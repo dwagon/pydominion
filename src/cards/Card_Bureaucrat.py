@@ -9,6 +9,23 @@ class Card_Bureaucrat(Card):
         self.cost = 4
 
     def special(self, game, player):
-        print "Not Implemented"
+        """ Gain a silver card and put it on top of your deck. Each
+        other player reveals a victory card from his hand and puts
+        it on his deck (or reveals a hand with no victory cards)
+        """
+        silver = game['Silver']
+        player.deck.insert(0, silver.remove())
+
+        for pl in game.players:
+            if pl == player:
+                continue
+            if pl.hasDefense():
+                print "Player %s is defended"
+                continue
+            for c in pl.hand:
+                if c.isVictory():
+                    pl.deck.insert(0, c)
+                    print "Player %s moved a %s to the top" % (pl.name, c.name)
+                    break
 
 #EOF
