@@ -14,7 +14,7 @@ class Card_Bureaucrat(Card):
         it on his deck (or reveals a hand with no victory cards)
         """
         silver = game['Silver']
-        player.deck.insert(0, silver.remove())
+        player.addCard(silver.remove(), 'deck')
 
         for pl in game.players:
             if pl == player:
@@ -24,7 +24,7 @@ class Card_Bureaucrat(Card):
                 continue
             for c in pl.hand:
                 if c.isVictory():
-                    pl.deck.insert(0, c)
+                    pl.addCard(c, 'deck')
                     print "Player %s moved a %s to the top" % (pl.name, c.name)
                     break
 

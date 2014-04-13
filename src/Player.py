@@ -29,7 +29,7 @@ class Player(object):
         self.name = name
         self.hand = []
         self.deck = []
-        self.t = {} # Details for the current turn such as actions left, etc.
+        self.t = {}  # Details for the current turn such as actions left, etc.
         self.discardpile = []
         self.initial_Deck()
 
@@ -59,18 +59,23 @@ class Player(object):
             self.pickupCard()
 
     ###########################################################################
-    def addCard(self, c):
-        self.discardpile.append(c)
+    def addCard(self, c, pile='discard'):
+        if pile == 'discard':
+            self.discardpile.append(c)
+        elif pile == 'hand':
+            self.hand.append(c)
+        elif pile == 'deck':
+            self.deck.insert(0, c)
 
     ###########################################################################
     def discardCard(self, c):
         self.hand.remove(c)
-        self.addCard(c)
+        self.addCard(c, 'discard')
 
     ###########################################################################
     def discardHand(self):
-        while self.hand:
-            self.addCard(self.hand.pop())
+        for c in self.hand:
+            self.discardCard(c)
 
     ###########################################################################
     def choiceSelection(self):
@@ -130,6 +135,7 @@ class Player(object):
 
     ###########################################################################
     def playCard(self, card):
+        self.discardCard(card)
         self.t['actions'] -= 1
         self.t['actions'] += card.actions
         self.t['gold'] += card.gold
