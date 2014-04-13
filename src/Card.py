@@ -18,4 +18,9 @@ class Card(object):
     def hasDefense(self):
         return self.defense
 
+    def isTreasure(self):
+        if self.cardtype == 'treasure':
+            return True
+        return False
+
 #EOF
