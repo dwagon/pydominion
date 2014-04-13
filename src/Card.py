@@ -3,6 +3,7 @@ class Card(object):
         self.image = None
         self.buys = 0
         self.cardtype = 'unknown'
+        self.selectable = True
         self.actions = 0
         self.gold = 0
         self.cost = 0

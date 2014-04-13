@@ -4,6 +4,7 @@ class Card_Province(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
+        self.selectable = False
         self.name = 'province'
         self.image = 'images/province.jpg'
         self.cost = 8

@@ -31,6 +31,12 @@ class Game(object):
             self.cardpiles[c] = CardPile(c)
             unfilled -= 1
 
+    def cardTypes(self):
+        return self.cardpiles.values()
+
+    def __getitem__(self, key):
+        return self.cardpiles[key]
+
     def getAvailableCards(self):
         cardfiles = glob.glob('cards/Card_*.py')
         cards = [c.replace('cards/Card_', '').replace('.py', '') for c in cardfiles]
@@ -46,7 +52,5 @@ if __name__ == "__main__":
     g.startGame(numplayers=2)
     while not g.gameover:
         g.turn()
-        for p in g.players:
-            print repr(p)
 
 #EOF

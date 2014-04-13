@@ -4,6 +4,7 @@ class Card_Gold(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
+        self.selectable = False
         self.name = 'gold'
         self.image = 'images/gold.jpg'
         self.gold = 3
