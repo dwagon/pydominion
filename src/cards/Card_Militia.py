@@ -9,7 +9,7 @@ class Card_Militia(Card):
         self.gold = 2
         self.cost = 4
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF

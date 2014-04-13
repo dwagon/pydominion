@@ -9,7 +9,7 @@ class Card_Chancellor(Card):
         self.gold = 2
         self.cost = 3
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF

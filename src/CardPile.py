@@ -11,8 +11,9 @@ class CardPile(object):
         cardmodule = imp.load_module(self.name, fp, pathname, description)
         self.cardclass = getattr(cardmodule, "Card_%s" % self.name)
         self.card = self.cardclass()
-        self.cost = self.card.cost
-        self.cardtype = self.card.cardtype
+
+    def __getattr__(self, name):
+        return getattr(self.card, name)
 
     def remove(self):
         if self.numcards:

@@ -3,14 +3,19 @@ class Card(object):
         self.image = None
         self.buys = 0
         self.cardtype = 'unknown'
-        self.selectable = True
+        self.playable = True
+        self.defense = False
+        self.needcurse = False
         self.actions = 0
         self.gold = 0
         self.cost = 0
         self.cards = 0
         self.victory = 0
 
-    def special(self):
+    def special(self, game, player):
         pass
+
+    def hasDefense(self):
+        return self.defense
 
 #EOF

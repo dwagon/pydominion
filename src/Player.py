@@ -26,7 +26,7 @@ class Player(object):
         self.hand = []
         self.deck = []
         self.t = {} # Details for the current turn such as actions left, etc.
-        self.discard = []
+        self.discardpile = []
         self.initial_Deck()
 
     ###########################################################################
@@ -36,13 +36,14 @@ class Player(object):
         for i in range(3):
             self.deck.append(self.game['Estate'].remove())
         random.shuffle(self.deck)
+        self.pickUpHand()
 
     ###########################################################################
     def pickupCard(self):
         if not(self.deck):
-            random.shuffle(self.discard)
-            while self.discard:
-                self.deck.append(self.discard.pop())
+            random.shuffle(self.discardpile)
+            while self.discardpile:
+                self.deck.append(self.discardpile.pop())
         self.hand.append(self.deck.pop())
 
     ###########################################################################
@@ -51,9 +52,13 @@ class Player(object):
             self.pickupCard()
 
     ###########################################################################
+    def addCard(self, c):
+        self.discardpile.append(c)
+
+    ###########################################################################
     def discardHand(self):
         while self.hand:
-            self.discard.append(self.hand.pop())
+            self.addCard(self.hand.pop())
 
     ###########################################################################
     def choiceSelection(self):
@@ -61,7 +66,7 @@ class Player(object):
 
         if self.t['actions']:
             index = 1
-            playable = [c for c in self.hand if c.selectable]
+            playable = [c for c in self.hand if c.playable]
             for p in playable:
                 selector = "%d" % index
                 options.append({'selector':selector, 'print':'Play %s' % p.name, 'card':p, 'action':'play'})
@@ -69,9 +74,7 @@ class Player(object):
 
         if self.t['buys']:
             index = 0
-            purchasable = [c for c in self.game.cardTypes() if c.cost <= self.t['gold']]
-            purchasable.sort(key=lambda c: c.cost)
-            purchasable.sort(key=lambda c: c.cardtype)
+            purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
                 selector = chr(ord('a')+index)
                 toprint = 'Buy %s (%d gold)' % (p.name, p.cost)
@@ -86,13 +89,17 @@ class Player(object):
             for o in options:
                 if o['selector'] == input:
                     return o
-            print "Invalid Option - '0' to end turn"
+            print "Invalid Option (%s) - '0' to end turn" % input
+
+    ###########################################################################
+    def score(self):
+        vp = sum([c.victory for c in self.discardpile + self.hand + self.deck])
+        return vp
 
     ###########################################################################
     def turn(self):
-        self.pickUpHand()
-        print "#" * 50
-        print "%s Turn" % self.name
+        print "#" * 80
+        print "%s Turn (%d points)" % (self.name, self.score())
         print "%s" % ", ".join([c.name.title() for c in self.hand])
         self.t = {'buys':1, 'actions':1, 'gold':sum([c.gold for c in self.hand])}
         while self.t['actions'] + self.t['buys']:
@@ -106,17 +113,17 @@ class Player(object):
             else:
                 sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
         self.discardHand()
+        self.pickUpHand()
 
     ###########################################################################
     def playCard(self, card):
-        print "Playing %s" % card
         self.t['actions'] -= 1
         self.t['actions'] += card.actions
         self.t['gold'] += card.gold
         self.t['buys'] += card.buys
         for i in range(card.cards):
             self.pickupCard()
-        card.special()
+        card.special(game=self.game, player=self)
             
     ###########################################################################
     def buyCard(self, cardpile):
@@ -125,7 +132,14 @@ class Player(object):
             sys.stderr.write("ERROR: Buying from empty cardpile %s" % repr(cardpile))
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
-        self.discard.append(newcard)
+        self.addCard(newcard)
+
+    ###########################################################################
+    def hasDefense(self):
+        for c in self.hand:
+            if c.hasDefense():
+                return True
+        return False
 
     ###########################################################################
     def __repr__(self):

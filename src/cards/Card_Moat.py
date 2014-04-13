@@ -6,9 +6,10 @@ class Card_Moat(Card):
         self.cardtype = 'action'
         self.name = 'moat'
         self.image = 'images/moat.jpg'
+        self.defense = True
         self.cost = 2
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF

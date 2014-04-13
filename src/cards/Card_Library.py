@@ -8,7 +8,7 @@ class Card_Library(Card):
         self.image = 'images/library.jpg'
         self.cost = 5
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF

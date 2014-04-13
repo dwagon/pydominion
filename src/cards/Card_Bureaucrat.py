@@ -8,7 +8,7 @@ class Card_Bureaucrat(Card):
         self.image = 'images/bureaucrat.jpg'
         self.cost = 4
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF

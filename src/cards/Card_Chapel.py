@@ -8,7 +8,7 @@ class Card_Chapel(Card):
         self.image = 'images/chapel.jpg'
         self.cost = 2
 
-    def special(self):
-        raise NotImplemented
+    def special(self, game, player):
+        print "Not Implemented"
 
 #EOF
