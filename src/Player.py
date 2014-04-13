@@ -17,6 +17,10 @@ playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
     'Steven', 'Susan', 'Suzanne', 'Thomas', 'Timothy', 'Wayne', 'Wendy',
     'William']
 
+
+###############################################################################
+###############################################################################
+###############################################################################
 class Player(object):
     def __init__(self, game, name=''):
         self.game = game
@@ -40,20 +44,28 @@ class Player(object):
 
     ###########################################################################
     def pickupCard(self):
+        """ Pick a card from the deck and put it into the players hand """
         if not(self.deck):
             random.shuffle(self.discardpile)
             while self.discardpile:
                 self.deck.append(self.discardpile.pop())
-        self.hand.append(self.deck.pop())
+        c = self.deck.pop()
+        self.hand.append(c)
+        return c
 
     ###########################################################################
     def pickUpHand(self):
-        while len(self.hand)<5:
+        while len(self.hand) < 5:
             self.pickupCard()
 
     ###########################################################################
     def addCard(self, c):
         self.discardpile.append(c)
+
+    ###########################################################################
+    def discardCard(self, c):
+        self.hand.remove(c)
+        self.addCard(c)
 
     ###########################################################################
     def discardHand(self):
@@ -62,14 +74,14 @@ class Player(object):
 
     ###########################################################################
     def choiceSelection(self):
-        options = [{'selector': '0', 'print':'End Turn', 'card':None, 'action':'quit'}]
+        options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
 
         if self.t['actions']:
             index = 1
             playable = [c for c in self.hand if c.playable]
             for p in playable:
                 selector = "%d" % index
-                options.append({'selector':selector, 'print':'Play %s' % p.name, 'card':p, 'action':'play'})
+                options.append({'selector': selector, 'print': 'Play %s' % p.name, 'card': p, 'action': 'play'})
                 index += 1
 
         if self.t['buys']:
@@ -78,7 +90,7 @@ class Player(object):
             for p in purchasable:
                 selector = chr(ord('a')+index)
                 toprint = 'Buy %s (%d gold)' % (p.name, p.cost)
-                options.append({'selector': selector, 'print': toprint, 'card':p, 'action':'buy'})
+                options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
                 index += 1
 
         for o in options:
@@ -101,8 +113,9 @@ class Player(object):
         print "#" * 80
         print "%s Turn (%d points)" % (self.name, self.score())
         print "%s" % ", ".join([c.name.title() for c in self.hand])
-        self.t = {'buys':1, 'actions':1, 'gold':sum([c.gold for c in self.hand])}
+        self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         while self.t['actions'] + self.t['buys']:
+            self.t['gold'] = sum([c.gold for c in self.hand])
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
@@ -124,7 +137,7 @@ class Player(object):
         for i in range(card.cards):
             self.pickupCard()
         card.special(game=self.game, player=self)
-            
+
     ###########################################################################
     def buyCard(self, cardpile):
         newcard = cardpile.remove()
