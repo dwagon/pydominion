@@ -23,4 +23,9 @@ class Card(object):
             return True
         return False
 
+    def isVictory(self):
+        if self.cardtype == 'victory':
+            return True
+        return False
+
 #EOF
