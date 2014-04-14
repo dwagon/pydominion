@@ -1,5 +1,6 @@
 import imp
 
+
 class CardPile(object):
     def __init__(self, cardname, numcards=10):
         self.name = cardname
@@ -14,6 +15,9 @@ class CardPile(object):
 
     def __getattr__(self, name):
         return getattr(self.card, name)
+
+    def isEmpty(self):
+        return self.numcards == 0
 
     def remove(self):
         if self.numcards:
