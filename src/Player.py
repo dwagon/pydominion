@@ -29,7 +29,7 @@ class Player(object):
         self.name = name
         self.hand = []
         self.deck = []
-        self.t = {}  # Details for the current turn such as actions left, etc.
+        self.t = {'buys': 1, 'actions': 1, 'gold': 0}  # Details for the current turn such as actions left, etc.
         self.discardpile = []
         self.initial_Deck()
 
@@ -43,14 +43,26 @@ class Player(object):
         self.pickUpHand()
 
     ###########################################################################
+    def trashCard(self, c):
+        """ Take a card out of the game """
+        # TODO: Need to prevent cards being trashed that have already been used to buy
+        self.game.trashpile.append(c)
+        self.t['gold'] -= c.gold
+        self.hand.remove(c)
+
+    ###########################################################################
     def pickupCard(self):
         """ Pick a card from the deck and put it into the players hand """
         if not(self.deck):
             self.shuffleDeck()
             while self.discardpile:
                 self.deck.append(self.discardpile.pop())
+        if not self.deck:
+            print "No more cards in deck"
+            return None
         c = self.deck.pop()
         self.hand.append(c)
+        self.t['gold'] += c.gold
         return c
 
     ###########################################################################
