@@ -46,12 +46,16 @@ class Player(object):
     def pickupCard(self):
         """ Pick a card from the deck and put it into the players hand """
         if not(self.deck):
-            random.shuffle(self.discardpile)
+            self.shuffleDeck()
             while self.discardpile:
                 self.deck.append(self.discardpile.pop())
         c = self.deck.pop()
         self.hand.append(c)
         return c
+
+    ###########################################################################
+    def shuffleDeck(self):
+        random.shuffle(self.discardpile)
 
     ###########################################################################
     def pickUpHand(self):
@@ -119,8 +123,8 @@ class Player(object):
         print "%s Turn (%d points)" % (self.name, self.score())
         print "%s" % ", ".join([c.name.title() for c in self.hand])
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
+        self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
         while self.t['actions'] + self.t['buys']:
-            self.t['gold'] = sum([c.gold for c in self.hand])
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
@@ -151,6 +155,7 @@ class Player(object):
             sys.stderr.write("ERROR: Buying from empty cardpile %s" % repr(cardpile))
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
+        print "Bought %s for %d gold" % (newcard.name, newcard.cost)
         self.addCard(newcard)
 
     ###########################################################################
