@@ -8,6 +8,7 @@ from CardPile import CardPile
 
 baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
 
+
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -15,6 +16,7 @@ class Game(object):
     def __init__(self):
         self.players = []
         self.cardpiles = {}
+        self.trashpile = []
         self.gameover = False
 
     ###########################################################################
@@ -64,9 +66,24 @@ class Game(object):
         return cards
 
     ###########################################################################
+    def isGameOver(self):
+        numEmpty = 0
+        for c in self.cardpiles:
+            if c.isEmpty():
+                numEmpty += 1
+        if numEmpty >= 3:
+            return True
+
+        if self['Province'].isEmpty():
+            return True
+        return False
+
+    ###########################################################################
     def turn(self):
         for plr in self.players:
             plr.turn()
+        if self.isGameOver():
+            self.gameover = True
 
 ###############################################################################
 if __name__ == "__main__":
