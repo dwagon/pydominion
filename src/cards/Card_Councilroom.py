@@ -11,6 +11,9 @@ class Card_Councilroom(Card):
         self.cost = 5
 
     def special(self, game, player):
-        print "Not Implemented"
+        """ Each other player draws a card """
+        for pl in game.players:
+            if pl != player:
+                pl.pickupCard()
 
 #EOF

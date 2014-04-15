@@ -69,7 +69,7 @@ class Game(object):
     def isGameOver(self):
         numEmpty = 0
         for c in self.cardpiles:
-            if c.isEmpty():
+            if self[c].isEmpty():
                 numEmpty += 1
         if numEmpty >= 3:
             return True
