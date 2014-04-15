@@ -33,7 +33,7 @@ class Card_Chancellor(Card):
                 player.shuffleDeck()
                 return
             else:
-                print "Invalid Option (%s) - '0' to end turn" % input
+                print "Invalid Option (%s) - '0' to do nothing" % input
 
 
 #EOF

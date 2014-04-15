@@ -48,7 +48,8 @@ class Player(object):
         # TODO: Need to prevent cards being trashed that have already been used to buy
         self.game.trashpile.append(c)
         self.t['gold'] -= c.gold
-        self.hand.remove(c)
+        if c in self.hand:
+            self.hand.remove(c)
 
     ###########################################################################
     def pickupCard(self):

@@ -27,7 +27,7 @@ class Card_Workshop(Card):
             input = raw_input()
             for o in options:
                 if o['selector'] == input:
-                    player.discardCard(o['card'].remove())
+                    player.addCard(o['card'].remove())
                     print "Took %s" % o['card']
                     return
             print "Invalid Option (%s) - '0' to get nothing" % input
