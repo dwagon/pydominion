@@ -95,6 +95,18 @@ class Player(object):
             self.discardCard(c)
 
     ###########################################################################
+    def userInput(self, options, prompt):
+        for o in options:
+            print "%s\t%s" % (o['selector'], o['print'])
+        print prompt,
+        while(1):
+            input = raw_input()
+            for o in options:
+                if o['selector'] == input:
+                    return o
+            print "Invalid Option (%s)" % input
+
+    ###########################################################################
     def choiceSelection(self):
         options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
 
@@ -115,15 +127,8 @@ class Player(object):
                 options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
                 index += 1
 
-        for o in options:
-            print "%s\t%s" % (o['selector'], o['print'])
-        print "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d)?" % self.t,
-        while(1):
-            input = raw_input()
-            for o in options:
-                if o['selector'] == input:
-                    return o
-            print "Invalid Option (%s) - '0' to end turn" % input
+        prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d)?" % self.t
+        return self.userInput(options, prompt)
 
     ###########################################################################
     def score(self):

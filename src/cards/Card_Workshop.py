@@ -1,5 +1,6 @@
 from Card import Card
 
+
 class Card_Workshop(Card):
     def __init__(self):
         Card.__init__(self)
@@ -20,16 +21,8 @@ class Card_Workshop(Card):
             options.append({'selector': selector, 'print': toprint, 'card':p})
             index += 1
 
-        for o in options:
-            print "%s\t%s" % (o['selector'], o['print'])
-        print "What card do you wish?",
-        while(1):
-            input = raw_input()
-            for o in options:
-                if o['selector'] == input:
-                    player.addCard(o['card'].remove())
-                    print "Took %s" % o['card']
-                    return
-            print "Invalid Option (%s) - '0' to get nothing" % input
+        o = player.userInput(options, "What card do you wish?")
+        player.addCard(o['card'].remove())
+        print "Took %s" % o['card']
 
 #EOF
