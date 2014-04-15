@@ -14,14 +14,14 @@ class Card_Chapel(Card):
         trash = []
         print "Trash up to four cards"
         while(1):
-            options = [{'selector': '0', 'print': 'No more trash', 'card': None}]
+            options = [{'selector': '0', 'print': 'Finish trashing', 'card': None}]
             index = 1
             for c in player.hand:
                 selector = "%d" % index
                 trashtag = 'Untrash' if c in trash else 'Trash'
                 options.append({'selector': selector, 'print': "%s %s" % (trashtag, c.name), 'card': c})
                 index += 1
-            o = player.userInput(options, "Trash which card")
+            o = player.userInput(options, "Trash which card?")
             if not o['card']:
                 break
             if o['card'] in trash:
@@ -33,7 +33,7 @@ class Card_Chapel(Card):
                     print "Can only trash four cards"
 
         for t in trash:
-            print "Trashing %s" % c.name
+            print "Trashing %s" % t.name
             player.trashCard(t)
 
 #EOF
