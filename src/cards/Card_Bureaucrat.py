@@ -1,5 +1,6 @@
 from Card import Card
 
+
 class Card_Bureaucrat(Card):
     def __init__(self):
         Card.__init__(self)
@@ -20,7 +21,7 @@ class Card_Bureaucrat(Card):
             if pl == player:
                 continue
             if pl.hasDefense():
-                print "Player %s is defended"
+                print "Player %s is defended" % pl.name
                 continue
             for c in pl.hand:
                 if c.isVictory():

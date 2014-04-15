@@ -2,20 +2,25 @@ import random
 import sys
 
 playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
-    'Anne', 'Anthony', 'Barbara', 'Benjamin', 'Brian', 'Catherine', 'Chloe',
-    'Christine', 'Christopher', 'Colin', 'Craig', 'Daniel', 'Darren', 'David',
-    'Elizabeth', 'Emily', 'Emma', 'Fiona', 'Gary', 'Geoffrey', 'George',
-    'Graeme', 'Gregory', 'Heather', 'Helen', 'Ian', 'Jack', 'James', 'Jason',
-    'Jennifer', 'Jessica', 'Joan', 'Joanne', 'John', 'Joshua', 'Judith',
-    'Julie', 'Karen', 'Kate', 'Kathleen', 'Kenneth', 'Kevin', 'Lachlan',
-    'Laura', 'Lauren', 'Leanne', 'Linda', 'Lisa', 'Luke', 'Lynette',
-    'Margaret', 'Maria', 'Mark', 'Mary', 'Matthew', 'Melissa', 'Michael',
-    'Michelle', 'Natalie', 'Nathan', 'Nicholas', 'Nicole', 'Olivia', 'Pamela',
-    'Patricia', 'Paul', 'Peter', 'Raymond', 'Rebecca', 'Richard', 'Robert',
-    'Robyn', 'Ronald', 'Ryan', 'Samantha', 'Samuel', 'Sandra', 'Sarah',
-    'Scott', 'Shane', 'Sharon', 'Shirley', 'Simon', 'Stephanie', 'Stephen',
-    'Steven', 'Susan', 'Suzanne', 'Thomas', 'Timothy', 'Wayne', 'Wendy',
-    'William']
+               'Anne', 'Anthony', 'Barbara', 'Benjamin', 'Brian',
+               'Catherine', 'Chloe', 'Christine', 'Christopher',
+               'Colin', 'Craig', 'Daniel', 'Darren', 'David',
+               'Elizabeth', 'Emily', 'Emma', 'Fiona', 'Gary',
+               'Geoffrey', 'George', 'Graeme', 'Gregory', 'Heather',
+               'Helen', 'Ian', 'Jack', 'James', 'Jason', 'Jennifer',
+               'Jessica', 'Joan', 'Joanne', 'John', 'Joshua',
+               'Judith', 'Julie', 'Karen', 'Kate', 'Kathleen',
+               'Kenneth', 'Kevin', 'Lachlan', 'Laura', 'Lauren',
+               'Leanne', 'Linda', 'Lisa', 'Luke', 'Lynette',
+               'Margaret', 'Maria', 'Mark', 'Mary', 'Matthew',
+               'Melissa', 'Michael', 'Michelle', 'Natalie', 'Nathan',
+               'Nicholas', 'Nicole', 'Olivia', 'Pamela', 'Patricia',
+               'Paul', 'Peter', 'Raymond', 'Rebecca', 'Richard',
+               'Robert', 'Robyn', 'Ronald', 'Ryan', 'Samantha',
+               'Samuel', 'Sandra', 'Sarah', 'Scott', 'Shane',
+               'Sharon', 'Shirley', 'Simon', 'Stephanie', 'Stephen',
+               'Steven', 'Susan', 'Suzanne', 'Thomas', 'Timothy',
+               'Wayne', 'Wendy', 'William']
 
 
 ###############################################################################
@@ -29,7 +34,8 @@ class Player(object):
         self.name = name
         self.hand = []
         self.deck = []
-        self.t = {'buys': 1, 'actions': 1, 'gold': 0}  # Details for the current turn such as actions left, etc.
+        # Details for the current turn such as actions left, etc.
+        self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.discardpile = []
         self.initial_Deck()
 
@@ -114,8 +120,9 @@ class Player(object):
             index = 1
             playable = [c for c in self.hand if c.playable]
             for p in playable:
-                selector = "%d" % index
-                options.append({'selector': selector, 'print': 'Play %s' % p.name, 'card': p, 'action': 'play'})
+                sel = "%d" % index
+                pr = "Play %s" % p.name
+                options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
                 index += 1
 
         if self.t['buys']:
@@ -163,7 +170,8 @@ class Player(object):
         self.t['gold'] += card.gold
         self.t['buys'] += card.buys
         for i in range(card.cards):
-            self.pickupCard()
+            c = self.pickupCard()
+            print "Picked up %s" % c.name
         card.special(game=self.game, player=self)
 
     ###########################################################################

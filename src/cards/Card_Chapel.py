@@ -17,9 +17,10 @@ class Card_Chapel(Card):
             options = [{'selector': '0', 'print': 'Finish trashing', 'card': None}]
             index = 1
             for c in player.hand:
-                selector = "%d" % index
+                sel = "%d" % index
                 trashtag = 'Untrash' if c in trash else 'Trash'
-                options.append({'selector': selector, 'print': "%s %s" % (trashtag, c.name), 'card': c})
+                pr = "%s %s" % (trashtag, c.name)
+                options.append({'selector': sel, 'print': pr, 'card': c})
                 index += 1
             o = player.userInput(options, "Trash which card?")
             if not o['card']:

@@ -6,8 +6,6 @@ import sys
 from Player import Player
 from CardPile import CardPile
 
-baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
-
 
 ###############################################################################
 ###############################################################################
@@ -18,6 +16,7 @@ class Game(object):
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
+        self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
 
     ###########################################################################
     def startGame(self, numplayers):
@@ -27,7 +26,7 @@ class Game(object):
 
     ###########################################################################
     def loadDecks(self):
-        for card in baseCards:
+        for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=50)
         available = self.getAvailableCards()
         unfilled = 10

@@ -20,10 +20,10 @@ class Card_Cellar(Card):
             for c in player.hand:
                 s = "%s" % index
                 discstr = "Undiscard" if c in todiscard else "Discard"
-                options.append({'selector': s, 'print': '%s %s' % (c.name, discstr), 'card': c})
+                options.append({'selector': s, 'print': '%s %s' % (discstr, c.name), 'card': c})
                 index += 1
             o = player.userInput(options, prompt)
-            if o['card'] == None:
+            if o['card'] is None:
                 break
             if o['card'] in todiscard:
                 todiscard.remove(o['card'])
@@ -34,6 +34,6 @@ class Card_Cellar(Card):
             print "Discarding %s" % c.name
             player.addCard(c, 'discard')
             n = player.pickupCard()
-            print "Picked up %s" % n.name
+            print "Drew %s" % n.name
 
 #EOF

@@ -1,5 +1,6 @@
 from Card import Card
 
+
 class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)

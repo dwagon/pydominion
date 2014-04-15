@@ -1,5 +1,6 @@
 from Card import Card
 
+
 class Card_Feast(Card):
     def __init__(self):
         Card.__init__(self)
@@ -21,7 +22,7 @@ class Card_Feast(Card):
         for p in purchasable:
             selector = "%d" % index
             toprint = 'Get %s (%d gold)' % (p.name, p.cost)
-            options.append({'selector': selector, 'print': toprint, 'card':p})
+            options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 
         o = player.userInput(options, "What card do you wish?")
