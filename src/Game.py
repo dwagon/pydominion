@@ -94,7 +94,7 @@ class Game(object):
 ###############################################################################
 if __name__ == "__main__":
     g = Game()
-    g.startGame(numplayers=2)
+    g.startGame(numplayers=3)
     while not g.gameover:
         g.turn()
     g.whoWon()

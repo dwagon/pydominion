@@ -5,6 +5,7 @@ class Card_Chancellor(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.desc = "+2 gold, Discard deck"
         self.name = 'chancellor'
         self.image = 'images/chancellor.jpg'
         self.gold = 2

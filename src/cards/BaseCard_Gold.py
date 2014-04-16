@@ -5,6 +5,7 @@ class Card_Gold(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
+        self.desc = "+3 gold"
         self.playable = False
         self.name = 'gold'
         self.image = 'images/gold.jpg'

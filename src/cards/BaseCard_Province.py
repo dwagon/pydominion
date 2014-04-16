@@ -5,6 +5,7 @@ class Card_Province(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
+        self.desc = "6 VP"
         self.playable = False
         self.name = 'province'
         self.image = 'images/province.jpg'

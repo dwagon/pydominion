@@ -5,6 +5,7 @@ class Card_Woodcutter(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.desc = "+1 buys, +2 gold"
         self.name = 'woodcutter'
         self.image = 'images/woodcutter.jpg'
         self.buys = 1

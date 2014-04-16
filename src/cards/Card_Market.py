@@ -5,6 +5,7 @@ class Card_Market(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.desc = "+1 cards, +1 action, +1 gold, +1 buys"
         self.name = 'market'
         self.image = 'images/market.jpg'
         self.cards = 1

@@ -6,6 +6,7 @@ class Card_Copper(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.playable = False
+        self.desc = "+1 gold"
         self.name = 'copper'
         self.image = 'images/copper.jpg'
         self.gold = 1

@@ -5,6 +5,7 @@ class Card_Mine(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.desc = "Trash a treasure, gain a better treasure"
         self.name = 'mine'
         self.image = 'images/mine.jpg'
         self.cost = 5

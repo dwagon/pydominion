@@ -5,6 +5,7 @@ class Card_Bureaucrat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.desc = "Gain a silver"
         self.name = 'bureaucrat'
         self.image = 'images/bureaucrat.jpg'
         self.cost = 4

@@ -1,6 +1,8 @@
 class Card(object):
     def __init__(self):
         self.image = None
+        self.desc = "TODO"
+        self.name = "TODO"
         self.buys = 0
         self.cardtype = 'unknown'
         self.playable = True

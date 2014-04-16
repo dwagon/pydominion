@@ -121,7 +121,7 @@ class Player(object):
             playable = [c for c in self.hand if c.playable]
             for p in playable:
                 sel = "%d" % index
-                pr = "Play %s" % p.name
+                pr = "Play %s (%s)" % (p.name, p.desc)
                 options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
                 index += 1
 
@@ -130,7 +130,7 @@ class Player(object):
             purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
                 selector = chr(ord('a')+index)
-                toprint = 'Buy %s (%d gold)' % (p.name, p.cost)
+                toprint = 'Buy %s (%d gold) %s' % (p.name, p.cost, p.desc)
                 options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
                 index += 1
 

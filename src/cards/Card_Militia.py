@@ -5,6 +5,7 @@ class Card_Militia(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'attack'
+        self.desc = "+2 gold, Every other player discards down to 3"
         self.name = 'militia'
         self.image = 'images/militia.jpg'
         self.gold = 2
@@ -19,6 +20,8 @@ class Card_Militia(Card):
                 print "Player %s is defended" % plr.name
                 continue
             self.playerDiscard(plr)
+        print "*" * 20
+        print "Back to %s" % player.name
 
     def playerDiscard(self, plr):
         print "*" * 20
