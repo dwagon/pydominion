@@ -78,6 +78,13 @@ class Game(object):
         return False
 
     ###########################################################################
+    def whoWon(self):
+        scores = []
+        for plr in self.players:
+            scores[plr.name] = plr.score()
+        print scores
+
+    ###########################################################################
     def turn(self):
         for plr in self.players:
             plr.turn()
@@ -90,5 +97,6 @@ if __name__ == "__main__":
     g.startGame(numplayers=2)
     while not g.gameover:
         g.turn()
+    g.whoWon()
 
 #EOF

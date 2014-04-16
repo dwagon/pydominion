@@ -28,4 +28,7 @@ class Card(object):
             return True
         return False
 
+    def special_score(self, game, player):
+        return 0
+
 #EOF

@@ -13,7 +13,9 @@ class Card_Gardens(Card):
     def special(self, game, player):
         pass
 
-    def special_score(self):
-        print "Not implemented"
+    def special_score(self, game, player):
+        """ Worth 1VP for every 10 cards in your deck rounded down """
+        numcards = len(self.discardpile + self.hand + self.deck)
+        return int(numcards / 10)
 
 #EOF

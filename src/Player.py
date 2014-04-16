@@ -139,7 +139,9 @@ class Player(object):
 
     ###########################################################################
     def score(self):
-        vp = sum([c.victory for c in self.discardpile + self.hand + self.deck])
+        allcards = self.discardpile + self.hand + self.deck
+        vp = sum([c.victory for c in allcards])
+        vp += sum([c.special_score(self.game, self) for c in allcards])
         return vp
 
     ###########################################################################

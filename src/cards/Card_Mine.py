@@ -7,7 +7,7 @@ class Card_Mine(Card):
         self.cardtype = 'action'
         self.name = 'mine'
         self.image = 'images/mine.jpg'
-        self.cost = 1  # 5
+        self.cost = 5
 
     def special(self, game, player):
         """ Trash a treasure card from your hand. Gain a treasure card
