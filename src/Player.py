@@ -41,8 +41,12 @@ class Player(object):
 
     ###########################################################################
     def initial_Deck(self):
+        """ Provide the initial deck - cards don't come from the piles
+            hence add them back """
+        self.game['Copper'].numcards += 7
         for i in range(7):
             self.deck.append(self.game['Copper'].remove())
+        self.game['Estate'].numcards += 3
         for i in range(3):
             self.deck.append(self.game['Estate'].remove())
         random.shuffle(self.deck)
@@ -83,6 +87,8 @@ class Player(object):
 
     ###########################################################################
     def addCard(self, c, pile='discard'):
+        if not c:
+            return
         if pile == 'discard':
             self.discardpile.append(c)
         elif pile == 'hand':

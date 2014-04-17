@@ -4,7 +4,6 @@ import imp
 class CardPile(object):
     def __init__(self, cardname, numcards=10):
         self.name = cardname
-        self.numcards = numcards
         try:
             fp, pathname, description = imp.find_module("Card_%s" % self.name, ['cards'])
         except ImportError:
@@ -12,6 +11,7 @@ class CardPile(object):
         cardmodule = imp.load_module(self.name, fp, pathname, description)
         self.cardclass = getattr(cardmodule, "Card_%s" % self.name)
         self.card = self.cardclass()
+        self.numcards = numcards
 
     def __getattr__(self, name):
         return getattr(self.card, name)

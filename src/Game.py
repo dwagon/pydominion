@@ -27,7 +27,7 @@ class Game(object):
     ###########################################################################
     def loadDecks(self, initcards):
         for card in self.baseCards:
-            self.cardpiles[card] = CardPile(card, numcards=50)
+            self.cardpiles[card] = CardPile(card, numcards=12)
         available = self.getAvailableCards()
         unfilled = 10 - len(initcards)
         self.needcurse = False
@@ -43,7 +43,7 @@ class Game(object):
             self.useCardPile(available, c)
             unfilled -= 1
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=50)
+            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(len(self.players)-1))
 
     ###########################################################################
     def useCardPile(self, available, c):
