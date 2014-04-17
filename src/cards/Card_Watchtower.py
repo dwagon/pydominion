@@ -4,13 +4,16 @@ from Card import Card
 class Card_Watchtower(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
-        self.desc = "TODO"
-        self.name = 'watchtower'
+        self.cardtype = 'action'
+        self.desc = "Draw up to 6 cards. Can trash gained cards or put on top of deck"
+        self.name = 'Watchtower'
         self.image = 'images/watchtower.jpg'
-        self.cost = 4
+        self.cost = 3
 
     def special(self, game, player):
-        pass
+        """ Draw until you have 6 cards in hand. When you gain a
+            card, you may reveal this from your hand. If you do, either
+            trash that card, or put it on top of your deck """
+        print "Not implemented yet"
 
 #EOF
