@@ -110,6 +110,7 @@ def parseArgs():
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')
     parser.add_argument('--card', action='append', dest='initcards',
+                        default=[],
                         help='Include card in lineup')
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
