@@ -29,18 +29,29 @@ class Game(object):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=50)
         available = self.getAvailableCards()
-        unfilled = 10
-        needcurse = False
+        unfilled = 10 - len(initcards)
+        self.needcurse = False
+        for c in initcards:
+            c = c.strip().lower().title()
+            if c not in available:
+                sys.stderr.write("Card %s is not available\n" % c)
+                sys.exit(1)
+            self.useCardPile(available, c)
+
         while unfilled:
             c = random.choice(available)
-            sys.stderr.write("Playing with %s\n" % c)
-            available.remove(c)
-            self.cardpiles[c] = CardPile(c)
-            if self.cardpiles[c].needcurse:
-                needcurse = True
+            self.useCardPile(available, c)
             unfilled -= 1
-        if needcurse:
+        if self.needcurse:
             self.cardpiles['Curse'] = CardPile('Curse', numcards=50)
+
+    ###########################################################################
+    def useCardPile(self, available, c):
+        sys.stderr.write("Playing with %s\n" % c)
+        available.remove(c)
+        self.cardpiles[c] = CardPile(c)
+        if self.cardpiles[c].needcurse:
+            self.needcurse = True
 
     ###########################################################################
     def cardsUnder(self, cost):
