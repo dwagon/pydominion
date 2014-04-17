@@ -6,11 +6,15 @@ class Card_Loan(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.desc = "Play with treasures"
-        self.name = 'loan'
+        self.name = 'Loan'
         self.image = 'images/loan.jpg'
-        self.cost = 4
+        self.gold = 1
+        self.cost = 3
 
     def special(self, game, player):
-        pass
+        """ When you play this, reveal a card from your deck until
+            you reveal a treasure. Discard it or trash it. Discard the
+            other cards """
+        print "Not implemented yet"
 
 #EOF

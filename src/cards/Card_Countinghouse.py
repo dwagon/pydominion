@@ -11,6 +11,8 @@ class Card_Countinghouse(Card):
         self.cost = 5
 
     def special(self, game, player):
-        pass
+        """ Look through the discard pile, reveal any number of
+            copper cards from it, and put them into your hand """
+        print "Not implemented yet"
 
 #EOF

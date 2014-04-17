@@ -4,14 +4,16 @@ from Card import Card
 class Card_Hoard(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
-        self.desc = "numcards / 10 VP"
-        self.name = 'hoard'
+        self.cardtype = 'treasure'
+        self.desc = "Gain gold if buy victory"
+        self.name = 'Hoard'
         self.image = 'images/hoard.jpg'
-        self.cost = 4
+        self.gold = 2
+        self.cost = 6
 
     def special(self, game, player):
-        pass
+        """ When this is in play, when you buy a Victory card, gain a Gold """
+        print "Not implemented yet"
 
 
 #EOF

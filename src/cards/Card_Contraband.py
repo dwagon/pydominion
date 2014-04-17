@@ -13,6 +13,8 @@ class Card_Contraband(Card):
         self.buy = 1
 
     def special(self, game, player):
-        pass
+        """ When you play this, the player to your left names a
+            card. You can't buy that card this turn """
+        print "Not implemented yet"
 
 #EOF

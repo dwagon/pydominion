@@ -11,6 +11,9 @@ class Card_Mint(Card):
         self.cost = 5
 
     def special(self, game, player):
-        pass
+        """ You may reveal a treasure card from your hand. Gain a
+            copy of it. When you buy this, trash all treasures you have
+            in play"""
+        print "Not implemented yet"
 
 #EOF

@@ -6,12 +6,13 @@ class Card_Kingscourt(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Play action 3 times"
-        self.name = 'kingscourt'
+        self.name = "King's court"
         self.image = 'images/kingscourt.jpg'
         self.cost = 7
 
     def special(self, game, player):
-        pass
+        """ You may chose an Action card in your hand. Play it three times """
+        print "Not implemented yet"
 
 
 #EOF

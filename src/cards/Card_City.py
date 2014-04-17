@@ -13,6 +13,8 @@ class Card_City(Card):
         self.action = 2
 
     def special(self, game, player):
+        """ If there are one or more empty Supply piles, +1 card.
+        If there are two or more, +1 gold, +1 buy """
         print "Not implemented yet"
 
 #EOF

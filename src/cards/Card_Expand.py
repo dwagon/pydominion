@@ -11,6 +11,8 @@ class Card_Expand(Card):
         self.cost = 7
 
     def special(self, game, player):
-        pass
+        """ Trash a card from your hand. Gain a card costing up to
+            3 more than the trashed card """
+        print "Not implemented yet"
 
 #EOF

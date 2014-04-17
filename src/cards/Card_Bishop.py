@@ -5,16 +5,18 @@ class Card_Bishop(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "bishop stuff"
+        self.desc = "Trash a card for VP"
         self.name = 'bishop'
         self.image = 'images/bishop.jpg'
-        self.cost = 1
+        self.gold = 1
+        self.victory = 1
+        self.cost = 4
 
     def special(self, game, player):
+        """ Trash a card from your hand. +VP equal to half its cost
+        in coins, rounded down. Each other player may trash a card
+        from his hand """
         print "Not implemented yet"
 
-    def special_score(self, game, player):
-        print "Not implemented yet"
-        return 0
 
 #EOF

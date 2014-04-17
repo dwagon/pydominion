@@ -4,14 +4,16 @@ from Card import Card
 class Card_Forge(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
-        self.desc = "TODO"
+        self.cardtype = 'action'
+        self.desc = "Trash any number of cards to gain a card"
         self.name = 'forge'
         self.image = 'images/forge.jpg'
-        self.cost = 4
+        self.cost = 7
 
     def special(self, game, player):
-        pass
-
+        """ Trash any number of cards from your hand. Gain a card
+            with cost exactly equal to the total cost in coins of the
+            trashed cards """
+        print "Not implemented yet"
 
 #EOF

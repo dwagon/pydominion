@@ -10,6 +10,7 @@ class Card_Colony(Card):
         self.playable = False
         self.image = 'images/colony.jpg'
         self.cost = 11
+        self.victory = 10
 
 
 #EOF
