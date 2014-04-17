@@ -28,6 +28,9 @@ class Game(object):
     def loadDecks(self, initcards):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12)
+        self['Copper'].numcards = 60
+        self['Silver'].numcards = 40
+        self['Gold'].numcards = 30
         available = self.getAvailableCards()
         unfilled = 10 - len(initcards)
         self.needcurse = False
