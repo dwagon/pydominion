@@ -18,7 +18,7 @@ class Card_Workshop(Card):
         index = 1
         for p in purchasable:
             selector = "%d" % index
-            toprint = 'Get %s (%d gold)' % (p.name, p.cost)
+            toprint = 'Get %s (%d gold) %s' % (p.name, p.cost, p.desc)
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 
