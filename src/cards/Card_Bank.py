@@ -12,6 +12,10 @@ class Card_Bank(Card):
 
     def special(self, game, player):
         """ Worth 1 per treasure card in play (counting this)"""
-        print "Not implemented yet"
+        g = 1   # Counting this
+        for c in player.hand:
+            if c.isTreasure():
+                g += 1
+        player.t['gold'] += g
 
 #EOF
