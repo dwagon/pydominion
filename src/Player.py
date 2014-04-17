@@ -130,7 +130,7 @@ class Player(object):
             purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
                 selector = chr(ord('a')+index)
-                toprint = 'Buy %s (%d gold) %s' % (p.name, p.cost, p.desc)
+                toprint = 'Buy %s (%d gold) %s (%d left)' % (p.name, p.cost, p.desc, p.numcards)
                 options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
                 index += 1
 

@@ -90,7 +90,7 @@ class Game(object):
 
     ###########################################################################
     def whoWon(self):
-        scores = []
+        scores = {}
         for plr in self.players:
             scores[plr.name] = plr.score()
         print scores
