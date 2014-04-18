@@ -12,6 +12,10 @@ class Card_Expand(Card):
     def special(self, game, player):
         """ Trash a card from your hand. Gain a card costing up to
             3 more than the trashed card """
-        print "Not implemented yet"
+        print "Trash a card from your hand. Gain another costing up to 3 more than the one you trashed"
+        tc = player.plrTrashCard()
+        if tc:
+            cost = tc.cost
+            player.plrGainCard(cost + 3)
 
 #EOF
