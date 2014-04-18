@@ -31,6 +31,7 @@ class Player(object):
         self.game = game
         if not name:
             name = random.choice(playerNames)
+        print "Player %s is at the table" % name
         self.name = name
         self.hand = []
         self.deck = []
