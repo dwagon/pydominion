@@ -7,7 +7,7 @@ class Card_Cellar(Card):
         self.cardtype = 'action'
         self.desc = "+1 action, Discard and redraw cards"
         self.name = 'Cellar'
-        self.action = 1
+        self.actions = 1
         self.cost = 2
 
     def special(self, game, player):
