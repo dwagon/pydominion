@@ -209,8 +209,32 @@ class Player(object):
         return False
 
     ###########################################################################
-    def __repr__(self):
-        handstr = ", ".join([c.name for c in self.hand])
-        return "Player %s: %s" % (self.name, handstr)
+    def discardDownTo(self, num):
+        discard = []
+        while(1):
+            options = []
+            numleft = (len(self.hand) - len(discard)) - num
+            if numleft == 0:
+                options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
+            index = 1
+            for c in self.hand:
+                sel = "%s" % index
+                pr = "%s %s" % ("Undiscard" if c in discard else "Discard", c.name)
+                options.append({'selector': sel, 'print': pr, 'card': c})
+                index += 1
+
+            numleft = (len(self.hand) - len(discard)) - num
+            o = self.userInput(options, "Discard %s more cards." % numleft)
+            if o['card']:
+                if o['card'] in discard:
+                    discard.remove(o['card'])
+                else:
+                    discard.append(o['card'])
+            numleft = (len(self.hand) - len(discard)) - num
+            if o['card'] is None and numleft == 0:
+                break
+        for c in discard:
+            self.discardCard(c)
+
 
 #EOF
