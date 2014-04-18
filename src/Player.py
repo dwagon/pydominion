@@ -211,7 +211,43 @@ class Player(object):
         return False
 
     ###########################################################################
-    def discardDownTo(self, num):
+    def plrTrashCard(self):
+        """ Ask player to trash a single card """
+        print "Trash a card"
+        options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
+        index = 1
+        for c in self.hand:
+            sel = "%d" % index
+            pr = "Trash %s" % c.name
+            options.append({'selector': sel, 'print': pr, 'card': c})
+            index += 1
+        o = self.userInput(options, "Trash which card?")
+        if not o['card']:
+            return
+        trash = o['card']
+        self.trashCard(trash)
+        return trash
+
+    ###########################################################################
+    def plrGainCard(self, cost):
+        """ Gain a card of players choice up to cost gold """
+        print "Gain a card costing up to %d" % cost
+        options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
+        purchasable = self.game.cardsUnder(cost)
+        index = 1
+        for p in purchasable:
+            selector = "%d" % index
+            toprint = 'Get %s (%d gold) %s' % (p.name, p.cost, p.desc)
+            options.append({'selector': selector, 'print': toprint, 'card': p})
+            index += 1
+
+        o = self.userInput(options, "What card do you wish?")
+        if o['card']:
+            self.addCard(o['card'].remove())
+
+    ###########################################################################
+    def plrDiscardDownTo(self, num):
+        """ Get the player to discard down to num cards in their hand """
         discard = []
         while(1):
             options = []
