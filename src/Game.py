@@ -59,10 +59,11 @@ class Game(object):
     ###########################################################################
     def cardsUnder(self, cost):
         """Return the list of cards for under $cost """
-        purchasable = [c for c in self.cardTypes() if c.cost <= cost and c.numcards]
-        purchasable.sort(key=lambda c: c.basecard)
-        purchasable.sort(key=lambda c: c.cardtype)
-        return purchasable
+        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard]
+        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard]
+        purchbase.sort(key=lambda c: c.cost)
+        purchnorm.sort(key=lambda c: c.cost)
+        return purchnorm + purchbase
 
     ###########################################################################
     def cardTypes(self):
