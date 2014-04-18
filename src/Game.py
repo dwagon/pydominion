@@ -20,12 +20,12 @@ class Game(object):
 
     ###########################################################################
     def startGame(self, numplayers, initcards=[]):
-        self.loadDecks(initcards)
+        self.loadDecks(initcards, numplayers)
         for i in range(numplayers):
             self.players.append(Player(game=self))
 
     ###########################################################################
-    def loadDecks(self, initcards):
+    def loadDecks(self, initcards, numplayers):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12)
         self['Copper'].numcards = 60
@@ -46,7 +46,7 @@ class Game(object):
             self.useCardPile(available, c)
             unfilled -= 1
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(len(self.players)-1))
+            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1))
 
     ###########################################################################
     def useCardPile(self, available, c):
