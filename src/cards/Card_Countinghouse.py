@@ -12,6 +12,12 @@ class Card_Countinghouse(Card):
     def special(self, game, player):
         """ Look through the discard pile, reveal any number of
             copper cards from it, and put them into your hand """
-        print "Not implemented yet"
+        count = 0
+        for c in player.discardpile:
+            if c.cardname == 'copper':
+                player.addCard(c, 'hand')
+                player.t['gold'] += c.gold
+                count += 1
+        print "Picked up %d coppers" % count
 
 #EOF
