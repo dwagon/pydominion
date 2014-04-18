@@ -44,4 +44,7 @@ class Card(object):
     def special_score(self, game, player):
         return 0
 
+    def hook_buycard(self, game, player, card):
+        pass
+
 #EOF

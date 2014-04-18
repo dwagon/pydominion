@@ -154,6 +154,11 @@ class Player(object):
         return vp
 
     ###########################################################################
+    def hook_buycard(self, card):
+        for c in self.hand:
+            c.hook_buycard(game=self.game, player=self, card=card)
+
+    ###########################################################################
     def turn(self):
         print "#" * 80
         print "%s Turn (%d points)" % (self.name, self.score())
@@ -164,6 +169,7 @@ class Player(object):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
+                self.hook_buycard(opt['card'])
             elif opt['action'] == 'play':
                 self.playCard(opt['card'])
             elif opt['action'] == 'quit':
