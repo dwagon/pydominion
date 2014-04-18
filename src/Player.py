@@ -32,6 +32,7 @@ class Player(object):
         if not name:
             name = random.choice(playerNames)
         print "Player %s is at the table" % name
+        self.basescore = 0
         self.name = name
         self.hand = []
         self.deck = []
@@ -149,6 +150,7 @@ class Player(object):
         allcards = self.discardpile + self.hand + self.deck
         vp = sum([c.victory for c in allcards])
         vp += sum([c.special_score(self.game, self) for c in allcards])
+        vp += self.basescore
         return vp
 
     ###########################################################################
