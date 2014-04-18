@@ -12,8 +12,22 @@ class Card_Goons(Card):
         self.gold = 2
 
     def special(self, game, player):
-        """ While this card is in play, when you buy a card +1 VP """
-        print "Not implemented yet"
+        """ Each other player discards down to three cards """
+        for plr in game.players:
+            if plr == player:
+                continue
+            if plr.hasDefense():
+                print "Player %s is defended" % plr.name
+                continue
+            print "*" * 20
+            print "Player %s discard down to %d cards" % (plr.name, 3)
+            plr.discardDownTo(3)
+        print "*" * 20
+        print "Back to %s" % player.name
 
+    def hook_buycard(self, game, player, card):
+        """ While this card is in play, when you buy a card +1 VP """
+        print "Scored 1 more from goons"
+        player.basescore += 1
 
 #EOF
