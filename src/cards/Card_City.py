@@ -17,7 +17,7 @@ class Card_City(Card):
         empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
         if empties >= 1:
             player.t['cards'] += 1
-        if empties >=2:
+        if empties >= 2:
             player.t['gold'] += 1
             player.t['buys'] += 1
 

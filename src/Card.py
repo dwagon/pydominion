@@ -19,7 +19,7 @@ class Card(object):
 
     def getCardName(self):
         c = self.__class__.__name__
-        c = c.replace('Card_','')
+        c = c.replace('Card_', '')
         return c.lower()
 
     def getImageName(self):
@@ -51,5 +51,8 @@ class Card(object):
 
     def hook_buycard(self, game, player, card):
         pass
+
+    def hook_allowedtobuy(self, game, player):
+        return True
 
 #EOF

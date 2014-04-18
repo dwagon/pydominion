@@ -137,6 +137,8 @@ class Player(object):
             index = 0
             purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
+                if not self.hook_allowedtobuy(p):
+                    continue
                 selector = chr(ord('a')+index)
                 toprint = 'Buy %s (%d gold) %s (%d left)' % (p.name, p.cost, p.desc, p.numcards)
                 options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
@@ -154,7 +156,13 @@ class Player(object):
         return vp
 
     ###########################################################################
+    def hook_allowedtobuy(self, card):
+        """ Hook to check if you are allowed to buy a card """
+        return card.hook_allowedtobuy(game=self.game, player=self)
+
+    ###########################################################################
     def hook_buycard(self, card):
+        """ Hook for after purchasing a card """
         for c in self.hand:
             c.hook_buycard(game=self.game, player=self, card=card)
 
