@@ -173,7 +173,7 @@ class Player(object):
         print "%s" % ", ".join([c.name for c in self.hand])
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
-        while self.t['actions'] + self.t['buys']:
+        while(1):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
