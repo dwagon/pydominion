@@ -14,12 +14,16 @@ class Card(object):
         self.gold = 0
         self.cards = 0
         self.victory = 0
+        self.cardname = self.getCardName()
         self.image = self.getImageName()
 
-    def getImageName(self):
+    def getCardName(self):
         c = self.__class__.__name__
         c = c.replace('Card_','')
-        return 'images/%s.jpg' % c.lower()
+        return c.lower()
+
+    def getImageName(self):
+        return 'images/%s.jpg' % self.cardname
 
     def special(self, game, player):
         pass
