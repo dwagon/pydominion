@@ -162,7 +162,7 @@ class Player(object):
     def turn(self):
         print "#" * 80
         print "%s Turn (%d points)" % (self.name, self.score())
-        print "%s" % ", ".join([c.name.title() for c in self.hand])
+        print "%s" % ", ".join([c.name for c in self.hand])
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
         while self.t['actions'] + self.t['buys']:
@@ -180,9 +180,11 @@ class Player(object):
         self.pickUpHand()
 
     ###########################################################################
-    def playCard(self, card):
-        self.discardCard(card)
-        self.t['actions'] -= 1
+    def playCard(self, card, discard=True, costAction=True):
+        if discard:
+            self.discardCard(card)
+        if costAction:
+            self.t['actions'] -= 1
         self.t['actions'] += card.actions
         self.t['gold'] += card.gold
         self.t['buys'] += card.buys
