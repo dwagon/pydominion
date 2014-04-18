@@ -6,8 +6,7 @@ class Card_Bank(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.desc = "Worth 1 per treasure card in play"
-        self.name = 'bank'
-        self.image = 'images/bank.jpg'
+        self.name = 'Bank'
         self.cost = 7
 
     def special(self, game, player):
@@ -16,6 +15,7 @@ class Card_Bank(Card):
         for c in player.hand:
             if c.isTreasure():
                 g += 1
+        print "Gained %d gold from bank" % g
         player.t['gold'] += g
 
 #EOF

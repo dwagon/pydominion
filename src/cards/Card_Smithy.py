@@ -6,8 +6,7 @@ class Card_Smithy(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+3 cards"
-        self.name = 'smithy'
-        self.image = 'images/smithy.jpg'
+        self.name = 'Smithy'
         self.cards = 3
         self.cost = 4
 

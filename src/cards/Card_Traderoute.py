@@ -6,8 +6,7 @@ class Card_Traderoute(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+1 buy, +1 gold per token, trash card"
-        self.name = 'Trade route'
-        self.image = 'images/traderoute.jpg'
+        self.name = 'Trade Route'
         self.cost = 3
         self.buy = 1
 

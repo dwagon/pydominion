@@ -7,8 +7,8 @@ class Card_Estate(Card):
         self.cardtype = 'victory'
         self.desc = "1 VP"
         self.playable = False
-        self.name = 'estate'
-        self.image = 'images/estate.jpg'
+        self.basecard = True
+        self.name = 'Estate'
         self.cost = 2
         self.victory = 1
 

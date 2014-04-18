@@ -7,7 +7,6 @@ class Card_Monument(Card):
         self.cardtype = 'action'
         self.desc = "+2 gold, +1 VP"
         self.name = 'Monument'
-        self.image = 'images/monument.jpg'
         self.cost = 4
         self.gold = 2
         self.score = 1

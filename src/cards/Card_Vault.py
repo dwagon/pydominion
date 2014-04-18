@@ -7,7 +7,6 @@ class Card_Vault(Card):
         self.cardtype = 'action'
         self.desc = "+2 cards, discard cards for +1 gold. Other players discard"
         self.name = 'Vault'
-        self.image = 'images/vault.jpg'
         self.cost = 5
         self.cards = 2
 

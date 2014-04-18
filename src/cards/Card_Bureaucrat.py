@@ -6,8 +6,7 @@ class Card_Bureaucrat(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Gain a silver"
-        self.name = 'bureaucrat'
-        self.image = 'images/bureaucrat.jpg'
+        self.name = 'Bureaucrat'
         self.cost = 4
 
     def special(self, game, player):

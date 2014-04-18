@@ -7,8 +7,7 @@ class Card_Witch(Card):
         self.cardtype = 'action'
         self.desc = "+2 cards, curse everyone else"
         self.needcurse = True
-        self.name = 'witch'
-        self.image = 'images/witch.jpg'
+        self.name = 'Witch'
         self.cards = 2
         self.cost = 3
 

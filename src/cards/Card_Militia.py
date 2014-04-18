@@ -6,8 +6,7 @@ class Card_Militia(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+2 gold, Every other player discards down to 3"
-        self.name = 'militia'
-        self.image = 'images/militia.jpg'
+        self.name = 'Militia'
         self.gold = 2
         self.cost = 4
 

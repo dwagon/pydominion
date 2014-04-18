@@ -6,8 +6,7 @@ class Card_Kingscourt(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Play action 3 times"
-        self.name = "King's court"
-        self.image = 'images/kingscourt.jpg'
+        self.name = "King's Court"
         self.cost = 7
 
     def special(self, game, player):

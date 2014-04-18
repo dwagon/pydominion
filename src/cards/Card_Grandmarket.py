@@ -7,7 +7,6 @@ class Card_Grandmarket(Card):
         self.cardtype = 'victory'
         self.desc = "+1 card, +1 action, +1 buy, +2 gold"
         self.name = 'Grand Market'
-        self.image = 'images/grandmarket.jpg'
         self.cost = 6
 
     def special(self, game, player):

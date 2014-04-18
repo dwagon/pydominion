@@ -7,7 +7,6 @@ class Card_Mountebank(Card):
         self.cardtype = 'action'
         self.desc = "+2 gold. Others discard curse or gain one + copper"
         self.name = 'Mountebank'
-        self.image = 'images/mountebank.jpg'
         self.needcurse = True
         self.gold = 2
         self.cost = 5

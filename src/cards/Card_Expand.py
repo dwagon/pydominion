@@ -6,8 +6,7 @@ class Card_Expand(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Trash a card from hand and gain one costing 3 more"
-        self.name = 'expand'
-        self.image = 'images/expand.jpg'
+        self.name = 'Expand'
         self.cost = 7
 
     def special(self, game, player):

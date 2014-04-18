@@ -6,8 +6,7 @@ class Card_City(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+1 card, +2 action, more if stacks empty"
-        self.name = 'city'
-        self.image = 'images/city.jpg'
+        self.name = 'City'
         self.cost = 5
         self.card = 1
         self.action = 2

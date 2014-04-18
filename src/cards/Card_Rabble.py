@@ -6,8 +6,7 @@ class Card_Rabble(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+3 cards. Other players discard cards"
-        self.name = 'rabble'
-        self.image = 'images/rabble.jpg'
+        self.name = 'Rabble'
         self.cost = 5
         self.cards = 3
 

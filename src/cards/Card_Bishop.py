@@ -6,8 +6,7 @@ class Card_Bishop(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Trash a card for VP"
-        self.name = 'bishop'
-        self.image = 'images/bishop.jpg'
+        self.name = 'Bishop'
         self.gold = 1
         self.victory = 1
         self.cost = 4

@@ -6,8 +6,7 @@ class Card_Peddler(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+1 card, +1 action, +1 gold"
-        self.name = 'pedler'
-        self.image = 'images/pedler.jpg'
+        self.name = 'Pedler'
         self.card = 1
         self.action = 1
         self.gold = 1

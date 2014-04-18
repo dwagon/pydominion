@@ -6,8 +6,7 @@ class Card_Cellar(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+1 action, Discard and redraw cards"
-        self.name = 'cellar'
-        self.image = 'images/cellar.jpg'
+        self.name = 'Cellar'
         self.action = 1
         self.cost = 2
 

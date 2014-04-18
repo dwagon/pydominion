@@ -6,8 +6,7 @@ class Card_Contraband(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.desc = "+3 gold, +1 buy, player to left bans a card purchase"
-        self.name = 'contraband'
-        self.image = 'images/contraband.jpg'
+        self.name = 'Contraband'
         self.cost = 5
         self.gold = 3
         self.buy = 1

@@ -7,7 +7,6 @@ class Card_Loan(Card):
         self.cardtype = 'treasure'
         self.desc = "Play with treasures"
         self.name = 'Loan'
-        self.image = 'images/loan.jpg'
         self.gold = 1
         self.cost = 3
 

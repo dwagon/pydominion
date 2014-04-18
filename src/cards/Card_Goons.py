@@ -6,8 +6,7 @@ class Card_Goons(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Other players discard down to 3. +1 VP when buying"
-        self.name = 'goons'
-        self.image = 'images/goons.jpg'
+        self.name = 'Goons'
         self.cost = 6
         self.buy = 1
         self.gold = 2

@@ -6,8 +6,7 @@ class Card_Adventurer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Discard until two treasures"
-        self.name = 'adventurer'
-        self.image = 'images/adventurer.jpg'
+        self.name = 'Adventurer'
         self.cost = 6
 
     def special(self, game, player):

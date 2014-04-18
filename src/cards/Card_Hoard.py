@@ -7,7 +7,6 @@ class Card_Hoard(Card):
         self.cardtype = 'treasure'
         self.desc = "Gain gold if buy victory"
         self.name = 'Hoard'
-        self.image = 'images/hoard.jpg'
         self.gold = 2
         self.cost = 6
 

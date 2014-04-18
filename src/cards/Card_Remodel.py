@@ -7,7 +7,6 @@ class Card_Remodel(Card):
         self.cardtype = 'action'
         self.desc = "Trash a card and gain one costing 2 more"
         self.name = 'Remodel'
-        self.image = 'images/remodel.jpg'
         self.cost = 2
 
     def special(self, game, player):

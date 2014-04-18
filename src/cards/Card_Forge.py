@@ -6,8 +6,7 @@ class Card_Forge(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Trash any number of cards to gain a card"
-        self.name = 'forge'
-        self.image = 'images/forge.jpg'
+        self.name = 'Forge'
         self.cost = 7
 
     def special(self, game, player):

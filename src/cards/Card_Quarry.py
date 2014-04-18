@@ -7,7 +7,6 @@ class Card_Quarry(Card):
         self.cardtype = 'treasure'
         self.desc = "+1 gold, action cards cost 2 less"
         self.name = 'Quarry'
-        self.image = 'images/quarry.jpg'
         self.cost = 4
         self.gold = 1
 

@@ -7,7 +7,6 @@ class Card_Watchtower(Card):
         self.cardtype = 'action'
         self.desc = "Draw up to 6 cards. Can trash gained cards or put on top of deck"
         self.name = 'Watchtower'
-        self.image = 'images/watchtower.jpg'
         self.cost = 3
 
     def special(self, game, player):

@@ -7,7 +7,6 @@ class Card_Venture(Card):
         self.cardtype = 'treasure'
         self.desc = "+1 gold, get next treasure from deck"
         self.name = 'Venture'
-        self.image = 'images/venture.jpg'
         self.cost = 5
 
     def special(self, game, player):

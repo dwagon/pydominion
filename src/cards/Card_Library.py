@@ -6,8 +6,7 @@ class Card_Library(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Draw up to 7 cards"
-        self.name = 'library'
-        self.image = 'images/library.jpg'
+        self.name = 'Library'
         self.cost = 5
 
     def special(self, game, player):

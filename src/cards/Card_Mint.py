@@ -6,8 +6,7 @@ class Card_Mint(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Treasure stuff"
-        self.name = 'mint'
-        self.image = 'images/mint.jpg'
+        self.name = 'Mint'
         self.cost = 5
 
     def special(self, game, player):

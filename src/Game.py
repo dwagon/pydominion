@@ -60,7 +60,7 @@ class Game(object):
     def cardsUnder(self, cost):
         """Return the list of cards for under $cost """
         purchasable = [c for c in self.cardTypes() if c.cost <= cost and c.numcards]
-        purchasable.sort(key=lambda c: c.cost)
+        purchasable.sort(key=lambda c: c.basecard)
         purchasable.sort(key=lambda c: c.cardtype)
         return purchasable
 

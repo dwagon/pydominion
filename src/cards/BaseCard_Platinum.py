@@ -6,9 +6,9 @@ class Card_Platinum(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.desc = "+5 gold"
-        self.name = 'platinum'
+        self.name = 'Platinum'
         self.playable = False
-        self.image = 'images/platinum.jpg'
+        self.basecard = True
         self.gold = 5
         self.cost = 9
 

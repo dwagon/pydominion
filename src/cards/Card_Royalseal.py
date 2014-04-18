@@ -7,7 +7,6 @@ class Card_Royalseal(Card):
         self.cardtype = 'treasure'
         self.desc = "+2 gold. Cards gain go to top of deck"
         self.name = 'Royal Seal'
-        self.image = 'images/royalseal.jpg'
         self.cost = 5
         self.gold = 2
 

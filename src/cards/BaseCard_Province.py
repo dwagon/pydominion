@@ -7,8 +7,8 @@ class Card_Province(Card):
         self.cardtype = 'victory'
         self.desc = "6 VP"
         self.playable = False
-        self.name = 'province'
-        self.image = 'images/province.jpg'
+        self.basecard = True
+        self.name = 'Province'
         self.cost = 8
         self.victory = 6
 

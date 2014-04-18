@@ -6,8 +6,7 @@ class Card_Talisman(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.desc = "+1 gold. Gain copy of non-victory cards you buy"
-        self.name = 'talisman'
-        self.image = 'images/talisman.jpg'
+        self.name = 'Talisman'
         self.cost = 4
         self.gold = 1
 

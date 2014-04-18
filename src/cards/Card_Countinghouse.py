@@ -6,8 +6,7 @@ class Card_Countinghouse(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Pull coppers out of discard"
-        self.name = 'countinghouse'
-        self.image = 'images/countinghouse.jpg'
+        self.name = 'Counting House'
         self.cost = 5
 
     def special(self, game, player):
