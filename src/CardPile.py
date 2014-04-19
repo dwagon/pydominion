@@ -2,11 +2,11 @@ import imp
 
 
 class CardPile(object):
-    def __init__(self, cardname, numcards=10):
+    def __init__(self, cardname, numcards=10, cardpath='cards'):
         try:
-            fp, pathname, description = imp.find_module("Card_%s" % cardname, ['cards'])
+            fp, pathname, description = imp.find_module("Card_%s" % cardname, [cardpath, 'cards'])
         except ImportError:
-            fp, pathname, description = imp.find_module("BaseCard_%s" % cardname, ['cards'])
+            fp, pathname, description = imp.find_module("BaseCard_%s" % cardname, [cardpath, 'cards'])
         cardmodule = imp.load_module(cardname, fp, pathname, description)
         self.cardclass = getattr(cardmodule, "Card_%s" % cardname)
         self.card = self.cardclass()
