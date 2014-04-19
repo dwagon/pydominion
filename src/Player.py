@@ -83,8 +83,8 @@ class Player(object):
         random.shuffle(self.discardpile)
 
     ###########################################################################
-    def pickUpHand(self):
-        while len(self.hand) < 5:
+    def pickUpHand(self, handsize=5):
+        while len(self.hand) < handsize:
             self.pickupCard()
 
     ###########################################################################
@@ -205,7 +205,7 @@ class Player(object):
     def buyCard(self, cardpile):
         newcard = cardpile.remove()
         if not newcard:
-            sys.stderr.write("ERROR: Buying from empty cardpile %s" % repr(cardpile))
+            sys.stderr.write("ERROR: Buying from empty cardpile %s" % cardpile.name)
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
         print "Bought %s for %d gold" % (newcard.name, newcard.cost)
