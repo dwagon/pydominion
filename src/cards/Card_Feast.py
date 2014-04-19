@@ -26,7 +26,7 @@ class Card_Feast(Card):
             index += 1
 
         o = player.userInput(options, "What card do you wish?")
-        player.addCard(o['card'].remove())
+        player.gainCard(o['card'])
         print "Took %s" % o['card'].name
         return
 

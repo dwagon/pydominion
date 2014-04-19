@@ -14,8 +14,7 @@ class Card_Bureaucrat(Card):
         other player reveals a victory card from his hand and puts
         it on his deck (or reveals a hand with no victory cards)
         """
-        silver = game['Silver']
-        player.addCard(silver.remove(), 'deck')
+        player.gainCard('silver', 'deck')
 
         for pl in game.players:
             if pl == player:

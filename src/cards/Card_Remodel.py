@@ -30,7 +30,7 @@ class Card_Remodel(Card):
 
         o = player.userInput(options, "What card do you wish?")
         if o:
-            player.addCard(o['card'].remove())
+            player.gainCard(o['card'])
 
     def trashCard(self, game, player):
         print "Trash a card"
