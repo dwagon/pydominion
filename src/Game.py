@@ -37,7 +37,7 @@ class Game(object):
         for c in initcards:
             c = c.strip().lower().title()
             if c not in available:
-                sys.stderr.write("Card %s is not available\n" % c)
+                sys.stderr.write("Card '%s' is not available\n" % c)
                 sys.exit(1)
             self.useCardPile(available, c)
 
@@ -71,6 +71,7 @@ class Game(object):
 
     ###########################################################################
     def __getitem__(self, key):
+        key = key.lower().title()
         return self.cardpiles[key]
 
     ###########################################################################

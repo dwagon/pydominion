@@ -55,4 +55,7 @@ class Card(object):
     def hook_allowedtobuy(self, game, player):
         return True
 
+    def hook_gaincard(self, game, player, card):
+        pass
+
 #EOF

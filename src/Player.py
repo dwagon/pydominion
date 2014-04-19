@@ -202,14 +202,30 @@ class Player(object):
         card.special(game=self.game, player=self)
 
     ###########################################################################
-    def buyCard(self, cardpile):
-        newcard = cardpile.remove()
+    def gainCard(self, cardpile, destination='discard'):
+        """ Add a new card to the players set of cards from a cardpile """
+        if type(cardpile) == type(''):
+            newcard = self.game[cardpile].remove()
+        else:
+            newcard = cardpile.remove()
+        self.hook_gaincard(newcard)
         if not newcard:
-            sys.stderr.write("ERROR: Buying from empty cardpile %s" % cardpile.name)
+            sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
+        self.addCard(newcard, destination)
+        return newcard
+
+    ###########################################################################
+    def buyCard(self, card):
+        newcard = self.gainCard(card)
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
         print "Bought %s for %d gold" % (newcard.name, newcard.cost)
-        self.addCard(newcard)
+
+    ###########################################################################
+    def hook_gaincard(self, card):
+        """ Hook which is fired by a card being obtained by a player """
+        for c in self.hand:
+            c.hook_gaincard(game=self.game, player=self, card=card)
 
     ###########################################################################
     def hasDefense(self):
