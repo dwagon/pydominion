@@ -23,7 +23,7 @@ class Card_Kingscourt(Card):
         o = player.userInput(options, "Play which action card three times?")
         if not o['card']:
             return
-        for i in range(3):
+        for i in range(1, 4):
             print "Number %d play of %s" % (i, o['card'].name)
             player.playCard(o['card'], discard=False, costAction=False)
         player.discardCard(o['card'])

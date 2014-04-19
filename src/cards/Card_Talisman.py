@@ -14,7 +14,7 @@ class Card_Talisman(Card):
     def hook_buycard(self, game, player, card):
         """ While this is in play, when you buy a card costing 4
             or less that is not a victory card, gain a copy of it."""
-        if card.cost<=4 and not card.isVictory():
+        if card.cost <= 4 and not card.isVictory():
             print "Gained another %s from Talisman" % card.name
             player.addCard(game[card.cardname].remove())
 
