@@ -13,13 +13,12 @@ class Card_Witch(Card):
 
     def special(self, game, player):
         """ All other players gain a curse """
-        cursepile = game['Curse']
         for pl in game.players:
             if pl != player:
                 if pl.hasDefense():
                     print "%s's moat blocked curse" % pl.name
                 else:
                     print "%s got cursed" % pl.name
-                    pl.addCard(cursepile.remove())
+                    pl.gainCard('curse')
 
 #EOF

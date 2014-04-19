@@ -23,7 +23,7 @@ class Card_Workshop(Card):
 
         o = player.userInput(options, "What card do you wish?")
         if o:
-            player.addCard(o['card'].remove())
-            print "Took %s" % o['card'].name
+            c = player.gainCard(o['card'])
+            print "Took %s" % c.name
 
 #EOF
