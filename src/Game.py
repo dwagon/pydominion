@@ -20,12 +20,12 @@ class Game(object):
 
     ###########################################################################
     def startGame(self, numplayers, initcards=[]):
-        self.loadDecks(initcards)
+        self.loadDecks(initcards, numplayers)
         for i in range(numplayers):
             self.players.append(Player(game=self))
 
     ###########################################################################
-    def loadDecks(self, initcards):
+    def loadDecks(self, initcards, numplayers):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12)
         self['Copper'].numcards = 60
@@ -46,7 +46,7 @@ class Game(object):
             self.useCardPile(available, c)
             unfilled -= 1
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(len(self.players)-1))
+            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1))
 
     ###########################################################################
     def useCardPile(self, available, c):
@@ -59,10 +59,11 @@ class Game(object):
     ###########################################################################
     def cardsUnder(self, cost):
         """Return the list of cards for under $cost """
-        purchasable = [c for c in self.cardTypes() if c.cost <= cost and c.numcards]
-        purchasable.sort(key=lambda c: c.basecard)
-        purchasable.sort(key=lambda c: c.cardtype)
-        return purchasable
+        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard]
+        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard]
+        purchbase.sort(key=lambda c: c.cost)
+        purchnorm.sort(key=lambda c: c.cost)
+        return purchnorm + purchbase
 
     ###########################################################################
     def cardTypes(self):

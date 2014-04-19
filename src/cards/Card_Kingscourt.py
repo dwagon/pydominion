@@ -11,7 +11,21 @@ class Card_Kingscourt(Card):
 
     def special(self, game, player):
         """ You may chose an Action card in your hand. Play it three times """
-        print "Not implemented yet"
-
+        options = [{'selector': '0', 'print': "Don't play a card", 'card': None}]
+        index = 1
+        for c in player.hand:
+            if not c.isAction():
+                continue
+            sel = "%d" % index
+            pr = "Play %s trice" % c.name
+            options.append({'selector': sel, 'print': pr, 'card': c})
+            index += 1
+        o = player.userInput(options, "Play which action card three times?")
+        if not o['card']:
+            return
+        for i in range(3):
+            print "Number %d play of %s" % (i, o['card'].name)
+            player.playCard(o['card'], discard=False, costAction=False)
+        player.discardCard(o['card'])
 
 #EOF

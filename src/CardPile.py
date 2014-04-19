@@ -10,6 +10,7 @@ class CardPile(object):
         cardmodule = imp.load_module(cardname, fp, pathname, description)
         self.cardclass = getattr(cardmodule, "Card_%s" % cardname)
         self.card = self.cardclass()
+        self.cardname = cardname
         self.numcards = numcards
 
     def __getattr__(self, name):
