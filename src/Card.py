@@ -56,6 +56,6 @@ class Card(object):
         return True
 
     def hook_gaincard(self, game, player, card):
-        pass
+        return {}
 
 #EOF

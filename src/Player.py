@@ -96,7 +96,7 @@ class Player(object):
         elif pile == 'hand':
             self.hand.append(c)
         elif pile == 'deck':
-            self.deck.insert(0, c)
+            self.deck.append(c)
 
     ###########################################################################
     def discardCard(self, c):
@@ -105,7 +105,7 @@ class Player(object):
 
     ###########################################################################
     def discardHand(self):
-        for c in self.hand:
+        for c in self.hand[:]:
             self.discardCard(c)
 
     ###########################################################################
@@ -208,9 +208,11 @@ class Player(object):
             newcard = self.game[cardpile].remove()
         else:
             newcard = cardpile.remove()
-        self.hook_gaincard(newcard)
+        options = self.hook_gaincard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
+        if 'destination' in options:
+            destination = options['destination']
         self.addCard(newcard, destination)
         return newcard
 
@@ -224,8 +226,11 @@ class Player(object):
     ###########################################################################
     def hook_gaincard(self, card):
         """ Hook which is fired by a card being obtained by a player """
+        options = {}
         for c in self.hand:
-            c.hook_gaincard(game=self.game, player=self, card=card)
+            o = c.hook_gaincard(game=self.game, player=self, card=card)
+            options.update(o)
+        return options
 
     ###########################################################################
     def hasDefense(self):
