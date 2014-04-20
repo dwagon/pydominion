@@ -13,6 +13,12 @@ class Card_Library(Card):
         """ Draw until you have 7 cards in your hand. You may set
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing """
-        pass
+        while(len(player.hand)<7):
+            c = player.nextCard()
+            if c.isAction():
+                player.addCard(c, 'discard')
+            else:
+                player.pickupCard(c)
+                print "Added %s" % c.name
 
 #EOF
