@@ -77,12 +77,13 @@ class Player(object):
         return c
 
     ###########################################################################
-    def pickupCard(self):
+    def pickupCard(self, card=None):
         """ Pick a card from the deck and put it into the players hand """
-        c = self.nextCard()
-        self.hand.append(c)
-        self.t['gold'] += c.gold
-        return c
+        if not card:
+            card = self.nextCard()
+        self.hand.append(card)
+        self.t['gold'] += card.gold
+        return card
 
     ###########################################################################
     def shuffleDeck(self):
