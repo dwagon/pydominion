@@ -64,8 +64,8 @@ class Player(object):
             self.hand.remove(c)
 
     ###########################################################################
-    def pickupCard(self):
-        """ Pick a card from the deck and put it into the players hand """
+    def nextCard(self):
+        """ Return the next card from the deck """
         if not(self.deck):
             self.shuffleDeck()
             while self.discardpile:
@@ -74,6 +74,12 @@ class Player(object):
             print "No more cards in deck"
             return None
         c = self.deck.pop()
+        return c
+
+    ###########################################################################
+    def pickupCard(self):
+        """ Pick a card from the deck and put it into the players hand """
+        c = self.nextCard()
         self.hand.append(c)
         self.t['gold'] += c.gold
         return c
