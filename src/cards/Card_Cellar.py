@@ -6,9 +6,8 @@ class Card_Cellar(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+1 action, Discard and redraw cards"
-        self.name = 'cellar'
-        self.image = 'images/cellar.jpg'
-        self.action = 1
+        self.name = 'Cellar'
+        self.actions = 1
         self.cost = 2
 
     def special(self, game, player):

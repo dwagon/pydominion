@@ -6,8 +6,7 @@ class Card_Moat(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+2 cards, defense"
-        self.name = 'moat'
-        self.image = 'images/moat.jpg'
+        self.name = 'Moat'
         self.defense = True
         self.cost = 2
         self.cards = 2

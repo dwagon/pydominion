@@ -7,8 +7,8 @@ class Card_Gold(Card):
         self.cardtype = 'treasure'
         self.desc = "+3 gold"
         self.playable = False
-        self.name = 'gold'
-        self.image = 'images/gold.jpg'
+        self.basecard = True
+        self.name = 'Gold'
         self.gold = 3
         self.cost = 6
 

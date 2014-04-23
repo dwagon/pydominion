@@ -19,50 +19,51 @@ class Game(object):
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[]):
-        self.loadDecks(initcards)
+    def startGame(self, numplayers, initcards=[], cardpath='cards'):
+        self.loadDecks(initcards, numplayers, cardpath)
         for i in range(numplayers):
             self.players.append(Player(game=self))
 
     ###########################################################################
-    def loadDecks(self, initcards):
+    def loadDecks(self, initcards, numplayers, cardpath):
         for card in self.baseCards:
-            self.cardpiles[card] = CardPile(card, numcards=12)
+            self.cardpiles[card] = CardPile(card, numcards=12, cardpath=cardpath)
         self['Copper'].numcards = 60
         self['Silver'].numcards = 40
         self['Gold'].numcards = 30
-        available = self.getAvailableCards()
+        available = self.getAvailableCards(cardpath)
         unfilled = 10 - len(initcards)
         self.needcurse = False
         for c in initcards:
             c = c.strip().lower().title()
             if c not in available:
-                sys.stderr.write("Card %s is not available\n" % c)
+                sys.stderr.write("Card '%s' is not available\n" % c)
                 sys.exit(1)
-            self.useCardPile(available, c)
+            self.useCardPile(available, c, cardpath)
 
         while unfilled:
             c = random.choice(available)
-            self.useCardPile(available, c)
+            self.useCardPile(available, c, cardpath)
             unfilled -= 1
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(len(self.players)-1))
+            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1), cardpath=cardpath)
 
     ###########################################################################
-    def useCardPile(self, available, c):
+    def useCardPile(self, available, c, cardpath):
         sys.stderr.write("Playing with %s\n" % c)
         available.remove(c)
-        self.cardpiles[c] = CardPile(c)
+        self.cardpiles[c] = CardPile(c, cardpath=cardpath)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
 
     ###########################################################################
     def cardsUnder(self, cost):
         """Return the list of cards for under $cost """
-        purchasable = [c for c in self.cardTypes() if c.cost <= cost and c.numcards]
-        purchasable.sort(key=lambda c: c.cost)
-        purchasable.sort(key=lambda c: c.cardtype)
-        return purchasable
+        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard]
+        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard]
+        purchbase.sort(key=lambda c: c.cost)
+        purchnorm.sort(key=lambda c: c.cost)
+        return purchnorm + purchbase
 
     ###########################################################################
     def cardTypes(self):
@@ -70,12 +71,13 @@ class Game(object):
 
     ###########################################################################
     def __getitem__(self, key):
+        key = key.lower().title()
         return self.cardpiles[key]
 
     ###########################################################################
-    def getAvailableCards(self):
-        cardfiles = glob.glob('cards/Card_*.py')
-        cards = [c.replace('cards/Card_', '').replace('.py', '') for c in cardfiles]
+    def getAvailableCards(self, cardpath):
+        cardfiles = glob.glob('%s/Card_*.py' % cardpath)
+        cards = [c.replace('%s/Card_' % cardpath, '').replace('.py', '') for c in cardfiles]
         return cards
 
     ###########################################################################
@@ -117,6 +119,8 @@ def parseArgs():
                         help='Include card in lineup')
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
+    parser.add_argument('--cardpath', default='cards',
+                        help='Where to find card definitions')
     args = parser.parse_args()
     return args
 
@@ -128,7 +132,7 @@ def runGame(args):
         for line in args.cardset:
             cards.append(line.strip())
     g = Game()
-    g.startGame(numplayers=args.numplayers, initcards=cards)
+    g.startGame(numplayers=args.numplayers, initcards=cards, cardpath=args.cardpath)
     while not g.gameover:
         g.turn()
     g.whoWon()

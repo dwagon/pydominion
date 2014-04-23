@@ -6,8 +6,7 @@ class Card_Bureaucrat(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Gain a silver"
-        self.name = 'bureaucrat'
-        self.image = 'images/bureaucrat.jpg'
+        self.name = 'Bureaucrat'
         self.cost = 4
 
     def special(self, game, player):
@@ -15,8 +14,7 @@ class Card_Bureaucrat(Card):
         other player reveals a victory card from his hand and puts
         it on his deck (or reveals a hand with no victory cards)
         """
-        silver = game['Silver']
-        player.addCard(silver.remove(), 'deck')
+        player.gainCard('silver', 'deck')
 
         for pl in game.players:
             if pl == player:

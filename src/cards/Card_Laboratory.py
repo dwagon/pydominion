@@ -6,8 +6,7 @@ class Card_Laboratory(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "+2 cards, +1 action"
-        self.name = 'laboratory'
-        self.image = 'images/laboratory.jpg'
+        self.name = 'Laboratory'
         self.cards = 2
         self.actions = 1
         self.cost = 5

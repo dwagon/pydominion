@@ -6,8 +6,7 @@ class Card_Chapel(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Trash up to 4 cards"
-        self.name = 'chapel'
-        self.image = 'images/chapel.jpg'
+        self.name = 'Chapel'
         self.cost = 2
 
     def special(self, game, player):

@@ -7,20 +7,18 @@ class Card_Witch(Card):
         self.cardtype = 'action'
         self.desc = "+2 cards, curse everyone else"
         self.needcurse = True
-        self.name = 'witch'
-        self.image = 'images/witch.jpg'
+        self.name = 'Witch'
         self.cards = 2
         self.cost = 3
 
     def special(self, game, player):
         """ All other players gain a curse """
-        cursepile = game['Curse']
         for pl in game.players:
             if pl != player:
                 if pl.hasDefense():
                     print "%s's moat blocked curse" % pl.name
                 else:
                     print "%s got cursed" % pl.name
-                    pl.addCard(cursepile.remove())
+                    pl.gainCard('curse')
 
 #EOF

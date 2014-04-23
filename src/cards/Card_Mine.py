@@ -6,8 +6,7 @@ class Card_Mine(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = "Trash a treasure, gain a better treasure"
-        self.name = 'mine'
-        self.image = 'images/mine.jpg'
+        self.name = 'Mine'
         self.cost = 5
 
     def special(self, game, player):
@@ -27,10 +26,9 @@ class Card_Mine(Card):
             # Make an assumption and pick the best treasure card
             for tc in game.baseCards:
                 if game[tc].cost == val + 3:
-                    c = game[tc].remove()
+                    c = player.gainCard(tc, 'hand')
                     print "Converted to %s" % c.name
                     player.trashCard(o['card'])
-                    player.addCard(c, 'hand')
                     player.t['gold'] += c.gold
                     break
             else:

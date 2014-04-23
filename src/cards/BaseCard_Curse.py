@@ -6,9 +6,9 @@ class Card_Curse(Card):
         Card.__init__(self)
         self.cardtype = 'victory'
         self.desc = "-1 VP"
+        self.basecard = True
         self.playable = False
-        self.name = 'curse'
-        self.image = 'images/curse.jpg'
+        self.name = 'Curse'
         self.cost = 0
         self.victory = -1
 
