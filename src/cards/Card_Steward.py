@@ -26,6 +26,7 @@ class Card_Steward(Card):
             player.t['gold'] += 2
             return
         if o['choose'] == 'trash':
+            print "Trash two cards"
             for i in range(2):
                 player.plrTrashCard()
             return
