@@ -283,6 +283,7 @@ class Player(object):
         o = self.userInput(options, "What card do you wish?")
         if o['card']:
             self.addCard(o['card'].remove())
+            return o['card']
 
     ###########################################################################
     def plrDiscardDownTo(self, num):
