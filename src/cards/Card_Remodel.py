@@ -13,7 +13,7 @@ class Card_Remodel(Card):
         """ Trash a card from your hand. Gain a card costing up to
             2 more than the trashed card """
         print "Trash a card from your hand. Gain another costing up to 2 more than the one you trashed"
-        tc = player.plrTrashCard()
+        tc = player.plrTrashCard(printcost=True)
         if tc:
             cost = tc.cost
             player.plrGainCard(cost + 2)

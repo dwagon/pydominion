@@ -250,14 +250,17 @@ class Player(object):
         return False
 
     ###########################################################################
-    def plrTrashCard(self):
+    def plrTrashCard(self, printcost=False):
         """ Ask player to trash a single card """
         print "Trash a card"
         options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
         index = 1
         for c in self.hand:
             sel = "%d" % index
-            pr = "Trash %s" % c.name
+            if printcost:
+                pr = "Trash %s (%d gold)" % (c.name, c.cost)
+            else:
+                pr = "Trash %s" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
             index += 1
         o = self.userInput(options, "Trash which card?")

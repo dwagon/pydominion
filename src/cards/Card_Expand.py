@@ -13,7 +13,7 @@ class Card_Expand(Card):
         """ Trash a card from your hand. Gain a card costing up to
             3 more than the trashed card """
         print "Trash a card from your hand. Gain another costing up to 3 more than the one you trashed"
-        tc = player.plrTrashCard()
+        tc = player.plrTrashCard(printcost=True)
         if tc:
             cost = tc.cost
             player.plrGainCard(cost + 3)
