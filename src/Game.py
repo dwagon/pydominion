@@ -66,6 +66,15 @@ class Game(object):
         return purchnorm + purchbase
 
     ###########################################################################
+    def cardsWorth(self, cost):
+        """Return the list of cards that are exactly $cost """
+        purchbase = [c for c in self.cardTypes() if c.cost == cost and c.numcards and c.basecard]
+        purchnorm = [c for c in self.cardTypes() if c.cost == cost and c.numcards and not c.basecard]
+        purchbase.sort(key=lambda c: c.cost)
+        purchnorm.sort(key=lambda c: c.cost)
+        return purchnorm + purchbase
+
+    ###########################################################################
     def cardTypes(self):
         return self.cardpiles.values()
 
