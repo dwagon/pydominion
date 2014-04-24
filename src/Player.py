@@ -38,7 +38,7 @@ class Player(object):
         self.deck = []
         # Details for the current turn such as actions left, etc.
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
-        self.turnstats = { 'actions': 0, 'buys': 0}
+        self.turnstats = {'actions': 0, 'buys': 0}
         self.discardpile = []
         self.initial_Deck()
 
@@ -82,8 +82,7 @@ class Player(object):
         """ Pick a card from the deck and put it into the players hand """
         if not card:
             card = self.nextCard()
-        self.hand.append(card)
-        self.t['gold'] += card.gold
+        self.addCard(card, 'hand')
         return card
 
     ###########################################################################
@@ -182,7 +181,7 @@ class Player(object):
         print "%s" % ", ".join([c.name for c in self.hand])
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
-        self.turnstats = { 'actions': 0, 'buys': 0}
+        self.turnstats = {'actions': 0, 'buys': 0}
         while(1):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
