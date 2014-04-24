@@ -295,13 +295,12 @@ class Player(object):
             return o['card']
 
     ###########################################################################
-    def plrDiscardDownTo(self, num):
-        """ Get the player to discard down to num cards in their hand """
+    def plrDiscardCards(self, num):
+        """ Get the player to discard exactly num cards """
         discard = []
         while(1):
             options = []
-            numleft = (len(self.hand) - len(discard)) - num
-            if numleft == 0:
+            if num == len(discard) or len(self.hand) == len(discard):
                 options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
             index = 1
             for c in self.hand:
@@ -310,18 +309,22 @@ class Player(object):
                 options.append({'selector': sel, 'print': pr, 'card': c})
                 index += 1
 
-            numleft = (len(self.hand) - len(discard)) - num
+            numleft = num - len(discard)
             o = self.userInput(options, "Discard %s more cards." % numleft)
             if o['card']:
                 if o['card'] in discard:
                     discard.remove(o['card'])
                 else:
                     discard.append(o['card'])
-            numleft = (len(self.hand) - len(discard)) - num
-            if o['card'] is None and numleft == 0:
+            if o['card'] is None:
                 break
         for c in discard:
             self.discardCard(c)
 
+    ###########################################################################
+    def plrDiscardDownTo(self, num):
+        """ Get the player to discard down to num cards in their hand """
+        numtogo = len(self.hand) - num
+        self.plrDiscardCards(numtogo)
 
 #EOF
