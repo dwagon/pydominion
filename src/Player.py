@@ -103,6 +103,7 @@ class Player(object):
             self.discardpile.append(c)
         elif pile == 'hand':
             self.hand.append(c)
+            self.t['gold'] += c.gold
         elif pile == 'deck':
             self.deck.append(c)
 

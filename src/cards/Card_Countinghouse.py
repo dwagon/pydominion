@@ -16,7 +16,6 @@ class Card_Countinghouse(Card):
         for c in player.discardpile:
             if c.cardname == 'copper':
                 player.addCard(c, 'hand')
-                player.t['gold'] += c.gold
                 count += 1
         print "Picked up %d coppers" % count
 
