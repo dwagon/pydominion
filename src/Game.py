@@ -103,6 +103,12 @@ class Game(object):
         return False
 
     ###########################################################################
+    def playerToLeft(self, plr):
+        """ Return the player to the 'left' of the one specified """
+        place = self.players.index(plr) - 1
+        return self.players[place]
+
+    ###########################################################################
     def whoWon(self):
         scores = {}
         for plr in self.players:
