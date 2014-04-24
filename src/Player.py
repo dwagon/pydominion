@@ -271,11 +271,17 @@ class Player(object):
         return trash
 
     ###########################################################################
-    def plrGainCard(self, cost):
+    def plrGainCard(self, cost, modifier='less'):
         """ Gain a card of players choice up to cost gold """
-        print "Gain a card costing up to %d" % cost
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
-        purchasable = self.game.cardsUnder(cost)
+        if modifier == 'less':
+            print "Gain a card costing up to %d" % cost
+            purchasable = self.game.cardsUnder(cost)
+        elif modifier == 'equal':
+            print "Gain a card costing exactly %d" % cost
+            purchasable = self.game.cardsWorth(cost)
+        else:
+            print "Unhandled modifier: %s" % modifier
         index = 1
         for p in purchasable:
             selector = "%d" % index
