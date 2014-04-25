@@ -125,8 +125,8 @@ class Player(object):
     ###########################################################################
     def userInput(self, options, prompt):
         for o in options:
-            self.output("%s\t%s" % (o['selector'], o['print']))
-        self.output(prompt, end='')
+            self.output("%s)\t%s" % (o['selector'], o['print']))
+        self.output(prompt, end=' ')
         while(1):
             input = raw_input()
             for o in options:
@@ -137,25 +137,35 @@ class Player(object):
     ###########################################################################
     def choiceSelection(self):
         options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
+        index = 0
 
         if self.t['actions']:
-            index = 1
             playable = [c for c in self.hand if c.playable]
             for p in playable:
-                sel = "%d" % index
+                sel = chr(ord('a')+index)
                 pr = "Play %s (%s)" % (p.name, p.desc)
                 options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
                 index += 1
 
         if self.t['buys']:
-            index = 0
+            spendable = [c for c in self.hand if c.isTreasure()]
+            if spendable:
+                sel = chr(ord('a')+index)
+                toprint = 'Spend all treasures (%d gold)' % sum([c.gold for c in spendable])
+                options.append({'selector': sel, 'print': toprint, 'card': None, 'action': 'spendall'})
+                index += 1
+            for s in spendable:
+                sel = chr(ord('a')+index)
+                toprint = 'Spend %s (%d gold)' % (s.name, s.gold)
+                options.append({'selector': sel, 'print': toprint, 'card': s, 'action': 'spend'})
+                index += 1
             purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
                 if not self.hook_allowedtobuy(p):
                     continue
-                selector = chr(ord('a')+index)
+                sel = chr(ord('a')+index)
                 toprint = 'Buy %s (%d gold) %s (%d left)' % (p.name, p.cost, p.desc, p.numcards)
-                options.append({'selector': selector, 'print': toprint, 'card': p, 'action': 'buy'})
+                options.append({'selector': sel, 'print': toprint, 'card': p, 'action': 'buy'})
                 index += 1
 
         prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d)?" % self.t
@@ -184,11 +194,13 @@ class Player(object):
     def turn(self):
         self.output("#" * 80)
         self.output("%s Turn (%d points)" % (self.name, self.score()))
-        self.output("%s" % ", ".join([c.name for c in self.hand]))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
-        self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
         self.turnstats = {'actions': 0, 'buys': 0}
         while(1):
+            if self.hand:
+                self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
+            else:
+                self.output("Hand: <EMPTY>")
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
@@ -196,12 +208,28 @@ class Player(object):
             elif opt['action'] == 'play':
                 self.turnstats['actions'] += 1
                 self.playCard(opt['card'])
+            elif opt['action'] == 'spend':
+                self.spendCard(opt['card'])
+            elif opt['action'] == 'spendall':
+                self.spendAllCards()
             elif opt['action'] == 'quit':
                 break
             else:
                 sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
         self.discardHand()
         self.pickUpHand()
+
+    ###########################################################################
+    def spendCard(self, card):
+        self.discardCard(card)
+        self.t['gold'] += card.gold
+
+    ###########################################################################
+    def spendAllCards(self):
+        for card in self.hand[:]:
+            if card.isTreasure():
+                self.discardCard(card)
+                self.t['gold'] += card.gold
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
