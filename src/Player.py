@@ -243,9 +243,11 @@ class Player(object):
         return options
 
     ###########################################################################
-    def hasDefense(self):
+    def hasDefense(self, verbose=True):
         for c in self.hand:
             if c.hasDefense():
+                if verbose:
+                    print("Player %s is defended" % self.name)
                 return True
         return False
 

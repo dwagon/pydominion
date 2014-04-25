@@ -15,9 +15,7 @@ class Card_Witch(Card):
         """ All other players gain a curse """
         for pl in game.players:
             if pl != player:
-                if pl.hasDefense():
-                    print("%s's moat blocked curse" % pl.name)
-                else:
+                if not pl.hasDefense():
                     print("%s got cursed" % pl.name)
                     pl.gainCard('curse')
 

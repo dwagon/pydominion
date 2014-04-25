@@ -18,9 +18,7 @@ class Card_Thief(Card):
         for pl in game.players:
             if pl == player:
                 continue
-            if pl.hasDefense():
-                print("%s is defended" % pl.name)
-            else:
+            if not pl.hasDefense():
                 self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):

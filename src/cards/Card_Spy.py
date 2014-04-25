@@ -14,9 +14,7 @@ class Card_Spy(Card):
     def special(self, game, player):
         """ Each player (including you) reveals the top of his deck and either discards it or puts it back, your choice"""
         for pl in game.players:
-            if pl.hasDefense():
-                print("%s is defended" % pl.name)
-            else:
+            if not pl.hasDefense():
                 self.spyOn(pl)
 
     def spyOn(self, player):

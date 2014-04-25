@@ -17,7 +17,6 @@ class Card_Goons(Card):
             if plr == player:
                 continue
             if plr.hasDefense():
-                print("Player %s is defended" % plr.name)
                 continue
             print("*" * 20)
             print("Player %s discard down to %d cards" % (plr.name, 3))

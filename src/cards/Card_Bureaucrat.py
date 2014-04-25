@@ -20,7 +20,6 @@ class Card_Bureaucrat(Card):
             if pl == player:
                 continue
             if pl.hasDefense():
-                print("Player %s is defended" % pl.name)
                 continue
             for c in pl.hand:
                 if c.isVictory():
