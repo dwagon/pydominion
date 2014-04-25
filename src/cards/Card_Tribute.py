@@ -18,20 +18,20 @@ class Card_Tribute(Card):
         cards = [victim.nextCard(), victim.nextCard()]
         cardname = None
         for c in cards:
-            print "Looking at %s from %s" % (c.name, victim.name)
+            print("Looking at %s from %s" % (c.name, victim.name))
             victim.addCard(c, 'discard')
             if c.name == cardname:
                 continue
             cardname = c.name
             if c.isAction():
-                print "Gained two actions"
+                print("Gained two actions")
                 player.t['actions'] += 2
             elif c.isTreasure():
-                print "Gained two gold"
+                print("Gained two gold")
                 player.t['gold'] += 2
             elif c.isVictory():
                 for i in range(2):
                     n = player.pickupCard()
-                    print "Picked up %s" % n.name
+                    print("Picked up %s" % n.name)
 
 #EOF

@@ -15,7 +15,7 @@ class Card_Feast(Card):
             self.selectNewCard(game, player)
 
     def selectNewCard(self, game, player):
-        print "Feast: Gain a card costing up to 5"
+        print("Gain a card costing up to 5")
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
         purchasable = game.cardsUnder(5)
         index = 1
@@ -27,7 +27,7 @@ class Card_Feast(Card):
 
         o = player.userInput(options, "What card do you wish?")
         player.gainCard(o['card'])
-        print "Took %s" % o['card'].name
+        print("Took %s" % o['card'].name)
         return
 
     def trashCard(self, player):

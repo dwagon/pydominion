@@ -14,7 +14,7 @@ class Card_Hoard(Card):
     def hook_buycard(self, game, player, card):
         """ When this is in play, when you buy a Victory card, gain a Gold """
         if card.isVictory():
-            print "Gaining Gold from Hoard"
+            print("Gaining Gold from Hoard")
             player.addCard(game['Gold'].remove())
 
 #EOF

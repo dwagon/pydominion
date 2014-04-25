@@ -15,7 +15,7 @@ class Card_Ironworks(Card):
         c = player.plrGainCard(4)
         if c.isVictory():
             nc = player.pickupCard()
-            print "Picked up %s" % nc.name
+            print("Picked up %s" % nc.name)
             return
         if c.isAction():
             player.t['actions'] += 1
@@ -23,5 +23,5 @@ class Card_Ironworks(Card):
         if c.isTreasure():
             player.t['gold'] += 1
             return
-        print "What sort of wierd card is %s" % c.name
+        print("What sort of wierd card is %s" % c.name)
 #EOF

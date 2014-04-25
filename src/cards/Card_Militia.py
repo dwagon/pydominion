@@ -16,12 +16,12 @@ class Card_Militia(Card):
             if plr == player:
                 continue
             if plr.hasDefense():
-                print "Player %s is defended" % plr.name
+                print("Player %s is defended" % plr.name)
                 continue
-            print "*" * 20
-            print "Player %s discard down to %d cards" % (plr.name, 3)
+            print("*" * 20)
+            print("Player %s discard down to %d cards" % (plr.name, 3))
             plr.plrDiscardDownTo(3)
-        print "*" * 20
-        print "Back to %s" % player.name
+        print("*" * 20)
+        print("Back to %s" % player.name)
 
 #EOF

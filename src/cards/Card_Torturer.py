@@ -18,12 +18,12 @@ class Card_Torturer(Card):
             if plr == player:
                 continue
             if plr.hasDefense():
-                print "Player %s is defended" % plr.name
+                print("Player %s is defended" % plr.name)
                 continue
-            print "*" * 20
-            print "Player %s - Choose:" % plr.name
+            print("*" * 20)
+            print("Player %s - Choose:" % plr.name)
             self.choiceOfDoom(plr)
-            print "*" * 20
+            print("*" * 20)
 
     def choiceOfDoom(self, victim):
         options = [

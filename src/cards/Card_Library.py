@@ -19,6 +19,6 @@ class Card_Library(Card):
                 player.addCard(c, 'discard')
             else:
                 player.pickupCard(c)
-                print "Added %s" % c.name
+                print("Added %s" % c.name)
 
 #EOF

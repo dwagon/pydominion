@@ -12,7 +12,7 @@ class Card_Tradingpost(Card):
     def special(self, game, player):
         """ Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         trash = []
-        print "Trash two cards"
+        print("Trash two cards")
         while(1):
             options = []
             if len(trash) in [0, 2]:
@@ -34,7 +34,7 @@ class Card_Tradingpost(Card):
 
         if trash:
             for t in trash:
-                print "Trashing %s" % t.name
+                print("Trashing %s" % t.name)
                 player.trashCard(t)
             player.gainCard('silver', 'hand')
             player.t['gold'] += 2

@@ -18,6 +18,6 @@ class Card_Shantytown(Card):
         else:
             for i in range(2):
                 c = player.pickupCard()
-                print "Picked up %s" % c.name
+                print("Picked up %s" % c.name)
 
 #EOF

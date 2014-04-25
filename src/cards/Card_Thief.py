@@ -19,7 +19,7 @@ class Card_Thief(Card):
             if pl == player:
                 continue
             if pl.hasDefense():
-                print "%s is defended" % pl.name
+                print("%s is defended" % pl.name)
             else:
                 self.thieveOn(pl, player)
 
@@ -32,7 +32,7 @@ class Card_Thief(Card):
             else:
                 victim.addCard(c, 'discard')
         if not treasures:
-            print "Player %s has no treasures" % victim.name
+            print("Player %s has no treasures" % victim.name)
             return
         index = 1
         options = [ {'selector': '0', 'print': "Don't trash any card", 'card': None, 'steal': False} ]
@@ -54,7 +54,7 @@ class Card_Thief(Card):
                 victim.discardCard(tc)
         if o['steal']:
             thief.addCard(o['card'])
-            print "Stealing %s form %s" % (o['card'].name, victim.name)
+            print("Stealing %s from %s" % (o['card'].name, victim.name))
         else:
             victim.trashCard(o['card'])
 

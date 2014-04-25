@@ -17,15 +17,15 @@ class Card_Mountebank(Card):
             if plr == player:
                 continue
             if plr.hasDefense():
-                print "Player %s is defended" % plr.name
+                print("Player %s is defended" % plr.name)
                 continue
             for c in plr.hand:
                 if c.cardname == 'curse':
-                    print "Player %s trashed a curse" % plr.name
+                    print("Player %s trashed a curse" % plr.name)
                     plr.trashCard(c)
                     break
             else:
-                print "Player %s gained a curse and a copper" % plr.name
+                print("Player %s gained a curse and a copper" % plr.name)
                 plr.addCard(game['Curse'].remove())
                 plr.addCard(game['Copper'].remove())
 

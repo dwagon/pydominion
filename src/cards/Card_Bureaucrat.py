@@ -20,12 +20,12 @@ class Card_Bureaucrat(Card):
             if pl == player:
                 continue
             if pl.hasDefense():
-                print "Player %s is defended" % pl.name
+                print("Player %s is defended" % pl.name)
                 continue
             for c in pl.hand:
                 if c.isVictory():
                     pl.addCard(c, 'deck')
-                    print "Player %s moved a %s to the top" % (pl.name, c.name)
+                    print("Player %s moved a %s to the top" % (pl.name, c.name))
                     break
 
 #EOF

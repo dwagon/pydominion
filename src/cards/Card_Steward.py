@@ -20,13 +20,13 @@ class Card_Steward(Card):
         if o['choose'] == 'cards':
             for i in range(2):
                 n = player.pickupCard()
-                print "Picked up %s" % n.name
+                print("Picked up %s" % n.name)
             return
         if o['choose'] == 'gold':
             player.t['gold'] += 2
             return
         if o['choose'] == 'trash':
-            print "Trash two cards"
+            print("Trash two cards")
             for i in range(2):
                 player.plrTrashCard()
             return

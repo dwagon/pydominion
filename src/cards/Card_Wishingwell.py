@@ -23,10 +23,10 @@ class Card_Wishingwell(Card):
             return
         c = player.nextCard()
         if o['card'].name == c.name:
-            print "You guessed correctly"
+            print("You guessed correctly")
             player.addCard(c, 'hand')
         else:
-            print "You chose poorly - it was a %s" % c.name
+            print("You chose poorly - it was a %s" % c.name)
             player.addCard(c, 'deck')
 
 #EOF

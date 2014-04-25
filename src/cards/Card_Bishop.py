@@ -15,7 +15,7 @@ class Card_Bishop(Card):
         """ Trash a card from your hand. +VP equal to half its cost
         in coins, rounded down. Each other player may trash a card
         from his hand """
-        print "Trash a card."
+        print("Trash a card.")
         options = [{'selector': '0', 'print': "Don't trash a card", 'card': None}]
         index = 1
         for c in player.hand:
@@ -28,7 +28,7 @@ class Card_Bishop(Card):
             return
         points = int(o['card'].cost / 2)
         player.basescore += points
-        print "Trashing %s for %d points" % (o['card'].name, points)
+        print("Trashing %s for %d points" % (o['card'].name, points))
         player.trashCard(o['card'])
 
 #EOF

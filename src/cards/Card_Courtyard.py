@@ -23,6 +23,6 @@ class Card_Courtyard(Card):
         if not o['card']:
             return
         player.addCard(o['card'], 'deck')
-        print "Put %s on top of deck" % o['card'].name
+        print("Put %s on top of deck" % o['card'].name)
 
 #EOF
