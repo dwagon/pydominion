@@ -14,7 +14,7 @@ class Card_Adventurer(Card):
         Add those to your hand and discard the other revealed cards """
         treasures = []
         while len(treasures) < 2:
-            c = player.pickupCard()
+            c = player.pickupCard(verbose=False)
             if c.isTreasure():
                 treasures.append(c)
                 print("Adding %s" % c.name)

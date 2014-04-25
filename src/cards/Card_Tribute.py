@@ -32,6 +32,5 @@ class Card_Tribute(Card):
             elif c.isVictory():
                 for i in range(2):
                     n = player.pickupCard()
-                    print("Picked up %s" % n.name)
 
 #EOF

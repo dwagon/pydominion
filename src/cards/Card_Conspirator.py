@@ -15,7 +15,6 @@ class Card_Conspirator(Card):
             this); +1 card, +1 action """
         if player.turnstats['actions'] >= 3:
             c = player.pickupCard()
-            print("Picked up %s" % c.name)
             player.t['actions'] += 1
 
 #EOF

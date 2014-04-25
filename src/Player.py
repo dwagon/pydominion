@@ -78,11 +78,13 @@ class Player(object):
         return c
 
     ###########################################################################
-    def pickupCard(self, card=None):
+    def pickupCard(self, card=None, verbose=True):
         """ Pick a card from the deck and put it into the players hand """
         if not card:
             card = self.nextCard()
         self.addCard(card, 'hand')
+        if verbose:
+            print("Picked up %s" % card.name)
         return card
 
     ###########################################################################

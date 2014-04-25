@@ -20,7 +20,6 @@ class Card_Nobles(Card):
         if o['choose'] == 'cards':
             for i in range(3):
                 n = player.pickupCard()
-                print("Picked up %s" % n.name)
             return
         if o['choose'] == 'actions':
             player.t['actions'] += 2

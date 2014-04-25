@@ -15,7 +15,6 @@ class Card_Ironworks(Card):
         c = player.plrGainCard(4)
         if c.isVictory():
             nc = player.pickupCard()
-            print("Picked up %s" % nc.name)
             return
         if c.isAction():
             player.t['actions'] += 1

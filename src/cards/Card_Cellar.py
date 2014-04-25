@@ -34,6 +34,5 @@ class Card_Cellar(Card):
             print("Discarding %s" % c.name)
             player.addCard(c, 'discard')
             n = player.pickupCard()
-            print("Drew %s" % n.name)
 
 #EOF
