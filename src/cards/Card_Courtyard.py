@@ -13,7 +13,7 @@ class Card_Courtyard(Card):
     def special(self, player, game):
         """ Put a card from your hand on top of your deck """
         options = [{'selector': '0', 'print': "Don't put anything on deck", 'card': None}]
-        index = 0
+        index = 1
         for c in player.hand:
             sel = "%d" % index
             pr = "Put %s" % c.name
