@@ -76,7 +76,7 @@ class Game(object):
 
     ###########################################################################
     def cardTypes(self):
-        return self.cardpiles.values()
+        return list(self.cardpiles.values())
 
     ###########################################################################
     def __getitem__(self, key):
@@ -113,7 +113,7 @@ class Game(object):
         scores = {}
         for plr in self.players:
             scores[plr.name] = plr.score()
-        print scores
+        print(scores)
 
     ###########################################################################
     def turn(self):
