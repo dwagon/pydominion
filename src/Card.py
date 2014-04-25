@@ -58,4 +58,8 @@ class Card(object):
     def hook_gaincard(self, game, player, card):
         return {}
 
+    def hook_spendvalue(self, game, player, card):
+        """ Does this card make any  modifications on the value of spending a card """
+        return 0
+
 #EOF

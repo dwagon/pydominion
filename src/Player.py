@@ -36,6 +36,8 @@ class Player(object):
         self.name = name
         self.hand = []
         self.deck = []
+        # What cards have been played this turn
+        self.played = []
         # Details for the current turn such as actions left, etc.
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.turnstats = {'actions': 0, 'buys': 0}
@@ -62,10 +64,9 @@ class Player(object):
     ###########################################################################
     def trashCard(self, c):
         """ Take a card out of the game """
-        # TODO: Need to prevent cards being trashed that have already been used to buy
         self.game.trashpile.append(c)
-        self.t['gold'] -= c.gold
         if c in self.hand:
+            self.t['gold'] -= c.gold
             self.hand.remove(c)
 
     ###########################################################################
@@ -93,6 +94,7 @@ class Player(object):
 
     ###########################################################################
     def shuffleDeck(self):
+        player.output("Shuffling Discard Pile")
         random.shuffle(self.discardpile)
 
     ###########################################################################
@@ -151,21 +153,22 @@ class Player(object):
             spendable = [c for c in self.hand if c.isTreasure()]
             if spendable:
                 sel = chr(ord('a')+index)
-                toprint = 'Spend all treasures (%d gold)' % sum([c.gold for c in spendable])
-                options.append({'selector': sel, 'print': toprint, 'card': None, 'action': 'spendall'})
+                totgold = sum([self.hook_spendvalue(c) for c in spendable])
+                tp = 'Spend all treasures (%d gold)' % totgold
+                options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
                 index += 1
             for s in spendable:
                 sel = chr(ord('a')+index)
-                toprint = 'Spend %s (%d gold)' % (s.name, s.gold)
-                options.append({'selector': sel, 'print': toprint, 'card': s, 'action': 'spend'})
+                tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendvalue(s))
+                options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
                 index += 1
             purchasable = self.game.cardsUnder(self.t['gold'])
             for p in purchasable:
                 if not self.hook_allowedtobuy(p):
                     continue
                 sel = chr(ord('a')+index)
-                toprint = 'Buy %s (%d gold) %s (%d left)' % (p.name, p.cost, p.desc, p.numcards)
-                options.append({'selector': sel, 'print': toprint, 'card': p, 'action': 'buy'})
+                tp = 'Buy %s (%d gold) %s (%d left)' % (p.name, p.cost, p.desc, p.numcards)
+                options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
                 index += 1
 
         prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d)?" % self.t
@@ -192,6 +195,7 @@ class Player(object):
 
     ###########################################################################
     def turn(self):
+        self.played = []
         self.output("#" * 80)
         self.output("%s Turn (%d points)" % (self.name, self.score()))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
@@ -201,6 +205,11 @@ class Player(object):
                 self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
             else:
                 self.output("Hand: <EMPTY>")
+            if self.played:
+                self.output("Played: %s" % ", ".join([c.name for c in self.played]))
+            else:
+                self.output("Played: <NONE>")
+
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
@@ -221,15 +230,21 @@ class Player(object):
 
     ###########################################################################
     def spendCard(self, card):
+        self.t['gold'] += self.hook_spendvalue(card)
         self.discardCard(card)
-        self.t['gold'] += card.gold
+
+    ###########################################################################
+    def hook_spendvalue(self, card):
+        val = card.gold
+        for c in self.played:
+            val += c.hook_spendvalue(game=self.game, player=self, card=card)
+        return val
 
     ###########################################################################
     def spendAllCards(self):
         for card in self.hand[:]:
             if card.isTreasure():
-                self.discardCard(card)
-                self.t['gold'] += card.gold
+                self.spendCard(card)
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
@@ -241,13 +256,14 @@ class Player(object):
         self.t['gold'] += card.gold
         self.t['buys'] += card.buys
         for i in range(card.cards):
-            c = self.pickupCard()
+            self.pickupCard()
         card.special(game=self.game, player=self)
+        self.played.append(card)
 
     ###########################################################################
     def gainCard(self, cardpile, destination='discard'):
         """ Add a new card to the players set of cards from a cardpile """
-        if type(cardpile) == type(''):
+        if isinstance(cardpile, str):
             newcard = self.game[cardpile].remove()
         else:
             newcard = cardpile.remove()
