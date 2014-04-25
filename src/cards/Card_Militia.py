@@ -17,10 +17,7 @@ class Card_Militia(Card):
                 continue
             if plr.hasDefense():
                 continue
-            print("*" * 20)
-            print("Player %s discard down to %d cards" % (plr.name, 3))
+            plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)
-        print("*" * 20)
-        print("Back to %s" % player.name)
 
 #EOF

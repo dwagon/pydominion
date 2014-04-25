@@ -12,7 +12,7 @@ class Card_Chapel(Card):
     def special(self, game, player):
         """ Trash up to 4 cards from your hand """
         trash = []
-        print("Trash up to four cards")
+        player.output("Trash up to four cards")
         while(1):
             options = [{'selector': '0', 'print': 'Finish trashing', 'card': None}]
             index = 1
@@ -31,10 +31,10 @@ class Card_Chapel(Card):
                 if len(trash) < 4:
                     trash.append(o['card'])
                 else:
-                    print("Can only trash four cards")
+                    player.output("Can only trash four cards")
 
         for t in trash:
-            print("Trashing %s" % t.name)
+            player.output("Trashing %s" % t.name)
             player.trashCard(t)
 
 #EOF

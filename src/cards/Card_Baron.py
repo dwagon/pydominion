@@ -27,7 +27,7 @@ class Card_Baron(Card):
                 {'selector': '1', 'print': "Trash an Estate - Gain +4 Gold", 'trash': True}]
             o = player.userInput(options, "Trash Estate")
             if o['trash']:
-                print("Trashed %s" % hasEstate.cardname)
+                player.output("Trashed %s" % hasEstate.cardname)
                 player.trashCard(hasEstate)
                 player.t['gold'] += 4
                 return

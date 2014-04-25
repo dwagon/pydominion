@@ -24,7 +24,7 @@ class Card_Bureaucrat(Card):
             for c in pl.hand:
                 if c.isVictory():
                     pl.addCard(c, 'deck')
-                    print("Player %s moved a %s to the top" % (pl.name, c.name))
+                    player.output("Player %s moved a %s to the top" % (pl.name, c.name))
                     break
 
 #EOF

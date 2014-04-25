@@ -17,7 +17,7 @@ class Card_Adventurer(Card):
             c = player.pickupCard(verbose=False)
             if c.isTreasure():
                 treasures.append(c)
-                print("Adding %s" % c.name)
+                player.output("Adding %s" % c.name)
             else:
                 player.discardCard(c)
 

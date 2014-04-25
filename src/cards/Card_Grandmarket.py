@@ -17,7 +17,7 @@ class Card_Grandmarket(Card):
         """ You can't buy this if you have any copper in play """
         for c in player.hand:
             if c.name == 'Copper':
-                print("Not allowed to buy Grand Market due to copper in hand")
+                player.output("Not allowed to buy Grand Market due to copper in hand")
                 return False
         return True
 

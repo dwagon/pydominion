@@ -25,6 +25,11 @@ class Game(object):
             self.players.append(Player(game=self))
 
     ###########################################################################
+    def output(self, msg):
+        """ Send output to all players """
+        sys.stdout.write("ALL: %s\n" % msg)
+
+    ###########################################################################
     def loadDecks(self, initcards, numplayers, cardpath):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12, cardpath=cardpath)
@@ -50,7 +55,7 @@ class Game(object):
 
     ###########################################################################
     def useCardPile(self, available, c, cardpath):
-        sys.stderr.write("Playing with %s\n" % c)
+        self.output("Playing with %s" % c)
         available.remove(c)
         self.cardpiles[c] = CardPile(c, cardpath=cardpath)
         if self.cardpiles[c].needcurse:
@@ -113,7 +118,7 @@ class Game(object):
         scores = {}
         for plr in self.players:
             scores[plr.name] = plr.score()
-        print(scores)
+        self.output(scores)
 
     ###########################################################################
     def turn(self):

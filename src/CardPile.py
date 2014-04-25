@@ -24,7 +24,6 @@ class CardPile(object):
             self.numcards -= 1
             return self.cardclass()
         else:
-            print("No more %s available" % self.name)
             return None
 
     def __repr__(self):

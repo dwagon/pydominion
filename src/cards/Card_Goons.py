@@ -18,15 +18,12 @@ class Card_Goons(Card):
                 continue
             if plr.hasDefense():
                 continue
-            print("*" * 20)
-            print("Player %s discard down to %d cards" % (plr.name, 3))
+            plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)
-        print("*" * 20)
-        print("Back to %s" % player.name)
 
     def hook_buycard(self, game, player, card):
         """ While this card is in play, when you buy a card +1 VP """
-        print("Scored 1 more from goons")
+        player.output("Scored 1 more from goons")
         player.basescore += 1
 
 #EOF

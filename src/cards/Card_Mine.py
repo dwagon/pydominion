@@ -19,7 +19,7 @@ class Card_Mine(Card):
                 sel = "%s" % index
                 options.append({'selector': sel, 'print': "Trash %s" % c.name, 'card': c})
                 index += 1
-        print("Trash a treasure to gain a better one")
+        player.output("Trash a treasure to gain a better one")
         o = player.userInput(options, "Trash which treasure?")
         if o['card']:
             val = o['card'].cost
@@ -27,11 +27,11 @@ class Card_Mine(Card):
             for tc in game.baseCards:
                 if game[tc].cost == val + 3:
                     c = player.gainCard(tc, 'hand')
-                    print("Converted to %s" % c.name)
+                    player.output("Converted to %s" % c.name)
                     player.trashCard(o['card'])
                     player.t['gold'] += c.gold
                     break
             else:
-                print("No appropriate treasure card exists")
+                player.output("No appropriate treasure card exists")
 
 #EOF

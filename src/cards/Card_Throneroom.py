@@ -24,7 +24,7 @@ class Card_Throneroom(Card):
         if not o['card']:
             return
         for i in range(1, 3):
-            print("Number %d play of %s" % (i, o['card'].name))
+            player.output("Number %d play of %s" % (i, o['card'].name))
             player.playCard(o['card'], discard=False, costAction=False)
         player.discardCard(o['card'])
 

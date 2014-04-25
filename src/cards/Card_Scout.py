@@ -20,10 +20,10 @@ class Card_Scout(Card):
             c = player.nextCard()
             if c.isVictory():
                 player.addCard(c, 'hand')
-                print("Adding %s to hand" % c.name)
+                player.output("Adding %s to hand" % c.name)
             else:
                 cards.append(c)
         for c in cards:
-            print("Putting %s back on deck" % c.name)
+            player.output("Putting %s back on deck" % c.name)
             player.addCard(c, 'deck')
 #EOF

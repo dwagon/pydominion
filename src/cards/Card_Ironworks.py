@@ -22,5 +22,5 @@ class Card_Ironworks(Card):
         if c.isTreasure():
             player.t['gold'] += 1
             return
-        print("What sort of wierd card is %s" % c.name)
+        player.output("What sort of wierd card is %s" % c.name)
 #EOF

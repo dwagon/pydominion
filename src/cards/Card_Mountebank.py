@@ -20,11 +20,11 @@ class Card_Mountebank(Card):
                 continue
             for c in plr.hand:
                 if c.cardname == 'curse':
-                    print("Player %s trashed a curse" % plr.name)
+                    player.output("Player %s trashed a curse" % plr.name)
                     plr.trashCard(c)
                     break
             else:
-                print("Player %s gained a curse and a copper" % plr.name)
+                player.output("Player %s gained a curse and a copper" % plr.name)
                 plr.addCard(game['Curse'].remove())
                 plr.addCard(game['Copper'].remove())
 

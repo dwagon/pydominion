@@ -16,11 +16,11 @@ class Card_Venture(Card):
         while(1):
             c = player.pickupCard(verbose=False)
             if c.isTreasure():
-                print("Picked up %s" % c.name)
+                player.output("Picked up %s" % c.name)
                 break
             else:
-                print("Picked up and discarded %s" % c.name)
-                self.t['gold'] -= c.gold    # Compensate for not keeping card
+                player.output("Picked up and discarded %s" % c.name)
+                player.t['gold'] -= c.gold    # Compensate for not keeping card
                 player.discardCard(c)
 
 #EOF

@@ -16,7 +16,7 @@ class Card_Witch(Card):
         for pl in game.players:
             if pl != player:
                 if not pl.hasDefense():
-                    print("%s got cursed" % pl.name)
+                    player.output("%s got cursed" % pl.name)
                     pl.gainCard('curse')
 
 #EOF

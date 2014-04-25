@@ -30,7 +30,7 @@ class Card_Thief(Card):
             else:
                 victim.addCard(c, 'discard')
         if not treasures:
-            print("Player %s has no treasures" % victim.name)
+            thief.output("Player %s has no treasures" % victim.name)
             return
         index = 1
         options = [ {'selector': '0', 'print': "Don't trash any card", 'card': None, 'steal': False} ]
@@ -43,7 +43,7 @@ class Card_Thief(Card):
             pr = "Steal %s from %s" % (c.name, victim.name)
             options.append({'selector': sel, 'print': pr, 'card': c, 'steal': False})
             index += 1
-        o = victim.userInput(options, "What to do to %s's cards?" % victim.name)
+        o = thief.userInput(options, "What to do to %s's cards?" % victim.name)
         if not o['card']:
             return
         # Discard the ones we don't care about
@@ -52,7 +52,7 @@ class Card_Thief(Card):
                 victim.discardCard(tc)
         if o['steal']:
             thief.addCard(o['card'])
-            print("Stealing %s from %s" % (o['card'].name, victim.name))
+            thief.output("Stealing %s from %s" % (o['card'].name, victim.name))
         else:
             victim.trashCard(o['card'])
 

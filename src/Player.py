@@ -31,7 +31,7 @@ class Player(object):
         self.game = game
         if not name:
             name = random.choice(playerNames)
-        print("Player %s is at the table" % name)
+        game.output("Player %s is at the table" % name)
         self.basescore = 0
         self.name = name
         self.hand = []
@@ -56,6 +56,10 @@ class Player(object):
         self.pickUpHand()
 
     ###########################################################################
+    def output(self, msg, end='\n'):
+        sys.stdout.write("%s: %s%s" % (self.name, msg, end))
+
+    ###########################################################################
     def trashCard(self, c):
         """ Take a card out of the game """
         # TODO: Need to prevent cards being trashed that have already been used to buy
@@ -72,7 +76,7 @@ class Player(object):
             while self.discardpile:
                 self.deck.append(self.discardpile.pop())
         if not self.deck:
-            print("No more cards in deck")
+            self.output("No more cards in deck")
             return None
         c = self.deck.pop()
         return c
@@ -84,7 +88,7 @@ class Player(object):
             card = self.nextCard()
         self.addCard(card, 'hand')
         if verbose:
-            print("Picked up %s" % card.name)
+            self.output("Picked up %s" % card.name)
         return card
 
     ###########################################################################
@@ -121,14 +125,14 @@ class Player(object):
     ###########################################################################
     def userInput(self, options, prompt):
         for o in options:
-            print("%s\t%s" % (o['selector'], o['print']))
-        print(prompt,)
+            self.output("%s\t%s" % (o['selector'], o['print']))
+        self.output(prompt, end='')
         while(1):
             input = raw_input()
             for o in options:
                 if o['selector'] == input:
                     return o
-            print("Invalid Option (%s)" % input)
+            self.output("Invalid Option (%s)" % input)
 
     ###########################################################################
     def choiceSelection(self):
@@ -178,9 +182,9 @@ class Player(object):
 
     ###########################################################################
     def turn(self):
-        print("#" * 80)
-        print("%s Turn (%d points)" % (self.name, self.score()))
-        print("%s" % ", ".join([c.name for c in self.hand]))
+        self.output("#" * 80)
+        self.output("%s Turn (%d points)" % (self.name, self.score()))
+        self.output("%s" % ", ".join([c.name for c in self.hand]))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0}
         self.t['gold'] = sum([c.gold for c in self.hand if c.isTreasure()])
         self.turnstats = {'actions': 0, 'buys': 0}
@@ -210,7 +214,6 @@ class Player(object):
         self.t['buys'] += card.buys
         for i in range(card.cards):
             c = self.pickupCard()
-            print("Picked up %s" % c.name)
         card.special(game=self.game, player=self)
 
     ###########################################################################
@@ -223,6 +226,7 @@ class Player(object):
         options = self.hook_gaincard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
+            return
         if 'destination' in options:
             destination = options['destination']
         self.addCard(newcard, destination)
@@ -233,7 +237,7 @@ class Player(object):
         newcard = self.gainCard(card)
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
-        print("Bought %s for %d gold" % (newcard.name, newcard.cost))
+        self.output("Bought %s for %d gold" % (newcard.name, newcard.cost))
 
     ###########################################################################
     def hook_gaincard(self, card):
@@ -249,14 +253,14 @@ class Player(object):
         for c in self.hand:
             if c.hasDefense():
                 if verbose:
-                    print("Player %s is defended" % self.name)
+                    self.output("Player %s is defended" % self.name)
                 return True
         return False
 
     ###########################################################################
     def plrTrashCard(self, printcost=False):
         """ Ask player to trash a single card """
-        print("Trash a card")
+        self.output("Trash a card")
         options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
         index = 1
         for c in self.hand:
@@ -279,13 +283,13 @@ class Player(object):
         """ Gain a card of players choice up to cost gold """
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
         if modifier == 'less':
-            print("Gain a card costing up to %d" % cost)
+            self.output("Gain a card costing up to %d" % cost)
             purchasable = self.game.cardsUnder(cost)
         elif modifier == 'equal':
-            print("Gain a card costing exactly %d" % cost)
+            self.output("Gain a card costing exactly %d" % cost)
             purchasable = self.game.cardsWorth(cost)
         else:
-            print("Unhandled modifier: %s" % modifier)
+            self.output("Unhandled modifier: %s" % modifier)
         index = 1
         for p in purchasable:
             selector = "%d" % index

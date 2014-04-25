@@ -31,7 +31,7 @@ class Card_Cellar(Card):
                 todiscard.append(o['card'])
 
         for c in todiscard:
-            print("Discarding %s" % c.name)
+            player.output("Discarding %s" % c.name)
             player.addCard(c, 'discard')
             n = player.pickupCard()
 

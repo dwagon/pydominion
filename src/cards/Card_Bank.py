@@ -15,7 +15,7 @@ class Card_Bank(Card):
         for c in player.hand:
             if c.isTreasure():
                 g += 1
-        print("Gained %d gold from bank" % g)
+        player.output("Gained %d gold from bank" % g)
         player.t['gold'] += g
 
 #EOF

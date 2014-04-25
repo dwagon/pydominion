@@ -17,6 +17,6 @@ class Card_Countinghouse(Card):
             if c.cardname == 'copper':
                 player.addCard(c, 'hand')
                 count += 1
-        print("Picked up %d coppers" % count)
+        player.output("Picked up %d coppers" % count)
 
 #EOF

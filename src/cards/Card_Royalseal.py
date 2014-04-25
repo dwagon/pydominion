@@ -20,7 +20,7 @@ class Card_Royalseal(Card):
         options.append({'selector': '1', 'print': "Put %s on top of draw pile" % card.name, 'deck': True})
         o = player.userInput(options, "Where to put %s?" % card.name)
         if o['deck']:
-            print("Putting %s on deck due to Royal Seal" % card.name)
+            player.output("Putting %s on deck due to Royal Seal" % card.name)
             mod['destination'] = 'deck'
         return mod
 
