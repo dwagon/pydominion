@@ -94,7 +94,7 @@ class Player(object):
 
     ###########################################################################
     def shuffleDeck(self):
-        player.output("Shuffling Discard Pile")
+        self.output("Shuffling Pile of %d cards" % len(self.discardpile))
         random.shuffle(self.discardpile)
 
     ###########################################################################
@@ -176,7 +176,7 @@ class Player(object):
 
     ###########################################################################
     def score(self):
-        allcards = self.discardpile + self.hand + self.deck
+        allcards = self.discardpile + self.hand + self.deck + self.played
         vp = sum([c.victory for c in allcards])
         vp += sum([c.special_score(self.game, self) for c in allcards])
         vp += self.basescore
