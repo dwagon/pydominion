@@ -162,8 +162,8 @@ class Player(object):
                 tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendvalue(s))
                 options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
                 index += 1
-            purchasable = self.game.cardsUnder(self.t['gold'])
-            for p in purchasable:
+            buyable = self.game.cardsUnder(self.t['gold'])
+            for p in buyable:
                 if not self.hook_allowedtobuy(p):
                     continue
                 sel = chr(ord('a')+index)
@@ -328,14 +328,14 @@ class Player(object):
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
         if modifier == 'less':
             self.output("Gain a card costing up to %d" % cost)
-            purchasable = self.game.cardsUnder(cost)
+            buyable = self.game.cardsUnder(cost)
         elif modifier == 'equal':
             self.output("Gain a card costing exactly %d" % cost)
-            purchasable = self.game.cardsWorth(cost)
+            buyable = self.game.cardsWorth(cost)
         else:
             self.output("Unhandled modifier: %s" % modifier)
         index = 1
-        for p in purchasable:
+        for p in buyable:
             selector = "%d" % index
             toprint = 'Get %s (%d gold) %s' % (p.name, p.cost, p.desc)
             options.append({'selector': selector, 'print': toprint, 'card': p})

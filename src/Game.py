@@ -64,8 +64,8 @@ class Game(object):
     ###########################################################################
     def cardsUnder(self, cost):
         """Return the list of cards for under $cost """
-        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard]
-        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard]
+        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard and c.purchasable]
+        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard and c.purchasable]
         purchbase.sort(key=lambda c: c.cost)
         purchnorm.sort(key=lambda c: c.cost)
         return purchnorm + purchbase
@@ -73,8 +73,8 @@ class Game(object):
     ###########################################################################
     def cardsWorth(self, cost):
         """Return the list of cards that are exactly $cost """
-        purchbase = [c for c in self.cardTypes() if c.cost == cost and c.numcards and c.basecard]
-        purchnorm = [c for c in self.cardTypes() if c.cost == cost and c.numcards and not c.basecard]
+        purchbase = [c for c in self.cardTypes() if c.cost == cost and c.numcards and c.basecard and c.purchasable]
+        purchnorm = [c for c in self.cardTypes() if c.cost == cost and c.numcards and not c.basecard and c.purchasable]
         purchbase.sort(key=lambda c: c.cost)
         purchnorm.sort(key=lambda c: c.cost)
         return purchnorm + purchbase

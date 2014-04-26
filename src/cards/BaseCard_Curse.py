@@ -8,6 +8,7 @@ class Card_Curse(Card):
         self.desc = "-1 VP"
         self.basecard = True
         self.playable = False
+        self.purchasable = False
         self.name = 'Curse'
         self.cost = 0
         self.victory = -1

@@ -6,6 +6,7 @@ class Card(object):
         self.basecard = False
         self.cost = -1
         self.cardtype = 'unknown'
+        self.purchasable = True
         self.playable = True
         self.defense = False
         self.needcurse = False

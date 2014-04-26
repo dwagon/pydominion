@@ -17,9 +17,9 @@ class Card_Feast(Card):
     def selectNewCard(self, game, player):
         player.output("Gain a card costing up to 5")
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
-        purchasable = game.cardsUnder(5)
+        buyable = game.cardsUnder(5)
         index = 1
-        for p in purchasable:
+        for p in buyable:
             selector = "%d" % index
             toprint = 'Get %s (%d gold)' % (p.name, p.cost)
             options.append({'selector': selector, 'print': toprint, 'card': p})
