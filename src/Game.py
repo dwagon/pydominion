@@ -11,12 +11,16 @@ from CardPile import CardPile
 ###############################################################################
 ###############################################################################
 class Game(object):
-    def __init__(self):
+    def __init__(self, prosperity=False):
         self.players = []
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
+        self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
+        if self.prosperity:
+            self.baseCards.append('Colony')
+            self.baseCards.append('Platinum')
 
     ###########################################################################
     def startGame(self, numplayers, initcards=[], cardpath='cards'):
@@ -141,6 +145,8 @@ def parseArgs():
                         help='File containing list of cards to use')
     parser.add_argument('--cardpath', default='cards',
                         help='Where to find card definitions')
+    parser.add_argument('--prosperity', default=False, action='store_true',
+                        help='Use colonies and platinums')
     args = parser.parse_args()
     return args
 
@@ -151,7 +157,7 @@ def runGame(args):
     if args.cardset:
         for line in args.cardset:
             cards.append(line.strip())
-    g = Game()
+    g = Game(prosperity=args.prosperity)
     g.startGame(numplayers=args.numplayers, initcards=cards, cardpath=args.cardpath)
     while not g.gameover:
         g.turn()
