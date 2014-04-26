@@ -264,7 +264,7 @@ class Player(object):
 
     ###########################################################################
     def hook_spendvalue(self, card):
-        val = card.gold
+        val = card.hook_goldvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendvalue(game=self.game, player=self, card=card)
         return val
