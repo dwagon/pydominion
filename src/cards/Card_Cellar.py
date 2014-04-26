@@ -33,6 +33,6 @@ class Card_Cellar(Card):
         for c in todiscard:
             player.output("Discarding %s" % c.name)
             player.addCard(c, 'discard')
-            n = player.pickupCard()
+            player.pickupCard()
 
 #EOF

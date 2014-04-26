@@ -14,7 +14,7 @@ class Card_Ironworks(Card):
             +1 action; treasure card +1 gold; victory card, +1 card"""
         c = player.plrGainCard(4)
         if c.isVictory():
-            nc = player.pickupCard()
+            player.pickupCard()
             return
         if c.isAction():
             player.t['actions'] += 1

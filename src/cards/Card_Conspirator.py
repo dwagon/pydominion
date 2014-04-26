@@ -14,7 +14,7 @@ class Card_Conspirator(Card):
         """ If you've player 3 or more actions this turn (counting
             this); +1 card, +1 action """
         if player.turnstats['actions'] >= 3:
-            c = player.pickupCard()
+            player.pickupCard()
             player.t['actions'] += 1
 
 #EOF

@@ -33,7 +33,7 @@ class Card_Thief(Card):
             thief.output("Player %s has no treasures" % victim.name)
             return
         index = 1
-        options = [ {'selector': '0', 'print': "Don't trash any card", 'card': None, 'steal': False} ]
+        options = [{'selector': '0', 'print': "Don't trash any card", 'card': None, 'steal': False}]
         for c in treasures:
             sel = '%s' % index
             pr = "Trash %s from %s" % (c.name, victim.name)

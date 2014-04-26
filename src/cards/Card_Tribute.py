@@ -31,6 +31,6 @@ class Card_Tribute(Card):
                 player.t['gold'] += 2
             elif c.isVictory():
                 for i in range(2):
-                    n = player.pickupCard()
+                    player.pickupCard()
 
 #EOF

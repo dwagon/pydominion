@@ -13,13 +13,13 @@ class Card_Nobles(Card):
     def special(self, game, player):
         """ Choose one: +3 Cards; or +2 Actions """
         options = [
-                {'selector': '0', 'print': '+3 Cards', 'choose': 'cards'},
-                {'selector': '1', 'print': '+2 Actions', 'choose': 'actions'}
-                ]
+            {'selector': '0', 'print': '+3 Cards', 'choose': 'cards'},
+            {'selector': '1', 'print': '+2 Actions', 'choose': 'actions'}
+            ]
         o = player.userInput(options, "Choose one")
         if o['choose'] == 'cards':
             for i in range(3):
-                n = player.pickupCard()
+                player.pickupCard()
             return
         if o['choose'] == 'actions':
             player.t['actions'] += 2
