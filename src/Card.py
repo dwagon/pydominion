@@ -5,19 +5,26 @@ class Card(object):
         self.name = "TODO"
         self.basecard = False
         self.cost = -1
+        self.potcost = 0
         self.cardtype = 'unknown'
         self.purchasable = True
         self.playable = True
         self.defense = False
         self.needcurse = False
-        self.needpotion = False
         self.actions = 0
         self.buys = 0
         self.gold = 0
+        self.potion = 0
         self.cards = 0
         self.victory = 0
         self.cardname = self.getCardName()
         self.image = self.getImageName()
+
+    def coststr(self):
+        goldcost = "%d gold" % self.cost
+        potcost = "%d potions" % self.potcost if self.potcost else ""
+        coststr = "%s %s" % (goldcost, potcost)
+        return coststr.strip()
 
     def getCardName(self):
         c = self.__class__.__name__

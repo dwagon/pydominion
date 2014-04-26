@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import glob
+import operator
 import random
 import sys
 
@@ -57,8 +58,10 @@ class Game(object):
             unfilled -= 1
         if self.needcurse:
             self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1), cardpath=cardpath)
+            self.output("Playing with Curse")
         if self.needpotion:
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=cardpath)
+            self.output("Playing with Potion")
 
     ###########################################################################
     def useCardPile(self, available, c, cardpath):
@@ -67,26 +70,33 @@ class Game(object):
         self.cardpiles[c] = CardPile(c, cardpath=cardpath)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
-        if self.cardpiles[c].needpotion:
+        if self.cardpiles[c].potcost:
             self.needpotion = True
 
     ###########################################################################
-    def cardsUnder(self, cost):
-        """Return the list of cards for under $cost """
-        purchbase = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and c.basecard and c.purchasable]
-        purchnorm = [c for c in self.cardTypes() if c.cost <= cost and c.numcards and not c.basecard and c.purchasable]
-        purchbase.sort(key=lambda c: c.cost)
-        purchnorm.sort(key=lambda c: c.cost)
-        return purchnorm + purchbase
+    def cardsAffordable(self, oper, gold, potions=0, actiononly=False):
+        """Return the list of cards for under cost """
+        affordable = []
+        for c in self.cardTypes():
+            if not c.purchasable:
+                continue
+            if actiononly and not c.isAction():
+                continue
+            if oper(c.cost, gold) and oper(c.potcost, potions):
+                affordable.append(c)
+        affordable.sort(key=lambda c: c.cost)
+        affordable.sort(key=lambda c: c.basecard)
+        return affordable
 
     ###########################################################################
-    def cardsWorth(self, cost):
-        """Return the list of cards that are exactly $cost """
-        purchbase = [c for c in self.cardTypes() if c.cost == cost and c.numcards and c.basecard and c.purchasable]
-        purchnorm = [c for c in self.cardTypes() if c.cost == cost and c.numcards and not c.basecard and c.purchasable]
-        purchbase.sort(key=lambda c: c.cost)
-        purchnorm.sort(key=lambda c: c.cost)
-        return purchnorm + purchbase
+    def cardsUnder(self, gold, potions=0, actiononly=False):
+        """Return the list of cards for under cost """
+        return self.cardsAffordable(operator.le, gold, potions, actiononly)
+
+    ###########################################################################
+    def cardsWorth(self, gold, potions=0, actiononly=False):
+        """Return the list of cards that are exactly cost """
+        return self.cardsAffordable(operator.eq, gold, potions, actiononly)
 
     ###########################################################################
     def cardTypes(self):
