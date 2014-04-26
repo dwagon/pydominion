@@ -10,6 +10,7 @@ class Card(object):
         self.playable = True
         self.defense = False
         self.needcurse = False
+        self.needpotion = False
         self.actions = 0
         self.buys = 0
         self.gold = 0

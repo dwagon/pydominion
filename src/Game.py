@@ -43,6 +43,7 @@ class Game(object):
         available = self.getAvailableCards(cardpath)
         unfilled = 10 - len(initcards)
         self.needcurse = False
+        self.needpotion = False
         for c in initcards:
             c = c.strip().lower().title()
             if c not in available:
@@ -56,6 +57,8 @@ class Game(object):
             unfilled -= 1
         if self.needcurse:
             self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1), cardpath=cardpath)
+        if self.needpotion:
+            self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=cardpath)
 
     ###########################################################################
     def useCardPile(self, available, c, cardpath):
@@ -64,6 +67,8 @@ class Game(object):
         self.cardpiles[c] = CardPile(c, cardpath=cardpath)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
+        if self.cardpiles[c].needpotion:
+            self.needpotion = True
 
     ###########################################################################
     def cardsUnder(self, cost):
