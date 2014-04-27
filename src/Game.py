@@ -82,6 +82,8 @@ class Game(object):
                 continue
             if actiononly and not c.isAction():
                 continue
+            if not c.numcards:
+                continue
             if oper(c.cost, gold) and oper(c.potcost, potions):
                 affordable.append(c)
         affordable.sort(key=lambda c: c.cost)
