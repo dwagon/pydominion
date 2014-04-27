@@ -23,6 +23,7 @@ class Card_Torturer(Card):
             self.choiceOfDoom(plr)
 
     def choiceOfDoom(self, victim):
+        victim.output("Your hand is: %s" % ", ".join([c.name for c in self.hand]))
         options = [
             {'selector': '0', 'print': 'Discard 2 cards', 'choice': 'discard'},
             {'selector': '1', 'print': 'Gain a curse card', 'choice': 'curse'}
