@@ -14,12 +14,7 @@ class Card_Baron(Card):
         """ You may discard an Estate card. If you do +4 GP. Otherwise,
             gain an estate card """
 
-        for c in player.hand:
-            if c.cardname == 'estate':
-                hasEstate = c
-                break
-        else:
-            hasEstate = None
+        hasEstate = player.inHand('Estate')
 
         if hasEstate:
             options = [

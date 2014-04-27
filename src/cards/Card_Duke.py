@@ -14,7 +14,7 @@ class Card_Duke(Card):
         """ Worth 1VP per Duchy you have"""
         vp = 0
         for c in player.discardpile + player.hand + player.deck:
-            if c.cardname == 'Duke':
+            if c.cardname == 'Duchy':
                 vp += 1
         return vp
 

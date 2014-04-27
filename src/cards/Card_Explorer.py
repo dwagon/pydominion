@@ -13,7 +13,7 @@ class Card_Explorer(Card):
         """ You may reveal a Province card from you hand. If you
             do, gain a Gold card, putting it into your hand. Otherise,
             gain a Silver card, putting it into your hand """
-        if player.inHand('Province'):
+        if player.inHand('province'):
             player.gainCard('Gold', destination='hand')
         else:
             player.gainCard('Silver', destination='hand')

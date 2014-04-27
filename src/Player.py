@@ -62,6 +62,13 @@ class Player(object):
         sys.stdout.write("%s: %s%s" % (self.name, msg, end))
 
     ###########################################################################
+    def inHand(self, card):
+        """ Return named card if card is in hand """
+        for c in self.hand:
+            if c.cardname == card.lower():
+                return c
+
+    ###########################################################################
     def trashCard(self, c):
         """ Take a card out of the game """
         self.game.trashpile.append(c)

@@ -15,10 +15,9 @@ class Card_Grandmarket(Card):
 
     def hook_allowedtobuy(self, game, player):
         """ You can't buy this if you have any copper in play """
-        for c in player.hand:
-            if c.name == 'Copper':
-                player.output("Not allowed to buy Grand Market due to copper in hand")
-                return False
+        if player.inHand('copper'):
+            player.output("Not allowed to buy Grand Market due to copper in hand")
+            return False
         return True
 
 #EOF
