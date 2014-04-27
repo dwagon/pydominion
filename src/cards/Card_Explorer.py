@@ -14,8 +14,10 @@ class Card_Explorer(Card):
             do, gain a Gold card, putting it into your hand. Otherise,
             gain a Silver card, putting it into your hand """
         if player.inHand('province'):
+            player.output("Gained a Gold")
             player.gainCard('Gold', destination='hand')
         else:
+            player.output("Gained a Silver")
             player.gainCard('Silver', destination='hand')
 
 #EOF
