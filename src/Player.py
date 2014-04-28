@@ -210,11 +210,16 @@ class Player(object):
         return self.userInput(options, prompt)
 
     ###########################################################################
-    def score(self):
+    def score(self, verbose=False):
         allcards = self.discardpile + self.hand + self.deck + self.played
-        vp = sum([c.victory for c in allcards])
-        vp += sum([c.special_score(self.game, self) for c in allcards])
-        vp += self.basescore
+        score = {}
+        for c in allcards:
+            score[c.name] = score.get(c.name, 0) + c.victory
+            score[c.name] = score.get(c.name, 0) + c.special_score(self.game, self)
+            score['_base'] = self.basescore
+        vp = sum(score.values())
+        if verbose:
+            print "%s: %s" % (self.name, score)
         return vp
 
     ###########################################################################

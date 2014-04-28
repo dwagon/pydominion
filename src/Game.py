@@ -138,7 +138,7 @@ class Game(object):
     def whoWon(self):
         scores = {}
         for plr in self.players:
-            scores[plr.name] = plr.score()
+            scores[plr.name] = plr.score(verbose=True)
         self.output(scores)
 
     ###########################################################################
