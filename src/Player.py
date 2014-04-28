@@ -318,10 +318,16 @@ class Player(object):
         return newcard
 
     ###########################################################################
+    def hook_purchasedCard(self, card):
+        """ Hook which is fired when a card has been bought """
+        card.hook_purchasedCard(game=self.game, player=self)
+
+    ###########################################################################
     def buyCard(self, card):
         newcard = self.gainCard(card)
         self.t['buys'] -= 1
         self.t['gold'] -= newcard.cost
+        self.hook_purchasedCard(card)
         self.output("Bought %s for %d gold" % (newcard.name, newcard.cost))
 
     ###########################################################################
