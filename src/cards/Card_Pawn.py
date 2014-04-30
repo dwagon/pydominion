@@ -22,7 +22,7 @@ class Card_Pawn(Card):
             if o['opt'] == 'card':
                 player.pickupCard()
             elif o['opt'] == 'action':
-                player.t['action'] += 1
+                player.t['actions'] += 1
             elif o['opt'] == 'buy':
                 player.t['buys'] += 1
             elif o['opt'] == 'gold':
