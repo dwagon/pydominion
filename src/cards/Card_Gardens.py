@@ -5,6 +5,7 @@ class Card_Gardens(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
+        self.base = 'dominion'
         self.desc = "numcards / 10 VP"
         self.name = 'Gardens'
         self.playable = False

@@ -5,6 +5,7 @@ class Card_Adventurer(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Discard until two treasures"
         self.name = 'Adventurer'
         self.cost = 6

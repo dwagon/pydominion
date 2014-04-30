@@ -5,6 +5,7 @@ class Card_Chancellor(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "+2 gold, Discard deck"
         self.name = 'Chancellor'
         self.gold = 2

@@ -5,6 +5,7 @@ class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "+2 cards, curse everyone else"
         self.needcurse = True
         self.name = 'Witch'

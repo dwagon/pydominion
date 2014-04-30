@@ -319,7 +319,7 @@ class Player(object):
 
     ###########################################################################
     def hook_purchasedCard(self, card):
-        """ Hook which is fired when a card has been bought """
+        """ Hook which is fired when the card has been bought """
         card.hook_purchasedCard(game=self.game, player=self)
 
     ###########################################################################

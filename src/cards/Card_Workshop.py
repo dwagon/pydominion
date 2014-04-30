@@ -5,6 +5,7 @@ class Card_Workshop(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Gain a card costing up to 4"
         self.name = 'Workshop'
         self.cost = 3

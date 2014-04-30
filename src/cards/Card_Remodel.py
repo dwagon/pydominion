@@ -5,6 +5,7 @@ class Card_Remodel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Trash a card and gain one costing 2 more"
         self.name = 'Remodel'
         self.cost = 2

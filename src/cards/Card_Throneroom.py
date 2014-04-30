@@ -5,6 +5,7 @@ class Card_Throneroom(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Play action 2 times"
         self.name = "Throne Room"
         self.cost = 4

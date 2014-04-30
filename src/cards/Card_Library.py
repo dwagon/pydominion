@@ -5,6 +5,7 @@ class Card_Library(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Draw up to 7 cards"
         self.name = 'Library'
         self.cost = 5

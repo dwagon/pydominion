@@ -3,6 +3,7 @@ class Card(object):
         self.image = None
         self.desc = "TODO"
         self.name = "TODO"
+        self.base = "TODO"
         self.basecard = False
         self.cost = -1
         self.potcost = 0

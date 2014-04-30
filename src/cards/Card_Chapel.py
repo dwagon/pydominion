@@ -5,6 +5,7 @@ class Card_Chapel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Trash up to 4 cards"
         self.name = 'Chapel'
         self.cost = 2
