@@ -370,9 +370,15 @@ class Player(object):
         return trash
 
     ###########################################################################
-    def plrGainCard(self, cost, modifier='less', actiononly=False):
-        """ Gain a card of players choice up to cost gold """
-        options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
+    def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False):
+        """ Gain a card of 'chooser's choice up to cost gold
+        if actiononly then gain only action cards
+        """
+        if not chooser:
+            chooser = self
+        options = []
+        if not force:
+            options.append({'selector': '0', 'print': 'Nothing', 'card': None})
         if modifier == 'less':
             self.output("Gain a card costing up to %d" % cost)
             buyable = self.game.cardsUnder(cost, actiononly=actiononly)
@@ -388,7 +394,7 @@ class Player(object):
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 
-        o = self.userInput(options, "What card do you wish?")
+        o = chooser.userInput(options, "What card do you wish?")
         if o['card']:
             self.addCard(o['card'].remove())
             return o['card']
