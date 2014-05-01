@@ -6,7 +6,7 @@ class Card_Courtyard(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+3 actions. Put a card from hand to top of deck"
+        self.desc = "+3 cards. Put a card from hand to top of deck"
         self.name = 'Courtyard'
         self.cards = 3
         self.cost = 2
