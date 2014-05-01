@@ -4,7 +4,8 @@ from Card import Card
 class Card_Minion(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
+        self.base = 'intrigue'
         self.desc = "+1 action, Choose +2 gold or discard"
         self.name = 'Minion'
         self.cost = 5

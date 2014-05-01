@@ -4,7 +4,7 @@ from Card import Card
 class Card_Mountebank(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
         self.desc = "+2 gold. Others discard curse or gain one + copper"
         self.name = 'Mountebank'
         self.needcurse = True

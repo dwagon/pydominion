@@ -4,7 +4,8 @@ from Card import Card
 class Card_Saboteur(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
+        self.base = 'intrigue'
         self.desc = "Trash other players cards but they get one back"
         self.name = 'Saboteur'
         self.cost = 5

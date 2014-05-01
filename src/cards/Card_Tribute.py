@@ -5,6 +5,7 @@ class Card_Tribute(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "Player to left discards 2 cards; you get goodies"
         self.name = 'Tribute'
         self.cost = 5

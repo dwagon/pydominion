@@ -5,6 +5,7 @@ class Card_Miningvillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "+1 card, +2 actions, trash self for +2 gold"
         self.name = 'Mining Village'
         self.cards = 1

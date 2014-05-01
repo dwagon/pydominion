@@ -5,6 +5,7 @@ class Card_Coppersmith(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "Copper produces and extra +1 this turn"
         self.name = 'Coppersmith'
         self.cost = 4

@@ -5,6 +5,7 @@ class Card_Steward(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "Chose: +2 cards, +2 gold, trash 2 cards"
         self.name = 'Steward'
         self.cost = 3

@@ -5,6 +5,7 @@ class Card_Duke(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
+        self.base = 'intrigue'
         self.desc = "Worth 1 per duchy"
         self.name = 'Duke'
         self.playable = False

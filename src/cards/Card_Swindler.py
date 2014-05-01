@@ -4,7 +4,8 @@ from Card import Card
 class Card_Swindler(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
+        self.base = 'intrigue'
         self.desc = "+2 gold. Other players trash top card and gain one with the same cost"
         self.name = 'Swindler'
         self.cost = 3

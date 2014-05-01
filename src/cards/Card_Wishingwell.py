@@ -5,6 +5,7 @@ class Card_Wishingwell(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "+1 card, +1 action, guess top card to get it"
         self.name = 'Wishing Well'
         self.cost = 3

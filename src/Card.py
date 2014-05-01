@@ -42,17 +42,27 @@ class Card(object):
         return self.defense
 
     def isTreasure(self):
-        if self.cardtype == 'treasure':
+        if 'treasure' in self.cardtype:
             return True
         return False
 
     def isAction(self):
-        if self.cardtype == 'action':
+        if 'action' in self.cardtype:
             return True
         return False
 
     def isVictory(self):
-        if self.cardtype == 'victory':
+        if 'victory' in self.cardtype:
+            return True
+        return False
+
+    def isReaction(self):
+        if 'reaction' in self.cardtype:
+            return True
+        return False
+
+    def isAttack(self):
+        if 'attack' in self.cardtype:
             return True
         return False
 

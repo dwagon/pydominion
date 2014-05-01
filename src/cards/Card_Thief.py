@@ -4,7 +4,7 @@ from Card import Card
 class Card_Thief(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
         self.base = 'dominion'
         self.desc = "Steal treasure from other players"
         self.name = 'Thief'

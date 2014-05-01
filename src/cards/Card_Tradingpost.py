@@ -5,6 +5,7 @@ class Card_Tradingpost(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "Trash 2 cards for a silver"
         self.name = "Trading Post"
         self.cost = 5

@@ -4,7 +4,8 @@ from Card import Card
 class Card_Nobles(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'victory']
+        self.base = 'intrigue'
         self.desc = "2VP, choose +3 cards or +2 actions"
         self.name = 'Nobles'
         self.victory = 2

@@ -4,7 +4,7 @@ from Card import Card
 class Card_Cutpurse(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
         self.desc = "+2 gold, other players discard copper"
         self.name = 'Cutpurse'
         self.gold = 2

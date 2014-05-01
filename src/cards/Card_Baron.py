@@ -5,6 +5,7 @@ class Card_Baron(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "+1 Buy, discard an estate gain +4 Gold, else gain estate"
         self.name = 'Baron'
         self.cost = 4

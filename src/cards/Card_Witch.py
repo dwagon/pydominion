@@ -4,7 +4,7 @@ from Card import Card
 class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'attack']
         self.base = 'dominion'
         self.desc = "+2 cards, curse everyone else"
         self.needcurse = True
