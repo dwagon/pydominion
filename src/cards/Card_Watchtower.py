@@ -14,5 +14,6 @@ class Card_Watchtower(Card):
             card, you may reveal this from your hand. If you do, either
             trash that card, or put it on top of your deck """
         player.pickUpHand(6)
+        # TODO: Need to do second part
 
 #EOF
