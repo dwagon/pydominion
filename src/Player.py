@@ -219,7 +219,7 @@ class Player(object):
             score['_base'] = self.basescore
         vp = sum(score.values())
         if verbose:
-            print "%s: %s" % (self.name, score)
+            self.game.output("%s: %s" % (self.name, score))
         return vp
 
     ###########################################################################
@@ -342,6 +342,7 @@ class Player(object):
     ###########################################################################
     def hasDefense(self, verbose=True):
         for c in self.hand:
+            c.hook_underAttack(game=self.game, player=self)
             if c.hasDefense():
                 if verbose:
                     self.output("Player %s is defended" % self.name)
