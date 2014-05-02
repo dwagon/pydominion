@@ -5,6 +5,7 @@ class Card_Bridge(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "+1 buy, +1 gold, all cards -1 cost"
         self.name = 'Bridge'
         self.buys = 1
