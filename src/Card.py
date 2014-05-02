@@ -21,12 +21,6 @@ class Card(object):
         self.cardname = self.getCardName()
         self.image = self.getImageName()
 
-    def coststr(self):
-        goldcost = "%d gold" % self.cost
-        potcost = "%d potions" % self.potcost if self.potcost else ""
-        coststr = "%s %s" % (goldcost, potcost)
-        return coststr.strip()
-
     def getCardName(self):
         c = self.__class__.__name__
         c = c.replace('Card_', '')
@@ -78,7 +72,11 @@ class Card(object):
     def hook_gaincard(self, game, player, card):
         return {}
 
+    def hook_cardCost(self, game, player, card):
+        return 0
+
     def hook_goldvalue(self, game, player):
+        """ How much gold does this card contribute """
         return self.gold
 
     def hook_spendvalue(self, game, player, card):

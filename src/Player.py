@@ -1,3 +1,4 @@
+import operator
 import random
 import sys
 
@@ -181,12 +182,12 @@ class Player(object):
     ###########################################################################
     def buyableSelection(self, index):
         options = []
-        buyable = self.game.cardsUnder(gold=self.t['gold'], potions=self.t['potions'])
+        buyable = self.cardsUnder(gold=self.t['gold'], potions=self.t['potions'])
         for p in buyable:
             if not self.hook_allowedtobuy(p):
                 continue
             sel = chr(ord('a')+index)
-            tp = 'Buy %s (%s) %s (%d left)' % (p.name, p.coststr(), p.desc, p.numcards)
+            tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
             options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
             index += 1
         return options, index
@@ -276,6 +277,7 @@ class Player(object):
 
     ###########################################################################
     def hook_spendvalue(self, card):
+        """ How much do you get for spending the card """
         val = card.hook_goldvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendvalue(game=self.game, player=self, card=card)
@@ -302,6 +304,13 @@ class Player(object):
         self.played.append(card)
 
     ###########################################################################
+    def cardCost(self, card):
+        cost = card.cost
+        for c in self.hand + self.played:
+            cost += c.hook_cardCost(game=self.game, player=self, card=card)
+        return max(0, cost)
+
+    ###########################################################################
     def gainCard(self, cardpile, destination='discard'):
         """ Add a new card to the players set of cards from a cardpile """
         if isinstance(cardpile, str):
@@ -326,9 +335,9 @@ class Player(object):
     def buyCard(self, card):
         newcard = self.gainCard(card)
         self.t['buys'] -= 1
-        self.t['gold'] -= newcard.cost
+        self.t['gold'] -= self.cardCost(newcard)
         self.hook_purchasedCard(card)
-        self.output("Bought %s for %d gold" % (newcard.name, newcard.cost))
+        self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
 
     ###########################################################################
     def hook_gaincard(self, card):
@@ -358,7 +367,7 @@ class Player(object):
         for c in self.hand:
             sel = "%d" % index
             if printcost:
-                pr = "Trash %s (%d gold)" % (c.name, c.cost)
+                pr = "Trash %s (%d gold)" % (c.name, self.cardCost(c))
             else:
                 pr = "Trash %s" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
@@ -369,6 +378,34 @@ class Player(object):
         trash = o['card']
         self.trashCard(trash)
         return trash
+
+    ###########################################################################
+    def cardsAffordable(self, oper, gold, potions=0, actiononly=False):
+        """Return the list of cards for under cost """
+        affordable = []
+        for c in self.game.cardTypes():
+            cost = self.cardCost(c)
+            if not c.purchasable:
+                continue
+            if actiononly and not c.isAction():
+                continue
+            if not c.numcards:
+                continue
+            if oper(cost, gold) and oper(c.potcost, potions):
+                affordable.append(c)
+        affordable.sort(key=lambda c: self.cardCost(c))
+        affordable.sort(key=lambda c: c.basecard)
+        return affordable
+
+    ###########################################################################
+    def cardsUnder(self, gold, potions=0, actiononly=False):
+        """Return the list of cards for under cost """
+        return self.cardsAffordable(operator.le, gold, potions, actiononly)
+
+    ###########################################################################
+    def cardsWorth(self, gold, potions=0, actiononly=False):
+        """Return the list of cards that are exactly cost """
+        return self.cardsAffordable(operator.eq, gold, potions, actiononly)
 
     ###########################################################################
     def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False):
@@ -382,16 +419,16 @@ class Player(object):
             options.append({'selector': '0', 'print': 'Nothing', 'card': None})
         if modifier == 'less':
             self.output("Gain a card costing up to %d" % cost)
-            buyable = self.game.cardsUnder(cost, actiononly=actiononly)
+            buyable = self.cardsUnder(cost, actiononly=actiononly)
         elif modifier == 'equal':
             self.output("Gain a card costing exactly %d" % cost)
-            buyable = self.game.cardsWorth(cost, actiononly=actiononly)
+            buyable = self.cardsWorth(cost, actiononly=actiononly)
         else:
             self.output("Unhandled modifier: %s" % modifier)
         index = 1
         for p in buyable:
             selector = "%d" % index
-            toprint = 'Get %s (%s) %s' % (p.name, p.coststr(), p.desc)
+            toprint = 'Get %s (%s) %s' % (p.name, self.coststr(p), p.desc)
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 
@@ -399,6 +436,13 @@ class Player(object):
         if o['card']:
             self.addCard(o['card'].remove())
             return o['card']
+
+    ###########################################################################
+    def coststr(self, card):
+        goldcost = "%d gold" % self.cardCost(card)
+        potcost = "%d potions" % card.potcost if card.potcost else ""
+        cststr = "%s %s" % (goldcost, potcost)
+        return cststr.strip()
 
     ###########################################################################
     def plrDiscardCards(self, num):

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import glob
-import operator
 import random
 import sys
 
@@ -72,33 +71,6 @@ class Game(object):
             self.needcurse = True
         if self.cardpiles[c].potcost:
             self.needpotion = True
-
-    ###########################################################################
-    def cardsAffordable(self, oper, gold, potions=0, actiononly=False):
-        """Return the list of cards for under cost """
-        affordable = []
-        for c in self.cardTypes():
-            if not c.purchasable:
-                continue
-            if actiononly and not c.isAction():
-                continue
-            if not c.numcards:
-                continue
-            if oper(c.cost, gold) and oper(c.potcost, potions):
-                affordable.append(c)
-        affordable.sort(key=lambda c: c.cost)
-        affordable.sort(key=lambda c: c.basecard)
-        return affordable
-
-    ###########################################################################
-    def cardsUnder(self, gold, potions=0, actiononly=False):
-        """Return the list of cards for under cost """
-        return self.cardsAffordable(operator.le, gold, potions, actiononly)
-
-    ###########################################################################
-    def cardsWorth(self, gold, potions=0, actiononly=False):
-        """Return the list of cards that are exactly cost """
-        return self.cardsAffordable(operator.eq, gold, potions, actiononly)
 
     ###########################################################################
     def cardTypes(self):
