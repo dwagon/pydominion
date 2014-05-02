@@ -5,6 +5,7 @@ class Card_Transmute(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'alchemy'
         self.desc = "Trash a card from hand to gain others"
         self.name = 'Transmute'
         self.cost = 0

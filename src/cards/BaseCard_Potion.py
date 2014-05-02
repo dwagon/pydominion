@@ -5,6 +5,7 @@ class Card_Potion(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
+        self.base = 'alchemy'
         self.basecard = True
         self.playable = False
         self.desc = "+1 potion"

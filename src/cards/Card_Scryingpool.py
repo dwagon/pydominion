@@ -5,6 +5,7 @@ class Card_Scryingpool(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
+        self.base = 'alchemy'
         self.desc = "+1 action, potentially discard others top cards, get lots of cards into hand"
         self.name = 'Scrying Pool'
         self.actions = 1

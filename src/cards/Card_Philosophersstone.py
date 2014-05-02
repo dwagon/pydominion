@@ -5,6 +5,7 @@ class Card_Philosophersstone(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
+        self.base = 'alchemy'
         self.desc = "Gain +1 Gold for every 5 cards owned"
         self.name = "Philosopher's Stone"
         self.cost = 3

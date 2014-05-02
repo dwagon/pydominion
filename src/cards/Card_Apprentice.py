@@ -5,6 +5,7 @@ class Card_Apprentice(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'alchemy'
         self.desc = "+1 action, Trash a card, +1 card per cost, +2 cards if it is a potion"
         self.name = 'Apprentice'
         self.cost = 5

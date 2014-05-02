@@ -5,6 +5,7 @@ class Card_Familiar(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
+        self.base = 'alchemy'
         self.desc = "+1 card, +1 action, curse everyone else"
         self.needcurse = True
         self.name = 'Familiar'
