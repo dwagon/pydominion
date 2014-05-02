@@ -69,9 +69,9 @@ class Game(object):
             cp = CardPile(c, cardpath=self.cardpath)
             if  cp.base in self.cardbase:
                 return 0
-        self.output("Playing with %s" % c)
         available.remove(c)
         self.cardpiles[c] = CardPile(c, cardpath=self.cardpath)
+        self.output("Playing with %s" % self[c].name)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
         if self.cardpiles[c].potcost:
