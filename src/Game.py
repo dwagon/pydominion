@@ -65,9 +65,10 @@ class Game(object):
 
     ###########################################################################
     def useCardPile(self, available, c):
-        cp = CardPile(c, cardpath=self.cardpath)
-        if not self.cardbase or cp.base in self.cardbase:
-            return 0
+        if self.cardbase:
+            cp = CardPile(c, cardpath=self.cardpath)
+            if  cp.base in self.cardbase:
+                return 0
         self.output("Playing with %s" % c)
         available.remove(c)
         self.cardpiles[c] = CardPile(c, cardpath=self.cardpath)
