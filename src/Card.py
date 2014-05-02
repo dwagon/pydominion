@@ -63,13 +63,13 @@ class Card(object):
     def special_score(self, game, player):
         return 0
 
-    def hook_buycard(self, game, player, card):
+    def hook_buyCard(self, game, player, card):
         pass
 
-    def hook_allowedtobuy(self, game, player):
+    def hook_allowedToBuy(self, game, player):
         return True
 
-    def hook_gaincard(self, game, player, card):
+    def hook_gainCard(self, game, player, card):
         return {}
 
     def hook_cardCost(self, game, player, card):
@@ -79,7 +79,7 @@ class Card(object):
         """ How much gold does this card contribute """
         return self.gold
 
-    def hook_spendvalue(self, game, player, card):
+    def hook_spendValue(self, game, player, card):
         """ Does this card make any  modifications on the value of spending a card """
         return 0
 

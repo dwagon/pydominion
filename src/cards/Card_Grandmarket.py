@@ -13,7 +13,7 @@ class Card_Grandmarket(Card):
         self.buys = 1
         self.gold = 2
 
-    def hook_allowedtobuy(self, game, player):
+    def hook_allowedToBuy(self, game, player):
         """ You can't buy this if you have any copper in play """
         if player.inHand('copper'):
             player.output("Not allowed to buy Grand Market due to copper in hand")

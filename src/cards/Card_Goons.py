@@ -21,7 +21,7 @@ class Card_Goons(Card):
             plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)
 
-    def hook_buycard(self, game, player, card):
+    def hook_buyCard(self, game, player, card):
         """ While this card is in play, when you buy a card +1 VP """
         player.output("Scored 1 more from goons")
         player.basescore += 1

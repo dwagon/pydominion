@@ -159,7 +159,7 @@ class Player(object):
         spendable = [c for c in self.hand if c.isTreasure()]
         if spendable:
             sel = chr(ord('a')+index)
-            totgold = sum([self.hook_spendvalue(c) for c in spendable])
+            totgold = sum([self.hook_spendValue(c) for c in spendable])
             numpots = sum([1 for c in spendable if c.name == 'Potion'])
             potstr = ", %d potions" % numpots if numpots else ""
             tp = 'Spend all treasures (%d gold%s)' % (totgold, potstr)
@@ -167,7 +167,7 @@ class Player(object):
             index += 1
         for s in spendable:
             sel = chr(ord('a')+index)
-            tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendvalue(s))
+            tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
@@ -184,7 +184,7 @@ class Player(object):
         options = []
         buyable = self.cardsUnder(gold=self.t['gold'], potions=self.t['potions'])
         for p in buyable:
-            if not self.hook_allowedtobuy(p):
+            if not self.hook_allowedToBuy(p):
                 continue
             sel = chr(ord('a')+index)
             tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
@@ -224,15 +224,15 @@ class Player(object):
         return vp
 
     ###########################################################################
-    def hook_allowedtobuy(self, card):
+    def hook_allowedToBuy(self, card):
         """ Hook to check if you are allowed to buy a card """
-        return card.hook_allowedtobuy(game=self.game, player=self)
+        return card.hook_allowedToBuy(game=self.game, player=self)
 
     ###########################################################################
-    def hook_buycard(self, card):
+    def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
         for c in self.hand:
-            c.hook_buycard(game=self.game, player=self, card=card)
+            c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
     def turn(self):
@@ -254,7 +254,7 @@ class Player(object):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
-                self.hook_buycard(opt['card'])
+                self.hook_buyCard(opt['card'])
             elif opt['action'] == 'play':
                 self.turnstats['actions'] += 1
                 self.playCard(opt['card'])
@@ -271,16 +271,22 @@ class Player(object):
 
     ###########################################################################
     def spendCard(self, card):
-        self.t['gold'] += self.hook_spendvalue(card)
+        self.t['gold'] += self.hook_spendValue(card)
         self.t['potions'] += card.potion
         self.discardCard(card)
+        self.played.append(card)
 
     ###########################################################################
-    def hook_spendvalue(self, card):
+    def hook_discard(self, card):
+        """ A card has been discarded """
+        pass
+
+    ###########################################################################
+    def hook_spendValue(self, card):
         """ How much do you get for spending the card """
         val = card.hook_goldvalue(game=self.game, player=self)
         for c in self.played:
-            val += c.hook_spendvalue(game=self.game, player=self, card=card)
+            val += c.hook_spendValue(game=self.game, player=self, card=card)
         return val
 
     ###########################################################################
@@ -317,7 +323,7 @@ class Player(object):
             newcard = self.game[cardpile].remove()
         else:
             newcard = cardpile.remove()
-        options = self.hook_gaincard(newcard)
+        options = self.hook_gainCard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
             return
@@ -340,11 +346,11 @@ class Player(object):
         self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
 
     ###########################################################################
-    def hook_gaincard(self, card):
+    def hook_gainCard(self, card):
         """ Hook which is fired by a card being obtained by a player """
         options = {}
         for c in self.hand:
-            o = c.hook_gaincard(game=self.game, player=self, card=card)
+            o = c.hook_gainCard(game=self.game, player=self, card=card)
             options.update(o)
         return options
 
