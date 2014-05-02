@@ -18,7 +18,7 @@ class Card_Swindler(Card):
         for victim in game.players:
             if victim != player:
                 continue
-            if victim.hasDefense():
+            if victim.hasDefense(player):
                 continue
             card = victim.pickupCard()
             victim.output("Trashing %s" % card.name)

@@ -355,12 +355,12 @@ class Player(object):
         return options
 
     ###########################################################################
-    def hasDefense(self, verbose=True):
+    def hasDefense(self, attacker, verbose=True):
         for c in self.hand:
             c.hook_underAttack(game=self.game, player=self)
             if c.hasDefense():
                 if verbose:
-                    self.output("Player %s is defended" % self.name)
+                    attacker.output("Player %s is defended" % self.name)
                 return True
         return False
 

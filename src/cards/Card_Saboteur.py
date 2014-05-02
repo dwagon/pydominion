@@ -18,7 +18,7 @@ class Card_Saboteur(Card):
         for victim in game.players:
             if victim != player:
                 continue
-            if victim.hasDefense():
+            if victim.hasDefense(player):
                 continue
             card = self.pickCard(victim)
             victim.output("Trashing %s" % card.name)

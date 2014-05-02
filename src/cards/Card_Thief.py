@@ -19,7 +19,7 @@ class Card_Thief(Card):
         for pl in game.players:
             if pl == player:
                 continue
-            if not pl.hasDefense():
+            if not pl.hasDefense(player):
                 self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):

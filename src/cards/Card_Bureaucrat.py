@@ -20,7 +20,7 @@ class Card_Bureaucrat(Card):
         for pl in game.players:
             if pl == player:
                 continue
-            if pl.hasDefense():
+            if pl.hasDefense(player):
                 continue
             for c in pl.hand:
                 if c.isVictory():

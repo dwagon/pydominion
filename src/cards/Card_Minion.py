@@ -30,7 +30,7 @@ class Card_Minion(Card):
         self.dropAndDraw(player)
         for victim in game.players:
             if victim != player:
-                if victim.hasDefense():
+                if victim.hasDefense(player):
                     continue
             if len(victim.hand) >= 5:
                 self.dropAndDraw(victim)

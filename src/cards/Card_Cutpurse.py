@@ -17,7 +17,7 @@ class Card_Cutpurse(Card):
         for victim in game.players:
             if victim == player:
                 continue
-            if victim.hasDefense():
+            if victim.hasDefense(player):
                 continue
             c = victim.inHand('Copper')
             if c:

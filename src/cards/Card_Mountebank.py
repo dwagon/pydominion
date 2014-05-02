@@ -16,7 +16,7 @@ class Card_Mountebank(Card):
         for plr in game.players:
             if plr == player:
                 continue
-            if plr.hasDefense():
+            if plr.hasDefense(player):
                 continue
             for c in plr.hand:
                 if c.cardname == 'curse':

@@ -18,7 +18,7 @@ class Card_Torturer(Card):
         for plr in game.players:
             if plr == player:
                 continue
-            if plr.hasDefense():
+            if plr.hasDefense(player):
                 continue
             plr.output("Choose:")
             self.choiceOfDoom(plr)

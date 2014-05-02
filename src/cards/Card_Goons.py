@@ -16,7 +16,7 @@ class Card_Goons(Card):
         for plr in game.players:
             if plr == player:
                 continue
-            if plr.hasDefense():
+            if plr.hasDefense(player):
                 continue
             plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)

@@ -19,7 +19,7 @@ class Card_Scryingpool(Card):
             on that is not an Action. Put all of your revealed cards
             into your hand."""
         for plr in game.players:
-            if not plr.hasDefense():
+            if not plr.hasDefense(player):
                 self.discardOrPutBack(plr, player)
         while(1):
             topcard = player.pickupCard()
