@@ -28,7 +28,7 @@ playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
 ###############################################################################
 ###############################################################################
 class Player(object):
-    def __init__(self, game, name=''):
+    def __init__(self, game, name='', quiet=False):
         self.game = game
         if not name:
             name = random.choice(playerNames)
@@ -60,7 +60,9 @@ class Player(object):
 
     ###########################################################################
     def output(self, msg, end='\n'):
-        sys.stdout.write("%s: %s%s" % (self.name, msg, end))
+        if not self.quiet:
+            sys.stdout.write("%s: %s%s" % (self.name, msg, end))
+        self.messages.append(msg)
 
     ###########################################################################
     def inHand(self, card):

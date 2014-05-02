@@ -11,11 +11,12 @@ from CardPile import CardPile
 ###############################################################################
 ###############################################################################
 class Game(object):
-    def __init__(self, prosperity=False):
+    def __init__(self, quiet=False, prosperity=False):
         self.players = []
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
+        self.quiet = quiet
         self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
         if self.prosperity:
@@ -33,7 +34,8 @@ class Game(object):
     ###########################################################################
     def output(self, msg):
         """ Send output to all players """
-        sys.stdout.write("ALL: %s\n" % msg)
+        if not self.quiet:
+            sys.stdout.write("ALL: %s\n" % msg)
 
     ###########################################################################
     def loadDecks(self, initcards, numplayers):
