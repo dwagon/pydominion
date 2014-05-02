@@ -24,12 +24,16 @@ class Game(object):
             self.baseCards.append('Platinum')
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[]):
+    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[]):
         self.cardbase = cardbase
         self.cardpath = cardpath
         self.loadDecks(initcards, numplayers)
         for i in range(numplayers):
-            self.players.append(Player(game=self))
+            try:
+                name = playernames.pop()
+            except IndexError:
+                name = None
+            self.players.append(Player(game=self, quiet=self.quiet, name=name))
 
     ###########################################################################
     def output(self, msg):
