@@ -113,6 +113,18 @@ class Game(object):
         return False
 
     ###########################################################################
+    def print_state(self):
+        """ This is used for debugging """
+        print "#" * 40
+        print "Trash: %s" % ", ".join([c.name for c in self.trashpile])
+        for p in self.players:
+            print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
+            print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
+            print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
+            print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
+            print "%s's messages: %s" % (p.name, p.messages)
+
+    ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
         place = self.players.index(plr) - 1
