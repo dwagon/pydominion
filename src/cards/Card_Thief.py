@@ -1,4 +1,7 @@
+#!/usr/bin/env python
+
 from Card import Card
+import unittest
 
 
 class Card_Thief(Card):
@@ -42,19 +45,90 @@ class Card_Thief(Card):
             index += 1
             sel = '%s' % index
             pr = "Steal %s from %s" % (c.name, victim.name)
-            options.append({'selector': sel, 'print': pr, 'card': c, 'steal': False})
+            options.append({'selector': sel, 'print': pr, 'card': c, 'steal': True})
             index += 1
         o = thief.userInput(options, "What to do to %s's cards?" % victim.name)
-        if not o['card']:
-            return
         # Discard the ones we don't care about
         for tc in treasures:
             if o['card'] != tc:
-                victim.discardCard(tc)
-        if o['steal']:
-            thief.addCard(o['card'])
-            thief.output("Stealing %s from %s" % (o['card'].name, victim.name))
+                victim.addCard(tc, 'discard')
+        if o['card']:
+            if o['steal']:
+                thief.addCard(o['card'])
+                thief.output("Stealing %s from %s" % (o['card'].name, victim.name))
+                victim.output("%s stole your %s" % (thief.name, o['card'].name))
+            else:
+                victim.trashCard(o['card'])
+
+###############################################################################
+class Test_Thief(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['thief', 'moat'], playernames=['victim', 'thief'])
+        self.thiefcard = self.g['thief'].remove()
+        self.thief = self.g.players[0]
+        self.thief.addCard(self.thiefcard, 'hand')
+        self.victim = self.g.players[1]
+
+    def test_no_treasure(self):
+        self.g.players[1].setDeck('estate', 'estate', 'estate')
+        self.thief.playCard(self.thiefcard)
+        self.assertIn('Player victim has no treasures', self.thief.messages)
+
+    def test_moat_defense(self):
+        self.victim.setHand('moat', 'copper', 'copper')
+        self.victim.setDeck('copper', 'silver', 'gold')
+        self.thief.playCard(self.thiefcard)
+        self.assertIn('Player victim is defended', self.thief.messages)
+        self.assertEquals(len(self.victim.deck), 3)
+        self.assertEquals(len(self.victim.discardpile), 0)
+
+    def test_do_nothing(self):
+        self.victim.setHand('copper', 'copper')
+        self.victim.setDeck('copper', 'silver', 'gold')
+        self.thief.test_input = '0'
+        self.thief.playCard(self.thiefcard)
+        self.assertEquals(len(self.victim.deck), 1)
+        self.assertEquals(len(self.victim.discardpile), 2)
+        self.assertEquals(len(self.thief.discardpile), 0)
+
+    def test_trash_treasure(self):
+        self.victim.setHand('copper', 'copper')
+        self.victim.setDeck('copper', 'silver', 'gold')
+        self.thief.test_input = '1'
+        self.thief.playCard(self.thiefcard)
+        # Make sure the gold ends up in the trashpile and not in the victims deck
+        self.assertEquals(self.g.trashpile[0].name, 'Gold')
+        for c in self.victim.deck:
+            self.assertNotEquals(c.name, 'Gold')
+        self.assertEquals(self.victim.discardpile[0].name, 'Silver')
+
+    def test_steal_treasure(self):
+        self.victim.setHand('copper', 'copper')
+        self.victim.setDeck('copper', 'silver', 'gold')
+        self.thief.test_input = '2'
+        self.thief.playCard(self.thiefcard)
+        self.assertEquals(self.g.trashpile, [])
+        for c in self.victim.deck:
+            self.assertNotEquals(c.name, 'Gold')
+        for c in self.thief.discardpile:
+            if c.name == 'Gold':
+                break
         else:
-            victim.trashCard(o['card'])
+            self.fail()
+        self.assertIn('%s stole your Gold' % self.thief.name, self.victim.messages)
+
+    def print_players(self):
+        print "#" * 40
+        print "Trash: %s" % ", ".join([c.name for c in self.g.trashpile])
+        for p in self.g.players:
+            print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
+            print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
+            print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
+            print "%s's messages: %s" % (p.name, p.messages)
+
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
