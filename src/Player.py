@@ -78,6 +78,8 @@ class Player(object):
     def trashCard(self, c):
         """ Take a card out of the game """
         self.game.trashpile.append(c)
+        if c in self.played:
+            self.played.remove(c)
         if c in self.hand:
             self.hand.remove(c)
 
@@ -98,7 +100,7 @@ class Player(object):
     ###########################################################################
     def nextCard(self):
         """ Return the next card from the deck """
-        if not(self.deck):
+        if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
                 self.deck.append(self.discardpile.pop())
@@ -151,7 +153,7 @@ class Player(object):
         for c in self.hand[:]:
             self.discardCard(c)
         for c in self.played[:]:
-            self.discardCard(c)
+            self.addCard(c, 'discard')
 
     ###########################################################################
     def userInput(self, options, prompt):
@@ -325,6 +327,7 @@ class Player(object):
     def playCard(self, card, discard=True, costAction=True):
         if discard:
             self.addCard(card, 'played')
+            self.hand.remove(card)
         if costAction:
             self.t['actions'] -= 1
         self.t['actions'] += card.actions
