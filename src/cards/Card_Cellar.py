@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -33,7 +36,43 @@ class Card_Cellar(Card):
 
         for c in todiscard:
             player.output("Discarding %s" % c.name)
-            player.addCard(c, 'discard')
+            player.discardCard(c)
             player.pickupCard()
+
+
+###############################################################################
+class Test_Cellar(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['cellar'])
+        self.plr = self.g.players[0]
+        self.ccard = self.g['cellar'].remove()
+
+    def test_none(self):
+        self.plr.setHand('estate', 'copper', 'silver')
+        self.plr.addCard(self.ccard, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.ccard)
+        self.assertEquals(len(self.plr.hand), 3)
+
+    def test_one(self):
+        self.plr.setHand('estate', 'copper', 'silver')
+        self.plr.setDeck('province', 'gold')
+        self.plr.addCard(self.ccard, 'hand')
+        self.plr.test_input = ['1', '0']
+        self.plr.playCard(self.ccard)
+        self.assertEquals(self.plr.deck[-1].name, 'Province')
+        for c in self.plr.hand:
+            if c.name == 'Gold':
+                break
+        else:
+            self.fail()
+        self.assertEquals(len(self.plr.hand), 3)
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
