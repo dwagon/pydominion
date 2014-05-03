@@ -35,6 +35,7 @@ class Player(object):
         game.output("Player %s is at the table" % name)
         self.basescore = 0
         self.name = name
+        self.messages = []
         self.hand = []
         self.deck = []
         # What cards have been played this turn
@@ -137,6 +138,8 @@ class Player(object):
             self.hand.append(c)
         elif pile == 'deck':
             self.deck.append(c)
+        elif pile == 'played':
+            self.played.append(c)
 
     ###########################################################################
     def discardCard(self, c):
@@ -146,6 +149,8 @@ class Player(object):
     ###########################################################################
     def discardHand(self):
         for c in self.hand[:]:
+            self.discardCard(c)
+        for c in self.played[:]:
             self.discardCard(c)
 
     ###########################################################################
@@ -320,7 +325,7 @@ class Player(object):
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
         if discard:
-            self.discardCard(card)
+            self.addCard(card, 'played')
         if costAction:
             self.t['actions'] -= 1
         self.t['actions'] += card.actions
@@ -329,7 +334,6 @@ class Player(object):
         for i in range(card.cards):
             self.pickupCard()
         card.special(game=self.game, player=self)
-        self.played.append(card)
 
     ###########################################################################
     def cardCost(self, card):
