@@ -73,7 +73,7 @@ class Game(object):
     def useCardPile(self, available, c):
         if self.cardbase:
             cp = CardPile(c, cardpath=self.cardpath)
-            if  cp.base in self.cardbase:
+            if cp.base not in self.cardbase:
                 return 0
         available.remove(c)
         self.cardpiles[c] = CardPile(c, cardpath=self.cardpath)
