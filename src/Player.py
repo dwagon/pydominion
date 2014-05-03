@@ -81,6 +81,20 @@ class Player(object):
             self.hand.remove(c)
 
     ###########################################################################
+    def setHand(self, *cards):
+        """ This is mostly used for testing """
+        self.hand = []
+        for c in cards:
+            self.hand.append(self.game[c].remove())
+
+    ###########################################################################
+    def setDeck(self, *cards):
+        """ This is mostly used for testing """
+        self.deck = []
+        for c in cards:
+            self.deck.append(self.game[c].remove())
+
+    ###########################################################################
     def nextCard(self):
         """ Return the next card from the deck """
         if not(self.deck):
