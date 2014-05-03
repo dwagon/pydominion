@@ -26,6 +26,9 @@ class Card(object):
         c = c.replace('Card_', '')
         return c.lower()
 
+    def __repr__(self):
+        return self.name
+
     def getImageName(self):
         return 'images/%s.jpg' % self.cardname
 
