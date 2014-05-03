@@ -45,7 +45,7 @@ class Player(object):
         self.turnstats = {'actions': 0, 'buys': 0}
         self.discardpile = []
         self.quiet = quiet
-        self.test_input = None
+        self.test_input = []
         self.initial_Deck()
 
     ###########################################################################
@@ -160,8 +160,7 @@ class Player(object):
         self.output(prompt, end=' ')
         while(1):
             if self.test_input:
-                inp = self.test_input
-                self.test_input = ''
+                inp = self.test_input.pop(0)
             else:
                 inp = raw_input()
             for o in options:
