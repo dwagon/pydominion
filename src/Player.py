@@ -43,6 +43,8 @@ class Player(object):
         self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
         self.turnstats = {'actions': 0, 'buys': 0}
         self.discardpile = []
+        self.quiet = quiet
+        self.test_input = None
         self.initial_Deck()
 
     ###########################################################################
@@ -138,11 +140,15 @@ class Player(object):
             self.output("%s)\t%s" % (o['selector'], o['print']))
         self.output(prompt, end=' ')
         while(1):
-            input = raw_input()
+            if self.test_input:
+                inp = self.test_input
+                self.test_input = ''
+            else:
+                inp = raw_input()
             for o in options:
-                if o['selector'] == input:
+                if o['selector'] == inp:
                     return o
-            self.output("Invalid Option (%s)" % input)
+            self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
     def playableSelection(self, index):
