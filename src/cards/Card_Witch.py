@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -19,5 +22,36 @@ class Card_Witch(Card):
                 if not pl.hasDefense(player):
                     player.output("%s got cursed" % pl.name)
                     pl.gainCard('curse')
+
+
+###############################################################################
+class Test_Witch(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['witch', 'moat'])
+        self.attacker = self.g.players[0]
+        self.victim = self.g.players[1]
+        self.wcard = self.g['witch'].remove()
+        self.mcard = self.g['moat'].remove()
+        self.attacker.addCard(self.wcard, 'hand')
+
+    def test_defended(self):
+        self.victim.addCard(self.mcard, 'hand')
+        self.attacker.playCard(self.wcard)
+        self.assertEqual(len(self.victim.hand), 6)
+        self.assertEqual(len(self.attacker.hand), 7)
+        self.assertEqual(self.victim.discardpile, [])
+
+    def test_nodefense(self):
+        self.attacker.playCard(self.wcard)
+        self.assertEqual(len(self.victim.hand), 5)
+        self.assertEqual(len(self.attacker.hand), 7)
+        self.assertEqual(self.victim.discardpile[0].name, 'Curse')
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
