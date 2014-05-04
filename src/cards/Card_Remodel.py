@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -18,5 +21,44 @@ class Card_Remodel(Card):
         if tc:
             cost = tc.cost
             player.plrGainCard(cost + 2)
+
+
+###############################################################################
+class Test_Remodel(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['remodel'])
+        self.plr = self.g.players[0]
+        self.rcard = self.g['remodel'].remove()
+
+    def test_nothing(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(self.g.trashpile, [])
+        self.assertEqual(len(self.plr.discardpile), 0)
+        self.assertEqual(len(self.plr.hand), 5)
+
+    def test_trash_gainnothing(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['1', '0']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(len(self.plr.discardpile), 0)
+        self.assertEqual(len(self.plr.hand), 4)
+
+    def test_trash_gainsomething(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['1', '1']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(len(self.plr.hand), 4)
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
