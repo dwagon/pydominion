@@ -310,6 +310,7 @@ class Player(object):
         self.t['potions'] += card.potion
         self.discardCard(card)
         self.played.append(card)
+        card.special(game=self.game, player=self)
 
     ###########################################################################
     def hook_discard(self, card):
