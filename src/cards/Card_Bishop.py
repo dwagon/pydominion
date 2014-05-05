@@ -27,7 +27,7 @@ class Card_Bishop(Card):
         if not o['card']:
             return
         points = int(o['card'].cost / 2)
-        player.basescore += points
+        player.addScore('bishop', points)
         player.output("Trashing %s for %d points" % (o['card'].name, points))
         player.trashCard(o['card'])
 

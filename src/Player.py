@@ -33,7 +33,7 @@ class Player(object):
         if not name:
             name = random.choice(playerNames)
         game.output("Player %s is at the table" % name)
-        self.basescore = 0
+        self.score = {}
         self.name = name
         self.messages = []
         self.hand = []
@@ -110,7 +110,7 @@ class Player(object):
         if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
-                self.deck.insert(self.discardpile.pop(), 0)
+                self.deck.insert(0, self.discardpile.pop())
         if not self.deck:
             self.output("No more cards in deck")
             return None
@@ -246,16 +246,22 @@ class Player(object):
         return self.userInput(options, prompt)
 
     ###########################################################################
-    def score(self, verbose=False):
+    def addScore(self, reason, points):
+        if reason not in self.score:
+            self.score[reason] = 0
+        self.score[reason] += points
+
+    ###########################################################################
+    def getScore(self, verbose=False):
         allcards = self.discardpile + self.hand + self.deck + self.played
-        score = {}
+        scr = {}
         for c in allcards:
-            score[c.name] = score.get(c.name, 0) + c.victory
-            score[c.name] = score.get(c.name, 0) + c.special_score(self.game, self)
-            score['_base'] = self.basescore
-        vp = sum(score.values())
+            scr[c.name] = scr.get(c.name, 0) + c.victory
+            scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
+        scr.update(self.score)
+        vp = sum(scr.values())
         if verbose:
-            self.game.output("%s: %s" % (self.name, score))
+            self.game.output("%s: %s" % (self.name, scr))
         return vp
 
     ###########################################################################
@@ -273,7 +279,7 @@ class Player(object):
     def turn(self):
         self.played = []
         self.output("#" * 80)
-        self.output("%s Turn (%d points)" % (self.name, self.score()))
+        self.output("%s Turn (%d points)" % (self.name, self.getScore()))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
         self.turnstats = {'actions': 0, 'buys': 0}
         while(1):

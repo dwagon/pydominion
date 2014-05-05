@@ -5,6 +5,7 @@ class Card_Goons(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'prosperity'
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6
@@ -24,6 +25,6 @@ class Card_Goons(Card):
     def hook_buyCard(self, game, player, card):
         """ While this card is in play, when you buy a card +1 VP """
         player.output("Scored 1 more from goons")
-        player.basescore += 1
+        player.addScore('goons', 1)
 
 #EOF

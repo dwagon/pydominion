@@ -123,6 +123,7 @@ class Game(object):
             print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
             print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
             print "%s's messages: %s" % (p.name, p.messages)
+            print "%s's turn: %s" % (p.name, p.t)
 
     ###########################################################################
     def playerToLeft(self, plr):
@@ -134,7 +135,7 @@ class Game(object):
     def whoWon(self):
         scores = {}
         for plr in self.players:
-            scores[plr.name] = plr.score(verbose=True)
+            scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
     ###########################################################################
