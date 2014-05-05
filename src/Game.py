@@ -174,8 +174,11 @@ def runGame(args):
             cards.append(line.strip())
     g = Game(prosperity=args.prosperity)
     g.startGame(numplayers=args.numplayers, initcards=cards, cardpath=args.cardpath, cardbase=args.cardbase)
-    while not g.gameover:
-        g.turn()
+    try:
+        while not g.gameover:
+            g.turn()
+    except KeyboardInterrupt:
+        pass
     g.whoWon()
 
 
