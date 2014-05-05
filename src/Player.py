@@ -110,7 +110,7 @@ class Player(object):
         if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
-                self.deck.append(self.discardpile.pop())
+                self.deck.insert(self.discardpile.pop(), 0)
         if not self.deck:
             self.output("No more cards in deck")
             return None
