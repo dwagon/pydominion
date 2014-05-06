@@ -47,6 +47,7 @@ class Player(object):
         self.quiet = quiet
         self.test_input = []
         self.initial_Deck()
+        self.pickUpHand()
 
     ###########################################################################
     def initial_Deck(self):
@@ -59,7 +60,6 @@ class Player(object):
         for i in range(3):
             self.deck.append(self.game['Estate'].remove())
         random.shuffle(self.deck)
-        self.pickUpHand()
 
     ###########################################################################
     def output(self, msg, end='\n'):
@@ -73,6 +73,7 @@ class Player(object):
         for c in self.hand:
             if c.cardname == card.lower():
                 return c
+        return None
 
     ###########################################################################
     def trashCard(self, c):
