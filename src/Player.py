@@ -85,6 +85,13 @@ class Player(object):
             self.hand.remove(c)
 
     ###########################################################################
+    def setPlayed(self, *cards):
+        """ This is mostly used for testing """
+        self.discardpile = []
+        for c in cards:
+            self.played.append(self.game[c].remove())
+
+    ###########################################################################
     def setDiscard(self, *cards):
         """ This is mostly used for testing """
         self.discardpile = []
