@@ -152,7 +152,6 @@ class Game(object):
 
     ###########################################################################
     def turn(self):
-        self.output("Numcards is %d (orig %d)" % (self.countCards(), self.numcards))
         assert(self.countCards() == self.numcards)
         for plr in self.players:
             plr.turn()
