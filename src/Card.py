@@ -92,4 +92,7 @@ class Card(object):
     def hook_underAttack(self, game, player):
         pass
 
+    def hook_discardCard(self, game, player):
+        pass
+
 #EOF

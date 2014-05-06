@@ -13,6 +13,7 @@ This is called after a card has been purchased, and is invoked for every card in
 
 hook_discardCard
 ----------------
+This is called when this card is discarded.
 
 hook_spendValue
 ---------------

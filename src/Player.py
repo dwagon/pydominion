@@ -153,6 +153,7 @@ class Player(object):
     ###########################################################################
     def discardCard(self, c):
         self.hand.remove(c)
+        self.hook_discardCard(c)
         self.addCard(c, 'discard')
 
     ###########################################################################
@@ -321,9 +322,9 @@ class Player(object):
         card.special(game=self.game, player=self)
 
     ###########################################################################
-    def hook_discard(self, card):
+    def hook_discardCard(self, card):
         """ A card has been discarded """
-        pass
+        card.hook_discardCard(game=self.game, player=self)
 
     ###########################################################################
     def hook_spendValue(self, card):
