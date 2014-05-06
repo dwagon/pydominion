@@ -263,10 +263,13 @@ class Player(object):
         self.score[reason] += points
 
     ###########################################################################
+    def allCards(self):
+        return self.discardpile + self.hand + self.deck + self.played
+
+    ###########################################################################
     def getScore(self, verbose=False):
-        allcards = self.discardpile + self.hand + self.deck + self.played
         scr = {}
-        for c in allcards:
+        for c in self.allCards():
             scr[c.name] = scr.get(c.name, 0) + c.victory
             scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
         scr.update(self.score)
@@ -468,8 +471,7 @@ class Player(object):
 
     ###########################################################################
     def countCards(self):
-        allcards = self.discardpile + self.hand + self.deck + self.played
-        return len(allcards)
+        return len(self.allCards())
 
     ###########################################################################
     def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False):
