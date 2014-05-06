@@ -160,18 +160,18 @@ class Player(object):
 
     ###########################################################################
     def discardCard(self, c):
-        self.hand.remove(c)
-        self.hook_discardCard(c)
+        if c in self.hand:
+            self.hand.remove(c)
         self.addCard(c, 'discard')
 
     ###########################################################################
     def discardHand(self):
-        for c in self.hand[:]:
-            self.discardCard(c)
-        self.hand = []
-        for c in self.played[:]:
-            self.addCard(c, 'discard')
-        self.played = []
+        for c in self.hand + self.played:
+            self.hook_discardCard(c)
+        while self.hand:
+            self.discardCard(self.hand.pop())
+        while self.played:
+            self.discardCard(self.played.pop())
 
     ###########################################################################
     def userInput(self, options, prompt):
