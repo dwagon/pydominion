@@ -458,6 +458,11 @@ class Player(object):
         return self.cardsAffordable(operator.eq, gold, potions, actiononly)
 
     ###########################################################################
+    def countCards(self):
+        allcards = self.discardpile + self.hand + self.deck + self.played
+        return len(allcards)
+
+    ###########################################################################
     def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False):
         """ Gain a card of 'chooser's choice up to cost gold
         if actiononly then gain only action cards

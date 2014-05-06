@@ -34,6 +34,17 @@ class Game(object):
             except IndexError:
                 name = None
             self.players.append(Player(game=self, quiet=self.quiet, name=name))
+        self.numcards = self.countCards()
+
+    ###########################################################################
+    def countCards(self):
+        count = 0
+        count += len(self.trashpile)
+        for cp in self.cardpiles.values():
+            count += cp.numcards
+        for pl in self.players:
+            count += pl.countCards()
+        return count
 
     ###########################################################################
     def output(self, msg):
