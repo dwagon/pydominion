@@ -134,16 +134,20 @@ class Game(object):
     ###########################################################################
     def whoWon(self):
         scores = {}
+        self.output("")
         for plr in self.players:
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
     ###########################################################################
     def turn(self):
+        self.output("Numcards is %d (orig %d)" % (self.countCards(), self.numcards))
+        assert(self.countCards() == self.numcards)
         for plr in self.players:
             plr.turn()
-        if self.isGameOver():
-            self.gameover = True
+            if self.isGameOver():
+                self.gameover = True
+                break
 
 
 ###############################################################################
