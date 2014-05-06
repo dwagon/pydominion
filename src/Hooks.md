@@ -23,6 +23,7 @@ Return the delta. So 0 for no change.
 
 hook_purchasedCard
 ------------------
+Triggered when a card is purchased
 
 hook_gainCard
 -------------
@@ -31,4 +32,9 @@ It returns a dictionary of modifiers.
 
 Currently:
     destination - if set then put the card in the destination pile
+
+hook_goldvalue
+--------------
+How much this card is worth
+
 #EOF
