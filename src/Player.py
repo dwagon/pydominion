@@ -159,8 +159,10 @@ class Player(object):
     def discardHand(self):
         for c in self.hand[:]:
             self.discardCard(c)
+        self.hand = []
         for c in self.played[:]:
             self.addCard(c, 'discard')
+        self.played = []
 
     ###########################################################################
     def userInput(self, options, prompt):
@@ -314,8 +316,8 @@ class Player(object):
     def spendCard(self, card):
         self.t['gold'] += self.hook_spendValue(card)
         self.t['potions'] += card.potion
-        self.discardCard(card)
-        self.played.append(card)
+        self.addCard(card, 'played')
+        self.hand.remove(card)
         card.special(game=self.game, player=self)
 
     ###########################################################################
