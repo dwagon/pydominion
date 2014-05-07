@@ -293,7 +293,8 @@ class Player(object):
     def turn(self):
         self.played = []
         self.output("#" * 80)
-        self.output("%s Turn (%d points)" % (self.name, self.getScore()))
+        stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
+        self.output("%s Turn %s" % (self.name, stats))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
         self.turnstats = {'actions': 0, 'buys': 0}
         while(1):
@@ -474,7 +475,7 @@ class Player(object):
         return len(self.allCards())
 
     ###########################################################################
-    def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False):
+    def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False, destination='discard'):
         """ Gain a card of 'chooser's choice up to cost gold
         if actiononly then gain only action cards
         """
@@ -500,7 +501,7 @@ class Player(object):
 
         o = chooser.userInput(options, "What card do you wish?")
         if o['card']:
-            self.addCard(o['card'].remove())
+            self.addCard(o['card'].remove(), destination)
             return o['card']
 
     ###########################################################################
