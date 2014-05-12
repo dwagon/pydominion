@@ -37,4 +37,8 @@ hook_goldvalue
 --------------
 How much this card is worth
 
+setup
+-----
+Any setup required before the game starts, but after all the card piles and players have been setup
+
 #EOF

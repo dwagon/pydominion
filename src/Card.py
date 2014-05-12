@@ -35,6 +35,9 @@ class Card(object):
     def special(self, game, player):
         pass
 
+    def setup(self, game):
+        pass
+
     def hasDefense(self):
         return self.defense
 

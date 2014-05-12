@@ -35,6 +35,13 @@ class Game(object):
                 name = None
             self.players.append(Player(game=self, quiet=self.quiet, name=name))
         self.numcards = self.countCards()
+        self.cardSetup()
+
+    ###########################################################################
+    def cardSetup(self):
+        """ Run the setup() method for all cards """
+        for cp in self.cardpiles.values():
+            cp.setup(game=self)
 
     ###########################################################################
     def countCards(self):
