@@ -267,12 +267,17 @@ class Player(object):
         return self.discardpile + self.hand + self.deck + self.played
 
     ###########################################################################
-    def getScore(self, verbose=False):
+    def getScoreDetails(self, verbose=False):
         scr = {}
         for c in self.allCards():
             scr[c.name] = scr.get(c.name, 0) + c.victory
             scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
         scr.update(self.score)
+        return scr
+
+    ###########################################################################
+    def getScore(self, verbose=False):
+        scr = self.getScoreDetails(verbose)
         vp = sum(scr.values())
         if verbose:
             self.game.output("%s: %s" % (self.name, scr))
