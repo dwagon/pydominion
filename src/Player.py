@@ -118,7 +118,7 @@ class Player(object):
         if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
-                self.deck.insert(0, self.discardpile.pop())
+                self.addCard(self.discardpile.pop(), 'deck')
         if not self.deck:
             self.output("No more cards in deck")
             return None
@@ -153,8 +153,10 @@ class Player(object):
             self.discardpile.append(c)
         elif pile == 'hand':
             self.hand.append(c)
-        elif pile == 'deck':
+        elif pile == 'topdeck':
             self.deck.append(c)
+        elif pile == 'deck':
+            self.deck.insert(0, c)
         elif pile == 'played':
             self.played.append(c)
 
