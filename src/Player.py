@@ -427,10 +427,14 @@ class Player(object):
         return False
 
     ###########################################################################
-    def plrTrashCard(self, printcost=False):
+    def plrTrashCard(self, printcost=False, force=False):
         """ Ask player to trash a single card """
         self.output("Trash a card")
-        options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
+        if force:
+            options = []
+        else:
+            options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
+
         index = 1
         for c in self.hand:
             sel = "%d" % index
