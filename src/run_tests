@@ -1,0 +1,17 @@
+#!/bin/sh
+
+./Tests.py
+
+export PYTHONPATH=.
+for c in ./cards/*.py
+    do
+        if [ -x $c ]; then
+            echo "Running Tests for ${c}"
+            ${c}
+            if [ $? -ne 0 ]; then
+                exit
+            fi
+        fi
+    done
+
+#EOF
