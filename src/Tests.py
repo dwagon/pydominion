@@ -14,7 +14,6 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(self.plr.played, [])
         self.assertEqual(self.plr.discardpile, [])
-        self.g.print_state()
 
     def test_initialDeck(self):
         self.plr.deck = []
@@ -27,6 +26,15 @@ class TestPlayer(unittest.TestCase):
         self.plr.trashCard(card)
         self.assertEqual(numcards, self.g.countCards())
         self.assertEqual(self.g.trashpile[0], card)
+
+    def test_deckorder(self):
+        self.plr.deck = []
+        estate = self.g['estate'].remove()
+        gold = self.g['gold'].remove()
+        self.plr.addCard(estate, 'deck')
+        self.plr.addCard(gold, 'topdeck')
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Gold')
 
 ###############################################################################
 if __name__ == "__main__":
