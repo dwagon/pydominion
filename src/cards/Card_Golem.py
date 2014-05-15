@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -26,9 +29,42 @@ class Card_Golem(Card):
                 actions.append(c)
             else:
                 player.output("Drew and discarded %s" % c.name)
+                player.discardCard(c)
         # TODO - let the player choose the order
         for card in actions:
             player.output("Playing %s" % c.name)
-            player.playCard(card, costAction=False, discard=False)
+            player.playCard(card, costAction=False)
+
+
+###############################################################################
+class Test_Golem(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['golem', 'village', 'moat'])
+        self.plr = self.g.players[0]
+        self.golem = self.g['golem'].remove()
+
+    def test_actions(self):
+        """ Ensure two actions are picked up and played, others are discarded """
+        self.plr.setHand()
+        self.plr.setDeck('gold', 'gold', 'gold', 'village', 'moat', 'estate', 'copper')
+        self.plr.addCard(self.golem, 'hand')
+        self.plr.playCard(self.golem)
+        self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
+        self.assertEqual(['Copper', 'Estate'], [c.name for c in self.plr.discardpile])
+
+    def test_golem(self):
+        """ Ensure golem isn't picked up """
+        self.plr.setHand()
+        self.plr.setDeck('gold', 'gold', 'gold', 'village', 'golem', 'moat', 'estate', 'copper')
+        self.plr.addCard(self.golem, 'hand')
+        self.plr.playCard(self.golem)
+        self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
+        self.assertEqual(['Copper', 'Estate', 'Golem'], [c.name for c in self.plr.discardpile])
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
