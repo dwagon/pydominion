@@ -131,6 +131,9 @@ class Player(object):
         """ Pick a card from the deck and put it into the players hand """
         if not card:
             card = self.nextCard()
+            if not card:
+                self.output("No more cards to pickup")
+                return None
         self.addCard(card, 'hand')
         if verbose:
             self.output("Picked up %s" % card.name)
@@ -430,8 +433,12 @@ class Player(object):
         return False
 
     ###########################################################################
-    def plrTrashCard(self, printcost=False, force=False):
-        """ Ask player to trash a single card """
+    def plrTrashCard(self, printcost=False, force=False, exclude=[]):
+        """ Ask player to trash a single card
+            force - must trash a card, otherwise have option not to trash
+            printcost - print the cost of the card being trashed
+            exclude - can't select a card in the exclude list to be trashed
+        """
         self.output("Trash a card")
         if force:
             options = []
@@ -440,6 +447,8 @@ class Player(object):
 
         index = 1
         for c in self.hand:
+            if exclude and c.name in exclude:
+                continue
             sel = "%d" % index
             if printcost:
                 pr = "Trash %s (%d gold)" % (c.name, self.cardCost(c))
