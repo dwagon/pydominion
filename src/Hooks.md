@@ -10,7 +10,6 @@ hook_buyCard
 ------------
 This is called after a card has been purchased, and is invoked for every card in the players hand.
 
-
 hook_discardCard
 ----------------
 This is called when this card is discarded.
@@ -36,6 +35,10 @@ Currently:
 hook_goldvalue
 --------------
 How much this card is worth
+
+hook_trashCard
+--------------
+Called just before the card is trashed
 
 setup
 -----

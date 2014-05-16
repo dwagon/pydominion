@@ -78,6 +78,7 @@ class Player(object):
     ###########################################################################
     def trashCard(self, c):
         """ Take a card out of the game """
+        c.hook_trashCard(game=self.game, player=self)
         self.game.trashpile.append(c)
         if c in self.played:
             self.played.remove(c)

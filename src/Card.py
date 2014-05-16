@@ -98,4 +98,7 @@ class Card(object):
     def hook_discardCard(self, game, player):
         pass
 
+    def hook_trashCard(self, game, player):
+        pass
+
 #EOF
