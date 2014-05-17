@@ -127,7 +127,7 @@ class Player(object):
         return c
 
     ###########################################################################
-    def pickupCard(self, card=None, verbose=True):
+    def pickupCard(self, card=None, verbose=True, verb='Picked up'):
         """ Pick a card from the deck and put it into the players hand """
         if not card:
             card = self.nextCard()
@@ -136,7 +136,7 @@ class Player(object):
                 return None
         self.addCard(card, 'hand')
         if verbose:
-            self.output("Picked up %s" % card.name)
+            self.output("%s %s" % (verb, card.name))
         return card
 
     ###########################################################################
