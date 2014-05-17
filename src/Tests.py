@@ -36,14 +36,70 @@ class TestPlayer(unittest.TestCase):
         c = self.plr.nextCard()
         self.assertEqual(c.name, 'Gold')
 
-    def test_plrTrashCard_None(self):
+
+###############################################################################
+class Test_cardsAffordable(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_under(self):
+        price = 4
+        ans = self.plr.cardsUnder(price, types={'action': True})
+        for a in ans:
+            self.assertLessEqual(a.cost, price)
+            self.assertTrue(a.isAction())
+
+    def test_worth(self):
+        price = 5
+        ans = self.plr.cardsWorth(price, types={'victory': True})
+        for a in ans:
+            self.assertEqual(a.cost, price)
+            self.assertTrue(a.isVictory())
+
+
+###############################################################################
+class Test_typeSelector(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_selzero(self):
+        x = self.plr.typeSelector({})
+        self.assertTrue(x['action'])
+        self.assertTrue(x['treasure'])
+        self.assertTrue(x['victory'])
+
+    def test_selone(self):
+        x = self.plr.typeSelector({'action': True})
+        self.assertTrue(x['action'])
+        self.assertFalse(x['treasure'])
+        self.assertFalse(x['victory'])
+
+    def test_seltwo(self):
+        x = self.plr.typeSelector({'action': True, 'victory': True})
+        self.assertTrue(x['action'])
+        self.assertFalse(x['treasure'])
+        self.assertTrue(x['victory'])
+
+
+###############################################################################
+class Test_plrTrashCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_None(self):
         self.plr.setHand('gold')
         self.plr.test_input = ['0']
         x = self.plr.plrTrashCard()
         self.assertEqual(x, None)
         self.assertEqual(self.g.trashpile, [])
 
-    def test_plrTrashCard_Trash(self):
+    def test_Trash(self):
         self.plr.setHand('gold')
         self.plr.test_input = ['1']
         x = self.plr.plrTrashCard()
@@ -51,7 +107,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.g.trashpile), 1)
         self.assertEqual(self.g.trashpile[-1].name, 'Gold')
 
-    def test_plrTrashCard_Force(self):
+    def test_Force(self):
         self.plr.setHand('gold')
         self.plr.test_input = ['0', '1']
         x = self.plr.plrTrashCard(force=True)
@@ -66,7 +122,7 @@ class TestPlayer(unittest.TestCase):
             if 'Trash nothing' in m:
                 self.fail("Nothing available")
 
-    def test_plrTrashCard_exclude(self):
+    def test_exclude(self):
         self.plr.setHand('gold', 'gold', 'copper')
         self.plr.test_input = ['1']
         x = self.plr.plrTrashCard(exclude=['Gold'])

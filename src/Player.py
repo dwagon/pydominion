@@ -464,14 +464,18 @@ class Player(object):
         return trash
 
     ###########################################################################
-    def cardsAffordable(self, oper, gold, potions=0, actiononly=False):
+    def cardsAffordable(self, oper, gold, potions=0, types={}):
         """Return the list of cards for under cost """
         affordable = []
         for c in self.game.cardTypes():
             cost = self.cardCost(c)
             if not c.purchasable:
                 continue
-            if actiononly and not c.isAction():
+            if c.isAction() and not types['action']:
+                continue
+            if c.isVictory() and not types['victory']:
+                continue
+            if c.isTreasure() and not types['treasure']:
                 continue
             if not c.numcards:
                 continue
@@ -482,24 +486,35 @@ class Player(object):
         return affordable
 
     ###########################################################################
-    def cardsUnder(self, gold, potions=0, actiononly=False):
+    def cardsUnder(self, gold, potions=0, types={}):
         """Return the list of cards for under cost """
-        return self.cardsAffordable(operator.le, gold, potions, actiononly)
+        types = self.typeSelector(types)
+        return self.cardsAffordable(operator.le, gold, potions, types)
 
     ###########################################################################
-    def cardsWorth(self, gold, potions=0, actiononly=False):
+    def cardsWorth(self, gold, potions=0, types={}):
         """Return the list of cards that are exactly cost """
-        return self.cardsAffordable(operator.eq, gold, potions, actiononly)
+        types = self.typeSelector(types)
+        return self.cardsAffordable(operator.eq, gold, potions, types)
 
     ###########################################################################
     def countCards(self):
         return len(self.allCards())
 
     ###########################################################################
-    def plrGainCard(self, cost, modifier='less', actiononly=False, chooser=None, force=False, destination='discard'):
+    def typeSelector(self, types):
+        if not types:
+            return {'action': True, 'victory': True, 'treasure': True}
+        _types = {'action': False, 'victory': False, 'treasure': False}
+        _types.update(types)
+        return _types
+
+    ###########################################################################
+    def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
         """ Gain a card of 'chooser's choice up to cost gold
         if actiononly then gain only action cards
         """
+        types = self.typeSelector(types)
         if not chooser:
             chooser = self
         options = []
@@ -507,10 +522,10 @@ class Player(object):
             options.append({'selector': '0', 'print': 'Nothing', 'card': None})
         if modifier == 'less':
             self.output("Gain a card costing up to %d" % cost)
-            buyable = self.cardsUnder(cost, actiononly=actiononly)
+            buyable = self.cardsUnder(cost, types=types)
         elif modifier == 'equal':
             self.output("Gain a card costing exactly %d" % cost)
-            buyable = self.cardsWorth(cost, actiononly=actiononly)
+            buyable = self.cardsWorth(cost, types=types)
         else:
             self.output("Unhandled modifier: %s" % modifier)
         index = 1
