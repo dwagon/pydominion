@@ -31,7 +31,7 @@ class Card_Alchemist(Card):
         o = player.userInput(options, 'What to do with the alchemist?')
         if o['todeck']:
             player.played.remove(self)
-            player.addCard(self, 'deck')
+            player.addCard(self, 'topdeck')
 
 
 ###############################################################################
@@ -42,16 +42,20 @@ class Test_Alchemist(unittest.TestCase):
         self.g.startGame(numplayers=1, initcards=['alchemist'])
         self.plr = self.g.players[0]
         self.alchemist = self.g['alchemist'].remove()
+        self.plr.addCard(self.alchemist, 'hand')
+
+    def test_play(self):
+        self.plr.playCard(self.alchemist)
+        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(len(self.plr.hand), 7)
 
     def test_nopotion(self):
-        self.plr.addCard(self.alchemist, 'hand')
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
         self.plr.setPlayed('potion')
-        self.plr.addCard(self.alchemist, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
@@ -64,7 +68,6 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_keep(self):
         self.plr.setPlayed('potion')
-        self.plr.addCard(self.alchemist, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
