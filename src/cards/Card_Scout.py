@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -27,4 +30,41 @@ class Card_Scout(Card):
         for c in cards:
             player.output("Putting %s back on deck" % c.name)
             player.addCard(c, 'deck')
+
+
+###############################################################################
+class Test_Scout(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['scout'])
+        self.plr = self.g.players[0]
+        self.scout = self.g['scout'].remove()
+
+    def test_play(self):
+        self.plr.addCard(self.scout, 'hand')
+        self.plr.playCard(self.scout)
+        self.assertEqual(self.plr.t['actions'], 1)
+
+    def test_victory(self):
+        self.plr.setHand()
+        self.plr.addCard(self.scout, 'hand')
+        self.plr.playCard(self.scout)
+        for c in self.plr.hand:
+            self.assertTrue(c.isVictory())
+
+    def test_deck(self):
+        self.plr.setHand()
+        self.plr.addCard(self.scout, 'hand')
+        self.plr.setDeck('copper', 'copper', 'copper', 'duchy')
+        self.plr.playCard(self.scout)
+        self.assertEqual(self.plr.hand[0].name, 'Duchy')
+        for c in self.plr.deck:
+            self.assertEqual(c.name, 'Copper')
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
+
 #EOF
