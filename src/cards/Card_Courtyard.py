@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -24,6 +27,37 @@ class Card_Courtyard(Card):
         if not o['card']:
             return
         player.addCard(o['card'], 'deck')
+        player.hand.remove(o['card'])
         player.output("Put %s on top of deck" % o['card'].name)
+
+
+###############################################################################
+class Test_Courtyard(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['courtyard'])
+        self.plr = self.g.players[0]
+        self.cy = self.g['courtyard'].remove()
+
+    def test_play(self):
+        self.plr.addCard(self.cy, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.cy)
+        self.assertEqual(len(self.plr.hand), 8)
+
+    def test_putcard(self):
+        self.plr.setHand('gold')
+        self.plr.addCard(self.cy, 'hand')
+        self.plr.test_input = ['1']
+        self.plr.playCard(self.cy)
+        self.assertEqual(self.plr.deck[0].name, 'Gold')
+        for c in self.plr.hand:
+            self.assertNotEqual(c.name, 'Gold')
+        self.assertEqual(len(self.plr.hand), 3)
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
