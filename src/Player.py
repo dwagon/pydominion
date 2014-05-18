@@ -147,7 +147,7 @@ class Player(object):
     ###########################################################################
     def pickUpHand(self, handsize=5):
         while len(self.hand) < handsize:
-            self.pickupCard()
+            self.pickupCard(verb='Dealt')
 
     ###########################################################################
     def addCard(self, c, pile='discard'):
