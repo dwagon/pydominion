@@ -98,7 +98,13 @@ class Game(object):
 
     ###########################################################################
     def addRuins(self):
-        self.cardpiles['ruin'] = RuinCardPile(cardpath=self.cardpath, numcards=self.numCurses())
+        from RuinCardPile import RuinCardPile
+        self.cardpiles['Ruins'] = RuinCardPile(cardpath=self.cardpath, numcards=self.numCurses())
+
+    ###########################################################################
+    def addKnights(self):
+        from KnightCardPile import KnightCardPile
+        self.cardpiles['Knights'] = KnightCardPile(cardpath=self.cardpath)
 
     ###########################################################################
     def useCardPile(self, available, c):

@@ -2,6 +2,7 @@
 
 from Card import Card
 
+
 ###############################################################################
 class Card_Ruinedvillage(Card):
     def __init__(self):

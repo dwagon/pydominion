@@ -3,6 +3,7 @@ import glob
 import random
 from CardPile import CardPile
 
+
 ###############################################################################
 class RuinCardPile(CardPile):
     def __init__(self, numcards=10, cardpath='cards'):
