@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import argparse
 import glob
 import random
 import sys
@@ -27,7 +28,8 @@ class Game(object):
     def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[]):
         self.cardbase = cardbase
         self.cardpath = cardpath
-        self.loadDecks(initcards, numplayers)
+        self.numplayers = numplayers
+        self.loadDecks(initcards)
         for i in range(numplayers):
             try:
                 name = playernames.pop()
@@ -60,7 +62,7 @@ class Game(object):
             sys.stdout.write("ALL: %s\n" % msg)
 
     ###########################################################################
-    def loadDecks(self, initcards, numplayers):
+    def loadDecks(self, initcards):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12, cardpath=self.cardpath)
         self['Copper'].numcards = 60
@@ -70,6 +72,7 @@ class Game(object):
         unfilled = 10 - len(initcards)
         self.needcurse = False
         self.needpotion = False
+        self.needruins = False
         for c in initcards:
             c = c.strip().lower().title()
             if c not in available:
@@ -81,11 +84,21 @@ class Game(object):
             c = random.choice(available)
             unfilled -= self.useCardPile(available, c)
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=10*(numplayers-1), cardpath=self.cardpath)
+            self.cardpiles['Curse'] = CardPile('Curse', numcards=self.numCurses(), cardpath=self.cardpath)
             self.output("Playing with Curse")
         if self.needpotion:
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Potion")
+        if self.needruins:
+            self.addRuins()
+
+    ###########################################################################
+    def numCurses(self):
+        return 10*(self.numplayers-1)
+
+    ###########################################################################
+    def addRuins(self):
+        self.cardpiles['ruin'] = RuinCardPile(cardpath=self.cardpath, numcards=self.numCurses())
 
     ###########################################################################
     def useCardPile(self, available, c):
@@ -100,6 +113,8 @@ class Game(object):
             self.needcurse = True
         if self.cardpiles[c].potcost:
             self.needpotion = True
+        if self.cardpiles[c].isLooter():
+            self.needruins = True
         return 1
 
     ###########################################################################
@@ -169,7 +184,6 @@ class Game(object):
 
 ###############################################################################
 def parseArgs():
-    import argparse
     parser = argparse.ArgumentParser(description='Play dominion')
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')

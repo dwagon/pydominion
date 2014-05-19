@@ -46,6 +46,11 @@ class Card(object):
             return True
         return False
 
+    def isLooter(self):
+        if 'looter' in self.cardtype:
+            return True
+        return False
+
     def isAction(self):
         if 'action' in self.cardtype:
             return True

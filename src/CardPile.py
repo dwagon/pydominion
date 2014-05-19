@@ -3,15 +3,23 @@ import imp
 
 class CardPile(object):
     def __init__(self, cardname, numcards=10, cardpath='cards'):
-        try:
-            fp, pathname, description = imp.find_module("Card_%s" % cardname, [cardpath, 'cards'])
-        except ImportError:
-            fp, pathname, description = imp.find_module("BaseCard_%s" % cardname, [cardpath, 'cards'])
-        cardmodule = imp.load_module(cardname, fp, pathname, description)
+        self.cardpath = cardpath
+        cardmodule = self.importCard(cardname=cardname)
         self.cardclass = getattr(cardmodule, "Card_%s" % cardname)
         self.card = self.cardclass()
         self.cardname = cardname
         self.numcards = numcards
+
+    def importCard(self, cardname=None, cardfile=None):
+        if cardfile:
+            fp, pathname, desc = imp.find_module(cardfile, [self.cardpath, 'cards'])
+        else:
+            try:
+                fp, pathname, desc = imp.find_module("Card_%s" % cardname, [self.cardpath, 'cards'])
+            except ImportError:
+                fp, pathname, desc = imp.find_module("BaseCard_%s" % cardname, [self.cardpath, 'cards'])
+        cardmodule = imp.load_module(cardname, fp, pathname, desc)
+        return cardmodule
 
     def __getattr__(self, name):
         return getattr(self.card, name)
