@@ -66,6 +66,11 @@ class Card(object):
             return True
         return False
 
+    def isKnight(self):
+        if 'knight' in self.cardtype:
+            return True
+        return False
+
     def isAttack(self):
         if 'attack' in self.cardtype:
             return True
@@ -105,5 +110,41 @@ class Card(object):
 
     def hook_trashCard(self, game, player):
         pass
+
+    def knight_special(self, game, player):
+        """ Each other player reveals the top 2 cards of his deck,
+            trashes one of them costing from 3 to 6 and discards the
+            rest. If a knight is trashed by this, trash this card """
+        for pl in game.players:
+            if pl == player:
+                continue
+            if pl.hasDefense():
+                continue
+            self.knight_attack(game, player, pl)
+
+    def knight_attack(self, game, player, victim):
+        cards = []
+        for i in range(2):
+            c = victim.nextCard()
+            if 3 <= c.cost <= 6:
+                cards.append(c)
+            else:
+                victim.discardCard(c)
+        if not cards:
+            return
+        index = 0
+        options = []
+        for c in cards:
+            sel = '%d' % index
+            index += 1
+            options.append({'selector': sel, 'print': 'Trash %s' % c.name, 'card': c})
+        o = victim.userInput(options, "Trash a card due to %s's %s" % (player.name, self.name))
+        if o['card'].isKnight():
+            player.output("%s trashed a knight: %s - trashing your %s" % (victim.name, o['card'].name, self.name))
+            player.trashCard(self)
+        victim.trashCard(o['card'])
+        for c in cards:
+            if c != o['card']:
+                victim.discardCard(c)
 
 #EOF

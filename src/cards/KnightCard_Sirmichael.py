@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+from Card import Card
+
+
+###############################################################################
+class Card_Sirmichael(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['action', 'attack', 'knight']
+        self.base = 'darkages'
+        self.name = "Sir Michael"
+        self.buys = 2
+        self.cost = 5
+
+    def special(self, game, player):
+        """ Each other player discards down to 3 cards in hand.
+
+            Each other player reveals the top 2 cards of his deck,
+            trashes one of them costing from 3 to 6 and discards the
+            rest. If a knight is trashed by this, trash this card """
+        for plr in game.players:
+            if plr == player:
+                continue
+            if plr.hasDefense():
+                continue
+            plr.plrDiscardDownTo(3)
+            self.knight_special(game, player)
+
+#EOF
