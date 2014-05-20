@@ -78,8 +78,6 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.other.hand, [])
         self.assertEqual(len(self.g.trashpile), 2)
 
-
-
 ###############################################################################
 if __name__ == "__main__":
     unittest.main()

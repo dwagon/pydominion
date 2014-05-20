@@ -52,6 +52,7 @@ class Card_Lookout(Card):
         player.discardCard(o['card'])
         return o['card']
 
+
 ###############################################################################
 class Test_Lookout(unittest.TestCase):
     def setUp(self):

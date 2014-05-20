@@ -23,7 +23,7 @@ class Card_Ironmonger(Card):
         options = [
             {'selector': '0', 'print': 'Put back %s' % card.name, 'discard': False},
             {'selector': '1', 'print': 'Discard %s' % card.name, 'discard': True}
-            ]
+        ]
         o = player.userInput(options, "What to do with %s" % card.name)
         if o['discard']:
             player.discardCard(card)
@@ -35,6 +35,7 @@ class Card_Ironmonger(Card):
             player.t['actions'] += 1
         if card.isTreasure():
             player.t['gold'] += 1
+
 
 ###############################################################################
 class Test_Ironmonger(unittest.TestCase):

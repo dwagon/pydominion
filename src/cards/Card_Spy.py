@@ -28,7 +28,7 @@ class Card_Spy(Card):
         options = [
             {'selector': '0', 'print': "Keep %s on deck" % c.name, 'discard': False},
             {'selector': '1', 'print': "Discard %s" % c.name, 'discard': True}
-            ]
+        ]
         o = attacker.userInput(options, "Discard %s card?" % vicname)
         if o['discard']:
             victim.addCard(c, 'discard')
