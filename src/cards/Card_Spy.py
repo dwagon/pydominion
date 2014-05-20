@@ -33,7 +33,7 @@ class Card_Spy(Card):
         if o['discard']:
             victim.addCard(c, 'discard')
         else:
-            victim.addCard(c, 'deck')
+            victim.addCard(c, 'topdeck')
 
 
 ###############################################################################

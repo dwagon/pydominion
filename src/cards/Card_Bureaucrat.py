@@ -18,7 +18,7 @@ class Card_Bureaucrat(Card):
         other player reveals a victory card from his hand and puts
         it on his deck (or reveals a hand with no victory cards)
         """
-        player.gainCard('silver', 'deck')
+        player.gainCard('silver', 'topdeck')
         player.output("Added silver to deck")
 
         for pl in game.players:
@@ -28,7 +28,7 @@ class Card_Bureaucrat(Card):
                 continue
             for c in pl.hand:
                 if c.isVictory():
-                    pl.addCard(c, 'deck')
+                    pl.addCard(c, 'topdeck')
                     pl.output("Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name))
                     player.output("Player %s moved a %s to the top" % (pl.name, c.name))
                     break

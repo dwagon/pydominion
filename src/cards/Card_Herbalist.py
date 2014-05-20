@@ -20,6 +20,7 @@ class Card_Herbalist(Card):
             your Treasures from play on top of your deck """
         options = [{'selector': '0', 'print': 'Do nothing', 'card': None}]
         index = 1
+        player.output("Herbalist lets you put treasures on top of deck")
         for c in player.played:
             if c.isTreasure():
                 sel = "%d" % index
@@ -27,7 +28,8 @@ class Card_Herbalist(Card):
                 index += 1
         o = player.userInput(options, "Put a card on the top of your deck?")
         if o['card']:
-            player.addCard(o['card'], 'deck')
+            player.played.remove(o['card'])
+            player.addCard(o['card'], 'topdeck')
 
 
 ###############################################################################
@@ -49,11 +51,14 @@ class Test_Herbalist(unittest.TestCase):
 
     def test_putgold(self):
         self.plr.setPlayed('gold', 'estate')
+        self.plr.hand = []
         self.plr.addCard(self.hcard, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.hcard)
         self.plr.discardHand()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
+        self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
+        self.assertEqual(len(self.plr.discardpile), 2)
         self.assertEqual(len(self.plr.deck), 6)
 
 ###############################################################################
