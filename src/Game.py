@@ -94,7 +94,9 @@ class Game(object):
 
     ###########################################################################
     def numCurses(self):
-        return 10*(self.numplayers-1)
+        # The max here is to help for testing in 1 player games
+        # so the number of curses is never 0
+        return max(10, 10 * (self.numplayers - 1))
 
     ###########################################################################
     def addRuins(self):
