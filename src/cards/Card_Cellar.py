@@ -16,27 +16,8 @@ class Card_Cellar(Card):
 
     def special(self, game, player):
         """ Discard any number of cards, +1 card per card discarded """
-        todiscard = []
-        prompt = "Select which card(s) to discard?"
-        while(1):
-            options = [{'selector': '0', 'print': 'Discard no more', 'card': None}]
-            index = 1
-            for c in player.hand:
-                s = "%s" % index
-                discstr = "Undiscard" if c in todiscard else "Discard"
-                options.append({'selector': s, 'print': '%s %s' % (discstr, c.name), 'card': c})
-                index += 1
-            o = player.userInput(options, prompt)
-            if o['card'] is None:
-                break
-            if o['card'] in todiscard:
-                todiscard.remove(o['card'])
-            else:
-                todiscard.append(o['card'])
-
+        todiscard = player.plrDiscardCards(0, anynum=True)
         for c in todiscard:
-            player.output("Discarding %s" % c.name)
-            player.discardCard(c)
             player.pickupCard()
 
 
