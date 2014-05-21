@@ -199,7 +199,7 @@ class Player(object):
         options = []
         playable = [c for c in self.hand if c.playable]
         for p in playable:
-            sel = chr(ord('a')+index)
+            sel = chr(ord('a') + index)
             pr = "Play %s (%s)" % (p.name, p.desc)
             options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
             index += 1
@@ -210,7 +210,7 @@ class Player(object):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
         if spendable:
-            sel = chr(ord('a')+index)
+            sel = chr(ord('a') + index)
             totgold = sum([self.hook_spendValue(c) for c in spendable])
             numpots = sum([1 for c in spendable if c.name == 'Potion'])
             potstr = ", %d potions" % numpots if numpots else ""
@@ -218,14 +218,14 @@ class Player(object):
             options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
             index += 1
         for s in spendable:
-            sel = chr(ord('a')+index)
+            sel = chr(ord('a') + index)
             tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
         for c in self.hand:
             if c.name == 'Potion':
-                sel = chr(ord('a')+index)
+                sel = chr(ord('a') + index)
                 tp = 'Spend %s' % s.name
                 options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
                 index += 1
@@ -238,7 +238,7 @@ class Player(object):
         for p in buyable:
             if not self.hook_allowedToBuy(p):
                 continue
-            sel = chr(ord('a')+index)
+            sel = chr(ord('a') + index)
             tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
             options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
             index += 1
@@ -548,12 +548,12 @@ class Player(object):
         return cststr.strip()
 
     ###########################################################################
-    def plrDiscardCards(self, num):
+    def plrDiscardCards(self, num, anynum=False):
         """ Get the player to discard exactly num cards """
         discard = []
         while(1):
             options = []
-            if num == len(discard) or len(self.hand) == len(discard):
+            if anynum or num == len(discard) or len(self.hand) == len(discard):
                 options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
             index = 1
             for c in self.hand:
@@ -562,8 +562,11 @@ class Player(object):
                 options.append({'selector': sel, 'print': pr, 'card': c})
                 index += 1
 
-            numleft = num - len(discard)
-            o = self.userInput(options, "Discard %s more cards." % numleft)
+            if anynum:
+                msg = "Discard which cards."
+            else:
+                msg = "Discard %s more cards." % (num - len(discard))
+            o = self.userInput(options, msg)
             if o['card']:
                 if o['card'] in discard:
                     discard.remove(o['card'])
@@ -572,7 +575,9 @@ class Player(object):
             if o['card'] is None:
                 break
         for c in discard:
+            self.output("Discarding %s" % c.name)
             self.discardCard(c)
+        return discard
 
     ###########################################################################
     def plrDiscardDownTo(self, num):

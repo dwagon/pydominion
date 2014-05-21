@@ -3,6 +3,8 @@
 import unittest
 import Game
 
+
+###############################################################################
 class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
@@ -10,17 +12,20 @@ class TestPlayer(unittest.TestCase):
         self.plr = self.g.players[0]
 
     def test_initialCardStacks(self):
+        """ Make sure initial hands are correct """
         self.assertEqual(len(self.plr.deck), 5)
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(self.plr.played, [])
         self.assertEqual(self.plr.discardpile, [])
 
     def test_initialDeck(self):
+        """ Ensure initial player decks are correct """
         self.plr.deck = []
         self.plr.initial_Deck()
         self.assertEqual(len(self.plr.deck), 10)
 
     def test_trashcard(self):
+        """ Test that trashing a card works """
         numcards = self.g.countCards()
         card = self.plr.hand[0]
         self.plr.trashCard(card)
@@ -28,6 +33,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.g.trashpile[0], card)
 
     def test_deckorder(self):
+        """ Ensure adding cards to decks in the correct order """
         self.plr.deck = []
         estate = self.g['estate'].remove()
         gold = self.g['gold'].remove()
@@ -128,6 +134,40 @@ class Test_plrTrashCard(unittest.TestCase):
         x = self.plr.plrTrashCard(exclude=['Gold'])
         self.assertEqual(x.name, 'Copper')
         self.assertEqual(self.g.trashpile[-1].name, 'Copper')
+
+
+###############################################################################
+class Test_plrDiscardCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_discardNone(self):
+        self.plr.setHand('copper', 'estate', 'province', 'gold')
+        self.plr.test_input = ['0']
+        x = self.plr.plrDiscardCards(0)
+        self.assertEqual(x, [])
+        self.assertEqual(len(self.plr.hand), 4)
+        self.assertEqual(self.plr.discardpile, [])
+
+    def test_discardOne(self):
+        self.plr.setHand('copper', 'estate', 'province', 'gold')
+        self.plr.test_input = ['1', '0']
+        x = self.plr.plrDiscardCards(1)
+        self.assertEqual(len(x), 1)
+        self.assertEqual(len(self.plr.hand), 3)
+        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(x, self.plr.discardpile)
+
+    def test_discardAnynum(self):
+        self.plr.setHand('copper', 'estate', 'province', 'gold')
+        self.plr.test_input = ['1', '0']
+        x = self.plr.plrDiscardCards(0, anynum=True)
+        self.assertEqual(len(x), 1)
+        self.assertEqual(len(self.plr.hand), 3)
+        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(x, self.plr.discardpile)
 
 
 ###############################################################################
