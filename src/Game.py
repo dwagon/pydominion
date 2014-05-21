@@ -164,7 +164,10 @@ class Game(object):
             print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
             print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
             print "%s's messages: %s" % (p.name, p.messages)
+            print "%s's score: %s" % (p.name, p.score)
             print "%s's turn: %s" % (p.name, p.t)
+        cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
+        print "%s" % ", ".join(cpls)
 
     ###########################################################################
     def playerToLeft(self, plr):
