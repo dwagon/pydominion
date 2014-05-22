@@ -27,9 +27,10 @@ class Card_Bishop(Card):
 
     def trashOwnCard(self, game, player):
         player.output("Gain VP worth half the cost of the card you trash")
-        card = player.plrTrashCard(printcost=True)
-        if not card:
+        tc = player.plrTrashCard(printcost=True)
+        if not tc:
             return
+        card = tc[0]
         points = int(card.cost / 2)
         player.addScore('bishop', points)
         player.output("Trashing %s for %d points" % (card.name, points))

@@ -102,14 +102,21 @@ class Test_plrTrashCard(unittest.TestCase):
         self.plr.setHand('gold')
         self.plr.test_input = ['0']
         x = self.plr.plrTrashCard()
-        self.assertEqual(x, None)
+        self.assertEqual(x, [])
         self.assertEqual(self.g.trashpile, [])
+
+    def test_Two(self):
+        self.plr.setHand('gold', 'copper', 'silver')
+        self.plr.test_input = ['1', '2', '0']
+        x = self.plr.plrTrashCard(num=2)
+        self.assertEqual(len(x), 2)
+        self.assertEqual(self.g.trashpile, x)
 
     def test_Trash(self):
         self.plr.setHand('gold')
         self.plr.test_input = ['1']
         x = self.plr.plrTrashCard()
-        self.assertEqual(x.name, 'Gold')
+        self.assertEqual(x[0].name, 'Gold')
         self.assertEqual(len(self.g.trashpile), 1)
         self.assertEqual(self.g.trashpile[-1].name, 'Gold')
 
@@ -117,7 +124,7 @@ class Test_plrTrashCard(unittest.TestCase):
         self.plr.setHand('gold')
         self.plr.test_input = ['0', '1']
         x = self.plr.plrTrashCard(force=True)
-        self.assertEqual(x.name, 'Gold')
+        self.assertEqual(x[0].name, 'Gold')
         self.assertEqual(self.g.trashpile[-1].name, 'Gold')
         for m in self.plr.messages:
             if 'Invalid Option' in m:
@@ -132,7 +139,7 @@ class Test_plrTrashCard(unittest.TestCase):
         self.plr.setHand('gold', 'gold', 'copper')
         self.plr.test_input = ['1']
         x = self.plr.plrTrashCard(exclude=['Gold'])
-        self.assertEqual(x.name, 'Copper')
+        self.assertEqual(x[0].name, 'Copper')
         self.assertEqual(self.g.trashpile[-1].name, 'Copper')
 
 

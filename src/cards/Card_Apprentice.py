@@ -17,9 +17,10 @@ class Card_Apprentice(Card):
     def special(self, game, player):
         """ Trash a card from your hand. +1 Card per gold it costs.
             +2 Cards if it has potion it its cost """
-        c = player.plrTrashCard()
-        if not c:
+        tc = player.plrTrashCard()
+        if not tc:
             return
+        c = tc[0]
         numcards = c.cost
         if c.potcost:
             numcards += 2

@@ -433,34 +433,41 @@ class Player(object):
         return False
 
     ###########################################################################
-    def plrTrashCard(self, printcost=False, force=False, exclude=[]):
-        """ Ask player to trash a single card
+    def plrTrashCard(self, num=1, printcost=False, force=False, exclude=[]):
+        """ Ask player to trash num cards
             force - must trash a card, otherwise have option not to trash
             printcost - print the cost of the card being trashed
             exclude - can't select a card in the exclude list to be trashed
         """
-        self.output("Trash a card")
-        if force:
+        self.output("Trash %d cards" % num)
+        trash = []
+        while(True):
             options = []
-        else:
-            options = [{'selector': '0', 'print': 'Trash nothing', 'card': None}]
+            if num == len(trash) or not force:
+                options = [{'selector': '0', 'print': 'Finish Trashing', 'card': None}]
 
-        index = 1
-        for c in self.hand:
-            if exclude and c.name in exclude:
-                continue
-            sel = "%d" % index
-            if printcost:
-                pr = "Trash %s (%d gold)" % (c.name, self.cardCost(c))
-            else:
-                pr = "Trash %s" % c.name
-            options.append({'selector': sel, 'print': pr, 'card': c})
-            index += 1
-        o = self.userInput(options, "Trash which card?")
-        if not o['card']:
-            return
-        trash = o['card']
-        self.trashCard(trash)
+            index = 1
+            for c in self.hand:
+                if exclude and c.name in exclude:
+                    continue
+                sel = "%d" % index
+                if c in trash:
+                    verb = "Trash"
+                else:
+                    verb = "Untrash"
+                pr = "%s %s" % (verb, c.name)
+                if printcost:
+                    pr += " (%d gold)" % self.cardCost(c)
+                options.append({'selector': sel, 'print': pr, 'card': c})
+                index += 1
+            o = self.userInput(options, "Trash which card?")
+            if not o['card']:
+                break
+            trash.append(o['card'])
+            if num == 1 and len(trash) == 1:
+                break
+        for c in trash:
+            self.trashCard(c)
         return trash
 
     ###########################################################################
@@ -551,7 +558,7 @@ class Player(object):
     def plrDiscardCards(self, num, anynum=False):
         """ Get the player to discard exactly num cards """
         discard = []
-        while(1):
+        while(True):
             options = []
             if anynum or num == len(discard) or len(self.hand) == len(discard):
                 options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
