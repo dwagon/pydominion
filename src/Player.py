@@ -433,28 +433,30 @@ class Player(object):
         return False
 
     ###########################################################################
-    def plrTrashCard(self, num=1, printcost=False, force=False, exclude=[]):
+    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
         """ Ask player to trash num cards
             force - must trash a card, otherwise have option not to trash
             printcost - print the cost of the card being trashed
             exclude - can't select a card in the exclude list to be trashed
         """
-        self.output("Trash %d cards" % num)
+        if anynum:
+            self.output("Trash any cards")
+        else:
+            self.output("Trash %d cards" % num)
         trash = []
         while(True):
             options = []
-            if num == len(trash) or not force:
+            if num == len(trash) or not force or anynum:
                 options = [{'selector': '0', 'print': 'Finish Trashing', 'card': None}]
-
             index = 1
             for c in self.hand:
                 if exclude and c.name in exclude:
                     continue
                 sel = "%d" % index
                 if c in trash:
-                    verb = "Trash"
-                else:
                     verb = "Untrash"
+                else:
+                    verb = "Trash"
                 pr = "%s %s" % (verb, c.name)
                 if printcost:
                     pr += " (%d gold)" % self.cardCost(c)
