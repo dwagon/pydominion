@@ -34,6 +34,9 @@ class CardPile(object):
         else:
             return None
 
+    def add(self):
+        self.numcards += 1
+
     def __repr__(self):
         return "CardPile %s: %d" % (self.name, self.numcards)
 

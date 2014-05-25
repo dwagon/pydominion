@@ -71,6 +71,7 @@ class Game(object):
         available = self.getAvailableCards()
         unfilled = 10 - len(initcards)
         self.needcurse = False
+        self.needspoils = False
         self.needpotion = False
         self.needruins = False
         for c in initcards:
@@ -89,6 +90,10 @@ class Game(object):
         if self.needpotion:
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Potion")
+        if self.needspoils:
+            print "Playing with spoils"
+            self.cardpiles['Spoils'] = CardPile('Spoils', numcards=16, cardpath=self.cardpath)
+            self.output("Playing with Spoils")
         if self.needruins:
             self.addRuins()
 
@@ -123,6 +128,8 @@ class Game(object):
             self.needpotion = True
         if self.cardpiles[c].isLooter():
             self.needruins = True
+        if self.cardpiles[c].needspoils:
+            self.needspoils = True
         return 1
 
     ###########################################################################
@@ -220,7 +227,8 @@ def runGame(args):
         for line in args.cardset:
             cards.append(line.strip())
     g = Game(prosperity=args.prosperity)
-    g.startGame(numplayers=args.numplayers, initcards=cards, cardpath=args.cardpath, cardbase=args.cardbase)
+    g.startGame(numplayers=args.numplayers, initcards=cards,
+                cardpath=args.cardpath, cardbase=args.cardbase)
     try:
         while not g.gameover:
             g.turn()
