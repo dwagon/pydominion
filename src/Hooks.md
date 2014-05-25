@@ -26,11 +26,16 @@ Triggered when a card is purchased
 
 hook_gainCard
 -------------
-This is triggered every time you gain a card from a cardpile.
+This hook is triggered for every card in play when you gain
+another card.
 It returns a dictionary of modifiers.
 
 Currently:
     destination - if set then put the card in the destination pile
+
+hook_gainThisCard
+-------------
+This is triggered when the card is gained
 
 hook_goldvalue
 --------------

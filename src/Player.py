@@ -385,18 +385,20 @@ class Player(object):
         return max(0, cost)
 
     ###########################################################################
-    def gainCard(self, cardpile, destination='discard'):
+    def gainCard(self, cardpile=None, newcard=None, destination='discard'):
         """ Add a new card to the players set of cards from a cardpile """
-        if isinstance(cardpile, str):
-            newcard = self.game[cardpile].remove()
-        else:
-            newcard = cardpile.remove()
+        if not newcard:
+            if isinstance(cardpile, str):
+                newcard = self.game[cardpile].remove()
+            else:
+                newcard = cardpile.remove()
         options = self.hook_gainCard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
             return
         if 'destination' in options:
             destination = options['destination']
+        self.hook_gainThisCard(newcard)
         self.addCard(newcard, destination)
         return newcard
 
@@ -421,6 +423,11 @@ class Player(object):
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             options.update(o)
         return options
+
+    ###########################################################################
+    def hook_gainThisCard(self, card):
+        """ Hook which is fired by this card being obtained by a player """
+        card.hook_gainThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hasDefense(self, attacker, verbose=True):
