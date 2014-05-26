@@ -39,7 +39,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.assertEqual(self.g.trashpile, [])
 
     def test_trash(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['1', '0']
         self.plr.playCard(self.jd)
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(len(self.g.trashpile), 1)

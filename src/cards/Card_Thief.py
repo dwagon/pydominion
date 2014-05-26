@@ -60,6 +60,7 @@ class Card_Thief(Card):
             else:
                 victim.trashCard(o['card'])
 
+
 ###############################################################################
 class Test_Thief(unittest.TestCase):
     def setUp(self):
@@ -72,7 +73,7 @@ class Test_Thief(unittest.TestCase):
         self.victim = self.g.players[1]
 
     def test_no_treasure(self):
-        self.g.players[1].setDeck('estate', 'estate', 'estate')
+        self.victim.setDeck('estate', 'estate', 'estate')
         self.thief.playCard(self.thiefcard)
         self.assertIn('Player victim has no treasures', self.thief.messages)
 
@@ -87,7 +88,7 @@ class Test_Thief(unittest.TestCase):
     def test_do_nothing(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = '0'
+        self.thief.test_input = ['0']
         self.thief.playCard(self.thiefcard)
         self.assertEquals(len(self.victim.deck), 1)
         self.assertEquals(len(self.victim.discardpile), 2)
@@ -96,7 +97,7 @@ class Test_Thief(unittest.TestCase):
     def test_trash_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = '1'
+        self.thief.test_input = ['1']
         self.thief.playCard(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertEquals(self.g.trashpile[0].name, 'Gold')
@@ -107,7 +108,7 @@ class Test_Thief(unittest.TestCase):
     def test_steal_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = '2'
+        self.thief.test_input = ['2']
         self.thief.playCard(self.thiefcard)
         self.assertEquals(self.g.trashpile, [])
         for c in self.victim.deck:
@@ -119,15 +120,8 @@ class Test_Thief(unittest.TestCase):
             self.fail()
         self.assertIn('%s stole your Gold' % self.thief.name, self.victim.messages)
 
-    def print_players(self):
-        print "#" * 40
-        print "Trash: %s" % ", ".join([c.name for c in self.g.trashpile])
-        for p in self.g.players:
-            print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
-            print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
-            print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
-            print "%s's messages: %s" % (p.name, p.messages)
 
+###############################################################################
 if __name__ == "__main__":
     unittest.main()
 

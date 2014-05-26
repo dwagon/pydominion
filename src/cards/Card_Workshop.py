@@ -39,7 +39,7 @@ class Test_Workshop(unittest.TestCase):
         self.plr.playCard(self.wcard)
         self.assertEquals(len(self.plr.hand), 5)
         self.assertEquals(len(self.plr.discardpile), 1)
-        self.assertLessEqual(self.plr.discardpile[0].cost, 5)
+        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
 
 
 ###############################################################################

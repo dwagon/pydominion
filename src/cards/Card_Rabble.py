@@ -63,7 +63,6 @@ class Test_Rabble(unittest.TestCase):
     def test_nodefense(self):
         self.victim.setDeck('copper', 'estate', 'rabble')
         self.attacker.playCard(self.rabble)
-        self.g.print_state()
         self.assertEqual(self.victim.deck[-1].name, 'Estate')
         self.assertEqual(len(self.victim.discardpile), 2)
         self.assertEqual(len(self.attacker.hand), 5 + 3)

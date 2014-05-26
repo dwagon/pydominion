@@ -40,7 +40,6 @@ class Test_Expand(unittest.TestCase):
         self.assertEqual(self.plr.hand, [])
         self.assertEqual(len(self.plr.discardpile), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
-        self.g.print_state()
 
 ###############################################################################
 if __name__ == "__main__":

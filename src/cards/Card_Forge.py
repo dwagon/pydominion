@@ -47,7 +47,7 @@ class Test_Forge(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertEqual(self.g.trashpile[0].name, 'Estate')
         self.assertEqual(len(self.g.trashpile), 2)
-        self.assertEqual(len(self.g.hand), 1)
+        self.assertEqual(len(self.plr.hand), 1)
 
 
 ###############################################################################
