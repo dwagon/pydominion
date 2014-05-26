@@ -13,7 +13,7 @@ class Card_Embassy(Card):
     def special(self, game, player):
         player.plrDiscardCards(3)
 
-    def hook_purchasedCard(self, game, player):
+    def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player gains a Silver """
         for plr in game.players:
             if plr != player:

@@ -187,6 +187,7 @@ class Player(object):
         while(1):
             if self.test_input:
                 inp = self.test_input.pop(0)
+                self.output("Using %s test input" % inp)
             else:
                 inp = raw_input()
             for o in options:
@@ -403,16 +404,10 @@ class Player(object):
         return newcard
 
     ###########################################################################
-    def hook_purchasedCard(self, card):
-        """ Hook which is fired when the card has been bought """
-        card.hook_purchasedCard(game=self.game, player=self)
-
-    ###########################################################################
     def buyCard(self, card):
         newcard = self.gainCard(card)
         self.t['buys'] -= 1
         self.t['gold'] -= self.cardCost(newcard)
-        self.hook_purchasedCard(card)
         self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
 
     ###########################################################################

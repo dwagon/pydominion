@@ -100,9 +100,6 @@ class Card(object):
         """ Does this card make any  modifications on the value of spending a card """
         return 0
 
-    def hook_purchasedCard(self, game, player):
-        pass
-
     def hook_underAttack(self, game, player):
         pass
 

@@ -20,10 +20,6 @@ This modifies how much gold value you get for spending the card and is invoked f
 
 Return the delta. So 0 for no change.
 
-hook_purchasedCard
-------------------
-Triggered when a card is purchased
-
 hook_gainCard
 -------------
 This hook is triggered for every card in play when you gain
