@@ -18,15 +18,15 @@ class Card_Rabble(Card):
         for i in range(3):
             c = victim.nextCard()
             if c.isAction() or c.isTreasure():
-                victim.output("Discarding %s due to %s's rabble" % (c.cardname, attacker.name))
-                attacker.output("%s discarding %s" % (victim.name, c.cardname))
+                victim.output("Discarding %s due to %s's rabble" % (c.name, attacker.name))
+                attacker.output("%s discarding %s" % (victim.name, c.name))
                 victim.discardCard(c)
             else:
                 cards.append(c)
         # TODO - let victim pick order
         for c in cards:
-            victim.output("Putting %s back on deck" % c.cardname)
-            attacker.output("%s keeping %s" % (victim.name, c.cardname))
+            victim.output("Putting %s back on deck" % c.name)
+            attacker.output("%s keeping %s" % (victim.name, c.name))
             victim.addCard(c, 'deck')
 
     def special(self, game, player):
