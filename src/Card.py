@@ -109,7 +109,7 @@ class Card(object):
     def hook_discardCard(self, game, player):
         pass
 
-    def hook_trashCard(self, game, player):
+    def hook_trashThisCard(self, game, player):
         pass
 
     def hook_gainThisCard(self, game, player):

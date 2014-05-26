@@ -41,7 +41,7 @@ hook_goldvalue
 --------------
 How much this card is worth
 
-hook_trashCard
+hook_trashThisCard
 --------------
 Called just before the card is trashed
 
