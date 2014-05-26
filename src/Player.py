@@ -385,7 +385,7 @@ class Player(object):
         return max(0, cost)
 
     ###########################################################################
-    def gainCard(self, cardpile=None, newcard=None, destination='discard'):
+    def gainCard(self, cardpile=None, destination='discard', newcard=None):
         """ Add a new card to the players set of cards from a cardpile """
         if not newcard:
             if isinstance(cardpile, str):
