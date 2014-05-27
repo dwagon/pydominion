@@ -8,7 +8,7 @@ from Card import Card
 class Card_Grandmarket(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = 'action'
         self.base = 'prosperity'
         self.desc = "+1 card, +1 action, +1 buy, +2 gold"
         self.name = 'Grand Market'

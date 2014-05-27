@@ -326,7 +326,7 @@ class Player(object):
                 self.turnstats['actions'] += 1
                 self.playCard(opt['card'])
             elif opt['action'] == 'spend':
-                self.spendCard(opt['card'])
+                self.playCard(opt['card'])
             elif opt['action'] == 'spendall':
                 self.spendAllCards()
             elif opt['action'] == 'quit':
@@ -335,14 +335,6 @@ class Player(object):
                 sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
         self.discardHand()
         self.pickUpHand()
-
-    ###########################################################################
-    def spendCard(self, card):
-        self.t['gold'] += self.hook_spendValue(card)
-        self.t['potions'] += card.potion
-        self.addCard(card, 'played')
-        self.hand.remove(card)
-        card.special(game=self.game, player=self)
 
     ###########################################################################
     def hook_discardCard(self, card):
@@ -361,18 +353,19 @@ class Player(object):
     def spendAllCards(self):
         for card in self.hand[:]:
             if card.isTreasure():
-                self.spendCard(card)
+                self.playCard(card)
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
         if discard:
             self.addCard(card, 'played')
             self.hand.remove(card)
-        if costAction:
+        if card.isAction() and costAction:
             self.t['actions'] -= 1
         self.t['actions'] += card.actions
-        self.t['gold'] += card.gold
+        self.t['gold'] += self.hook_spendValue(card)
         self.t['buys'] += card.buys
+        self.t['potions'] += card.potion
         for i in range(card.cards):
             self.pickupCard()
         card.special(game=self.game, player=self)
