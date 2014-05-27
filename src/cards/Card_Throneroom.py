@@ -24,6 +24,8 @@ class Card_Throneroom(Card):
             pr = "Play %s twice" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
             index += 1
+        if index == 1:
+            return
         o = player.userInput(options, "Play which action card twice?")
         if not o['card']:
             return
