@@ -91,7 +91,7 @@ class Game(object):
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Potion")
         if self.needspoils:
-            print "Playing with spoils"
+            self.output("Playing with spoils")
             self.cardpiles['Spoils'] = CardPile('Spoils', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Spoils")
         if self.needruins:
