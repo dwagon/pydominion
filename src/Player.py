@@ -299,7 +299,6 @@ class Player(object):
     def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
         for c in self.played:
-            print "hook for %s" % c.name
             c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
@@ -409,7 +408,7 @@ class Player(object):
         self.t['buys'] -= 1
         self.t['gold'] -= self.cardCost(newcard)
         self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
-        self.hook_buyCard(card)
+        self.hook_buyCard(newcard)
 
     ###########################################################################
     def hook_gainCard(self, card):
