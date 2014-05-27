@@ -178,6 +178,33 @@ class Test_plrDiscardCard(unittest.TestCase):
 
 
 ###############################################################################
+class Test_gainCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_gainByString(self):
+        self.plr.gainCard('copper')
+        self.assertEqual(self.plr.discardpile[0].name, 'Copper')
+
+    def test_gainByCardpile(self):
+        cp = self.g['copper']
+        self.plr.gainCard(cp)
+        self.assertEqual(self.plr.discardpile[0].name, 'Copper')
+
+    def test_gainSpecific(self):
+        cu = self.g['copper'].remove()
+        self.plr.gainCard(newcard=cu)
+        self.assertEqual(self.plr.discardpile[0].name, 'Copper')
+
+    def test_destination(self):
+        self.plr.hand = []
+        self.plr.gainCard('copper', 'hand')
+        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.hand[0].name, 'Copper')
+
+###############################################################################
 if __name__ == "__main__":
     unittest.main()
 
