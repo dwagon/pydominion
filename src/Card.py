@@ -57,6 +57,11 @@ class Card(object):
             return True
         return False
 
+    def isRuin(self):
+        if 'ruin' in self.cardtype:
+            return True
+        return False
+
     def isVictory(self):
         if 'victory' in self.cardtype:
             return True
