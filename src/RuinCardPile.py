@@ -14,12 +14,15 @@ class RuinCardPile(CardPile):
         for r in ruinfiles:
             cardfile = r.replace('.py', '').replace('%s/' % cardpath, '')
             cardname = cardfile.replace('RuinCard_', '')
-            ruintypes[cardname] = self.importCard(cardfile=cardfile, cardname=cardname)
+            ruintypes[cardname] = self.loadClass(cardname, cardfile)
 
         self.ruins = []
         for i in range(numcards):
             c = random.choice(ruintypes.keys())
-            self.ruins.append(ruintypes[c])
+            self.ruins.append(ruintypes[c]())
+
+    def __getattr__(self, key):
+        return getattr(self.ruins[-1], key)
 
     def remove(self):
         if self.numcards:
@@ -29,7 +32,7 @@ class RuinCardPile(CardPile):
             return None
 
     def __repr__(self):
-        return "RuinPile %s: %d" % (self.name, self.numcards)
+        return "RuinCardPile %s: %d" % (self.name, self.numcards)
 
 
 ###############################################################################
