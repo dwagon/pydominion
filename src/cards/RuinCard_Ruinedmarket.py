@@ -10,7 +10,9 @@ class Card_Ruinedmarket(Card):
         self.cardtype = ['action', 'ruin']
         self.base = 'darkages'
         self.name = "Ruined Market"
+        self.desc = "+1 Buy"
+        self.purchasable = False
+        self.cost = 0
         self.buys = 1
-
 
 #EOF

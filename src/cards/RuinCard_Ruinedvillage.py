@@ -10,6 +10,9 @@ class Card_Ruinedvillage(Card):
         self.cardtype = ['action', 'ruin']
         self.base = 'darkages'
         self.name = "Ruined Village"
+        self.purchasable = False
+        self.cost = 0
+        self.card = "+1 Action"
         self.actions = 1
 
 #EOF

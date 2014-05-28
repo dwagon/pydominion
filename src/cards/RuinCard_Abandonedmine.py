@@ -10,6 +10,9 @@ class Card_Abandonedmine(Card):
         self.cardtype = ['action', 'ruin']
         self.base = 'darkages'
         self.name = "Abandoned Mine"
+        self.purchasable = False
+        self.cost = 0
+        self.desc = "+1 Gold"
         self.gold = 1
 
 #EOF

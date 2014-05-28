@@ -9,6 +9,9 @@ class Card_Survivors(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'ruin']
         self.base = 'darkages'
+        self.purchasable = False
+        self.cost = 0
+        self.desc = "Look at top 2 cards of deck. Discard or retain on deck"
         self.name = "Survivors"
 
     def special(self, player, game):

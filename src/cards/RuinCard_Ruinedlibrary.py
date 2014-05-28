@@ -9,6 +9,9 @@ class Card_Ruinedlibrary(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'ruin']
         self.base = 'darkages'
+        self.desc = "+1 Card"
+        self.purchasable = False
+        self.cost = 0
         self.name = "Ruined Library"
         self.cards = 1
 
