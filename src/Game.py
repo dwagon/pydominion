@@ -91,7 +91,6 @@ class Game(object):
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Potion")
         if self.needspoils:
-            self.output("Playing with spoils")
             self.cardpiles['Spoils'] = CardPile('Spoils', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Spoils")
         if self.needruins:
@@ -107,6 +106,7 @@ class Game(object):
     def addRuins(self):
         from RuinCardPile import RuinCardPile
         self.cardpiles['Ruins'] = RuinCardPile(cardpath=self.cardpath, numcards=self.numCurses())
+        self.output("Playing with Ruins")
 
     ###########################################################################
     def addKnights(self):
