@@ -35,7 +35,7 @@ class Card_Mystic(Card):
             player.addCard(c, 'hand')
         else:
             player.output("You chose poorly - it was a %s" % c.name)
-            player.addCard(c, 'deck')
+            player.addCard(c, 'topdeck')
 
 
 ###############################################################################
@@ -48,6 +48,7 @@ class Test_Mystic(unittest.TestCase):
         self.card = self.g['mystic'].remove()
 
     def test_play(self):
+        """ No guess should still get results """
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
@@ -55,33 +56,35 @@ class Test_Mystic(unittest.TestCase):
         self.assertEqual(self.plr.t['gold'], 2)
 
     def test_good(self):
+        """ When the guess is good the card should move to the hand """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('gold')
-        index = 1
-        for c in sorted(self.g.cardTypes()):
-            if c.name == 'Gold':
-                goldnum = index
-            index += 1
-        self.plr.test_input = ['%d' % goldnum]
+        self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.t['actions'], 1)
         self.assertEqual(self.plr.t['gold'], 2)
         self.assertTrue(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.deck, [])
 
     def test_bad(self):
+        """ When the guess is bad the card should stay on the deck """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('province')
-        index = 1
-        for c in sorted(self.g.cardTypes()):
-            if c.name == 'Gold':
-                goldnum = index
-            index += 1
-        self.plr.test_input = ['%d' % goldnum]
+        self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.t['actions'], 1)
         self.assertEqual(self.plr.t['gold'], 2)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
+        self.assertEqual(self.plr.deck[-1].name, 'Province')
+
+    def goldnum(self):
+        index = 1
+        for c in sorted(self.g.cardTypes()):
+            if c.name == 'Gold':
+                goldnum = index
+            index += 1
+        return goldnum
 
 
 ###############################################################################
