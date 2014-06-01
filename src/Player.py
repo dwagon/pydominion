@@ -514,6 +514,17 @@ class Player(object):
         return _types
 
     ###########################################################################
+    def attackVictims(self):
+        victims = []
+        for plr in self.game.players:
+            if plr == self:
+                continue
+            if plr.hasDefense(self):
+                continue
+            victims.append(plr)
+        return victims
+
+    ###########################################################################
     def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
         """ Gain a card of 'chooser's choice up to cost gold
         if actiononly then gain only action cards

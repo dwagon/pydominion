@@ -178,6 +178,21 @@ class Test_plrDiscardCard(unittest.TestCase):
 
 
 ###############################################################################
+class Test_attackVictims(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=3, initcards=['moat'])
+        self.plr = self.g.players[0]
+        self.defend = self.g.players[1]
+        self.victim = self.g.players[2]
+        self.defend.setHand('moat')
+
+    def test_output(self):
+        v = self.plr.attackVictims()
+        self.assertEqual(v, [self.victim])
+
+
+###############################################################################
 class Test_gainCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
