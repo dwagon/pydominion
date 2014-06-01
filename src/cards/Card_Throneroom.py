@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -5,7 +8,8 @@ class Card_Throneroom(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "Play action 2 times"
+        self.base = 'dominion'
+        self.desc = "Play action twice"
         self.name = "Throne Room"
         self.cost = 4
 
@@ -20,12 +24,46 @@ class Card_Throneroom(Card):
             pr = "Play %s twice" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
             index += 1
+        if index == 1:
+            return
         o = player.userInput(options, "Play which action card twice?")
         if not o['card']:
             return
         for i in range(1, 3):
-            print "Number %d play of %s" % (i, o['card'].name)
+            player.output("Number %d play of %s" % (i, o['card'].name))
             player.playCard(o['card'], discard=False, costAction=False)
         player.discardCard(o['card'])
+
+
+###############################################################################
+class Test_Throneroom(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['throneroom', 'mine'])
+        self.plr = self.g.players[0]
+
+    def test_action(self):
+        # Test by playing mine twice on a copper. Cu -> Ag -> Au
+        self.plr.setHand('copper', 'mine')
+        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.test_input = ['1', '1', '1']
+        self.plr.playCard(card)
+        self.assertEqual(self.plr.hand[0].name, 'Gold')
+        self.assertEqual(len(self.plr.hand), 1)
+        self.assertEqual(self.plr.discardpile[0].name, 'Mine')
+        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.t['actions'], 0)
+
+    def test_noaction(self):
+        self.plr.setHand('copper', 'copper')
+        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(card)
+        self.assertEqual(self.plr.test_input, ['0'])
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF

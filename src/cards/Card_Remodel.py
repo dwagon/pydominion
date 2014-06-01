@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
@@ -5,6 +8,7 @@ class Card_Remodel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'dominion'
         self.desc = "Trash a card and gain one costing 2 more"
         self.name = 'Remodel'
         self.cost = 2
@@ -12,10 +16,49 @@ class Card_Remodel(Card):
     def special(self, game, player):
         """ Trash a card from your hand. Gain a card costing up to
             2 more than the trashed card """
-        print "Trash a card from your hand. Gain another costing up to 2 more than the one you trashed"
-        tc = player.plrTrashCard()
+        player.output("Trash a card from your hand. Gain another costing up to 2 more than the one you trashed")
+        tc = player.plrTrashCard(printcost=True)
         if tc:
-            cost = tc.cost
+            cost = tc[0].cost
             player.plrGainCard(cost + 2)
+
+
+###############################################################################
+class Test_Remodel(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['remodel'])
+        self.plr = self.g.players[0]
+        self.rcard = self.g['remodel'].remove()
+
+    def test_nothing(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(self.g.trashpile, [])
+        self.assertEqual(len(self.plr.discardpile), 0)
+        self.assertEqual(len(self.plr.hand), 5)
+
+    def test_trash_gainnothing(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['1', '0']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(len(self.plr.discardpile), 0)
+        self.assertEqual(len(self.plr.hand), 4)
+
+    def test_trash_gainsomething(self):
+        self.plr.addCard(self.rcard, 'hand')
+        self.plr.test_input = ['1', '1']
+        self.plr.playCard(self.rcard)
+        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(len(self.plr.hand), 4)
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF

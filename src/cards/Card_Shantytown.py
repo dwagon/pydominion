@@ -5,7 +5,8 @@ class Card_Shantytown(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "If no action in hand, +2 cards"
+        self.base = 'intrigue'
+        self.desc = "+2 actions. If no action in hand, +2 cards"
         self.name = 'Shanty Town'
         self.actions = 2
         self.cost = 3
@@ -18,6 +19,5 @@ class Card_Shantytown(Card):
         else:
             for i in range(2):
                 c = player.pickupCard()
-                print "Picked up %s" % c.name
 
 #EOF

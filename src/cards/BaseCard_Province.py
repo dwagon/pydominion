@@ -5,6 +5,7 @@ class Card_Province(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
+        self.base = 'dominion'
         self.desc = "6 VP"
         self.playable = False
         self.basecard = True

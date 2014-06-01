@@ -11,7 +11,7 @@ class Card_Royalseal(Card):
         self.cost = 5
         self.gold = 2
 
-    def hook_gaincard(self, game, player, card):
+    def hook_gainCard(self, game, player, card):
         """ While this is in play, when you gain a card, you may
             put that card on top of your deck"""
         mod = {}
@@ -20,7 +20,7 @@ class Card_Royalseal(Card):
         options.append({'selector': '1', 'print': "Put %s on top of draw pile" % card.name, 'deck': True})
         o = player.userInput(options, "Where to put %s?" % card.name)
         if o['deck']:
-            print "Putting %s on deck due to Royal Seal" % card.name
+            player.output("Putting %s on deck due to Royal Seal" % card.name)
             mod['destination'] = 'deck'
         return mod
 

@@ -5,6 +5,7 @@ class Card_Tradingpost(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
+        self.base = 'intrigue'
         self.desc = "Trash 2 cards for a silver"
         self.name = "Trading Post"
         self.cost = 5
@@ -12,7 +13,7 @@ class Card_Tradingpost(Card):
     def special(self, game, player):
         """ Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         trash = []
-        print "Trash two cards"
+        player.output("Trash two cards")
         while(1):
             options = []
             if len(trash) in [0, 2]:
@@ -34,7 +35,7 @@ class Card_Tradingpost(Card):
 
         if trash:
             for t in trash:
-                print "Trashing %s" % t.name
+                player.output("Trashing %s" % t.name)
                 player.trashCard(t)
             player.gainCard('silver', 'hand')
             player.t['gold'] += 2

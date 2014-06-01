@@ -5,6 +5,7 @@ class Card_Platinum(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
+        self.base = 'prosperity'
         self.desc = "+5 gold"
         self.name = 'Platinum'
         self.playable = False
