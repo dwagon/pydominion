@@ -14,11 +14,7 @@ class Card_Cutpurse(Card):
         """ Each other player discard a Copper card (or reveals a
             hand with no copper)."""
 
-        for victim in game.players:
-            if victim == player:
-                continue
-            if victim.hasDefense(player):
-                continue
+        for victim in player.attackVictims():
             c = victim.inHand('Copper')
             if c:
                 player.output("%s discarded a copper" % victim.name)

@@ -33,11 +33,7 @@ class Card_Rabble(Card):
         """ Each other player reveals the top 3 cards of his deck,
             discard the revealed Actions and Treasures, and puts the
             rest back on top in any order he chooses """
-        for plr in game.players:
-            if plr.hasDefense(player):
-                continue
-            if plr == player:
-                continue
+        for plr in player.attackVictims():
             self.attack(plr, player)
 
 

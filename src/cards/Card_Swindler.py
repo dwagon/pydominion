@@ -19,11 +19,7 @@ class Card_Swindler(Card):
         """ Each other player trashed the top card of his deck and
             gains a card with the same cost that you choose """
 
-        for victim in game.players:
-            if victim == player:
-                continue
-            if victim.hasDefense(player):
-                continue
+        for victim in player.attackVictims():
             card = victim.pickupCard()
             victim.trashCard(card)
             player.output("Pick which card %s will get" % victim.name)

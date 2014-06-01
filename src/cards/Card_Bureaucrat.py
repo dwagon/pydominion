@@ -21,11 +21,7 @@ class Card_Bureaucrat(Card):
         player.gainCard('silver', 'topdeck')
         player.output("Added silver to deck")
 
-        for pl in game.players:
-            if pl == player:
-                continue
-            if pl.hasDefense(player):
-                continue
+        for pl in player.attackVictims():
             for c in pl.hand:
                 if c.isVictory():
                     pl.addCard(c, 'topdeck')

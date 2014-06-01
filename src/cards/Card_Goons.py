@@ -14,11 +14,7 @@ class Card_Goons(Card):
 
     def special(self, game, player):
         """ Each other player discards down to three cards """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)
 

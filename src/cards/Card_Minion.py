@@ -19,7 +19,7 @@ class Card_Minion(Card):
         options = [
             {'selector': '0', 'print': "+2 gold", 'attack': False},
             {'selector': '1', 'print': "Discard your hand, +4 cards and each other player with 5 cards discards and draws 4", 'attack': True},
-            ]
+        ]
         o = player.userInput(options, "What do you want to do?")
         if o['attack']:
             self.attack(game, player)
@@ -28,10 +28,7 @@ class Card_Minion(Card):
 
     def attack(self, game, player):
         self.dropAndDraw(player)
-        for victim in game.players:
-            if victim != player:
-                if victim.hasDefense(player):
-                    continue
+        for victim in player.attackVictims():
             if len(victim.hand) >= 5:
                 self.dropAndDraw(victim)
 

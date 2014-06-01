@@ -30,11 +30,7 @@ class Card_Mercenary(Card):
         for i in range(2):
             player.pickupCard()
         player.t['gold'] += 2
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)
 
 

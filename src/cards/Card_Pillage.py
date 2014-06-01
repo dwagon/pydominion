@@ -22,11 +22,7 @@ class Card_Pillage(Card):
             Gain 2 Spoils from the Spoils pile """
         for i in range(2):
             player.gainCard('Spoils')
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             if len(plr.hand) < 5:
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue

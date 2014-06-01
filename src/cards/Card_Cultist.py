@@ -17,11 +17,7 @@ class Card_Cultist(Card):
     def special(self, game, player):
         """ Each other play gains a Ruins. You may play a Cultist
             from your hand. """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.gainCard('ruins')
         cultist = player.inHand('cultist')
         if cultist:

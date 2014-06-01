@@ -15,11 +15,7 @@ class Card_Torturer(Card):
     def special(self, game, player):
         """ Each other player chooses one: he discards 2 cards; or
             he gains a Curse card, putting it in his hand """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.output("Choose:")
             self.choiceOfDoom(plr)
 
@@ -28,7 +24,7 @@ class Card_Torturer(Card):
         options = [
             {'selector': '0', 'print': 'Discard 2 cards', 'choice': 'discard'},
             {'selector': '1', 'print': 'Gain a curse card', 'choice': 'curse'}
-            ]
+        ]
         o = victim.userInput(options, "Discard or curse")
         if o['choice'] == 'discard':
             victim.plrDiscardCards(2)

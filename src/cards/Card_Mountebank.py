@@ -18,11 +18,7 @@ class Card_Mountebank(Card):
     def special(self, game, player):
         """ Each other player may discard a Curse. If he doesnt,
             he gains a Curse and a Copper """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             for c in plr.hand:
                 if c.cardname == 'curse':
                     player.output("Player %s discarded a curse" % plr.name)

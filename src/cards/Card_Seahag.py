@@ -17,12 +17,7 @@ class Card_Seahag(Card):
     def special(self, game, player):
         """ Each other player discards the top card of his deck,
             then gains a Curse card, putting it on top of his deck"""
-        for pl in game.players:
-            if pl == player:
-                continue
-            if pl.hasDefense(player):
-                continue
-
+        for pl in player.attackVictims():
             c = pl.nextCard()
             pl.discardCard(c)
             pl.output("Discarded your %s" % c.name)
