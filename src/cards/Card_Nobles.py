@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Nobles(Card):
     def __init__(self):
         Card.__init__(self)
@@ -14,9 +18,9 @@ class Card_Nobles(Card):
     def special(self, game, player):
         """ Choose one: +3 Cards; or +2 Actions """
         options = [
-            {'selector': '0', 'print': '+3 Cards', 'choose': 'cards'},
-            {'selector': '1', 'print': '+2 Actions', 'choose': 'actions'}
-            ]
+            {'selector': '1', 'print': '+3 Cards', 'choose': 'cards'},
+            {'selector': '2', 'print': '+2 Actions', 'choose': 'actions'}
+        ]
         o = player.userInput(options, "Choose one")
         if o['choose'] == 'cards':
             for i in range(3):
@@ -24,5 +28,40 @@ class Card_Nobles(Card):
             return
         if o['choose'] == 'actions':
             player.t['actions'] += 2
+
+
+###############################################################################
+class Test_Nobles(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['nobles'])
+        self.plr = self.g.players[0]
+        self.card = self.g['nobles'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_cards(self):
+        """ Play the Nobles - chosing cards """
+        self.plr.test_input = ['1']
+        self.plr.playCard(self.card)
+        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.t['actions'], 0)
+
+    def test_actions(self):
+        """ Play the Nobles - chosing actions """
+        self.plr.test_input = ['2']
+        self.plr.playCard(self.card)
+        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.t['actions'], 2)
+
+    def test_score(self):
+        """ Score the nobles """
+        sc = self.plr.getScoreDetails()
+        self.assertEqual(sc['Nobles'], 2)
+
+
+###############################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 #EOF
