@@ -25,7 +25,7 @@ class Card_Navigator(Card):
         options = [
             {'selector': '0', 'print': 'Discard cards', 'discard': True},
             {'selector': '1', 'print': 'Return them to the deck', 'discard': False}
-            ]
+        ]
         o = player.userInput(options, 'What do you want to do?')
         if o['discard']:
             for c in cards:
@@ -60,8 +60,9 @@ class Test_Navigator(unittest.TestCase):
         self.assertEqual(len(self.plr.discardpile), 0)
         self.assertEqual(len(self.plr.deck), 6)
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -80,7 +80,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(len(self.g.trashpile), 2)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

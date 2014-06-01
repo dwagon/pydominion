@@ -19,7 +19,7 @@ class Card_Chancellor(Card):
         options = [
             {'selector': '0', 'print': "Don't Discard Deck", 'discard': False},
             {'selector': '1', 'print': "Discard Deck", 'discard': True}
-            ]
+        ]
         o = player.userInput(options, "Discard deck?")
         if o['discard']:
             for c in player.deck[:]:
@@ -58,7 +58,7 @@ class Test_Chancellor(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

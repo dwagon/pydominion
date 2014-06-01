@@ -57,7 +57,7 @@ class Test_Courtyard(unittest.TestCase):
         self.assertEqual(len(self.plr.hand), 3)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -104,7 +104,7 @@ class Test_Cultist(unittest.TestCase):
         self.assertEqual(len(self.plr.hand), 8)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

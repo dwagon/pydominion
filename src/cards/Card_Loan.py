@@ -27,7 +27,7 @@ class Card_Loan(Card):
         options = [
             {'selector': '0', 'print': "Discard %s" % c.name, 'action': 'discard'},
             {'selector': '1', 'print': "Trash %s" % c.name, 'action': 'trash'}
-            ]
+        ]
         o = player.userInput(options, "What to do?")
         if o['action'] == 'discard':
             player.discardCard(c)
@@ -66,7 +66,7 @@ class Test_Loan(unittest.TestCase):
             self.assertNotEqual(c.cardtype, 'treasure')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

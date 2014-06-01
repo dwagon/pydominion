@@ -69,8 +69,9 @@ class Test_Mine(unittest.TestCase):
         self.assertEquals(self.plr.discardpile, [])
         self.assertEquals(len(self.plr.hand), 1)
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -14,9 +14,6 @@ class Card_Gardens(Card):
         self.playable = False
         self.cost = 4
 
-    def special(self, game, player):
-        pass
-
     def special_score(self, game, player):
         """ Worth 1VP for every 10 cards in your deck rounded down """
         numcards = len(player.discardpile + player.hand + player.deck)
@@ -47,7 +44,7 @@ class Test_Gardens(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

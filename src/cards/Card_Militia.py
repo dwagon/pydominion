@@ -51,8 +51,9 @@ class Test_Militia(unittest.TestCase):
         self.assertEquals(len(self.defender.discardpile), 2)
         self.assertEquals(self.attacker.t['gold'], 2)
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

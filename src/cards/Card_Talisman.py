@@ -57,11 +57,10 @@ class Test_Talisman(unittest.TestCase):
         self.assertEqual(len(self.plr.discardpile), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Duchy')
-        
-        
+
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -31,8 +31,9 @@ class Test_Library(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 7)
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -63,7 +63,7 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(self.plr.test_input, ['0'])
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

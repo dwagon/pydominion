@@ -64,7 +64,7 @@ class Test_Golem(unittest.TestCase):
         self.assertEqual(['Copper', 'Estate', 'Golem'], [c.name for c in self.plr.discardpile])
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

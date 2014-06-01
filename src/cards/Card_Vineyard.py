@@ -45,7 +45,7 @@ class Test_Vineyard(unittest.TestCase):
         self.assertEquals(self.plr.getScoreDetails()['Vineyard'], 4)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

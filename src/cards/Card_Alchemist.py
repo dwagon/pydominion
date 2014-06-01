@@ -27,7 +27,7 @@ class Card_Alchemist(Card):
         options = [
             {'selector': '0', 'print': 'Discard', 'todeck': False},
             {'selector': '1', 'print': 'Put on top of deck', 'todeck': True},
-            ]
+        ]
         o = player.userInput(options, 'What to do with the alchemist?')
         if o['todeck']:
             player.played.remove(self)
@@ -78,7 +78,7 @@ class Test_Alchemist(unittest.TestCase):
         self.assertEquals(self.plr.deck[-1].name, 'Alchemist')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

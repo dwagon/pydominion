@@ -45,7 +45,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.assertEqual(len(self.g.trashpile), 1)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -32,6 +32,7 @@ class Card_Pillage(Card):
                 continue
             self.pickACard(plr, player)
 
+    ###########################################################################
     def pickACard(self, victim, player):
         index = 1
         options = []
@@ -98,10 +99,10 @@ class Test_Pillage(unittest.TestCase):
             self.assertEqual(c.name, 'Spoils')
         self.assertEqual(len(self.victim.hand), 4)
         self.assertEqual(len(self.victim.discardpile), 1)
-        self.g.print_state()
+
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

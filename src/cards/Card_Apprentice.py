@@ -59,7 +59,7 @@ class Test_Apprentice(unittest.TestCase):
         self.assertEqual(len(self.plr.hand), self.g.trashpile[-1].cost + 2)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

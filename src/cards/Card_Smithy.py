@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Smithy(Card):
     def __init__(self):
         Card.__init__(self)
@@ -32,8 +33,7 @@ class Test_Smithy(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
-
 
 #EOF

@@ -42,7 +42,7 @@ class Test_Expand(unittest.TestCase):
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -70,7 +70,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

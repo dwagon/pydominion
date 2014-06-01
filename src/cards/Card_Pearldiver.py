@@ -64,8 +64,9 @@ class Test_Pearldiver(unittest.TestCase):
         self.assertEqual(self.plr.deck[-1].name, 'Copper')
         self.assertEqual(self.plr.deck[0].name, 'Estate')
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF
