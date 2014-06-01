@@ -1,12 +1,16 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Tribute(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "Player to left discards 2 cards; you get goodies"
+        self.desc = "Player to left discards 2 cards from deck; you get goodies"
         self.name = 'Tribute'
         self.cost = 5
 
@@ -22,6 +26,7 @@ class Card_Tribute(Card):
             player.output("Looking at %s from %s" % (c.name, victim.name))
             victim.addCard(c, 'discard')
             if c.name == cardname:
+                player.output("Duplicate - no extra")
                 continue
             cardname = c.name
             if c.isAction():
@@ -33,5 +38,38 @@ class Card_Tribute(Card):
             elif c.isVictory():
                 for i in range(2):
                     player.pickupCard()
+
+
+###############################################################################
+class Test_Tribute(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['tribute'])
+        self.plr = self.g.players[0]
+        self.victim = self.g.players[1]
+        self.card = self.g['tribute'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play(self):
+        """ Play a tribute """
+        self.victim.setDeck('copper', 'estate')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(len(self.victim.discardpile), 2)
+
+    def test_same(self):
+        """ Victim has the same cards for Tribute"""
+        self.victim.setDeck('tribute', 'tribute')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(len(self.plr.hand), 5)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF
