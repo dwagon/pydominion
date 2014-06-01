@@ -105,7 +105,8 @@ class Game(object):
     ###########################################################################
     def addRuins(self):
         from RuinCardPile import RuinCardPile
-        self.cardpiles['Ruins'] = RuinCardPile(cardpath=self.cardpath, numcards=self.numCurses())
+        nc = self.numplayers * 10
+        self.cardpiles['Ruins'] = RuinCardPile(cardpath=self.cardpath, numcards=nc)
         self.output("Playing with Ruins")
 
     ###########################################################################
