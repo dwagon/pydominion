@@ -20,7 +20,7 @@ class Card_Rats(Card):
         player.gainCard('rats')
         player.plrTrashCard(force=True, exclude=['Rats'])
 
-    def hook_trashCard(self, game, player):
+    def hook_trashThisCard(self, game, player):
         """ When you trash this +1 Card """
         player.pickupCard()
 
@@ -54,6 +54,7 @@ class Test_Rats(unittest.TestCase):
         self.assertEquals(self.plr.discardpile[0].name, 'Rats')
 
     def test_trashrats(self):
+        """ Trashing Rats - gain another card"""
         handsize = len(self.plr.hand)
         self.plr.trashCard(self.rats)
         # Lose rats, gain another card
