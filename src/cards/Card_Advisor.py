@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Advisor(Card):
     def __init__(self):
         Card.__init__(self)
@@ -54,7 +55,7 @@ class Test_Advisor(unittest.TestCase):
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.t['actions'], 1)
         for c in self.plr.hand:
-            if c.name == 'Gold':
+            if c.name == 'Gold':    # pragma: no cover
                 self.fail()
         self.assertEquals(len(self.plr.hand), 7)
         self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
