@@ -55,6 +55,12 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(len(self.plr.discardpile), 1)
         self.assertEqual(self.plr.t['actions'], 0)
 
+    def test_donothing(self):
+        self.plr.setHand('copper', 'mine')
+        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(card)
+
     def test_noaction(self):
         self.plr.setHand('copper', 'copper')
         card = self.plr.gainCard('throneroom', 'hand')

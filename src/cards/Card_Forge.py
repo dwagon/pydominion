@@ -40,8 +40,10 @@ class Test_Forge(unittest.TestCase):
         self.forge = self.g['forge'].remove()
 
     def test_play(self):
+        """ Play the Forge """
         self.plr.setHand('estate', 'estate', 'estate')
         self.plr.addCard(self.forge, 'hand')
+        # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ['1', '2', '0', '1']
         self.plr.playCard(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
@@ -51,7 +53,7 @@ class Test_Forge(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/sh
 
 export PYTHONPATH=.
 TEST=' -m unittest discover -p'
