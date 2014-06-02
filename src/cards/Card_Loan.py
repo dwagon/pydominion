@@ -19,10 +19,11 @@ class Card_Loan(Card):
             you reveal a Treasure. Discard it or trash it. Discard the
             other cards """
         while True:
-            c = player.pickupCard(verb='Revealed')
+            c = player.nextCard()
             if c.isTreasure():
                 break
             else:
+                player.output("Revealed and discarded %s" % c.name)
                 player.discardCard(c)
         options = [
             {'selector': '0', 'print': "Discard %s" % c.name, 'action': 'discard'},
@@ -50,18 +51,20 @@ class Test_Loan(unittest.TestCase):
         self.assertEquals(self.plr.t['gold'], 1)
 
     def test_discard(self):
+        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.discardpile[-1].cardtype, 'treasure')
+        self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, 'treasure')
         self.assertEquals(self.g.trashpile, [])
 
     def test_trash(self):
+        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
         self.assertEquals(len(self.g.trashpile), 1)
-        self.assertEquals(self.g.trashpile[0].cardtype, 'treasure')
+        self.assertEquals(self.g.trashpile[0].name, 'Gold')
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
 
