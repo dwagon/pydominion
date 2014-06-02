@@ -42,7 +42,6 @@ class Player(object):
         self.played = []
         # Details for the current turn such as actions left, etc.
         self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
-        self.turnstats = {'actions': 0, 'buys': 0}
         self.discardpile = []
         self.quiet = quiet
         self.test_input = []
@@ -308,7 +307,6 @@ class Player(object):
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s Turn %s" % (self.name, stats))
         self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
-        self.turnstats = {'actions': 0, 'buys': 0}
         while(1):
             if self.hand:
                 self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
@@ -323,7 +321,6 @@ class Player(object):
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
             elif opt['action'] == 'play':
-                self.turnstats['actions'] += 1
                 self.playCard(opt['card'])
             elif opt['action'] == 'spend':
                 self.playCard(opt['card'])
@@ -563,7 +560,7 @@ class Player(object):
         return cststr.strip()
 
     ###########################################################################
-    def plrDiscardCards(self, num, anynum=False):
+    def plrDiscardCards(self, num=1, anynum=False):
         """ Get the player to discard exactly num cards """
         discard = []
         while(True):
