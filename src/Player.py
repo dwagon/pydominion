@@ -542,6 +542,8 @@ class Player(object):
             self.output("Unhandled modifier: %s" % modifier)
         index = 1
         for p in buyable:
+            if not p.purchasable:
+                continue
             selector = "%d" % index
             toprint = 'Get %s (%s) %s' % (p.name, self.coststr(p), p.desc)
             options.append({'selector': selector, 'print': toprint, 'card': p})
