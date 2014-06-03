@@ -44,6 +44,33 @@ class TestPlayer(unittest.TestCase):
 
 
 ###############################################################################
+class Test_nextCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_emptyDeck(self):
+        self.plr.deck = []
+        self.plr.setDiscard('gold')
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Gold')
+
+    def test_noCards(self):
+        self.plr.deck = []
+        self.plr.discardpile = []
+        c = self.plr.nextCard()
+        self.assertEqual(c, None)
+
+    def test_drawOne(self):
+        self.plr.setDeck('province')
+        self.plr.discardpile = []
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Province')
+        self.assertEqual(self.plr.deck, [])
+
+
+###############################################################################
 class Test_cardsAffordable(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
@@ -129,10 +156,10 @@ class Test_plrTrashCard(unittest.TestCase):
         for m in self.plr.messages:
             if 'Invalid Option' in m:
                 break
-        else:
+        else:   # pragma: no cover
             self.fail("Accepted none when force")
         for m in self.plr.messages:
-            if 'Trash nothing' in m:
+            if 'Trash nothing' in m:    # pragma: no cover
                 self.fail("Nothing available")
 
     def test_exclude(self):
@@ -193,6 +220,24 @@ class Test_attackVictims(unittest.TestCase):
 
 
 ###############################################################################
+class Test_inHand(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players[0]
+
+    def test_inhand(self):
+        """ Test card is in hand """
+        self.plr.setHand('copper')
+        self.assertTrue(self.plr.inHand('Copper'))
+
+    def test_notinhand(self):
+        """ Test card that isn't in hand """
+        self.plr.setHand('copper')
+        self.assertFalse(self.plr.inHand('Estate'))
+
+
+###############################################################################
 class Test_gainCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
@@ -220,7 +265,7 @@ class Test_gainCard(unittest.TestCase):
         self.assertEqual(self.plr.hand[0].name, 'Copper')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF
