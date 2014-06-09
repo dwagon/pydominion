@@ -63,7 +63,7 @@ class Test_Alchemist(unittest.TestCase):
         for c in self.plr.discardpile:
             if c.name == 'Alchemist':
                 break
-        else:
+        else:   # pragma: no cover
             self.fail()
 
     def test_keep(self):
@@ -73,7 +73,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, pot
         for c in self.plr.discardpile:
-            if c.name == 'Alchemist':
+            if c.name == 'Alchemist':   # pragma: no cover
                 self.fail()
         self.assertEquals(self.plr.deck[-1].name, 'Alchemist')
 

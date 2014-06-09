@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Cellar(Card):
     def __init__(self):
         Card.__init__(self)
@@ -47,7 +48,7 @@ class Test_Cellar(unittest.TestCase):
         for c in self.plr.hand:
             if c.name == 'Gold':
                 break
-        else:
+        else:   # pragma: no cover
             self.fail()
         self.assertEquals(len(self.plr.hand), 3)
 

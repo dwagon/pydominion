@@ -113,7 +113,7 @@ class Test_Thief(unittest.TestCase):
         for c in self.thief.discardpile:
             if c.name == 'Gold':
                 break
-        else:
+        else:   # pragma: no cover
             self.fail()
         self.assertIn('%s stole your Gold' % self.thief.name, self.victim.messages)
 
