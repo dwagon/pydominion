@@ -87,7 +87,7 @@ class Player(object):
     ###########################################################################
     def setPlayed(self, *cards):
         """ This is mostly used for testing """
-        self.discardpile = []
+        self.played = []
         for c in cards:
             self.played.append(self.game[c].remove())
 
