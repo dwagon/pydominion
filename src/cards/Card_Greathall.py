@@ -12,7 +12,7 @@ class Card_Greathall(Card):
         self.base = 'intrigue'
         self.desc = "+1 card, +1 action, 1VP"
         self.name = 'Great Hall'
-        self.cost = 5
+        self.cost = 3
         self.cards = 1
         self.actions = 1
 
