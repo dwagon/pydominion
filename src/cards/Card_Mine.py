@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Mine(Card):
     def __init__(self):
         Card.__init__(self)
@@ -35,7 +36,7 @@ class Card_Mine(Card):
                     player.output("Converted to %s" % c.name)
                     player.trashCard(o['card'])
                     break
-            else:
+            else:   # pragma: no cover
                 player.output("No appropriate treasure card exists")
 
 
@@ -46,13 +47,13 @@ class Test_Mine(unittest.TestCase):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['mine'])
         self.plr = self.g.players[0]
-        self.mcard = self.g['mine'].remove()
+        self.card = self.g['mine'].remove()
 
     def test_convcopper(self):
         self.plr.setHand('copper')
-        self.plr.addCard(self.mcard, 'hand')
+        self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
-        self.plr.playCard(self.mcard)
+        self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Silver')
         self.assertEquals(self.plr.discardpile, [])
         self.assertEquals(len(self.plr.hand), 1)
@@ -62,9 +63,9 @@ class Test_Mine(unittest.TestCase):
 
     def test_convnothing(self):
         self.plr.setHand('copper')
-        self.plr.addCard(self.mcard, 'hand')
+        self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
-        self.plr.playCard(self.mcard)
+        self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Copper')
         self.assertEquals(self.plr.discardpile, [])
         self.assertEquals(len(self.plr.hand), 1)
