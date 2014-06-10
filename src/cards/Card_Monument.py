@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Monument(Card):
     def __init__(self):
         Card.__init__(self)
@@ -12,6 +16,28 @@ class Card_Monument(Card):
         self.gold = 2
 
     def special(self, game, player):
-        player.addScore('monument', 1)
+        player.addScore('Monument', 1)
+
+
+###############################################################################
+class Test_Monument(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['monument'])
+        self.plr = self.g.players[0]
+        self.card = self.g['monument'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play(self):
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.t['gold'], 2)
+        sc = self.plr.getScoreDetails()
+        self.assertEqual(sc['Monument'], 1)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF
