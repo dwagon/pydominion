@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Secretchamber(Card):
     def __init__(self):
         Card.__init__(self)
@@ -12,27 +16,8 @@ class Card_Secretchamber(Card):
 
     def special(self, player, game):
         """ Discard any number of cards, +1 gold per card discarded"""
-        todiscard = []
-        prompt = "Select which card(s) to discard (+1 gold per discard)?"
-        while(1):
-            options = [{'selector': '0', 'print': 'Discard no more', 'card': None}]
-            index = 1
-            for c in player.hand:
-                s = "%s" % index
-                discstr = "Undiscard" if c in todiscard else "Discard"
-                options.append({'selector': s, 'print': '%s %s' % (discstr, c.name), 'card': c})
-                index += 1
-            o = player.userInput(options, prompt)
-            if o['card'] is None:
-                break
-            if o['card'] in todiscard:
-                todiscard.remove(o['card'])
-            else:
-                todiscard.append(o['card'])
-
-        for c in todiscard:
-            player.output("Discarding %s" % c.name)
-            player.discardCard(c)
+        player.output("Select which card(s) to discard (+1 gold per discard)?")
+        todiscard = player.plrDiscardCards(anynum=True)
         player.t['gold'] += len(todiscard)
 
     def hook_underAttack(self, player, game):
@@ -63,8 +48,43 @@ class Card_Secretchamber(Card):
         options = [
             {'selector': '0', 'print': "Don't reveal", 'reveal': False},
             {'selector': '1', 'print': 'Reveal', 'reveal': True}
-            ]
+        ]
         o = player.userInput(options, "Reveal Secret Chamber?")
         return o['reveal']
+
+
+###############################################################################
+class Test_Secretchamber(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['secretchamber'])
+        self.plr = self.g.players[0]
+        self.card = self.g['secretchamber'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play_none(self):
+        """ Play the Secret Chamber - discard none"""
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.card)
+        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.t['gold'], 0)
+
+    def test_play_three(self):
+        """ Play the Secret Chamber - discard three"""
+        self.plr.test_input = ['1', '2', '3', '0']
+        self.plr.playCard(self.card)
+        self.assertEqual(len(self.plr.hand), 2)
+        self.assertEqual(self.plr.t['gold'], 3)
+
+    def test_underattack(self):
+        """ Secret chamber is under attack """
+        # TODO
+        pass
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF
