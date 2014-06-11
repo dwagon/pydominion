@@ -37,7 +37,7 @@ class Test_Baron(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['baron'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.baron = self.g['baron'].remove()
 
     def test_play(self):

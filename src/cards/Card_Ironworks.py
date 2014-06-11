@@ -35,7 +35,7 @@ class Test_Ironworks(unittest.TestCase):
         initcards = ['ironworks', 'greathall', 'apprentice', 'banditcamp',
                      'city', 'count', 'duke', 'library', 'market', 'rebuild']
         self.g.startGame(numplayers=1, initcards=initcards)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['ironworks'].remove()
         self.plr.addCard(self.card, 'hand')
 

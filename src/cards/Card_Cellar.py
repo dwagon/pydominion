@@ -26,8 +26,8 @@ class Test_Cellar(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['cellar'])
-        self.plr = self.g.players[0]
+        self.g.startGame(numplayers=1, initcards=['cellar'])
+        self.plr = self.g.players.values()[0]
         self.ccard = self.g['cellar'].remove()
 
     def test_none(self):

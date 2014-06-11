@@ -38,7 +38,7 @@ class Test_Scout(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['scout'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.scout = self.g['scout'].remove()
 
     def test_play(self):

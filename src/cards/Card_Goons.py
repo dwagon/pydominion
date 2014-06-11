@@ -34,8 +34,7 @@ class Test_Goons(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['goons', 'moat'])
-        self.plr = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.plr, self.victim = self.g.players.values()
         self.card = self.g['goons'].remove()
         self.plr.addCard(self.card, 'hand')
 

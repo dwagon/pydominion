@@ -38,7 +38,7 @@ class Test_Pearldiver(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['pearldiver'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.pearldiver = self.g['pearldiver'].remove()
         self.plr.addCard(self.pearldiver, 'hand')
 

@@ -33,7 +33,7 @@ class Test_Apprentice(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['apprentice', 'familiar'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.apprentice = self.g['apprentice'].remove()
 
     def test_trashNone(self):

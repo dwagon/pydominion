@@ -73,7 +73,7 @@ class Test_Count(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['count'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['count'].remove()
 
     def test_discard(self):

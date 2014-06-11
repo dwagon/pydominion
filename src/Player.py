@@ -529,7 +529,7 @@ class Player(object):
     ###########################################################################
     def attackVictims(self):
         victims = []
-        for plr in self.game.players:
+        for plr in self.game.players.values():
             if plr == self:
                 continue
             if plr.hasDefense(self):

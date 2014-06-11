@@ -42,8 +42,7 @@ class Test_Spy(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['spy', 'moat'])
-        self.attacker = self.g.players[0]
-        self.defender = self.g.players[1]
+        self.attacker, self.defender = self.g.players.values()
         self.attacker.setDeck('estate', 'province', 'duchy')
         self.defender.setDeck('estate', 'gold')
 

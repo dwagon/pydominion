@@ -3,6 +3,7 @@ import argparse
 import glob
 import random
 import sys
+import uuid
 
 from Player import Player
 from CardPile import CardPile
@@ -13,7 +14,7 @@ from CardPile import CardPile
 ###############################################################################
 class Game(object):
     def __init__(self, quiet=False, prosperity=False):
-        self.players = []
+        self.players = {}
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
@@ -35,7 +36,9 @@ class Game(object):
                 name = playernames.pop()
             except IndexError:
                 name = None
-            self.players.append(Player(game=self, quiet=self.quiet, name=name))
+            u = uuid.uuid4().hex
+            self.players[u] = Player(game=self, quiet=self.quiet, name=name)
+            self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
 
@@ -51,7 +54,7 @@ class Game(object):
         count += len(self.trashpile)
         for cp in self.cardpiles.values():
             count += cp.numcards
-        for pl in self.players:
+        for pl in self.players.values():
             count += pl.countCards()
         return count
 
@@ -166,7 +169,7 @@ class Game(object):
         """ This is used for debugging """
         print "#" * 40
         print "Trash: %s" % ", ".join([c.name for c in self.trashpile])
-        for p in self.players:
+        for p in self.players.values():
             print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
             print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
             print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
@@ -180,21 +183,22 @@ class Game(object):
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        place = self.players.index(plr) - 1
-        return self.players[place]
+        players = self.players.values()
+        place = players.index(plr) - 1
+        return self.players.values()[place]
 
     ###########################################################################
     def whoWon(self):
         scores = {}
         self.output("")
-        for plr in self.players:
+        for plr in self.players.values():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
     ###########################################################################
     def turn(self):
         assert(self.countCards() == self.numcards)
-        for plr in self.players:
+        for plr in self.players.values():
             plr.turn()
             if self.isGameOver():
                 self.gameover = True

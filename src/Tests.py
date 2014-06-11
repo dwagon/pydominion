@@ -9,7 +9,7 @@ class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_initialCardStacks(self):
         """ Make sure initial hands are correct """
@@ -48,7 +48,7 @@ class Test_nextCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_emptyDeck(self):
         self.plr.deck = []
@@ -75,7 +75,7 @@ class Test_cardsAffordable(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_under(self):
         price = 4
@@ -97,7 +97,7 @@ class Test_typeSelector(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_selzero(self):
         x = self.plr.typeSelector({})
@@ -123,7 +123,7 @@ class Test_plrTrashCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_None(self):
         self.plr.setHand('gold')
@@ -175,7 +175,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_discardNone(self):
         self.plr.setHand('copper', 'estate', 'province', 'gold')
@@ -209,9 +209,9 @@ class Test_attackVictims(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=3, initcards=['moat'])
-        self.plr = self.g.players[0]
-        self.defend = self.g.players[1]
-        self.victim = self.g.players[2]
+        self.plr = self.g.players.values()[0]
+        self.defend = self.g.players.values()[1]
+        self.victim = self.g.players.values()[2]
         self.defend.setHand('moat')
 
     def test_output(self):
@@ -224,7 +224,7 @@ class Test_inHand(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_inhand(self):
         """ Test card is in hand """
@@ -242,7 +242,7 @@ class Test_gainCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_gainByString(self):
         self.plr.gainCard('copper')

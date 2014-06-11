@@ -41,7 +41,7 @@ class Test_Steward(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['steward'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['steward'].remove()
         self.plr.addCard(self.card, 'hand')
 

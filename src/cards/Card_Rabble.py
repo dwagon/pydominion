@@ -43,8 +43,7 @@ class Test_Rabble(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['rabble', 'moat'])
-        self.attacker = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.attacker, self.victim = self.g.players.values()
         self.rabble = self.g['rabble'].remove()
         self.moat = self.g['moat'].remove()
         self.attacker.addCard(self.rabble, 'hand')

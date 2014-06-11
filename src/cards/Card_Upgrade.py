@@ -31,7 +31,7 @@ class Test_Upgrade(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['upgrade'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['upgrade'].remove()
 
     def test_play(self):

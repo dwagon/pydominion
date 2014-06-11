@@ -4,6 +4,7 @@ from Card import Card
 import unittest
 
 
+###############################################################################
 class Card_Thief(Card):
     def __init__(self):
         Card.__init__(self)
@@ -63,11 +64,12 @@ class Test_Thief(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['thief', 'moat'], playernames=['victim', 'thief'])
+        self.g.startGame(numplayers=2, initcards=['thief', 'moat'])
         self.thiefcard = self.g['thief'].remove()
-        self.thief = self.g.players[0]
+        self.thief, self.victim = self.g.players.values()
+        self.thief.name = 'thief'
+        self.victim.name = 'victim'
         self.thief.addCard(self.thiefcard, 'hand')
-        self.victim = self.g.players[1]
 
     def test_no_treasure(self):
         self.victim.setDeck('estate', 'estate', 'estate')

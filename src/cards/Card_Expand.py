@@ -29,7 +29,7 @@ class Test_Expand(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['expand'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.expand = self.g['expand'].remove()
 
     def test_play(self):

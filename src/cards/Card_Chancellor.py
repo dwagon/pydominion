@@ -33,7 +33,7 @@ class Test_Chancellor(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['chancellor'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.ccard = self.g['chancellor'].remove()
         self.plr.setHand('estate')
         self.plr.addCard(self.ccard, 'hand')

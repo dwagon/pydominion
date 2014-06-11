@@ -26,7 +26,7 @@ class Test_Gardens(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['gardens'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_score_0(self):
         self.plr.setHand('gardens', 'copper', 'copper')

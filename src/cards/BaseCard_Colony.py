@@ -24,7 +24,7 @@ class Test_Colony(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, prosperity=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['colony'].remove()
         self.plr.addCard(self.card, 'hand')
 

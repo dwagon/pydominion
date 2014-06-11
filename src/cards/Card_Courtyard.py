@@ -37,7 +37,7 @@ class Test_Courtyard(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['courtyard'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.cy = self.g['courtyard'].remove()
 
     def test_play(self):
