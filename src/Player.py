@@ -308,12 +308,15 @@ class Player(object):
             c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def turn(self):
+    def startTurn(self):
         self.played = []
+        self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
+
+    ###########################################################################
+    def turn(self):
         self.output("#" * 80)
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s Turn %s" % (self.name, stats))
-        self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
         while(1):
             if self.hand:
                 self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
@@ -337,6 +340,11 @@ class Player(object):
                 break
             else:
                 sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
+        self.endTurn()
+
+    ###########################################################################
+    def endTurn(self):
+        self.messages = []
         self.discardHand()
         self.pickUpHand()
 
@@ -361,6 +369,7 @@ class Player(object):
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
+        self.output("Played %s" % card.name)
         if discard:
             self.addCard(card, 'played')
             self.hand.remove(card)
