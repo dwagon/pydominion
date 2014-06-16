@@ -32,8 +32,7 @@ class Card_Catacombs(Card):
         else:
             for c in cards:
                 player.addCard(c, 'discard')
-            for i in range(3):
-                player.pickupCard()
+            player.pickupCards(3)
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this, gain a cheaper card """

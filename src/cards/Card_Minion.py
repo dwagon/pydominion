@@ -34,7 +34,6 @@ class Card_Minion(Card):
 
     def dropAndDraw(self, plr):
         plr.discardHand()
-        for i in range(4):
-            plr.pickupCard()
+        plr.pickupCards(4)
 
 #EOF

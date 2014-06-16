@@ -26,8 +26,7 @@ class Card_Secretchamber(Card):
             from your hand on top of your deck """
         if not self.revealCard(player):
             return
-        for i in range(2):
-            player.pickupCard()
+        player.pickupCards(2)
         player.output("Put two cards onto deck")
         for i in range(2):
             self.deckCard(player)

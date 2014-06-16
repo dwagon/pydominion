@@ -27,8 +27,7 @@ class Card_Mercenary(Card):
         if not o['trash']:
             return
         player.plrTrashCard(2, force=True)
-        for i in range(2):
-            player.pickupCard()
+        player.pickupCards(2)
         player.t['gold'] += 2
         for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)

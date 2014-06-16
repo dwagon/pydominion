@@ -23,8 +23,7 @@ class Card_Steward(Card):
         ]
         o = player.userInput(options, "Choose one?")
         if o['choose'] == 'cards':
-            for i in range(2):
-                player.pickupCard()
+            player.pickupCards(2)
             return
         if o['choose'] == 'gold':
             player.t['gold'] += 2

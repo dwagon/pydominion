@@ -24,8 +24,7 @@ class Card_Apprentice(Card):
         numcards = c.cost
         if c.potcost:
             numcards += 2
-        for c in range(numcards):
-            player.pickupCard()
+        player.pickupCards(numcards)
 
 
 ###############################################################################

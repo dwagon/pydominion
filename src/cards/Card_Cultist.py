@@ -31,8 +31,7 @@ class Card_Cultist(Card):
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this, +3 cards """
-        for i in range(3):
-            player.pickupCard()
+        player.pickupCards(3)
 
 
 ###############################################################################

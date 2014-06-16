@@ -18,8 +18,7 @@ class Card_Cellar(Card):
     def special(self, game, player):
         """ Discard any number of cards, +1 card per card discarded """
         todiscard = player.plrDiscardCards(0, anynum=True)
-        for c in todiscard:
-            player.pickupCard()
+        player.pickupCards(len(todiscard))
 
 
 ###############################################################################

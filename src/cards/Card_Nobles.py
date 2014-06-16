@@ -23,8 +23,7 @@ class Card_Nobles(Card):
         ]
         o = player.userInput(options, "Choose one")
         if o['choose'] == 'cards':
-            for i in range(3):
-                player.pickupCard()
+            player.pickupCards(3)
             return
         if o['choose'] == 'actions':
             player.t['actions'] += 2
