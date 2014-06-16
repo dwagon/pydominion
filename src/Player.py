@@ -126,6 +126,13 @@ class Player(object):
         return c
 
     ###########################################################################
+    def pickupCards(self, num, verbose=True, verb='Picked up'):
+        cards = []
+        for i in range(num):
+            cards.append(self.pickupCard(verbose=verbose, verb=verb))
+        return cards
+
+    ###########################################################################
     def pickupCard(self, card=None, verbose=True, verb='Picked up'):
         """ Pick a card from the deck and put it into the players hand """
         if not card:
