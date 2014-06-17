@@ -73,6 +73,15 @@ class Test_Kingscourt(unittest.TestCase):
         self.assertEqual(self.plr.discardpile, [])
         self.assertEqual(len(self.plr.played), 1)
 
+    def test_picked_nothing(self):
+        """ Selected no actions with Kings court """
+        self.plr.setHand('estate', 'estate', 'moat')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(len(self.plr.played), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
