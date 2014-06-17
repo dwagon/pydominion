@@ -19,7 +19,7 @@ class Card_Masquerade(Card):
         """ Each player passes a card from his hand to the left at
             once. Then you may trash a card from your hand"""
         xfer = {}
-        for plr in game.players:
+        for plr in game.players.values():
             xfer[plr] = self.pickCardToXfer(plr, game)
         for plr in xfer.keys():
             newplr = game.playerToLeft(plr)
@@ -49,8 +49,7 @@ class Test_Masquerade(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['masquerade'])
-        self.plr = self.g.players[0]
-        self.other = self.g.players[1]
+        self.plr, self.other = self.g.players.values()
         self.card = self.g['masquerade'].remove()
 
     def test_play(self):

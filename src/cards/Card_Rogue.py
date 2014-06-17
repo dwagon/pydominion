@@ -77,7 +77,7 @@ class Test_Rogue(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['rogue', 'moat'])
-        self.plr, self.victim = self.g.players
+        self.plr, self.victim = self.g.players.values()
         self.card = self.g['rogue'].remove()
 
     def test_play(self):
