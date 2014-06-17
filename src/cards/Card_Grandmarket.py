@@ -50,7 +50,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
-            if 'Buy Grand Market' in msg:
+            if 'Buy Grand Market' in msg:   # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
@@ -60,7 +60,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
-            if 'Buy Grand Market' in msg:
+            if 'Buy Grand Market' in msg:   # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
@@ -71,7 +71,7 @@ class Test_Grandmarket(unittest.TestCase):
         for msg in self.plr.messages:
             if 'Buy Grand Market' in msg:
                 break
-        else:
+        else:   # pragma: no cover
             self.fail("Not allowed to buy grand market")
 
 
