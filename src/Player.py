@@ -314,7 +314,8 @@ class Player(object):
 
     ###########################################################################
     def turn(self):
-        self.output("#" * 80)
+        self.startTurn()
+        self.output("#" * 50)
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s Turn %s" % (self.name, stats))
         while(1):
