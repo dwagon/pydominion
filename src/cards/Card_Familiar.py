@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Familiar(Card):
     def __init__(self):
         Card.__init__(self)
@@ -19,5 +23,36 @@ class Card_Familiar(Card):
         for pl in player.attackVictims():
             player.output("%s got cursed" % pl.name)
             pl.gainCard('curse')
+
+
+###############################################################################
+class Test_Familiar(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=2, initcards=['familiar', 'moat'])
+        self.plr = self.g.players[0]
+        self.victim = self.g.players[1]
+        self.card = self.g['familiar'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play(self):
+        """ Play a familiar """
+        self.plr.playCard(self.card)
+        self.assertEqual(self.victim.discardpile[0].name, 'Curse')
+        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(len(self.plr.hand), 5 + 1)
+
+    def test_defended(self):
+        self.victim.setHand('gold', 'moat')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.victim.discardpile, [])
+        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(len(self.plr.hand), 5 + 1)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF
