@@ -21,30 +21,22 @@ class Card_Count(Card):
 
         Choose one: +3 gold, or trash your hand or gain a Duchy """
 
-        options = [
-            {'selector': '0', 'print': 'Discard 2 cards', 'action': 'discard'},
-            {'selector': '1', 'print': 'Put a card from your hand on top of your deck', 'action': 'putcard'},
-            {'selector': '2', 'print': 'Gain a Copper', 'action': 'copper'}
-        ]
-        o = player.userInput(options, 'What do you want to do?')
-        if o['action'] == 'copper':
+        ans = player.plrChooseOptions("What do you want to do?", ("Discard 2 cards", "discard"), ("Put a card from you hand on top of your deck", "putcard"), ("Gain a copper", "copper"))
+        if ans == 'copper':
             player.output("Gained a copper")
             player.gainCard('copper')
-        elif o['action'] == 'putcard':
+        elif ans == 'putcard':
             self.putCard(game, player)
         else:
             player.plrDiscardCards(2)
 
-        options = [
-            {'selector': '0', 'print': '+3 gold', 'action': 'gold'},
-            {'selector': '1', 'print': 'Trash hand', 'action': 'trash'},
-            {'selector': '2', 'print': 'Gain Duchy', 'action': 'duchy'}
-        ]
-        o = player.userInput(options, 'What do you want to do now?')
-        if o['action'] == 'duchy':
+        ans = player.plrChooseOptions(
+            'What do you want to do now?',
+            ('+3 gold', 'gold'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
+        if ans == 'duchy':
             player.output("Gained a duchy")
             player.gainCard('duchy')
-        elif o['action'] == 'trash':
+        elif ans == 'trash':
             for c in player.hand[:]:
                 player.output("Trashing %s" % c.name)
                 player.trashCard(c)

@@ -22,12 +22,10 @@ class Card_Navigator(Card):
         for i in range(5):
             cards.append(player.nextCard())
         player.output("Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards]))
-        options = [
-            {'selector': '0', 'print': 'Discard cards', 'discard': True},
-            {'selector': '1', 'print': 'Return them to the deck', 'discard': False}
-        ]
-        o = player.userInput(options, 'What do you want to do?')
-        if o['discard']:
+        discard = player.plrChooseOptions(
+            'What do you want to do?',
+            ('Discard cards', True), ('Return them to the deck', False))
+        if discard:
             for c in cards:
                 player.discardCard(c)
         else:

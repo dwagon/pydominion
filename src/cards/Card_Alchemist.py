@@ -24,12 +24,10 @@ class Card_Alchemist(Card):
                 break
         else:
             return
-        options = [
-            {'selector': '0', 'print': 'Discard', 'todeck': False},
-            {'selector': '1', 'print': 'Put on top of deck', 'todeck': True},
-        ]
-        o = player.userInput(options, 'What to do with the alchemist?')
-        if o['todeck']:
+        ans = player.plrChooseOptions(
+            'What to do with the alchemist?',
+            ('Discard alchemist', False), ('Put on top of deck', True))
+        if ans:
             player.played.remove(self)
             player.addCard(self, 'topdeck')
 

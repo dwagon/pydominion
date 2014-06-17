@@ -19,12 +19,10 @@ class Card_Mercenary(Card):
             cards, +2 gold, and each other player discards down to 3
             cards in hand """
 
-        options = [
-            {'selector': '0', 'print': 'Trash nothing', 'trash': False},
-            {'selector': '1', 'print': 'Trash 2 cards', 'trash': True}
-        ]
-        o = player.userInput(options, "Trash cards?")
-        if not o['trash']:
+        ans = player.plrChooseOptions(
+            "Trash cards?",
+            ('Trash nothing', False), ('Trash 2 cards', True))
+        if not ans:
             return
         player.plrTrashCard(2, force=True)
         player.pickupCards(2)

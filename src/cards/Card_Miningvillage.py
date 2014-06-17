@@ -18,12 +18,10 @@ class Card_Miningvillage(Card):
 
     def special(self, game, player):
         """ You may trash this card immediately. If you do +2 gold """
-        options = [
-            {'selector': '0', 'print': 'Do nothing', 'trash': False},
-            {'selector': '1', 'print': 'Trash mining village for +2 gold', 'trash': True}
-        ]
-        o = player.userInput(options, "Choose one")
-        if o['trash']:
+        trash = player.plrChooseOptions(
+            "Choose one",
+            ('Do nothing', False), ('Trash mining village for +2 gold', True))
+        if trash:
             player.output("Trashing mining village")
             player.t['gold'] += 2
             player.trashCard(self)

@@ -27,12 +27,10 @@ class Card_Library(Card):
             player.pickupCard(c)
 
     def discardChoice(self, plr, card):
-        options = [
-            {'selector': '0', 'print': 'Discard %s' % card.name, 'discard': True},
-            {'selector': '1', 'print': 'Keep %s' % card.name, 'discard': False},
-        ]
-        o = plr.userInput(options, "Discard %s from library?" % card.name)
-        return o['discard']
+        ans = plr.plrChooseOptions(
+            "Discard %s from library?" % card.name,
+            ('Discard %s' % card.name, True), ('Keep %s' % card.name, False))
+        return ans
 
 
 ###############################################################################

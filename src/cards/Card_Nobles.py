@@ -17,15 +17,12 @@ class Card_Nobles(Card):
 
     def special(self, game, player):
         """ Choose one: +3 Cards; or +2 Actions """
-        options = [
-            {'selector': '1', 'print': '+3 Cards', 'choose': 'cards'},
-            {'selector': '2', 'print': '+2 Actions', 'choose': 'actions'}
-        ]
-        o = player.userInput(options, "Choose one")
-        if o['choose'] == 'cards':
+        cards = player.plrChooseOptions(
+            "Choose one",
+            ('+3 Cards', True), ('+2 Actions', False))
+        if cards:
             player.pickupCards(3)
-            return
-        if o['choose'] == 'actions':
+        else:
             player.t['actions'] += 2
 
 
@@ -41,14 +38,14 @@ class Test_Nobles(unittest.TestCase):
 
     def test_cards(self):
         """ Play the Nobles - chosing cards """
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 8)
         self.assertEqual(self.plr.t['actions'], 0)
 
     def test_actions(self):
         """ Play the Nobles - chosing actions """
-        self.plr.test_input = ['2']
+        self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(self.plr.t['actions'], 2)

@@ -20,12 +20,8 @@ class Card_Ironmonger(Card):
             Either way, if it is an... Action card, +1 Action; Treasure
             Card, +1 gold; Victory Card, +1 card """
         card = player.nextCard()
-        options = [
-            {'selector': '0', 'print': 'Put back %s' % card.name, 'discard': False},
-            {'selector': '1', 'print': 'Discard %s' % card.name, 'discard': True}
-        ]
-        o = player.userInput(options, "What to do with %s" % card.name)
-        if o['discard']:
+        ans = player.plrChooseOptions("What to do with %s" % card.name, ('Put back %s' % card.name, False), ('Discard %s' % card.name, True))
+        if ans:
             player.discardCard(card)
         else:
             player.addCard(card, 'topdeck')

@@ -19,12 +19,11 @@ class Card_Moneylender(Card):
         if not copper:
             player.output("No coppers in hand")
             return
-        options = []
-        options.append({'selector': '0', 'print': "Don't trash a copper", 'trash': False})
-        options.append({'selector': '1', 'print': "Trash a copper", 'trash': True})
         player.output("Trash a copper to gain +3 gold")
-        o = player.userInput(options, "Trash a copper?")
-        if o['trash']:
+        trash = player.plrChooseOptions(
+            "Trash a copper?",
+            ("Don't trash a copper", False), ("Trash a copper", True))
+        if trash:
             player.trashCard(copper)
             player.t['gold'] += 3
 

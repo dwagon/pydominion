@@ -25,12 +25,10 @@ class Card_Loan(Card):
             else:
                 player.output("Revealed and discarded %s" % c.name)
                 player.discardCard(c)
-        options = [
-            {'selector': '0', 'print': "Discard %s" % c.name, 'action': 'discard'},
-            {'selector': '1', 'print': "Trash %s" % c.name, 'action': 'trash'}
-        ]
-        o = player.userInput(options, "What to do?")
-        if o['action'] == 'discard':
+        discard = player.plrChooseOptions(
+            "What to do?",
+            ("Discard %s" % c.name, True), ("Trash %s" % c.name, False))
+        if discard:
             player.discardCard(c)
         else:
             player.trashCard(c)

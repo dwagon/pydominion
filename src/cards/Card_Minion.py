@@ -16,12 +16,11 @@ class Card_Minion(Card):
             discard your hand, +4 cards and each other player with
             at least 5 card in hand discards his hand and draws 4
             cards """
-        options = [
-            {'selector': '0', 'print': "+2 gold", 'attack': False},
-            {'selector': '1', 'print': "Discard your hand, +4 cards and each other player with 5 cards discards and draws 4", 'attack': True},
-        ]
-        o = player.userInput(options, "What do you want to do?")
-        if o['attack']:
+        attack = player.plrChooseOptions(
+            "What do you want to do?",
+            ("+2 gold", False),
+            ("Discard your hand, +4 cards and each other player with 5 cards discards and draws 4", True))
+        if attack:
             self.attack(game, player)
         else:
             player.t['gold'] += 2

@@ -16,19 +16,16 @@ class Card_Steward(Card):
 
     def special(self, game, player):
         """ Choose one: +2 Cards; or +2 gold, or trash 2 cards from your hand """
-        options = [
-            {'selector': '1', 'print': '+2 Cards', 'choose': 'cards'},
-            {'selector': '2', 'print': '+2 Gold', 'choose': 'gold'},
-            {'selector': '3', 'print': 'Trash 2', 'choose': 'trash'}
-        ]
-        o = player.userInput(options, "Choose one?")
-        if o['choose'] == 'cards':
+        choice = player.plrChooseOptions(
+            "Choose one?",
+            ('+2 Cards', 'cards'), ('+2 Gold', 'gold'), ('Trash 2', 'trash'))
+        if choice == 'cards':
             player.pickupCards(2)
             return
-        if o['choose'] == 'gold':
+        if choice == 'gold':
             player.t['gold'] += 2
             return
-        if o['choose'] == 'trash':
+        if choice == 'trash':
             player.output("Trash two cards")
             num = min(2, len(player.hand))
             player.plrTrashCard(num=num, force=True)
@@ -46,19 +43,19 @@ class Test_Steward(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_cards(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 7)
         self.assertEqual(self.plr.t['gold'], 0)
 
     def test_gold(self):
-        self.plr.test_input = ['2']
+        self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(self.plr.t['gold'], 2)
 
     def test_trash(self):
-        self.plr.test_input = ['3', '1', '2', '0']
+        self.plr.test_input = ['2', '1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.t['gold'], 0)
         self.assertEqual(len(self.g.trashpile), 2)
@@ -68,7 +65,7 @@ class Test_Steward(unittest.TestCase):
         """ Trash two when there are less than two to trash """
         self.plr.setHand('copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['3', '1', '0']
+        self.plr.test_input = ['2', '1', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.t['gold'], 0)
         self.assertEqual(len(self.g.trashpile), 1)

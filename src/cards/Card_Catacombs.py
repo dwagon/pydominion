@@ -21,12 +21,8 @@ class Card_Catacombs(Card):
         for i in range(3):
             cards.append(player.nextCard())
         player.output("You drew %s" % ", ".join([c.name for c in cards]))
-        options = [
-            {'selector': '0', 'print': 'Keep the three', 'keep': True},
-            {'selector': '1', 'print': 'Discard and draw 3 more', 'keep': False}
-        ]
-        o = player.userInput(options, 'What do you want to do?')
-        if o['keep']:
+        ans = player.plrChooseOptions("What do you want to do?", ("Keep the three", True), ("Discard and draw 3 more", False))
+        if ans:
             for c in cards:
                 player.addCard(c, 'hand')
         else:

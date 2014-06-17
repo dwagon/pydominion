@@ -25,12 +25,10 @@ class Card_Spy(Card):
     def spyOn(self, attacker, victim):
         c = victim.nextCard()
         vicname = "your" if attacker == victim else "%s's" % victim.name
-        options = [
-            {'selector': '0', 'print': "Keep %s on deck" % c.name, 'discard': False},
-            {'selector': '1', 'print': "Discard %s" % c.name, 'discard': True}
-        ]
-        o = attacker.userInput(options, "Discard %s card?" % vicname)
-        if o['discard']:
+        discard = attacker.plrChooseOptions(
+            "Discard %s card?" % vicname,
+            ("Keep %s on deck" % c.name, False), ("Discard %s" % c.name, True))
+        if discard:
             victim.addCard(c, 'discard')
         else:
             victim.addCard(c, 'topdeck')

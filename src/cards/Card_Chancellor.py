@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Chancellor(Card):
     def __init__(self):
         Card.__init__(self)
@@ -16,12 +17,8 @@ class Card_Chancellor(Card):
 
     def special(self, game, player):
         """ You may immediately put your deck into your discard pile """
-        options = [
-            {'selector': '0', 'print': "Don't Discard Deck", 'discard': False},
-            {'selector': '1', 'print': "Discard Deck", 'discard': True}
-        ]
-        o = player.userInput(options, "Discard deck?")
-        if o['discard']:
+        ans = player.plrChooseOptions("Discard deck?", ("Don't Discard Deck", False), ("Discard Deck", True))
+        if ans:
             for c in player.deck[:]:
                 player.addCard(c, 'discard')
                 player.deck.remove(c)

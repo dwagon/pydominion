@@ -19,12 +19,11 @@ class Card_Pearldiver(Card):
     def special(self, game, player):
         """ Look at the bottom card of your deck. You may put it on top """
         bcard = player.deck[0]
-        options = [
-            {'selector': '0', 'print': "Keep %s on bottom of deck" % bcard.name, 'top': False},
-            {'selector': '1', 'print': "Put %s on top of deck" % bcard.name, 'top': True}
-        ]
-        o = player.userInput(options, 'What to do with bottom card?')
-        if o['top']:
+        top = player.plrChooseOptions(
+            'What to do with bottom card?',
+            ("Keep %s on bottom of deck" % bcard.name, False),
+            ("Put %s on top of deck" % bcard.name, True))
+        if top:
             player.output("Putting %s on top of deck" % bcard.name)
             player.deck.remove(bcard)
             player.addCard(bcard, 'topdeck')

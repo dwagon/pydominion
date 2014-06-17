@@ -21,12 +21,8 @@ class Card_Cultist(Card):
             plr.gainCard('ruins')
         cultist = player.inHand('cultist')
         if cultist:
-            options = [
-                {'selector': '0', 'print': "Don't play cultist", 'play': False},
-                {'selector': '1', 'print': "Play cultist", 'play': True}
-            ]
-            o = player.userInput(options, 'Play another cultist?')
-            if o['play']:
+            ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play cultist", True))
+            if ans:
                 player.playCard(cultist, costAction=False)
 
     def hook_trashThisCard(self, game, player):

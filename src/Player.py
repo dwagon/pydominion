@@ -611,6 +611,17 @@ class Player(object):
         return discard
 
     ###########################################################################
+    def plrChooseOptions(self, prompt, *choices):
+        index = 0
+        options = []
+        for prnt, ans in choices:
+            sel = '%s' % index
+            options.append({'selector': sel, 'print': prnt, 'answer': ans})
+            index += 1
+        o = self.userInput(options, prompt)
+        return o['answer']
+
+    ###########################################################################
     def plrDiscardDownTo(self, num):
         """ Get the player to discard down to num cards in their hand """
         numtogo = len(self.hand) - num

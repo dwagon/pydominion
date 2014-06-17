@@ -28,15 +28,14 @@ class Card_Scryingpool(Card):
 
     def discardOrPutBack(self, victim, player):
         topcard = victim.nextCard()
-        options = [
-            {'selector': '0', 'print': 'Discard %s' % topcard.name, 'action': 'discard'},
-            {'selector': '1', 'print': 'Putback %s' % topcard.name, 'action': 'putback'},
-        ]
-        o = player.userInput(options, "For %s which one?" % victim.name)
-        if o['action'] == 'discard':
-            victim.addCard(topcard, 'discard')
-        else:
+        putback = player.plrChooseOption(
+            "For %s which one?" % victim.name,
+            ('Discard %s' % topcard.name, False),
+            ('Putback %s' % topcard.name, True))
+        if putback:
             victim.addCard(topcard, 'deck')
+        else:
+            victim.addCard(topcard, 'discard')
 
 
 #EOF
