@@ -39,7 +39,6 @@ class Player(object):
         self.messages = []
         self.hand = []
         self.deck = []
-        # What cards have been played this turn
         self.played = []
         self.buys = 1
         self.actions = 1
@@ -353,8 +352,7 @@ class Player(object):
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
             elif opt['action'] == 'coin':
-                self.coins -= 1
-                self.gold += 1
+                self.spendCoin()
             elif opt['action'] == 'play':
                 self.playCard(opt['card'])
             elif opt['action'] == 'spend':
@@ -366,6 +364,14 @@ class Player(object):
             else:
                 sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
         self.endTurn()
+
+    ###########################################################################
+    def spendCoin(self):
+        if self.coins <= 0:
+            return
+        self.coins -= 1
+        self.gold += 1
+        self.output("Spent a coin")
 
     ###########################################################################
     def endTurn(self):
@@ -394,12 +400,15 @@ class Player(object):
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
+        if card.isAction() and costAction:
+            self.actions -= 1
+        if self.actions < 0:
+            self.actions = 0
+            return
         self.output("Played %s" % card.name)
         if discard:
             self.addCard(card, 'played')
             self.hand.remove(card)
-        if card.isAction() and costAction:
-            self.actions -= 1
         self.actions += card.actions
         self.gold += self.hook_spendValue(card)
         self.buys += card.buys
@@ -435,6 +444,8 @@ class Player(object):
 
     ###########################################################################
     def buyCard(self, card):
+        if not self.buys:
+            return
         newcard = self.gainCard(card)
         self.buys -= 1
         self.gold -= self.cardCost(newcard)
@@ -506,8 +517,16 @@ class Player(object):
         return trash
 
     ###########################################################################
+    def getPotions(self):
+        return self.potions
+
+    ###########################################################################
     def getGold(self):
         return self.gold
+
+    ###########################################################################
+    def getCoins(self):
+        return self.coins
 
     ###########################################################################
     def addGold(self, num):
