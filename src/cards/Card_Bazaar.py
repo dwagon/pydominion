@@ -30,8 +30,8 @@ class Test_Bazaar(unittest.TestCase):
     def test_play(self):
         """ Play Bazaar """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getGold(), 1)
         self.assertEqual(len(self.plr.hand), 6)
 
 

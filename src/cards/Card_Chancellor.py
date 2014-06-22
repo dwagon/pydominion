@@ -40,7 +40,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.setDiscard('estate', 'duchy', 'province')
         self.plr.test_input = ['0']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.t['gold'], 2)
+        self.assertEquals(self.plr.getGold(), 2)
         self.assertEquals(len(self.plr.deck), 3)
         self.assertEquals(len(self.plr.discardpile), 3)
 
@@ -49,7 +49,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.setDiscard('estate', 'duchy', 'province')
         self.plr.test_input = ['1']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.t['gold'], 2)
+        self.assertEquals(self.plr.getGold(), 2)
         self.assertEquals(len(self.plr.deck), 0)
         self.assertEquals(len(self.plr.discardpile), 6)
 

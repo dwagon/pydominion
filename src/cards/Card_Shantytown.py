@@ -38,7 +38,7 @@ class Test_Shantytown(unittest.TestCase):
         self.plr.setHand('estate', 'estate', 'gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(len(self.plr.hand), 3 + 2)
 
     def test_actions(self):
@@ -46,7 +46,7 @@ class Test_Shantytown(unittest.TestCase):
         self.plr.setHand('moat', 'estate', 'gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(len(self.plr.hand), 3)
 
 

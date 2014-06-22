@@ -31,10 +31,10 @@ class Card_Tribute(Card):
             cardname = c.name
             if c.isAction():
                 player.output("Gained two actions")
-                player.t['actions'] += 2
+                player.addActions(2)
             elif c.isTreasure():
                 player.output("Gained two gold")
-                player.t['gold'] += 2
+                player.addGold(2)
             elif c.isVictory():
                 player.pickupCards(2)
 
@@ -53,7 +53,7 @@ class Test_Tribute(unittest.TestCase):
         """ Play a tribute """
         self.victim.setDeck('copper', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
         self.assertEqual(len(self.plr.hand), 7)
         self.assertEqual(len(self.victim.discardpile), 2)
 
@@ -61,8 +61,8 @@ class Test_Tribute(unittest.TestCase):
         """ Victim has the same cards for Tribute"""
         self.victim.setDeck('tribute', 'tribute')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(len(self.plr.hand), 5)
 
 

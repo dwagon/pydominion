@@ -25,7 +25,7 @@ class Card_Moneylender(Card):
             ("Don't trash a copper", False), ("Trash a copper", True))
         if trash:
             player.trashCard(copper)
-            player.t['gold'] += 3
+            player.addGold(3)
 
 
 ###############################################################################
@@ -42,7 +42,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile, [])
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_trash_copper(self):
         self.plr.test_input = ['1']
@@ -51,7 +51,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Copper')
         self.assertEqual(len(self.g.trashpile), 1)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
 
     def test_dont_trash_copper(self):
         self.plr.setHand('copper', 'copper', 'estate')
@@ -59,7 +59,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile, [])
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
 
 ###############################################################################

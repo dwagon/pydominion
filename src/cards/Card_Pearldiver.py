@@ -45,7 +45,7 @@ class Test_Pearldiver(unittest.TestCase):
         self.plr.setDeck('copper', 'gold', 'province', 'silver', 'duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.pearldiver)
-        self.assertEquals(self.plr.t['actions'], 1)
+        self.assertEquals(self.plr.getActions(), 1)
         self.assertEquals(len(self.plr.hand), 6)
 
     def test_donothing(self):

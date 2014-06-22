@@ -18,7 +18,7 @@ class Card_Secretchamber(Card):
         """ Discard any number of cards, +1 gold per card discarded"""
         player.output("Select which card(s) to discard (+1 gold per discard)?")
         todiscard = player.plrDiscardCards(anynum=True)
-        player.t['gold'] += len(todiscard)
+        player.addGold(len(todiscard))
 
     def hook_underAttack(self, player, game):
         """ When another player plans an Attack card, you may reveal
@@ -67,14 +67,14 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_play_three(self):
         """ Play the Secret Chamber - discard three"""
         self.plr.test_input = ['1', '2', '3', '0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 2)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
 
     def test_underattack(self):
         """ Secret chamber is under attack """

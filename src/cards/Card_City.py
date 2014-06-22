@@ -24,8 +24,8 @@ class Card_City(Card):
         if empties >= 1:
             player.pickupCard()
         if empties >= 2:
-            player.t['gold'] += 1
-            player.t['buys'] += 1
+            player.addGold(1)
+            player.addBuys(1)
 
 
 ###############################################################################
@@ -39,20 +39,23 @@ class Test_City(unittest.TestCase):
         self.plr.addCard(self.city, 'hand')
 
     def test_nostacks(self):
+        """ Play a city with no stacks empty """
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(len(self.plr.hand), 6)
 
     def test_onestack(self):
+        """ Play a city with one stacks empty """
         while(True):
             c = self.g['moat'].remove()
             if not c:
                 break
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(len(self.plr.hand), 7)
 
     def test_twostack(self):
+        """ Play a city with two stacks empty """
         while(True):
             c = self.g['moat'].remove()
             if not c:
@@ -62,10 +65,10 @@ class Test_City(unittest.TestCase):
             if not c:
                 break
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getGold(), 1)
         # 1 default + 1 for city
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getBuys(), 2)
         # 5 for hand, 1 for city, 1 for one stack
         self.assertEqual(len(self.plr.hand), 7)
 

@@ -41,7 +41,7 @@ class Card_Count(Card):
                 player.output("Trashing %s" % c.name)
                 player.trashCard(c)
         else:
-            player.t['gold'] += 3
+            player.addGold(3)
 
     ###########################################################################
     def putCard(self, game, player):
@@ -95,7 +95,7 @@ class Test_Count(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['2', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
 
     def test_trashhand(self):
         self.plr.addCard(self.card, 'hand')

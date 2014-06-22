@@ -30,7 +30,7 @@ class Test_Copper(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.t['gold'], 1)
+        self.assertEquals(self.plr.getGold(), 1)
 
 
 ###############################################################################

@@ -80,7 +80,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.played), 2)
-        self.assertEqual(self.plr.t['actions'], 0)
+        self.assertEqual(self.plr.getActions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
         self.assertEqual(len(self.victim.discardpile), 2)

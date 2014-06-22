@@ -20,7 +20,7 @@ class Card_Conspirator(Card):
             this); +1 card, +1 action """
         if self.numActionsPlayed(player) >= 3:
             player.pickupCard()
-            player.t['actions'] += 1
+            player.addActions(1)
 
     def numActionsPlayed(self, player):
         return sum([1 for c in player.played if c.isAction()])
@@ -39,16 +39,16 @@ class Test_Conspirator(unittest.TestCase):
     def test_play(self):
         """ Play the conspirator with not enough actions """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
-        self.assertEqual(self.plr.t['actions'], 0)
+        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getActions(), 0)
         self.assertEqual(len(self.plr.hand), 5)
 
     def test_actions(self):
         """ Play the conspirator with enough actions """
         self.plr.setPlayed('witch', 'witch', 'witch')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(len(self.plr.hand), 6)
 
 

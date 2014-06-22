@@ -21,7 +21,7 @@ class Card_Tradingpost(Card):
         trash = player.plrTrashCard(num=num)
         if len(trash) == 2:
             player.gainCard('silver', 'hand')
-            player.t['gold'] += 2
+            player.addGold(2)
         else:
             player.output("Not enough cards trashed")
 

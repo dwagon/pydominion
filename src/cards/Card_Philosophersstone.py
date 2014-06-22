@@ -38,14 +38,14 @@ class Test_Philosophersstone(unittest.TestCase):
         self.plr.setDeck('estate')
         self.plr.setDiscard('estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_play_value(self):
         """ Play a philosophers stone with the full Nicholas Flamel """
         self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'silver')
         self.plr.setDiscard('estate', 'estate', 'estate', 'estate', 'silver')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

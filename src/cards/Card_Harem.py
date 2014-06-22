@@ -30,7 +30,7 @@ class Test_Harem(unittest.TestCase):
     def test_play(self):
         """ Play a Harem """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
 
     def test_score(self):
         """ Score the harem """

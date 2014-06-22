@@ -29,9 +29,9 @@ class Test_Festival(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['buys'], 2)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.getGold(), 2)
 
 
 ###############################################################################

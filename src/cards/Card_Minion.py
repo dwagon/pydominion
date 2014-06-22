@@ -23,7 +23,7 @@ class Card_Minion(Card):
         if attack:
             self.attack(game, player)
         else:
-            player.t['gold'] += 2
+            player.addGold(2)
 
     def attack(self, game, player):
         self.dropAndDraw(player)

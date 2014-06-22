@@ -35,7 +35,7 @@ class Test_Talisman(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getGold(), 1)
 
     def test_buy(self):
         self.plr.playCard(self.card)

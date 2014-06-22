@@ -41,8 +41,10 @@ class Player(object):
         self.deck = []
         # What cards have been played this turn
         self.played = []
-        # Details for the current turn such as actions left, etc.
-        self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
+        self.buys = 1
+        self.actions = 1
+        self.gold = 0
+        self.potions = 0
         self.discardpile = []
         self.quiet = quiet
         self.test_input = []
@@ -247,7 +249,7 @@ class Player(object):
     ###########################################################################
     def buyableSelection(self, index):
         options = []
-        buyable = self.cardsUnder(gold=self.t['gold'], potions=self.t['potions'])
+        buyable = self.cardsUnder(gold=self.gold, potions=self.potions)
         for p in buyable:
             if not self.hook_allowedToBuy(p):
                 continue
@@ -265,19 +267,21 @@ class Player(object):
             options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
         index = 0
-        if self.t['actions']:
+        if self.actions:
             op, index = self.playableSelection(index)
             options.extend(op)
 
-        if self.t['buys']:
+        if self.buys:
             op, index = self.spendableSelection(index)
             options.extend(op)
             op, index = self.buyableSelection(index)
             options.extend(op)
 
-        prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d" % self.t
-        if self.t['potions']:
-            prompt += " potions=%(potions)d)" % self.t
+        prompt = "What to do (actions=%d buys=%d" % (self.actions, self.buys)
+        if self.gold:
+            prompt += " gold=%d" % self.gold
+        if self.potions:
+            prompt += " potions=%d" % self.potions
         if self.coins:
             prompt += " coins=%d" % self.coins
         prompt += ")?"
@@ -324,7 +328,10 @@ class Player(object):
     ###########################################################################
     def startTurn(self):
         self.played = []
-        self.t = {'buys': 1, 'actions': 1, 'gold': 0, 'potions': 0}
+        self.buys = 1
+        self.actions = 1
+        self.gold = 0
+        self.potions = 0
 
     ###########################################################################
     def turn(self):
@@ -347,7 +354,7 @@ class Player(object):
                 self.buyCard(opt['card'])
             elif opt['action'] == 'coin':
                 self.coins -= 1
-                self.t['gold'] += 1
+                self.gold += 1
             elif opt['action'] == 'play':
                 self.playCard(opt['card'])
             elif opt['action'] == 'spend':
@@ -392,11 +399,11 @@ class Player(object):
             self.addCard(card, 'played')
             self.hand.remove(card)
         if card.isAction() and costAction:
-            self.t['actions'] -= 1
-        self.t['actions'] += card.actions
-        self.t['gold'] += self.hook_spendValue(card)
-        self.t['buys'] += card.buys
-        self.t['potions'] += card.potion
+            self.actions -= 1
+        self.actions += card.actions
+        self.gold += self.hook_spendValue(card)
+        self.buys += card.buys
+        self.potions += card.potion
         for i in range(card.cards):
             self.pickupCard()
         card.special(game=self.game, player=self)
@@ -429,8 +436,8 @@ class Player(object):
     ###########################################################################
     def buyCard(self, card):
         newcard = self.gainCard(card)
-        self.t['buys'] -= 1
-        self.t['gold'] -= self.cardCost(newcard)
+        self.buys -= 1
+        self.gold -= self.cardCost(newcard)
         self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
         self.hook_buyCard(newcard)
 
@@ -497,6 +504,30 @@ class Player(object):
         for c in trash:
             self.trashCard(c)
         return trash
+
+    ###########################################################################
+    def getGold(self):
+        return self.gold
+
+    ###########################################################################
+    def addGold(self, num):
+        self.gold += num
+
+    ###########################################################################
+    def getActions(self):
+        return self.actions
+
+    ###########################################################################
+    def addActions(self, num):
+        self.actions += num
+
+    ###########################################################################
+    def getBuys(self):
+        return self.buys
+
+    ###########################################################################
+    def addBuys(self, num):
+        self.buys += num
 
     ###########################################################################
     def cardsAffordable(self, oper, gold, potions=0, types={}):

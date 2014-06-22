@@ -23,7 +23,7 @@ class Card_Steward(Card):
             player.pickupCards(2)
             return
         if choice == 'gold':
-            player.t['gold'] += 2
+            player.addGold(2)
             return
         if choice == 'trash':
             player.output("Trash two cards")
@@ -46,18 +46,18 @@ class Test_Steward(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 7)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_gold(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
 
     def test_trash(self):
         self.plr.test_input = ['2', '1', '2', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(len(self.g.trashpile), 2)
         self.assertEqual(len(self.plr.hand), 3)
 
@@ -67,7 +67,7 @@ class Test_Steward(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['2', '1', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(len(self.g.trashpile), 1)
         self.assertEqual(len(self.plr.hand), 0)
 

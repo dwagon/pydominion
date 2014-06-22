@@ -53,7 +53,7 @@ class Test_Advisor(unittest.TestCase):
         self.plr.setDeck('copper', 'silver', 'gold')
         self.plr2.test_input = ['1']
         self.plr.playCard(self.acard)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
         for c in self.plr.hand:
             if c.name == 'Gold':    # pragma: no cover
                 self.fail()

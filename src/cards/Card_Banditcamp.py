@@ -34,7 +34,7 @@ class Test_Banditcamp(unittest.TestCase):
         bc = self.g['banditcamp'].remove()
         self.plr.addCard(bc, 'hand')
         self.plr.playCard(bc)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(len(self.plr.hand), 6)
         self.assertEqual(self.plr.discardpile[0].name, 'Spoils')
 

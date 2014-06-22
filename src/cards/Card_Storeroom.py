@@ -23,7 +23,7 @@ class Card_Storeroom(Card):
         player.pickupCards(len(todiscard))
         player.output("Discard any number of cards. +1 GP per card discarded")
         todiscard = player.plrDiscardCards(0, anynum=True)
-        player.t['gold'] += len(todiscard)
+        player.addGold(len(todiscard))
 
 
 ###############################################################################
@@ -41,7 +41,7 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.test_input = ['0', '0']
         self.plr.playCard(self.card)
         self.assertEquals(len(self.plr.hand), 5)
-        self.assertEquals(self.plr.t['buys'], 2)
+        self.assertEquals(self.plr.getBuys(), 2)
         self.assertEquals(self.plr.discardpile, [])
 
     def test_discardonce(self):
@@ -50,7 +50,7 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEquals(len(self.plr.hand), 5 - 1 + 1)
         self.assertEquals(len(self.plr.discardpile), 1)
-        self.assertEquals(self.plr.t['buys'], 2)
+        self.assertEquals(self.plr.getBuys(), 2)
 
     def test_discardtwice(self):
         """ Storeroom: Discard during the both discard phases """
@@ -58,8 +58,8 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEquals(len(self.plr.hand), 5 - 1)
         self.assertEquals(len(self.plr.discardpile), 2)
-        self.assertEquals(self.plr.t['buys'], 2)
-        self.assertEquals(self.plr.t['gold'], 1)
+        self.assertEquals(self.plr.getBuys(), 2)
+        self.assertEquals(self.plr.getGold(), 1)
 
 
 ###############################################################################

@@ -48,8 +48,8 @@ class Test_Counterfiet(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 1)
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getBuys(), 2)
 
     def test_notreasures(self):
         self.plr.setHand('estate', 'estate', 'estate')
@@ -66,7 +66,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.assertEqual(self.plr.hand, [])
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
         # CF + 2 * Gold
-        self.assertEqual(self.plr.t['gold'], 7)
+        self.assertEqual(self.plr.getGold(), 7)
 
 
 ###############################################################################

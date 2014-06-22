@@ -34,7 +34,7 @@ class Test_Hoard(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
         self.assertEqual(self.plr.discardpile, [])
 
     def test_buy_victory(self):

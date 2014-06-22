@@ -32,9 +32,9 @@ class Test_Market(unittest.TestCase):
         """ Play a market """
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 6)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['buys'], 2)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.getGold(), 1)
 
 
 ###############################################################################

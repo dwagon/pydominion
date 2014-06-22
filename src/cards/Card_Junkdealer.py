@@ -33,8 +33,8 @@ class Test_Junkdealer(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.jd)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getGold(), 1)
         self.assertEqual(len(self.plr.hand), 6)
         self.assertEqual(self.g.trashpile, [])
 

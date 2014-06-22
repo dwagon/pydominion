@@ -23,7 +23,7 @@ class Card_Miningvillage(Card):
             ('Do nothing', False), ('Trash mining village for +2 gold', True))
         if trash:
             player.output("Trashing mining village")
-            player.t['gold'] += 2
+            player.addGold(2)
             player.trashCard(self)
 
 
@@ -42,8 +42,8 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 6)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(self.g.trashpile, [])
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
 
@@ -53,8 +53,8 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 6)
         self.assertEqual(self.plr.played, [])
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getGold(), 2)
         self.assertEqual(self.g.trashpile[-1].name, 'Mining Village')
 
 

@@ -36,8 +36,8 @@ class Test_Candlestickmaker(unittest.TestCase):
         self.plr.coins = 0
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.coins, 1)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 2)
 
 
 ###############################################################################

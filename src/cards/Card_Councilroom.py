@@ -38,7 +38,7 @@ class Test_Councilroom(unittest.TestCase):
         self.plr.playCard(self.ccard)
         self.assertEquals(len(self.other.hand), 6)
         self.assertEquals(len(self.plr.hand), 9)
-        self.assertEquals(self.plr.t['buys'], 2)
+        self.assertEquals(self.plr.getBuys(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

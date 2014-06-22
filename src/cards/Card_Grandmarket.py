@@ -39,14 +39,14 @@ class Test_Grandmarket(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.gm, 'hand')
         self.plr.playCard(self.gm)
-        self.assertEqual(self.plr.t['gold'], 2)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(len(self.plr.hand), 6)
 
     def test_nobuy(self):
         self.plr.setHand('copper', 'gold', 'gold')
-        self.plr.t['gold'] = 6
+        self.plr.addGold(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
@@ -56,7 +56,7 @@ class Test_Grandmarket(unittest.TestCase):
     def test_nobuy_played(self):
         self.plr.setHand('gold', 'gold', 'gold')
         self.plr.setPlayed('copper')
-        self.plr.t['gold'] = 6
+        self.plr.addGold(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
@@ -65,7 +65,7 @@ class Test_Grandmarket(unittest.TestCase):
 
     def test_buy(self):
         self.plr.setHand('gold', 'gold', 'gold')
-        self.plr.t['gold'] = 6
+        self.plr.addGold(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:

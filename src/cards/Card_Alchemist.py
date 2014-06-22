@@ -44,7 +44,7 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.alchemist)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(len(self.plr.hand), 7)
 
     def test_nopotion(self):

@@ -40,11 +40,11 @@ class Card_Pawn(Card):
             if choice == 'card':
                 player.pickupCard()
             elif choice == 'action':
-                player.t['actions'] += 1
+                player.addActions(1)
             elif choice == 'buy':
-                player.t['buys'] += 1
+                player.addBuys(1)
             elif choice == 'gold':
-                player.t['gold'] += 1
+                player.addGold(1)
 
 
 ###############################################################################
@@ -62,18 +62,18 @@ class Test_Pawn(unittest.TestCase):
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 6)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['buys'], 1)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_play_buy(self):
         """ Play the pawn - select buy and gold"""
         self.plr.test_input = ['3', '3']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.t['actions'], 0)
-        self.assertEqual(self.plr.t['buys'], 2)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.getGold(), 1)
 
 
 ###############################################################################

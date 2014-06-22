@@ -35,7 +35,7 @@ class Test_Warehouse(unittest.TestCase):
         self.plr.test_input = ['1', '2', '3', '0']
         self.plr.playCard(self.card)
         self.assertEquals(len(self.plr.hand), 5 - 3 + 3)
-        self.assertEquals(self.plr.t['actions'], 1)
+        self.assertEquals(self.plr.getActions(), 1)
         self.assertEquals(len(self.plr.discardpile), 3)
 
 

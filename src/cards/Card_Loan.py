@@ -46,7 +46,7 @@ class Test_Loan(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.t['gold'], 1)
+        self.assertEquals(self.plr.getGold(), 1)
 
     def test_discard(self):
         self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
