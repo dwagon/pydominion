@@ -35,6 +35,7 @@ class Player(object):
         game.output("Player %s is at the table" % name)
         self.score = {}
         self.name = name
+        self.coins = 0
         self.messages = []
         self.hand = []
         self.deck = []
@@ -156,6 +157,11 @@ class Player(object):
             self.pickupCard(verb='Dealt')
 
     ###########################################################################
+    def gainCoins(self, num=1):
+        """ Gain a number of coin tokens """
+        self.coins += num
+
+    ###########################################################################
     def addCard(self, c, pile='discard'):
         if not c:
             return
@@ -254,8 +260,11 @@ class Player(object):
     ###########################################################################
     def choiceSelection(self):
         options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
-        index = 0
 
+        if self.coins:
+            options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
+
+        index = 0
         if self.t['actions']:
             op, index = self.playableSelection(index)
             options.extend(op)
@@ -266,7 +275,12 @@ class Player(object):
             op, index = self.buyableSelection(index)
             options.extend(op)
 
-        prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d potions=%(potions)d)?" % self.t
+        prompt = "What to do (actions=%(actions)d buys=%(buys)d gold=%(gold)d" % self.t
+        if self.t['potions']:
+            prompt += " potions=%(potions)d)" % self.t
+        if self.coins:
+            prompt += " coins=%d" % self.coins
+        prompt += ")?"
         return self.userInput(options, prompt)
 
     ###########################################################################
@@ -331,6 +345,9 @@ class Player(object):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
+            elif opt['action'] == 'coin':
+                self.coins -= 1
+                self.t['gold'] += 1
             elif opt['action'] == 'play':
                 self.playCard(opt['card'])
             elif opt['action'] == 'spend':
