@@ -34,7 +34,7 @@ class Test_University(unittest.TestCase):
     def test_gain(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.university)
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertTrue(self.plr.discardpile[0].isAction())
         self.assertLessEqual(self.plr.discardpile[0].cost, 5)
 

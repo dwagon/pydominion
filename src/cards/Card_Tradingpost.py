@@ -17,7 +17,7 @@ class Card_Tradingpost(Card):
     def special(self, game, player):
         """ Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         player.output("Trash two cards to gain a silver")
-        num = min(2, len(player.hand))
+        num = min(2, player.handSize())
         trash = player.plrTrashCard(num=num)
         if len(trash) == 2:
             player.gainCard('silver', 'hand')
@@ -41,14 +41,14 @@ class Test_Tradingpost(unittest.TestCase):
         self.plr.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(len(self.g.trashpile), 2)
+        self.assertEqual(self.g.trashSize(), 2)
 
     def test_trash_little(self):
         """ Play a trading post but don't trash enough """
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.card)
         self.assertFalse(self.plr.inHand('Silver'))
-        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(self.g.trashSize(), 1)
 
 
 ###############################################################################

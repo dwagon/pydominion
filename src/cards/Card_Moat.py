@@ -29,7 +29,7 @@ class Test_Library(unittest.TestCase):
     def test_play(self):
         """ Play a moat """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
 
 ###############################################################################

@@ -32,7 +32,7 @@ class Test_Laboratory(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         # 5 hand, +2 for playing lab
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
 
 ###############################################################################

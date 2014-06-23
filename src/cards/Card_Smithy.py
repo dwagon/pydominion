@@ -29,7 +29,7 @@ class Test_Smithy(unittest.TestCase):
     def test_play(self):
         """ Play the smithy """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
 
 
 ###############################################################################

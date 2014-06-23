@@ -49,7 +49,7 @@ class Test_Royalseal(unittest.TestCase):
         self.plr.setPlayed('royalseal')
         self.plr.test_input = ['0']
         self.plr.gainCard('gold')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
         self.assertFalse(self.plr.inHand('Gold'))
 

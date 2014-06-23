@@ -48,26 +48,26 @@ class Test_Ironmonger(unittest.TestCase):
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.getActions(), 1)
         # 5 for hand, +1 for ironmonger and another potential +1 for action
-        self.assertIn(len(self.plr.hand), [6, 7])
+        self.assertIn(self.plr.handSize(), [6, 7])
 
     def test_victory(self):
         self.plr.test_input = ['0']
         self.plr.setDeck('duchy', 'estate')
         self.plr.playCard(self.im)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_treasure(self):
         self.plr.test_input = ['0']
         self.plr.setDeck('copper', 'gold')
         self.plr.playCard(self.im)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getGold(), 1)
 
     def test_action(self):
         self.plr.test_input = ['0']
         self.plr.setDeck('ironmonger', 'ironmonger')
         self.plr.playCard(self.im)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
 
     def test_discard(self):

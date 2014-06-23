@@ -29,7 +29,7 @@ class Test_Village(unittest.TestCase):
     def test_play(self):
         """ Play the village """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
 
 

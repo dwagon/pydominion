@@ -53,7 +53,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         # (moat + 2) * 3 + estate
-        self.assertEqual(len(self.plr.hand), 2 * 3 + 1)
+        self.assertEqual(self.plr.handSize(), 2 * 3 + 1)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
             if c.name == 'Moat':

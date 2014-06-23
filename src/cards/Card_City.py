@@ -42,7 +42,7 @@ class Test_City(unittest.TestCase):
         """ Play a city with no stacks empty """
         self.plr.playCard(self.city)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
 
     def test_onestack(self):
         """ Play a city with one stacks empty """
@@ -52,7 +52,7 @@ class Test_City(unittest.TestCase):
                 break
         self.plr.playCard(self.city)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_twostack(self):
         """ Play a city with two stacks empty """
@@ -70,7 +70,7 @@ class Test_City(unittest.TestCase):
         # 1 default + 1 for city
         self.assertEqual(self.plr.getBuys(), 2)
         # 5 for hand, 1 for city, 1 for one stack
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

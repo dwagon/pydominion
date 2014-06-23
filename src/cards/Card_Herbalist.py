@@ -47,7 +47,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.hcard)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.deck), 5)
+        self.assertEqual(self.plr.deckSize(), 5)
 
     def test_putgold(self):
         self.plr.setPlayed('gold', 'estate')
@@ -58,8 +58,8 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
         self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 2)
-        self.assertEqual(len(self.plr.deck), 6)
+        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.deckSize(), 6)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

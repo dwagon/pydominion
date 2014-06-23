@@ -81,17 +81,17 @@ class Test_Thief(unittest.TestCase):
         self.victim.setDeck('copper', 'silver', 'gold')
         self.thief.playCard(self.thiefcard)
         self.assertIn('Player victim is defended', self.thief.messages)
-        self.assertEquals(len(self.victim.deck), 3)
-        self.assertEquals(len(self.victim.discardpile), 0)
+        self.assertEquals(self.victim.deckSize(), 3)
+        self.assertEquals(self.victim.discardSize(), 0)
 
     def test_do_nothing(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
         self.thief.test_input = ['0']
         self.thief.playCard(self.thiefcard)
-        self.assertEquals(len(self.victim.deck), 1)
-        self.assertEquals(len(self.victim.discardpile), 2)
-        self.assertEquals(len(self.thief.discardpile), 0)
+        self.assertEquals(self.victim.deckSize(), 1)
+        self.assertEquals(self.victim.discardSize(), 2)
+        self.assertEquals(self.thief.discardSize(), 0)
 
     def test_trash_treasure(self):
         self.victim.setHand('copper', 'copper')

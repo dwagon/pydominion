@@ -55,7 +55,7 @@ class Test_Swindler(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
-        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(self.g.trashSize(), 1)
 
 
 ###############################################################################

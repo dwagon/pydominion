@@ -18,7 +18,7 @@ class Card_Philosophersstone(Card):
     def hook_goldvalue(self, game, player):
         """ When you play this, count your deck and discard pile.
             Worth 1 per 5 cards total between them (rounded down) """
-        numcards = len(player.deck) + len(player.discardpile)
+        numcards = player.deckSize() + player.discardSize()
         extragold = numcards / 5
         return extragold
 

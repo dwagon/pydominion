@@ -33,14 +33,14 @@ class Test_Chapel(unittest.TestCase):
     def test_trashnone(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.ccard)
-        self.assertEquals(len(self.plr.hand), 3)
+        self.assertEquals(self.plr.handSize(), 3)
         self.assertEquals(self.g.trashpile, [])
 
     def test_trashtwo(self):
         self.plr.test_input = ['1', '2', '0']
         self.plr.playCard(self.ccard)
-        self.assertEquals(len(self.plr.hand), 1)
-        self.assertEquals(len(self.g.trashpile), 2)
+        self.assertEquals(self.plr.handSize(), 1)
+        self.assertEquals(self.g.trashSize(), 2)
 
 
 ###############################################################################

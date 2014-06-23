@@ -46,16 +46,16 @@ class Test_Apothecary(unittest.TestCase):
         apoth = self.plr.hand[0]
         self.plr.setDeck('duchy', 'estate', 'estate', 'estate', 'province')
         self.plr.playCard(apoth)
-        self.assertEqual(len(self.plr.hand), 1)  # P
-        self.assertEqual(len(self.plr.deck), 4)  # D + E + E + E
+        self.assertEqual(self.plr.handSize(), 1)  # P
+        self.assertEqual(self.plr.deckSize(), 4)  # D + E + E + E
 
     def test_some(self):
         self.plr.setHand('apothecary')
         apoth = self.plr.hand[0]
         self.plr.setDeck('duchy', 'potion', 'copper', 'estate', 'province')
         self.plr.playCard(apoth)
-        self.assertEqual(len(self.plr.hand), 3)  # P + C + Pot
-        self.assertEqual(len(self.plr.deck), 2)  # E + D
+        self.assertEqual(self.plr.handSize(), 3)  # P + C + Pot
+        self.assertEqual(self.plr.deckSize(), 2)  # E + D
 
 
 ###############################################################################

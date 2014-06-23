@@ -40,7 +40,7 @@ class Test_Hoard(unittest.TestCase):
     def test_buy_victory(self):
         self.plr.playCard(self.card)
         self.plr.buyCard('estate')
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             if c.name == 'Gold':
                 break
@@ -50,7 +50,7 @@ class Test_Hoard(unittest.TestCase):
     def test_buy_nonvictory(self):
         self.plr.playCard(self.card)
         self.plr.buyCard('copper')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[-1].name, 'Copper')
 
 

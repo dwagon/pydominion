@@ -35,14 +35,14 @@ class Test_Junkdealer(unittest.TestCase):
         self.plr.playCard(self.jd)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getGold(), 1)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.g.trashpile, [])
 
     def test_trash(self):
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.jd)
-        self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.g.trashSize(), 1)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

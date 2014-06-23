@@ -44,7 +44,7 @@ class Test_Farmingvillage(unittest.TestCase):
         self.plr.setDeck('estate', 'estate', 'silver', 'estate', 'estate')
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Estate')
 
@@ -53,7 +53,7 @@ class Test_Farmingvillage(unittest.TestCase):
         self.plr.setDeck('estate', 'estate', 'farmingvillage', 'estate', 'estate')
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('farmingvillage'))
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Estate')
 

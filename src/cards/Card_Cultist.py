@@ -44,8 +44,8 @@ class Test_Cultist(unittest.TestCase):
         """ Play a cultists - should give 2 cards """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
-        self.assertEqual(len(self.victim.discardpile), 1)
+        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.victim.discardSize(), 1)
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
     def test_defense(self):
@@ -54,7 +54,7 @@ class Test_Cultist(unittest.TestCase):
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_noother(self):
@@ -83,7 +83,7 @@ class Test_Cultist(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
-        self.assertEqual(len(self.victim.discardpile), 2)
+        self.assertEqual(self.victim.discardSize(), 2)
         for c in self.victim.discardpile:
             self.assertTrue(c.isRuin())
 
@@ -92,7 +92,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Cultist')
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

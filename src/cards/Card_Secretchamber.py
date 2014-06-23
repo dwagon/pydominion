@@ -66,14 +66,14 @@ class Test_Secretchamber(unittest.TestCase):
         """ Play the Secret Chamber - discard none"""
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getGold(), 0)
 
     def test_play_three(self):
         """ Play the Secret Chamber - discard three"""
         self.plr.test_input = ['1', '2', '3', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 2)
+        self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getGold(), 3)
 
     def test_underattack(self):

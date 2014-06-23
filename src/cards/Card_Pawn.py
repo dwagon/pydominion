@@ -61,7 +61,7 @@ class Test_Pawn(unittest.TestCase):
         """ Play the pawn - select card and action"""
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.getGold(), 0)
@@ -70,7 +70,7 @@ class Test_Pawn(unittest.TestCase):
         """ Play the pawn - select buy and gold"""
         self.plr.test_input = ['3', '3']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getActions(), 0)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getGold(), 1)

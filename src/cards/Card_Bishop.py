@@ -76,7 +76,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertEqual(self.plr.hand, [])
         self.assertEqual(self.other.hand, [])
-        self.assertEqual(len(self.g.trashpile), 2)
+        self.assertEqual(self.g.trashSize(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

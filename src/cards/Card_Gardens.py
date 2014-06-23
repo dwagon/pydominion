@@ -16,7 +16,7 @@ class Card_Gardens(Card):
 
     def special_score(self, game, player):
         """ Worth 1VP for every 10 cards in your deck rounded down """
-        numcards = len(player.discardpile + player.hand + player.deck)
+        numcards = len(player.allCards())
         return int(numcards / 10)
 
 
