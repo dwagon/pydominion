@@ -46,7 +46,7 @@ class Test_Minion(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['minion'])
+        self.g.startGame(numplayers=2, initcards=['minion', 'moat'])
         self.plr, self.victim = self.g.players.values()
         self.card = self.g['minion'].remove()
         self.plr.addCard(self.card, 'hand')
@@ -82,6 +82,19 @@ class Test_Minion(unittest.TestCase):
         # Discard the 5 cards + the minion we added
         self.assertEqual(len(self.plr.discardpile), 5 + 1)
         self.assertEqual(len(self.victim.hand), 4)
+        self.assertEqual(len(self.victim.discardpile), 0)
+
+    def test_play_defended(self):
+        """ Play a minion and discard hand - the other player is defended """
+        self.victim.setHand('estate', 'estate', 'estate', 'estate', 'moat')
+        self.plr.test_input = ['1']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(len(self.plr.hand), 4)
+        # Discard the 5 cards + the minion we added
+        self.assertEqual(len(self.plr.discardpile), 5 + 1)
+        self.assertEqual(len(self.victim.hand), 5)
         self.assertEqual(len(self.victim.discardpile), 0)
 
 ###############################################################################
