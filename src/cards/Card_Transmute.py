@@ -31,8 +31,6 @@ class Card_Transmute(Card):
                 trashtag = 'Transmute'
             elif c.isVictory():
                 trashtag = 'Gold'
-            else:
-                trashtag = 'Nothing'
             pr = "Trash %s for %s" % (c.name, trashtag)
             options.append({'selector': sel, 'print': pr, 'card': c, 'gain': trashtag})
             index += 1
