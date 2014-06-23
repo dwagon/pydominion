@@ -50,7 +50,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Copper')
-        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(self.g.trashSize(), 1)
         self.assertEqual(self.plr.getGold(), 3)
 
     def test_dont_trash_copper(self):

@@ -61,7 +61,7 @@ class Test_Loan(unittest.TestCase):
         self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Gold')
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')

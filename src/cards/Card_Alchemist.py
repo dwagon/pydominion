@@ -45,19 +45,19 @@ class Test_Alchemist(unittest.TestCase):
     def test_play(self):
         self.plr.playCard(self.alchemist)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_nopotion(self):
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, alch
+        self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
         self.plr.setPlayed('potion')
         self.plr.test_input = ['0']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 9)  # 5 for hand, +2 cards, alch, pot
+        self.assertEqual(self.plr.discardSize(), 9)  # 5 for hand, +2 cards, alch, pot
         for c in self.plr.discardpile:
             if c.name == 'Alchemist':
                 break
@@ -69,7 +69,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, pot
+        self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, pot
         for c in self.plr.discardpile:
             if c.name == 'Alchemist':   # pragma: no cover
                 self.fail()

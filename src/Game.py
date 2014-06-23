@@ -65,6 +65,10 @@ class Game(object):
             sys.stdout.write("ALL: %s\n" % msg)
 
     ###########################################################################
+    def trashSize(self):
+        return len(self.trashpile)
+
+    ###########################################################################
     def loadDecks(self, initcards):
         for card in self.baseCards:
             self.cardpiles[card] = CardPile(card, numcards=12, cardpath=self.cardpath)

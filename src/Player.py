@@ -154,7 +154,7 @@ class Player(object):
 
     ###########################################################################
     def pickUpHand(self, handsize=5):
-        while len(self.hand) < handsize:
+        while self.handSize() < handsize:
             self.pickupCard(verb='Dealt')
 
     ###########################################################################
@@ -182,6 +182,18 @@ class Player(object):
         if c in self.hand:
             self.hand.remove(c)
         self.addCard(c, 'discard')
+
+    ###########################################################################
+    def handSize(self):
+        return len(self.hand)
+
+    ###########################################################################
+    def deckSize(self):
+        return len(self.deck)
+
+    ###########################################################################
+    def discardSize(self):
+        return len(self.discardpile)
 
     ###########################################################################
     def discardHand(self):

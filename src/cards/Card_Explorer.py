@@ -40,12 +40,12 @@ class Test_Explorer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Gold'))
         # 5 + province + gold
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_no_province(self):
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
 
 
 ###############################################################################

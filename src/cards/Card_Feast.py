@@ -66,7 +66,7 @@ class Test_Feast(unittest.TestCase):
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.plr.hand, [])
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
         self.assertEquals(self.plr.played, [])
 
@@ -74,10 +74,10 @@ class Test_Feast(unittest.TestCase):
         self.plr.setHand('feast')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
         self.assertEquals(self.plr.played, [])
-        self.assertEquals(len(self.plr.discardpile), 1)
+        self.assertEquals(self.plr.discardSize(), 1)
 
 
 ###############################################################################

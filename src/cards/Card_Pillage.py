@@ -23,7 +23,7 @@ class Card_Pillage(Card):
         for i in range(2):
             player.gainCard('Spoils')
         for plr in player.attackVictims():
-            if len(plr.hand) < 5:
+            if plr.handSize() < 5:
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue
             self.pickACard(plr, player)
@@ -56,8 +56,8 @@ class Test_Pillage(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 0)
         self.assertEqual(self.plr.getGold(), 0)
-        self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(len(self.plr.discardpile), 0)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.discardSize(), 0)
 
     def test_defended(self):
         """ Victim has a defense """
@@ -66,10 +66,10 @@ class Test_Pillage(unittest.TestCase):
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.trashCard(self.card)
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(len(self.victim.hand), 6)
+        self.assertEqual(self.victim.handSize(), 6)
 
     def test_nohandsize(self):
         """ Victim has too small a hand"""
@@ -77,10 +77,10 @@ class Test_Pillage(unittest.TestCase):
         self.victim.setHand('copper', 'copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(len(self.victim.hand), 2)
+        self.assertEqual(self.victim.handSize(), 2)
 
     def test_attack(self):
         """ Victim has no defense and a large enough hand """
@@ -89,11 +89,11 @@ class Test_Pillage(unittest.TestCase):
         self.victim.setHand('copper', 'copper', 'copper', 'copper', 'gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(len(self.victim.hand), 4)
-        self.assertEqual(len(self.victim.discardpile), 1)
+        self.assertEqual(self.victim.handSize(), 4)
+        self.assertEqual(self.victim.discardSize(), 1)
 
 
 ###############################################################################

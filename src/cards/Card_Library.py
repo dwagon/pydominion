@@ -18,7 +18,7 @@ class Card_Library(Card):
         """ Draw until you have 7 cards in your hand. You may set
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing """
-        while(len(player.hand) < 7):
+        while(player.handSize() < 7):
             c = player.nextCard()
             if c.isAction():
                 if self.discardChoice(player, c):
@@ -47,7 +47,7 @@ class Test_Library(unittest.TestCase):
         """ Play a library where no actions are drawn """
         self.plr.setDeck('duchy', 'copper', 'gold')
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_actions_discard(self):
         """ Play a library where actions are drawn and discarded"""
@@ -55,7 +55,7 @@ class Test_Library(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Moat')
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_actions_keep(self):
         """ Play a library where actions are drawn and kept"""
@@ -64,7 +64,7 @@ class Test_Library(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile, [])
         self.assertEqual(self.plr.deck[-1].name, 'Duchy')
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
         self.assertTrue(self.plr.inHand('Moat'))
 
 

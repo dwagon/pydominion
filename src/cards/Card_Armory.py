@@ -32,14 +32,14 @@ class Test_Armory(unittest.TestCase):
     def test_gainzero(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.armory)
-        self.assertEquals(len(self.plr.hand), 5)
+        self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.discardpile, [])
 
     def test_gainone(self):
         self.plr.test_input = ['1']
         self.plr.deck = []
         self.plr.playCard(self.armory)
-        self.assertEquals(len(self.plr.hand), 5)
+        self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.discardpile, [])
         self.assertLessEqual(self.plr.deck[-1].cost, 4)
 

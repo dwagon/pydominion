@@ -49,7 +49,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
 
     def test_discardestate(self):
         self.plr.setHand('gold', 'estate', 'copper')
@@ -58,7 +58,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getGold(), 4)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.inHand('Estate'), None)
 
     def test_keepestate(self):
@@ -68,7 +68,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertNotEqual(self.plr.inHand('Estate'), None)
 
 

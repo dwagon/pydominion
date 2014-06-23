@@ -73,8 +73,8 @@ class Test_Count(unittest.TestCase):
         # Discard, select card 1 and card 2, finish selecting, +3 gold
         self.plr.test_input = ['0', '1', '2', '0', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.discardpile), 2)
-        self.assertEqual(len(self.plr.hand), 3)
+        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.handSize(), 3)
 
     def test_topdeck(self):
         self.plr.setHand('gold')
@@ -102,7 +102,7 @@ class Test_Count(unittest.TestCase):
         self.plr.test_input = ['2', '1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand, [])
-        self.assertEqual(len(self.g.trashpile), 5)
+        self.assertEqual(self.g.trashSize(), 5)
 
     def test_gainDuchy(self):
         self.plr.addCard(self.card, 'hand')

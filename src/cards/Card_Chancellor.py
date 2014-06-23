@@ -41,8 +41,8 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.getGold(), 2)
-        self.assertEquals(len(self.plr.deck), 3)
-        self.assertEquals(len(self.plr.discardpile), 3)
+        self.assertEquals(self.plr.deckSize(), 3)
+        self.assertEquals(self.plr.discardSize(), 3)
 
     def test_discard(self):
         self.plr.setDeck('copper', 'silver', 'gold')
@@ -50,8 +50,8 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.getGold(), 2)
-        self.assertEquals(len(self.plr.deck), 0)
-        self.assertEquals(len(self.plr.discardpile), 6)
+        self.assertEquals(self.plr.deckSize(), 0)
+        self.assertEquals(self.plr.discardSize(), 6)
 
 
 ###############################################################################

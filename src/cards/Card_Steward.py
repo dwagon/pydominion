@@ -27,7 +27,7 @@ class Card_Steward(Card):
             return
         if choice == 'trash':
             player.output("Trash two cards")
-            num = min(2, len(player.hand))
+            num = min(2, player.handSize())
             player.plrTrashCard(num=num, force=True)
             return
 
@@ -45,21 +45,21 @@ class Test_Steward(unittest.TestCase):
     def test_cards(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.plr.getGold(), 0)
 
     def test_gold(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getGold(), 2)
 
     def test_trash(self):
         self.plr.test_input = ['2', '1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getGold(), 0)
-        self.assertEqual(len(self.g.trashpile), 2)
-        self.assertEqual(len(self.plr.hand), 3)
+        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.plr.handSize(), 3)
 
     def test_trash_smallhand(self):
         """ Trash two when there are less than two to trash """
@@ -68,8 +68,8 @@ class Test_Steward(unittest.TestCase):
         self.plr.test_input = ['2', '1', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getGold(), 0)
-        self.assertEqual(len(self.g.trashpile), 1)
-        self.assertEqual(len(self.plr.hand), 0)
+        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.plr.handSize(), 0)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

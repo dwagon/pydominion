@@ -35,7 +35,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.ccard)
-        self.assertEquals(len(self.plr.hand), 3)
+        self.assertEquals(self.plr.handSize(), 3)
 
     def test_one(self):
         self.plr.setHand('estate', 'copper', 'silver')
@@ -49,7 +49,7 @@ class Test_Cellar(unittest.TestCase):
                 break
         else:   # pragma: no cover
             self.fail()
-        self.assertEquals(len(self.plr.hand), 3)
+        self.assertEquals(self.plr.handSize(), 3)
 
 
 ###############################################################################

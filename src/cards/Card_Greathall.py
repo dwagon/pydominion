@@ -33,7 +33,7 @@ class Test_Greathall(unittest.TestCase):
     def test_play(self):
         """ Play a Great Hall """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
 
     def test_score(self):
