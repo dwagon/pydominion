@@ -5,7 +5,7 @@ import random
 import sys
 import uuid
 
-from Player import Player
+from TextPlayer import TextPlayer
 from CardPile import CardPile
 
 
@@ -27,7 +27,7 @@ class Game(object):
             self.baseCards.append('Platinum')
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[]):
+    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[], plrKlass=TextPlayer):
         self.cardbase = cardbase
         self.cardpath = cardpath
         self.numplayers = numplayers
@@ -38,7 +38,7 @@ class Game(object):
             except IndexError:
                 name = None
             u = uuid.uuid4().hex
-            self.players[u] = Player(game=self, quiet=self.quiet, name=name)
+            self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name)
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
