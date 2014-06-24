@@ -18,6 +18,7 @@ class Game(object):
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
+        self.currentPlayer = None
         self.quiet = quiet
         self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
@@ -41,6 +42,7 @@ class Game(object):
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
+        self.currentPlayer = self.players.values()[0]
 
     ###########################################################################
     def cardSetup(self):
@@ -202,11 +204,10 @@ class Game(object):
     ###########################################################################
     def turn(self):
         assert(self.countCards() == self.numcards)
-        for plr in self.players.values():
-            plr.turn()
-            if self.isGameOver():
-                self.gameover = True
-                break
+        self.currentPlayer = self.playerToLeft(self.currentPlayer)
+        self.currentPlayer.turn()
+        if self.isGameOver():
+            self.gameover = True
 
 
 ###############################################################################
