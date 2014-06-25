@@ -1,19 +1,92 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Watchtower(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = ['action', 'reaction']
         self.desc = "Draw up to 6 cards. Can trash gained cards or put on top of deck"
         self.name = 'Watchtower'
         self.cost = 3
 
     def special(self, game, player):
-        """ Draw until you have 6 cards in hand. When you gain a
-            card, you may reveal this from your hand. If you do, either
-            trash that card, or put it on top of your deck """
+        """ Draw until you have 6 cards in hand. """
         player.pickUpHand(6)
-        # TODO: Need to do second part
+
+    def hook_gainCard(self, game, player, card):
+        """ When you gain a card, you may reveal this from your
+            hand. If you do, either trash that card, or put it on top
+            of your deck """
+        act = player.plrChooseOptions(
+            "What to do with watchtower?",
+            ("Do nothing", 'nothing'),
+            ("Trash %s" % card.name, 'trash'),
+            ("Put %s on top of deck" % card.name, 'topdeck'))
+        if act == 'trash':
+            options = {'trash': True}
+        elif act == 'topdeck':
+            options = {'destination': 'topdeck'}
+        else:
+            options = {}
+        return options
+
+
+###############################################################################
+class Test_Watchtower(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['watchtower'])
+        self.plr = self.g.players.values()[0]
+        self.card = self.g['watchtower'].remove()
+
+    def test_play(self):
+        """ Play a watch tower """
+        self.plr.setHand('gold')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.handSize(), 6)
+
+    def test_react_nothing(self):
+        """ React to gaining a card - but do nothing """
+        self.plr.setHand('gold')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['0']
+        self.plr.gainCard('copper')
+        self.assertEqual(self.plr.discardpile[0].name, 'Copper')
+        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.handSize(), 2)
+
+    def test_react_trash(self):
+        """ React to gaining a card - discard card"""
+        self.plr.test_input = ['1']
+        self.plr.setHand('gold')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.gainCard('copper')
+        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashpile[-1].name, 'Copper')
+        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.inHand('Copper'), None)
+
+    def test_react_topdeck(self):
+        """ React to gaining a card - put card on deck"""
+        self.plr.test_input = ['2']
+        self.plr.setHand('gold')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.gainCard('silver')
+        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.inHand('Silver'), None)
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Silver')
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF
