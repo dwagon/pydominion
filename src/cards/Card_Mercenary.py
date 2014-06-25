@@ -11,7 +11,7 @@ class Card_Mercenary(Card):
         self.base = 'darkages'
         self.desc = "You may trash 2 cards for +2 cards, +2 gold other players discard down to 3"
         self.name = 'Mercenary'
-        self.purcashable = False
+        self.purchasable = False
         self.cost = 0
 
     def special(self, game, player):
