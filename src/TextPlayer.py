@@ -134,6 +134,7 @@ class TextPlayer(Player):
 
         o = chooser.userInput(options, "What card do you wish?")
         if o['card']:
+            self.output("Got a %s" % o['card'].name)
             self.addCard(o['card'].remove(), destination)
             return o['card']
 
