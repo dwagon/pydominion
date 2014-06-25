@@ -395,6 +395,9 @@ class Player(object):
             return
         if 'destination' in options:
             destination = options['destination']
+        if 'trash' in options and options['trash']:
+            self.trashCard(newcard)
+            return newcard
         self.hook_gainThisCard(newcard)
         self.addCard(newcard, destination)
         return newcard

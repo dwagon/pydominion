@@ -28,6 +28,7 @@ It returns a dictionary of modifiers.
 
 Currently:
     destination - if set then put the card in the destination pile
+    trash - if true then trash card instead of gaining card
 
 hook_gainThisCard
 -------------
