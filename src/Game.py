@@ -3,8 +3,9 @@ import argparse
 import glob
 import random
 import sys
+import uuid
 
-from Player import Player
+from TextPlayer import TextPlayer
 from CardPile import CardPile
 
 
@@ -13,10 +14,11 @@ from CardPile import CardPile
 ###############################################################################
 class Game(object):
     def __init__(self, quiet=False, prosperity=False):
-        self.players = []
+        self.players = {}
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
+        self.currentPlayer = None
         self.quiet = quiet
         self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
@@ -25,7 +27,7 @@ class Game(object):
             self.baseCards.append('Platinum')
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[]):
+    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[], plrKlass=TextPlayer):
         self.cardbase = cardbase
         self.cardpath = cardpath
         self.numplayers = numplayers
@@ -35,9 +37,12 @@ class Game(object):
                 name = playernames.pop()
             except IndexError:
                 name = None
-            self.players.append(Player(game=self, quiet=self.quiet, name=name))
+            u = uuid.uuid4().hex
+            self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name)
+            self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
+        self.currentPlayer = self.players.values()[0]
 
     ###########################################################################
     def cardSetup(self):
@@ -51,7 +56,7 @@ class Game(object):
         count += len(self.trashpile)
         for cp in self.cardpiles.values():
             count += cp.numcards
-        for pl in self.players:
+        for pl in self.players.values():
             count += pl.countCards()
         return count
 
@@ -60,6 +65,10 @@ class Game(object):
         """ Send output to all players """
         if not self.quiet:
             sys.stdout.write("ALL: %s\n" % msg)
+
+    ###########################################################################
+    def trashSize(self):
+        return len(self.trashpile)
 
     ###########################################################################
     def loadDecks(self, initcards):
@@ -166,39 +175,39 @@ class Game(object):
         """ This is used for debugging """
         print "#" * 40
         print "Trash: %s" % ", ".join([c.name for c in self.trashpile])
-        for p in self.players:
+        for p in self.players.values():
             print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
             print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
             print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
             print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
             print "%s's messages: %s" % (p.name, p.messages)
             print "%s's score: %s" % (p.name, p.score)
-            print "%s's turn: %s" % (p.name, p.t)
+            print "%s's turn: gold=%d actions=%d buys=%d coins=%d potions=%d" % (p.name, p.gold, p.actions, p.buys, p.coins, p.potions)
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
         print "%s" % ", ".join(cpls)
 
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        place = self.players.index(plr) - 1
-        return self.players[place]
+        players = self.players.values()
+        place = players.index(plr) - 1
+        return self.players.values()[place]
 
     ###########################################################################
     def whoWon(self):
         scores = {}
         self.output("")
-        for plr in self.players:
+        for plr in self.players.values():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
     ###########################################################################
     def turn(self):
         assert(self.countCards() == self.numcards)
-        for plr in self.players:
-            plr.turn()
-            if self.isGameOver():
-                self.gameover = True
-                break
+        self.currentPlayer = self.playerToLeft(self.currentPlayer)
+        self.currentPlayer.turn()
+        if self.isGameOver():
+            self.gameover = True
 
 
 ###############################################################################

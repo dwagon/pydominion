@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Farmingvillage(Card):
     def __init__(self):
         Card.__init__(self)
@@ -23,5 +27,39 @@ class Card_Farmingvillage(Card):
             else:
                 player.output("Picked up and discarded %s" % c.name)
                 player.discardCard(c)
+
+
+###############################################################################
+class Test_Farmingvillage(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['farmingvillage'])
+        self.plr = self.g.players.values()[0]
+        self.card = self.g['farmingvillage'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play_treasure(self):
+        """ Play farming village with a treasure in deck """
+        self.plr.setDeck('estate', 'estate', 'silver', 'estate', 'estate')
+        self.plr.playCard(self.card)
+        self.assertTrue(self.plr.inHand('Silver'))
+        self.assertEqual(self.plr.discardSize(), 2)
+        for c in self.plr.discardpile:
+            self.assertEqual(c.name, 'Estate')
+
+    def test_play_action(self):
+        """ Play farming village with an action in deck"""
+        self.plr.setDeck('estate', 'estate', 'farmingvillage', 'estate', 'estate')
+        self.plr.playCard(self.card)
+        self.assertTrue(self.plr.inHand('farmingvillage'))
+        self.assertEqual(self.plr.discardSize(), 2)
+        for c in self.plr.discardpile:
+            self.assertEqual(c.name, 'Estate')
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF

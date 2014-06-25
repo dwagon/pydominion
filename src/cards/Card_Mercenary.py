@@ -11,7 +11,7 @@ class Card_Mercenary(Card):
         self.base = 'darkages'
         self.desc = "You may trash 2 cards for +2 cards, +2 gold other players discard down to 3"
         self.name = 'Mercenary'
-        self.purcashable = False
+        self.purchasable = False
         self.cost = 0
 
     def special(self, game, player):
@@ -19,22 +19,15 @@ class Card_Mercenary(Card):
             cards, +2 gold, and each other player discards down to 3
             cards in hand """
 
-        options = [
-            {'selector': '0', 'print': 'Trash nothing', 'trash': False},
-            {'selector': '1', 'print': 'Trash 2 cards', 'trash': True}
-        ]
-        o = player.userInput(options, "Trash cards?")
-        if not o['trash']:
+        ans = player.plrChooseOptions(
+            "Trash cards?",
+            ('Trash nothing', False), ('Trash 2 cards', True))
+        if not ans:
             return
         player.plrTrashCard(2, force=True)
-        for i in range(2):
-            player.pickupCard()
-        player.t['gold'] += 2
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        player.pickupCards(2)
+        player.addGold(2)
+        for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)
 
 
@@ -44,8 +37,7 @@ class Test_Mercenary(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['mercenary', 'moat'])
-        self.plr = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.plr, self.victim = self.g.players.values()
         self.card = self.g['mercenary'].remove()
 
     def test_play(self):
@@ -53,7 +45,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_defense(self):
@@ -63,10 +55,10 @@ class Test_Mercenary(unittest.TestCase):
         self.victim.addCard(moat, 'hand')
         self.plr.test_input = ['1', '1', '2', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.g.trashpile), 2)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.plr.handSize(), 5)
         # 5 for hand + moat
-        self.assertEqual(len(self.victim.hand), 6)
+        self.assertEqual(self.victim.handSize(), 6)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_attack(self):
@@ -75,14 +67,14 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.test_input = ['1', '1', '2', '0']
         self.victim.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.g.trashpile), 2)
-        self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.t['gold'], 2)
-        self.assertEqual(len(self.victim.hand), 3)
+        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.victim.handSize(), 3)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

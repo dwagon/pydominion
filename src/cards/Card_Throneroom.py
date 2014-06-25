@@ -41,7 +41,7 @@ class Test_Throneroom(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['throneroom', 'mine'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
@@ -50,10 +50,16 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.test_input = ['1', '1', '1']
         self.plr.playCard(card)
         self.assertEqual(self.plr.hand[0].name, 'Gold')
-        self.assertEqual(len(self.plr.hand), 1)
+        self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Mine')
-        self.assertEqual(len(self.plr.discardpile), 1)
-        self.assertEqual(self.plr.t['actions'], 0)
+        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.getActions(), 0)
+
+    def test_donothing(self):
+        self.plr.setHand('copper', 'mine')
+        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.test_input = ['0']
+        self.plr.playCard(card)
 
     def test_noaction(self):
         self.plr.setHand('copper', 'copper')
@@ -63,7 +69,7 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(self.plr.test_input, ['0'])
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -20,7 +20,7 @@ class Card_Rats(Card):
         player.gainCard('rats')
         player.plrTrashCard(force=True, exclude=['Rats'])
 
-    def hook_trashCard(self, game, player):
+    def hook_trashThisCard(self, game, player):
         """ When you trash this +1 Card """
         player.pickupCard()
 
@@ -31,7 +31,7 @@ class Test_Rats(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['rats'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.rats = self.g['rats'].remove()
         self.plr.addCard(self.rats, 'hand')
 
@@ -39,13 +39,13 @@ class Test_Rats(unittest.TestCase):
         self.plr.setDeck('gold')
         self.plr.test_input = ['1']
         self.plr.playCard(self.rats)
-        self.plr.t['actions'] = 1
+        self.plr.addActions(1)
         self.assertEqual(self.plr.hand[-1].name, 'Gold')
 
     def test_trashcard(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.rats)
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertNotEquals(self.g.trashpile[0].name, 'Rats')
 
     def test_gainrats(self):
@@ -54,14 +54,15 @@ class Test_Rats(unittest.TestCase):
         self.assertEquals(self.plr.discardpile[0].name, 'Rats')
 
     def test_trashrats(self):
-        handsize = len(self.plr.hand)
+        """ Trashing Rats - gain another card"""
+        handsize = self.plr.handSize()
         self.plr.trashCard(self.rats)
         # Lose rats, gain another card
-        self.assertEqual(len(self.plr.hand), handsize)
+        self.assertEqual(self.plr.handSize(), handsize)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

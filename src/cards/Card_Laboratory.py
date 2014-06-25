@@ -23,20 +23,20 @@ class Test_Laboratory(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['laboratory'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['laboratory'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a Laboratory """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
         # 5 hand, +2 for playing lab
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

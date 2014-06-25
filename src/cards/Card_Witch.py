@@ -17,11 +17,9 @@ class Card_Witch(Card):
 
     def special(self, game, player):
         """ All other players gain a curse """
-        for pl in game.players:
-            if pl != player:
-                if not pl.hasDefense(player):
-                    player.output("%s got cursed" % pl.name)
-                    pl.gainCard('curse')
+        for pl in player.attackVictims():
+            player.output("%s got cursed" % pl.name)
+            pl.gainCard('curse')
 
 
 ###############################################################################
@@ -30,8 +28,7 @@ class Test_Witch(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['witch', 'moat'])
-        self.attacker = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.attacker, self.victim = self.g.players.values()
         self.wcard = self.g['witch'].remove()
         self.mcard = self.g['moat'].remove()
         self.attacker.addCard(self.wcard, 'hand')
@@ -39,19 +36,19 @@ class Test_Witch(unittest.TestCase):
     def test_defended(self):
         self.victim.addCard(self.mcard, 'hand')
         self.attacker.playCard(self.wcard)
-        self.assertEqual(len(self.victim.hand), 6)
-        self.assertEqual(len(self.attacker.hand), 7)
+        self.assertEqual(self.victim.handSize(), 6)
+        self.assertEqual(self.attacker.handSize(), 7)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_nodefense(self):
         self.attacker.playCard(self.wcard)
-        self.assertEqual(len(self.victim.hand), 5)
-        self.assertEqual(len(self.attacker.hand), 7)
+        self.assertEqual(self.victim.handSize(), 5)
+        self.assertEqual(self.attacker.handSize(), 7)
         self.assertEqual(self.victim.discardpile[0].name, 'Curse')
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

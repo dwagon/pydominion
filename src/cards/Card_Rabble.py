@@ -33,11 +33,7 @@ class Card_Rabble(Card):
         """ Each other player reveals the top 3 cards of his deck,
             discard the revealed Actions and Treasures, and puts the
             rest back on top in any order he chooses """
-        for plr in game.players:
-            if plr.hasDefense(player):
-                continue
-            if plr == player:
-                continue
+        for plr in player.attackVictims():
             self.attack(plr, player)
 
 
@@ -47,8 +43,7 @@ class Test_Rabble(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['rabble', 'moat'])
-        self.attacker = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.attacker, self.victim = self.g.players.values()
         self.rabble = self.g['rabble'].remove()
         self.moat = self.g['moat'].remove()
         self.attacker.addCard(self.rabble, 'hand')
@@ -56,20 +51,20 @@ class Test_Rabble(unittest.TestCase):
     def test_defended(self):
         self.victim.addCard(self.moat, 'hand')
         self.attacker.playCard(self.rabble)
-        self.assertEqual(len(self.victim.hand), 6)  # 5 + moat
-        self.assertEqual(len(self.attacker.hand), 5 + 3)
+        self.assertEqual(self.victim.handSize(), 6)  # 5 + moat
+        self.assertEqual(self.attacker.handSize(), 5 + 3)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_nodefense(self):
         self.victim.setDeck('copper', 'estate', 'rabble')
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.deck[-1].name, 'Estate')
-        self.assertEqual(len(self.victim.discardpile), 2)
-        self.assertEqual(len(self.attacker.hand), 5 + 3)
+        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.attacker.handSize(), 5 + 3)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

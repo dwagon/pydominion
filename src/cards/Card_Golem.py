@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Golem(Card):
     def __init__(self):
         Card.__init__(self)
@@ -19,9 +20,12 @@ class Card_Golem(Card):
             cards other than Golem cards. Discard the other cards, then
             play the Action cards in either order """
         actions = []
+        maxnum = len(player.allCards())
+        count = 0
         while len(actions) != 2:
             c = player.nextCard()
-            if not c:
+            count += 1
+            if count > maxnum:
                 player.output("Not enough action cards in deck")
                 break
             if c.isAction() and c.name != 'Golem':
@@ -42,15 +46,15 @@ class Test_Golem(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['golem', 'village', 'moat'])
-        self.plr = self.g.players[0]
-        self.golem = self.g['golem'].remove()
+        self.plr = self.g.players.values()[0]
+        self.card = self.g['golem'].remove()
 
     def test_actions(self):
         """ Ensure two actions are picked up and played, others are discarded """
         self.plr.setHand()
         self.plr.setDeck('gold', 'gold', 'gold', 'village', 'moat', 'estate', 'copper')
-        self.plr.addCard(self.golem, 'hand')
-        self.plr.playCard(self.golem)
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
         self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
         self.assertEqual(['Copper', 'Estate'], [c.name for c in self.plr.discardpile])
 
@@ -58,13 +62,19 @@ class Test_Golem(unittest.TestCase):
         """ Ensure golem isn't picked up """
         self.plr.setHand()
         self.plr.setDeck('gold', 'gold', 'gold', 'village', 'golem', 'moat', 'estate', 'copper')
-        self.plr.addCard(self.golem, 'hand')
-        self.plr.playCard(self.golem)
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
         self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
         self.assertEqual(['Copper', 'Estate', 'Golem'], [c.name for c in self.plr.discardpile])
 
+    def test_nocards(self):
+        self.plr.setHand('copper', 'copper', 'copper')
+        self.plr.setDeck('copper', 'copper', 'copper')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

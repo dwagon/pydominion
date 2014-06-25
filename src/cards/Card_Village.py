@@ -22,18 +22,19 @@ class Test_Village(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['village'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['village'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play the village """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 6)
-        self.assertEqual(self.plr.t['actions'], 2)
+        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.getActions(), 2)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
+
 #EOF

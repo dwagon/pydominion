@@ -22,19 +22,19 @@ class Test_Woodcutter(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['woodcutter'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['woodcutter'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play the woodcutter """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 2)
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getBuys(), 2)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

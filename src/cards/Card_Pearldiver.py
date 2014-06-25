@@ -19,12 +19,11 @@ class Card_Pearldiver(Card):
     def special(self, game, player):
         """ Look at the bottom card of your deck. You may put it on top """
         bcard = player.deck[0]
-        options = [
-            {'selector': '0', 'print': "Keep %s on bottom of deck" % bcard.name, 'top': False},
-            {'selector': '1', 'print': "Put %s on top of deck" % bcard.name, 'top': True}
-        ]
-        o = player.userInput(options, 'What to do with bottom card?')
-        if o['top']:
+        top = player.plrChooseOptions(
+            'What to do with bottom card?',
+            ("Keep %s on bottom of deck" % bcard.name, False),
+            ("Put %s on top of deck" % bcard.name, True))
+        if top:
             player.output("Putting %s on top of deck" % bcard.name)
             player.deck.remove(bcard)
             player.addCard(bcard, 'topdeck')
@@ -38,7 +37,7 @@ class Test_Pearldiver(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['pearldiver'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.pearldiver = self.g['pearldiver'].remove()
         self.plr.addCard(self.pearldiver, 'hand')
 
@@ -46,8 +45,8 @@ class Test_Pearldiver(unittest.TestCase):
         self.plr.setDeck('copper', 'gold', 'province', 'silver', 'duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.pearldiver)
-        self.assertEquals(self.plr.t['actions'], 1)
-        self.assertEquals(len(self.plr.hand), 6)
+        self.assertEquals(self.plr.getActions(), 1)
+        self.assertEquals(self.plr.handSize(), 6)
 
     def test_donothing(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
@@ -64,8 +63,9 @@ class Test_Pearldiver(unittest.TestCase):
         self.assertEqual(self.plr.deck[-1].name, 'Copper')
         self.assertEqual(self.plr.deck[0].name, 'Estate')
 
+
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

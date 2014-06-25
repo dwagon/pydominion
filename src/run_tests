@@ -1,6 +1,0 @@
-#!/bin/sh
-
-export PYTHONPATH=.
-python -m unittest discover -v -p \*.py
-
-#EOF

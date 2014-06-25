@@ -29,20 +29,20 @@ class Test_Spoils(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['banditcamp'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_play(self):
         numspoils = self.g['Spoils'].numcards
         spoils = self.g['Spoils'].remove()
         self.plr.addCard(spoils, 'hand')
         self.plr.playCard(spoils)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
         self.assertEqual(self.plr.played, [])
         self.assertEqual(self.g['Spoils'].numcards, numspoils)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

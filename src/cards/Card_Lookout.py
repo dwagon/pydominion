@@ -59,7 +59,7 @@ class Test_Lookout(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['lookout'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.lookout = self.g['lookout'].remove()
 
     def test_actions(self):
@@ -73,7 +73,7 @@ class Test_Lookout(unittest.TestCase):
         self.assertEqual(self.plr.deck[1].name, 'Estate')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

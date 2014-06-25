@@ -39,27 +39,27 @@ class Test_Apothecary(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['apothecary'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_none(self):
         self.plr.setHand('apothecary')
         apoth = self.plr.hand[0]
         self.plr.setDeck('duchy', 'estate', 'estate', 'estate', 'province')
         self.plr.playCard(apoth)
-        self.assertEqual(len(self.plr.hand), 1)  # P
-        self.assertEqual(len(self.plr.deck), 4)  # D + E + E + E
+        self.assertEqual(self.plr.handSize(), 1)  # P
+        self.assertEqual(self.plr.deckSize(), 4)  # D + E + E + E
 
     def test_some(self):
         self.plr.setHand('apothecary')
         apoth = self.plr.hand[0]
         self.plr.setDeck('duchy', 'potion', 'copper', 'estate', 'province')
         self.plr.playCard(apoth)
-        self.assertEqual(len(self.plr.hand), 3)  # P + C + Pot
-        self.assertEqual(len(self.plr.deck), 2)  # E + D
+        self.assertEqual(self.plr.handSize(), 3)  # P + C + Pot
+        self.assertEqual(self.plr.deckSize(), 2)  # E + D
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

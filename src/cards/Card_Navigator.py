@@ -22,12 +22,10 @@ class Card_Navigator(Card):
         for i in range(5):
             cards.append(player.nextCard())
         player.output("Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards]))
-        options = [
-            {'selector': '0', 'print': 'Discard cards', 'discard': True},
-            {'selector': '1', 'print': 'Return them to the deck', 'discard': False}
-            ]
-        o = player.userInput(options, 'What do you want to do?')
-        if o['discard']:
+        discard = player.plrChooseOptions(
+            'What do you want to do?',
+            ('Discard cards', True), ('Return them to the deck', False))
+        if discard:
             for c in cards:
                 player.discardCard(c)
         else:
@@ -42,7 +40,7 @@ class Test_Navigator(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['navigator'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.navigator = self.g['navigator'].remove()
         self.plr.addCard(self.navigator, 'hand')
 
@@ -50,18 +48,19 @@ class Test_Navigator(unittest.TestCase):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.navigator)
-        self.assertEqual(len(self.plr.discardpile), 5)
-        self.assertEqual(len(self.plr.deck), 1)
+        self.assertEqual(self.plr.discardSize(), 5)
+        self.assertEqual(self.plr.deckSize(), 1)
 
     def test_keep(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.navigator)
-        self.assertEqual(len(self.plr.discardpile), 0)
-        self.assertEqual(len(self.plr.deck), 6)
+        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.deckSize(), 6)
+
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

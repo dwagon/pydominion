@@ -27,14 +27,14 @@ class Test_University(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['university'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.university = self.g['university'].remove()
         self.plr.addCard(self.university, 'hand')
 
     def test_gain(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.university)
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertTrue(self.plr.discardpile[0].isAction())
         self.assertLessEqual(self.plr.discardpile[0].cost, 5)
 
@@ -45,7 +45,7 @@ class Test_University(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

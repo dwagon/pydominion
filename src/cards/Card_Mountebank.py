@@ -18,11 +18,7 @@ class Card_Mountebank(Card):
     def special(self, game, player):
         """ Each other player may discard a Curse. If he doesnt,
             he gains a Curse and a Copper """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             for c in plr.hand:
                 if c.cardname == 'curse':
                     player.output("Player %s discarded a curse" % plr.name)
@@ -40,8 +36,7 @@ class Test_Mountebank(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['mountebank'])
-        self.attacker = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.attacker, self.victim = self.g.players.values()
         self.mountebank = self.g['mountebank'].remove()
         self.curse = self.g['curse'].remove()
 
@@ -59,7 +54,7 @@ class Test_Mountebank(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

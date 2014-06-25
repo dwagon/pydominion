@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
+import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Explorer(Card):
     def __init__(self):
         Card.__init__(self)
@@ -19,5 +23,33 @@ class Card_Explorer(Card):
         else:
             player.output("Gained a Silver")
             player.gainCard('Silver', destination='hand')
+
+
+###############################################################################
+class Test_Explorer(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['explorer'])
+        self.plr = self.g.players.values()[0]
+        self.card = self.g['explorer'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_province(self):
+        self.plr.gainCard('province', 'hand')
+        self.plr.playCard(self.card)
+        self.assertTrue(self.plr.inHand('Gold'))
+        # 5 + province + gold
+        self.assertEqual(self.plr.handSize(), 7)
+
+    def test_no_province(self):
+        self.plr.playCard(self.card)
+        self.assertTrue(self.plr.inHand('Silver'))
+        self.assertEqual(self.plr.handSize(), 6)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 #EOF

@@ -24,8 +24,7 @@ class Card_Apprentice(Card):
         numcards = c.cost
         if c.potcost:
             numcards += 2
-        for c in range(numcards):
-            player.pickupCard()
+        player.pickupCards(numcards)
 
 
 ###############################################################################
@@ -34,14 +33,14 @@ class Test_Apprentice(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['apprentice', 'familiar'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.apprentice = self.g['apprentice'].remove()
 
     def test_trashNone(self):
         self.plr.addCard(self.apprentice, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.apprentice)
-        self.assertEqual(len(self.plr.hand), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.g.trashpile, [])
 
     def test_trashCard(self):
@@ -49,17 +48,17 @@ class Test_Apprentice(unittest.TestCase):
         self.plr.addCard(self.apprentice, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.apprentice)
-        self.assertEqual(len(self.plr.hand), self.g.trashpile[-1].cost)
+        self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost)
 
     def test_trashPotion(self):
         self.plr.setHand('familiar')
         self.plr.addCard(self.apprentice, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.apprentice)
-        self.assertEqual(len(self.plr.hand), self.g.trashpile[-1].cost + 2)
+        self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost + 2)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

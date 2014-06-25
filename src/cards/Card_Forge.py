@@ -36,22 +36,24 @@ class Test_Forge(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['forge'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.forge = self.g['forge'].remove()
 
     def test_play(self):
+        """ Play the Forge """
         self.plr.setHand('estate', 'estate', 'estate')
         self.plr.addCard(self.forge, 'hand')
+        # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ['1', '2', '0', '1']
         self.plr.playCard(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertEqual(self.g.trashpile[0].name, 'Estate')
-        self.assertEqual(len(self.g.trashpile), 2)
-        self.assertEqual(len(self.plr.hand), 1)
+        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.plr.handSize(), 1)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

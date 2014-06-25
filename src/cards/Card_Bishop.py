@@ -19,7 +19,7 @@ class Card_Bishop(Card):
         """ Trash a card from your hand. +VP equal to half its cost
         in coins, rounded down. Each other player may trash a card
         from his hand """
-        for plr in game.players:
+        for plr in game.players.values():
             if plr == player:
                 self.trashOwnCard(game, player)
             else:
@@ -46,8 +46,7 @@ class Test_Bishop(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['bishop'])
-        self.plr = self.g.players[0]
-        self.other = self.g.players[1]
+        self.plr, self.other = self.g.players.values()
         self.bishop = self.g['bishop'].remove()
 
     def test_play(self):
@@ -55,7 +54,7 @@ class Test_Bishop(unittest.TestCase):
         self.plr.test_input = ['0']
         self.other.test_input = ['0']
         self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getGold(), 1)
 
     def test_trash(self):
         self.plr.setHand('gold')
@@ -77,10 +76,10 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertEqual(self.plr.hand, [])
         self.assertEqual(self.other.hand, [])
-        self.assertEqual(len(self.g.trashpile), 2)
+        self.assertEqual(self.g.trashSize(), 2)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -28,23 +28,23 @@ class Test_Bordervillage(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['bordervillage'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.bv = self.g['bordervillage'].remove()
         self.plr.addCard(self.bv, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.bv)
-        self.assertEqual(self.plr.t['actions'], 2)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.handSize(), 6)
 
     def test_gain(self):
         self.plr.test_input = ['4']
         self.plr.gainCard('bordervillage')
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

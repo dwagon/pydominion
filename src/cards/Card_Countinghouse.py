@@ -31,7 +31,7 @@ class Test_Countinghouse(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['countinghouse'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.ch = self.g['countinghouse'].remove()
         self.plr.setHand()
         self.plr.addCard(self.ch, 'hand')
@@ -39,7 +39,7 @@ class Test_Countinghouse(unittest.TestCase):
     def test_pullcoppers(self):
         self.plr.setDiscard('copper', 'gold', 'duchy', 'copper')
         self.plr.playCard(self.ch)
-        self.assertEqual(len(self.plr.hand), 2)
+        self.assertEqual(self.plr.handSize(), 2)
         for c in self.plr.hand:
             self.assertEqual(c.name, 'Copper')
         for c in self.plr.discardpile:
@@ -47,7 +47,7 @@ class Test_Countinghouse(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

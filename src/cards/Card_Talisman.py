@@ -28,40 +28,39 @@ class Test_Talisman(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['talisman'])
-        self.plr = self.g.players[0]
+        self.g.startGame(numplayers=1, initcards=['talisman'])
+        self.plr = self.g.players.values()[0]
         self.card = self.g['talisman'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getGold(), 1)
 
     def test_buy(self):
         self.plr.playCard(self.card)
         self.plr.buyCard('copper')
-        self.assertEqual(len(self.plr.discardpile), 2)
+        self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Copper')
 
     def test_tooexpensive(self):
         self.plr.playCard(self.card)
         self.plr.buyCard('gold')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Gold')
 
     def test_victory(self):
         self.plr.playCard(self.card)
         self.plr.buyCard('duchy')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Duchy')
-        
-        
+
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

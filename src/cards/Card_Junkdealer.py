@@ -26,26 +26,26 @@ class Test_Junkdealer(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['junkdealer'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.jd = self.g['junkdealer'].remove()
         self.plr.addCard(self.jd, 'hand')
 
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.jd)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['gold'], 1)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.g.trashpile, [])
 
     def test_trash(self):
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.jd)
-        self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(len(self.g.trashpile), 1)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.g.trashSize(), 1)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

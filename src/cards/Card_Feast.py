@@ -37,12 +37,10 @@ class Card_Feast(Card):
         return
 
     def trashCard(self, player):
-        options = [
-            {'selector': '0', 'print': "Don't trash this card", 'trash': False},
-            {'selector': '1', 'print': "Trash this card", 'trash': True}
-        ]
-        o = player.userInput(options, "Trash this card?")
-        if o['trash']:
+        ans = player.plrChooseOptions(
+            "Trash this card?",
+            ("Don't trash this card", False), ("Trash this card", True))
+        if ans:
             player.trashCard(self)
             return True
         return False
@@ -53,8 +51,8 @@ class Test_Feast(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['feast'])
-        self.plr = self.g.players[0]
+        self.g.startGame(numplayers=1, initcards=['feast'])
+        self.plr = self.g.players.values()[0]
 
     def test_dontTrash(self):
         self.plr.setHand('feast')
@@ -68,7 +66,7 @@ class Test_Feast(unittest.TestCase):
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.plr.hand, [])
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
         self.assertEquals(self.plr.played, [])
 
@@ -76,14 +74,14 @@ class Test_Feast(unittest.TestCase):
         self.plr.setHand('feast')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(len(self.g.trashpile), 1)
+        self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
         self.assertEquals(self.plr.played, [])
-        self.assertEquals(len(self.plr.discardpile), 1)
+        self.assertEquals(self.plr.discardSize(), 1)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Smithy(Card):
     def __init__(self):
         Card.__init__(self)
@@ -21,19 +22,18 @@ class Test_Smithy(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['smithy'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['smithy'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play the smithy """
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
-
 
 #EOF

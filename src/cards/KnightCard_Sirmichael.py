@@ -19,11 +19,7 @@ class Card_Sirmichael(Card):
             Each other player reveals the top 2 cards of his deck,
             trashes one of them costing from 3 to 6 and discards the
             rest. If a knight is trashed by this, trash this card """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense():
-                continue
+        for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)
             self.knight_special(game, player)
 

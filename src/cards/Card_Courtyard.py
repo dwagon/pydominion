@@ -37,14 +37,14 @@ class Test_Courtyard(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['courtyard'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.cy = self.g['courtyard'].remove()
 
     def test_play(self):
         self.plr.addCard(self.cy, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.cy)
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
 
     def test_putcard(self):
         self.plr.setHand('gold')
@@ -54,10 +54,10 @@ class Test_Courtyard(unittest.TestCase):
         self.assertEqual(self.plr.deck[0].name, 'Gold')
         for c in self.plr.hand:
             self.assertNotEqual(c.name, 'Gold')
-        self.assertEqual(len(self.plr.hand), 3)
+        self.assertEqual(self.plr.handSize(), 3)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

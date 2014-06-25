@@ -24,12 +24,10 @@ class Card_Alchemist(Card):
                 break
         else:
             return
-        options = [
-            {'selector': '0', 'print': 'Discard', 'todeck': False},
-            {'selector': '1', 'print': 'Put on top of deck', 'todeck': True},
-            ]
-        o = player.userInput(options, 'What to do with the alchemist?')
-        if o['todeck']:
+        ans = player.plrChooseOptions(
+            'What to do with the alchemist?',
+            ('Discard alchemist', False), ('Put on top of deck', True))
+        if ans:
             player.played.remove(self)
             player.addCard(self, 'topdeck')
 
@@ -40,30 +38,30 @@ class Test_Alchemist(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['alchemist'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.alchemist = self.g['alchemist'].remove()
         self.plr.addCard(self.alchemist, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.alchemist)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 7)
 
     def test_nopotion(self):
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, alch
+        self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
         self.plr.setPlayed('potion')
         self.plr.test_input = ['0']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 9)  # 5 for hand, +2 cards, alch, pot
+        self.assertEqual(self.plr.discardSize(), 9)  # 5 for hand, +2 cards, alch, pot
         for c in self.plr.discardpile:
             if c.name == 'Alchemist':
                 break
-        else:
+        else:   # pragma: no cover
             self.fail()
 
     def test_keep(self):
@@ -71,14 +69,14 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(len(self.plr.discardpile), 8)  # 5 for hand, +2 cards, pot
+        self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, pot
         for c in self.plr.discardpile:
-            if c.name == 'Alchemist':
+            if c.name == 'Alchemist':   # pragma: no cover
                 self.fail()
         self.assertEquals(self.plr.deck[-1].name, 'Alchemist')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

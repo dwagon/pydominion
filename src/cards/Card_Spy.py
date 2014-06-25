@@ -18,19 +18,17 @@ class Card_Spy(Card):
 
     def special(self, game, player):
         """ Each player (including you) reveals the top of his deck and either discards it or puts it back, your choice"""
-        for pl in game.players:
-            if not pl.hasDefense(player) or player == pl:
-                self.spyOn(player, pl)
+        self.spyOn(player, player)
+        for pl in player.attackVictims():
+            self.spyOn(player, pl)
 
     def spyOn(self, attacker, victim):
         c = victim.nextCard()
         vicname = "your" if attacker == victim else "%s's" % victim.name
-        options = [
-            {'selector': '0', 'print': "Keep %s on deck" % c.name, 'discard': False},
-            {'selector': '1', 'print': "Discard %s" % c.name, 'discard': True}
-        ]
-        o = attacker.userInput(options, "Discard %s card?" % vicname)
-        if o['discard']:
+        discard = attacker.plrChooseOptions(
+            "Discard %s card?" % vicname,
+            ("Keep %s on deck" % c.name, False), ("Discard %s" % c.name, True))
+        if discard:
             victim.addCard(c, 'discard')
         else:
             victim.addCard(c, 'topdeck')
@@ -42,8 +40,7 @@ class Test_Spy(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['spy', 'moat'])
-        self.attacker = self.g.players[0]
-        self.defender = self.g.players[1]
+        self.attacker, self.defender = self.g.players.values()
         self.attacker.setDeck('estate', 'province', 'duchy')
         self.defender.setDeck('estate', 'gold')
 
@@ -71,7 +68,7 @@ class Test_Spy(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -21,11 +21,7 @@ class Card_Bureaucrat(Card):
         player.gainCard('silver', 'topdeck')
         player.output("Added silver to deck")
 
-        for pl in game.players:
-            if pl == player:
-                continue
-            if pl.hasDefense(player):
-                continue
+        for pl in player.attackVictims():
             for c in pl.hand:
                 if c.isVictory():
                     pl.addCard(c, 'topdeck')
@@ -41,8 +37,8 @@ class Test_Bureaucrat(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['bureaucrat', 'moat'])
-        self.plr = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.plr = self.g.players.values()[0]
+        self.victim = self.g.players.values()[1]
         self.bcard = self.g['bureaucrat'].remove()
         self.plr.addCard(self.bcard, 'hand')
 
@@ -70,7 +66,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

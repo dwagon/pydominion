@@ -26,23 +26,23 @@ class Test_Bank(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['bank'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['bank'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_gainnothing(self):
         self.plr.setPlayed('estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getGold(), 1)
 
     def test_gainsomething(self):
         self.plr.setPlayed('copper', 'silver', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

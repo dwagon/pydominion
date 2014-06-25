@@ -4,6 +4,7 @@ from Card import Card
 import unittest
 
 
+###############################################################################
 class Card_Thief(Card):
     def __init__(self):
         Card.__init__(self)
@@ -19,11 +20,8 @@ class Card_Thief(Card):
             that you choose. You may gain any or all of these trashed
             Cards. They discard the other revealed cards. """
 
-        for pl in game.players:
-            if pl == player:
-                continue
-            if not pl.hasDefense(player):
-                self.thieveOn(pl, player)
+        for pl in player.attackVictims():
+            self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):
         treasures = []
@@ -66,11 +64,12 @@ class Test_Thief(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['thief', 'moat'], playernames=['victim', 'thief'])
+        self.g.startGame(numplayers=2, initcards=['thief', 'moat'])
         self.thiefcard = self.g['thief'].remove()
-        self.thief = self.g.players[0]
+        self.thief, self.victim = self.g.players.values()
+        self.thief.name = 'thief'
+        self.victim.name = 'victim'
         self.thief.addCard(self.thiefcard, 'hand')
-        self.victim = self.g.players[1]
 
     def test_no_treasure(self):
         self.victim.setDeck('estate', 'estate', 'estate')
@@ -82,17 +81,17 @@ class Test_Thief(unittest.TestCase):
         self.victim.setDeck('copper', 'silver', 'gold')
         self.thief.playCard(self.thiefcard)
         self.assertIn('Player victim is defended', self.thief.messages)
-        self.assertEquals(len(self.victim.deck), 3)
-        self.assertEquals(len(self.victim.discardpile), 0)
+        self.assertEquals(self.victim.deckSize(), 3)
+        self.assertEquals(self.victim.discardSize(), 0)
 
     def test_do_nothing(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
         self.thief.test_input = ['0']
         self.thief.playCard(self.thiefcard)
-        self.assertEquals(len(self.victim.deck), 1)
-        self.assertEquals(len(self.victim.discardpile), 2)
-        self.assertEquals(len(self.thief.discardpile), 0)
+        self.assertEquals(self.victim.deckSize(), 1)
+        self.assertEquals(self.victim.discardSize(), 2)
+        self.assertEquals(self.thief.discardSize(), 0)
 
     def test_trash_treasure(self):
         self.victim.setHand('copper', 'copper')
@@ -116,13 +115,13 @@ class Test_Thief(unittest.TestCase):
         for c in self.thief.discardpile:
             if c.name == 'Gold':
                 break
-        else:
+        else:   # pragma: no cover
             self.fail()
         self.assertIn('%s stole your Gold' % self.thief.name, self.victim.messages)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

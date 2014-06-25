@@ -29,7 +29,7 @@ class Test_Expand(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['expand'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.expand = self.g['expand'].remove()
 
     def test_play(self):
@@ -38,11 +38,11 @@ class Test_Expand(unittest.TestCase):
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.expand)
         self.assertEqual(self.plr.hand, [])
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -18,9 +18,9 @@ class Card_Scryingpool(Card):
             Then reveal cards from the top of your deck until you reveal
             on that is not an Action. Put all of your revealed cards
             into your hand."""
-        for plr in game.players:
-            if not plr.hasDefense(player):
-                self.discardOrPutBack(plr, player)
+        for plr in player.attackVictims():
+            self.discardOrPutBack(plr, player)
+        self.discardOrPutBack(player, player)
         while(1):
             topcard = player.pickupCard()
             if not topcard.isAction():
@@ -28,15 +28,14 @@ class Card_Scryingpool(Card):
 
     def discardOrPutBack(self, victim, player):
         topcard = victim.nextCard()
-        options = [
-            {'selector': '0', 'print': 'Discard %s' % topcard.name, 'action': 'discard'},
-            {'selector': '1', 'print': 'Putback %s' % topcard.name, 'action': 'putback'},
-            ]
-        o = player.userInput(options, "For %s which one?" % victim.name)
-        if o['action'] == 'discard':
-            victim.addCard(topcard, 'discard')
-        else:
+        putback = player.plrChooseOption(
+            "For %s which one?" % victim.name,
+            ('Discard %s' % topcard.name, False),
+            ('Putback %s' % topcard.name, True))
+        if putback:
             victim.addCard(topcard, 'deck')
+        else:
+            victim.addCard(topcard, 'discard')
 
 
 #EOF

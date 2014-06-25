@@ -38,13 +38,13 @@ class Test_Scout(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['scout'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.scout = self.g['scout'].remove()
 
     def test_play(self):
         self.plr.addCard(self.scout, 'hand')
         self.plr.playCard(self.scout)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
 
     def test_victory(self):
         self.plr.setHand()
@@ -64,7 +64,7 @@ class Test_Scout(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

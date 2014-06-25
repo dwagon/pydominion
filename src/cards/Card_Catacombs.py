@@ -21,19 +21,14 @@ class Card_Catacombs(Card):
         for i in range(3):
             cards.append(player.nextCard())
         player.output("You drew %s" % ", ".join([c.name for c in cards]))
-        options = [
-            {'selector': '0', 'print': 'Keep the three', 'keep': True},
-            {'selector': '1', 'print': 'Discard and draw 3 more', 'keep': False}
-        ]
-        o = player.userInput(options, 'What do you want to do?')
-        if o['keep']:
+        ans = player.plrChooseOptions("What do you want to do?", ("Keep the three", True), ("Discard and draw 3 more", False))
+        if ans:
             for c in cards:
                 player.addCard(c, 'hand')
         else:
             for c in cards:
                 player.addCard(c, 'discard')
-            for i in range(3):
-                player.pickupCard()
+            player.pickupCards(3)
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this, gain a cheaper card """
@@ -46,7 +41,7 @@ class Test_Catacombs(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['catacombs'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.cat = self.g['catacombs'].remove()
         self.plr.addCard(self.cat, 'hand')
 
@@ -55,7 +50,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == 'Gold'])
         self.assertEqual(numgold, 3)
 
@@ -64,7 +59,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == 'Gold'])
         self.assertEqual(numgold, 0)
         numprov = sum([1 for c in self.plr.hand if c.name == 'Province'])
@@ -75,13 +70,13 @@ class Test_Catacombs(unittest.TestCase):
     def test_trash(self):
         self.plr.test_input = ['1']
         self.plr.trashCard(self.cat)
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)
         self.assertEqual(self.g.trashpile[0].name, self.cat.name)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

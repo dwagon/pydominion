@@ -14,12 +14,9 @@ class Card_Gardens(Card):
         self.playable = False
         self.cost = 4
 
-    def special(self, game, player):
-        pass
-
     def special_score(self, game, player):
         """ Worth 1VP for every 10 cards in your deck rounded down """
-        numcards = len(player.discardpile + player.hand + player.deck)
+        numcards = len(player.allCards())
         return int(numcards / 10)
 
 
@@ -29,7 +26,7 @@ class Test_Gardens(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['gardens'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_score_0(self):
         self.plr.setHand('gardens', 'copper', 'copper')
@@ -47,7 +44,7 @@ class Test_Gardens(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

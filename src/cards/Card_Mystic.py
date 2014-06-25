@@ -44,7 +44,7 @@ class Test_Mystic(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['mystic'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['mystic'].remove()
 
     def test_play(self):
@@ -52,8 +52,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getGold(), 2)
 
     def test_good(self):
         """ When the guess is good the card should move to the hand """
@@ -61,8 +61,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('gold')
         self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getGold(), 2)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertEqual(self.plr.deck, [])
 
@@ -72,8 +72,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('province')
         self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getGold(), 2)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Province')
@@ -88,7 +88,7 @@ class Test_Mystic(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

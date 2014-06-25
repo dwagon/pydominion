@@ -42,7 +42,7 @@ class Test_Wishingwell(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['wishingwell'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.card = self.g['wishingwell'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -50,8 +50,8 @@ class Test_Wishingwell(unittest.TestCase):
         """ No guess still gets a card and action """
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.t['actions'], 1)
-        self.assertEqual(len(self.plr.hand), 6)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 6)
 
     def test_good(self):
         """ A good guess means the card ends up in the hand"""
@@ -78,7 +78,7 @@ class Test_Wishingwell(unittest.TestCase):
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

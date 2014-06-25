@@ -17,26 +17,17 @@ class Card_Cultist(Card):
     def special(self, game, player):
         """ Each other play gains a Ruins. You may play a Cultist
             from your hand. """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.gainCard('ruins')
         cultist = player.inHand('cultist')
         if cultist:
-            options = [
-                {'selector': '0', 'print': "Don't play cultist", 'play': False},
-                {'selector': '1', 'print': "Play cultist", 'play': True}
-            ]
-            o = player.userInput(options, 'Play another cultist?')
-            if o['play']:
+            ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play cultist", True))
+            if ans:
                 player.playCard(cultist, costAction=False)
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this, +3 cards """
-        for i in range(3):
-            player.pickupCard()
+        player.pickupCards(3)
 
 
 ###############################################################################
@@ -45,16 +36,16 @@ class Test_Cultist(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['cultist', 'moat'])
-        self.plr = self.g.players[0]
-        self.victim = self.g.players[1]
+        self.plr = self.g.players.values()[0]
+        self.victim = self.g.players.values()[1]
         self.card = self.g['cultist'].remove()
 
     def test_play(self):
         """ Play a cultists - should give 2 cards """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
-        self.assertEqual(len(self.victim.discardpile), 1)
+        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.victim.discardSize(), 1)
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
     def test_defense(self):
@@ -63,7 +54,7 @@ class Test_Cultist(unittest.TestCase):
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.hand), 7)
+        self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.victim.discardpile, [])
 
     def test_noother(self):
@@ -89,10 +80,10 @@ class Test_Cultist(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr.played), 2)
-        self.assertEqual(self.plr.t['actions'], 0)
+        self.assertEqual(self.plr.getActions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
-        self.assertEqual(len(self.victim.discardpile), 2)
+        self.assertEqual(self.victim.discardSize(), 2)
         for c in self.victim.discardpile:
             self.assertTrue(c.isRuin())
 
@@ -101,10 +92,10 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Cultist')
-        self.assertEqual(len(self.plr.hand), 8)
+        self.assertEqual(self.plr.handSize(), 8)
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

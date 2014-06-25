@@ -16,11 +16,7 @@ class Card_Militia(Card):
 
     def special(self, game, player):
         """ Every other player discards down to 3 cards """
-        for plr in game.players:
-            if plr == player:
-                continue
-            if plr.hasDefense(player):
-                continue
+        for plr in player.attackVictims():
             plr.output("Discard down to 3 cards")
             plr.plrDiscardDownTo(3)
 
@@ -31,8 +27,7 @@ class Test_Militia(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['militia', 'moat'])
-        self.attacker = self.g.players[0]
-        self.defender = self.g.players[1]
+        self.attacker, self.defender = self.g.players.values()
         self.mcard = self.g['militia'].remove()
 
     def test_defense(self):
@@ -40,19 +35,20 @@ class Test_Militia(unittest.TestCase):
         self.defender.addCard(self.g['moat'].remove(), 'hand')
         #self.defender.test_input = ['1', '1', '0']
         self.attacker.playCard(self.mcard)
-        self.assertEquals(len(self.defender.hand), 6)   # Normal + moat
-        self.assertEquals(self.attacker.t['gold'], 2)
+        self.assertEquals(self.defender.handSize(), 6)   # Normal + moat
+        self.assertEquals(self.attacker.getGold(), 2)
 
     def test_attack(self):
         self.attacker.addCard(self.mcard, 'hand')
         self.defender.test_input = ['1', '2', '0']
         self.attacker.playCard(self.mcard)
-        self.assertEquals(len(self.defender.hand), 3)   # Normal  - 2
-        self.assertEquals(len(self.defender.discardpile), 2)
-        self.assertEquals(self.attacker.t['gold'], 2)
+        self.assertEquals(self.defender.handSize(), 3)   # Normal  - 2
+        self.assertEquals(self.defender.discardSize(), 2)
+        self.assertEquals(self.attacker.getGold(), 2)
+
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

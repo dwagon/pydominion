@@ -19,17 +19,16 @@ class Card_Loan(Card):
             you reveal a Treasure. Discard it or trash it. Discard the
             other cards """
         while True:
-            c = player.pickupCard(verb='Revealed')
+            c = player.nextCard()
             if c.isTreasure():
                 break
             else:
+                player.output("Revealed and discarded %s" % c.name)
                 player.discardCard(c)
-        options = [
-            {'selector': '0', 'print': "Discard %s" % c.name, 'action': 'discard'},
-            {'selector': '1', 'print': "Trash %s" % c.name, 'action': 'trash'}
-            ]
-        o = player.userInput(options, "What to do?")
-        if o['action'] == 'discard':
+        discard = player.plrChooseOptions(
+            "What to do?",
+            ("Discard %s" % c.name, True), ("Trash %s" % c.name, False))
+        if discard:
             player.discardCard(c)
         else:
             player.trashCard(c)
@@ -41,32 +40,34 @@ class Test_Loan(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['loan'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.loan = self.plr.gainCard('loan', 'hand')
 
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.t['gold'], 1)
+        self.assertEquals(self.plr.getGold(), 1)
 
     def test_discard(self):
+        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.discardpile[-1].cardtype, 'treasure')
+        self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, 'treasure')
         self.assertEquals(self.g.trashpile, [])
 
     def test_trash(self):
+        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
-        self.assertEquals(len(self.g.trashpile), 1)
-        self.assertEquals(self.g.trashpile[0].cardtype, 'treasure')
+        self.assertEquals(self.g.trashSize(), 1)
+        self.assertEquals(self.g.trashpile[0].name, 'Gold')
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

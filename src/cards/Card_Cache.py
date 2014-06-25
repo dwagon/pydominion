@@ -27,7 +27,7 @@ class Test_Cache(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['cache'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.cache = self.g['cache'].remove()
 
     def test_gain(self):
@@ -38,11 +38,11 @@ class Test_Cache(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.cache, 'hand')
         self.plr.playCard(self.cache)
-        self.assertEqual(self.plr.t['gold'], 3)
+        self.assertEqual(self.plr.getGold(), 3)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

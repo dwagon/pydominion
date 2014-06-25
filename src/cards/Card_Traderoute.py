@@ -36,7 +36,7 @@ class Card_Traderoute(Card):
             supply pile. When a card is gained from that pile move the
             token to the trade route map """
         player.plrTrashCard()
-        player.t['gold'] += self.isWorth()
+        player.addGold(self.isWorth())
 
 
 ###############################################################################
@@ -45,31 +45,31 @@ class Test_Traderoute(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['traderoute'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.traderoute = self.g['traderoute'].remove()
         self.plr.addCard(self.traderoute, 'hand')
 
     def test_playZero(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
 
     def test_playOne(self):
         self.plr.test_input = ['0']
         self.g['estate'].remove()
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.t['gold'], 1)
+        self.assertEqual(self.plr.getGold(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ['0']
         self.g['estate'].remove()
         self.g['province'].remove()
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.t['gold'], 2)
+        self.assertEqual(self.plr.getGold(), 2)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

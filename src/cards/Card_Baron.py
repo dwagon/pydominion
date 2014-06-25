@@ -19,13 +19,10 @@ class Card_Baron(Card):
             gain an estate card """
         hasEstate = player.inHand('Estate')
         if hasEstate:
-            options = [
-                {'selector': '0', 'print': "Keep Estate - Gain another", 'discard': False},
-                {'selector': '1', 'print': "Discard an Estate - Gain +4 Gold", 'discard': True}]
-            o = player.userInput(options, "Discard Estate?")
-            if o['discard']:
+            ans = player.plrChooseOptions("Discard Estate?", ("Keep Estate - Gain another", False), ("Discard an Estate - Gain +4 Gold", True))
+            if ans:
                 player.discardCard(hasEstate)
-                player.t['gold'] += 4
+                player.addGold(4)
                 return
         player.output("Gained an Estate")
         player.gainCard('estate')
@@ -37,31 +34,31 @@ class Test_Baron(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['baron'])
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
         self.baron = self.g['baron'].remove()
 
     def test_play(self):
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.t['buys'], 2)
+        self.assertEqual(self.plr.getBuys(), 2)
 
     def test_noestate(self):
         self.plr.setHand('copper', 'copper', 'copper')
         self.plr.addCard(self.baron, 'hand')
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
 
     def test_discardestate(self):
         self.plr.setHand('gold', 'estate', 'copper')
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.t['gold'], 4)
+        self.assertEqual(self.plr.getGold(), 4)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.inHand('Estate'), None)
 
     def test_keepestate(self):
@@ -69,14 +66,14 @@ class Test_Baron(unittest.TestCase):
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.t['gold'], 0)
+        self.assertEqual(self.plr.getGold(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
-        self.assertEqual(len(self.plr.discardpile), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertNotEqual(self.plr.inHand('Estate'), None)
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Advisor(Card):
     def __init__(self):
         Card.__init__(self)
@@ -43,8 +44,8 @@ class Test_Advisor(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['advisor'])
-        self.plr = self.g.players[0]
-        self.plr2 = self.g.players[1]
+        self.plr = self.g.players.values()[0]
+        self.plr2 = self.g.players.values()[1]
         self.acard = self.g['advisor'].remove()
         self.plr.addCard(self.acard, 'hand')
 
@@ -52,16 +53,16 @@ class Test_Advisor(unittest.TestCase):
         self.plr.setDeck('copper', 'silver', 'gold')
         self.plr2.test_input = ['1']
         self.plr.playCard(self.acard)
-        self.assertEqual(self.plr.t['actions'], 1)
+        self.assertEqual(self.plr.getActions(), 1)
         for c in self.plr.hand:
-            if c.name == 'Gold':
+            if c.name == 'Gold':    # pragma: no cover
                 self.fail()
-        self.assertEquals(len(self.plr.hand), 7)
+        self.assertEquals(self.plr.handSize(), 7)
         self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF

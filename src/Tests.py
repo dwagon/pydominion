@@ -9,7 +9,7 @@ class TestPlayer(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_initialCardStacks(self):
         """ Make sure initial hands are correct """
@@ -44,11 +44,38 @@ class TestPlayer(unittest.TestCase):
 
 
 ###############################################################################
+class Test_nextCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players.values()[0]
+
+    def test_emptyDeck(self):
+        self.plr.deck = []
+        self.plr.setDiscard('gold')
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Gold')
+
+    def test_noCards(self):
+        self.plr.deck = []
+        self.plr.discardpile = []
+        c = self.plr.nextCard()
+        self.assertEqual(c, None)
+
+    def test_drawOne(self):
+        self.plr.setDeck('province')
+        self.plr.discardpile = []
+        c = self.plr.nextCard()
+        self.assertEqual(c.name, 'Province')
+        self.assertEqual(self.plr.deck, [])
+
+
+###############################################################################
 class Test_cardsAffordable(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_under(self):
         price = 4
@@ -70,7 +97,7 @@ class Test_typeSelector(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_selzero(self):
         x = self.plr.typeSelector({})
@@ -96,7 +123,7 @@ class Test_plrTrashCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_None(self):
         self.plr.setHand('gold')
@@ -129,10 +156,10 @@ class Test_plrTrashCard(unittest.TestCase):
         for m in self.plr.messages:
             if 'Invalid Option' in m:
                 break
-        else:
+        else:   # pragma: no cover
             self.fail("Accepted none when force")
         for m in self.plr.messages:
-            if 'Trash nothing' in m:
+            if 'Trash nothing' in m:    # pragma: no cover
                 self.fail("Nothing available")
 
     def test_exclude(self):
@@ -148,7 +175,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_discardNone(self):
         self.plr.setHand('copper', 'estate', 'province', 'gold')
@@ -178,11 +205,44 @@ class Test_plrDiscardCard(unittest.TestCase):
 
 
 ###############################################################################
+class Test_attackVictims(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=3, initcards=['moat'])
+        self.plr = self.g.players.values()[0]
+        self.defend = self.g.players.values()[1]
+        self.victim = self.g.players.values()[2]
+        self.defend.setHand('moat')
+
+    def test_output(self):
+        v = self.plr.attackVictims()
+        self.assertEqual(v, [self.victim])
+
+
+###############################################################################
+class Test_inHand(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players.values()[0]
+
+    def test_inhand(self):
+        """ Test card is in hand """
+        self.plr.setHand('copper')
+        self.assertTrue(self.plr.inHand('Copper'))
+
+    def test_notinhand(self):
+        """ Test card that isn't in hand """
+        self.plr.setHand('copper')
+        self.assertFalse(self.plr.inHand('Estate'))
+
+
+###############################################################################
 class Test_gainCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1)
-        self.plr = self.g.players[0]
+        self.plr = self.g.players.values()[0]
 
     def test_gainByString(self):
         self.plr.gainCard('copper')
@@ -204,8 +264,76 @@ class Test_gainCard(unittest.TestCase):
         self.assertEqual(self.plr.discardpile, [])
         self.assertEqual(self.plr.hand[0].name, 'Copper')
 
+
 ###############################################################################
-if __name__ == "__main__":
+class Test_spendAllCards(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1, initcards=['moat'])
+        self.plr = self.g.players.values()[0]
+
+    def test_spendCards(self):
+        """ Spend all cards in hand"""
+        self.plr.setHand('gold', 'silver', 'estate', 'moat')
+        self.plr.spendAllCards()
+        self.assertEqual(self.plr.getGold(), 3 + 2)
+        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(len(self.plr.played), 2)
+        for c in self.plr.played:
+            if not c.isTreasure():  # pragma: no cover
+                self.fail("Spent non treasure")
+
+
+###############################################################################
+class Test_pickupCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players.values()[0]
+
+    def test_pickup(self):
+        """ Test picking up a card """
+        self.plr.setDeck('gold')
+        self.plr.setHand()
+        self.plr.pickupCard()
+        self.assertEqual(self.plr.hand[0].name, 'Gold')
+        self.assertEqual(self.plr.deckSize(), 0)
+        self.assertEqual(self.plr.handSize(), 1)
+
+    def test_pickup_empty(self):
+        """ Test picking up a card from an empty deck"""
+        self.plr.setDeck()
+        self.plr.setDiscard('gold')
+        self.plr.setHand()
+        self.plr.pickupCard()
+        self.assertEqual(self.plr.hand[0].name, 'Gold')
+        self.assertEqual(self.plr.deckSize(), 0)
+        self.assertEqual(self.plr.handSize(), 1)
+
+
+###############################################################################
+class Test_spendCoin(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True)
+        self.g.startGame(numplayers=1)
+        self.plr = self.g.players.values()[0]
+
+    def test_spendCoin(self):
+        """ Spend a coin that the player has """
+        self.plr.coins = 1
+        self.plr.spendCoin()
+        self.assertEqual(self.plr.getCoins(), 0)
+        self.assertEqual(self.plr.gold, 1)
+
+    def test_spendNothing(self):
+        """ Spend a coin that the player doesn't have """
+        self.plr.coins = 0
+        self.plr.spendCoin()
+        self.assertEqual(self.plr.getCoins(), 0)
+        self.assertEqual(self.plr.gold, 0)
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
 #EOF
