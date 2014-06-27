@@ -53,7 +53,7 @@ class Game(object):
     ###########################################################################
     def countCards(self):
         count = 0
-        count += len(self.trashpile)
+        count += self.trashSize()
         for cp in self.cardpiles.values():
             count += cp.numcards
         for pl in self.players.values():
