@@ -12,7 +12,7 @@ class Card_Abandonedmine(Card):
         self.name = "Abandoned Mine"
         self.purchasable = False
         self.cost = 0
-        self.desc = "+1 Gold"
-        self.gold = 1
+        self.desc = "+1 coin"
+        self.coin = 1
 
 #EOF

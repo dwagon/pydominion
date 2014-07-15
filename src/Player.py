@@ -35,14 +35,14 @@ class Player(object):
         game.output("Player %s is at the table" % name)
         self.score = {}
         self.name = name
-        self.coins = 0
+        self.specialcoins = 0
         self.messages = []
         self.hand = []
         self.deck = []
         self.played = []
         self.buys = 1
         self.actions = 1
-        self.gold = 0
+        self.coin = 0
         self.potions = 0
         self.discardpile = []
         self.quiet = quiet
@@ -152,9 +152,9 @@ class Player(object):
             self.pickupCard(verb='Dealt')
 
     ###########################################################################
-    def gainCoins(self, num=1):
+    def gainSpecialCoins(self, num=1):
         """ Gain a number of coin tokens """
-        self.coins += num
+        self.specialcoins += num
 
     ###########################################################################
     def addCard(self, c, pile='discard'):
@@ -215,15 +215,15 @@ class Player(object):
         spendable = [c for c in self.hand if c.isTreasure()]
         if spendable:
             sel = chr(ord('a') + index)
-            totgold = sum([self.hook_spendValue(c) for c in spendable])
+            totcoin = sum([self.hook_spendValue(c) for c in spendable])
             numpots = sum([1 for c in spendable if c.name == 'Potion'])
             potstr = ", %d potions" % numpots if numpots else ""
-            tp = 'Spend all treasures (%d gold%s)' % (totgold, potstr)
+            tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
             options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
             index += 1
         for s in spendable:
             sel = chr(ord('a') + index)
-            tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendValue(s))
+            tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
@@ -238,7 +238,7 @@ class Player(object):
     ###########################################################################
     def buyableSelection(self, index):
         options = []
-        buyable = self.cardsUnder(gold=self.gold, potions=self.potions)
+        buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
         for p in buyable:
             if not self.hook_allowedToBuy(p):
                 continue
@@ -252,7 +252,7 @@ class Player(object):
     def choiceSelection(self):
         options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
 
-        if self.coins:
+        if self.specialcoins:
             options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
         index = 0
@@ -267,12 +267,12 @@ class Player(object):
             options.extend(op)
 
         prompt = "What to do (actions=%d buys=%d" % (self.actions, self.buys)
-        if self.gold:
-            prompt += " gold=%d" % self.gold
+        if self.coin:
+            prompt += " coin=%d" % self.coin
         if self.potions:
             prompt += " potions=%d" % self.potions
-        if self.coins:
-            prompt += " coins=%d" % self.coins
+        if self.specialcoins:
+            prompt += " specialcoins=%d" % self.specialcoins
         prompt += ")?"
         return self.userInput(options, prompt)
 
@@ -319,15 +319,15 @@ class Player(object):
         self.played = []
         self.buys = 1
         self.actions = 1
-        self.gold = 0
+        self.coin = 0
         self.potions = 0
 
     ###########################################################################
     def spendCoin(self):
-        if self.coins <= 0:
+        if self.specialcoins <= 0:
             return
-        self.coins -= 1
-        self.gold += 1
+        self.specialcoins -= 1
+        self.coin += 1
         self.output("Spent a coin")
 
     ###########################################################################
@@ -344,7 +344,7 @@ class Player(object):
     ###########################################################################
     def hook_spendValue(self, card):
         """ How much do you get for spending the card """
-        val = card.hook_goldvalue(game=self.game, player=self)
+        val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendValue(game=self.game, player=self, card=card)
         return val
@@ -367,7 +367,7 @@ class Player(object):
             self.addCard(card, 'played')
             self.hand.remove(card)
         self.actions += card.actions
-        self.gold += self.hook_spendValue(card)
+        self.coin += self.hook_spendValue(card)
         self.buys += card.buys
         self.potions += card.potion
         for i in range(card.cards):
@@ -408,8 +408,8 @@ class Player(object):
             return
         newcard = self.gainCard(card)
         self.buys -= 1
-        self.gold -= self.cardCost(newcard)
-        self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
+        self.coin -= self.cardCost(newcard)
+        self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
         self.hook_buyCard(newcard)
 
     ###########################################################################
@@ -441,16 +441,16 @@ class Player(object):
         return self.potions
 
     ###########################################################################
-    def getGold(self):
-        return self.gold
+    def getCoin(self):
+        return self.coin
 
     ###########################################################################
-    def getCoins(self):
-        return self.coins
+    def getSpecialCoins(self):
+        return self.specialcoins
 
     ###########################################################################
-    def addGold(self, num):
-        self.gold += num
+    def addCoin(self, num):
+        self.coin += num
 
     ###########################################################################
     def getActions(self):
@@ -469,7 +469,7 @@ class Player(object):
         self.buys += num
 
     ###########################################################################
-    def cardsAffordable(self, oper, gold, potions=0, types={}):
+    def cardsAffordable(self, oper, coin, potions=0, types={}):
         """Return the list of cards for under cost """
         affordable = []
         for c in self.game.cardTypes():
@@ -484,23 +484,23 @@ class Player(object):
                 continue
             if not c.numcards:
                 continue
-            if oper(cost, gold) and oper(c.potcost, potions):
+            if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.append(c)
         affordable.sort(key=lambda c: self.cardCost(c))
         affordable.sort(key=lambda c: c.basecard)
         return affordable
 
     ###########################################################################
-    def cardsUnder(self, gold, potions=0, types={}):
+    def cardsUnder(self, coin, potions=0, types={}):
         """Return the list of cards for under cost """
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.le, gold, potions, types)
+        return self.cardsAffordable(operator.le, coin, potions, types)
 
     ###########################################################################
-    def cardsWorth(self, gold, potions=0, types={}):
+    def cardsWorth(self, coin, potions=0, types={}):
         """Return the list of cards that are exactly cost """
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.eq, gold, potions, types)
+        return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
     def countCards(self):
@@ -527,9 +527,9 @@ class Player(object):
 
     ###########################################################################
     def coststr(self, card):
-        goldcost = "%d gold" % self.cardCost(card)
+        coincost = "%d coins" % self.cardCost(card)
         potcost = "%d potions" % card.potcost if card.potcost else ""
-        cststr = "%s %s" % (goldcost, potcost)
+        cststr = "%s %s" % (coincost, potcost)
         return cststr.strip()
 
 #EOF

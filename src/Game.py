@@ -182,7 +182,7 @@ class Game(object):
             print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
             print "%s's messages: %s" % (p.name, p.messages)
             print "%s's score: %s" % (p.name, p.score)
-            print "%s's turn: gold=%d actions=%d buys=%d coins=%d potions=%d" % (p.name, p.gold, p.actions, p.buys, p.coins, p.potions)
+            print "%s's turn: coin=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.actions, p.buys, p.specialcoins, p.potions)
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
         print "%s" % ", ".join(cpls)
 

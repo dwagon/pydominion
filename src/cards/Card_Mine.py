@@ -57,7 +57,7 @@ class Test_Mine(unittest.TestCase):
         self.assertEquals(self.plr.hand[0].name, 'Silver')
         self.assertEquals(self.plr.discardpile, [])
         self.assertEquals(self.plr.handSize(), 1)
-        self.assertEquals(self.plr.getGold(), 0)
+        self.assertEquals(self.plr.getCoin(), 0)
         self.assertEquals(self.plr.getBuys(), 1)
         self.assertEquals(self.plr.getActions(), 0)
 

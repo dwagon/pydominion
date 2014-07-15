@@ -10,12 +10,12 @@ class Card_Spoils(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'darkages'
-        self.desc = "+3 gold - once off"
+        self.desc = "+3 coin - once off"
         self.basecard = True
         self.purchasable = False
         self.name = 'Spoils'
         self.cost = 0
-        self.gold = 3
+        self.coin = 3
 
     def special(self, player, game):
         """ When you play this return it to the spoils pile """
@@ -36,7 +36,7 @@ class Test_Spoils(unittest.TestCase):
         spoils = self.g['Spoils'].remove()
         self.plr.addCard(spoils, 'hand')
         self.plr.playCard(spoils)
-        self.assertEqual(self.plr.getGold(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.played, [])
         self.assertEqual(self.g['Spoils'].numcards, numspoils)
 

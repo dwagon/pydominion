@@ -6,11 +6,11 @@ class Card_Gold(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'dominion'
-        self.desc = "+3 gold"
+        self.desc = "+3 coin"
         self.playable = False
         self.basecard = True
         self.name = 'Gold'
-        self.gold = 3
+        self.coin = 3
         self.cost = 6
 
 #EOF

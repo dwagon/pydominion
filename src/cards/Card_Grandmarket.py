@@ -10,13 +10,13 @@ class Card_Grandmarket(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 card, +1 action, +1 buy, +2 gold"
+        self.desc = "+1 card, +1 action, +1 buy, +2 coin"
         self.name = 'Grand Market'
         self.cost = 6
         self.cards = 1
         self.actions = 1
         self.buys = 1
-        self.gold = 2
+        self.coin = 2
 
     def hook_allowedToBuy(self, game, player):
         """ You can't buy this if you have any copper in play """
@@ -39,14 +39,14 @@ class Test_Grandmarket(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.gm, 'hand')
         self.plr.playCard(self.gm)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_nobuy(self):
         self.plr.setHand('copper', 'gold', 'gold')
-        self.plr.addGold(6)
+        self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
@@ -56,7 +56,7 @@ class Test_Grandmarket(unittest.TestCase):
     def test_nobuy_played(self):
         self.plr.setHand('gold', 'gold', 'gold')
         self.plr.setPlayed('copper')
-        self.plr.addGold(6)
+        self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:
@@ -65,7 +65,7 @@ class Test_Grandmarket(unittest.TestCase):
 
     def test_buy(self):
         self.plr.setHand('gold', 'gold', 'gold')
-        self.plr.addGold(6)
+        self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection()
         for msg in self.plr.messages:

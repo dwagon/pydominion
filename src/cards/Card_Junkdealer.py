@@ -9,11 +9,11 @@ class Card_Junkdealer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+1 card, +1 action, +1 gold, trash a card"
+        self.desc = "+1 card, +1 action, +1 coin, trash a card"
         self.name = 'Junk Dealer'
         self.cards = 1
         self.actions = 1
-        self.gold = 1
+        self.coin = 1
         self.cost = 2
 
     def special(self, game, player):
@@ -34,7 +34,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.jd)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.g.trashpile, [])
 

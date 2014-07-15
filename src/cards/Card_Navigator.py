@@ -9,9 +9,9 @@ class Card_Navigator(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "+2 gold. Discard top 5 cards, or put them back on deck"
+        self.desc = "+2 coin. Discard top 5 cards, or put them back on deck"
         self.name = 'Navigator'
-        self.gold = 2
+        self.coin = 2
         self.cost = 4
 
     def special(self, game, player):

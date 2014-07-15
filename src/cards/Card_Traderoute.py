@@ -9,7 +9,7 @@ class Card_Traderoute(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 buy, +1 gold per token, trash card"
+        self.desc = "+1 buy, +1 coin per token, trash card"
         self.name = 'Trade Route'
         self.cost = 3
         self.buy = 1
@@ -31,12 +31,12 @@ class Card_Traderoute(Card):
         return worth
 
     def special(self, game, player):
-        """ +1 gold per token on the trade route map. Trash a card
+        """ +1 coin per token on the trade route map. Trash a card
             from your hand. Setup: Put a token on each victory card
             supply pile. When a card is gained from that pile move the
             token to the trade route map """
         player.plrTrashCard()
-        player.addGold(self.isWorth())
+        player.addCoin(self.isWorth())
 
 
 ###############################################################################
@@ -52,20 +52,20 @@ class Test_Traderoute(unittest.TestCase):
     def test_playZero(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
 
     def test_playOne(self):
         self.plr.test_input = ['0']
         self.g['estate'].remove()
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ['0']
         self.g['estate'].remove()
         self.g['province'].remove()
         self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
 
 ###############################################################################

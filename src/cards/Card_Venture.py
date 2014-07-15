@@ -9,7 +9,7 @@ class Card_Venture(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+1 gold, get next treasure from deck"
+        self.desc = "+1 coin, get next treasure from deck"
         self.name = 'Venture'
         self.cost = 5
 
@@ -25,7 +25,7 @@ class Card_Venture(Card):
                 break
             else:
                 player.output("Picked up and discarded %s" % c.name)
-                player.addGold(c.gold)    # Compensate for not keeping card
+                player.addCoin(c.coin)    # Compensate for not keeping card
                 player.discardCard(c)
 
 
@@ -43,7 +43,7 @@ class Test_Venture(unittest.TestCase):
         """ Play a Venture """
         self.plr.setDeck('gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)  # Gold
+        self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
             if c.name == 'Gold':
                 break
@@ -55,7 +55,7 @@ class Test_Venture(unittest.TestCase):
         """ Make sure we discard non-treasures """
         self.plr.setDeck('gold', 'estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)  # Gold
+        self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
             if c.name == 'Gold':
                 break

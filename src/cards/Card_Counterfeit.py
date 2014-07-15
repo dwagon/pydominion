@@ -12,7 +12,7 @@ class Card_Counterfeit(Card):
         self.desc = "+1 Gold, +1 Buy; May play a treasure twice and trash it"
         self.name = 'Counterfeit'
         self.cost = 5
-        self.gold = 1
+        self.coin = 1
         self.buys = 1
 
     def special(self, game, player):
@@ -48,7 +48,7 @@ class Test_Counterfiet(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_notreasures(self):
@@ -66,7 +66,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.assertEqual(self.plr.hand, [])
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
         # CF + 2 * Gold
-        self.assertEqual(self.plr.getGold(), 7)
+        self.assertEqual(self.plr.getCoin(), 7)
 
 
 ###############################################################################

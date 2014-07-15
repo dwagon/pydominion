@@ -12,9 +12,9 @@ class Card_Copper(Card):
         self.base = 'dominion'
         self.basecard = True
         self.playable = False
-        self.desc = "+1 gold"
+        self.desc = "+1 coin"
         self.name = 'Copper'
-        self.gold = 1
+        self.coin = 1
         self.cost = 0
 
 
@@ -30,7 +30,7 @@ class Test_Copper(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getGold(), 1)
+        self.assertEquals(self.plr.getCoin(), 1)
 
 
 ###############################################################################

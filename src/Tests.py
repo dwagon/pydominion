@@ -276,7 +276,7 @@ class Test_spendAllCards(unittest.TestCase):
         """ Spend all cards in hand"""
         self.plr.setHand('gold', 'silver', 'estate', 'moat')
         self.plr.spendAllCards()
-        self.assertEqual(self.plr.getGold(), 3 + 2)
+        self.assertEqual(self.plr.getCoin(), 3 + 2)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
@@ -320,17 +320,17 @@ class Test_spendCoin(unittest.TestCase):
 
     def test_spendCoin(self):
         """ Spend a coin that the player has """
-        self.plr.coins = 1
+        self.plr.specialcoins = 1
         self.plr.spendCoin()
-        self.assertEqual(self.plr.getCoins(), 0)
-        self.assertEqual(self.plr.gold, 1)
+        self.assertEqual(self.plr.getSpecialCoins(), 0)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_spendNothing(self):
         """ Spend a coin that the player doesn't have """
-        self.plr.coins = 0
+        self.plr.specialcoins = 0
         self.plr.spendCoin()
-        self.assertEqual(self.plr.getCoins(), 0)
-        self.assertEqual(self.plr.gold, 0)
+        self.assertEqual(self.plr.getSpecialCoins(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

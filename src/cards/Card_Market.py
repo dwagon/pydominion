@@ -9,12 +9,12 @@ class Card_Market(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+1 cards, +1 action, +1 gold, +1 buys"
+        self.desc = "+1 cards, +1 action, +1 coin, +1 buys"
         self.name = 'Market'
         self.cards = 1
         self.actions = 1
         self.buys = 1
-        self.gold = 1
+        self.coin = 1
         self.cost = 5
 
 
@@ -34,7 +34,7 @@ class Test_Market(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
 
 ###############################################################################

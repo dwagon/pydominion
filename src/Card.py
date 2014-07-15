@@ -15,7 +15,7 @@ class Card(object):
         self.needspoils = False
         self.actions = 0
         self.buys = 0
-        self.gold = 0
+        self.coin = 0
         self.potion = 0
         self.cards = 0
         self.victory = 0
@@ -97,9 +97,9 @@ class Card(object):
     def hook_cardCost(self, game, player, card):
         return 0
 
-    def hook_goldvalue(self, game, player):
-        """ How much gold does this card contribute """
-        return self.gold
+    def hook_coinvalue(self, game, player):
+        """ How much coin does this card contribute """
+        return self.coin
 
     def hook_spendValue(self, game, player, card):
         """ Does this card make any  modifications on the value of spending a card """

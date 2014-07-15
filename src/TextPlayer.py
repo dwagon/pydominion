@@ -91,7 +91,7 @@ class TextPlayer(Player):
                     verb = "Trash"
                 pr = "%s %s" % (verb, c.name)
                 if printcost:
-                    pr += " (%d gold)" % self.cardCost(c)
+                    pr += " (%d coin)" % self.cardCost(c)
                 options.append({'selector': sel, 'print': pr, 'card': c})
                 index += 1
             o = self.userInput(options, "Trash which card?")
@@ -106,7 +106,7 @@ class TextPlayer(Player):
 
     ###########################################################################
     def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
-        """ Gain a card of 'chooser's choice up to cost gold
+        """ Gain a card of 'chooser's choice up to cost coin
         if actiononly then gain only action cards
         """
         types = self.typeSelector(types)
