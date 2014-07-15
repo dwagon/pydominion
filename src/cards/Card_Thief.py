@@ -87,7 +87,7 @@ class Test_Thief(unittest.TestCase):
     def test_do_nothing(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['0']
+        self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.thiefcard)
         self.assertEquals(self.victim.deckSize(), 1)
         self.assertEquals(self.victim.discardSize(), 2)
@@ -96,7 +96,7 @@ class Test_Thief(unittest.TestCase):
     def test_trash_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['1']
+        self.thief.test_input = ['trash gold']
         self.thief.playCard(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertEquals(self.g.trashpile[0].name, 'Gold')
@@ -107,7 +107,7 @@ class Test_Thief(unittest.TestCase):
     def test_steal_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['2']
+        self.thief.test_input = ['steal gold']
         self.thief.playCard(self.thiefcard)
         self.assertEquals(self.g.trashpile, [])
         for c in self.victim.deck:
