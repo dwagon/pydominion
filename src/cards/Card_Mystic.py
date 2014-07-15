@@ -80,7 +80,7 @@ class Test_Mystic(unittest.TestCase):
 
     def goldnum(self):
         index = 1
-        for c in sorted(self.g.cardTypes()):
+        for c in sorted(list(self.g.cardTypes())):
             if c.name == 'Gold':
                 goldnum = index
             index += 1
