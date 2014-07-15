@@ -20,7 +20,7 @@ class Card_Silkroad(Card):
         for c in player.allCards():
             if c.isVictory():
                 score += 1
-        return score / 4
+        return int(score / 4)
 
 
 ###############################################################################

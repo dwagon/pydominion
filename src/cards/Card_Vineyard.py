@@ -22,7 +22,7 @@ class Card_Vineyard(Card):
         for c in player.allCards():
             if c.isAction():
                 score += 1
-        return score / 3
+        return int(score / 3)
 
 
 ###############################################################################
