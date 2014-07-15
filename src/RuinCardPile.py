@@ -18,7 +18,7 @@ class RuinCardPile(CardPile):
 
         self.ruins = []
         for i in range(numcards):
-            c = random.choice(values(ruintypes.keys()))
+            c = random.choice(list(ruintypes.keys()))
             self.ruins.append(ruintypes[c]())
 
     def __getattr__(self, key):
