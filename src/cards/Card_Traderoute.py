@@ -50,18 +50,18 @@ class Test_Traderoute(unittest.TestCase):
         self.plr.addCard(self.traderoute, 'hand')
 
     def test_playZero(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish trashing']
         self.plr.playCard(self.traderoute)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_playOne(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish trashing']
         self.g['estate'].remove()
         self.plr.playCard(self.traderoute)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_playTwo(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish trashing']
         self.g['estate'].remove()
         self.g['province'].remove()
         self.plr.playCard(self.traderoute)
