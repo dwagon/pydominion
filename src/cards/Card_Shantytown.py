@@ -30,7 +30,7 @@ class Test_Shantytown(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['shantytown', 'moat'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['shantytown'].remove()
 
     def test_no_actions(self):

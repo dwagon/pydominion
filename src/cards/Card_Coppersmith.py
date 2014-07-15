@@ -28,7 +28,7 @@ class Test_Coppersmith(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['coppersmith'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['coppersmith'].remove()
 
     def test_copper(self):

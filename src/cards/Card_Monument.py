@@ -25,7 +25,7 @@ class Test_Monument(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['monument'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['monument'].remove()
         self.plr.addCard(self.card, 'hand')
 

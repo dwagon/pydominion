@@ -22,7 +22,7 @@ class Card_Baker(Card):
 
     def setup(self, game):
         """ Each Player takes a coin token"""
-        for plr in game.players.values():
+        for plr in list(game.players.values()):
             plr.gainSpecialCoins(1)
 
 
@@ -32,7 +32,7 @@ class Test_Baker(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['baker'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['baker'].remove()
         self.plr.addCard(self.card, 'hand')
 

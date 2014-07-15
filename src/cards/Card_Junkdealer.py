@@ -26,7 +26,7 @@ class Test_Junkdealer(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['junkdealer'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.jd = self.g['junkdealer'].remove()
         self.plr.addCard(self.jd, 'hand')
 

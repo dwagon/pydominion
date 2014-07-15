@@ -29,7 +29,7 @@ class Test_Spoils(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['banditcamp'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
 
     def test_play(self):
         numspoils = self.g['Spoils'].numcards

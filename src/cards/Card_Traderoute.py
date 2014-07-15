@@ -18,13 +18,13 @@ class Card_Traderoute(Card):
     def setup(cls, game):
         cls.tokens = {}
         cls.game = game
-        for cp in game.cardpiles.values():
+        for cp in list(game.cardpiles.values()):
             if cp.isVictory():
                 cls.tokens[cp.cardname] = cp.numcards
 
     def isWorth(self):
         worth = 0
-        for cp in self.game.cardpiles.values():
+        for cp in list(self.game.cardpiles.values()):
             if cp.cardname in self.tokens:
                 if self.tokens[cp.cardname] != cp.numcards:
                     worth += 1
@@ -45,7 +45,7 @@ class Test_Traderoute(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['traderoute'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.traderoute = self.g['traderoute'].remove()
         self.plr.addCard(self.traderoute, 'hand')
 

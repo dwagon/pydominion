@@ -37,8 +37,7 @@ class Test_Bureaucrat(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['bureaucrat', 'moat'])
-        self.plr = self.g.players.values()[0]
-        self.victim = self.g.players.values()[1]
+        self.plr, self.victim = list(self.g.players.values())
         self.bcard = self.g['bureaucrat'].remove()
         self.plr.addCard(self.bcard, 'hand')
 

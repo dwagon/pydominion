@@ -45,7 +45,7 @@ class Test_Saboteur(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['saboteur'])
-        self.plr, self.victim = self.g.players.values()
+        self.plr, self.victim = list(self.g.players.values())
         self.card = self.g['saboteur'].remove()
         self.plr.addCard(self.card, 'hand')
 

@@ -46,7 +46,7 @@ class Test_Golem(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['golem', 'village', 'moat'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['golem'].remove()
 
     def test_actions(self):

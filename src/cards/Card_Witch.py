@@ -28,7 +28,7 @@ class Test_Witch(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['witch', 'moat'])
-        self.attacker, self.victim = self.g.players.values()
+        self.attacker, self.victim = list(self.g.players.values())
         self.wcard = self.g['witch'].remove()
         self.mcard = self.g['moat'].remove()
         self.attacker.addCard(self.wcard, 'hand')

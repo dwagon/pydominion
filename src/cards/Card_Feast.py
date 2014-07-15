@@ -52,7 +52,7 @@ class Test_Feast(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['feast'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
 
     def test_dontTrash(self):
         self.plr.setHand('feast')

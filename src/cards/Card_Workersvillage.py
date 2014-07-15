@@ -23,7 +23,7 @@ class Test_Workersvillage(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['workersvillage'])
-        self.plr = self.g.players.values()[0]
+        self.plr = list(self.g.players.values())[0]
         self.card = self.g['workersvillage'].remove()
         self.plr.addCard(self.card, 'hand')
 
