@@ -23,12 +23,17 @@ class TextPlayer(Player):
         while(1):
             if self.test_input:
                 inp = self.test_input.pop(0)
-                self.output("Using %s test input" % inp)
+                self.output("Using '%s' test input" % inp)
             else:
                 inp = raw_input()
+            matching = []
             for o in options:
                 if o['selector'] == inp:
                     return o
+                if inp.lower() in o['print'].lower():
+                    matching.append(o)
+            if len(matching) == 1:
+                return matching[0]
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
