@@ -10,10 +10,10 @@ class Card_Swindler(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
-        self.desc = "+2 gold. Other players trash top card and gain one with the same cost"
+        self.desc = "+2 coin. Other players trash top card and gain one with the same cost"
         self.name = 'Swindler'
         self.cost = 3
-        self.gold = 2
+        self.coin = 2
 
     def special(self, game, player):
         """ Each other player trashed the top card of his deck and
@@ -41,7 +41,7 @@ class Test_Swindler(unittest.TestCase):
         """ Play the Swindler """
         self.victim.setHand('moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_defended(self):
         """ Swindle a defended player """

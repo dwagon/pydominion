@@ -10,10 +10,10 @@ class Card_Mystic(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+2 gold, +1 action, guess top card to get it"
+        self.desc = "+2 coin, +1 action, guess top card to get it"
         self.name = 'Mystic'
         self.actions = 1
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
     ###########################################################################
@@ -53,7 +53,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_good(self):
         """ When the guess is good the card should move to the hand """
@@ -62,7 +62,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertEqual(self.plr.deck, [])
 
@@ -73,7 +73,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.test_input = ['%d' % self.goldnum()]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Province')

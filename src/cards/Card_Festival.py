@@ -9,11 +9,11 @@ class Card_Festival(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+2 actions, +1 buys, +2 gold"
+        self.desc = "+2 actions, +1 buys, +2 coin"
         self.name = 'Festival'
         self.actions = 2
         self.buys = 1
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
 
@@ -31,7 +31,7 @@ class Test_Festival(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
 
 ###############################################################################

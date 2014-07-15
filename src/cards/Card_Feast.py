@@ -26,7 +26,7 @@ class Card_Feast(Card):
         index = 1
         for p in buyable:
             selector = "%d" % index
-            toprint = 'Get %s (%d gold)' % (p.name, p.cost)
+            toprint = 'Get %s (%d coin)' % (p.name, p.cost)
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 

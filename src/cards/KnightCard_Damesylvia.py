@@ -10,7 +10,7 @@ class Card_Damesylvia(Card):
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.name = "Dame Sylvia"
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
     def special(self, game, player):

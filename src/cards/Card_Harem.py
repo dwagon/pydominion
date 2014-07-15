@@ -10,9 +10,9 @@ class Card_Harem(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'victory']
         self.base = 'intrigue'
-        self.desc = "+2 Gold; 2 VPs"
+        self.desc = "+2 coin; 2 VPs"
         self.name = 'Harem'
-        self.gold = 2
+        self.coin = 2
         self.victory = 2
         self.cost = 6
 
@@ -30,7 +30,7 @@ class Test_Harem(unittest.TestCase):
     def test_play(self):
         """ Play a Harem """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_score(self):
         """ Score the harem """

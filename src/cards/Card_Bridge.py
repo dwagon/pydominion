@@ -6,10 +6,10 @@ class Card_Bridge(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+1 buy, +1 gold, all cards -1 cost"
+        self.desc = "+1 buy, +1 coin, all cards -1 cost"
         self.name = 'Bridge'
         self.buys = 1
-        self.gold = 1
+        self.coin = 1
         self.cost = 4
 
     def hook_cardCost(self, game, player, card):

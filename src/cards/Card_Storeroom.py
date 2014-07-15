@@ -23,7 +23,7 @@ class Card_Storeroom(Card):
         player.pickupCards(len(todiscard))
         player.output("Discard any number of cards. +1 GP per card discarded")
         todiscard = player.plrDiscardCards(0, anynum=True)
-        player.addGold(len(todiscard))
+        player.addCoin(len(todiscard))
 
 
 ###############################################################################
@@ -59,7 +59,7 @@ class Test_Storeroom(unittest.TestCase):
         self.assertEquals(self.plr.handSize(), 5 - 1)
         self.assertEquals(self.plr.discardSize(), 2)
         self.assertEquals(self.plr.getBuys(), 2)
-        self.assertEquals(self.plr.getGold(), 1)
+        self.assertEquals(self.plr.getCoin(), 1)
 
 
 ###############################################################################

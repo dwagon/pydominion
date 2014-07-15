@@ -18,7 +18,7 @@ class Card_Ironmonger(Card):
     def special(self, player, game):
         """ Reveal the top card of your deck; you may discard it.
             Either way, if it is an... Action card, +1 Action; Treasure
-            Card, +1 gold; Victory Card, +1 card """
+            Card, +1 coin; Victory Card, +1 card """
         card = player.nextCard()
         ans = player.plrChooseOptions("What to do with %s" % card.name, ('Put back %s' % card.name, False), ('Discard %s' % card.name, True))
         if ans:
@@ -30,7 +30,7 @@ class Card_Ironmonger(Card):
         if card.isAction():
             player.addActions(1)
         if card.isTreasure():
-            player.addGold(1)
+            player.addCoin(1)
 
 
 ###############################################################################
@@ -61,7 +61,7 @@ class Test_Ironmonger(unittest.TestCase):
         self.plr.setDeck('copper', 'gold')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_action(self):
         self.plr.test_input = ['0']

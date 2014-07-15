@@ -14,7 +14,7 @@ class Card_Goons(Card):
         self.name = 'Goons'
         self.cost = 6
         self.buy = 1
-        self.gold = 2
+        self.coin = 2
 
     def special(self, game, player):
         """ Each other player discards down to three cards """

@@ -10,9 +10,9 @@ class Card_Rogue(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = "+2 Gold; Pull a card from the trash or attack other player hands"
+        self.desc = "+2 coin; Pull a card from the trash or attack other player hands"
         self.name = 'Rogue'
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
     ###########################################################################
@@ -92,7 +92,7 @@ class Test_Rogue(unittest.TestCase):
         """ Nothing should happen """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_defended(self):
         """ Victim has a defense """

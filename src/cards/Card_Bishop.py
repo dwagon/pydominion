@@ -11,7 +11,7 @@ class Card_Bishop(Card):
         self.base = 'prosperity'
         self.desc = "Trash a card for VP"
         self.name = 'Bishop'
-        self.gold = 1
+        self.coin = 1
         self.victory = 1
         self.cost = 4
 
@@ -54,7 +54,7 @@ class Test_Bishop(unittest.TestCase):
         self.plr.test_input = ['finish']
         self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_trash(self):
         self.plr.setHand('gold')

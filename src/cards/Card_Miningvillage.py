@@ -10,20 +10,20 @@ class Card_Miningvillage(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+1 card, +2 actions, trash self for +2 gold"
+        self.desc = "+1 card, +2 actions, trash self for +2 coin"
         self.name = 'Mining Village'
         self.cards = 1
         self.actions = 2
         self.cost = 4
 
     def special(self, game, player):
-        """ You may trash this card immediately. If you do +2 gold """
+        """ You may trash this card immediately. If you do +2 coin """
         trash = player.plrChooseOptions(
             "Choose one",
-            ('Do nothing', False), ('Trash mining village for +2 gold', True))
+            ('Do nothing', False), ('Trash mining village for +2 coin', True))
         if trash:
             player.output("Trashing mining village")
-            player.addGold(2)
+            player.addCoin(2)
             player.trashCard(self)
 
 
@@ -43,7 +43,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.g.trashpile, [])
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
 
@@ -54,7 +54,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.played, [])
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.g.trashpile[-1].name, 'Mining Village')
 
 

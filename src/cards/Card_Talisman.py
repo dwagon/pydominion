@@ -9,11 +9,11 @@ class Card_Talisman(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'prosperity'
-        self.desc = "+1 gold. Gain copy of non-victory cards you buy"
+        self.desc = "+1 coin. Gain copy of non-victory cards you buy"
         self.name = 'Talisman'
         self.playable = False
         self.cost = 4
-        self.gold = 1
+        self.coin = 1
 
     def hook_buyCard(self, game, player, card):
         """ While this is in play, when you buy a card costing 4
@@ -35,7 +35,7 @@ class Test_Talisman(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_buy(self):
         self.plr.playCard(self.card)

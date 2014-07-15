@@ -9,10 +9,10 @@ class Card_Hoard(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "Gain gold if buy victory"
+        self.desc = "+2 coin; Gain gold if buy victory"
         self.name = 'Hoard'
         self.playable = False
-        self.gold = 2
+        self.coin = 2
         self.cost = 6
 
     def hook_buyCard(self, game, player, card):
@@ -34,7 +34,7 @@ class Test_Hoard(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.discardpile, [])
 
     def test_buy_victory(self):

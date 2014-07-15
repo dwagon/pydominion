@@ -10,11 +10,11 @@ class Card_Platinum(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'prosperity'
-        self.desc = "+5 gold"
+        self.desc = "+5 coin"
         self.name = 'Platinum'
         self.playable = False
         self.basecard = True
-        self.gold = 5
+        self.coin = 5
         self.cost = 9
 
 
@@ -31,7 +31,7 @@ class Test_Platinum(unittest.TestCase):
     def test_play(self):
         """ Play a platinum """
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getGold(), 5)
+        self.assertEquals(self.plr.getCoin(), 5)
 
 
 ###############################################################################

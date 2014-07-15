@@ -26,7 +26,7 @@ class Card_Baron(Card):
             )
             if ans:
                 player.discardCard(hasEstate)
-                player.addGold(4)
+                player.addCoin(4)
                 return
         player.output("Gained an Estate")
         player.gainCard('estate')
@@ -51,7 +51,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.setHand('copper', 'copper', 'copper')
         self.plr.addCard(self.baron, 'hand')
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
         self.assertEqual(self.plr.discardSize(), 1)
 
@@ -60,7 +60,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.getGold(), 4)
+        self.assertEqual(self.plr.getCoin(), 4)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.inHand('Estate'), None)
@@ -70,7 +70,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['keep']
         self.plr.playCard(self.baron)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertNotEqual(self.plr.inHand('Estate'), None)

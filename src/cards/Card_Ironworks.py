@@ -16,14 +16,14 @@ class Card_Ironworks(Card):
 
     def special(self, player, game):
         """ Gain a card costing up to 4. If it is an action card:
-            +1 action; treasure card +1 g'gold'] += 1old; victory card, +1 card"""
+            +1 action; treasure card +1 coin; victory card, +1 card"""
         c = player.plrGainCard(4, force=True)
         if c.isVictory():
             player.pickupCard()
         if c.isAction():
             player.addActions(1)
         if c.isTreasure():
-            player.addGold(1)
+            player.addCoin(1)
 
 
 ###############################################################################
@@ -45,7 +45,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_play_silver(self):
@@ -54,7 +54,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Silver')
         self.assertEqual(self.plr.getActions(), 0)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.handSize(), 5)
 
     def test_play_ironworks(self):
@@ -63,7 +63,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Iron Works')
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
 

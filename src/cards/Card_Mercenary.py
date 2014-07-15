@@ -9,14 +9,14 @@ class Card_Mercenary(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = "You may trash 2 cards for +2 cards, +2 gold other players discard down to 3"
+        self.desc = "You may trash 2 cards for +2 cards, +2 coin other players discard down to 3"
         self.name = 'Mercenary'
         self.purchasable = False
         self.cost = 0
 
     def special(self, game, player):
         """ You may trash 2 cards from your hand. If you do, +2
-            cards, +2 gold, and each other player discards down to 3
+            cards, +2 coin, and each other player discards down to 3
             cards in hand """
 
         ans = player.plrChooseOptions(
@@ -26,7 +26,7 @@ class Card_Mercenary(Card):
             return
         player.plrTrashCard(2, force=True)
         player.pickupCards(2)
-        player.addGold(2)
+        player.addCoin(2)
         for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)
 
@@ -69,7 +69,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 2)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.victim.handSize(), 3)
 
 

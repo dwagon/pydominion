@@ -10,17 +10,17 @@ class Card_Philosophersstone(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'alchemy'
-        self.desc = "Gain +1 Gold for every 5 cards in deck + discard"
+        self.desc = "Gain +1 coin for every 5 cards in deck + discard"
         self.name = "Philosopher's Stone"
         self.cost = 3
         self.potcost = 1
 
-    def hook_goldvalue(self, game, player):
+    def hook_coinvalue(self, game, player):
         """ When you play this, count your deck and discard pile.
             Worth 1 per 5 cards total between them (rounded down) """
         numcards = player.deckSize() + player.discardSize()
-        extragold = numcards / 5
-        return extragold
+        extracoin = numcards / 5
+        return extracoin
 
 
 ###############################################################################
@@ -38,14 +38,14 @@ class Test_Philosophersstone(unittest.TestCase):
         self.plr.setDeck('estate')
         self.plr.setDiscard('estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_value(self):
         """ Play a philosophers stone with the full Nicholas Flamel """
         self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'silver')
         self.plr.setDiscard('estate', 'estate', 'estate', 'estate', 'silver')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

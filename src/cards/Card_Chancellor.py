@@ -10,9 +10,9 @@ class Card_Chancellor(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+2 gold, Discard deck"
+        self.desc = "+2 coin, Discard deck"
         self.name = 'Chancellor'
-        self.gold = 2
+        self.coin = 2
         self.cost = 3
 
     def special(self, game, player):
@@ -40,7 +40,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.setDiscard('estate', 'duchy', 'province')
         self.plr.test_input = ["Don't discard"]
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getGold(), 2)
+        self.assertEquals(self.plr.getCoin(), 2)
         self.assertEquals(self.plr.deckSize(), 3)
         self.assertEquals(self.plr.discardSize(), 3)
 
@@ -49,7 +49,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.setDiscard('estate', 'duchy', 'province')
         self.plr.test_input = ['discard deck']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getGold(), 2)
+        self.assertEquals(self.plr.getCoin(), 2)
         self.assertEquals(self.plr.deckSize(), 0)
         self.assertEquals(self.plr.discardSize(), 6)
 

@@ -10,15 +10,15 @@ class Card_Secretchamber(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
         self.base = 'intrigue'
-        self.desc = "Discard any number of cards; +1 gold per card discarded"
+        self.desc = "Discard any number of cards; +1 coin per card discarded"
         self.name = 'Secret Chamber'
         self.cost = 2
 
     def special(self, player, game):
-        """ Discard any number of cards, +1 gold per card discarded"""
-        player.output("Select which card(s) to discard (+1 gold per discard)?")
+        """ Discard any number of cards, +1 coin per card discarded"""
+        player.output("Select which card(s) to discard (+1 coin per discard)?")
         todiscard = player.plrDiscardCards(anynum=True)
-        player.addGold(len(todiscard))
+        player.addCoin(len(todiscard))
 
     def hook_underAttack(self, player, game):
         """ When another player plans an Attack card, you may reveal
@@ -67,14 +67,14 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_three(self):
         """ Play the Secret Chamber - discard three"""
         self.plr.test_input = ['1', '2', '3', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.getGold(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
 
     def test_underattack(self):
         """ Secret chamber is under attack """

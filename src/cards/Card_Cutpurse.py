@@ -9,9 +9,9 @@ class Card_Cutpurse(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.desc = "+2 gold, other players discard copper"
+        self.desc = "+2 coin, other players discard copper"
         self.name = 'Cutpurse'
-        self.gold = 2
+        self.coin = 2
         self.cost = 4
 
     def special(self, game, player):

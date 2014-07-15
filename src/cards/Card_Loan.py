@@ -12,7 +12,7 @@ class Card_Loan(Card):
         self.desc = "+1 Gold, Dig for a treasure and trash or discard it"
         self.name = 'Loan'
         self.cost = 3
-        self.gold = 1
+        self.coin = 1
 
     def special(self, game, player):
         """ When you play this, reveal cards from your deck until
@@ -46,7 +46,7 @@ class Test_Loan(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.getGold(), 1)
+        self.assertEquals(self.plr.getCoin(), 1)
 
     def test_discard(self):
         self.plr.setDeck('estate', 'gold', 'estate', 'duchy')

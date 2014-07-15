@@ -19,7 +19,7 @@ class Card_Count(Card):
         """ Choose one: Discard 2 cards; or put a card from your
         hand on top of your deck; or gain a copper.
 
-        Choose one: +3 gold, or trash your hand or gain a Duchy """
+        Choose one: +3 coin, or trash your hand or gain a Duchy """
 
         ans = player.plrChooseOptions(
             "What do you want to do?",
@@ -37,7 +37,7 @@ class Card_Count(Card):
 
         ans = player.plrChooseOptions(
             'What do you want to do now?',
-            ('+3 gold', 'gold'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
+            ('+3 coin', 'coin'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
         if ans == 'duchy':
             player.output("Gained a duchy")
             player.gainCard('duchy')
@@ -46,7 +46,7 @@ class Card_Count(Card):
                 player.output("Trashing %s" % c.name)
                 player.trashCard(c)
         else:
-            player.addGold(3)
+            player.addCoin(3)
 
     ###########################################################################
     def putCard(self, game, player):
@@ -101,7 +101,7 @@ class Test_Count(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['gain a copper', '+3 gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
 
     def test_trashhand(self):
         self.plr.addCard(self.card, 'hand')
