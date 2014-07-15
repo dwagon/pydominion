@@ -372,7 +372,11 @@ class Player(object):
         self.potions += card.potion
         for i in range(card.cards):
             self.pickupCard()
-        card.special(game=self.game, player=self)
+        try:
+            card.special(game=self.game, player=self)
+        except KeyboardInterrupt:
+            sys.stderr.write("\nFailed: %s\n" % self.messages)
+            sys.exit(1)
 
     ###########################################################################
     def cardCost(self, card):
