@@ -76,8 +76,8 @@ class Test_Count(unittest.TestCase):
 
     def test_discard(self):
         self.plr.addCard(self.card, 'hand')
-        # Discard, select card 1 and card 2, finish selecting, +3 gold
-        self.plr.test_input = ['discard 2', 'discard estate', 'discard copper', 'finish', '+3 gold']
+        # Discard, select card 1 and card 2, finish selecting, +3 coin
+        self.plr.test_input = ['discard 2', 'discard estate', 'discard copper', 'finish', '+3 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertEqual(self.plr.handSize(), 3)
@@ -85,21 +85,21 @@ class Test_Count(unittest.TestCase):
     def test_topdeck(self):
         self.plr.setHand('gold')
         self.plr.addCard(self.card, 'hand')
-        # top deck, card select, +3 gold
-        self.plr.test_input = ['top of your deck', 'put gold', '+3 gold']
+        # top deck, card select, +3 coin
+        self.plr.test_input = ['top of your deck', 'put gold', '+3 coin']
         self.plr.playCard(self.card)
         nc = self.plr.nextCard()
         self.assertEqual(nc.name, 'Gold')
 
     def test_gainCopper(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['gain a copper', '+3 gold']
+        self.plr.test_input = ['gain a copper', '+3 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
 
     def test_gaingold(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['gain a copper', '+3 gold']
+        self.plr.test_input = ['gain a copper', '+3 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
 
