@@ -38,7 +38,7 @@ class Test_Apprentice(unittest.TestCase):
 
     def test_trashNone(self):
         self.plr.addCard(self.apprentice, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.g.trashpile, [])
@@ -46,14 +46,14 @@ class Test_Apprentice(unittest.TestCase):
     def test_trashCard(self):
         self.plr.setHand('silver')
         self.plr.addCard(self.apprentice, 'hand')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['silver']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost)
 
     def test_trashPotion(self):
         self.plr.setHand('familiar')
         self.plr.addCard(self.apprentice, 'hand')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['familiar']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost + 2)
 

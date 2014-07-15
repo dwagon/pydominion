@@ -38,7 +38,7 @@ class Test_Bordervillage(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_gain(self):
-        self.plr.test_input = ['4']
+        self.plr.test_input = ['get estate']
         self.plr.gainCard('bordervillage')
         self.assertEqual(self.plr.discardSize(), 2)
 

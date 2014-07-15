@@ -29,17 +29,17 @@ class Test_Altar(unittest.TestCase):
         self.plr.addCard(self.altar, 'hand')
 
     def test_gainzero(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['nothing']
         self.plr.playCard(self.altar)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.discardpile, [])
 
     def test_gainone(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['get upgrade']
         self.plr.playCard(self.altar)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.discardSize(), 1)
-        self.assertLessEqual(self.plr.discardpile[0].cost, 5)
+        self.assertLessEqual(self.plr.discardpile[0].name, 'Upgrade')
 
 
 ###############################################################################

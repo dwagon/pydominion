@@ -22,7 +22,7 @@ class Card_Butcher(Card):
         player.gainCoins(2)
         trash = player.plrChooseOptions(
             'Trash a card to buy a card?',
-            ("Don't trash a card", False), ('Trash a card', True))
+            ("Don't trash cards", False), ('Trash a card', True))
         if not trash:
             return
         card = player.plrTrashCard(force=True)[0]
@@ -50,20 +50,20 @@ class Test_Butcher(unittest.TestCase):
     def test_play(self):
         """ Play a butcher"""
         self.plr.coins = 0
-        self.plr.test_input = ['0']
+        self.plr.test_input = ["Don't trash"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoins(), 2)
 
     def test_trash_gold(self):
         """ Trash a gold """
-        self.plr.setHand('gold', 'gold', 'gold')
+        self.plr.setHand('copper', 'gold', 'silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.coins = 0
         # Trash a card
         # Trash card 3
         # Spend 2 coin
         # Buy card 1
-        self.plr.test_input = ['1', '3', '2', '1']
+        self.plr.test_input = ['trash a card', 'trash gold', 'add 2', 'get silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoins(), 0)
         self.assertEqual(self.plr.handSize(), 2)

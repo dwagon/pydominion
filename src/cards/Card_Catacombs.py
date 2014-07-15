@@ -47,7 +47,7 @@ class Test_Catacombs(unittest.TestCase):
 
     def test_keep(self):
         self.plr.setDeck('province', 'gold', 'gold', 'gold')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['keep the three']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.handSize(), 8)
@@ -56,7 +56,7 @@ class Test_Catacombs(unittest.TestCase):
 
     def test_discard(self):
         self.plr.setDeck('province', 'province', 'province', 'gold', 'gold', 'gold')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['discard and draw']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.handSize(), 8)
@@ -68,7 +68,7 @@ class Test_Catacombs(unittest.TestCase):
         self.assertEqual(numgold, 3)
 
     def test_trash(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['get estate']
         self.plr.trashCard(self.cat)
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)

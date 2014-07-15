@@ -54,7 +54,7 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_discard(self):
         self.plr.setPlayed('potion')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['discard']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discardSize(), 9)  # 5 for hand, +2 cards, alch, pot
@@ -66,7 +66,7 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_keep(self):
         self.plr.setPlayed('potion')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['top of deck']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, pot
