@@ -42,21 +42,21 @@ class Game(object):
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
-        self.currentPlayer = self.players.values()[0]
+        self.currentPlayer = list(self.players.values())[0]
 
     ###########################################################################
     def cardSetup(self):
         """ Run the setup() method for all cards """
-        for cp in self.cardpiles.values():
+        for cp in list(self.cardpiles.values()):
             cp.setup(game=self)
 
     ###########################################################################
     def countCards(self):
         count = 0
         count += self.trashSize()
-        for cp in self.cardpiles.values():
+        for cp in list(self.cardpiles.values()):
             count += cp.numcards
-        for pl in self.players.values():
+        for pl in list(self.players.values()):
             count += pl.countCards()
         return count
 
@@ -173,31 +173,31 @@ class Game(object):
     ###########################################################################
     def print_state(self):
         """ This is used for debugging """
-        print "#" * 40
-        print "Trash: %s" % ", ".join([c.name for c in self.trashpile])
+        print("#" * 40)
+        print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
         for p in self.players.values():
-            print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
-            print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
-            print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
-            print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
-            print "%s's messages: %s" % (p.name, p.messages)
-            print "%s's score: %s" % (p.name, p.score)
-            print "%s's turn: coin=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.actions, p.buys, p.specialcoins, p.potions)
+            print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
+            print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
+            print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
+            print("%s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
+            print("%s's messages: %s" % (p.name, p.messages))
+            print("%s's score: %s" % (p.name, p.score))
+            print("%s's turn: coin=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.actions, p.buys, p.specialcoins, p.potions))
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
-        print "%s" % ", ".join(cpls)
+        print("%s" % ", ".join(cpls))
 
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        players = self.players.values()
+        players = list(self.players.values())
         place = players.index(plr) - 1
-        return self.players.values()[place]
+        return list(self.players.values())[place]
 
     ###########################################################################
     def whoWon(self):
         scores = {}
         self.output("")
-        for plr in self.players.values():
+        for plr in list(self.players.values()):
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
