@@ -10,6 +10,10 @@ class CardPile(object):
         self.card = self.loadClass(cardname)()
 
     ###########################################################################
+    def __lt__(self, a):
+        return self.cardname < a.cardname
+
+    ###########################################################################
     def loadClass(self, cardname, cardfile=None):
         cardmodule = self.importCard(cardname=cardname, cardfile=cardfile)
         self.cardclass = getattr(cardmodule, "Card_%s" % cardname)
