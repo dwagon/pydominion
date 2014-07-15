@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Navigator(Card):
     def __init__(self):
         Card.__init__(self)
@@ -40,20 +41,20 @@ class Test_Navigator(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['navigator'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.navigator = self.g['navigator'].remove()
         self.plr.addCard(self.navigator, 'hand')
 
     def test_discard(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['discard']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 5)
         self.assertEqual(self.plr.deckSize(), 1)
 
     def test_keep(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['return']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.deckSize(), 6)

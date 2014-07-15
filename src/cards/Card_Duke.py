@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Duke(Card):
     def __init__(self):
         Card.__init__(self)
@@ -29,7 +30,7 @@ class Test_Duke(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['duke'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
 
     def test_score(self):
         self.plr.setDeck('duchy', 'duchy', 'estate')

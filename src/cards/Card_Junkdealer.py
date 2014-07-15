@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Junkdealer(Card):
     def __init__(self):
         Card.__init__(self)
@@ -26,22 +27,23 @@ class Test_Junkdealer(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['junkdealer'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.jd = self.g['junkdealer'].remove()
+        self.plr.setHand('copper', 'estate', 'silver', 'gold')
         self.plr.addCard(self.jd, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.jd)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.g.trashpile, [])
 
     def test_trash(self):
-        self.plr.test_input = ['1', '0']
+        self.plr.test_input = ['trash copper', 'finish']
         self.plr.playCard(self.jd)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.handSize(), 4)
         self.assertEqual(self.g.trashSize(), 1)
 
 ###############################################################################

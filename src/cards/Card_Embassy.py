@@ -31,12 +31,14 @@ class Test_Embassy(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['embassy'])
-        self.plr, self.other = list(self.g.players.values())
+        self.plr, self.other = self.g.playerList()
         self.card = self.g['embassy'].remove()
+        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'estate')
+        self.plr.setHand('copper', 'silver', 'gold', 'estate', 'duchy')
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['1', '2', '3', '0']
+        self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
 

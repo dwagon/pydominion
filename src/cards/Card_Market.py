@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Market(Card):
     def __init__(self):
         Card.__init__(self)
@@ -24,7 +25,7 @@ class Test_Market(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['market'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playersList(0)
         self.card = self.g['market'].remove()
         self.plr.addCard(self.card, 'hand')
 
