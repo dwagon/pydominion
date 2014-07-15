@@ -45,6 +45,13 @@ class Game(object):
         self.currentPlayer = list(self.players.values())[0]
 
     ###########################################################################
+    def playerList(self, num=None):
+        if num is None:
+            return list(self.players.values())
+        else:
+            return list(self.players.values())[num]
+
+    ###########################################################################
     def cardSetup(self):
         """ Run the setup() method for all cards """
         for cp in list(self.cardpiles.values()):
