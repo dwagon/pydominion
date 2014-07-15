@@ -59,7 +59,7 @@ class Test_Mystic(unittest.TestCase):
         """ When the guess is good the card should move to the hand """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('gold')
-        self.plr.test_input = ['%d' % self.goldnum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
@@ -70,21 +70,13 @@ class Test_Mystic(unittest.TestCase):
         """ When the guess is bad the card should stay on the deck """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('province')
-        self.plr.test_input = ['%d' % self.goldnum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Province')
-
-    def goldnum(self):
-        index = 1
-        for c in sorted(list(self.g.cardTypes())):
-            if c.name == 'Gold':
-                goldnum = index
-            index += 1
-        return goldnum
 
 
 ###############################################################################
