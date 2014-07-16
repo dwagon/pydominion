@@ -57,6 +57,10 @@ class Card(object):
             return True
         return False
 
+    def isShelter(self):
+        import sys
+        sys.stderr.write("Card.isShelter() unimplemented\n")
+
     def isRuin(self):
         if 'ruin' in self.cardtype:
             return True
