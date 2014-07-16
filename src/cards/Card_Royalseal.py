@@ -33,8 +33,8 @@ class Card_Royalseal(Card):
 class Test_Royalseal(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['royalseal'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['royalseal'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['royalseal'].remove()
         self.plr.addCard(self.card, 'hand')

@@ -31,8 +31,8 @@ class Card_Swindler(Card):
 class Test_Swindler(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['swindler', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['swindler', 'moat'])
+        self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['swindler'].remove()
         self.plr.addCard(self.card, 'hand')

@@ -23,8 +23,8 @@ class Card_Market(Card):
 class Test_Market(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['market'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['market'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['market'].remove()
         self.plr.addCard(self.card, 'hand')

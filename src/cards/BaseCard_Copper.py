@@ -22,8 +22,8 @@ class Card_Copper(Card):
 class Test_Copper(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1)
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['copper'].remove()
         self.plr.addCard(self.card, 'hand')

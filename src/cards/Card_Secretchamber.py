@@ -56,8 +56,8 @@ class Card_Secretchamber(Card):
 class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['secretchamber'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['secretchamber'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['secretchamber'].remove()
         self.plr.addCard(self.card, 'hand')

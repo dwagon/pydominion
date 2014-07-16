@@ -31,8 +31,8 @@ class Card_Grandmarket(Card):
 class Test_Grandmarket(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['grandmarket'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['grandmarket'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.gm = self.g['grandmarket'].remove()
 

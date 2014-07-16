@@ -27,8 +27,8 @@ class Card_Farmland(Card):
 class Test_Farmland(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['farmland', 'militia'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['farmland', 'militia'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['farmland'].remove()
 

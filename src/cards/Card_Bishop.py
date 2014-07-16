@@ -44,8 +44,8 @@ class Card_Bishop(Card):
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['bishop'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['bishop'])
+        self.g.startGame()
         self.plr, self.other = self.g.playerList()
         self.bishop = self.g['bishop'].remove()
 

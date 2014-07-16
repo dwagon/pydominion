@@ -36,8 +36,8 @@ class Card_Alchemist(Card):
 class Test_Alchemist(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['alchemist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['alchemist'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.alchemist = self.g['alchemist'].remove()
         self.plr.addCard(self.alchemist, 'hand')

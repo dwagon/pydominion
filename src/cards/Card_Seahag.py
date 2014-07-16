@@ -30,8 +30,8 @@ class Card_Seahag(Card):
 class Test_Seahag(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['seahag', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['seahag', 'moat'])
+        self.g.startGame()
         self.attacker, self.victim = self.g.playerList()
         self.seahag = self.g['seahag'].remove()
         self.mcard = self.g['moat'].remove()

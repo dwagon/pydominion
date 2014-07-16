@@ -38,8 +38,8 @@ class Card_Loan(Card):
 class Test_Loan(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['loan'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['loan'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.loan = self.plr.gainCard('loan', 'hand')
 

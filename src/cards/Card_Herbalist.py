@@ -36,8 +36,8 @@ class Card_Herbalist(Card):
 class Test_Herbalist(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['herbalist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['herbalist'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.hcard = self.g['herbalist'].remove()
 

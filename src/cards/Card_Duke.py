@@ -28,8 +28,8 @@ class Card_Duke(Card):
 class Test_Duke(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['duke'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['duke'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_score(self):

@@ -31,8 +31,8 @@ class Card_Miningvillage(Card):
 class Test_Miningvillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['miningvillage'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['miningvillage'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['miningvillage'].remove()
         self.plr.addCard(self.card, 'hand')

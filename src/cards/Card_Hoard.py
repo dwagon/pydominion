@@ -26,8 +26,8 @@ class Card_Hoard(Card):
 class Test_Hoard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['hoard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['hoard'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['hoard'].remove()
         self.plr.addCard(self.card, 'hand')

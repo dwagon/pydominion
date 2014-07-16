@@ -42,8 +42,8 @@ class Card_Mystic(Card):
 class Test_Mystic(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['mystic'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['mystic'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['mystic'].remove()
 

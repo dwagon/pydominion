@@ -42,8 +42,8 @@ class Card_Advisor(Card):
 class Test_Advisor(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['advisor'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['advisor'])
+        self.g.startGame()
         self.plr, self.plr2 = self.g.playerList()
         self.acard = self.g['advisor'].remove()
         self.plr.addCard(self.acard, 'hand')

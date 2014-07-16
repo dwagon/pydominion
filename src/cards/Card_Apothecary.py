@@ -37,8 +37,8 @@ class Card_Apothecary(Card):
 class Test_Apothecary(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['apothecary'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['apothecary'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_none(self):

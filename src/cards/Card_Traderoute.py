@@ -43,8 +43,8 @@ class Card_Traderoute(Card):
 class Test_Traderoute(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['traderoute'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['traderoute'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.traderoute = self.g['traderoute'].remove()
         self.plr.addCard(self.traderoute, 'hand')

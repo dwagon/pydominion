@@ -28,8 +28,8 @@ class Card_Chancellor(Card):
 class Test_Chancellor(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['chancellor'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['chancellor'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.ccard = self.g['chancellor'].remove()
         self.plr.setHand('estate')

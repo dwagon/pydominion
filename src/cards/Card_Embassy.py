@@ -29,8 +29,8 @@ class Card_Embassy(Card):
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['embassy'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['embassy'])
+        self.g.startGame()
         self.plr, self.other = self.g.playerList()
         self.card = self.g['embassy'].remove()
         self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'estate')

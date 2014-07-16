@@ -25,8 +25,8 @@ class Card_Fairgrounds(Card):
 class Test_Fairgrounds(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['fairgrounds'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['fairgrounds'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['fairgrounds'].remove()
 

@@ -30,8 +30,8 @@ class Card_Rats(Card):
 class Test_Rats(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['rats'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['rats'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.rats = self.g['rats'].remove()
         self.plr.setDeck('estate', 'province', 'duchy')

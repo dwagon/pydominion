@@ -46,8 +46,8 @@ class Card_Transmute(Card):
 class Test_Transmute(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['transmute'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['transmute'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['transmute'].remove()
 

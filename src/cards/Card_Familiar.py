@@ -29,8 +29,8 @@ class Card_Familiar(Card):
 class Test_Familiar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['familiar', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['familiar', 'moat'])
+        self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['familiar'].remove()
         self.plr.addCard(self.card, 'hand')

@@ -39,8 +39,8 @@ class Card_Watchtower(Card):
 class Test_Watchtower(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['watchtower'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['watchtower'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['watchtower'].remove()
 

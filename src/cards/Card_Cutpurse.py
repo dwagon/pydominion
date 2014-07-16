@@ -31,8 +31,8 @@ class Card_Cutpurse(Card):
 class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['cutpurse'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['cutpurse'])
+        self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['cutpurse'].remove()
         self.plr.addCard(self.card, 'hand')

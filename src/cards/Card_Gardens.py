@@ -25,8 +25,8 @@ class Card_Gardens(Card):
 class Test_Gardens(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['gardens'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['gardens'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_score_0(self):

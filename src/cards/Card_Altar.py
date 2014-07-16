@@ -22,8 +22,8 @@ class Card_Altar(Card):
 class Test_Altar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['altar', 'upgrade'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['altar', 'upgrade'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.altar = self.g['altar'].remove()
         self.plr.addCard(self.altar, 'hand')

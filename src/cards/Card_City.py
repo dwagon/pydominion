@@ -32,8 +32,8 @@ class Card_City(Card):
 class Test_City(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['city', 'moat', 'cellar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['city', 'moat', 'cellar'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.city = self.g['city'].remove()
         self.plr.addCard(self.city, 'hand')

@@ -42,8 +42,8 @@ class Card_Ironmonger(Card):
 class Test_Ironmonger(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['ironmonger'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['ironmonger'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.im = self.g['ironmonger'].remove()
         self.plr.addCard(self.im, 'hand')

@@ -41,8 +41,8 @@ class Card_Butcher(Card):
 class Test_Butcher(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['butcher'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['butcher'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['butcher'].remove()
         self.plr.addCard(self.card, 'hand')

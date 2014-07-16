@@ -32,8 +32,8 @@ class Card_Vagrant(Card):
 class Test_Vagrant(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['vagrant'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['vagrant'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['vagrant'].remove()
         self.plr.addCard(self.card, 'hand')
@@ -42,7 +42,6 @@ class Test_Vagrant(unittest.TestCase):
         """ Play the vagrant with unexciting next card"""
         self.plr.setDeck('gold', 'silver', 'copper')
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.nextCard().name, 'Silver')

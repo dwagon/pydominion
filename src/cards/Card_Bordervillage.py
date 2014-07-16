@@ -26,8 +26,8 @@ class Card_Bordervillage(Card):
 class Test_Bordervillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['bordervillage'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['bordervillage'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.bv = self.g['bordervillage'].remove()
         self.plr.addCard(self.bv, 'hand')

@@ -57,8 +57,8 @@ class Card_Lookout(Card):
 class Test_Lookout(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['lookout'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['lookout'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.lookout = self.g['lookout'].remove()
 

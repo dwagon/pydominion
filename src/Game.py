@@ -13,26 +13,44 @@ from CardPile import CardPile
 ###############################################################################
 ###############################################################################
 class Game(object):
-    def __init__(self, quiet=False, prosperity=False):
+    def __init__(self, **kwargs):
+        self.parseArgs(**kwargs)
+
         self.players = {}
         self.cardpiles = {}
         self.trashpile = []
         self.gameover = False
         self.currentPlayer = None
-        self.quiet = quiet
-        self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
         if self.prosperity:
             self.baseCards.append('Colony')
             self.baseCards.append('Platinum')
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[], plrKlass=TextPlayer):
-        self.cardbase = cardbase
-        self.cardpath = cardpath
-        self.numplayers = numplayers
-        self.loadDecks(initcards)
-        for i in range(numplayers):
+    def parseArgs(self, **args):
+        self.prosperity = False
+        self.quiet = False
+        self.numplayers = 2
+        self.initcards = []
+        self.cardpath = 'cards'
+        self.cardbase = []
+        if 'prosperity' in args:
+            self.prosperity = args['prosperity']
+        if 'quiet' in args:
+            self.quiet = args['quiet']
+        if 'numplayers' in args:
+            self.numplayers = args['numplayers']
+        if 'initcards' in args:
+            self.initcards = args['initcards']
+        if 'cardpath' in args:
+            self.cardpath = args['cardpath']
+        if 'cardbase' in args:
+            self.cardbase = args['cardbase']
+
+    ###########################################################################
+    def startGame(self, playernames=[], plrKlass=TextPlayer):
+        self.loadDecks(self.initcards)
+        for i in range(self.numplayers):
             try:
                 name = playernames.pop()
             except IndexError:
@@ -239,13 +257,12 @@ def parseArgs():
 
 ###############################################################################
 def runGame(args):
-    cards = args.initcards
-    if args.cardset:
-        for line in args.cardset:
+    cards = args['initcards']
+    if args['cardset']:
+        for line in args['cardset']:
             cards.append(line.strip())
-    g = Game(prosperity=args.prosperity)
-    g.startGame(numplayers=args.numplayers, initcards=cards,
-                cardpath=args.cardpath, cardbase=args.cardbase)
+    g = Game(args=args)
+    g.startGame()
     try:
         while not g.gameover:
             g.turn()
@@ -257,7 +274,7 @@ def runGame(args):
 ###############################################################################
 def main():
     args = parseArgs()
-    runGame(args)
+    runGame(vars(args))
 
 
 ###############################################################################

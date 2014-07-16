@@ -39,8 +39,8 @@ class Card_Throneroom(Card):
 class Test_Throneroom(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['throneroom', 'mine'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['throneroom', 'mine'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_action(self):

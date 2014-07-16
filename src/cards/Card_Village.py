@@ -20,8 +20,8 @@ class Card_Village(Card):
 class Test_Village(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['village'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['village'].remove()
         self.plr.addCard(self.card, 'hand')

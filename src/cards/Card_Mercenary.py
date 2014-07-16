@@ -35,8 +35,8 @@ class Card_Mercenary(Card):
 class Test_Mercenary(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['mercenary', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['mercenary', 'moat'])
+        self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['mercenary'].remove()
 

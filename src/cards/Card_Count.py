@@ -68,8 +68,8 @@ class Card_Count(Card):
 class Test_Count(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['count'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['count'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['count'].remove()
         self.plr.setHand('copper', 'estate', 'silver', 'province', 'gold')

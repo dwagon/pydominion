@@ -21,8 +21,8 @@ class Card_Bazaar(Card):
 class Test_Bazaar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['bazaar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['bazaar'])
+        self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['bazaar'].remove()
         self.plr.addCard(self.card, 'hand')

@@ -31,8 +31,8 @@ class Card_Rebuild(Card):
 class Test_XXX(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['xxx'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['xxx'])
+        self.g.startGame()
         self.plr = self.g.players[0]
 
 
