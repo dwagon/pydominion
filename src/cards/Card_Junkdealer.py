@@ -29,7 +29,8 @@ class Test_Junkdealer(unittest.TestCase):
         self.g.startGame(numplayers=1, initcards=['junkdealer'])
         self.plr = self.g.playerList(0)
         self.jd = self.g['junkdealer'].remove()
-        self.plr.setHand('copper', 'estate', 'silver', 'gold')
+        self.plr.setHand('copper', 'silver', 'silver', 'gold')
+        self.plr.setDeck('estate', 'province', 'duchy')
         self.plr.addCard(self.jd, 'hand')
 
     def test_play(self):

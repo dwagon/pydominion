@@ -42,7 +42,7 @@ class Game(object):
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
-        self.currentPlayer = list(self.players.values())[0]
+        self.currentPlayer = self.playerList(0)
 
     ###########################################################################
     def playerList(self, num=None):
@@ -63,7 +63,7 @@ class Game(object):
         count += self.trashSize()
         for cp in list(self.cardpiles.values()):
             count += cp.numcards
-        for pl in list(self.players.values()):
+        for pl in self.playerList():
             count += pl.countCards()
         return count
 
@@ -182,7 +182,7 @@ class Game(object):
         """ This is used for debugging """
         print("#" * 40)
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
-        for p in self.players.values():
+        for p in self.playerList():
             print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
             print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
@@ -196,15 +196,15 @@ class Game(object):
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        players = list(self.players.values())
+        players = self.playerList()
         place = players.index(plr) - 1
-        return list(self.players.values())[place]
+        return players[place]
 
     ###########################################################################
     def whoWon(self):
         scores = {}
         self.output("")
-        for plr in list(self.players.values()):
+        for plr in self.playerList():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 

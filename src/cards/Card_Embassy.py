@@ -19,7 +19,7 @@ class Card_Embassy(Card):
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player gains a Silver """
-        for plr in list(game.players.values()):
+        for plr in game.playerList():
             if plr != player:
                 plr.output("Gained a silver from %s's purchase of Embassy" % player.name)
                 plr.gainCard('Silver')

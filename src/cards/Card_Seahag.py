@@ -32,7 +32,7 @@ class Test_Seahag(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['seahag', 'moat'])
-        self.attacker, self.victim = list(self.g.players.values())
+        self.attacker, self.victim = self.g.playerList()
         self.seahag = self.g['seahag'].remove()
         self.mcard = self.g['moat'].remove()
         self.attacker.addCard(self.seahag, 'hand')

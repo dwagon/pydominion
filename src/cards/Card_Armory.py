@@ -25,7 +25,7 @@ class Test_Armory(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['armory', 'feast'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.armory = self.g['armory'].remove()
         self.plr.addCard(self.armory, 'hand')
 

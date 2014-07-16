@@ -31,7 +31,7 @@ class Test_Explorer(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['explorer'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.card = self.g['explorer'].remove()
         self.plr.addCard(self.card, 'hand')
 

@@ -23,7 +23,7 @@ class Test_Festival(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['festival'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.card = self.g['festival'].remove()
         self.plr.addCard(self.card, 'hand')
 

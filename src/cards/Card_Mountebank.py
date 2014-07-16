@@ -36,7 +36,7 @@ class Test_Mountebank(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=2, initcards=['mountebank'])
-        self.attacker, self.victim = list(self.g.players.values())
+        self.attacker, self.victim = self.g.playerList()
         self.mountebank = self.g['mountebank'].remove()
         self.curse = self.g['curse'].remove()
 

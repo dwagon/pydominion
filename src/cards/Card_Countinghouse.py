@@ -31,7 +31,7 @@ class Test_Countinghouse(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True)
         self.g.startGame(numplayers=1, initcards=['countinghouse'])
-        self.plr = list(self.g.players.values())[0]
+        self.plr = self.g.playerList(0)
         self.ch = self.g['countinghouse'].remove()
         self.plr.setHand()
         self.plr.addCard(self.ch, 'hand')
