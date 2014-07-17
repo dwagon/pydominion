@@ -147,6 +147,19 @@ class TextPlayer(Player):
             return o['card']
 
     ###########################################################################
+    def plrPickCard(self, force=False):
+        options = []
+        if not force:
+            options.append({'selector': '0', 'print': 'Nothing', 'card': None})
+        index = 1
+        for c in self.hand:
+            sel = '%d' % index
+            index += 1
+            options.append({'selector': sel, 'print': 'Pick %s' % c.name, 'card': c})
+        o = self.userInput(options, "What card?")
+        return o['card']
+
+    ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False):
         """ Get the player to discard exactly num cards """
         discard = []
