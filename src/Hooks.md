@@ -46,4 +46,8 @@ setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup
 
+duration
+--------
+Gets invoked for duration cards the next turn
+
 #EOF
