@@ -42,6 +42,11 @@ class Card(object):
     def hasDefense(self):
         return self.defense
 
+    def isDuration(self):
+        if 'duration' in self.cardtype:
+            return True
+        return False
+
     def isTreasure(self):
         if 'treasure' in self.cardtype:
             return True
@@ -157,4 +162,4 @@ class Card(object):
             if c != o['card']:
                 victim.discardCard(c)
 
-#EOF
+# EOF

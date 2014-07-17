@@ -38,6 +38,7 @@ class Player(object):
         self.specialcoins = 0
         self.messages = []
         self.hand = []
+        self.durationpile = []
         self.deck = []
         self.played = []
         self.buys = 1
@@ -170,6 +171,8 @@ class Player(object):
             self.deck.insert(0, c)
         elif pile == 'played':
             self.played.append(c)
+        elif pile == 'duration':
+            self.durationpile.append(c)
 
     ###########################################################################
     def discardCard(self, c):
@@ -180,6 +183,14 @@ class Player(object):
     ###########################################################################
     def handSize(self):
         return len(self.hand)
+
+    ###########################################################################
+    def playedSize(self):
+        return len(self.played)
+
+    ###########################################################################
+    def durationSize(self):
+        return len(self.durationpile)
 
     ###########################################################################
     def deckSize(self):
@@ -284,7 +295,7 @@ class Player(object):
 
     ###########################################################################
     def allCards(self):
-        return self.discardpile + self.hand + self.deck + self.played
+        return self.discardpile + self.hand + self.deck + self.played + self.durationpile
 
     ###########################################################################
     def getScoreDetails(self, verbose=False):
@@ -321,6 +332,10 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
+        for card in self.durationpile:
+            card.duration(game=self.game, player=self)
+            self.addCard(card, 'played')
+        self.durationpile = []
 
     ###########################################################################
     def spendCoin(self):
@@ -364,7 +379,10 @@ class Player(object):
             return
         self.output("Played %s" % card.name)
         if discard:
-            self.addCard(card, 'played')
+            if card.isDuration():
+                self.addCard(card, 'duration')
+            else:
+                self.addCard(card, 'played')
             self.hand.remove(card)
         self.actions += card.actions
         self.coin += self.hook_spendValue(card)
@@ -536,4 +554,4 @@ class Player(object):
         cststr = "%s %s" % (coincost, potcost)
         return cststr.strip()
 
-#EOF
+# EOF

@@ -204,6 +204,7 @@ class Game(object):
             print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
             print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
+            print("%s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
             print("%s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
             print("%s's messages: %s" % (p.name, p.messages))
             print("%s's score: %s" % (p.name, p.score))
@@ -261,7 +262,7 @@ def runGame(args):
     if args['cardset']:
         for line in args['cardset']:
             cards.append(line.strip())
-    g = Game(args=args)
+    g = Game(args=args, initcards=cards)
     g.startGame()
     try:
         while not g.gameover:
@@ -281,4 +282,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF
