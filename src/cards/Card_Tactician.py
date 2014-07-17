@@ -10,7 +10,7 @@ class Card_Tactician(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
         self.base = 'seaside'
-        self.desc = "Discard your hand; +5 cards, +1 buy and +1 action next turn"
+        self.desc = "Discard hand; +5 cards, +1 buy and +1 action next turn"
         self.name = 'Tactician'
         self.cost = 5
 
@@ -20,7 +20,7 @@ class Card_Tactician(Card):
             'Discard hand for good stuff next turn?',
             ('Discard', True),
             ('Keep', False)
-            )
+        )
         if discard and player.handSize():
             self.discarded = True
             player.discardHand()
