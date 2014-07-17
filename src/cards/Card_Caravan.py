@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Caravan(Card):
     def __init__(self):
         Card.__init__(self)
@@ -49,4 +50,4 @@ class Test_Caravan(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
