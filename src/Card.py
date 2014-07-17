@@ -36,6 +36,9 @@ class Card(object):
     def special(self, game, player):
         pass
 
+    def duration(self, game, player):
+        pass
+
     def setup(self, game):
         pass
 
