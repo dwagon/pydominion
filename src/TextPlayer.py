@@ -208,4 +208,4 @@ class TextPlayer(Player):
         numtogo = len(self.hand) - num
         self.plrDiscardCards(numtogo)
 
-#EOF
+# EOF
