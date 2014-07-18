@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Workshop(Card):
     def __init__(self):
         Card.__init__(self)
@@ -32,7 +33,7 @@ class Test_Workshop(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.wcard)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertEquals(self.plr.discardSize(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ['1']
@@ -46,4 +47,4 @@ class Test_Workshop(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

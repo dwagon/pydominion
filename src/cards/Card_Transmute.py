@@ -56,7 +56,7 @@ class Test_Transmute(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['trash nothing']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_trash_treasure(self):
         """ Transmute a treasure card to gain a Transmute """
@@ -86,4 +86,4 @@ class Test_Transmute(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

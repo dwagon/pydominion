@@ -63,7 +63,7 @@ class Test_Bishop(unittest.TestCase):
         self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
 
     def test_bothtrash(self):
@@ -74,12 +74,12 @@ class Test_Bishop(unittest.TestCase):
         self.other.test_input = ['trash province']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertEqual(self.plr.hand, [])
-        self.assertEqual(self.other.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
+        self.assertTrue(self.other.hand.isEmpty())
         self.assertEqual(self.g.trashSize(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

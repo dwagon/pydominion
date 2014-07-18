@@ -107,7 +107,7 @@ class Test_Count(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['gain a copper', 'trash hand']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashSize(), 5)
 
     def test_gainDuchy(self):
@@ -121,4 +121,4 @@ class Test_Count(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

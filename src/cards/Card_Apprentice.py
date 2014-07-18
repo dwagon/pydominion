@@ -41,7 +41,7 @@ class Test_Apprentice(unittest.TestCase):
         self.plr.test_input = ['finish']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashCard(self):
         self.plr.setHand('silver')
@@ -61,4 +61,4 @@ class Test_Apprentice(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

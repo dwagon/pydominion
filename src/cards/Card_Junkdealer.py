@@ -39,7 +39,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertEqual(self.g.trashSize(), 0)
 
     def test_trash(self):
         self.plr.test_input = ['trash copper', 'finish']
@@ -51,4 +51,4 @@ class Test_Junkdealer(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

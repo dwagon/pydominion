@@ -41,7 +41,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.setHand('estate', 'estate', 'estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_trash_copper(self):
@@ -58,7 +58,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.getCoin(), 0)
 
 
@@ -66,4 +66,4 @@ class Test_Moneylender(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

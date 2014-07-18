@@ -58,17 +58,17 @@ class Test_Feast(unittest.TestCase):
         self.plr.setHand('feast')
         self.plr.test_input = ['0']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEquals(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
         self.plr.setHand('feast')
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
-        self.assertEquals(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
 
     def test_trashForSomething(self):
         self.plr.setHand('feast')
@@ -76,7 +76,7 @@ class Test_Feast(unittest.TestCase):
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
-        self.assertEquals(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
         self.assertEquals(self.plr.discardSize(), 1)
 
 
@@ -84,4 +84,4 @@ class Test_Feast(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

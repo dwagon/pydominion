@@ -36,7 +36,7 @@ class Test_Remodel(unittest.TestCase):
         self.plr.addCard(self.rcard, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.rcard)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
@@ -61,4 +61,4 @@ class Test_Remodel(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

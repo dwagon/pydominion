@@ -42,7 +42,7 @@ class Test_Seahag(unittest.TestCase):
         self.attacker.playCard(self.seahag)
         self.assertEqual(self.victim.handSize(), 6)
         self.assertNotEqual(self.victim.deck[0].name, 'Curse')
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
 
     def test_nodefense(self):
         self.victim.setDeck('gold')
@@ -56,4 +56,4 @@ class Test_Seahag(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

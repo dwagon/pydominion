@@ -55,7 +55,7 @@ class Test_Loan(unittest.TestCase):
         self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, 'treasure')
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trash(self):
         self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
@@ -70,4 +70,4 @@ class Test_Loan(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
