@@ -1,3 +1,4 @@
+from PlayArea import PlayArea
 import operator
 import random
 import sys
@@ -37,15 +38,15 @@ class Player(object):
         self.name = name
         self.specialcoins = 0
         self.messages = []
-        self.hand = []
-        self.durationpile = []
-        self.deck = []
-        self.played = []
+        self.hand = PlayArea([])
+        self.durationpile = PlayArea([])
+        self.deck = PlayArea([])
+        self.played = PlayArea([])
+        self.discardpile = PlayArea([])
         self.buys = 1
         self.actions = 1
         self.coin = 0
         self.potions = 0
-        self.discardpile = []
         self.quiet = quiet
         self.test_input = []
         self.initial_Deck()
@@ -57,11 +58,11 @@ class Player(object):
             hence add them back """
         self.game['Copper'].numcards += 7
         for i in range(7):
-            self.deck.append(self.game['Copper'].remove())
+            self.deck.add(self.game['Copper'].remove())
         self.game['Estate'].numcards += 3
         for i in range(3):
-            self.deck.append(self.game['Estate'].remove())
-        random.shuffle(self.deck)
+            self.deck.add(self.game['Estate'].remove())
+        self.deck.shuffle()
 
     ###########################################################################
     def inHand(self, card):
@@ -75,7 +76,7 @@ class Player(object):
     def trashCard(self, c):
         """ Take a card out of the game """
         c.hook_trashThisCard(game=self.game, player=self)
-        self.game.trashpile.append(c)
+        self.game.trashpile.add(c)
         if c in self.played:
             self.played.remove(c)
         if c in self.hand:
@@ -84,30 +85,30 @@ class Player(object):
     ###########################################################################
     def setPlayed(self, *cards):
         """ This is mostly used for testing """
-        self.played = []
+        self.played.empty()
         for c in cards:
-            self.played.append(self.game[c].remove())
+            self.played.add(self.game[c].remove())
 
     ###########################################################################
     def setDiscard(self, *cards):
         """ This is mostly used for testing """
-        self.discardpile = []
+        self.discardpile.empty()
         for c in cards:
-            self.discardpile.append(self.game[c].remove())
+            self.discardpile.add(self.game[c].remove())
 
     ###########################################################################
     def setHand(self, *cards):
         """ This is mostly used for testing """
-        self.hand = []
+        self.hand.empty()
         for c in cards:
-            self.hand.append(self.game[c].remove())
+            self.hand.add(self.game[c].remove())
 
     ###########################################################################
     def setDeck(self, *cards):
         """ This is mostly used for testing """
-        self.deck = []
+        self.deck.empty()
         for c in cards:
-            self.deck.append(self.game[c].remove())
+            self.deck.add(self.game[c].remove())
 
     ###########################################################################
     def nextCard(self):
@@ -115,11 +116,11 @@ class Player(object):
         if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
-                self.addCard(self.discardpile.pop(), 'deck')
+                self.addCard(self.discardpile.topcard(), 'deck')
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.pop()
+        c = self.deck.topcard()
         return c
 
     ###########################################################################
@@ -145,7 +146,7 @@ class Player(object):
     ###########################################################################
     def shuffleDeck(self):
         self.output("Shuffling Pile of %d cards" % len(self.discardpile))
-        random.shuffle(self.discardpile)
+        self.discardpile.shuffle()
 
     ###########################################################################
     def pickUpHand(self, handsize=5):
@@ -162,17 +163,17 @@ class Player(object):
         if not c:
             return
         if pile == 'discard':
-            self.discardpile.append(c)
+            self.discardpile.add(c)
         elif pile == 'hand':
-            self.hand.append(c)
+            self.hand.add(c)
         elif pile == 'topdeck':
-            self.deck.append(c)
+            self.deck.add(c)
         elif pile == 'deck':
-            self.deck.insert(0, c)
+            self.deck.addToTop(c)
         elif pile == 'played':
-            self.played.append(c)
+            self.played.add(c)
         elif pile == 'duration':
-            self.durationpile.append(c)
+            self.durationpile.add(c)
 
     ###########################################################################
     def discardCard(self, c):
@@ -205,9 +206,9 @@ class Player(object):
         for c in self.hand + self.played:
             self.hook_discardCard(c)
         while self.hand:
-            self.discardCard(self.hand.pop())
+            self.discardCard(self.hand.topcard())
         while self.played:
-            self.discardCard(self.played.pop())
+            self.discardCard(self.played.topcard())
 
     ###########################################################################
     def playableSelection(self, index):
@@ -295,7 +296,14 @@ class Player(object):
 
     ###########################################################################
     def allCards(self):
-        return self.discardpile + self.hand + self.deck + self.played + self.durationpile
+        """ Return all the cards that the player has """
+        x = PlayArea([])
+        x += self.discardpile
+        x += self.hand
+        x += self.deck
+        x += self.played
+        x += self.durationpile
+        return x
 
     ###########################################################################
     def getScoreDetails(self, verbose=False):
@@ -327,7 +335,7 @@ class Player(object):
 
     ###########################################################################
     def startTurn(self):
-        self.played = []
+        self.played.empty()
         self.buys = 1
         self.actions = 1
         self.coin = 0
@@ -335,7 +343,7 @@ class Player(object):
         for card in self.durationpile:
             card.duration(game=self.game, player=self)
             self.addCard(card, 'played')
-        self.durationpile = []
+        self.durationpile.empty()
 
     ###########################################################################
     def spendCoin(self):
@@ -493,7 +501,7 @@ class Player(object):
     ###########################################################################
     def cardsAffordable(self, oper, coin, potions=0, types={}):
         """Return the list of cards for under cost """
-        affordable = []
+        affordable = PlayArea([])
         for c in self.game.cardTypes():
             cost = self.cardCost(c)
             if not c.purchasable:
@@ -507,7 +515,7 @@ class Player(object):
             if not c.numcards:
                 continue
             if oper(cost, coin) and oper(c.potcost, potions):
-                affordable.append(c)
+                affordable.add(c)
         affordable.sort(key=lambda c: self.cardCost(c))
         affordable.sort(key=lambda c: c.basecard)
         return affordable

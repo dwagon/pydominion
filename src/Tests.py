@@ -15,12 +15,12 @@ class TestPlayer(unittest.TestCase):
         """ Make sure initial hands are correct """
         self.assertEqual(len(self.plr.deck), 5)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.played, [])
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.playedSize(), 0)
+        self.assertEqual(self.plr.discardSize(), 0)
 
     def test_initialDeck(self):
         """ Ensure initial player decks are correct """
-        self.plr.deck = []
+        self.plr.deck.empty()
         self.plr.initial_Deck()
         self.assertEqual(len(self.plr.deck), 10)
 
@@ -34,7 +34,7 @@ class TestPlayer(unittest.TestCase):
 
     def test_deckorder(self):
         """ Ensure adding cards to decks in the correct order """
-        self.plr.deck = []
+        self.plr.deck.empty()
         estate = self.g['estate'].remove()
         gold = self.g['gold'].remove()
         self.plr.addCard(estate, 'deck')
@@ -51,23 +51,23 @@ class Test_nextCard(unittest.TestCase):
         self.plr = self.g.playerList(0)
 
     def test_emptyDeck(self):
-        self.plr.deck = []
+        self.plr.deck.empty()
         self.plr.setDiscard('gold')
         c = self.plr.nextCard()
         self.assertEqual(c.name, 'Gold')
 
     def test_noCards(self):
-        self.plr.deck = []
-        self.plr.discardpile = []
+        self.plr.deck.empty()
+        self.plr.discardpile.empty()
         c = self.plr.nextCard()
         self.assertEqual(c, None)
 
     def test_drawOne(self):
         self.plr.setDeck('province')
-        self.plr.discardpile = []
+        self.plr.discardpile.empty()
         c = self.plr.nextCard()
         self.assertEqual(c.name, 'Province')
-        self.assertEqual(self.plr.deck, [])
+        self.assertTrue(self.plr.deck.isEmpty())
 
 
 ###############################################################################
@@ -130,14 +130,14 @@ class Test_plrTrashCard(unittest.TestCase):
         self.plr.test_input = ['0']
         x = self.plr.plrTrashCard()
         self.assertEqual(x, [])
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_Two(self):
         self.plr.setHand('gold', 'copper', 'silver')
         self.plr.test_input = ['1', '2', '0']
         x = self.plr.plrTrashCard(num=2)
         self.assertEqual(len(x), 2)
-        self.assertEqual(self.g.trashpile, x)
+        self.assertEqual(self.g.trashpile.cards, x)
 
     def test_Trash(self):
         self.plr.setHand('gold')
@@ -183,7 +183,7 @@ class Test_plrDiscardCard(unittest.TestCase):
         x = self.plr.plrDiscardCards(0)
         self.assertEqual(x, [])
         self.assertEqual(len(self.plr.hand), 4)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_discardOne(self):
         self.plr.setHand('copper', 'estate', 'province', 'gold')
@@ -192,7 +192,7 @@ class Test_plrDiscardCard(unittest.TestCase):
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
-        self.assertEqual(x, self.plr.discardpile)
+        self.assertEqual(x, self.plr.discardpile.cards)
 
     def test_discardAnynum(self):
         self.plr.setHand('copper', 'estate', 'province', 'gold')
@@ -257,9 +257,9 @@ class Test_gainCard(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
 
     def test_destination(self):
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.gainCard('copper', 'hand')
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEqual(self.plr.hand[0].name, 'Copper')
 
 
@@ -356,4 +356,4 @@ class Test_spendCoin(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
