@@ -96,7 +96,7 @@ class Test_Rogue(unittest.TestCase):
 
     def test_defended(self):
         """ Victim has a defense """
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.addCard(self.card, 'hand')
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
@@ -139,4 +139,4 @@ class Test_Rogue(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

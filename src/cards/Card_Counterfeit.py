@@ -63,7 +63,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
         # CF + 2 * Gold
         self.assertEqual(self.plr.getCoin(), 7)
@@ -73,4 +73,4 @@ class Test_Counterfiet(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

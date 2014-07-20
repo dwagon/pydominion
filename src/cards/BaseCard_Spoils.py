@@ -37,7 +37,7 @@ class Test_Spoils(unittest.TestCase):
         self.plr.addCard(spoils, 'hand')
         self.plr.playCard(spoils)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
         self.assertEqual(self.g['Spoils'].numcards, numspoils)
 
 
@@ -45,4 +45,4 @@ class Test_Spoils(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -35,7 +35,7 @@ class Test_Hoard(unittest.TestCase):
     def test_play(self):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_buy_victory(self):
         self.plr.playCard(self.card)
@@ -58,4 +58,4 @@ class Test_Hoard(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

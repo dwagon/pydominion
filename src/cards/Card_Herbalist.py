@@ -51,7 +51,7 @@ class Test_Herbalist(unittest.TestCase):
 
     def test_putgold(self):
         self.plr.setPlayed('gold', 'estate')
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.addCard(self.hcard, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.hcard)
@@ -65,4 +65,4 @@ class Test_Herbalist(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

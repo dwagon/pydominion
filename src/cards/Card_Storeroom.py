@@ -42,7 +42,7 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.getBuys(), 2)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_discardonce(self):
         """ Storeroom: Only discard during the first discard phase """
@@ -66,4 +66,4 @@ class Test_Storeroom(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

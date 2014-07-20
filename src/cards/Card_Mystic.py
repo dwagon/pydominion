@@ -64,7 +64,7 @@ class Test_Mystic(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(self.plr.inHand('Gold'))
-        self.assertEqual(self.plr.deck, [])
+        self.assertTrue(self.plr.deck.isEmpty())
 
     def test_bad(self):
         """ When the guess is bad the card should stay on the deck """
@@ -83,4 +83,4 @@ class Test_Mystic(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

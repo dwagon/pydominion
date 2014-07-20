@@ -33,14 +33,14 @@ class Test_Armory(unittest.TestCase):
         self.plr.test_input = ['nothing']
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_gainone(self):
         self.plr.test_input = ['feast']
-        self.plr.deck = []
+        self.plr.deck.empty()
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertLessEqual(self.plr.deck[-1].cost, 4)
 
 
@@ -48,4 +48,4 @@ class Test_Armory(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

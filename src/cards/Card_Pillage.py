@@ -61,7 +61,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_defended(self):
         """ Victim has a defense """
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.addCard(self.card, 'hand')
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
@@ -73,7 +73,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_nohandsize(self):
         """ Victim has too small a hand"""
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.victim.setHand('copper', 'copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
@@ -84,7 +84,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_attack(self):
         """ Victim has no defense and a large enough hand """
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.test_input = ['1']
         self.victim.setHand('copper', 'copper', 'copper', 'copper', 'gold')
         self.plr.addCard(self.card, 'hand')
@@ -100,4 +100,4 @@ class Test_Pillage(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -70,7 +70,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.setHand('estate', 'estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(len(self.plr.played), 1)
 
     def test_picked_nothing(self):
@@ -79,7 +79,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(len(self.plr.played), 1)
 
 
@@ -87,4 +87,4 @@ class Test_Kingscourt(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

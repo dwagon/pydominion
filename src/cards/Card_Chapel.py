@@ -34,7 +34,7 @@ class Test_Chapel(unittest.TestCase):
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 3)
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashtwo(self):
         self.plr.test_input = ['trash copper', 'trash silver', 'finish']
@@ -47,4 +47,4 @@ class Test_Chapel(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

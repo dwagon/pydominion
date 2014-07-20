@@ -7,6 +7,7 @@ import uuid
 
 from TextPlayer import TextPlayer
 from CardPile import CardPile
+from PlayArea import PlayArea
 
 
 ###############################################################################
@@ -18,7 +19,7 @@ class Game(object):
 
         self.players = {}
         self.cardpiles = {}
-        self.trashpile = []
+        self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']

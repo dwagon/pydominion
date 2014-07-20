@@ -53,7 +53,7 @@ class Test_Rabble(unittest.TestCase):
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.handSize(), 6)  # 5 + moat
         self.assertEqual(self.attacker.handSize(), 5 + 3)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
 
     def test_nodefense(self):
         self.victim.setDeck('copper', 'estate', 'rabble')
@@ -67,4 +67,4 @@ class Test_Rabble(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

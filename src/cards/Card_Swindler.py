@@ -47,7 +47,7 @@ class Test_Swindler(unittest.TestCase):
         """ Swindle a defended player """
         self.victim.setHand('moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_attack(self):
         """ Swindle an undefended player """
@@ -62,4 +62,4 @@ class Test_Swindler(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

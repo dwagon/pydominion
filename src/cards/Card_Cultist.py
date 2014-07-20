@@ -54,7 +54,7 @@ class Test_Cultist(unittest.TestCase):
         self.victim.addCard(moat, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
 
     def test_noother(self):
         """ Don't ask to play another cultist if it doesn't exist """
@@ -97,4 +97,4 @@ class Test_Cultist(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

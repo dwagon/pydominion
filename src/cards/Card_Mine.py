@@ -55,7 +55,7 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Silver')
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEquals(self.plr.handSize(), 1)
         self.assertEquals(self.plr.getCoin(), 0)
         self.assertEquals(self.plr.getBuys(), 1)
@@ -67,7 +67,7 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Copper')
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEquals(self.plr.handSize(), 1)
 
 
@@ -75,4 +75,4 @@ class Test_Mine(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

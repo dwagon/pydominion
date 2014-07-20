@@ -44,7 +44,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
 
     def test_trash(self):
@@ -52,7 +52,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.g.trashpile[-1].name, 'Mining Village')
@@ -62,4 +62,4 @@ class Test_Miningvillage(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

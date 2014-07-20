@@ -109,7 +109,7 @@ class Test_Thief(unittest.TestCase):
         self.victim.setDeck('copper', 'silver', 'gold')
         self.thief.test_input = ['steal gold']
         self.thief.playCard(self.thiefcard)
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         for c in self.victim.deck:
             self.assertNotEquals(c.name, 'Gold')
         for c in self.thief.discardpile:
@@ -124,4 +124,4 @@ class Test_Thief(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -32,7 +32,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.test_input = ['nothing']
         self.plr.playCard(self.altar)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_gainone(self):
         self.plr.test_input = ['get upgrade']
@@ -46,4 +46,4 @@ class Test_Altar(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

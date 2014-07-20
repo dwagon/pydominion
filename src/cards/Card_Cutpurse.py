@@ -46,7 +46,7 @@ class Test_Cutpurse(unittest.TestCase):
     def test_play_none(self):
         self.victim.setHand('estate', 'estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
         self.assertEqual(self.victim.handSize(), 3)
 
 
@@ -54,4 +54,4 @@ class Test_Cutpurse(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

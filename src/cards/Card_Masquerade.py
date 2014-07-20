@@ -64,7 +64,7 @@ class Test_Masquerade(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.inHand('gold'))
         self.assertTrue(self.other.inHand('silver'))
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
@@ -82,4 +82,4 @@ class Test_Masquerade(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

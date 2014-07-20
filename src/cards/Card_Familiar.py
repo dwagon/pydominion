@@ -45,7 +45,7 @@ class Test_Familiar(unittest.TestCase):
     def test_defended(self):
         self.victim.setHand('gold', 'moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
 
@@ -54,4 +54,4 @@ class Test_Familiar(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
