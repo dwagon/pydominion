@@ -17,6 +17,7 @@ class Card_Merchantship(Card):
 
     def duration(self, game, player):
         """ Now and at the start of your next turn +2 coins """
+        player.output("2 more coins from Merchant Ship")
         player.addCoin(2)
 
 
