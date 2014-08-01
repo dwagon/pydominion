@@ -73,6 +73,65 @@ class TextPlayer(Player):
         self.endTurn()
 
     ###########################################################################
+    def cardSel(self, num=1, **kwargs):
+        """ Most interactions with players are the selection of cards
+            either from the hand, the drawpiles, or a subset
+            * force
+                True - Have to select num cards
+                False - Can pick less than num cards [Default]
+            * chooser - Which player does the selecting [player]
+            * cardsrc
+                hand - Select the cards from the players hand
+            * exclude = [] - Don't let cards in this list be selected
+            * printcost
+                True - Print out the cost of the cards
+                False - Don't print out the cost [Default]
+        """
+        if 'cardsrc' in kwargs:
+            if kwargs['cardsrc'] == 'hand':
+                selectfrom = self.hand
+        else:
+            selectfrom = self.hand
+        if 'chooser' in kwargs:
+            chooser = kwargs['chooser']
+        else:
+            chooser = self
+        if 'force' in kwargs and kwargs['force']:
+            force = True
+        else:
+            force = False
+
+        selected = []
+        while(True):
+            options = []
+            if (force and num == len(selected)) or not force:
+                options.append({'selector': '0', 'print': 'Finish Selecting', 'card': None})
+            index = 1
+            for c in selectfrom:
+                if 'exclude' in kwargs and c.name in kwargs['exclude']:
+                    continue
+                sel = "%d" % index
+                index += 1
+                if c in selected:
+                    verb = "Unselect"
+                else:
+                    verb = "Select"
+                pr = "%s %s" % (verb, c.name)
+                if 'printcost' in kwargs and kwargs['printcost']:
+                    pr += " (%d coin)" % chooser.cardCost(c)
+                options.append({'selector': sel, 'print': pr, 'card': c})
+            o = chooser.userInput(options, "Select which card?")
+            if not o['card']:
+                break
+            if o['card'] in selected:
+                selected.remove(o['card'])
+            else:
+                selected.append(o['card'])
+            if num == 1 and len(selected) == 1:
+                break
+        return selected
+
+    ###########################################################################
     def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
         """ Ask player to trash num cards
             force - must trash a card, otherwise have option not to trash
@@ -83,31 +142,7 @@ class TextPlayer(Player):
             self.output("Trash any cards")
         else:
             self.output("Trash %d cards" % num)
-        trash = []
-        while(True):
-            options = []
-            if num == len(trash) or not force or anynum:
-                options = [{'selector': '0', 'print': 'Finish Trashing', 'card': None}]
-            index = 1
-            for c in self.hand:
-                if exclude and c.name in exclude:
-                    continue
-                sel = "%d" % index
-                if c in trash:
-                    verb = "Untrash"
-                else:
-                    verb = "Trash"
-                pr = "%s %s" % (verb, c.name)
-                if printcost:
-                    pr += " (%d coin)" % self.cardCost(c)
-                options.append({'selector': sel, 'print': pr, 'card': c})
-                index += 1
-            o = self.userInput(options, "Trash which card?")
-            if not o['card']:
-                break
-            trash.append(o['card'])
-            if num == 1 and len(trash) == 1:
-                break
+        trash = self.cardSel(num=num, cardsrc='hand', anynum=anynum, printcost=printcost, force=force, exclude=exclude)
         for c in trash:
             self.trashCard(c)
         return trash
@@ -148,44 +183,17 @@ class TextPlayer(Player):
 
     ###########################################################################
     def plrPickCard(self, force=False):
-        options = []
-        if not force:
-            options.append({'selector': '0', 'print': 'Nothing', 'card': None})
-        index = 1
-        for c in self.hand:
-            sel = '%d' % index
-            index += 1
-            options.append({'selector': sel, 'print': 'Pick %s' % c.name, 'card': c})
-        o = self.userInput(options, "What card?")
-        return o['card']
+        sel = self.cardSel(force=force)
+        return sel[0]
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False):
         """ Get the player to discard exactly num cards """
-        discard = []
-        while(True):
-            options = []
-            if anynum or num == len(discard) or len(self.hand) == len(discard):
-                options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
-            index = 1
-            for c in self.hand:
-                sel = "%s" % index
-                pr = "%s %s" % ("Undiscard" if c in discard else "Discard", c.name)
-                options.append({'selector': sel, 'print': pr, 'card': c})
-                index += 1
-
-            if anynum:
-                msg = "Discard which cards."
-            else:
-                msg = "Discard %s more cards." % (num - len(discard))
-            o = self.userInput(options, msg)
-            if o['card']:
-                if o['card'] in discard:
-                    discard.remove(o['card'])
-                else:
-                    discard.append(o['card'])
-            if o['card'] is None:
-                break
+        if anynum:
+            self.output("Discard any number of cards")
+        else:
+            self.output("Discard %d cards" % num)
+        discard = self.cardSel(num=num, anynum=anynum)
         for c in discard:
             self.output("Discarding %s" % c.name)
             self.discardCard(c)
