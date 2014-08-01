@@ -38,7 +38,7 @@ class Test_Embassy(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['select copper', 'select silver', 'select gold', 'finish']
+        self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
 

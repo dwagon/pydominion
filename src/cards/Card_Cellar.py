@@ -41,7 +41,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.setHand('estate', 'copper', 'silver')
         self.plr.setDeck('province', 'gold')
         self.plr.addCard(self.ccard, 'hand')
-        self.plr.test_input = ['select estate', 'finish']
+        self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.deck[-1].name, 'Province')
         for c in self.plr.hand:

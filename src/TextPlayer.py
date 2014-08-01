@@ -86,6 +86,8 @@ class TextPlayer(Player):
             * printcost
                 True - Print out the cost of the cards
                 False - Don't print out the cost [Default]
+            * verbs
+                ('Select', 'Unselect')
         """
         if 'cardsrc' in kwargs:
             if kwargs['cardsrc'] == 'hand':
@@ -100,6 +102,10 @@ class TextPlayer(Player):
             force = True
         else:
             force = False
+        if 'verbs' in kwargs:
+            verbs = kwargs['verbs']
+        else:
+            verbs = ('Select', 'Unselect')
 
         selected = []
         while(True):
@@ -112,10 +118,10 @@ class TextPlayer(Player):
                     continue
                 sel = "%d" % index
                 index += 1
-                if c in selected:
-                    verb = "Unselect"
+                if c not in selected:
+                    verb = verbs[0]
                 else:
-                    verb = "Select"
+                    verb = verbs[1]
                 pr = "%s %s" % (verb, c.name)
                 if 'printcost' in kwargs and kwargs['printcost']:
                     pr += " (%d coin)" % chooser.cardCost(c)
@@ -134,15 +140,13 @@ class TextPlayer(Player):
     ###########################################################################
     def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
         """ Ask player to trash num cards
-            force - must trash a card, otherwise have option not to trash
-            printcost - print the cost of the card being trashed
-            exclude - can't select a card in the exclude list to be trashed
         """
         if anynum:
             self.output("Trash any cards")
         else:
             self.output("Trash %d cards" % num)
-        trash = self.cardSel(num=num, cardsrc='hand', anynum=anynum, printcost=printcost, force=force, exclude=exclude)
+        trash = self.cardSel(
+            num=num, cardsrc='hand', anynum=anynum, printcost=printcost, force=force, exclude=exclude, verbs=('Trash', 'Untrash'))
         for c in trash:
             self.trashCard(c)
         return trash
@@ -193,7 +197,7 @@ class TextPlayer(Player):
             self.output("Discard any number of cards")
         else:
             self.output("Discard %d cards" % num)
-        discard = self.cardSel(num=num, anynum=anynum)
+        discard = self.cardSel(num=num, anynum=anynum, verbs=('Discard', 'Undiscard'))
         for c in discard:
             self.output("Discarding %s" % c.name)
             self.discardCard(c)
