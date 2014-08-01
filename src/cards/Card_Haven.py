@@ -51,7 +51,7 @@ class Test_Haven(unittest.TestCase):
 
     def test_playcard(self):
         """ Play a haven """
-        self.plr.test_input = ['pick gold']
+        self.plr.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.getActions(), 1)

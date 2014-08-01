@@ -37,7 +37,7 @@ class Test_Chapel(unittest.TestCase):
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashtwo(self):
-        self.plr.test_input = ['trash copper', 'trash silver', 'finish']
+        self.plr.test_input = ['select copper', 'select silver', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 1)
         self.assertEquals(self.g.trashSize(), 2)

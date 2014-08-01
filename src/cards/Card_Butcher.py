@@ -63,7 +63,7 @@ class Test_Butcher(unittest.TestCase):
         # Trash card 3
         # Spend 2 coin
         # Buy card 1
-        self.plr.test_input = ['trash a card', 'trash gold', 'add 2', 'get silver']
+        self.plr.test_input = ['trash a card', 'select gold', 'add 2', 'get silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getSpecialCoins(), 0)
         self.assertEqual(self.plr.handSize(), 2)
@@ -79,4 +79,4 @@ class Test_Butcher(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

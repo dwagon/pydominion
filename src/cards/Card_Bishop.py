@@ -59,7 +59,7 @@ class Test_Bishop(unittest.TestCase):
     def test_trash(self):
         self.plr.setHand('gold')
         self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['trash gold']
+        self.plr.test_input = ['select gold']
         self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
@@ -70,8 +70,8 @@ class Test_Bishop(unittest.TestCase):
         self.plr.setHand('gold')
         self.other.setHand('province')
         self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['trash gold']
-        self.other.test_input = ['trash province']
+        self.plr.test_input = ['select gold']
+        self.other.test_input = ['select province']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertTrue(self.plr.hand.isEmpty())
