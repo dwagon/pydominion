@@ -8,4 +8,4 @@ install:
     - "pip install -r requirements.txt"
     - "pip install -r requirements-dev.txt"
 
-script: "./run_tests"
+script: "./src/run_tests"
