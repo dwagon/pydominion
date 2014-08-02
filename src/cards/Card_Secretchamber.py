@@ -64,7 +64,7 @@ class Test_Secretchamber(unittest.TestCase):
     def test_play_none(self):
         """ Play the Secret Chamber - discard none"""
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getCoin(), 0)
