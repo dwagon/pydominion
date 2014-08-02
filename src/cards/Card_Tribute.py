@@ -17,7 +17,7 @@ class Card_Tribute(Card):
     def special(self, game, player):
         """ The player to your left reveals then discards the top
             2 cards of his deck. For each differently named card revealed,
-            if is an Action card, +2 actions; treasure card, +2 gold;
+            if is an Action card, +2 actions; treasure card, +2 coin;
             victory card, +2 cards """
         victim = game.playerToLeft(player)
         cards = [victim.nextCard(), victim.nextCard()]
@@ -33,8 +33,8 @@ class Card_Tribute(Card):
                 player.output("Gained two actions")
                 player.addActions(2)
             elif c.isTreasure():
-                player.output("Gained two gold")
-                player.addGold(2)
+                player.output("Gained two coin")
+                player.addCoin(2)
             elif c.isVictory():
                 player.pickupCards(2)
 
@@ -43,9 +43,9 @@ class Card_Tribute(Card):
 class Test_Tribute(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['tribute'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['tribute'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['tribute'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -53,7 +53,7 @@ class Test_Tribute(unittest.TestCase):
         """ Play a tribute """
         self.victim.setDeck('copper', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.victim.discardSize(), 2)
 
@@ -62,7 +62,7 @@ class Test_Tribute(unittest.TestCase):
         self.victim.setDeck('tribute', 'tribute')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
 

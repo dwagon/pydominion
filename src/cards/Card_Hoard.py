@@ -9,10 +9,10 @@ class Card_Hoard(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "Gain gold if buy victory"
+        self.desc = "+2 coin; Gain gold if buy victory"
         self.name = 'Hoard'
         self.playable = False
-        self.gold = 2
+        self.coin = 2
         self.cost = 6
 
     def hook_buyCard(self, game, player, card):
@@ -26,16 +26,16 @@ class Card_Hoard(Card):
 class Test_Hoard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['hoard'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['hoard'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['hoard'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_buy_victory(self):
         self.plr.playCard(self.card)
@@ -58,4 +58,4 @@ class Test_Hoard(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

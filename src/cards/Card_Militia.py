@@ -9,9 +9,9 @@ class Card_Militia(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'dominion'
-        self.desc = "+2 gold, Every other player discards down to 3"
+        self.desc = "+2 coin, Every other player discards down to 3"
         self.name = 'Militia'
-        self.gold = 2
+        self.coin = 2
         self.cost = 4
 
     def special(self, game, player):
@@ -25,9 +25,9 @@ class Card_Militia(Card):
 class Test_Militia(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['militia', 'moat'])
-        self.attacker, self.defender = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['militia', 'moat'])
+        self.g.startGame()
+        self.attacker, self.defender = self.g.playerList()
         self.mcard = self.g['militia'].remove()
 
     def test_defense(self):
@@ -36,7 +36,7 @@ class Test_Militia(unittest.TestCase):
         #self.defender.test_input = ['1', '1', '0']
         self.attacker.playCard(self.mcard)
         self.assertEquals(self.defender.handSize(), 6)   # Normal + moat
-        self.assertEquals(self.attacker.getGold(), 2)
+        self.assertEquals(self.attacker.getCoin(), 2)
 
     def test_attack(self):
         self.attacker.addCard(self.mcard, 'hand')
@@ -44,7 +44,7 @@ class Test_Militia(unittest.TestCase):
         self.attacker.playCard(self.mcard)
         self.assertEquals(self.defender.handSize(), 3)   # Normal  - 2
         self.assertEquals(self.defender.discardSize(), 2)
-        self.assertEquals(self.attacker.getGold(), 2)
+        self.assertEquals(self.attacker.getCoin(), 2)
 
 
 ###############################################################################

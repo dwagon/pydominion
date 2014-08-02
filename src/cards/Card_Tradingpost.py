@@ -21,7 +21,7 @@ class Card_Tradingpost(Card):
         trash = player.plrTrashCard(num=num)
         if len(trash) == 2:
             player.gainCard('silver', 'hand')
-            player.addGold(2)
+            player.addCoin(2)
         else:
             player.output("Not enough cards trashed")
 
@@ -30,9 +30,9 @@ class Card_Tradingpost(Card):
 class Test_Tradingpost(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['tradingpost'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['tradingpost'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['tradingpost'].remove()
         self.plr.addCard(self.card, 'hand')
 

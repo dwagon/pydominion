@@ -22,16 +22,16 @@ class Card_Vineyard(Card):
         for c in player.allCards():
             if c.isAction():
                 score += 1
-        return score / 3
+        return int(score / 3)
 
 
 ###############################################################################
 class Test_Vineyard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['vineyard', 'moat'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['vineyard', 'moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_scoreOne(self):
         self.plr.setHand('vineyard')

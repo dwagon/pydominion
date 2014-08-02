@@ -9,7 +9,7 @@ class Card_Venture(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+1 gold, get next treasure from deck"
+        self.desc = "+1 coin, get next treasure from deck"
         self.name = 'Venture'
         self.cost = 5
 
@@ -25,7 +25,7 @@ class Card_Venture(Card):
                 break
             else:
                 player.output("Picked up and discarded %s" % c.name)
-                player.addGold(c.gold)    # Compensate for not keeping card
+                player.addCoin(c.coin)    # Compensate for not keeping card
                 player.discardCard(c)
 
 
@@ -33,9 +33,9 @@ class Card_Venture(Card):
 class Test_Venture(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['venture'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['venture'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['venture'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -43,19 +43,19 @@ class Test_Venture(unittest.TestCase):
         """ Play a Venture """
         self.plr.setDeck('gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)  # Gold
+        self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
             if c.name == 'Gold':
                 break
         else:   # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertEqual(self.plr.deck, [])
+        self.assertTrue(self.plr.deck.isEmpty())
 
     def test_discard(self):
         """ Make sure we discard non-treasures """
         self.plr.setDeck('gold', 'estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)  # Gold
+        self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
             if c.name == 'Gold':
                 break
@@ -71,4 +71,4 @@ class Test_Venture(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

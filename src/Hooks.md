@@ -16,7 +16,7 @@ This is called when this card is discarded.
 
 hook_spendValue
 ---------------
-This modifies how much gold value you get for spending the card and is invoked for every card that has been played this turn.
+This modifies how much coin value you get for spending the card and is invoked for every card that has been played this turn.
 
 Return the delta. So 0 for no change.
 
@@ -34,7 +34,7 @@ hook_gainThisCard
 -------------
 This is triggered when the card is gained
 
-hook_goldvalue
+hook_coinvalue
 --------------
 How much this card is worth
 
@@ -45,5 +45,9 @@ Called just before the card is trashed
 setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup
+
+duration
+--------
+Gets invoked for duration cards the next turn
 
 #EOF

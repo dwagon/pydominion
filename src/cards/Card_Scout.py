@@ -36,9 +36,9 @@ class Card_Scout(Card):
 class Test_Scout(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['scout'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['scout'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.scout = self.g['scout'].remove()
 
     def test_play(self):

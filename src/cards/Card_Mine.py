@@ -44,9 +44,9 @@ class Card_Mine(Card):
 class Test_Mine(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['mine'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['mine'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['mine'].remove()
 
     def test_convcopper(self):
@@ -55,9 +55,9 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Silver')
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEquals(self.plr.handSize(), 1)
-        self.assertEquals(self.plr.getGold(), 0)
+        self.assertEquals(self.plr.getCoin(), 0)
         self.assertEquals(self.plr.getBuys(), 1)
         self.assertEquals(self.plr.getActions(), 0)
 
@@ -67,7 +67,7 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.hand[0].name, 'Copper')
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEquals(self.plr.handSize(), 1)
 
 
@@ -75,4 +75,4 @@ class Test_Mine(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -41,9 +41,9 @@ class Card_Torturer(Card):
 class Test_Torturer(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['torturer', 'moat'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['torturer', 'moat'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['torturer'].remove()
         self.plr.addCard(self.card, 'hand')
 

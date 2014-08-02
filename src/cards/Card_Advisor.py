@@ -42,16 +42,15 @@ class Card_Advisor(Card):
 class Test_Advisor(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['advisor'])
-        self.plr = self.g.players.values()[0]
-        self.plr2 = self.g.players.values()[1]
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['advisor'])
+        self.g.startGame()
+        self.plr, self.plr2 = self.g.playerList()
         self.acard = self.g['advisor'].remove()
         self.plr.addCard(self.acard, 'hand')
 
     def test_defended(self):
         self.plr.setDeck('copper', 'silver', 'gold')
-        self.plr2.test_input = ['1']
+        self.plr2.test_input = ['discard gold']
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.getActions(), 1)
         for c in self.plr.hand:

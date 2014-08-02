@@ -7,32 +7,51 @@ import uuid
 
 from TextPlayer import TextPlayer
 from CardPile import CardPile
+from PlayArea import PlayArea
 
 
 ###############################################################################
 ###############################################################################
 ###############################################################################
 class Game(object):
-    def __init__(self, quiet=False, prosperity=False):
+    def __init__(self, **kwargs):
+        self.parseArgs(**kwargs)
+
         self.players = {}
         self.cardpiles = {}
-        self.trashpile = []
+        self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
-        self.quiet = quiet
-        self.prosperity = prosperity
         self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
         if self.prosperity:
             self.baseCards.append('Colony')
             self.baseCards.append('Platinum')
 
     ###########################################################################
-    def startGame(self, numplayers, initcards=[], cardpath='cards', cardbase=[], playernames=[], plrKlass=TextPlayer):
-        self.cardbase = cardbase
-        self.cardpath = cardpath
-        self.numplayers = numplayers
-        self.loadDecks(initcards)
-        for i in range(numplayers):
+    def parseArgs(self, **args):
+        self.prosperity = False
+        self.quiet = False
+        self.numplayers = 2
+        self.initcards = []
+        self.cardpath = 'cards'
+        self.cardbase = []
+        if 'prosperity' in args:
+            self.prosperity = args['prosperity']
+        if 'quiet' in args:
+            self.quiet = args['quiet']
+        if 'numplayers' in args:
+            self.numplayers = args['numplayers']
+        if 'initcards' in args:
+            self.initcards = args['initcards']
+        if 'cardpath' in args:
+            self.cardpath = args['cardpath']
+        if 'cardbase' in args:
+            self.cardbase = args['cardbase']
+
+    ###########################################################################
+    def startGame(self, playernames=[], plrKlass=TextPlayer):
+        self.loadDecks(self.initcards)
+        for i in range(self.numplayers):
             try:
                 name = playernames.pop()
             except IndexError:
@@ -42,21 +61,28 @@ class Game(object):
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
-        self.currentPlayer = self.players.values()[0]
+        self.currentPlayer = self.playerList(0)
+
+    ###########################################################################
+    def playerList(self, num=None):
+        if num is None:
+            return list(self.players.values())
+        else:
+            return list(self.players.values())[num]
 
     ###########################################################################
     def cardSetup(self):
         """ Run the setup() method for all cards """
-        for cp in self.cardpiles.values():
+        for cp in list(self.cardpiles.values()):
             cp.setup(game=self)
 
     ###########################################################################
     def countCards(self):
         count = 0
-        count += len(self.trashpile)
-        for cp in self.cardpiles.values():
+        count += self.trashSize()
+        for cp in list(self.cardpiles.values()):
             count += cp.numcards
-        for pl in self.players.values():
+        for pl in self.playerList():
             count += pl.countCards()
         return count
 
@@ -173,31 +199,32 @@ class Game(object):
     ###########################################################################
     def print_state(self):
         """ This is used for debugging """
-        print "#" * 40
-        print "Trash: %s" % ", ".join([c.name for c in self.trashpile])
-        for p in self.players.values():
-            print "%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand]))
-            print "%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck]))
-            print "%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile]))
-            print "%s's played: %s" % (p.name, ", ".join([c.name for c in p.played]))
-            print "%s's messages: %s" % (p.name, p.messages)
-            print "%s's score: %s" % (p.name, p.score)
-            print "%s's turn: gold=%d actions=%d buys=%d coins=%d potions=%d" % (p.name, p.gold, p.actions, p.buys, p.coins, p.potions)
+        print("#" * 40)
+        print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
+        for p in self.playerList():
+            print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
+            print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
+            print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
+            print("%s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
+            print("%s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
+            print("%s's messages: %s" % (p.name, p.messages))
+            print("%s's score: %s" % (p.name, p.score))
+            print("%s's turn: coin=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.actions, p.buys, p.specialcoins, p.potions))
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
-        print "%s" % ", ".join(cpls)
+        print("%s" % ", ".join(cpls))
 
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        players = self.players.values()
+        players = self.playerList()
         place = players.index(plr) - 1
-        return self.players.values()[place]
+        return players[place]
 
     ###########################################################################
     def whoWon(self):
         scores = {}
         self.output("")
-        for plr in self.players.values():
+        for plr in self.playerList():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
 
@@ -232,13 +259,12 @@ def parseArgs():
 
 ###############################################################################
 def runGame(args):
-    cards = args.initcards
-    if args.cardset:
-        for line in args.cardset:
+    cards = args['initcards']
+    if args['cardset']:
+        for line in args['cardset']:
             cards.append(line.strip())
-    g = Game(prosperity=args.prosperity)
-    g.startGame(numplayers=args.numplayers, initcards=cards,
-                cardpath=args.cardpath, cardbase=args.cardbase)
+    g = Game(args=args, initcards=cards)
+    g.startGame()
     try:
         while not g.gameover:
             g.turn()
@@ -250,11 +276,11 @@ def runGame(args):
 ###############################################################################
 def main():
     args = parseArgs()
-    runGame(args)
+    runGame(vars(args))
 
 
 ###############################################################################
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF

@@ -10,14 +10,14 @@ class Card_Chancellor(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+2 gold, Discard deck"
+        self.desc = "+2 coin, Discard deck"
         self.name = 'Chancellor'
-        self.gold = 2
+        self.coin = 2
         self.cost = 3
 
     def special(self, game, player):
         """ You may immediately put your deck into your discard pile """
-        ans = player.plrChooseOptions("Discard deck?", ("Don't Discard Deck", False), ("Discard Deck", True))
+        ans = player.plrChooseOptions("Discard deck?", ("Don't Discard", False), ("Discard Deck", True))
         if ans:
             for c in player.deck[:]:
                 player.addCard(c, 'discard')
@@ -28,9 +28,9 @@ class Card_Chancellor(Card):
 class Test_Chancellor(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['chancellor'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['chancellor'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.ccard = self.g['chancellor'].remove()
         self.plr.setHand('estate')
         self.plr.addCard(self.ccard, 'hand')
@@ -38,18 +38,18 @@ class Test_Chancellor(unittest.TestCase):
     def test_nodiscard(self):
         self.plr.setDeck('copper', 'silver', 'gold')
         self.plr.setDiscard('estate', 'duchy', 'province')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ["Don't discard"]
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getGold(), 2)
+        self.assertEquals(self.plr.getCoin(), 2)
         self.assertEquals(self.plr.deckSize(), 3)
         self.assertEquals(self.plr.discardSize(), 3)
 
     def test_discard(self):
         self.plr.setDeck('copper', 'silver', 'gold')
         self.plr.setDiscard('estate', 'duchy', 'province')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['discard deck']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getGold(), 2)
+        self.assertEquals(self.plr.getCoin(), 2)
         self.assertEquals(self.plr.deckSize(), 0)
         self.assertEquals(self.plr.discardSize(), 6)
 

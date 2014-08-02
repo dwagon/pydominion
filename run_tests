@@ -1,8 +1,0 @@
-#!/bin/bash
-
-export PYTHONPATH=.
-
-cd src
-nosetests --with-coverage *.py cards/*.py
-
-#EOF

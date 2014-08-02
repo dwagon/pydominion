@@ -10,12 +10,12 @@ class Card_Spoils(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'darkages'
-        self.desc = "+3 gold - once off"
+        self.desc = "+3 coin - once off"
         self.basecard = True
         self.purchasable = False
         self.name = 'Spoils'
         self.cost = 0
-        self.gold = 3
+        self.coin = 3
 
     def special(self, player, game):
         """ When you play this return it to the spoils pile """
@@ -27,17 +27,17 @@ class Card_Spoils(Card):
 class Test_Spoils(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['banditcamp'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['banditcamp'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_play(self):
         numspoils = self.g['Spoils'].numcards
         spoils = self.g['Spoils'].remove()
         self.plr.addCard(spoils, 'hand')
         self.plr.playCard(spoils)
-        self.assertEqual(self.plr.getGold(), 3)
-        self.assertEqual(self.plr.played, [])
+        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertTrue(self.plr.played.isEmpty())
         self.assertEqual(self.g['Spoils'].numcards, numspoils)
 
 
@@ -45,4 +45,4 @@ class Test_Spoils(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

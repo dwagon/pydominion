@@ -1,3 +1,4 @@
+from PlayArea import PlayArea
 import operator
 import random
 import sys
@@ -35,16 +36,17 @@ class Player(object):
         game.output("Player %s is at the table" % name)
         self.score = {}
         self.name = name
-        self.coins = 0
+        self.specialcoins = 0
         self.messages = []
-        self.hand = []
-        self.deck = []
-        self.played = []
+        self.hand = PlayArea([])
+        self.durationpile = PlayArea([])
+        self.deck = PlayArea([])
+        self.played = PlayArea([])
+        self.discardpile = PlayArea([])
         self.buys = 1
         self.actions = 1
-        self.gold = 0
+        self.coin = 0
         self.potions = 0
-        self.discardpile = []
         self.quiet = quiet
         self.test_input = []
         self.initial_Deck()
@@ -56,11 +58,11 @@ class Player(object):
             hence add them back """
         self.game['Copper'].numcards += 7
         for i in range(7):
-            self.deck.append(self.game['Copper'].remove())
+            self.deck.add(self.game['Copper'].remove())
         self.game['Estate'].numcards += 3
         for i in range(3):
-            self.deck.append(self.game['Estate'].remove())
-        random.shuffle(self.deck)
+            self.deck.add(self.game['Estate'].remove())
+        self.deck.shuffle()
 
     ###########################################################################
     def inHand(self, card):
@@ -74,7 +76,7 @@ class Player(object):
     def trashCard(self, c):
         """ Take a card out of the game """
         c.hook_trashThisCard(game=self.game, player=self)
-        self.game.trashpile.append(c)
+        self.game.trashpile.add(c)
         if c in self.played:
             self.played.remove(c)
         if c in self.hand:
@@ -83,30 +85,30 @@ class Player(object):
     ###########################################################################
     def setPlayed(self, *cards):
         """ This is mostly used for testing """
-        self.played = []
+        self.played.empty()
         for c in cards:
-            self.played.append(self.game[c].remove())
+            self.played.add(self.game[c].remove())
 
     ###########################################################################
     def setDiscard(self, *cards):
         """ This is mostly used for testing """
-        self.discardpile = []
+        self.discardpile.empty()
         for c in cards:
-            self.discardpile.append(self.game[c].remove())
+            self.discardpile.add(self.game[c].remove())
 
     ###########################################################################
     def setHand(self, *cards):
         """ This is mostly used for testing """
-        self.hand = []
+        self.hand.empty()
         for c in cards:
-            self.hand.append(self.game[c].remove())
+            self.hand.add(self.game[c].remove())
 
     ###########################################################################
     def setDeck(self, *cards):
         """ This is mostly used for testing """
-        self.deck = []
+        self.deck.empty()
         for c in cards:
-            self.deck.append(self.game[c].remove())
+            self.deck.add(self.game[c].remove())
 
     ###########################################################################
     def nextCard(self):
@@ -114,11 +116,11 @@ class Player(object):
         if not self.deck:
             self.shuffleDeck()
             while self.discardpile:
-                self.addCard(self.discardpile.pop(), 'deck')
+                self.addCard(self.discardpile.topcard(), 'deck')
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.pop()
+        c = self.deck.topcard()
         return c
 
     ###########################################################################
@@ -144,7 +146,7 @@ class Player(object):
     ###########################################################################
     def shuffleDeck(self):
         self.output("Shuffling Pile of %d cards" % len(self.discardpile))
-        random.shuffle(self.discardpile)
+        self.discardpile.shuffle()
 
     ###########################################################################
     def pickUpHand(self, handsize=5):
@@ -152,24 +154,26 @@ class Player(object):
             self.pickupCard(verb='Dealt')
 
     ###########################################################################
-    def gainCoins(self, num=1):
+    def gainSpecialCoins(self, num=1):
         """ Gain a number of coin tokens """
-        self.coins += num
+        self.specialcoins += num
 
     ###########################################################################
     def addCard(self, c, pile='discard'):
         if not c:
             return
         if pile == 'discard':
-            self.discardpile.append(c)
+            self.discardpile.add(c)
         elif pile == 'hand':
-            self.hand.append(c)
+            self.hand.add(c)
         elif pile == 'topdeck':
-            self.deck.append(c)
+            self.deck.add(c)
         elif pile == 'deck':
-            self.deck.insert(0, c)
+            self.deck.addToTop(c)
         elif pile == 'played':
-            self.played.append(c)
+            self.played.add(c)
+        elif pile == 'duration':
+            self.durationpile.add(c)
 
     ###########################################################################
     def discardCard(self, c):
@@ -180,6 +184,14 @@ class Player(object):
     ###########################################################################
     def handSize(self):
         return len(self.hand)
+
+    ###########################################################################
+    def playedSize(self):
+        return len(self.played)
+
+    ###########################################################################
+    def durationSize(self):
+        return len(self.durationpile)
 
     ###########################################################################
     def deckSize(self):
@@ -194,9 +206,9 @@ class Player(object):
         for c in self.hand + self.played:
             self.hook_discardCard(c)
         while self.hand:
-            self.discardCard(self.hand.pop())
+            self.discardCard(self.hand.topcard())
         while self.played:
-            self.discardCard(self.played.pop())
+            self.discardCard(self.played.topcard())
 
     ###########################################################################
     def playableSelection(self, index):
@@ -215,15 +227,15 @@ class Player(object):
         spendable = [c for c in self.hand if c.isTreasure()]
         if spendable:
             sel = chr(ord('a') + index)
-            totgold = sum([self.hook_spendValue(c) for c in spendable])
+            totcoin = sum([self.hook_spendValue(c) for c in spendable])
             numpots = sum([1 for c in spendable if c.name == 'Potion'])
             potstr = ", %d potions" % numpots if numpots else ""
-            tp = 'Spend all treasures (%d gold%s)' % (totgold, potstr)
+            tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
             options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
             index += 1
         for s in spendable:
             sel = chr(ord('a') + index)
-            tp = 'Spend %s (%d gold)' % (s.name, self.hook_spendValue(s))
+            tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
@@ -238,7 +250,7 @@ class Player(object):
     ###########################################################################
     def buyableSelection(self, index):
         options = []
-        buyable = self.cardsUnder(gold=self.gold, potions=self.potions)
+        buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
         for p in buyable:
             if not self.hook_allowedToBuy(p):
                 continue
@@ -252,7 +264,7 @@ class Player(object):
     def choiceSelection(self):
         options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
 
-        if self.coins:
+        if self.specialcoins:
             options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
         index = 0
@@ -267,12 +279,12 @@ class Player(object):
             options.extend(op)
 
         prompt = "What to do (actions=%d buys=%d" % (self.actions, self.buys)
-        if self.gold:
-            prompt += " gold=%d" % self.gold
+        if self.coin:
+            prompt += " coin=%d" % self.coin
         if self.potions:
             prompt += " potions=%d" % self.potions
-        if self.coins:
-            prompt += " coins=%d" % self.coins
+        if self.specialcoins:
+            prompt += " specialcoins=%d" % self.specialcoins
         prompt += ")?"
         return self.userInput(options, prompt)
 
@@ -284,7 +296,14 @@ class Player(object):
 
     ###########################################################################
     def allCards(self):
-        return self.discardpile + self.hand + self.deck + self.played
+        """ Return all the cards that the player has """
+        x = PlayArea([])
+        x += self.discardpile
+        x += self.hand
+        x += self.deck
+        x += self.played
+        x += self.durationpile
+        return x
 
     ###########################################################################
     def getScoreDetails(self, verbose=False):
@@ -316,18 +335,22 @@ class Player(object):
 
     ###########################################################################
     def startTurn(self):
-        self.played = []
+        self.played.empty()
         self.buys = 1
         self.actions = 1
-        self.gold = 0
+        self.coin = 0
         self.potions = 0
+        for card in self.durationpile:
+            card.duration(game=self.game, player=self)
+            self.addCard(card, 'played')
+        self.durationpile.empty()
 
     ###########################################################################
     def spendCoin(self):
-        if self.coins <= 0:
+        if self.specialcoins <= 0:
             return
-        self.coins -= 1
-        self.gold += 1
+        self.specialcoins -= 1
+        self.coin += 1
         self.output("Spent a coin")
 
     ###########################################################################
@@ -344,7 +367,7 @@ class Player(object):
     ###########################################################################
     def hook_spendValue(self, card):
         """ How much do you get for spending the card """
-        val = card.hook_goldvalue(game=self.game, player=self)
+        val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendValue(game=self.game, player=self, card=card)
         return val
@@ -364,15 +387,22 @@ class Player(object):
             return
         self.output("Played %s" % card.name)
         if discard:
-            self.addCard(card, 'played')
+            if card.isDuration():
+                self.addCard(card, 'duration')
+            else:
+                self.addCard(card, 'played')
             self.hand.remove(card)
         self.actions += card.actions
-        self.gold += self.hook_spendValue(card)
+        self.coin += self.hook_spendValue(card)
         self.buys += card.buys
         self.potions += card.potion
         for i in range(card.cards):
             self.pickupCard()
-        card.special(game=self.game, player=self)
+        try:
+            card.special(game=self.game, player=self)
+        except KeyboardInterrupt:
+            sys.stderr.write("\nFailed: %s\n" % self.messages)
+            sys.exit(1)
 
     ###########################################################################
     def cardCost(self, card):
@@ -408,8 +438,8 @@ class Player(object):
             return
         newcard = self.gainCard(card)
         self.buys -= 1
-        self.gold -= self.cardCost(newcard)
-        self.output("Bought %s for %d gold" % (newcard.name, self.cardCost(newcard)))
+        self.coin -= self.cardCost(newcard)
+        self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
         self.hook_buyCard(newcard)
 
     ###########################################################################
@@ -441,16 +471,16 @@ class Player(object):
         return self.potions
 
     ###########################################################################
-    def getGold(self):
-        return self.gold
+    def getCoin(self):
+        return self.coin
 
     ###########################################################################
-    def getCoins(self):
-        return self.coins
+    def getSpecialCoins(self):
+        return self.specialcoins
 
     ###########################################################################
-    def addGold(self, num):
-        self.gold += num
+    def addCoin(self, num):
+        self.coin += num
 
     ###########################################################################
     def getActions(self):
@@ -469,9 +499,9 @@ class Player(object):
         self.buys += num
 
     ###########################################################################
-    def cardsAffordable(self, oper, gold, potions=0, types={}):
+    def cardsAffordable(self, oper, coin, potions=0, types={}):
         """Return the list of cards for under cost """
-        affordable = []
+        affordable = PlayArea([])
         for c in self.game.cardTypes():
             cost = self.cardCost(c)
             if not c.purchasable:
@@ -484,23 +514,23 @@ class Player(object):
                 continue
             if not c.numcards:
                 continue
-            if oper(cost, gold) and oper(c.potcost, potions):
-                affordable.append(c)
+            if oper(cost, coin) and oper(c.potcost, potions):
+                affordable.add(c)
         affordable.sort(key=lambda c: self.cardCost(c))
         affordable.sort(key=lambda c: c.basecard)
         return affordable
 
     ###########################################################################
-    def cardsUnder(self, gold, potions=0, types={}):
+    def cardsUnder(self, coin, potions=0, types={}):
         """Return the list of cards for under cost """
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.le, gold, potions, types)
+        return self.cardsAffordable(operator.le, coin, potions, types)
 
     ###########################################################################
-    def cardsWorth(self, gold, potions=0, types={}):
+    def cardsWorth(self, coin, potions=0, types={}):
         """Return the list of cards that are exactly cost """
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.eq, gold, potions, types)
+        return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
     def countCards(self):
@@ -517,7 +547,7 @@ class Player(object):
     ###########################################################################
     def attackVictims(self):
         victims = []
-        for plr in self.game.players.values():
+        for plr in list(self.game.players.values()):
             if plr == self:
                 continue
             if plr.hasDefense(self):
@@ -527,9 +557,73 @@ class Player(object):
 
     ###########################################################################
     def coststr(self, card):
-        goldcost = "%d gold" % self.cardCost(card)
+        coincost = "%d coins" % self.cardCost(card)
         potcost = "%d potions" % card.potcost if card.potcost else ""
-        cststr = "%s %s" % (goldcost, potcost)
+        cststr = "%s %s" % (coincost, potcost)
         return cststr.strip()
 
-#EOF
+    ###########################################################################
+    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
+        """ Ask player to trash num cards
+        """
+        if anynum:
+            prompt = "Trash any cards"
+        else:
+            prompt = "Trash %d cards" % num
+        trash = self.cardSel(
+            num=num, cardsrc='hand', anynum=anynum, printcost=printcost,
+            force=force, exclude=exclude, verbs=('Trash', 'Untrash'),
+            prompt=prompt)
+        for c in trash:
+            self.trashCard(c)
+        return trash
+
+    ###########################################################################
+    def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
+        """ Gain a card of 'chooser's choice up to cost coin
+        if actiononly then gain only action cards
+        """
+        types = self.typeSelector(types)
+        if modifier == 'less':
+            prompt = "Gain a card costing up to %d" % cost
+            buyable = self.cardsUnder(cost, types=types)
+        elif modifier == 'equal':
+            prompt = "Gain a card costing exactly %d" % cost
+            buyable = self.cardsWorth(cost, types=types)
+        buyable = [c for c in buyable if c.purchasable]
+        cards = self.cardSel(
+            cardsrc=buyable, chooser=chooser, verbs=('Get', 'Unget'),
+            force=force, prompt=prompt)
+        if cards:
+            card = cards[0]
+            self.output("Got a %s" % card.name)
+            self.addCard(card.remove(), destination)
+            return card
+
+    ###########################################################################
+    def plrPickCard(self, force=False):
+        sel = self.cardSel(force=force)
+        return sel[0]
+
+    ###########################################################################
+    def plrDiscardCards(self, num=1, anynum=False):
+        """ Get the player to discard exactly num cards """
+        if anynum:
+            msg = "Discard any number of cards"
+        else:
+            msg = "Discard %d cards" % num
+        discard = self.cardSel(
+            num=num, anynum=anynum, verbs=('Discard', 'Undiscard'),
+            prompt=msg)
+        for c in discard:
+            self.output("Discarding %s" % c.name)
+            self.discardCard(c)
+        return discard
+
+    ###########################################################################
+    def plrDiscardDownTo(self, num):
+        """ Get the player to discard down to num cards in their hand """
+        numtogo = len(self.hand) - num
+        self.plrDiscardCards(numtogo)
+
+# EOF

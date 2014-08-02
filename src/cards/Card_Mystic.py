@@ -10,10 +10,10 @@ class Card_Mystic(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+2 gold, +1 action, guess top card to get it"
+        self.desc = "+2 coin, +1 action, guess top card to get it"
         self.name = 'Mystic'
         self.actions = 1
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
     ###########################################################################
@@ -42,9 +42,9 @@ class Card_Mystic(Card):
 class Test_Mystic(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['mystic'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['mystic'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['mystic'].remove()
 
     def test_play(self):
@@ -53,42 +53,34 @@ class Test_Mystic(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_good(self):
         """ When the guess is good the card should move to the hand """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('gold')
-        self.plr.test_input = ['%d' % self.goldnum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(self.plr.inHand('Gold'))
-        self.assertEqual(self.plr.deck, [])
+        self.assertTrue(self.plr.deck.isEmpty())
 
     def test_bad(self):
         """ When the guess is bad the card should stay on the deck """
         self.plr.addCard(self.card, 'hand')
         self.plr.setDeck('province')
-        self.plr.test_input = ['%d' % self.goldnum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Province')
-
-    def goldnum(self):
-        index = 1
-        for c in sorted(self.g.cardTypes()):
-            if c.name == 'Gold':
-                goldnum = index
-            index += 1
-        return goldnum
 
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

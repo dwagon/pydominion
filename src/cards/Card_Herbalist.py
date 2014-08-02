@@ -9,11 +9,11 @@ class Card_Herbalist(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'alchemy'
-        self.desc = "+1 buy, +1 gold, can put treasures on top of deck"
+        self.desc = "+1 buy, +1 coin, can put treasures on top of deck"
         self.name = 'Herbalist'
         self.cost = 2
         self.buys = 1
-        self.gold = 1
+        self.coin = 1
 
     def hook_discardCard(self, game, player):
         """ When you discard this from play, you may put one of
@@ -36,9 +36,9 @@ class Card_Herbalist(Card):
 class Test_Herbalist(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['herbalist'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['herbalist'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.hcard = self.g['herbalist'].remove()
 
     def test_putnothing(self):
@@ -51,7 +51,7 @@ class Test_Herbalist(unittest.TestCase):
 
     def test_putgold(self):
         self.plr.setPlayed('gold', 'estate')
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.addCard(self.hcard, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.hcard)
@@ -65,4 +65,4 @@ class Test_Herbalist(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

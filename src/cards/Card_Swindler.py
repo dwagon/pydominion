@@ -10,10 +10,10 @@ class Card_Swindler(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
-        self.desc = "+2 gold. Other players trash top card and gain one with the same cost"
+        self.desc = "+2 coin. Other players trash top card and gain one with the same cost"
         self.name = 'Swindler'
         self.cost = 3
-        self.gold = 2
+        self.coin = 2
 
     def special(self, game, player):
         """ Each other player trashed the top card of his deck and
@@ -31,9 +31,9 @@ class Card_Swindler(Card):
 class Test_Swindler(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['swindler', 'moat'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['swindler', 'moat'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['swindler'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -41,13 +41,13 @@ class Test_Swindler(unittest.TestCase):
         """ Play the Swindler """
         self.victim.setHand('moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_defended(self):
         """ Swindle a defended player """
         self.victim.setHand('moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_attack(self):
         """ Swindle an undefended player """
@@ -62,4 +62,4 @@ class Test_Swindler(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

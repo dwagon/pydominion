@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Gardens(Card):
     def __init__(self):
         Card.__init__(self)
@@ -24,9 +25,9 @@ class Card_Gardens(Card):
 class Test_Gardens(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['gardens'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['gardens'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_score_0(self):
         self.plr.setHand('gardens', 'copper', 'copper')

@@ -25,15 +25,15 @@ class Card_Cellar(Card):
 class Test_Cellar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['cellar'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['cellar'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.ccard = self.g['cellar'].remove()
 
     def test_none(self):
         self.plr.setHand('estate', 'copper', 'silver')
         self.plr.addCard(self.ccard, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 3)
 
@@ -41,7 +41,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.setHand('estate', 'copper', 'silver')
         self.plr.setDeck('province', 'gold')
         self.plr.addCard(self.ccard, 'hand')
-        self.plr.test_input = ['1', '0']
+        self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.deck[-1].name, 'Province')
         for c in self.plr.hand:
@@ -56,4 +56,4 @@ class Test_Cellar(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

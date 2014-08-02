@@ -15,7 +15,7 @@ class Card(object):
         self.needspoils = False
         self.actions = 0
         self.buys = 0
-        self.gold = 0
+        self.coin = 0
         self.potion = 0
         self.cards = 0
         self.victory = 0
@@ -36,11 +36,19 @@ class Card(object):
     def special(self, game, player):
         pass
 
+    def duration(self, game, player):
+        pass
+
     def setup(self, game):
         pass
 
     def hasDefense(self):
         return self.defense
+
+    def isDuration(self):
+        if 'duration' in self.cardtype:
+            return True
+        return False
 
     def isTreasure(self):
         if 'treasure' in self.cardtype:
@@ -54,6 +62,11 @@ class Card(object):
 
     def isAction(self):
         if 'action' in self.cardtype:
+            return True
+        return False
+
+    def isShelter(self):
+        if 'shelter' in self.cardtype:
             return True
         return False
 
@@ -97,9 +110,9 @@ class Card(object):
     def hook_cardCost(self, game, player, card):
         return 0
 
-    def hook_goldvalue(self, game, player):
-        """ How much gold does this card contribute """
-        return self.gold
+    def hook_coinvalue(self, game, player):
+        """ How much coin does this card contribute """
+        return self.coin
 
     def hook_spendValue(self, game, player, card):
         """ Does this card make any  modifications on the value of spending a card """
@@ -153,4 +166,4 @@ class Card(object):
             if c != o['card']:
                 victim.discardCard(c)
 
-#EOF
+# EOF

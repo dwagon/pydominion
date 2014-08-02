@@ -12,7 +12,7 @@ class Card_Counterfeit(Card):
         self.desc = "+1 Gold, +1 Buy; May play a treasure twice and trash it"
         self.name = 'Counterfeit'
         self.cost = 5
-        self.gold = 1
+        self.coin = 1
         self.buys = 1
 
     def special(self, game, player):
@@ -39,16 +39,16 @@ class Card_Counterfeit(Card):
 class Test_Counterfiet(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['counterfeit'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['counterfeit'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['counterfeit'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_notreasures(self):
@@ -63,14 +63,14 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
         # CF + 2 * Gold
-        self.assertEqual(self.plr.getGold(), 7)
+        self.assertEqual(self.plr.getCoin(), 7)
 
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

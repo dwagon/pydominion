@@ -19,12 +19,12 @@ class Card_City(Card):
     ###########################################################################
     def special(self, game, player):
         """ If there are one or more empty Supply piles, +1 card.
-        If there are two or more, +1 gold, +1 buy """
+        If there are two or more, +1 coin, +1 buy """
         empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
         if empties >= 1:
             player.pickupCard()
         if empties >= 2:
-            player.addGold(1)
+            player.addCoin(1)
             player.addBuys(1)
 
 
@@ -32,9 +32,9 @@ class Card_City(Card):
 class Test_City(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['city', 'moat', 'cellar'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['city', 'moat', 'cellar'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.city = self.g['city'].remove()
         self.plr.addCard(self.city, 'hand')
 
@@ -66,7 +66,7 @@ class Test_City(unittest.TestCase):
                 break
         self.plr.playCard(self.city)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         # 1 default + 1 for city
         self.assertEqual(self.plr.getBuys(), 2)
         # 5 for hand, 1 for city, 1 for one stack

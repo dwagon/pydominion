@@ -9,10 +9,10 @@ class Card_Woodcutter(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+1 buys, +2 gold"
+        self.desc = "+1 buys, +2 coin"
         self.name = 'Woodcutter'
         self.buys = 1
-        self.gold = 2
+        self.coin = 2
         self.cost = 3
 
 
@@ -20,16 +20,16 @@ class Card_Woodcutter(Card):
 class Test_Woodcutter(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['woodcutter'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['woodcutter'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['woodcutter'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play the woodcutter """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
 
 

@@ -9,10 +9,10 @@ class Card_Cache(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+3 gold. Gain two coppers when you gain this"
+        self.desc = "+3 coin. Gain two coppers when you gain this"
         self.name = 'Cache'
         self.cost = 5
-        self.gold = 3
+        self.coin = 3
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, gain two Coppers"""
@@ -25,9 +25,9 @@ class Card_Cache(Card):
 class Test_Cache(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['cache'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['cache'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.cache = self.g['cache'].remove()
 
     def test_gain(self):
@@ -38,7 +38,7 @@ class Test_Cache(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.cache, 'hand')
         self.plr.playCard(self.cache)
-        self.assertEqual(self.plr.getGold(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
 
 
 ###############################################################################

@@ -23,9 +23,9 @@ class Card_Curse(Card):
 class Test_Curse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['witch'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['witch'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['curse'].remove()
 
     def test_play(self):

@@ -11,7 +11,7 @@ class Card_Bishop(Card):
         self.base = 'prosperity'
         self.desc = "Trash a card for VP"
         self.name = 'Bishop'
-        self.gold = 1
+        self.coin = 1
         self.victory = 1
         self.cost = 4
 
@@ -19,7 +19,7 @@ class Card_Bishop(Card):
         """ Trash a card from your hand. +VP equal to half its cost
         in coins, rounded down. Each other player may trash a card
         from his hand """
-        for plr in game.players.values():
+        for plr in game.playerList():
             if plr == player:
                 self.trashOwnCard(game, player)
             else:
@@ -44,42 +44,42 @@ class Card_Bishop(Card):
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['bishop'])
-        self.plr, self.other = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['bishop'])
+        self.g.startGame()
+        self.plr, self.other = self.g.playerList()
         self.bishop = self.g['bishop'].remove()
 
     def test_play(self):
         self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['0']
-        self.other.test_input = ['0']
+        self.plr.test_input = ['finish']
+        self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.getGold(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_trash(self):
         self.plr.setHand('gold')
         self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['1']
-        self.other.test_input = ['0']
+        self.plr.test_input = ['trash gold']
+        self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
 
     def test_bothtrash(self):
         self.plr.setHand('gold')
         self.other.setHand('province')
         self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['1']
-        self.other.test_input = ['1']
+        self.plr.test_input = ['trash gold']
+        self.other.test_input = ['trash province']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertEqual(self.plr.hand, [])
-        self.assertEqual(self.other.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
+        self.assertTrue(self.other.hand.isEmpty())
         self.assertEqual(self.g.trashSize(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -19,7 +19,7 @@ class Card_Embassy(Card):
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player gains a Silver """
-        for plr in game.players.values():
+        for plr in game.playerList():
             if plr != player:
                 plr.output("Gained a silver from %s's purchase of Embassy" % player.name)
                 plr.gainCard('Silver')
@@ -29,14 +29,16 @@ class Card_Embassy(Card):
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['embassy'])
-        self.plr, self.other = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['embassy'])
+        self.g.startGame()
+        self.plr, self.other = self.g.playerList()
         self.card = self.g['embassy'].remove()
+        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'estate')
+        self.plr.setHand('copper', 'silver', 'gold', 'estate', 'duchy')
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['1', '2', '3', '0']
+        self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
 
@@ -49,4 +51,4 @@ class Test_Embassy(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

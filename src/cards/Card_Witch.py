@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)
@@ -26,9 +27,9 @@ class Card_Witch(Card):
 class Test_Witch(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['witch', 'moat'])
-        self.attacker, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['witch', 'moat'])
+        self.g.startGame()
+        self.attacker, self.victim = self.g.playerList()
         self.wcard = self.g['witch'].remove()
         self.mcard = self.g['moat'].remove()
         self.attacker.addCard(self.wcard, 'hand')
@@ -38,7 +39,7 @@ class Test_Witch(unittest.TestCase):
         self.attacker.playCard(self.wcard)
         self.assertEqual(self.victim.handSize(), 6)
         self.assertEqual(self.attacker.handSize(), 7)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertEqual(self.victim.discardSize(), 0)
 
     def test_nodefense(self):
         self.attacker.playCard(self.wcard)
@@ -51,4 +52,4 @@ class Test_Witch(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

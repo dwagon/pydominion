@@ -19,9 +19,14 @@ class Card_Count(Card):
         """ Choose one: Discard 2 cards; or put a card from your
         hand on top of your deck; or gain a copper.
 
-        Choose one: +3 gold, or trash your hand or gain a Duchy """
+        Choose one: +3 coin, or trash your hand or gain a Duchy """
 
-        ans = player.plrChooseOptions("What do you want to do?", ("Discard 2 cards", "discard"), ("Put a card from you hand on top of your deck", "putcard"), ("Gain a copper", "copper"))
+        ans = player.plrChooseOptions(
+            "What do you want to do?",
+            ("Discard 2 cards", "discard"),
+            ("Put a card from you hand on top of your deck", "putcard"),
+            ("Gain a copper", "copper")
+        )
         if ans == 'copper':
             player.output("Gained a copper")
             player.gainCard('copper')
@@ -32,7 +37,7 @@ class Card_Count(Card):
 
         ans = player.plrChooseOptions(
             'What do you want to do now?',
-            ('+3 gold', 'gold'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
+            ('+3 coin', 'coin'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
         if ans == 'duchy':
             player.output("Gained a duchy")
             player.gainCard('duchy')
@@ -41,7 +46,7 @@ class Card_Count(Card):
                 player.output("Trashing %s" % c.name)
                 player.trashCard(c)
         else:
-            player.addGold(3)
+            player.addCoin(3)
 
     ###########################################################################
     def putCard(self, game, player):
@@ -63,15 +68,16 @@ class Card_Count(Card):
 class Test_Count(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['count'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['count'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['count'].remove()
+        self.plr.setHand('copper', 'estate', 'silver', 'province', 'gold')
 
     def test_discard(self):
         self.plr.addCard(self.card, 'hand')
-        # Discard, select card 1 and card 2, finish selecting, +3 gold
-        self.plr.test_input = ['0', '1', '2', '0', '0']
+        # Discard, select card 1 and card 2, finish selecting, +3 coin
+        self.plr.test_input = ['discard 2', 'discard estate', 'discard copper', 'finish', '+3 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertEqual(self.plr.handSize(), 3)
@@ -79,34 +85,34 @@ class Test_Count(unittest.TestCase):
     def test_topdeck(self):
         self.plr.setHand('gold')
         self.plr.addCard(self.card, 'hand')
-        # top deck, card select, +3 gold
-        self.plr.test_input = ['1', '1', '0']
+        # top deck, card select, +3 coin
+        self.plr.test_input = ['top of your deck', 'put gold', '+3 coin']
         self.plr.playCard(self.card)
         nc = self.plr.nextCard()
         self.assertEqual(nc.name, 'Gold')
 
     def test_gainCopper(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['2', '0']
+        self.plr.test_input = ['gain a copper', '+3 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
 
     def test_gaingold(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['2', '0']
+        self.plr.test_input = ['gain a copper', '+3 coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
 
     def test_trashhand(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['2', '1']
+        self.plr.test_input = ['gain a copper', 'trash hand']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.g.trashSize(), 5)
 
     def test_gainDuchy(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['2', '2']
+        self.plr.test_input = ['gain a copper', 'gain duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[1].name, 'Duchy')
 
@@ -115,4 +121,4 @@ class Test_Count(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

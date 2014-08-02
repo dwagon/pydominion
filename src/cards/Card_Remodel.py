@@ -27,16 +27,16 @@ class Card_Remodel(Card):
 class Test_Remodel(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['remodel'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['remodel'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.rcard = self.g['remodel'].remove()
 
     def test_nothing(self):
         self.plr.addCard(self.rcard, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.rcard)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
@@ -61,4 +61,4 @@ class Test_Remodel(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

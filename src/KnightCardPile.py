@@ -18,7 +18,7 @@ class KnightCardPile(CardPile):
 
         self.knights = []
         for i in range(numcards):
-            c = random.choice(knighttypes.keys())
+            c = random.choice(list(knighttypes.keys()))
             self.knights.append(knighttypes[c])
 
     def remove(self):

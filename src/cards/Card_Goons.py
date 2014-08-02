@@ -14,7 +14,7 @@ class Card_Goons(Card):
         self.name = 'Goons'
         self.cost = 6
         self.buy = 1
-        self.gold = 2
+        self.coin = 2
 
     def special(self, game, player):
         """ Each other player discards down to three cards """
@@ -32,9 +32,9 @@ class Card_Goons(Card):
 class Test_Goons(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['goons', 'moat'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['goons', 'moat'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['goons'].remove()
         self.plr.addCard(self.card, 'hand')
 

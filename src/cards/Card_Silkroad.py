@@ -20,16 +20,16 @@ class Card_Silkroad(Card):
         for c in player.allCards():
             if c.isVictory():
                 score += 1
-        return score / 4
+        return int(score / 4)
 
 
 ###############################################################################
 class Test_Silkroad(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['silkroad'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['silkroad'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_scoreOne(self):
         self.plr.setHand('silkroad')

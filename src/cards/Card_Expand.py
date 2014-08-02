@@ -27,9 +27,9 @@ class Card_Expand(Card):
 class Test_Expand(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['expand'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['expand'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.expand = self.g['expand'].remove()
 
     def test_play(self):
@@ -37,7 +37,7 @@ class Test_Expand(unittest.TestCase):
         self.plr.addCard(self.expand, 'hand')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.expand)
-        self.assertEqual(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
 
@@ -45,4 +45,4 @@ class Test_Expand(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

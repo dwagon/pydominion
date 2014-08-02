@@ -4,14 +4,15 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Navigator(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "+2 gold. Discard top 5 cards, or put them back on deck"
+        self.desc = "+2 coin. Discard top 5 cards, or put them back on deck"
         self.name = 'Navigator'
-        self.gold = 2
+        self.coin = 2
         self.cost = 4
 
     def special(self, game, player):
@@ -38,22 +39,22 @@ class Card_Navigator(Card):
 class Test_Navigator(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['navigator'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['navigator'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.navigator = self.g['navigator'].remove()
         self.plr.addCard(self.navigator, 'hand')
 
     def test_discard(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['discard']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 5)
         self.assertEqual(self.plr.deckSize(), 1)
 
     def test_keep(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['return']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.deckSize(), 6)

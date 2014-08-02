@@ -45,9 +45,9 @@ class Card_Pillage(Card):
 class Test_Pillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['pillage', 'moat'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['pillage', 'moat'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['pillage'].remove()
 
     def test_play(self):
@@ -55,13 +55,13 @@ class Test_Pillage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 0)
-        self.assertEqual(self.plr.getGold(), 0)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discardSize(), 0)
 
     def test_defended(self):
         """ Victim has a defense """
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.addCard(self.card, 'hand')
         moat = self.g['moat'].remove()
         self.victim.addCard(moat, 'hand')
@@ -73,7 +73,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_nohandsize(self):
         """ Victim has too small a hand"""
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.victim.setHand('copper', 'copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
@@ -84,7 +84,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_attack(self):
         """ Victim has no defense and a large enough hand """
-        self.plr.hand = []
+        self.plr.hand.empty()
         self.plr.test_input = ['1']
         self.victim.setHand('copper', 'copper', 'copper', 'copper', 'gold')
         self.plr.addCard(self.card, 'hand')
@@ -100,4 +100,4 @@ class Test_Pillage(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

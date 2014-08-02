@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Rats(Card):
     def __init__(self):
         Card.__init__(self)
@@ -29,27 +30,29 @@ class Card_Rats(Card):
 class Test_Rats(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['rats'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['rats'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.rats = self.g['rats'].remove()
+        self.plr.setDeck('estate', 'province', 'duchy')
+        self.plr.setHand('copper', 'gold', 'silver', 'rats')
         self.plr.addCard(self.rats, 'hand')
 
     def test_play(self):
         self.plr.setDeck('gold')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rats)
         self.plr.addActions(1)
         self.assertEqual(self.plr.hand[-1].name, 'Gold')
 
     def test_trashcard(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rats)
         self.assertEquals(self.g.trashSize(), 1)
         self.assertNotEquals(self.g.trashpile[0].name, 'Rats')
 
     def test_gainrats(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rats)
         self.assertEquals(self.plr.discardpile[0].name, 'Rats')
 
@@ -65,4 +68,4 @@ class Test_Rats(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

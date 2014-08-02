@@ -9,10 +9,10 @@ class Card_Mountebank(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'prosperity'
-        self.desc = "+2 gold. Others discard curse or gain one + copper"
+        self.desc = "+2 coin. Others discard curse or gain one + copper"
         self.name = 'Mountebank'
         self.needcurse = True
-        self.gold = 2
+        self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
@@ -34,9 +34,9 @@ class Card_Mountebank(Card):
 class Test_Mountebank(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['mountebank'])
-        self.attacker, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['mountebank'])
+        self.g.startGame()
+        self.attacker, self.victim = self.g.playerList()
         self.mountebank = self.g['mountebank'].remove()
         self.curse = self.g['curse'].remove()
 

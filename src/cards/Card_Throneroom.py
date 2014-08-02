@@ -39,9 +39,9 @@ class Card_Throneroom(Card):
 class Test_Throneroom(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['throneroom', 'mine'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['throneroom', 'mine'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au

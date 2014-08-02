@@ -29,9 +29,9 @@ class Card_Countinghouse(Card):
 class Test_Countinghouse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['countinghouse'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['countinghouse'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.ch = self.g['countinghouse'].remove()
         self.plr.setHand()
         self.plr.addCard(self.ch, 'hand')

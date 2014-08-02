@@ -37,9 +37,9 @@ class Card_Library(Card):
 class Test_Library(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['library', 'moat'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['library', 'moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['library'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -62,7 +62,7 @@ class Test_Library(unittest.TestCase):
         self.plr.setDeck('duchy', 'moat', 'gold')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertEqual(self.plr.deck[-1].name, 'Duchy')
         self.assertEqual(self.plr.handSize(), 7)
         self.assertTrue(self.plr.inHand('Moat'))
@@ -72,4 +72,4 @@ class Test_Library(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

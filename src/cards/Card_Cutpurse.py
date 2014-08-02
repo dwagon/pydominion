@@ -9,9 +9,9 @@ class Card_Cutpurse(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.desc = "+2 gold, other players discard copper"
+        self.desc = "+2 coin, other players discard copper"
         self.name = 'Cutpurse'
-        self.gold = 2
+        self.coin = 2
         self.cost = 4
 
     def special(self, game, player):
@@ -31,9 +31,9 @@ class Card_Cutpurse(Card):
 class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['cutpurse'])
-        self.plr, self.victim = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['cutpurse'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['cutpurse'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -46,7 +46,7 @@ class Test_Cutpurse(unittest.TestCase):
     def test_play_none(self):
         self.victim.setHand('estate', 'estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.victim.discardpile, [])
+        self.assertTrue(self.victim.discardpile.isEmpty())
         self.assertEqual(self.victim.handSize(), 3)
 
 
@@ -54,4 +54,4 @@ class Test_Cutpurse(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

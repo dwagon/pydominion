@@ -26,7 +26,7 @@ class Card_Feast(Card):
         index = 1
         for p in buyable:
             selector = "%d" % index
-            toprint = 'Get %s (%d gold)' % (p.name, p.cost)
+            toprint = 'Get %s (%d coin)' % (p.name, p.cost)
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
 
@@ -50,25 +50,25 @@ class Card_Feast(Card):
 class Test_Feast(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['feast'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['feast'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
 
     def test_dontTrash(self):
         self.plr.setHand('feast')
         self.plr.test_input = ['0']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEquals(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
         self.plr.setHand('feast')
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(self.plr.hand, [])
+        self.assertTrue(self.plr.hand.isEmpty())
         self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
-        self.assertEquals(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
 
     def test_trashForSomething(self):
         self.plr.setHand('feast')
@@ -76,7 +76,7 @@ class Test_Feast(unittest.TestCase):
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')
-        self.assertEquals(self.plr.played, [])
+        self.assertTrue(self.plr.played.isEmpty())
         self.assertEquals(self.plr.discardSize(), 1)
 
 
@@ -84,4 +84,4 @@ class Test_Feast(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

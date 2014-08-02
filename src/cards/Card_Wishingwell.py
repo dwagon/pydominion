@@ -40,15 +40,15 @@ class Card_Wishingwell(Card):
 class Test_Wishingwell(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['wishingwell'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['wishingwell'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['wishingwell'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ No guess still gets a card and action """
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['no guess']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 6)
@@ -56,25 +56,17 @@ class Test_Wishingwell(unittest.TestCase):
     def test_good(self):
         """ A good guess means the card ends up in the hand"""
         self.plr.setDeck('gold', 'copper')
-        self.plr.test_input = ['%d' % self.getGoldNum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Gold'))
 
     def test_bad(self):
         """ Guessing badly should result in the card staying on the deck """
         self.plr.setDeck('province', 'copper')
-        self.plr.test_input = ['%d' % self.getGoldNum()]
+        self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))
-
-    def getGoldNum(self):
-        index = 1
-        for c in sorted(self.g.cardTypes()):
-            if c.name == 'Gold':
-                goldnum = index
-            index += 1
-        return goldnum
 
 
 ###############################################################################

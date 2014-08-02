@@ -24,9 +24,9 @@ class Card_Greathall(Card):
 class Test_Greathall(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['greathall'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['greathall'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['greathall'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -46,4 +46,4 @@ class Test_Greathall(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

@@ -9,11 +9,11 @@ class Card_Royalseal(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+2 gold. Cards gain go to top of deck"
+        self.desc = "+2 coin. Cards gain go to top of deck"
         self.playable = False
         self.name = 'Royal Seal'
         self.cost = 5
-        self.gold = 2
+        self.coin = 2
 
     def hook_gainCard(self, game, player, card):
         """ While this is in play, when you gain a card, you may
@@ -33,16 +33,16 @@ class Card_Royalseal(Card):
 class Test_Royalseal(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['royalseal'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['royalseal'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['royalseal'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a Royal Seal """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_discard(self):
         """ Have a Royal Seal  - discard the gained card"""

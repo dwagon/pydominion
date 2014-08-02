@@ -19,9 +19,9 @@ class Card_Masquerade(Card):
         """ Each player passes a card from his hand to the left at
             once. Then you may trash a card from your hand"""
         xfer = {}
-        for plr in game.players.values():
+        for plr in game.playerList():
             xfer[plr] = self.pickCardToXfer(plr, game)
-        for plr in xfer.keys():
+        for plr in list(xfer.keys()):
             newplr = game.playerToLeft(plr)
             newcrd = xfer[plr]
             newplr.output("You gained a %s from %s" % (newcrd.name, plr.name))
@@ -29,50 +29,46 @@ class Card_Masquerade(Card):
         player.plrTrashCard()
 
     def pickCardToXfer(self, plr, game):
-        index = 1
-        options = []
         leftplr = game.playerToLeft(plr).name
-        for c in plr.hand:
-            sel = "%d" % index
-            pr = "Select %s" % c.name
-            options.append({'selector': sel, 'print': pr, 'card': c})
-            index += 1
-        o = plr.userInput(options, "Which card to give to %s?" % leftplr)
-        plr.hand.remove(o['card'])
-        plr.output("Gave %s to %s" % (o['card'].name, leftplr))
-        return o['card']
+        cards = plr.cardSel(
+            prompt="Which card to give to %s?" % leftplr, num=1, force=True
+        )
+        card = cards[0]
+        plr.hand.remove(card)
+        plr.output("Gave %s to %s" % (card.name, leftplr))
+        return card
 
 
 ###############################################################################
 class Test_Masquerade(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['masquerade'])
-        self.plr, self.other = self.g.players.values()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['masquerade'])
+        self.g.startGame()
+        self.plr, self.other = self.g.playerList()
         self.card = self.g['masquerade'].remove()
 
     def test_play(self):
         """ Play a masquerade """
-        self.other.setHand('gold', 'gold', 'gold')
-        self.plr.setHand('silver', 'silver', 'silver')
-        self.plr.setDeck('silver', 'silver', 'silver')
+        self.other.setHand('copper', 'silver', 'gold')
+        self.plr.setHand('copper', 'silver', 'gold')
+        self.plr.setDeck('estate', 'duchy', 'province')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1', '0']
-        self.other.test_input = ['1']
+        self.plr.test_input = ['select silver', 'finish']
+        self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.inHand('gold'))
         self.assertTrue(self.other.inHand('silver'))
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
-        self.other.setHand('gold', 'gold', 'gold')
-        self.plr.setHand('silver', 'silver', 'silver')
+        self.other.setHand('copper', 'silver', 'gold')
+        self.plr.setHand('copper', 'silver', 'gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1', '1']
-        self.other.test_input = ['1']
+        self.plr.test_input = ['select gold', 'trash silver']
+        self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1)
         self.assertEqual(self.g.trashSize(), 1)
@@ -82,4 +78,4 @@ class Test_Masquerade(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

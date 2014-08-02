@@ -2,5 +2,13 @@ language: python
 
 python:
     - "2.7"
+    - "3.3"
 
-script: "./run_tests"
+install:
+    - "pip install -r requirements.txt"
+    - "pip install -r requirements-dev.txt"
+
+script: "./src/run_tests"
+
+after_success:
+    coveralls --data_file src/.coverage

@@ -16,42 +16,39 @@ class Card_Courtyard(Card):
 
     def special(self, player, game):
         """ Put a card from your hand on top of your deck """
-        options = [{'selector': '0', 'print': "Don't put anything on deck", 'card': None}]
-        index = 1
-        for c in player.hand:
-            sel = "%d" % index
-            pr = "Put %s" % c.name
-            options.append({'selector': sel, 'print': pr, 'card': c})
-            index += 1
-        o = player.userInput(options, "Put which card on top of deck?")
-        if not o['card']:
+        cards = player.cardSel(prompt='Put which card on top of deck?', num=1, verbs=('Put', 'Unput'))
+        if not cards:
             return
-        player.addCard(o['card'], 'deck')
-        player.hand.remove(o['card'])
-        player.output("Put %s on top of deck" % o['card'].name)
+        card = cards[0]
+        player.addCard(card, 'topdeck')
+        player.hand.remove(card)
+        player.output("Put %s on top of deck" % card.name)
 
 
 ###############################################################################
 class Test_Courtyard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['courtyard'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['courtyard'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.cy = self.g['courtyard'].remove()
 
     def test_play(self):
+        """ Play courtyard """
         self.plr.addCard(self.cy, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.cy)
         self.assertEqual(self.plr.handSize(), 8)
 
     def test_putcard(self):
+        """ Use courtyard to put a card to the top of the deck """
         self.plr.setHand('gold')
         self.plr.addCard(self.cy, 'hand')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['put gold']
         self.plr.playCard(self.cy)
-        self.assertEqual(self.plr.deck[0].name, 'Gold')
+        card = self.plr.nextCard()
+        self.assertEqual(card.name, 'Gold')
         for c in self.plr.hand:
             self.assertNotEqual(c.name, 'Gold')
         self.assertEqual(self.plr.handSize(), 3)
@@ -60,4 +57,4 @@ class Test_Courtyard(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

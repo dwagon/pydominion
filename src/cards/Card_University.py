@@ -25,9 +25,9 @@ class Card_University(Card):
 class Test_University(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['university'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['university'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.university = self.g['university'].remove()
         self.plr.addCard(self.university, 'hand')
 
@@ -41,11 +41,11 @@ class Test_University(unittest.TestCase):
     def test_none(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.university)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

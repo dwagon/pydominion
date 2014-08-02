@@ -23,24 +23,24 @@ class Card_Armory(Card):
 class Test_Armory(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['armory', 'feast'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['armory', 'feast'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.armory = self.g['armory'].remove()
         self.plr.addCard(self.armory, 'hand')
 
     def test_gainzero(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_gainone(self):
-        self.plr.test_input = ['1']
-        self.plr.deck = []
+        self.plr.test_input = ['feast']
+        self.plr.deck.empty()
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardpile, [])
+        self.assertTrue(self.plr.discardpile.isEmpty())
         self.assertLessEqual(self.plr.deck[-1].cost, 4)
 
 
@@ -48,4 +48,4 @@ class Test_Armory(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

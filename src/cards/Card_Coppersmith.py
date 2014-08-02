@@ -26,9 +26,9 @@ class Card_Coppersmith(Card):
 class Test_Coppersmith(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['coppersmith'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['coppersmith'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['coppersmith'].remove()
 
     def test_copper(self):
@@ -37,7 +37,7 @@ class Test_Coppersmith(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_silver(self):
         """ Silver should be unchanged and worth two """
@@ -45,7 +45,7 @@ class Test_Coppersmith(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getGold(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
 
 ###############################################################################

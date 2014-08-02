@@ -23,21 +23,21 @@ class Card_Chapel(Card):
 class Test_Chapel(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['chapel'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['chapel'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.ccard = self.g['chapel'].remove()
-        self.plr.setHand('estate', 'estate', 'estate')
+        self.plr.setHand('copper', 'silver', 'estate')
         self.plr.addCard(self.ccard, 'hand')
 
     def test_trashnone(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 3)
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashtwo(self):
-        self.plr.test_input = ['1', '2', '0']
+        self.plr.test_input = ['trash copper', 'trash silver', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 1)
         self.assertEquals(self.g.trashSize(), 2)
@@ -47,4 +47,4 @@ class Test_Chapel(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

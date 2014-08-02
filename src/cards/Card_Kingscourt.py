@@ -21,7 +21,7 @@ class Card_Kingscourt(Card):
             if not c.isAction():
                 continue
             sel = "%d" % index
-            pr = "Play %s trice" % c.name
+            pr = "Play %s thrice" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
             index += 1
         if index == 1:
@@ -41,16 +41,16 @@ class Card_Kingscourt(Card):
 class Test_Kingscourt(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['kingscourt', 'moat'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['kingscourt', 'moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['kingscourt'].remove()
 
     def test_play(self):
         self.plr.setDeck('estate', 'estate', 'gold', 'gold', 'duchy', 'duchy')
         self.plr.setHand('moat', 'estate')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['play moat']
         self.plr.playCard(self.card)
         # (moat + 2) * 3 + estate
         self.assertEqual(self.plr.handSize(), 2 * 3 + 1)
@@ -70,16 +70,16 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.setHand('estate', 'estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(len(self.plr.played), 1)
 
     def test_picked_nothing(self):
         """ Selected no actions with Kings court """
         self.plr.setHand('estate', 'estate', 'moat')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile, [])
+        self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(len(self.plr.played), 1)
 
 
@@ -87,4 +87,4 @@ class Test_Kingscourt(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

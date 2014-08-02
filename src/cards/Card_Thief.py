@@ -63,10 +63,10 @@ class Card_Thief(Card):
 class Test_Thief(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=2, initcards=['thief', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['thief', 'moat'])
+        self.g.startGame()
         self.thiefcard = self.g['thief'].remove()
-        self.thief, self.victim = self.g.players.values()
+        self.thief, self.victim = self.g.playerList()
         self.thief.name = 'thief'
         self.victim.name = 'victim'
         self.thief.addCard(self.thiefcard, 'hand')
@@ -87,7 +87,7 @@ class Test_Thief(unittest.TestCase):
     def test_do_nothing(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['0']
+        self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.thiefcard)
         self.assertEquals(self.victim.deckSize(), 1)
         self.assertEquals(self.victim.discardSize(), 2)
@@ -96,7 +96,7 @@ class Test_Thief(unittest.TestCase):
     def test_trash_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['1']
+        self.thief.test_input = ['trash gold']
         self.thief.playCard(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertEquals(self.g.trashpile[0].name, 'Gold')
@@ -107,9 +107,9 @@ class Test_Thief(unittest.TestCase):
     def test_steal_treasure(self):
         self.victim.setHand('copper', 'copper')
         self.victim.setDeck('copper', 'silver', 'gold')
-        self.thief.test_input = ['2']
+        self.thief.test_input = ['steal gold']
         self.thief.playCard(self.thiefcard)
-        self.assertEquals(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
         for c in self.victim.deck:
             self.assertNotEquals(c.name, 'Gold')
         for c in self.thief.discardpile:
@@ -124,4 +124,4 @@ class Test_Thief(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

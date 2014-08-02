@@ -29,9 +29,9 @@ class Card_Upgrade(Card):
 class Test_Upgrade(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True)
-        self.g.startGame(numplayers=1, initcards=['upgrade'])
-        self.plr = self.g.players.values()[0]
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['upgrade'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
         self.card = self.g['upgrade'].remove()
 
     def test_play(self):
@@ -41,7 +41,7 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.g.trashpile, [])
+        self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trash(self):
         """ Trash an upgrade """
@@ -61,4 +61,4 @@ class Test_Upgrade(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
