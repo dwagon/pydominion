@@ -98,7 +98,7 @@ class TextPlayer(Player):
                 selectfrom = kwargs['cardsrc']
         else:
             selectfrom = self.hand
-        if 'chooser' in kwargs:
+        if 'chooser' in kwargs and kwargs['chooser']:
             chooser = kwargs['chooser']
         else:
             chooser = self
