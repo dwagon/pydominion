@@ -60,10 +60,10 @@ class Test_Secretchamber(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['secretchamber'].remove()
-        self.plr.addCard(self.card, 'hand')
 
     def test_play_none(self):
         """ Play the Secret Chamber - discard none"""
+        self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
@@ -71,7 +71,9 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_play_three(self):
         """ Play the Secret Chamber - discard three"""
-        self.plr.test_input = ['1', '2', '3', '0']
+        self.plr.setHand('copper', 'silver', 'gold', 'province', 'estate')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
@@ -86,4 +88,4 @@ class Test_Secretchamber(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF
