@@ -30,7 +30,7 @@ class Test_Armory(unittest.TestCase):
         self.plr.addCard(self.armory, 'hand')
 
     def test_gainzero(self):
-        self.plr.test_input = ['nothing']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertTrue(self.plr.discardpile.isEmpty())

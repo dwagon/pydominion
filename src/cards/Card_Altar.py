@@ -29,7 +29,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.addCard(self.altar, 'hand')
 
     def test_gainzero(self):
-        self.plr.test_input = ['nothing']
+        self.plr.test_input = ['finish']
         self.plr.playCard(self.altar)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertTrue(self.plr.discardpile.isEmpty())

@@ -73,123 +73,76 @@ class TextPlayer(Player):
         self.endTurn()
 
     ###########################################################################
-    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
-        """ Ask player to trash num cards
-            force - must trash a card, otherwise have option not to trash
-            printcost - print the cost of the card being trashed
-            exclude - can't select a card in the exclude list to be trashed
+    def cardSel(self, num=1, **kwargs):
+        """ Most interactions with players are the selection of cards
+            either from the hand, the drawpiles, or a subset
+            * force
+                True - Have to select num cards
+                False - Can pick less than num cards [Default]
+            * chooser - Which player does the selecting [player]
+            * cardsrc
+                hand - Select the cards from the players hand
+            * exclude = [] - Don't let cards in this list be selected
+            * printcost
+                True - Print out the cost of the cards
+                False - Don't print out the cost [Default]
+            * verbs
+                ('Select', 'Unselect')
+            * prompt
+                What to tell the player at the start
         """
-        if anynum:
-            self.output("Trash any cards")
+        if 'cardsrc' in kwargs:
+            if kwargs['cardsrc'] == 'hand':
+                selectfrom = self.hand
+            else:
+                selectfrom = kwargs['cardsrc']
         else:
-            self.output("Trash %d cards" % num)
-        trash = []
+            selectfrom = self.hand
+        if 'chooser' in kwargs:
+            chooser = kwargs['chooser']
+        else:
+            chooser = self
+        if 'force' in kwargs and kwargs['force']:
+            force = True
+        else:
+            force = False
+        if 'verbs' in kwargs:
+            verbs = kwargs['verbs']
+        else:
+            verbs = ('Select', 'Unselect')
+
+        if 'prompt' in kwargs:
+            chooser.output(kwargs['prompt'])
+
+        selected = []
         while(True):
             options = []
-            if num == len(trash) or not force or anynum:
-                options = [{'selector': '0', 'print': 'Finish Trashing', 'card': None}]
+            if (force and num == len(selected)) or not force:
+                options.append({'selector': '0', 'print': 'Finish Selecting', 'card': None})
             index = 1
-            for c in self.hand:
-                if exclude and c.name in exclude:
+            for c in selectfrom:
+                if 'exclude' in kwargs and c.name in kwargs['exclude']:
                     continue
                 sel = "%d" % index
-                if c in trash:
-                    verb = "Untrash"
-                else:
-                    verb = "Trash"
-                pr = "%s %s" % (verb, c.name)
-                if printcost:
-                    pr += " (%d coin)" % self.cardCost(c)
-                options.append({'selector': sel, 'print': pr, 'card': c})
                 index += 1
-            o = self.userInput(options, "Trash which card?")
+                if c not in selected:
+                    verb = verbs[0]
+                else:
+                    verb = verbs[1]
+                pr = "%s %s" % (verb, c.name)
+                if 'printcost' in kwargs and kwargs['printcost']:
+                    pr += " (%d coin)" % chooser.cardCost(c)
+                options.append({'selector': sel, 'print': pr, 'card': c})
+            o = chooser.userInput(options, "Select which card?")
             if not o['card']:
                 break
-            trash.append(o['card'])
-            if num == 1 and len(trash) == 1:
-                break
-        for c in trash:
-            self.trashCard(c)
-        return trash
-
-    ###########################################################################
-    def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
-        """ Gain a card of 'chooser's choice up to cost coin
-        if actiononly then gain only action cards
-        """
-        types = self.typeSelector(types)
-        if not chooser:
-            chooser = self
-        options = []
-        if not force:
-            options.append({'selector': '0', 'print': 'Nothing', 'card': None})
-        if modifier == 'less':
-            self.output("Gain a card costing up to %d" % cost)
-            buyable = self.cardsUnder(cost, types=types)
-        elif modifier == 'equal':
-            self.output("Gain a card costing exactly %d" % cost)
-            buyable = self.cardsWorth(cost, types=types)
-        else:
-            self.output("Unhandled modifier: %s" % modifier)
-        index = 1
-        for p in buyable:
-            if not p.purchasable:
-                continue
-            selector = "%d" % index
-            toprint = 'Get %s (%s) %s' % (p.name, self.coststr(p), p.desc)
-            options.append({'selector': selector, 'print': toprint, 'card': p})
-            index += 1
-
-        o = chooser.userInput(options, "What card do you wish?")
-        if o['card']:
-            self.output("Got a %s" % o['card'].name)
-            self.addCard(o['card'].remove(), destination)
-            return o['card']
-
-    ###########################################################################
-    def plrPickCard(self, force=False):
-        options = []
-        if not force:
-            options.append({'selector': '0', 'print': 'Nothing', 'card': None})
-        index = 1
-        for c in self.hand:
-            sel = '%d' % index
-            index += 1
-            options.append({'selector': sel, 'print': 'Pick %s' % c.name, 'card': c})
-        o = self.userInput(options, "What card?")
-        return o['card']
-
-    ###########################################################################
-    def plrDiscardCards(self, num=1, anynum=False):
-        """ Get the player to discard exactly num cards """
-        discard = []
-        while(True):
-            options = []
-            if anynum or num == len(discard) or len(self.hand) == len(discard):
-                options = [{'selector': '0', 'print': 'Finished selecting', 'card': None}]
-            index = 1
-            for c in self.hand:
-                sel = "%s" % index
-                pr = "%s %s" % ("Undiscard" if c in discard else "Discard", c.name)
-                options.append({'selector': sel, 'print': pr, 'card': c})
-                index += 1
-
-            if anynum:
-                msg = "Discard which cards."
+            if o['card'] in selected:
+                selected.remove(o['card'])
             else:
-                msg = "Discard %s more cards." % (num - len(discard))
-            o = self.userInput(options, msg)
-            if o['card']:
-                if o['card'] in discard:
-                    discard.remove(o['card'])
-                else:
-                    discard.append(o['card'])
-            if o['card'] is None:
+                selected.append(o['card'])
+            if num == 1 and len(selected) == 1:
                 break
-        for c in discard:
-            self.output("Discarding %s" % c.name)
-            self.discardCard(c)
-        return discard
+        return selected
 
     ###########################################################################
     def plrChooseOptions(self, prompt, *choices):
@@ -201,11 +154,5 @@ class TextPlayer(Player):
             index += 1
         o = self.userInput(options, prompt)
         return o['answer']
-
-    ###########################################################################
-    def plrDiscardDownTo(self, num):
-        """ Get the player to discard down to num cards in their hand """
-        numtogo = len(self.hand) - num
-        self.plrDiscardCards(numtogo)
 
 # EOF
