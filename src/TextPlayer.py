@@ -90,6 +90,8 @@ class TextPlayer(Player):
                 ('Select', 'Unselect')
             * prompt
                 What to tell the player at the start
+            * anynum
+                True - Any number of cards can be selected
         """
         if 'cardsrc' in kwargs:
             if kwargs['cardsrc'] == 'hand':
@@ -114,10 +116,16 @@ class TextPlayer(Player):
         if 'prompt' in kwargs:
             chooser.output(kwargs['prompt'])
 
+        if 'anynum' in kwargs and kwargs['anynum']:
+            anynum = True
+            num = 0
+        else:
+            anynum = False
+
         selected = []
         while(True):
             options = []
-            if (force and num == len(selected)) or not force:
+            if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 options.append({'selector': '0', 'print': 'Finish Selecting', 'card': None})
             index = 1
             for c in selectfrom:
