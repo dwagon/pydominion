@@ -562,4 +562,68 @@ class Player(object):
         cststr = "%s %s" % (coincost, potcost)
         return cststr.strip()
 
+    ###########################################################################
+    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
+        """ Ask player to trash num cards
+        """
+        if anynum:
+            prompt = "Trash any cards"
+        else:
+            prompt = "Trash %d cards" % num
+        trash = self.cardSel(
+            num=num, cardsrc='hand', anynum=anynum, printcost=printcost,
+            force=force, exclude=exclude, verbs=('Trash', 'Untrash'),
+            prompt=prompt)
+        for c in trash:
+            self.trashCard(c)
+        return trash
+
+    ###########################################################################
+    def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
+        """ Gain a card of 'chooser's choice up to cost coin
+        if actiononly then gain only action cards
+        """
+        types = self.typeSelector(types)
+        if modifier == 'less':
+            prompt = "Gain a card costing up to %d" % cost
+            buyable = self.cardsUnder(cost, types=types)
+        elif modifier == 'equal':
+            prompt = "Gain a card costing exactly %d" % cost
+            buyable = self.cardsWorth(cost, types=types)
+        buyable = [c for c in buyable if c.purchasable]
+        cards = self.cardSel(
+            cardsrc=buyable, chooser=chooser, verbs=('Get', 'Unget'),
+            force=force, prompt=prompt)
+        if cards:
+            card = cards[0]
+            self.output("Got a %s" % card.name)
+            self.addCard(card.remove(), destination)
+            return card
+
+    ###########################################################################
+    def plrPickCard(self, force=False):
+        sel = self.cardSel(force=force)
+        return sel[0]
+
+    ###########################################################################
+    def plrDiscardCards(self, num=1, anynum=False):
+        """ Get the player to discard exactly num cards """
+        if anynum:
+            msg = "Discard any number of cards"
+        else:
+            msg = "Discard %d cards" % num
+        discard = self.cardSel(
+            num=num, anynum=anynum, verbs=('Discard', 'Undiscard'),
+            prompt=msg)
+        for c in discard:
+            self.output("Discarding %s" % c.name)
+            self.discardCard(c)
+        return discard
+
+    ###########################################################################
+    def plrDiscardDownTo(self, num):
+        """ Get the player to discard down to num cards in their hand """
+        numtogo = len(self.hand) - num
+        self.plrDiscardCards(numtogo)
+
 # EOF
