@@ -92,6 +92,8 @@ class TextPlayer(Player):
         if 'cardsrc' in kwargs:
             if kwargs['cardsrc'] == 'hand':
                 selectfrom = self.hand
+            else:
+                selectfrom = kwargs['cardsrc']
         else:
             selectfrom = self.hand
         if 'chooser' in kwargs:
@@ -170,20 +172,14 @@ class TextPlayer(Player):
             buyable = self.cardsWorth(cost, types=types)
         else:
             self.output("Unhandled modifier: %s" % modifier)
-        index = 1
-        for p in buyable:
-            if not p.purchasable:
-                continue
-            selector = "%d" % index
-            toprint = 'Get %s (%s) %s' % (p.name, self.coststr(p), p.desc)
-            options.append({'selector': selector, 'print': toprint, 'card': p})
-            index += 1
-
-        o = chooser.userInput(options, "What card do you wish?")
-        if o['card']:
-            self.output("Got a %s" % o['card'].name)
-            self.addCard(o['card'].remove(), destination)
-            return o['card']
+        buyable = [c for c in buyable if c.purchasable]
+        chooser.output("What card do you wish?")
+        cards = self.cardSel(cardsrc=buyable, chooser=chooser, verbs=('Get', 'Unget'))
+        if cards:
+            card = cards[0]
+            self.output("Got a %s" % card.name)
+            self.addCard(card.remove(), destination)
+            return card
 
     ###########################################################################
     def plrPickCard(self, force=False):
