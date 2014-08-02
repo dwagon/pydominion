@@ -9,3 +9,6 @@ install:
     - "pip install -r requirements-dev.txt"
 
 script: "./src/run_tests"
+
+after_success:
+    coveralls
