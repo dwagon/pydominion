@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/dwagon/pydominion.svg?branch=develop)](https://travis-ci.org/dwagon/pydominion)
-[![Coverage Status](https://coveralls.io/repos/dwagon/pydominion/badge.png)]
+[![Coverage Status](https://coveralls.io/repos/dwagon/pydominion/badge.png)](https://coveralls.io/r/dwagon/pydominion)
 
 pydominion
 ==========
