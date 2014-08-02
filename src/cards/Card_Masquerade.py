@@ -29,18 +29,14 @@ class Card_Masquerade(Card):
         player.plrTrashCard()
 
     def pickCardToXfer(self, plr, game):
-        index = 1
-        options = []
         leftplr = game.playerToLeft(plr).name
-        for c in plr.hand:
-            sel = "%d" % index
-            pr = "Select %s" % c.name
-            options.append({'selector': sel, 'print': pr, 'card': c})
-            index += 1
-        o = plr.userInput(options, "Which card to give to %s?" % leftplr)
-        plr.hand.remove(o['card'])
-        plr.output("Gave %s to %s" % (o['card'].name, leftplr))
-        return o['card']
+        cards = plr.cardSel(
+            prompt="Which card to give to %s?" % leftplr, num=1, force=True
+        )
+        card = cards[0]
+        plr.hand.remove(card)
+        plr.output("Gave %s to %s" % (card.name, leftplr))
+        return card
 
 
 ###############################################################################
@@ -54,12 +50,12 @@ class Test_Masquerade(unittest.TestCase):
 
     def test_play(self):
         """ Play a masquerade """
-        self.other.setHand('gold', 'gold', 'gold')
-        self.plr.setHand('silver', 'silver', 'silver')
-        self.plr.setDeck('silver', 'silver', 'silver')
+        self.other.setHand('copper', 'silver', 'gold')
+        self.plr.setHand('copper', 'silver', 'gold')
+        self.plr.setDeck('estate', 'duchy', 'province')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1', '0']
-        self.other.test_input = ['1']
+        self.plr.test_input = ['select silver', 'finish']
+        self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.inHand('gold'))
@@ -68,11 +64,11 @@ class Test_Masquerade(unittest.TestCase):
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
-        self.other.setHand('gold', 'gold', 'gold')
-        self.plr.setHand('silver', 'silver', 'silver')
+        self.other.setHand('copper', 'silver', 'gold')
+        self.plr.setHand('copper', 'silver', 'gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1', '1']
-        self.other.test_input = ['1']
+        self.plr.test_input = ['select gold', 'trash silver']
+        self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1)
         self.assertEqual(self.g.trashSize(), 1)

@@ -21,27 +21,19 @@ class Card_Secretchamber(Card):
         player.addCoin(len(todiscard))
 
     def hook_underAttack(self, player, game):
-        """ When another player plans an Attack card, you may reveal
+        """ When another player plays an Attack card, you may reveal
             this from you hand. If you do +2 cards, then put 2 cards
             from your hand on top of your deck """
         if not self.revealCard(player):
             return
         player.pickupCards(2)
         player.output("Put two cards onto deck")
-        for i in range(2):
-            self.deckCard(player)
-
-    def deckCard(self, player):
-        options = []
-        index = 1
-        for c in player.hand:
-            sel = "%d" % index
-            pr = "Put %s to top of deck" % c.name
-            options.append({'selector': sel, 'print': pr, 'card': c})
-            index += 1
-        o = player.userInput(options, "Deck which card?")
-        player.addCard(o['card'], 'deck')
-        player.hand.remove(o['card'])
+        cards = player.cardSel(
+            prompt='Put which two cards on top of deck?',
+            force=True, num=2, verbs=('Put', 'Unput'))
+        for card in cards:
+            player.addCard(card, 'topdeck')
+            player.hand.remove(card)
 
     def revealCard(self, player):
         options = [
