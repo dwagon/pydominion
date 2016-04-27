@@ -13,4 +13,4 @@ class Card_Silver(Card):
         self.coin = 2
         self.cost = 3
 
-#EOF
+# EOF

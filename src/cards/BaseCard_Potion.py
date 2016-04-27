@@ -13,4 +13,4 @@ class Card_Potion(Card):
         self.potion = 1
         self.cost = 4
 
-#EOF
+# EOF

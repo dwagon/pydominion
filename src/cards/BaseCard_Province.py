@@ -13,4 +13,4 @@ class Card_Province(Card):
         self.cost = 8
         self.victory = 6
 
-#EOF
+# EOF

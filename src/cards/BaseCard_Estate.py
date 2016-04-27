@@ -13,4 +13,4 @@ class Card_Estate(Card):
         self.cost = 2
         self.victory = 1
 
-#EOF
+# EOF
