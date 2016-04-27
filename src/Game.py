@@ -227,6 +227,7 @@ class Game(object):
         for plr in self.playerList():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
+        return scores
 
     ###########################################################################
     def turn(self):
@@ -238,7 +239,7 @@ class Game(object):
 
 
 ###############################################################################
-def parseArgs():
+def parseArgs(args=sys.argv):
     parser = argparse.ArgumentParser(description='Play dominion')
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')
@@ -253,8 +254,8 @@ def parseArgs():
                         help='Where to find card definitions')
     parser.add_argument('--prosperity', default=False, action='store_true',
                         help='Use colonies and platinums')
-    args = parser.parse_args()
-    return args
+    namespace = parser.parse_args(args)
+    return namespace
 
 
 ###############################################################################
@@ -280,7 +281,7 @@ def main():
 
 
 ###############################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()
 
 # EOF
