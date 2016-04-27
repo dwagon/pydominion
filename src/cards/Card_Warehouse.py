@@ -32,11 +32,12 @@ class Test_Warehouse(unittest.TestCase):
     def test_playcard(self):
         """ Play a warehouse """
         self.plr.setHand('estate', 'copper', 'silver', 'gold')
+        self.plr.setDeck('province', 'province', 'province', 'duchy')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['discard estate', 'discard copper', 'discard silver', 'finish']
+        self.plr.test_input = ['discard estate', 'discard copper', 'discard duchy', 'finish']
         self.plr.playCard(self.card)
-        self.g.print_state()
-        self.assertEquals(self.plr.handSize(), 5 - 3 + 3)
+        # Initial hand size - 3 discards + 3 pickups - 1 played
+        self.assertEquals(self.plr.handSize(), 5 - 3 + 3 - 1)
         self.assertEquals(self.plr.getActions(), 1)
         self.assertEquals(self.plr.discardSize(), 3)
 
