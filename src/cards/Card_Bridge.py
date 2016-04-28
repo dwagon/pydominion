@@ -18,4 +18,4 @@ class Card_Bridge(Card):
         if self in player.played:
             return -1
         return 0
-#EOF
+# EOF
