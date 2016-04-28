@@ -24,4 +24,4 @@ class Card_Sirvander(Card):
     def hook_trashcard(self, game, player):
         player.gainCard('gold')
 
-#EOF
+# EOF
