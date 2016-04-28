@@ -239,7 +239,7 @@ class Game(object):
 
 
 ###############################################################################
-def parseArgs(args=sys.argv):
+def parseArgs(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description='Play dominion')
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')
