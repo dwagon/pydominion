@@ -55,4 +55,4 @@ class CardPile(object):
     def __repr__(self):
         return "CardPile %s: %d" % (self.name, self.numcards)
 
-#EOF
+# EOF

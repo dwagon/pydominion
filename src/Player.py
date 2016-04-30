@@ -1,4 +1,6 @@
 from PlayArea import PlayArea
+# from Card import Card
+# from CardPile import CardPile
 import operator
 import random
 import sys
@@ -47,9 +49,13 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
+        self.card_token = False
+        self.coin_token = False
+        self.journey_token = False
         self.quiet = quiet
         self.test_input = []
         self.initial_Deck()
+        self.initial_tokens()
         self.pickUpHand()
 
     ###########################################################################
@@ -65,10 +71,53 @@ class Player(object):
         self.deck.shuffle()
 
     ###########################################################################
-    def inHand(self, card):
-        """ Return named card if card is in hand """
+    def initial_tokens(self):
+        self.tokens = {
+            'Trashing': None,
+            'Estate': None,
+            '+Card': None,
+            '+Action': None,
+            '+Buy': None,
+            '+Coin': None,
+            '-Cost': None,
+            # '-Card': Handled elsewhere
+            # 'Journey': Handled elsewhere
+            # '-Coin': Handled elsewhere
+        }
+
+    ###########################################################################
+    def flip_journey_token(self):
+        if self.journey_token:
+            self.journey_token = False
+        else:
+            self.journey_token = True
+        return self.journey_token
+
+    ###########################################################################
+    def place_token(self, token, pilename):
+        """ Place a token on a pile
+            Can pass the card, the cardpile or just the name """
+        if hasattr(pilename, 'name'):
+            pilename = pilename.name
+        self.tokens[token] = pilename
+
+    ###########################################################################
+    def which_token(self, pilename):
+        """ Return which token(s) are on a cardstack """
+        if hasattr(pilename, 'name'):
+            pilename = pilename.name
+        onstack = []
+        for tk in self.tokens:
+            if self.tokens[tk] == pilename:
+                onstack.append(tk)
+        return onstack
+
+    ###########################################################################
+    def inHand(self, cardname):
+        """ Return named card if cardname is in hand """
+        # assert(isinstance(cardname, str))
         for c in self.hand:
-            if c.cardname == card.lower():
+            if c.cardname == cardname.lower():
                 return c
         return None
 
@@ -150,6 +199,10 @@ class Player(object):
 
     ###########################################################################
     def pickUpHand(self, handsize=5):
+        if self.card_token:
+            self.output("-Card token reduce draw by one")
+            handsize -= 1
+            self.card_token = False
         while self.handSize() < handsize:
             self.pickupCard(verb='Dealt')
 
@@ -256,6 +309,8 @@ class Player(object):
                 continue
             sel = chr(ord('a') + index)
             tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
+            for tkn in self.which_token(p):
+                tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
             index += 1
         return options, index
@@ -370,6 +425,9 @@ class Player(object):
         val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendValue(game=self.game, player=self, card=card)
+        if self.coin_token:
+            val -= 1
+            self.coin_token = False
         return val
 
     ###########################################################################
@@ -380,12 +438,26 @@ class Player(object):
 
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
+        # assert(isinstance(card, (Card, CardPile)))
         if card.isAction() and costAction:
             self.actions -= 1
         if self.actions < 0:
             self.actions = 0
             return
         self.output("Played %s" % card.name)
+        tkns = self.which_token(card.name)
+        if '+Action' in tkns:
+            self.output("Gaining action from +Action token")
+            self.actions += 1
+        if '+Card' in tkns:
+            c = self.pickupCard()
+            self.output("Picked up %s from +Card token" % c.name)
+        if '+Coin' in tkns:
+            self.output("Gaining coin from +Coin token")
+            self.coin += 1
+        if '+Buy' in tkns:
+            self.output("Gaining buy from +Buy token")
+            self.buys += 1
         if discard:
             if card.isDuration():
                 self.addCard(card, 'duration')
@@ -396,17 +468,26 @@ class Player(object):
         self.coin += self.hook_spendValue(card)
         self.buys += card.buys
         self.potions += card.potion
-        for i in range(card.cards):
+
+        modif = 0
+        if self.card_token and card.cards:
+            self.output("-Card token reduces cards drawn")
+            self.card_token = False
+            modif = -1
+
+        for i in range(card.cards + modif):
             self.pickupCard()
         try:
             card.special(game=self.game, player=self)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt:   # pragma: no cover
             sys.stderr.write("\nFailed: %s\n" % self.messages)
             sys.exit(1)
 
     ###########################################################################
     def cardCost(self, card):
         cost = card.cost
+        if '-Cost' in self.which_token(card):
+            cost -= 2
         for c in self.hand + self.played:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
         return max(0, cost)
@@ -434,12 +515,16 @@ class Player(object):
 
     ###########################################################################
     def buyCard(self, card):
+        # assert(isinstance(card, (Card, CardPile)))
         if not self.buys:
             return
         newcard = self.gainCard(card)
         self.buys -= 1
         self.coin -= self.cardCost(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
+        if self.tokens['Trashing'] == card:
+            self.output("Trashing token allows you to trash a card")
+            self.plrTrashCard()
         self.hook_buyCard(newcard)
 
     ###########################################################################

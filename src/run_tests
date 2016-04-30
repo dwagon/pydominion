@@ -4,6 +4,6 @@ import os
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-os.system('py.test --cov-report term-missing --cov . *.py cards/*.py')
+os.system('py.test --cov-report term-missing --cov . *.py tests/*.py cards/*.py')
 
 # EOF

@@ -201,6 +201,8 @@ class Game(object):
         """ This is used for debugging """
         print("#" * 40)
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
+        for cp in self.cardpiles:
+            print("CardPile %s: %d cards" % (cp, self.cardpiles[cp].numcards))
         for p in self.playerList():
             print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
