@@ -51,7 +51,7 @@ class Player(object):
         self.potions = 0
         self.card_token = False
         self.coin_token = False
-        self.journey_token = False
+        self.journey_token = True
         self.quiet = quiet
         self.test_input = []
         self.initial_Deck()

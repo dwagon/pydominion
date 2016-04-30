@@ -96,11 +96,11 @@ class TestToken(unittest.TestCase):
 
     def test_journey_token(self):
         """ Does the Journey token work """
-        self.assertFalse(self.plr.journey_token)
-        self.plr.flip_journey_token()
         self.assertTrue(self.plr.journey_token)
         self.plr.flip_journey_token()
         self.assertFalse(self.plr.journey_token)
+        self.plr.flip_journey_token()
+        self.assertTrue(self.plr.journey_token)
 
     def test_coin_token(self):
         """ Does the -Coin token work """
