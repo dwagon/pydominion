@@ -71,6 +71,20 @@ class Test_nextCard(unittest.TestCase):
 
 
 ###############################################################################
+class Test_playonce(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_once(self):
+        x = self.plr.do_once('test')
+        self.assertTrue(x)
+        x = self.plr.do_once('test')
+        self.assertFalse(x)
+
+
+###############################################################################
 class Test_cardsAffordable(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)

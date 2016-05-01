@@ -56,6 +56,7 @@ class Player(object):
         self.test_input = []
         self.initial_Deck()
         self.initial_tokens()
+        self.once = {}
         self.pickUpHand()
 
     ###########################################################################
@@ -92,6 +93,14 @@ class Player(object):
         else:
             self.journey_token = True
         return self.journey_token
+
+    ###########################################################################
+    def do_once(self, card):
+        """ Allow a player to do something once per turn """
+        if card in self.once:
+            return False
+        self.once[card] = True
+        return True
 
     ###########################################################################
     def place_token(self, token, pilename):
@@ -411,6 +420,7 @@ class Player(object):
     ###########################################################################
     def endTurn(self):
         self.messages = []
+        self.once = {}
         self.discardHand()
         self.pickUpHand()
 
