@@ -310,6 +310,18 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def eventSelection(self, index):
+        options = []
+        for op in self.game.events.values():
+            if op.cost <= self.coin:
+                sel = chr(ord('a') + index)
+                tp = 'Use event %s: %s (%d coins)' % (op.name, op.desc, op.cost)
+                index += 1
+                options.append({'selector': sel, 'print': tp, 'card': op, 'action': 'event'})
+
+        return options, index
+
+    ###########################################################################
     def buyableSelection(self, index):
         options = []
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
@@ -340,6 +352,10 @@ class Player(object):
             op, index = self.spendableSelection(index)
             options.extend(op)
             op, index = self.buyableSelection(index)
+            options.extend(op)
+
+        if self.game.events and self.buys:
+            op, index = self.eventSelection(index)
             options.extend(op)
 
         prompt = "What to do (actions=%d buys=%d" % (self.actions, self.buys)
@@ -592,6 +608,13 @@ class Player(object):
     ###########################################################################
     def addBuys(self, num):
         self.buys += num
+
+    ###########################################################################
+    def performEvent(self, card):
+        self.buys -= 1
+        self.coin -= card.cost
+        self.output("Using event %s" % card.name)
+        card.special(game=self.game, player=self)
 
     ###########################################################################
     def cardsAffordable(self, oper, coin, potions=0, types={}):

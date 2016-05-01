@@ -58,6 +58,8 @@ class TextPlayer(Player):
             opt = self.choiceSelection()
             if opt['action'] == 'buy':
                 self.buyCard(opt['card'])
+            elif opt['action'] == 'event':
+                self.performEvent(opt['card'])
             elif opt['action'] == 'coin':
                 self.spendCoin()
             elif opt['action'] == 'play':
