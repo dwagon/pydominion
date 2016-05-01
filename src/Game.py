@@ -7,6 +7,7 @@ import uuid
 
 from TextPlayer import TextPlayer
 from CardPile import CardPile
+from EventPile import EventPile
 from PlayArea import PlayArea
 
 
@@ -19,6 +20,7 @@ class Game(object):
 
         self.players = {}
         self.cardpiles = {}
+        self.events = {}
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -32,8 +34,11 @@ class Game(object):
         self.prosperity = False
         self.quiet = False
         self.numplayers = 2
+        self.numevents = 0
         self.initcards = []
+        self.eventcards = []
         self.cardpath = 'cards'
+        self.eventpath = 'cards'
         self.cardbase = []
         if 'prosperity' in args:
             self.prosperity = args['prosperity']
@@ -41,8 +46,12 @@ class Game(object):
             self.quiet = args['quiet']
         if 'numplayers' in args:
             self.numplayers = args['numplayers']
+        if 'numevents' in args:
+            self.numevents = args['numevents']
         if 'initcards' in args:
             self.initcards = args['initcards']
+        if 'eventcards' in args:
+            self.eventcards = args['eventcards']
         if 'cardpath' in args:
             self.cardpath = args['cardpath']
         if 'cardbase' in args:
@@ -51,6 +60,7 @@ class Game(object):
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
         self.loadDecks(self.initcards)
+        self.loadEvents()
         for i in range(self.numplayers):
             try:
                 name = playernames.pop()
@@ -95,6 +105,15 @@ class Game(object):
     ###########################################################################
     def trashSize(self):
         return len(self.trashpile)
+
+    ###########################################################################
+    def loadEvents(self):
+        for ev in self.eventcards:
+            evname = ev.title()
+            self.events[evname] = EventPile(evname, eventpath=self.eventpath)
+        while len(self.events) < self.numevents:
+            # TODO - Select random event
+            break
 
     ###########################################################################
     def loadDecks(self, initcards):
@@ -248,6 +267,11 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--card', action='append', dest='initcards',
                         default=[],
                         help='Include card in lineup')
+    parser.add_argument('--event', action='append', dest='eventcards',
+                        default=[],
+                        help='Include event')
+    parser.add_argument('--numevents', type=int, default=2,
+                        help='Number of events to use')
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
     parser.add_argument('--cardbase', action='append',
@@ -266,7 +290,8 @@ def runGame(args):
     if args['cardset']:
         for line in args['cardset']:
             cards.append(line.strip())
-    g = Game(args=args, initcards=cards)
+    args['initcards'] = cards
+    g = Game(**args)
     g.startGame()
     try:
         while not g.gameover:

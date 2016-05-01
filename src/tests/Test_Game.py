@@ -91,6 +91,9 @@ class Test_parse_args(unittest.TestCase):
         args = Game.parseArgs(['--prosperity'])
         self.assertEqual(args.prosperity, True)
 
+    def test_numplayers(self):
+        args = Game.parseArgs(['--numplayers', '4'])
+        self.assertEqual(args.numplayers, 4)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
