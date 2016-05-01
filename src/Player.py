@@ -49,6 +49,7 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
+        self.handsize = 5
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
@@ -207,13 +208,18 @@ class Player(object):
         self.discardpile.shuffle()
 
     ###########################################################################
-    def pickUpHand(self, handsize=5):
+    def pickUpHand(self, handsize=None):
+        if handsize is None:
+            handsize = self.handsize
         if self.card_token:
             self.output("-Card token reduce draw by one")
             handsize -= 1
             self.card_token = False
         while self.handSize() < handsize:
-            self.pickupCard(verb='Dealt')
+            c = self.pickupCard(verb='Dealt')
+            if not c:
+                self.output("Not enough cards to fill hand")
+                break
 
     ###########################################################################
     def gainSpecialCoins(self, num=1):
@@ -439,6 +445,7 @@ class Player(object):
         self.once = {}
         self.discardHand()
         self.pickUpHand()
+        self.handsize = 5
 
     ###########################################################################
     def hook_discardCard(self, card):
