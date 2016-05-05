@@ -13,6 +13,7 @@ class Card(object):
         self.defense = False
         self.needcurse = False
         self.needspoils = False
+        self.traveller = False
         self.actions = 0
         self.buys = 0
         self.coin = 0
@@ -72,6 +73,11 @@ class Card(object):
 
     def isRuin(self):
         if 'ruin' in self.cardtype:
+            return True
+        return False
+
+    def isTraveller(self):
+        if 'traveller' in self.cardtype:
             return True
         return False
 

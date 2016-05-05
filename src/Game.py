@@ -60,6 +60,8 @@ class Game(object):
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
         self.loadDecks(self.initcards)
+        if self.needtravellers:
+            self.loadTravellers()
         self.loadEvents()
         for i in range(self.numplayers):
             try:
@@ -107,6 +109,12 @@ class Game(object):
         return len(self.trashpile)
 
     ###########################################################################
+    def loadTravellers(self):
+        travellers = self.getAvailableCards('Traveller')
+        for trav in travellers:
+            self.cardpiles[trav] = CardPile(trav, numcards=12, cardpath=self.cardpath)
+
+    ###########################################################################
     def loadEvents(self):
         for ev in self.eventcards:
             evname = ev.title()
@@ -128,6 +136,7 @@ class Game(object):
         self.needspoils = False
         self.needpotion = False
         self.needruins = False
+        self.needtravellers = False
         for c in initcards:
             c = c.strip().lower().title()
             if c not in available:
@@ -185,6 +194,8 @@ class Game(object):
             self.needruins = True
         if self.cardpiles[c].needspoils:
             self.needspoils = True
+        if self.cardpiles[c].traveller:
+            self.needtravellers = True
         return 1
 
     ###########################################################################
@@ -197,9 +208,9 @@ class Game(object):
         return self.cardpiles[key]
 
     ###########################################################################
-    def getAvailableCards(self):
-        cardfiles = glob.glob('%s/Card_*.py' % self.cardpath)
-        cards = [c.replace('%s/Card_' % self.cardpath, '').replace('.py', '') for c in cardfiles]
+    def getAvailableCards(self, prefix='Card'):
+        cardfiles = glob.glob('%s/%s_*.py' % (self.cardpath, prefix))
+        cards = [c.replace('%s/%s_' % (self.cardpath, prefix), '').replace('.py', '') for c in cardfiles]
         return cards
 
     ###########################################################################

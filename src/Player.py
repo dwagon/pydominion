@@ -1,6 +1,4 @@
 from PlayArea import PlayArea
-# from Card import Card
-# from CardPile import CardPile
 import operator
 import random
 import sys
@@ -88,6 +86,28 @@ class Player(object):
         }
 
     ###########################################################################
+    def replace_traveller(self, src, dst):
+        """ For traveller cards replace the src card with a copy of the
+        dst card """
+        if src not in self.played:
+            self.output("Not activating %s traveller as not played" % src.name)
+            return
+        choice = self.plrChooseOptions(
+            "Replace Traveller",
+            ('Replace with a %s?' % dst, 'replace'),
+            ('Keep %s' % src, 'keep')
+        )
+        if choice == 'keep':
+            return
+        if choice == 'replace':
+            # New card goes into hand as it is about to be discarded
+            newcard = self.gainCard(cardpile=dst, destination='hand')
+            if newcard:
+                cardpile = self.game.cardpiles[src.name]
+                cardpile.add()
+                self.played.remove(src)
+
+    ###########################################################################
     def flip_journey_token(self):
         if self.journey_token:
             self.journey_token = False
@@ -125,9 +145,10 @@ class Player(object):
     ###########################################################################
     def inHand(self, cardname):
         """ Return named card if cardname is in hand """
-        # assert(isinstance(cardname, str))
+        if hasattr(cardname, 'name'):
+            cardname = cardname.name
         for c in self.hand:
-            if c.cardname == cardname.lower():
+            if c.cardname.lower() == cardname.lower():
                 return c
         return None
 

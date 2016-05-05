@@ -242,6 +242,7 @@ class Test_inHand(unittest.TestCase):
         """ Test card is in hand """
         self.plr.setHand('copper')
         self.assertTrue(self.plr.inHand('Copper'))
+        self.assertEqual(self.plr.inHand('Copper').name, 'Copper')
 
     def test_notinhand(self):
         """ Test card that isn't in hand """
