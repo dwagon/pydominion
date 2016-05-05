@@ -21,13 +21,18 @@ class CardPile(object):
 
     ###########################################################################
     def importCard(self, cardname=None, cardfile=None):
-        if cardfile:
-            fp, pathname, desc = imp.find_module(cardfile, [self.cardpath, 'cards'])
-        else:
+        for i in (cardfile,
+                  "Card_%s" % cardname,
+                  "BaseCard_%s" % cardname,
+                  "Traveller_%s" % cardname,
+                  ):
             try:
-                fp, pathname, desc = imp.find_module("Card_%s" % cardname, [self.cardpath, 'cards'])
-            except ImportError:
-                fp, pathname, desc = imp.find_module("BaseCard_%s" % cardname, [self.cardpath, 'cards'])
+                fp, pathname, desc = imp.find_module(i, [self.cardpath, 'cards'])
+                break
+            except (ImportError, TypeError):
+                pass
+        else:
+            raise Exception("Couldn't import cardname=%s cardfile=%s" % (cardname, cardfile))
         cardmodule = imp.load_module(cardname, fp, pathname, desc)
         return cardmodule
 
