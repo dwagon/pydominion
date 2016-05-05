@@ -5,7 +5,7 @@ from Card import Card
 
 
 ###############################################################################
-class Card_Treasure_Hunter(Card):
+class Card_Treasurehunter(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
@@ -27,13 +27,13 @@ class Card_Treasure_Hunter(Card):
 
 
 ###############################################################################
-class Test_Treasure_Hunter(unittest.TestCase):
+class Test_Treasurehunter(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['treasure_hunter'].remove()
+        self.card = self.g['treasurehunter'].remove()
 
     def test_treasure_hunter(self):
         """ Play a treasure_hunter """

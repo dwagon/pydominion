@@ -25,16 +25,16 @@ class Test_replace_traveller(unittest.TestCase):
         """ Replace a traveller """
         self.plr.test_input = ['replace']
         self.plr.playCard(self.card)
-        self.plr.replace_traveller(self.card, 'Treasure_Hunter')
+        self.plr.replace_traveller(self.card, 'TreasureHunter')
         self.assertIsNone(self.plr.inHand('Page'))
-        self.assertIsNotNone(self.plr.inHand('Treasure_Hunter'))
+        self.assertIsNotNone(self.plr.inHand('TreasureHunter'))
 
     def test_dont_replace(self):
         """ Choose not to replace a traveller """
         self.plr.test_input = ['keep']
-        self.plr.replace_traveller(self.card, 'Treasure_Hunter')
+        self.plr.replace_traveller(self.card, 'TreasureHunter')
         self.assertIsNotNone(self.plr.inHand('Page'))
-        self.assertIsNone(self.plr.inHand('Treasure_Hunter'))
+        self.assertIsNone(self.plr.inHand('TreasureHunter'))
 
     def test_replacement_not_available(self):
         """ Try and replace a traveller when the replacement isn't available """
@@ -44,9 +44,9 @@ class Test_replace_traveller(unittest.TestCase):
     def test_not_played(self):
         """ Try and replace a traveller when it hasn't been played """
         self.plr.test_input = ['replace']
-        self.plr.replace_traveller(self.card, 'Treasure_Hunter')
+        self.plr.replace_traveller(self.card, 'TreasureHunter')
         self.assertIsNotNone(self.plr.inHand('Page'))
-        self.assertIsNone(self.plr.inHand('Treasure_Hunter'))
+        self.assertIsNone(self.plr.inHand('TreasureHunter'))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

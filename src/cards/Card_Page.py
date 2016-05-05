@@ -19,7 +19,7 @@ class Card_Page(Card):
 
     def hook_discardCard(self, game, player):
         """ Replace with Treasure Hunter """
-        player.replace_traveller(self, 'Treasure_Hunter')
+        player.replace_traveller(self, 'TreasureHunter')
 
 
 ###############################################################################
