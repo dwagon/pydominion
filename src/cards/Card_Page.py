@@ -12,13 +12,14 @@ class Card_Page(Card):
         self.base = 'adventure'
         self.desc = "+1 Card, +1 Action; Discard to replace with Treasure Hunter"
         self.name = 'Page'
+        self.traveller = True
         self.cards = 1
-        self.action = 1
+        self.actions = 1
         self.cost = 2
 
     def hook_discardCard(self, game, player):
         """ Replace with Treasure Hunter """
-        pass    # TODO
+        player.replace_traveller(self, 'Treasure_Hunter')
 
 
 ###############################################################################
@@ -36,7 +37,7 @@ class Test_Page(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 1)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.getActions(), 1)
 
 
 ###############################################################################
