@@ -15,4 +15,4 @@ class Card_Ruinedvillage(Card):
         self.card = "+1 Action"
         self.actions = 1
 
-#EOF
+# EOF

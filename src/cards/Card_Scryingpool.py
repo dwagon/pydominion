@@ -38,4 +38,4 @@ class Card_Scryingpool(Card):
             victim.addCard(topcard, 'discard')
 
 
-#EOF
+# EOF

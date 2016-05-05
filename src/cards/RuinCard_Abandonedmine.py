@@ -15,4 +15,4 @@ class Card_Abandonedmine(Card):
         self.desc = "+1 coin"
         self.coin = 1
 
-#EOF
+# EOF

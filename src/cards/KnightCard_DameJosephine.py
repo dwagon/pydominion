@@ -19,4 +19,4 @@ class Card_Damejosephine(Card):
             rest. If a knight is trashed by this, trash this card """
         self.knight_special(game, player)
 
-#EOF
+# EOF

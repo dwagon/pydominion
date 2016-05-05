@@ -20,4 +20,4 @@ class Card_Damenatalie(Card):
         player.plrGainCard(3)
         self.knight_special(game, player)
 
-#EOF
+# EOF

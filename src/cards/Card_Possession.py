@@ -19,4 +19,4 @@ class Card_Possession(Card):
             aside and returned to his discard pile at end of turn """
         # TODO
 
-#EOF
+# EOF

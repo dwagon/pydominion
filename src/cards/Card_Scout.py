@@ -18,7 +18,7 @@ class Card_Scout(Card):
         """ Reveal the top 4 cards of your deck. Put the revealed
             victory cards into your hand. Put the other cards on top
             of your deck in any order """
-        #TODO: Currently you can't order the cards you return
+        # TODO: Currently you can't order the cards you return
         cards = []
         for i in range(4):
             c = player.nextCard()
@@ -67,4 +67,4 @@ class Test_Scout(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

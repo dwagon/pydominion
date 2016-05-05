@@ -23,4 +23,4 @@ class Card_Sirmichael(Card):
             plr.plrDiscardDownTo(3)
             self.knight_special(game, player)
 
-#EOF
+# EOF

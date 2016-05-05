@@ -15,4 +15,4 @@ class Card_Ruinedlibrary(Card):
         self.name = "Ruined Library"
         self.cards = 1
 
-#EOF
+# EOF

@@ -15,4 +15,4 @@ class Card_Ruinedmarket(Card):
         self.cost = 0
         self.buys = 1
 
-#EOF
+# EOF

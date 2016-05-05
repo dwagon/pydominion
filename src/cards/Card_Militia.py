@@ -33,7 +33,6 @@ class Test_Militia(unittest.TestCase):
     def test_defense(self):
         self.attacker.addCard(self.mcard, 'hand')
         self.defender.addCard(self.g['moat'].remove(), 'hand')
-        #self.defender.test_input = ['1', '1', '0']
         self.attacker.playCard(self.mcard)
         self.assertEquals(self.defender.handSize(), 6)   # Normal + moat
         self.assertEquals(self.attacker.getCoin(), 2)
@@ -51,4 +50,4 @@ class Test_Militia(unittest.TestCase):
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
-#EOF
+# EOF

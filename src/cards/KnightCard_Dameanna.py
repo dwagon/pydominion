@@ -23,4 +23,4 @@ class Card_Dameanna(Card):
 
         self.knight_special(game, player)
 
-#EOF
+# EOF

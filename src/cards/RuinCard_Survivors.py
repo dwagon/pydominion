@@ -21,4 +21,4 @@ class Card_Survivors(Card):
         pass
 
 
-#EOF
+# EOF
