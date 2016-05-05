@@ -35,13 +35,13 @@ class Card(object):
         return 'images/%s.jpg' % self.cardname
 
     def special(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def duration(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def setup(self, game):
-        pass
+        pass    # pragma: no cover
 
     def hasDefense(self):
         return self.defense
@@ -102,39 +102,39 @@ class Card(object):
         return False
 
     def special_score(self, game, player):
-        return 0
+        return 0    # pragma: nocover
 
     def hook_buyCard(self, game, player, card):
-        pass
+        pass    # pragma: no cover
 
     def hook_allowedToBuy(self, game, player):
-        return True
+        return True     # pragma: no cover
 
     def hook_gainCard(self, game, player, card):
-        return {}
+        return {}   # pragma: no cover
 
     def hook_cardCost(self, game, player, card):
-        return 0
+        return 0    # pragma: no cover
 
     def hook_coinvalue(self, game, player):
         """ How much coin does this card contribute """
-        return self.coin
+        return self.coin    # pragma: no cover
 
     def hook_spendValue(self, game, player, card):
         """ Does this card make any  modifications on the value of spending a card """
-        return 0
+        return 0    # pragma: no cover
 
     def hook_underAttack(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def hook_discardCard(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def hook_trashThisCard(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def hook_gainThisCard(self, game, player):
-        pass
+        pass    # pragma: no cover
 
     def knight_special(self, game, player):
         """ Each other player reveals the top 2 cards of his deck,
