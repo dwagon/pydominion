@@ -18,9 +18,22 @@ class Card_Warrior(Card):
 
     def special(self, game, player):
         """ For each Traveller you have in play (including this), each other
-        player discards the top card of his deck and trashit it if it
+        player discards the top card of his deck and trashes it if it
         costs 3 or 4 """
-        pass
+        count = 0
+        for c in player.hand + player.played:
+            if c.isTraveller():
+                count += 1
+        for victim in player.attackVictims():
+            for i in range(count):
+                c = victim.nextCard()
+                if c.cost in (3, 4) and c.potcost == 0:
+                    victim.output("Trashing %s due to %s's Warrior" % (c.name, player.name))
+                    player.output("Trashing %s from %s" % (c.name, victim.name))
+                    victim.trashCard(c)
+                else:
+                    victim.output("Discarding %s due to %s's Warrior" % (c.name, player.name))
+                    victim.addCard(c, 'discard')
 
     def hook_discardCard(self, game, player):
         """ Replace with Hero """
@@ -31,14 +44,23 @@ class Card_Warrior(Card):
 class Test_Warrior(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['page'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr, self.victim = self.g.playerList()
         self.card = self.g['warrior'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_warrior(self):
-        """ Play a warrior """
-        pass
+        """ Play a warrior nothing to trash """
+        self.plr.playCard(self.card)
+        self.assertEqual(self.victim.discardSize(), 1)
+
+    def test_with_trash(self):
+        """ Play a warrior with something to trash """
+        self.victim.setDeck('silver', 'silver')
+        self.plr.setPlayed('page')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.g.trashSize(), 2)
 
 
 ###############################################################################
