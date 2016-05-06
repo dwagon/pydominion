@@ -62,6 +62,12 @@ class Test_Warrior(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 2)
 
+    def test_end_turn(self):
+        """ End the turn with a played warrior """
+        self.plr.test_input = ['keep']
+        self.plr.playCard(self.card)
+        self.plr.endTurn()
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
