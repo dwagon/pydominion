@@ -18,7 +18,7 @@ class Event_Expedition(Event):
 
 
 ###############################################################################
-class Test_Event(unittest.TestCase):
+class Test_Expedition(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['expedition'])
@@ -37,10 +37,13 @@ class Test_Event(unittest.TestCase):
     def test_playtwice(self):
         """ Use Expedition twice """
         self.plr.coin = 7
+        self.plr.addBuys(1)
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
         self.plr.performEvent(self.card)
+        self.g.print_state()
         self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.getBuys(), 0)
         self.plr.endTurn()
         self.assertEqual(self.plr.handSize(), 9)
 
