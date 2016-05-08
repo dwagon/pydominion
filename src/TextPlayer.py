@@ -28,7 +28,11 @@ class TextPlayer(Player):
                 inp = self.test_input.pop(0)
                 self.output("Using '%s' test input" % inp)
             else:
-                inp = raw_input()
+                try:
+                    inp = raw_input()
+                except IOError:
+                    self.game.print_state()
+                    raise
             matching = []
             for o in options:
                 if o['selector'] == inp:

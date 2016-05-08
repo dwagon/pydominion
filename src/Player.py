@@ -322,18 +322,13 @@ class Player(object):
             tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
             options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
             index += 1
+
         for s in spendable:
             sel = chr(ord('a') + index)
             tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
-        for c in self.hand:
-            if c.name == 'Potion':
-                sel = chr(ord('a') + index)
-                tp = 'Spend %s' % s.name
-                options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
-                index += 1
         return options, index
 
     ###########################################################################
@@ -639,10 +634,17 @@ class Player(object):
 
     ###########################################################################
     def performEvent(self, card):
+        if not self.buys:
+            self.output("Need a buy to perform an event")
+            return False
+        if self.coin < card.cost:
+            self.output("Need %d coints to perform this event" % card.cost)
+            return False
         self.buys -= 1
         self.coin -= card.cost
         self.output("Using event %s" % card.name)
         card.special(game=self.game, player=self)
+        return True
 
     ###########################################################################
     def cardsAffordable(self, oper, coin, potions=0, types={}):
