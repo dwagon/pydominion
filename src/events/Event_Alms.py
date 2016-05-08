@@ -33,12 +33,12 @@ class Event_Alms(Event):
 
 
 ###############################################################################
-class Test_Event(unittest.TestCase):
+class Test_Alms(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['alms'], initcards=['feast'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.playerList()[0]
         self.card = self.g.events['Alms']
 
     def test_with_treasure(self):
