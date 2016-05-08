@@ -47,7 +47,7 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
-        self.handsize = 5
+        self.newhandsize = 5
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
@@ -231,7 +231,7 @@ class Player(object):
     ###########################################################################
     def pickUpHand(self, handsize=None):
         if handsize is None:
-            handsize = self.handsize
+            handsize = self.newhandsize
         if self.card_token:
             self.output("-Card token reduce draw by one")
             handsize -= 1
@@ -466,7 +466,7 @@ class Player(object):
         self.once = {}
         self.discardHand()
         self.pickUpHand()
-        self.handsize = 5
+        self.newhandsize = 5
 
     ###########################################################################
     def hook_discardCard(self, card):

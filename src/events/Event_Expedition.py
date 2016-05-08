@@ -14,7 +14,7 @@ class Event_Expedition(Event):
         self.cost = 3
 
     def special(self, game, player):
-        player.handsize += 2
+        player.newhandsize += 2
 
 
 ###############################################################################
