@@ -39,7 +39,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.playCard(self.altar)
         self.assertEquals(self.plr.handSize(), 5)
         self.assertEquals(self.plr.discardSize(), 1)
-        self.assertLessEqual(self.plr.discardpile[0].name, 'Upgrade')
+        self.assertIsNotNone(self.plr.inDiscard('Upgrade'))
 
 
 ###############################################################################

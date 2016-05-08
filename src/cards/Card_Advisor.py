@@ -57,7 +57,7 @@ class Test_Advisor(unittest.TestCase):
             if c.name == 'Gold':    # pragma: no cover
                 self.fail()
         self.assertEquals(self.plr.handSize(), 7)
-        self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
 ###############################################################################

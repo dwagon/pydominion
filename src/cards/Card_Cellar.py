@@ -44,11 +44,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.deck[-1].name, 'Province')
-        for c in self.plr.hand:
-            if c.name == 'Gold':
-                break
-        else:   # pragma: no cover
-            self.fail()
+        self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertEquals(self.plr.handSize(), 3)
 
 

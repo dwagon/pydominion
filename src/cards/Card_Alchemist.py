@@ -58,11 +58,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discardSize(), 9)  # 5 for hand, +2 cards, alch, pot
-        for c in self.plr.discardpile:
-            if c.name == 'Alchemist':
-                break
-        else:   # pragma: no cover
-            self.fail()
+        self.assertIsNotNone(self.plr.inDiscard('Alchemist'))
 
     def test_keep(self):
         self.plr.setPlayed('potion')
@@ -70,9 +66,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, pot
-        for c in self.plr.discardpile:
-            if c.name == 'Alchemist':   # pragma: no cover
-                self.fail()
+        self.assertIsNone(self.plr.inDiscard('Alchemist'))
         self.assertEquals(self.plr.deck[-1].name, 'Alchemist')
 
 ###############################################################################

@@ -40,7 +40,7 @@ class Test_Adventurer(unittest.TestCase):
         self.plr.setHand('adventurer')
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(sorted(['Silver', 'Gold']), sorted([c.name for c in self.plr.hand]))
-        self.assertEquals(self.plr.discardpile[0].name, 'Estate')
+        self.assertIsNotNone(self.plr.inDiscard('Estate'))
         self.assertEquals(self.plr.deck[0].name, 'Copper')
 
 
