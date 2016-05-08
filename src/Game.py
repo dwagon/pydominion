@@ -112,7 +112,7 @@ class Game(object):
     def loadTravellers(self):
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            self.cardpiles[trav] = CardPile(trav, numcards=12, cardpath=self.cardpath)
+            self.cardpiles[trav] = CardPile(trav, cardpath=self.cardpath)
 
     ###########################################################################
     def loadEvents(self):
@@ -180,7 +180,7 @@ class Game(object):
     ###########################################################################
     def useCardPile(self, available, c):
         if self.cardbase:
-            cp = CardPile(c, cardpath=self.cardpath)
+            cp = CardPile(c, cardpath=self.cardpath, numcards=c.stacksize)
             if cp.base not in self.cardbase:
                 return 0
         available.remove(c)

@@ -5,6 +5,7 @@ class Card(object):
         self.name = "TODO"
         self.base = "TODO"
         self.basecard = False
+        self.stacksize = 10
         self.cost = -1
         self.potcost = 0
         self.cardtype = 'unknown'
