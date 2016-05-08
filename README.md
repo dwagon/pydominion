@@ -36,4 +36,4 @@ optional arguments:
 images
 ======
 
-Card images from http://dominion.diehrstraits.com
+Card images from http://wiki.dominionstrategy.com/ which is also a great resource for strategies and rule clarity
