@@ -721,7 +721,7 @@ class Player(object):
         return cststr.strip()
 
     ###########################################################################
-    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[]):
+    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[], cardsrc='hand'):
         """ Ask player to trash num cards
         """
         if anynum:
@@ -729,7 +729,7 @@ class Player(object):
         else:
             prompt = "Trash %d cards" % num
         trash = self.cardSel(
-            num=num, cardsrc='hand', anynum=anynum, printcost=printcost,
+            num=num, cardsrc=cardsrc, anynum=anynum, printcost=printcost,
             force=force, exclude=exclude, verbs=('Trash', 'Untrash'),
             prompt=prompt)
         for c in trash:

@@ -88,6 +88,7 @@ class TextPlayer(Player):
             * chooser - Which player does the selecting [player]
             * cardsrc
                 hand - Select the cards from the players hand
+                played - Select the cards from the cards played
             * exclude = [] - Don't let cards in this list be selected
             * printcost
                 True - Print out the cost of the cards
@@ -102,6 +103,8 @@ class TextPlayer(Player):
         if 'cardsrc' in kwargs:
             if kwargs['cardsrc'] == 'hand':
                 selectfrom = self.hand
+            elif kwargs['cardsrc'] == 'played':
+                selectfrom = self.played
             else:
                 selectfrom = kwargs['cardsrc']
         else:
