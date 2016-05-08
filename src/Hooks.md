@@ -10,6 +10,10 @@ hook_buyCard
 ------------
 This is called after a card has been purchased, and is invoked for every card in the players hand.
 
+hook_buyThisCard
+------------
+This is called after this card has been purchased.
+
 hook_discardCard
 ----------------
 This is called when this card is discarded.

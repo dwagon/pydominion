@@ -260,7 +260,7 @@ class Player(object):
 
     ###########################################################################
     def addCard(self, c, pile='discard'):
-        if not c:
+        if not c:   # pragma: no cover
             return
         if pile == 'discard':
             self.discardpile.add(c)
@@ -588,6 +588,7 @@ class Player(object):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
         self.hook_buyCard(newcard)
+        newcard.hook_buyThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hook_gainCard(self, card):

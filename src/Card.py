@@ -108,6 +108,9 @@ class Card(object):
     def hook_buyCard(self, game, player, card):
         pass    # pragma: no cover
 
+    def hook_buyThisCard(self, game, player):
+        pass    # pragma: no cover
+
     def hook_allowedToBuy(self, game, player):
         return True     # pragma: no cover
 
