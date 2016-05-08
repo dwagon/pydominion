@@ -129,7 +129,8 @@ class Player(object):
             Can pass the card, the cardpile or just the name """
         if hasattr(pilename, 'name'):
             pilename = pilename.name
-        self.tokens[token] = pilename
+        assert (token in self.tokens), "Unknown token %s" % token
+        self.tokens[token] = pilename.lower()
 
     ###########################################################################
     def which_token(self, pilename):
@@ -138,7 +139,7 @@ class Player(object):
             pilename = pilename.name
         onstack = []
         for tk in self.tokens:
-            if self.tokens[tk] == pilename:
+            if self.tokens[tk] == pilename.lower():
                 onstack.append(tk)
         return onstack
 
@@ -316,6 +317,8 @@ class Player(object):
         for p in playable:
             sel = chr(ord('a') + index)
             pr = "Play %s (%s)" % (p.name, p.desc)
+            for tkn in self.which_token(p):
+                pr += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
             index += 1
         return options, index
@@ -581,7 +584,7 @@ class Player(object):
         self.buys -= 1
         self.coin -= self.cardCost(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
-        if self.tokens['Trashing'] == card:
+        if 'Trashing' in self.which_token(card):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
         self.hook_buyCard(newcard)

@@ -433,6 +433,18 @@ class Test_playableSelection(unittest.TestCase):
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
+        self.assertEqual(opts[0]['print'], 'Play Moat (+2 cards, defense)')
+        self.assertEqual(ind, 2)
+
+    def test_token(self):
+        self.plr.place_token('+Card', 'moat')
+        self.plr.addCard(self.moat, 'hand')
+        opts, ind = self.plr.playableSelection(1)
+        self.g.print_state()
+        self.assertEqual(len(opts), 1)
+        self.assertEqual(opts[0]['selector'], 'b')
+        self.assertEqual(opts[0]['card'], self.moat)
+        self.assertTrue('[Tkn: +Card]' in opts[0]['print'])
         self.assertEqual(ind, 2)
 
 
