@@ -17,6 +17,7 @@ Text interface
 
 ```
 usage: Game.py [-h] [--numplayers NUMPLAYERS] [--card INITCARDS]
+               [--event EVENTCARDS] [--numevents NUMEVENTS]
                [--cardset CARDSET] [--cardbase CARDBASE] [--cardpath CARDPATH]
                [--prosperity]
 
@@ -27,6 +28,9 @@ optional arguments:
   --numplayers NUMPLAYERS
                         How many players
   --card INITCARDS      Include card in lineup
+  --event EVENTCARDS    Include event
+  --numevents NUMEVENTS
+                        Number of events to use
   --cardset CARDSET     File containing list of cards to use
   --cardbase CARDBASE   Include only cards from the specified base
   --cardpath CARDPATH   Where to find card definitions
