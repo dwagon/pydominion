@@ -44,6 +44,36 @@ class TestPlayer(unittest.TestCase):
 
 
 ###############################################################################
+class Test_inDiscard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_emptydiscard(self):
+        """ Test inDiscard() with no discard pile """
+        self.plr.setDiscard()
+        self.assertIsNone(self.plr.inDiscard('copper'))
+
+    def test_indiscard(self):
+        """ Test inDiscard() with it the only card in the discard pile """
+        self.plr.setDiscard('copper')
+        self.assertIsNotNone(self.plr.inDiscard('copper'))
+
+    def test_inmultidiscard(self):
+        """ Test inDiscard() with it one of many cards in the discard pile """
+        self.plr.setDiscard('copper', 'gold', 'copper')
+        c = self.plr.inDiscard('gold')
+        self.assertIsNotNone(c)
+        self.assertEqual(c.name, 'Gold')
+
+    def test_notinmultidiscard(self):
+        """ Test inDiscard() with it not one of many cards in the discard pile """
+        self.plr.setDiscard('copper', 'gold', 'copper')
+        self.assertIsNone(self.plr.inDiscard('estate'))
+
+
+###############################################################################
 class Test_nextCard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
