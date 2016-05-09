@@ -58,6 +58,16 @@ class Test_Reserve(unittest.TestCase):
         cotr = self.g['coinoftherealm'].remove()
         self.assertTrue(cotr.isReserve())
 
+    def test_reserveSelection(self):
+        gold = self.g['gold'].remove()
+        self.plr.addCard(gold, 'reserve')
+        output, index = self.plr.reserveSelection(1)
+        self.assertEquals(len(output), 1)
+        self.assertEquals(output[0]['action'], 'reserve')
+        self.assertEquals(output[0]['card'], gold)
+        self.assertEquals(output[0]['selector'], 'b')
+        self.assertEquals(index, 2)
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

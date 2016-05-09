@@ -50,6 +50,8 @@ class TextPlayer(Player):
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s Turn %s" % (self.name, stats))
         while(1):
+            if self.reserve:
+                self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
             if self.hand:
                 self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
             else:
@@ -64,6 +66,8 @@ class TextPlayer(Player):
                 self.buyCard(opt['card'])
             elif opt['action'] == 'event':
                 self.performEvent(opt['card'])
+            elif opt['action'] == 'reserve':
+                self.callReserve(opt['card'])
             elif opt['action'] == 'coin':
                 self.spendCoin()
             elif opt['action'] == 'play':

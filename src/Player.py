@@ -381,6 +381,17 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def reserveSelection(self, index):
+        options = []
+        for op in self.reserve:
+            sel = chr(ord('a') + index)
+            tp = 'Call %s from reserve (%s)' % (op.name, op.desc)
+            index += 1
+            options.append({'selector': sel, 'print': tp, 'card': op, 'action': 'reserve'})
+
+        return options, index
+
+    ###########################################################################
     def eventSelection(self, index):
         options = []
         for op in self.game.events.values():
@@ -423,6 +434,10 @@ class Player(object):
             op, index = self.spendableSelection(index)
             options.extend(op)
             op, index = self.buyableSelection(index)
+            options.extend(op)
+
+        if self.reserveSize():
+            op, index = self.reserveSelection(index)
             options.extend(op)
 
         if self.game.events and self.buys:
