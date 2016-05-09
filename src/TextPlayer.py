@@ -1,21 +1,28 @@
 import sys
+import colorama
 from Player import Player
 
 if sys.version[0] == "3":
     raw_input = input
+
+colours = [colorama.Fore.RED, colorama.Fore.GREEN, colorama.Fore.YELLOW, colorama.Fore.BLUE]
 
 
 ###############################################################################
 ###############################################################################
 ###############################################################################
 class TextPlayer(Player):
-    def __init__(self, game, name='', quiet=False):
-        Player.__init__(self, game, name, quiet)
+    def __init__(self, game, name='', quiet=False, **kwargs):
+        colorama.init()
+        self.colour = colours[kwargs['number']]
+        self.quiet = quiet
+        Player.__init__(self, game, name)
 
     ###########################################################################
     def output(self, msg, end='\n'):
         if not self.quiet:
-            sys.stdout.write("%s: %s%s" % (self.name, msg, end))
+            sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
+            sys.stdout.write("%s%s" % (msg, end))
         self.messages.append(msg)
 
     ###########################################################################
@@ -48,7 +55,7 @@ class TextPlayer(Player):
         self.startTurn()
         self.output("#" * 50)
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
-        self.output("%s Turn %s" % (self.name, stats))
+        self.output("%s's Turn %s" % (self.name, stats))
         while(1):
             if self.reserve:
                 self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))

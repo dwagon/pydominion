@@ -69,7 +69,7 @@ class Game(object):
             except IndexError:
                 name = None
             u = uuid.uuid4().hex
-            self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name)
+            self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
