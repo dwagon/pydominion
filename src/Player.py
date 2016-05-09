@@ -29,7 +29,7 @@ playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
 ###############################################################################
 ###############################################################################
 class Player(object):
-    def __init__(self, game, name='', quiet=False):
+    def __init__(self, game, name=''):
         self.game = game
         if not name:
             name = random.choice(playerNames)
@@ -52,7 +52,6 @@ class Player(object):
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
-        self.quiet = quiet
         self.test_input = []
         self.initial_Deck()
         self.initial_tokens()
