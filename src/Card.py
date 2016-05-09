@@ -102,6 +102,11 @@ class Card(object):
             return True
         return False
 
+    def isReserve(self):
+        if 'reserve' in self.cardtype:
+            return True
+        return False
+
     def special_score(self, game, player):
         return 0    # pragma: nocover
 
@@ -109,6 +114,9 @@ class Card(object):
         pass    # pragma: no cover
 
     def hook_buyThisCard(self, game, player):
+        pass    # pragma: no cover
+
+    def hook_callReserve(self, game, player):
         pass    # pragma: no cover
 
     def hook_allowedToBuy(self, game, player):

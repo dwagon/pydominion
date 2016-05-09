@@ -46,6 +46,10 @@ hook_trashThisCard
 --------------
 Called just before the card is trashed
 
+hook_callReserve
+--------------
+Called when a card is pulled from the Reserve
+
 setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup

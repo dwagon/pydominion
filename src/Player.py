@@ -43,6 +43,7 @@ class Player(object):
         self.deck = PlayArea([])
         self.played = PlayArea([])
         self.discardpile = PlayArea([])
+        self.reserve = PlayArea([])
         self.buys = 1
         self.actions = 1
         self.coin = 0
@@ -144,6 +145,28 @@ class Player(object):
         return onstack
 
     ###########################################################################
+    def callReserve(self, cardname):
+        c = self.inReserve(cardname)
+        if not c:
+            self.output("%s not in reserve" % cardname)
+            return None
+        c.hook_callReserve(game=self.game, player=self)
+        self.output("Calling %s from Reserve" % cardname)
+        self.reserve.remove(c)
+        self.addCard(c, 'discard')
+        return c
+
+    ###########################################################################
+    def inReserve(self, cardname):
+        """ Return named card if cardname is in reserve """
+        if hasattr(cardname, 'name'):
+            cardname = cardname.name
+        for c in self.reserve:
+            if c.cardname.lower() == cardname.lower():
+                return c
+        return None
+
+    ###########################################################################
     def inHand(self, cardname):
         """ Return named card if cardname is in hand """
         if hasattr(cardname, 'name'):
@@ -172,6 +195,13 @@ class Player(object):
             self.played.remove(c)
         if c in self.hand:
             self.hand.remove(c)
+
+    ###########################################################################
+    def setReserve(self, *cards):
+        """ This is mostly used for testing """
+        self.reserve.empty()
+        for c in cards:
+            self.reserve.add(self.game[c].remove())
 
     ###########################################################################
     def setPlayed(self, *cards):
@@ -274,12 +304,18 @@ class Player(object):
             self.played.add(c)
         elif pile == 'duration':
             self.durationpile.add(c)
+        elif pile == 'reserve':
+            self.reserve.add(c)
 
     ###########################################################################
     def discardCard(self, c):
         if c in self.hand:
             self.hand.remove(c)
         self.addCard(c, 'discard')
+
+    ###########################################################################
+    def reserveSize(self):
+        return len(self.reserve)
 
     ###########################################################################
     def handSize(self):
