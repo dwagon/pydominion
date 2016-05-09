@@ -162,7 +162,7 @@ class Player(object):
         if hasattr(cardname, 'name'):
             cardname = cardname.name
         for c in self.reserve:
-            if c.cardname.lower() == cardname.lower():
+            if c.name.lower() == cardname.lower():
                 return c
         return None
 
