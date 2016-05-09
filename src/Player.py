@@ -469,6 +469,7 @@ class Player(object):
         x += self.deck
         x += self.played
         x += self.durationpile
+        x += self.reserve
         return x
 
     ###########################################################################
