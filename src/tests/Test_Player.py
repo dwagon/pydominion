@@ -44,6 +44,22 @@ class TestPlayer(unittest.TestCase):
 
 
 ###############################################################################
+class Test_discardHand(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_discard(self):
+        self.plr.setHand('copper', 'silver')
+        self.plr.setPlayed('estate', 'duchy')
+        self.plr.discardHand()
+        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.playedSize(), 0)
+        self.assertEqual(self.plr.discardSize(), 4)
+
+
+###############################################################################
 class Test_inDiscard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
@@ -66,6 +82,13 @@ class Test_inDiscard(unittest.TestCase):
         c = self.plr.inDiscard('gold')
         self.assertIsNotNone(c)
         self.assertEqual(c.name, 'Gold')
+
+    def test_indiscard_with_card(self):
+        """ Test card is in discard passing a card """
+        self.plr.setDiscard('copper')
+        cu = self.g['copper'].remove()
+        self.assertTrue(self.plr.inDiscard(cu))
+        self.assertEqual(self.plr.inDiscard(cu).name, 'Copper')
 
     def test_notinmultidiscard(self):
         """ Test inDiscard() with it not one of many cards in the discard pile """
@@ -262,6 +285,32 @@ class Test_attackVictims(unittest.TestCase):
 
 
 ###############################################################################
+class Test_inDeck(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_indeck(self):
+        """ Test card is in deck """
+        self.plr.setDeck('copper')
+        self.assertTrue(self.plr.inDeck('Copper'))
+        self.assertEqual(self.plr.inDeck('Copper').name, 'Copper')
+
+    def test_indeck_with_card(self):
+        """ Test card is in deck passing a card """
+        self.plr.setDeck('copper')
+        cu = self.g['copper'].remove()
+        self.assertTrue(self.plr.inDeck(cu))
+        self.assertEqual(self.plr.inDeck(cu).name, 'Copper')
+
+    def test_notindeck(self):
+        """ Test card that isn't in deck """
+        self.plr.setDeck('copper')
+        self.assertFalse(self.plr.inDeck('Estate'))
+
+
+###############################################################################
 class Test_inHand(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
@@ -273,6 +322,13 @@ class Test_inHand(unittest.TestCase):
         self.plr.setHand('copper')
         self.assertTrue(self.plr.inHand('Copper'))
         self.assertEqual(self.plr.inHand('Copper').name, 'Copper')
+
+    def test_inhand_with_card(self):
+        """ Test card is in hand passing a card """
+        self.plr.setHand('copper')
+        cu = self.g['copper'].remove()
+        self.assertTrue(self.plr.inHand(cu))
+        self.assertEqual(self.plr.inHand(cu).name, 'Copper')
 
     def test_notinhand(self):
         """ Test card that isn't in hand """
@@ -417,6 +473,58 @@ class Test_misc(unittest.TestCase):
     def test_getPotions(self):
         self.plr.potions = 3
         self.assertEqual(self.plr.getPotions(), 3)
+
+    def test_durationSize(self):
+        copper = self.g['copper'].remove()
+        self.assertEqual(self.plr.durationSize(), 0)
+        self.plr.durationpile.add(copper)
+        self.plr.durationpile.add(copper)
+        self.assertEqual(self.plr.durationSize(), 2)
+
+
+###############################################################################
+class Test_buyableSelection(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.moat = self.g['moat'].remove()
+
+    def test_buy_moat(self):
+        self.plr.addCoin(3)
+        opts, ind = self.plr.buyableSelection(1)
+        self.assertEqual(ind, 1 + len(opts))
+        for i in opts:
+            if i['print'].startswith('Buy Moat'):
+                self.assertEqual(i['action'], 'buy')
+                self.assertEqual(i['card'], self.g['moat'])
+                break
+        else:
+            self.fail("Moat not buyable")
+
+    def test_buy_copper(self):
+        self.plr.coin = 0
+        opts, ind = self.plr.buyableSelection(1)
+        self.assertEqual(ind, 1 + len(opts))
+        for i in opts:
+            if i['print'].startswith('Buy Copper'):
+                self.assertEqual(i['action'], 'buy')
+                self.assertEqual(i['card'], self.g['copper'])
+                break
+        else:
+            self.fail("Copper not buyable")
+
+    def test_buy_token(self):
+        self.plr.addCoin(2)
+        self.plr.place_token('+Card', 'moat')
+        opts, ind = self.plr.buyableSelection(1)
+        self.assertEqual(ind, 1 + len(opts))
+        for i in opts:
+            if i['print'].startswith('Buy Moat'):
+                self.assertIn('[Tkn: +Card]', i['print'])
+                break
+        else:
+            self.fail("Moat not buyable")
 
 
 ###############################################################################

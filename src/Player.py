@@ -186,6 +186,16 @@ class Player(object):
         return None
 
     ###########################################################################
+    def inDeck(self, cardname):
+        """ Return named card if cardname is in the deck pile """
+        if hasattr(cardname, 'name'):
+            cardname = cardname.name
+        for c in self.deck:
+            if c.cardname.lower() == cardname.lower():
+                return c
+        return None
+
+    ###########################################################################
     def trashCard(self, c):
         """ Take a card out of the game """
         c.hook_trashThisCard(game=self.game, player=self)
