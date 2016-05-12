@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Raze(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = 'action'
+        self.base = 'adventure'
+        self.desc = "+1 Action; Trash stuff"
+        self.name = 'Raze'
+        self.actions = 1
+        self.cost = 2
+
+    def special(self, game, player):
+        """ Trash this or a card from your hand. Look at a number of cards
+            from the top of your deck equal to the cost in Coin of the trashed
+            card. Put one into your hand and discard the rest """
+        cards_to_trash = [self]
+        for c in player.hand:
+            cards_to_trash.append(c)
+        trash = player.plrTrashCard(cardsrc=cards_to_trash, force=True)
+        cost = trash[0].cost
+        cards = []
+        for c in range(cost):
+            cards.append(player.nextCard())
+        ans = player.cardSel(force=True, prompt="Pick a card to put into your hand", cardsrc=cards)
+        for c in cards:
+            if c == ans[0]:
+                player.addCard(c, 'hand')
+            else:
+                player.addCard(c, 'discard')
+
+
+###############################################################################
+class Test_Raze(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['raze'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.card = self.g['raze'].remove()
+
+    def test_play(self):
+        """ Play a raze - trashing itself """
+        self.plr.addCard(self.card, 'hand')
+        self.plr.setDeck('silver', 'gold', 'province')
+        self.plr.test_input = ['raze', 'gold']
+        self.plr.playCard(self.card)
+        self.g.print_state()
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertIsNotNone(self.plr.inDiscard('province'))
+        self.assertIsNotNone(self.plr.inHand('gold'))
+        self.assertIsNotNone(self.plr.inDeck('silver'))
+        self.assertIsNotNone(self.g.inTrash('raze'))
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
