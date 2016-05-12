@@ -83,6 +83,16 @@ class Game(object):
             return list(self.players.values())[num]
 
     ###########################################################################
+    def inTrash(self, cardname):
+        """ Return named card if cardname is in the trash pile """
+        if hasattr(cardname, 'name'):
+            cardname = cardname.name
+        for c in self.trashpile:
+            if c.cardname.lower() == cardname.lower():
+                return c
+        return None
+
+    ###########################################################################
     def cardSetup(self):
         """ Run the setup() method for all cards """
         for cp in list(self.cardpiles.values()):

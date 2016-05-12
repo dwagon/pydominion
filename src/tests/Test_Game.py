@@ -64,6 +64,31 @@ class Test_game_over(unittest.TestCase):
 
 
 ###############################################################################
+class Test_inTrash(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.plr.setHand('copper')
+        self.plr.trashCard(self.plr.hand[0])
+
+    def test_intrash(self):
+        """ Test card is in trash """
+        self.assertTrue(self.g.inTrash('Copper'))
+        self.assertEqual(self.g.inTrash('Copper').name, 'Copper')
+
+    def test_intrash_with_card(self):
+        """ Test card is in trash passing a card """
+        cu = self.g['copper'].remove()
+        self.assertTrue(self.g.inTrash(cu))
+        self.assertEqual(self.g.inTrash(cu).name, 'Copper')
+
+    def test_notintrash(self):
+        """ Test card that isn't in trash """
+        self.assertFalse(self.g.inTrash('Estate'))
+
+
+###############################################################################
 class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
