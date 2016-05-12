@@ -89,6 +89,18 @@ class Test_inTrash(unittest.TestCase):
 
 
 ###############################################################################
+class Test_actionpiles(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g.startGame()
+
+    def test_actionpiles(self):
+        piles = self.g.getActionPiles()
+        self.assertIn(self.g.cardpiles['Moat'], piles)
+        self.assertNotIn(self.g.cardpiles['Copper'], piles)
+
+
+###############################################################################
 class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3

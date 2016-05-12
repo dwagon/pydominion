@@ -224,6 +224,15 @@ class Game(object):
         return cards
 
     ###########################################################################
+    def getActionPiles(self):
+        """ Return all cardstacks that are action cards """
+        actionpiles = []
+        for cp in self.cardpiles.values():
+            if cp.isAction():
+                actionpiles.append(cp)
+        return actionpiles
+
+    ###########################################################################
     def isGameOver(self):
         numEmpty = 0
         for c in self.cardpiles:
