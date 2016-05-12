@@ -499,7 +499,7 @@ class Test_buyableSelection(unittest.TestCase):
                 self.assertEqual(i['action'], 'buy')
                 self.assertEqual(i['card'], self.g['moat'])
                 break
-        else:
+        else:   # pragma: no coverage
             self.fail("Moat not buyable")
 
     def test_buy_copper(self):
@@ -511,7 +511,7 @@ class Test_buyableSelection(unittest.TestCase):
                 self.assertEqual(i['action'], 'buy')
                 self.assertEqual(i['card'], self.g['copper'])
                 break
-        else:
+        else:   # pragma: no coverage
             self.fail("Copper not buyable")
 
     def test_buy_token(self):
@@ -523,7 +523,7 @@ class Test_buyableSelection(unittest.TestCase):
             if i['print'].startswith('Buy Moat'):
                 self.assertIn('[Tkn: +Card]', i['print'])
                 break
-        else:
+        else:   # pragma: no coverage
             self.fail("Moat not buyable")
 
 
