@@ -53,6 +53,36 @@ class Test_eventSelection(unittest.TestCase):
         self.assertEquals(index, 5)
         self.assertEquals(len(output), 2)
 
+
+###############################################################################
+class Test_eventRandom(unittest.TestCase):
+    def test_none(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.assertEqual(len(self.g.events), 0)
+
+    def test_specify(self):
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['alms', 'raid'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.assertEqual(len(self.g.events), 2)
+        self.assertIn('Alms', self.g.events)
+        self.assertIn('Raid', self.g.events)
+
+    def test_random(self):
+        self.g = Game.Game(quiet=True, numplayers=1, numevents=2)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.assertEqual(len(self.g.events), 2)
+
+    def test_both(self):
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['alms'], numevents=2)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.assertEqual(len(self.g.events), 2)
+        self.assertIn('Alms', self.g.events)
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

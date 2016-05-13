@@ -38,7 +38,7 @@ class Game(object):
         self.initcards = []
         self.eventcards = []
         self.cardpath = 'cards'
-        self.eventpath = 'cards'
+        self.eventpath = 'events'
         self.cardbase = []
         if 'prosperity' in args:
             self.prosperity = args['prosperity']
@@ -129,9 +129,13 @@ class Game(object):
         for ev in self.eventcards:
             evname = ev.title()
             self.events[evname] = EventPile(evname, eventpath=self.eventpath)
+        available = self.getAvailableEvents()
         while len(self.events) < self.numevents:
-            # TODO - Select random event
-            break
+            c = random.choice(available)
+            if c not in self.events:
+                self.events[c] = EventPile(c, eventpath=self.eventpath)
+        for e in self.events:
+            self.output("Playing with event %s" % e)
 
     ###########################################################################
     def loadDecks(self, initcards):
@@ -159,10 +163,10 @@ class Game(object):
             unfilled -= self.useCardPile(available, c)
         if self.needcurse:
             self.cardpiles['Curse'] = CardPile('Curse', numcards=self.numCurses(), cardpath=self.cardpath)
-            self.output("Playing with Curse")
+            self.output("Playing with Curses")
         if self.needpotion:
             self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
-            self.output("Playing with Potion")
+            self.output("Playing with Potions")
         if self.needspoils:
             self.cardpiles['Spoils'] = CardPile('Spoils', numcards=16, cardpath=self.cardpath)
             self.output("Playing with Spoils")
@@ -195,7 +199,7 @@ class Game(object):
                 return 0
         available.remove(c)
         self.cardpiles[c] = CardPile(c, cardpath=self.cardpath)
-        self.output("Playing with %s" % self[c].name)
+        self.output("Playing with card %s" % self[c].name)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
         if self.cardpiles[c].potcost:
@@ -224,6 +228,12 @@ class Game(object):
         return cards
 
     ###########################################################################
+    def getAvailableEvents(self):
+        eventfiles = glob.glob('%s/Event_*.py' % self.eventpath)
+        events = [c.replace('%s/Event_' % self.eventpath, '').replace('.py', '') for c in eventfiles]
+        return events
+
+    ###########################################################################
     def getActionPiles(self):
         """ Return all cardstacks that are action cards """
         actionpiles = []
@@ -246,7 +256,7 @@ class Game(object):
         return False
 
     ###########################################################################
-    def print_state(self):
+    def print_state(self):  # pragma: no cover
         """ This is used for debugging """
         print("#" * 40)
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
