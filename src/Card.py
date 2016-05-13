@@ -11,6 +11,7 @@ class Card(object):
         self.cardtype = 'unknown'
         self.purchasable = True
         self.playable = True
+        self.callable = True
         self.defense = False
         self.needcurse = False
         self.needspoils = False

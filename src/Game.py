@@ -353,6 +353,7 @@ def runGame(args):
         while not g.gameover:
             g.turn()
     except KeyboardInterrupt:
+        g.gameover = True
         pass
     g.whoWon()
 

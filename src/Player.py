@@ -393,6 +393,8 @@ class Player(object):
     def reserveSelection(self, index):
         options = []
         for op in self.reserve:
+            if not op.callable:
+                continue
             sel = chr(ord('a') + index)
             tp = 'Call %s from reserve (%s)' % (op.name, op.desc)
             index += 1
