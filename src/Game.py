@@ -99,14 +99,17 @@ class Game(object):
             cp.setup(game=self)
 
     ###########################################################################
-    def countCards(self):
-        count = 0
-        count += self.trashSize()
+    def countCards(self, verbose=False):
+        count = {}
+        count['trash'] = self.trashSize()
         for cp in list(self.cardpiles.values()):
-            count += cp.numcards
+            count['pile_%s' % cp.name] = cp.numcards
         for pl in self.playerList():
-            count += pl.countCards()
-        return count
+            count['player_%s' % pl.name] = pl.countCards(verbose)
+        total = sum([x for x in count.values()])
+        if verbose:
+            sys.stderr.write("countCards() %d = %s\n" % (total, count))
+        return total
 
     ###########################################################################
     def output(self, msg):
@@ -300,7 +303,12 @@ class Game(object):
 
     ###########################################################################
     def turn(self):
-        assert(self.countCards() == self.numcards)
+        try:
+            assert(self.countCards() == self.numcards)
+        except AssertionError:
+            sys.stderr.write("countCards() = %s\n" % self.countCards(verbose=True))
+            sys.stderr.write("numcards = %d\n" % self.numcards)
+            raise
         self.currentPlayer = self.playerToLeft(self.currentPlayer)
         self.currentPlayer.turn()
         if self.isGameOver():

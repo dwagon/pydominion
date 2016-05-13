@@ -756,8 +756,18 @@ class Player(object):
         return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
-    def countCards(self):
-        return len(self.allCards())
+    def countCards(self, verbose=False):
+        count = {}
+        count['discard'] = len(self.discardpile)
+        count['hand'] = len(self.hand)
+        count['deck'] = len(self.deck)
+        count['played'] = len(self.played)
+        count['duration'] = len(self.durationpile)
+        count['reserve'] = len(self.reserve)
+        total = sum([x for x in count.values()])
+        if verbose:
+            sys.stderr.write("countCards %s %d = %s\n" % (self.name, total, count))
+        return total
 
     ###########################################################################
     def typeSelector(self, types):
