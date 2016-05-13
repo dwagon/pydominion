@@ -25,10 +25,12 @@ class Card_Bureaucrat(Card):
             for c in pl.hand:
                 if c.isVictory():
                     pl.addCard(c, 'topdeck')
+                    pl.hand.remove(c)
                     pl.output("Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name))
                     player.output("Player %s moved a %s to the top" % (pl.name, c.name))
                     break
-            player.output("Player %s has no victory cards in hand" % pl.name)
+            else:
+                player.output("Player %s has no victory cards in hand" % pl.name)
 
 
 ###############################################################################
@@ -46,6 +48,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.victim.setDeck('silver')
         self.plr.playCard(self.bcard)
         self.assertEquals(self.victim.deck[-1].name, 'Estate')
+        self.assertIsNone(self.victim.inHand('Estate'))
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
     def test_novictory(self):
@@ -57,12 +60,12 @@ class Test_Bureaucrat(unittest.TestCase):
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
     def test_defense(self):
-        self.victim.setHand('estate', 'duchy', 'moat')
         self.victim.setDeck('province')
-        self.plr.setDeck('province')
+        self.victim.setHand('estate', 'duchy', 'moat')
         self.plr.playCard(self.bcard)
+        self.assertEqual(self.plr.deck[-1].name, 'Silver')
         self.assertEquals(self.victim.deck[-1].name, 'Province')
-        self.assertEquals(self.plr.deck[-1].name, 'Silver')
+        self.assertIsNotNone(self.victim.inHand('Estate'))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
