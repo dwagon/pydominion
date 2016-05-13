@@ -21,6 +21,10 @@ class Card_Lookout(Card):
         cards = []
         for i in range(3):
             cards.append(player.nextCard())
+        cards = [c for c in cards if c]
+        if not cards:
+            player.output("No cards available")
+            return
         player.output("Pulled %s from deck" % ", ".join([c.name for c in cards]))
         player.output("Trash a card, Discard a card, put a card on your deck")
         tc = self.trash(player, cards)
@@ -65,12 +69,20 @@ class Test_Lookout(unittest.TestCase):
     def test_actions(self):
         self.plr.setDeck('copper', 'estate', 'gold', 'province')
         self.plr.addCard(self.lookout, 'hand')
-        self.plr.test_input = ['1', '1']
+        self.plr.test_input = ['province', 'gold']
         self.plr.playCard(self.lookout)
-        self.assertEqual(self.g.trashpile[0].name, 'Province')
-        self.assertEqual(self.plr.discardpile[0].name, 'Gold')
+        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Copper')
         self.assertEqual(self.plr.deck[1].name, 'Estate')
+
+    def test_nocards(self):
+        """ Play a lookout when there are no cards available """
+        self.plr.setDeck()
+        self.plr.addCard(self.lookout, 'hand')
+        self.plr.playCard(self.lookout)
+        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.plr.discardSize(), 0)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
