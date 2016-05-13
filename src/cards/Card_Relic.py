@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Relic(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['treasure', 'attack']
+        self.base = 'adventure'
+        self.desc = "+2 Coin; Each other player gains a -1 Card token"
+        self.name = 'Relic'
+        self.coin = 2
+        self.cost = 5
+
+    def special(self, game, player):
+        """ When you play this, each other player puts his -1 Card token
+            on his deck. """
+        for victim in player.attackVictims():
+            victim.card_token = True
+            victim.output("-1 Card token active due to Relic by %s" % player.name)
+
+
+###############################################################################
+class Test_Relic(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['relic'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
+        self.card = self.g['relic'].remove()
+
+    def test_play(self):
+        """ Play a relic """
+        self.plr.setHand()
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertTrue(self.victim.card_token)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
