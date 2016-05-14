@@ -12,6 +12,7 @@ class Card_Copper(Card):
         self.base = 'dominion'
         self.basecard = True
         self.playable = False
+        self.callable = False
         self.desc = "+1 coin"
         self.name = 'Copper'
         self.coin = 1
