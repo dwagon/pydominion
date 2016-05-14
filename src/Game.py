@@ -6,6 +6,7 @@ import sys
 import uuid
 
 from TextPlayer import TextPlayer
+from BotPlayer import BotPlayer
 from CardPile import CardPile
 from EventPile import EventPile
 from PlayArea import PlayArea
@@ -56,6 +57,8 @@ class Game(object):
             self.cardpath = args['cardpath']
         if 'cardbase' in args:
             self.cardbase = args['cardbase']
+        if 'bot' in args:
+            self.bot = args['bot']
 
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
@@ -69,7 +72,11 @@ class Game(object):
             except IndexError:
                 name = None
             u = uuid.uuid4().hex
-            self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
+            if self.bot:
+                self.players[u] = BotPlayer(game=self, quiet=self.quiet)
+                self.bot = False
+            else:
+                self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
             self.players[u].uuid = u
         self.numcards = self.countCards()
         self.cardSetup()
@@ -306,11 +313,13 @@ class Game(object):
         try:
             assert(self.countCards() == self.numcards)
         except AssertionError:
-            sys.stderr.write("countCards() = %s\n" % self.countCards(verbose=True))
-            sys.stderr.write("numcards = %d\n" % self.numcards)
+            sys.stderr.write("current = %s\n" % self.countCards(verbose=True))
+            sys.stderr.write("original = %d\n" % self.numcards)
             raise
         self.currentPlayer = self.playerToLeft(self.currentPlayer)
+        self.currentPlayer.startTurn()
         self.currentPlayer.turn()
+        self.currentPlayer.endTurn()
         if self.isGameOver():
             self.gameover = True
 
@@ -336,6 +345,9 @@ def parseArgs(args=sys.argv[1:]):
                         help='Where to find card definitions')
     parser.add_argument('--prosperity', default=False, action='store_true',
                         help='Use colonies and platinums')
+    parser.add_argument('--bot', action='store_true', dest='bot',
+                        default=False,
+                        help='Bot Player')
     namespace = parser.parse_args(args)
     return namespace
 
