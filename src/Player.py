@@ -664,7 +664,7 @@ class Player(object):
                 newcard = cardpile.remove()
         options = self.hook_gainCard(newcard)
         if not newcard:
-            sys.stderr.write("ERROR: Getting from empty cardpile %s" % cardpile)
+            sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
             return
         if 'destination' in options:
             destination = options['destination']
