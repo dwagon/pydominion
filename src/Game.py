@@ -41,6 +41,7 @@ class Game(object):
         self.cardpath = 'cards'
         self.eventpath = 'events'
         self.cardbase = []
+        self.bot = False
         if 'prosperity' in args:
             self.prosperity = args['prosperity']
         if 'quiet' in args:
