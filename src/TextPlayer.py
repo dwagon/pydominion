@@ -51,45 +51,6 @@ class TextPlayer(Player):
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
-    def turn(self):
-        self.startTurn()
-        self.output("#" * 50)
-        stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
-        self.output("%s's Turn %s" % (self.name, stats))
-        while(1):
-            if self.reserve:
-                self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
-            if self.hand:
-                self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
-            else:
-                self.output("Hand: <EMPTY>")
-            if self.played:
-                self.output("Played: %s" % ", ".join([c.name for c in self.played]))
-            else:
-                self.output("Played: <NONE>")
-
-            opt = self.choiceSelection()
-            if opt['action'] == 'buy':
-                self.buyCard(opt['card'])
-            elif opt['action'] == 'event':
-                self.performEvent(opt['card'])
-            elif opt['action'] == 'reserve':
-                self.callReserve(opt['card'])
-            elif opt['action'] == 'coin':
-                self.spendCoin()
-            elif opt['action'] == 'play':
-                self.playCard(opt['card'])
-            elif opt['action'] == 'spend':
-                self.playCard(opt['card'])
-            elif opt['action'] == 'spendall':
-                self.spendAllCards()
-            elif opt['action'] == 'quit':
-                break
-            else:
-                sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
-        self.endTurn()
-
-    ###########################################################################
     def cardSel(self, num=1, **kwargs):
         """ Most interactions with players are the selection of cards
             either from the hand, the drawpiles, or a subset

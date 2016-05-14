@@ -466,6 +466,43 @@ class Player(object):
         return self.userInput(options, prompt)
 
     ###########################################################################
+    def turn(self):
+        self.output("#" * 50)
+        stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
+        self.output("%s's Turn %s" % (self.name, stats))
+        while(1):
+            if self.reserve:
+                self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
+            if self.hand:
+                self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
+            else:
+                self.output("Hand: <EMPTY>")
+            if self.played:
+                self.output("Played: %s" % ", ".join([c.name for c in self.played]))
+            else:
+                self.output("Played: <NONE>")
+
+            opt = self.choiceSelection()
+            if opt['action'] == 'buy':
+                self.buyCard(opt['card'])
+            elif opt['action'] == 'event':
+                self.performEvent(opt['card'])
+            elif opt['action'] == 'reserve':
+                self.callReserve(opt['card'])
+            elif opt['action'] == 'coin':
+                self.spendCoin()
+            elif opt['action'] == 'play':
+                self.playCard(opt['card'])
+            elif opt['action'] == 'spend':
+                self.playCard(opt['card'])
+            elif opt['action'] == 'spendall':
+                self.spendAllCards()
+            elif opt['action'] == 'quit':
+                break
+            else:
+                sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
+
+    ###########################################################################
     def addScore(self, reason, points):
         if reason not in self.score:
             self.score[reason] = 0
@@ -766,9 +803,14 @@ class Player(object):
         count['played'] = len(self.played)
         count['duration'] = len(self.durationpile)
         count['reserve'] = len(self.reserve)
-        total = sum([x for x in count.values()])
         if verbose:
-            sys.stderr.write("countCards %s %d = %s\n" % (self.name, total, count))
+            sys.stderr.write("Discard %d: %s" % (len(self.discardpile), ", ".join(self.discardpile)))
+            sys.stderr.write("Hand %d: %s" % (len(self.hand), ", ".join(self.hand)))
+            sys.stderr.write("Reserve %d: %s" % (len(self.reserve), ", ".join(self.reserve)))
+            sys.stderr.write("Deck %d: %s" % (len(self.deck), ", ".join(self.deck)))
+            sys.stderr.write("Played %d: %s" % (len(self.played), ", ".join(self.played)))
+            sys.stderr.write("Duration %d: %s" % (len(self.duration), ", ".join(self.duration)))
+        total = sum([x for x in count.values()])
         return total
 
     ###########################################################################
