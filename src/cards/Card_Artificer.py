@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Artificer(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = 'action'
+        self.base = 'adventure'
+        self.desc = """+1 Card, +1 Action, +1 Coin; Discard any number of cards. You may gain a card costing exactly 1 per card discarded, putting it on top of your deck"""
+        self.name = 'Artificer'
+        self.cards = 1
+        self.actions = 1
+        self.coin = 1
+        self.cost = 5
+
+    def special(self, game, player):
+        """ Discard any number of cards. You may gain a card costing
+            exactly 1 per card discarded, putting it on top of your deck """
+        player.output("Select which card(s) to discard")
+        todiscard = player.plrDiscardCards(anynum=True)
+        cost = len(todiscard)
+        player.output("Gain a card costing %d" % cost)
+        player.plrGainCard(cost=cost, modifier='equal', destination='topdeck')
+
+
+###############################################################################
+class Test_Artificer(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['artificer'])
+        self.g.startGame()
+        self.plr = self.g.playerList()[0]
+        self.card = self.g['artificer'].remove()
+
+    def test_play(self):
+        """ Play an artificer - discard none and pick up a copper """
+        self.plr.setDeck('province')
+        self.plr.setHand()
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['finish', 'copper']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.deck[0].name, 'Copper')
+
+    def test_play_more(self):
+        """ Play an artificer - discard three and pick up a silver """
+        self.plr.setDeck('gold')
+        self.plr.setHand('estate', 'duchy', 'province')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['estate', 'duchy', 'province', 'finish', 'silver']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 1)
+        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.deck[0].name, 'Silver')
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
