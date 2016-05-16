@@ -5,6 +5,44 @@ import Game
 
 
 ###############################################################################
+class Test_getWhens(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_start(self):
+        self.plr.startTurn()
+        whens = self.plr.getWhens()
+        self.assertEquals(whens, ['any', 'start'])
+
+    def test_not_start(self):
+        self.plr.startTurn()
+        self.plr.perform_action({'action': 'spendall'})
+        whens = self.plr.getWhens()
+        self.assertNotIn('start', whens)
+
+    def test_any(self):
+        whens = self.plr.getWhens()
+        self.assertIn('any', whens)
+
+    def test_postaction(self):
+        self.plr.setPlayed('moat')
+        whens = self.plr.getWhens()
+        self.assertIn('postaction', whens)
+        self.plr.setPlayed('copper')
+        whens = self.plr.getWhens()
+        self.assertNotIn('postaction', whens)
+
+    def test_not_postaction(self):
+        whens = self.plr.getWhens()
+        self.assertNotIn('postaction', whens)
+        self.plr.perform_action({'action': 'spendall'})
+        whens = self.plr.getWhens()
+        self.assertNotIn('postaction', whens)
+
+
+###############################################################################
 class Test_Reserve(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['coinoftherealm'])

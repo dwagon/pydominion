@@ -368,14 +368,19 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def reserveSelection(self, index):
+    def getWhens(self):
+        """ Return when we are for calling reserve cards """
         whens = ['any']
         for c in self.played:
             if c.isAction():
                 whens.append('postaction')
         if self.is_start:
             whens.append('start')
+        return whens
 
+    ###########################################################################
+    def reserveSelection(self, index):
+        whens = self.getWhens()
         options = []
         for card in self.reserve:
             if not card.callable:
