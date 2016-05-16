@@ -15,7 +15,6 @@ class BotPlayer(Player):
         self.colour = "%s%s" % (colorama.Back.BLACK, colorama.Fore.RED)
         self.quiet = quiet
         Player.__init__(self, game, name)
-        self.name = "%sBot" % self.name
 
     ###########################################################################
     def output(self, msg, end='\n'):

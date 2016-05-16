@@ -1,41 +1,17 @@
 from PlayArea import PlayArea
 import operator
-import random
 import sys
-
-playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
-               'Anne', 'Anthony', 'Barbara', 'Benjamin', 'Brian',
-               'Catherine', 'Chloe', 'Christine', 'Christopher',
-               'Colin', 'Craig', 'Daniel', 'Darren', 'David',
-               'Elizabeth', 'Emily', 'Emma', 'Fiona', 'Gary',
-               'Geoffrey', 'George', 'Graeme', 'Gregory', 'Heather',
-               'Helen', 'Ian', 'Jack', 'James', 'Jason', 'Jennifer',
-               'Jessica', 'Joan', 'Joanne', 'John', 'Joshua',
-               'Judith', 'Julie', 'Karen', 'Kate', 'Kathleen',
-               'Kenneth', 'Kevin', 'Lachlan', 'Laura', 'Lauren',
-               'Leanne', 'Linda', 'Lisa', 'Luke', 'Lynette',
-               'Margaret', 'Maria', 'Mark', 'Mary', 'Matthew',
-               'Melissa', 'Michael', 'Michelle', 'Natalie', 'Nathan',
-               'Nicholas', 'Nicole', 'Olivia', 'Pamela', 'Patricia',
-               'Paul', 'Peter', 'Raymond', 'Rebecca', 'Richard',
-               'Robert', 'Robyn', 'Ronald', 'Ryan', 'Samantha',
-               'Samuel', 'Sandra', 'Sarah', 'Scott', 'Shane',
-               'Sharon', 'Shirley', 'Simon', 'Stephanie', 'Stephen',
-               'Steven', 'Susan', 'Suzanne', 'Thomas', 'Timothy',
-               'Wayne', 'Wendy', 'William']
 
 
 ###############################################################################
 ###############################################################################
 ###############################################################################
 class Player(object):
-    def __init__(self, game, name=''):
+    def __init__(self, game, name):
         self.game = game
-        if not name:
-            name = random.choice(playerNames)
+        self.name = name
         game.output("Player %s is at the table" % name)
         self.score = {}
-        self.name = name
         self.specialcoins = 0
         self.messages = []
         self.hand = PlayArea([])

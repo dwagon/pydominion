@@ -10,6 +10,7 @@ from BotPlayer import BotPlayer
 from CardPile import CardPile
 from EventPile import EventPile
 from PlayArea import PlayArea
+from Names import playerNames
 
 
 ###############################################################################
@@ -63,6 +64,7 @@ class Game(object):
 
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
+        names = playerNames[:]
         self.loadDecks(self.initcards)
         if self.needtravellers:
             self.loadTravellers()
@@ -71,10 +73,11 @@ class Game(object):
             try:
                 name = playernames.pop()
             except IndexError:
-                name = None
+                name = random.choice(names)
+                names.remove(name)
             u = uuid.uuid4().hex
             if self.bot:
-                self.players[u] = BotPlayer(game=self, quiet=self.quiet)
+                self.players[u] = BotPlayer(game=self, quiet=self.quiet, name='%sBot' % name)
                 self.bot = False
             else:
                 self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
