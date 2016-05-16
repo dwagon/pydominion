@@ -52,6 +52,7 @@ class Player(object):
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
+        self.cleaned = False
         self.test_input = []
         self.initial_Deck()
         self.initial_tokens()
@@ -501,6 +502,7 @@ class Player(object):
     def cleanupPhase(self):
         self.discardHand()
         self.pickUpHand()
+        self.cleaned = True
 
     ###########################################################################
     def perform_action(self, opt):
@@ -589,6 +591,7 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
+        self.cleaned = False
         for card in self.durationpile:
             card.duration(game=self.game, player=self)
             self.addCard(card, 'played')
@@ -606,6 +609,8 @@ class Player(object):
     def endTurn(self):
         self.messages = []
         self.once = {}
+        if not self.cleaned:
+            self.cleanupPhase()
         self.newhandsize = 5
 
     ###########################################################################
