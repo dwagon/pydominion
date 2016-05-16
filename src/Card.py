@@ -16,6 +16,7 @@ class Card(object):
         self.needcurse = False
         self.needspoils = False
         self.traveller = False
+        self.when = 'any'
         self.actions = 0
         self.buys = 0
         self.coin = 0

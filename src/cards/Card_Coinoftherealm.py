@@ -14,6 +14,7 @@ class Card_Coinoftherealm(Card):
         self.name = 'Coin of the Realm'
         self.coin = 1
         self.cost = 2
+        self.when = 'postaction'
 
     def special(self, game, player):
         player.addCard(self, 'reserve')

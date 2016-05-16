@@ -28,7 +28,7 @@ class TextPlayer(Player):
     ###########################################################################
     def userInput(self, options, prompt):
         for o in options:
-            self.output("%s)\t%s" % (o['selector'], o['print']))
+            self.output("%s)    %s" % (o['selector'], o['print']))
         self.output(prompt, end=' ')
         while(1):
             if self.test_input:

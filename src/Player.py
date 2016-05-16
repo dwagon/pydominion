@@ -53,6 +53,7 @@ class Player(object):
         self.coin_token = False
         self.journey_token = True
         self.cleaned = False
+        self.is_start = False
         self.test_input = []
         self.initial_Deck()
         self.initial_tokens()
@@ -392,14 +393,23 @@ class Player(object):
 
     ###########################################################################
     def reserveSelection(self, index):
+        whens = ['any']
+        for c in self.played:
+            if c.isAction():
+                whens.append('postaction')
+        if self.is_start:
+            whens.append('start')
+
         options = []
-        for op in self.reserve:
-            if not op.callable:
+        for card in self.reserve:
+            if not card.callable:
+                continue
+            if card.when not in whens:
                 continue
             sel = chr(ord('a') + index)
-            tp = 'Call %s from reserve (%s)' % (op.name, op.desc)
+            tp = 'Call %s from reserve (%s)' % (card.name, card.desc)
             index += 1
-            options.append({'selector': sel, 'print': tp, 'card': op, 'action': 'reserve'})
+            options.append({'selector': sel, 'print': tp, 'card': card, 'action': 'reserve'})
 
         return options, index
 
@@ -432,16 +442,15 @@ class Player(object):
 
     ###########################################################################
     def choiceSelection(self, phase='action'):
-
         index = 0
+        options = [{'selector': '0', 'print': 'End Phase', 'card': None, 'action': 'quit'}]
+
         if phase == 'action':
-            options = [{'selector': '0', 'print': 'End Phase', 'card': None, 'action': 'quit'}]
             if self.actions:
                 op, index = self.playableSelection(index)
                 options.extend(op)
 
         if phase == 'buy':
-            options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
             if self.specialcoins:
                 options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
@@ -523,6 +532,8 @@ class Player(object):
             return
         else:
             sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
+            return
+        self.is_start = False
 
     ###########################################################################
     def displayOverview(self):
@@ -591,6 +602,7 @@ class Player(object):
         self.coin = 0
         self.potions = 0
         self.cleaned = False
+        self.is_start = True
         for card in self.durationpile:
             card.duration(game=self.game, player=self)
             self.addCard(card, 'played')

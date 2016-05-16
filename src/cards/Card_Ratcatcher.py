@@ -15,6 +15,7 @@ class Card_Ratcatcher(Card):
         self.cards = 1
         self.actions = 1
         self.cost = 2
+        self.when = 'start'
 
     def special(self, game, player):
         player.played.remove(self)
