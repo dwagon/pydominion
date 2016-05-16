@@ -40,14 +40,15 @@ class TextPlayer(Player):
                 except IOError:
                     self.game.print_state()
                     raise
-            matching = []
-            for o in options:
-                if o['selector'] == inp:
-                    return o
-                if inp.lower() in o['print'].lower():
-                    matching.append(o)
-            if len(matching) == 1:
-                return matching[0]
+            if inp:
+                matching = []
+                for o in options:
+                    if o['selector'] == inp:
+                        return o
+                    if inp.lower() in o['print'].lower():
+                        matching.append(o)
+                if len(matching) == 1:
+                    return matching[0]
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
