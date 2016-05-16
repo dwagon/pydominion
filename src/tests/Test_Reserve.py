@@ -96,7 +96,15 @@ class Test_Reserve(unittest.TestCase):
         cotr = self.g['coinoftherealm'].remove()
         self.assertTrue(cotr.isReserve())
 
-    def test_reserveSelection(self):
+
+###############################################################################
+class Test_reserveSelection(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['coinoftherealm'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_callable(self):
         gold = self.g['gold'].remove()
         self.plr.addCard(gold, 'reserve')
         output, index = self.plr.reserveSelection(1)
@@ -105,6 +113,14 @@ class Test_Reserve(unittest.TestCase):
         self.assertEquals(output[0]['card'], gold)
         self.assertEquals(output[0]['selector'], 'b')
         self.assertEquals(index, 2)
+
+    def test_not_callable(self):
+        """ Copper is not callable (Due to miser) """
+        copper = self.g['copper'].remove()
+        self.plr.addCard(copper, 'reserve')
+        output, index = self.plr.reserveSelection(1)
+        self.assertEquals(len(output), 0)
+        self.assertEquals(index, 1)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

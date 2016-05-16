@@ -481,6 +481,45 @@ class Test_misc(unittest.TestCase):
         self.plr.durationpile.add(copper)
         self.assertEqual(self.plr.durationSize(), 2)
 
+    def test_cleanup_phase(self):
+        self.plr.setHand('copper')
+        self.plr.cleanupPhase()
+        self.assertEquals(self.plr.handSize(), 5)
+        self.assertEquals(self.plr.playedSize(), 0)
+
+
+###############################################################################
+class Test_displayOverview(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_empty(self):
+        self.plr.messages = []
+        self.plr.setHand()
+        self.plr.setPlayed()
+        self.plr.displayOverview()
+        self.assertIn('Hand: <EMPTY>', self.plr.messages)
+        self.assertIn('Played: <NONE>', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 2)
+
+    def test_non_empty(self):
+        self.plr.messages = []
+        self.plr.setHand('copper', 'estate')
+        self.plr.setPlayed('moat')
+        self.plr.displayOverview()
+        self.assertIn('Hand: Copper, Estate', self.plr.messages)
+        self.assertIn('Played: Moat', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 2)
+
+    def test_reserve(self):
+        self.plr.messages = []
+        self.plr.setReserve('copper')
+        self.plr.displayOverview()
+        self.assertIn('Reserve: Copper', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 3)
+
 
 ###############################################################################
 class Test_buyableSelection(unittest.TestCase):
