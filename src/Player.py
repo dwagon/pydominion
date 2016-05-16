@@ -430,39 +430,42 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def choiceSelection(self):
-        options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
-
-        if self.specialcoins:
-            options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
+    def choiceSelection(self, phase='action'):
 
         index = 0
-        if self.actions:
-            op, index = self.playableSelection(index)
-            options.extend(op)
+        if phase == 'action':
+            options = [{'selector': '0', 'print': 'End Phase', 'card': None, 'action': 'quit'}]
+            if self.actions:
+                op, index = self.playableSelection(index)
+                options.extend(op)
 
-        if self.buys:
-            op, index = self.spendableSelection(index)
-            options.extend(op)
-            op, index = self.buyableSelection(index)
-            options.extend(op)
+        if phase == 'buy':
+            options = [{'selector': '0', 'print': 'End Turn', 'card': None, 'action': 'quit'}]
+            if self.specialcoins:
+                options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
+
+            if self.buys:
+                op, index = self.spendableSelection(index)
+                options.extend(op)
+                op, index = self.buyableSelection(index)
+                options.extend(op)
+            if self.game.events and self.buys:
+                op, index = self.eventSelection(index)
+                options.extend(op)
 
         if self.reserveSize():
             op, index = self.reserveSelection(index)
             options.extend(op)
 
-        if self.game.events and self.buys:
-            op, index = self.eventSelection(index)
-            options.extend(op)
-
-        prompt = "What to do (actions=%d buys=%d" % (self.actions, self.buys)
+        status = "Actions=%d Buys=%d" % (self.actions, self.buys)
         if self.coin:
-            prompt += " coin=%d" % self.coin
+            status += " Coins=%d" % self.coin
         if self.potions:
-            prompt += " potions=%d" % self.potions
+            status += " Potions=%d" % self.potions
         if self.specialcoins:
-            prompt += " specialcoins=%d" % self.specialcoins
-        prompt += ")?"
+            status += " Special Coins=%d" % self.specialcoins
+        self.output(status)
+        prompt = "What to do?"
         return self.userInput(options, prompt)
 
     ###########################################################################
@@ -470,37 +473,68 @@ class Player(object):
         self.output("#" * 50)
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s's Turn %s" % (self.name, stats))
-        while(1):
-            if self.reserve:
-                self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
-            if self.hand:
-                self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
-            else:
-                self.output("Hand: <EMPTY>")
-            if self.played:
-                self.output("Played: %s" % ", ".join([c.name for c in self.played]))
-            else:
-                self.output("Played: <NONE>")
+        self.actionPhase()
+        self.buyPhase()
+        self.cleanupPhase()
 
-            opt = self.choiceSelection()
-            if opt['action'] == 'buy':
-                self.buyCard(opt['card'])
-            elif opt['action'] == 'event':
-                self.performEvent(opt['card'])
-            elif opt['action'] == 'reserve':
-                self.callReserve(opt['card'])
-            elif opt['action'] == 'coin':
-                self.spendCoin()
-            elif opt['action'] == 'play':
-                self.playCard(opt['card'])
-            elif opt['action'] == 'spend':
-                self.playCard(opt['card'])
-            elif opt['action'] == 'spendall':
-                self.spendAllCards()
-            elif opt['action'] == 'quit':
-                break
-            else:
-                sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
+    ###########################################################################
+    def actionPhase(self):
+        self.output("************ Action Phase ************")
+        while(True):
+            self.displayOverview()
+            opt = self.choiceSelection(phase='action')
+            self.perform_action(opt)
+            if opt['action'] == 'quit':
+                return
+
+    ###########################################################################
+    def buyPhase(self):
+        self.output("************ Buy Phase ************")
+        while(True):
+            self.displayOverview()
+            opt = self.choiceSelection(phase='buy')
+            self.perform_action(opt)
+            if opt['action'] == 'quit':
+                return
+
+    ###########################################################################
+    def cleanupPhase(self):
+        self.discardHand()
+        self.pickUpHand()
+
+    ###########################################################################
+    def perform_action(self, opt):
+        if opt['action'] == 'buy':
+            self.buyCard(opt['card'])
+        elif opt['action'] == 'event':
+            self.performEvent(opt['card'])
+        elif opt['action'] == 'reserve':
+            self.callReserve(opt['card'])
+        elif opt['action'] == 'coin':
+            self.spendCoin()
+        elif opt['action'] == 'play':
+            self.playCard(opt['card'])
+        elif opt['action'] == 'spend':
+            self.playCard(opt['card'])
+        elif opt['action'] == 'spendall':
+            self.spendAllCards()
+        elif opt['action'] == 'quit':
+            return
+        else:
+            sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
+
+    ###########################################################################
+    def displayOverview(self):
+        if self.reserve:
+            self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
+        if self.hand:
+            self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
+        else:
+            self.output("Hand: <EMPTY>")
+        if self.played:
+            self.output("Played: %s" % ", ".join([c.name for c in self.played]))
+        else:
+            self.output("Played: <NONE>")
 
     ###########################################################################
     def addScore(self, reason, points):
@@ -572,8 +606,6 @@ class Player(object):
     def endTurn(self):
         self.messages = []
         self.once = {}
-        self.discardHand()
-        self.pickUpHand()
         self.newhandsize = 5
 
     ###########################################################################
