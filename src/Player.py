@@ -35,6 +35,7 @@ class Player(object):
         self.initial_tokens()
         self.once = {}
         self.pickUpHand()
+        self.secret_count = 0   # Hack to count cards that aren't anywhere normal
 
     ###########################################################################
     def initial_Deck(self):
@@ -826,20 +827,18 @@ class Player(object):
     ###########################################################################
     def countCards(self, verbose=False):
         count = {}
-        count['discard'] = len(self.discardpile)
-        count['hand'] = len(self.hand)
-        count['deck'] = len(self.deck)
-        count['played'] = len(self.played)
-        count['duration'] = len(self.durationpile)
-        count['reserve'] = len(self.reserve)
+        stacklist = (
+            ('Discard', self.discardpile), ('Hand', self.hand),
+            ('Reserve', self.reserve), ('Deck', self.deck),
+            ('Played', self.played), ('Duration', self.durationpile))
+        for name, stack in stacklist:
+            count[name] = len(stack)
         if verbose:
-            sys.stderr.write("Discard %d: %s" % (len(self.discardpile), ", ".join(self.discardpile)))
-            sys.stderr.write("Hand %d: %s" % (len(self.hand), ", ".join(self.hand)))
-            sys.stderr.write("Reserve %d: %s" % (len(self.reserve), ", ".join(self.reserve)))
-            sys.stderr.write("Deck %d: %s" % (len(self.deck), ", ".join(self.deck)))
-            sys.stderr.write("Played %d: %s" % (len(self.played), ", ".join(self.played)))
-            sys.stderr.write("Duration %d: %s" % (len(self.duration), ", ".join(self.duration)))
+            for name, stack in stacklist:
+                sys.stderr.write("%s %s (%d):\t%s\n" % (self.name, name, len(stack), ", ".join([c.name for c in stack])))
+            sys.stderr.write("%s secret %d\n" % (self.name, self.secret_count))
         total = sum([x for x in count.values()])
+        total += self.secret_count
         return total
 
     ###########################################################################
