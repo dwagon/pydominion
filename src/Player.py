@@ -465,8 +465,7 @@ class Player(object):
             status += " Potions=%d" % self.potions
         if self.specialcoins:
             status += " Special Coins=%d" % self.specialcoins
-        self.output(status)
-        prompt = "What to do?"
+        prompt = "What to do (%s)?" % status
         return self.userInput(options, prompt)
 
     ###########################################################################
