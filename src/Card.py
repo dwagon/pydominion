@@ -10,6 +10,7 @@ class Card(object):
         self.potcost = 0
         self.cardtype = 'unknown'
         self.purchasable = True
+        self.permanent = False
         self.playable = True
         self.callable = True
         self.defense = False

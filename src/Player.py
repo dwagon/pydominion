@@ -588,8 +588,9 @@ class Player(object):
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
-            self.addCard(card, 'played')
-        self.durationpile.empty()
+            if not card.permanent:
+                self.addCard(card, 'played')
+                self.durationpile.remove(card)
 
     ###########################################################################
     def spendCoin(self):
