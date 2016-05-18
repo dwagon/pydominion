@@ -2,6 +2,7 @@ from PlayArea import PlayArea
 import operator
 import sys
 from Card import Card
+from EventPile import EventPile
 
 
 ###############################################################################
@@ -780,17 +781,18 @@ class Player(object):
         self.buys += num
 
     ###########################################################################
-    def performEvent(self, card):
+    def performEvent(self, event):
+        assert(issubclass(event.__class__, EventPile))
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
-        if self.coin < card.cost:
-            self.output("Need %d coints to perform this event" % card.cost)
+        if self.coin < event.cost:
+            self.output("Need %d coints to perform this event" % event.cost)
             return False
         self.buys -= 1
-        self.coin -= card.cost
-        self.output("Using event %s" % card.name)
-        card.special(game=self.game, player=self)
+        self.coin -= event.cost
+        self.output("Using event %s" % event.name)
+        event.special(game=self.game, player=self)
         return True
 
     ###########################################################################
