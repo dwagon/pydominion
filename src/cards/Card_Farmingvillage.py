@@ -52,7 +52,7 @@ class Test_Farmingvillage(unittest.TestCase):
         """ Play farming village with an action in deck"""
         self.plr.setDeck('estate', 'estate', 'farmingvillage', 'estate', 'estate')
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('farmingvillage'))
+        self.assertTrue(self.plr.inHand('Farming Village'))
         self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Estate')

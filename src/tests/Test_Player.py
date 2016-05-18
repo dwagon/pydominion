@@ -83,13 +83,6 @@ class Test_inDiscard(unittest.TestCase):
         self.assertIsNotNone(c)
         self.assertEqual(c.name, 'Gold')
 
-    def test_indiscard_with_card(self):
-        """ Test card is in discard passing a card """
-        self.plr.setDiscard('copper')
-        cu = self.g['copper'].remove()
-        self.assertTrue(self.plr.inDiscard(cu))
-        self.assertEqual(self.plr.inDiscard(cu).name, 'Copper')
-
     def test_notinmultidiscard(self):
         """ Test inDiscard() with it not one of many cards in the discard pile """
         self.plr.setDiscard('copper', 'gold', 'copper')
@@ -297,13 +290,6 @@ class Test_inDeck(unittest.TestCase):
         self.assertTrue(self.plr.inDeck('Copper'))
         self.assertEqual(self.plr.inDeck('Copper').name, 'Copper')
 
-    def test_indeck_with_card(self):
-        """ Test card is in deck passing a card """
-        self.plr.setDeck('copper')
-        cu = self.g['copper'].remove()
-        self.assertTrue(self.plr.inDeck(cu))
-        self.assertEqual(self.plr.inDeck(cu).name, 'Copper')
-
     def test_notindeck(self):
         """ Test card that isn't in deck """
         self.plr.setDeck('copper')
@@ -322,13 +308,6 @@ class Test_inHand(unittest.TestCase):
         self.plr.setHand('copper')
         self.assertTrue(self.plr.inHand('Copper'))
         self.assertEqual(self.plr.inHand('Copper').name, 'Copper')
-
-    def test_inhand_with_card(self):
-        """ Test card is in hand passing a card """
-        self.plr.setHand('copper')
-        cu = self.g['copper'].remove()
-        self.assertTrue(self.plr.inHand(cu))
-        self.assertEqual(self.plr.inHand(cu).name, 'Copper')
 
     def test_notinhand(self):
         """ Test card that isn't in hand """
@@ -464,11 +443,9 @@ class Test_misc(unittest.TestCase):
         self.assertEqual(self.plr.coststr(golem), "4 coins 1 potions")
 
     def test_inHand(self):
-        silver = self.g['silver'].remove()
         self.plr.setHand('silver')
         self.assertFalse(self.plr.inHand('gold'))
         self.assertTrue(self.plr.inHand('silver'))
-        self.assertTrue(self.plr.inHand(silver))
 
     def test_getPotions(self):
         self.plr.potions = 3

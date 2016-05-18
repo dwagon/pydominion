@@ -27,7 +27,7 @@ class Test_replace_traveller(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.replace_traveller(self.card, 'TreasureHunter')
         self.assertIsNone(self.plr.inHand('Page'))
-        self.assertIsNotNone(self.plr.inHand('TreasureHunter'))
+        self.assertIsNotNone(self.plr.inHand('Treasure Hunter'))
 
     def test_dont_replace(self):
         """ Choose not to replace a traveller """

@@ -1,6 +1,7 @@
 from PlayArea import PlayArea
 import operator
 import sys
+from Card import Card
 
 
 ###############################################################################
@@ -147,42 +148,43 @@ class Player(object):
     ###########################################################################
     def inHand(self, cardname):
         """ Return named card if cardname is in hand """
-        if hasattr(cardname, 'name'):
-            cardname = cardname.name
-        for c in self.hand:
-            if c.cardname.lower() == cardname.lower():
-                return c
+        assert(isinstance(cardname, str))
+
+        for card in self.hand:
+            if card.name.lower() == cardname.lower():
+                return card
         return None
 
     ###########################################################################
     def inDiscard(self, cardname):
         """ Return named card if cardname is in the discard pile """
-        if hasattr(cardname, 'name'):
-            cardname = cardname.name
-        for c in self.discardpile:
-            if c.cardname.lower() == cardname.lower():
-                return c
+        assert(isinstance(cardname, str))
+
+        for card in self.discardpile:
+            if card.name.lower() == cardname.lower():
+                return card
         return None
 
     ###########################################################################
     def inDeck(self, cardname):
         """ Return named card if cardname is in the deck pile """
-        if hasattr(cardname, 'name'):
-            cardname = cardname.name
-        for c in self.deck:
-            if c.cardname.lower() == cardname.lower():
-                return c
+        assert(isinstance(cardname, str))
+
+        for card in self.deck:
+            if card.name.lower() == cardname.lower():
+                return card
         return None
 
     ###########################################################################
-    def trashCard(self, c):
+    def trashCard(self, card):
         """ Take a card out of the game """
-        c.hook_trashThisCard(game=self.game, player=self)
-        self.game.trashpile.add(c)
-        if c in self.played:
-            self.played.remove(c)
-        if c in self.hand:
-            self.hand.remove(c)
+        assert(isinstance(card, Card))
+        card.hook_trashThisCard(game=self.game, player=self)
+        self.game.trashpile.add(card)
+        if card in self.played:
+            self.played.remove(card)
+        if card in self.hand:
+            self.hand.remove(card)
 
     ###########################################################################
     def setReserve(self, *cards):
