@@ -97,11 +97,11 @@ class Player(object):
         return self.journey_token
 
     ###########################################################################
-    def do_once(self, card):
+    def do_once(self, name):
         """ Allow a player to do something once per turn """
-        if card in self.once:
+        if name in self.once:
             return False
-        self.once[card] = True
+        self.once[name] = True
         return True
 
     ###########################################################################
@@ -696,7 +696,8 @@ class Player(object):
                 newcard = self.game[cardpile].remove()
             else:
                 newcard = cardpile.remove()
-        options = self.hook_gainCard(newcard)
+        if newcard:
+            options = self.hook_gainCard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
             return
@@ -727,6 +728,7 @@ class Player(object):
     ###########################################################################
     def hook_gainCard(self, card):
         """ Hook which is fired by a card being obtained by a player """
+        assert(issubclass(card.__class__, Card))
         options = {}
         for c in self.hand:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
@@ -736,10 +738,12 @@ class Player(object):
     ###########################################################################
     def hook_gainThisCard(self, card):
         """ Hook which is fired by this card being obtained by a player """
+        assert(issubclass(card.__class__, Card))
         card.hook_gainThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hasDefense(self, attacker, verbose=True):
+        assert(issubclass(attacker.__class__, Player))
         for c in self.hand:
             c.hook_underAttack(game=self.game, player=self)
             if c.hasDefense():
@@ -762,6 +766,7 @@ class Player(object):
 
     ###########################################################################
     def addCoin(self, num):
+        assert(isinstance(num, int))
         self.coin += num
 
     ###########################################################################
@@ -770,6 +775,7 @@ class Player(object):
 
     ###########################################################################
     def addActions(self, num):
+        assert(isinstance(num, int))
         self.actions += num
 
     ###########################################################################
@@ -778,6 +784,7 @@ class Player(object):
 
     ###########################################################################
     def addBuys(self, num):
+        assert(isinstance(num, int))
         self.buys += num
 
     ###########################################################################
@@ -856,6 +863,7 @@ class Player(object):
 
     ###########################################################################
     def attackVictims(self):
+        """ Return list of other players who don't have defences """
         victims = []
         for plr in list(self.game.players.values()):
             if plr == self:
