@@ -138,11 +138,10 @@ class Player(object):
     ###########################################################################
     def inReserve(self, cardname):
         """ Return named card if cardname is in reserve """
-        if hasattr(cardname, 'name'):
-            cardname = cardname.name
-        for c in self.reserve:
-            if c.name.lower() == cardname.lower():
-                return c
+        assert(isinstance(cardname, str))
+        for card in self.reserve:
+            if card.name.lower() == cardname.lower():
+                return card
         return None
 
     ###########################################################################

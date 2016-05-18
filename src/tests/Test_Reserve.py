@@ -60,12 +60,6 @@ class Test_Reserve(unittest.TestCase):
         self.plr.setReserve('copper')
         self.assertFalse(self.plr.inReserve('Estate'))
 
-    def test_inreserve_card(self):
-        """ Test inReserve() passing a card  """
-        copper = self.g['copper'].remove()
-        self.plr.setReserve('copper')
-        self.assertTrue(self.plr.inReserve(copper))
-
     def test_setReserve(self):
         """ set reserved """
         self.plr.setReserve('silver')
