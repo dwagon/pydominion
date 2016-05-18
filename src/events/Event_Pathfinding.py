@@ -18,7 +18,7 @@ class Event_Pathfinding(Event):
         actionpiles = game.getActionPiles()
         stacks = player.cardSel(num=1, prompt='What stack to add the +1 Card Token to?', cardsrc=actionpiles)
         if stacks:
-            player.place_token('+Card', stacks[0])
+            player.place_token('+Card', stacks[0].name)
 
 
 ###############################################################################

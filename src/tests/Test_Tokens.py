@@ -14,10 +14,9 @@ class TestToken(unittest.TestCase):
     def test_place_token(self):
         """ Ensure that when we place a token it is there """
         self.assertEquals(self.plr.tokens['Trashing'], None)
-        copperpile = self.g.cardpiles['Copper']
-        self.plr.place_token('Trashing', copperpile)
+        self.plr.place_token('Trashing', 'Copper')
         self.assertNotEquals(self.plr.tokens['Trashing'], None)
-        ans = self.plr.which_token(copperpile)
+        ans = self.plr.which_token('Copper')
         self.assertEquals(ans, ['Trashing'])
 
     def test_pickup(self):
@@ -37,7 +36,6 @@ class TestToken(unittest.TestCase):
         self.assertEquals(self.plr.handSize(), 1)
         self.plr.playCard(moat)
         # 2 for moat -1 for token
-        self.g.print_state()
         self.assertEquals(self.plr.handSize(), 2 - 1)
         self.assertFalse(self.plr.card_token)
 

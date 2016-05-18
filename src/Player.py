@@ -106,10 +106,8 @@ class Player(object):
 
     ###########################################################################
     def place_token(self, token, pilename):
-        """ Place a token on a pile
-            Can pass the card, the cardpile or just the name """
-        if hasattr(pilename, 'name'):
-            pilename = pilename.name
+        """ Place a token on the specified pile """
+        assert(isinstance(pilename, str))
         assert (token in self.tokens), "Unknown token %s" % token
         self.tokens[token] = pilename.lower()
 
