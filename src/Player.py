@@ -351,25 +351,25 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def spendableSelection(self, index):
+    def spendableSelection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
+        totcoin = sum([self.hook_spendValue(c) for c in spendable])
+        numpots = sum([1 for c in spendable if c.name == 'Potion'])
+        potstr = ", %d potions" % numpots if numpots else ""
+        tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
         if spendable:
-            sel = chr(ord('a') + index)
-            totcoin = sum([self.hook_spendValue(c) for c in spendable])
-            numpots = sum([1 for c in spendable if c.name == 'Potion'])
-            potstr = ", %d potions" % numpots if numpots else ""
-            tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
-            options.append({'selector': sel, 'print': tp, 'card': None, 'action': 'spendall'})
-            index += 1
+            options.append({'selector': '1', 'print': tp, 'card': None, 'action': 'spendall'})
+        if self.specialcoins:
+            options.append({'selector': '2', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
+        index = 3
         for s in spendable:
-            sel = chr(ord('a') + index)
             tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
-            options.append({'selector': sel, 'print': tp, 'card': s, 'action': 'spend'})
+            options.append({'selector': index, 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
-        return options, index
+        return options
 
     ###########################################################################
     def getWhens(self):
@@ -411,17 +411,37 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def getAllPurchasable(self):
+        """ Return all potentially purchasable cards """
+        allcards = PlayArea([])
+        for c in self.game.cardTypes():
+            if not c.purchasable:
+                continue
+            allcards.add(c)
+        allcards.sort(key=lambda c: self.cardCost(c))
+        allcards.sort(key=lambda c: c.basecard)
+        return allcards
+
+    ###########################################################################
     def buyableSelection(self, index):
         options = []
+        allcards = self.getAllPurchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
-        for p in buyable:
-            if not self.hook_allowedToBuy(p):
+        for card in allcards:
+            if not self.hook_allowedToBuy(card):
                 continue
             sel = chr(ord('a') + index)
-            tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
-            for tkn in self.which_token(p.name):
+            if card in buyable:
+                action = 'buy'
+                verb = 'Buy %s' % card.name
+            else:
+                sel = '-'
+                action = None
+                verb = card.name
+            tp = '%s (%s) %s (%d left)' % (verb, self.coststr(card), card.desc, card.numcards)
+            for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
-            options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
+            options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
             index += 1
         return options, index
 
@@ -436,11 +456,9 @@ class Player(object):
                 options.extend(op)
 
         if phase == 'buy':
-            if self.specialcoins:
-                options.append({'selector': '1', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
             if self.buys:
-                op, index = self.spendableSelection(index)
+                op = self.spendableSelection()
                 options.extend(op)
                 op, index = self.buyableSelection(index)
                 options.extend(op)
