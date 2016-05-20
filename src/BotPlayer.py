@@ -60,8 +60,14 @@ class BotPlayer(Player):
 
     ###########################################################################
     def cardSel(self, num=1, **kwargs):
-        """ Big Money bot should never require this """
-        assert False, "BigMoneyBot can't select cards"
+        import inspect
+        stack = inspect.stack()
+        parent = stack[3][0]
+        mod = inspect.getmodule(parent)
+        if hasattr(mod, 'botresponse'):
+            ans = mod.botresponse(hand=self.hand)
+            return ans
+        assert False, "BigMoneyBot can't select cards from %s" % mod.__name__
 
     ###########################################################################
     def plrChooseOptions(self, prompt, *choices):
