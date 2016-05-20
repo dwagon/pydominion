@@ -710,14 +710,14 @@ class Player(object):
 
     ###########################################################################
     def buyCard(self, card):
-        # assert(isinstance(card, (Card, CardPile)))
+        assert(isinstance(card, CardPile))
         if not self.buys:
             return
         newcard = self.gainCard(card)
         self.buys -= 1
         self.coin -= self.cardCost(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
-        if 'Trashing' in self.which_token(card):
+        if 'Trashing' in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
         self.hook_buyCard(newcard)

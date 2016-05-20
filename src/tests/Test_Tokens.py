@@ -53,14 +53,14 @@ class TestToken(unittest.TestCase):
         self.plr.setHand('gold', 'province', 'duchy')
         self.plr.place_token('Trashing', 'Moat')
         self.plr.test_input = ['trash province']
-        self.plr.buyCard('Moat')
+        self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.g.trashSize(), 1)
 
     def test_cost_token(self):
         """ Does the -Cost token work """
         self.assertEquals(self.plr.getCoin(), 0)
         self.plr.place_token('-Cost', 'Moat')
-        self.plr.buyCard('Moat')
+        self.plr.buyCard(self.g['Moat'])
         self.assertEquals(self.plr.getCoin(), 0)
 
     def test_card_token(self):

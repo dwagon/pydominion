@@ -39,21 +39,21 @@ class Test_Talisman(unittest.TestCase):
 
     def test_buy(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard('copper')
+        self.plr.buyCard(self.g['copper'])
         self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Copper')
 
     def test_tooexpensive(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard('gold')
+        self.plr.buyCard(self.g['gold'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Gold')
 
     def test_victory(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard('duchy')
+        self.plr.buyCard(self.g['duchy'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Duchy')

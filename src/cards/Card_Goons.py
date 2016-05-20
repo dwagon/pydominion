@@ -51,7 +51,7 @@ class Test_Goons(unittest.TestCase):
     def test_buy(self):
         self.victim.setHand('moat', 'estate', 'gold', 'copper')
         self.plr.playCard(self.card)
-        self.plr.buyCard('copper')
+        self.plr.buyCard(self.g['copper'])
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Goons'], 1)
 

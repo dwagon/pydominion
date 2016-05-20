@@ -46,7 +46,7 @@ class Test_Port(unittest.TestCase):
     def test_buy(self):
         """ Buy a port """
         self.plr.setDiscard()
-        self.plr.buyCard('port')
+        self.plr.buyCard(self.g['port'])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Port')
         self.assertEqual(self.plr.discardSize(), 2)
