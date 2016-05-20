@@ -24,31 +24,39 @@ class BotPlayer(Player):
         self.messages.append(msg)
 
     ###########################################################################
-    def userInput(self, options, prompt):
+    def getOptions(self, options):
+        opts = {}
         for o in options:
+            if o['action'] == 'buy' and o['card'].name == 'Province':
+                opts['province'] = o
+            if o['action'] == 'buy' and o['card'].name == 'Gold':
+                opts['gold'] = o
+            if o['action'] == 'buy' and o['card'].name == 'Duchy':
+                opts['duchy'] = o
+            if o['action'] == 'buy' and o['card'].name == 'Silver':
+                opts['silver'] = o
+            if o['action'] == 'quit':
+                opts['quit'] = o
             if o['action'] == 'spendall':
-                return o
+                opts['spendall'] = o
+        return opts
+
+    ###########################################################################
+    def userInput(self, options, prompt):
+        opts = self.getOptions(options)
+        if 'spendall' in opts:
+            return opts['spendall']
         coin = self.getCoin()
         self.output("Have %d coins" % coin)
         if coin >= 8:
-            for o in options:
-                if o['action'] == 'buy' and o['card'].name == 'Province':
-                    return o
+            return opts['province']
         if coin >= 6:
-            for o in options:
-                if o['action'] == 'buy' and o['card'].name == 'Gold':
-                    return o
-        if coin >= 6:
-            for o in options:
-                if o['action'] == 'buy' and o['card'].name == 'Duchy':
-                    return o
+            return opts['gold']
+        if coin >= 5:
+            return opts['duchy']
         if coin >= 3:
-            for o in options:
-                if o['action'] == 'buy' and o['card'].name == 'Silver':
-                    return o
-        for o in options:
-            if o['action'] == 'quit':
-                return o
+            return opts['silver']
+        return opts['quit']
 
     ###########################################################################
     def cardSel(self, num=1, **kwargs):
