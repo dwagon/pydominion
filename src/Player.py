@@ -522,7 +522,7 @@ class Player(object):
         elif opt['action'] == 'event':
             self.performEvent(opt['card'])
         elif opt['action'] == 'reserve':
-            self.callReserve(opt['card'])
+            self.callReserve(opt['card'].name)
         elif opt['action'] == 'coin':
             self.spendCoin()
         elif opt['action'] == 'play':
