@@ -53,7 +53,7 @@ class BotPlayer(Player):
     ###########################################################################
     def cardSel(self, num=1, **kwargs):
         """ Big Money bot should never require this """
-        return None
+        assert False, "BigMoneyBot can't select cards"
 
     ###########################################################################
     def plrChooseOptions(self, prompt, *choices):
