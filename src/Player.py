@@ -2,6 +2,7 @@ from PlayArea import PlayArea
 import operator
 import sys
 from Card import Card
+from CardPile import CardPile
 from EventPile import EventPile
 
 
@@ -114,8 +115,7 @@ class Player(object):
     ###########################################################################
     def which_token(self, pilename):
         """ Return which token(s) are on a cardstack """
-        if hasattr(pilename, 'name'):
-            pilename = pilename.name
+        assert(isinstance(pilename, str))
         onstack = []
         for tk in self.tokens:
             if self.tokens[tk] == pilename.lower():
@@ -341,7 +341,7 @@ class Player(object):
         for p in playable:
             sel = chr(ord('a') + index)
             pr = "Play %s (%s)" % (p.name, p.desc)
-            for tkn in self.which_token(p):
+            for tkn in self.which_token(p.name):
                 pr += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
             index += 1
@@ -416,7 +416,7 @@ class Player(object):
                 continue
             sel = chr(ord('a') + index)
             tp = 'Buy %s (%s) %s (%d left)' % (p.name, self.coststr(p), p.desc, p.numcards)
-            for tkn in self.which_token(p):
+            for tkn in self.which_token(p.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': p, 'action': 'buy'})
             index += 1
@@ -679,8 +679,9 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
+        assert(isinstance(card, (Card, CardPile)))
         cost = card.cost
-        if '-Cost' in self.which_token(card):
+        if '-Cost' in self.which_token(card.name):
             cost -= 2
         for c in self.hand + self.played:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
