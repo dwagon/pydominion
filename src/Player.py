@@ -109,7 +109,6 @@ class Player(object):
     def place_token(self, token, pilename):
         """ Place a token on the specified pile """
         assert(isinstance(pilename, str))
-        assert (token in self.tokens), "Unknown token %s" % token
         self.tokens[token] = pilename.lower()
 
     ###########################################################################
@@ -124,6 +123,7 @@ class Player(object):
 
     ###########################################################################
     def callReserve(self, cardname):
+        assert(isinstance(cardname, str))
         c = self.inReserve(cardname)
         if not c:
             self.output("%s not in reserve" % cardname)
@@ -242,11 +242,12 @@ class Player(object):
     ###########################################################################
     def pickupCard(self, card=None, verbose=True, verb='Picked up'):
         """ Pick a card from the deck and put it into the players hand """
-        if not card:
+        if card is None:
             card = self.nextCard()
             if not card:
                 self.output("No more cards to pickup")
                 return None
+        assert(isinstance(card, Card))
         self.addCard(card, 'hand')
         if verbose:
             self.output("%s %s" % (verb, card.name))
@@ -277,29 +278,31 @@ class Player(object):
         self.specialcoins += num
 
     ###########################################################################
-    def addCard(self, c, pile='discard'):
-        if not c:   # pragma: no cover
+    def addCard(self, card, pile='discard'):
+        if not card:   # pragma: no cover
             return
+        assert(isinstance(card, Card))
         if pile == 'discard':
-            self.discardpile.add(c)
+            self.discardpile.add(card)
         elif pile == 'hand':
-            self.hand.add(c)
+            self.hand.add(card)
         elif pile == 'topdeck':
-            self.deck.add(c)
+            self.deck.add(card)
         elif pile == 'deck':
-            self.deck.addToTop(c)
+            self.deck.addToTop(card)
         elif pile == 'played':
-            self.played.add(c)
+            self.played.add(card)
         elif pile == 'duration':
-            self.durationpile.add(c)
+            self.durationpile.add(card)
         elif pile == 'reserve':
-            self.reserve.add(c)
+            self.reserve.add(card)
 
     ###########################################################################
-    def discardCard(self, c):
-        if c in self.hand:
-            self.hand.remove(c)
-        self.addCard(c, 'discard')
+    def discardCard(self, card):
+        assert(isinstance(card, Card))
+        if card in self.hand:
+            self.hand.remove(card)
+        self.addCard(card, 'discard')
 
     ###########################################################################
     def reserveSize(self):
@@ -727,7 +730,7 @@ class Player(object):
     ###########################################################################
     def hook_gainCard(self, card):
         """ Hook which is fired by a card being obtained by a player """
-        assert(issubclass(card.__class__, Card))
+        assert(isinstance(card, Card))
         options = {}
         for c in self.hand:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
@@ -737,12 +740,12 @@ class Player(object):
     ###########################################################################
     def hook_gainThisCard(self, card):
         """ Hook which is fired by this card being obtained by a player """
-        assert(issubclass(card.__class__, Card))
+        assert(isinstance(card, Card))
         card.hook_gainThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hasDefense(self, attacker, verbose=True):
-        assert(issubclass(attacker.__class__, Player))
+        assert(isinstance(attacker, Player))
         for c in self.hand:
             c.hook_underAttack(game=self.game, player=self)
             if c.hasDefense():
