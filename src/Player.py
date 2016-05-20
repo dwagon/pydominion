@@ -366,7 +366,7 @@ class Player(object):
         index = 3
         for s in spendable:
             tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
-            options.append({'selector': index, 'print': tp, 'card': s, 'action': 'spend'})
+            options.append({'selector': str(index), 'print': tp, 'card': s, 'action': 'spend'})
             index += 1
 
         return options
