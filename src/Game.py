@@ -110,17 +110,14 @@ class Game(object):
             cp.setup(game=self)
 
     ###########################################################################
-    def countCards(self, verbose=False):
+    def countCards(self):
         count = {}
         count['trash'] = self.trashSize()
         for cp in list(self.cardpiles.values()):
             count['pile_%s' % cp.name] = cp.numcards
         for pl in self.playerList():
-            count['player_%s' % pl.name] = pl.countCards(verbose)
+            count['player_%s' % pl.name] = pl.countCards()
         total = sum([x for x in count.values()])
-        if verbose:
-            sys.stderr.write("countCards() %d = %s\n" % (total, count))
-            sys.stderr.write("trash: %s\n" % ([c.name for c in self.trashpile]))
         return total
 
     ###########################################################################
