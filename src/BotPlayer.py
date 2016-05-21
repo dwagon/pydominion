@@ -26,21 +26,26 @@ class BotPlayer(Player):
 
     ###########################################################################
     def getOptions(self, options):
-        opts = {}
-        for o in options:
-            if o['action'] == 'buy' and o['card'].name == 'Province':
-                opts['province'] = o
-            if o['action'] == 'buy' and o['card'].name == 'Gold':
-                opts['gold'] = o
-            if o['action'] == 'buy' and o['card'].name == 'Duchy':
-                opts['duchy'] = o
-            if o['action'] == 'buy' and o['card'].name == 'Silver':
-                opts['silver'] = o
-            if o['action'] == 'quit':
-                opts['quit'] = o
-            if o['action'] == 'spendall':
-                opts['spendall'] = o
-        return opts
+        try:
+            opts = {}
+            for o in options:
+                if o['action'] == 'buy' and o['card'].name == 'Province':
+                    opts['province'] = o
+                if o['action'] == 'buy' and o['card'].name == 'Gold':
+                    opts['gold'] = o
+                if o['action'] == 'buy' and o['card'].name == 'Duchy':
+                    opts['duchy'] = o
+                if o['action'] == 'buy' and o['card'].name == 'Silver':
+                    opts['silver'] = o
+                if o['action'] == 'quit':
+                    opts['quit'] = o
+                if o['action'] == 'spendall':
+                    opts['spendall'] = o
+            return opts
+        except KeyError as exc:
+            print "Options=%s" % options
+            print "Exception: %s" % str(exc)
+            raise
 
     ###########################################################################
     def userInput(self, options, prompt):
