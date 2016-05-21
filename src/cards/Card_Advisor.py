@@ -17,25 +17,32 @@ class Card_Advisor(Card):
 
     def special(self, game, player):
         """ Reveal the top 3 cards of your deck. The player to your
-            left chooses one of them to them. Discard that card. Put
-            the other cards into your hand"""
+            left chooses one of them. Discard that card. Put
+            the other cards into your hand. """
         cards = []
         choser = game.playerToLeft(player)
         for i in range(3):
             cards.append(player.nextCard())
-        options = []
-        index = 1
+        to_discard = choser.cardSel(
+                    force=True,
+                    prompt='Pick a card of %s to discard' % player.name,
+                    cardsrc=cards,
+                    verbs=('Discard', 'Undiscard')
+                    )[0]
+        player.output("%s discarded %s" % (choser.name, to_discard.name))
         for c in cards:
-            sel = '%d' % index
-            options.append({'selector': sel, 'print': 'Discard %s' % c.name, 'card': c})
-            index += 1
-        o = choser.userInput(options, 'Pick a card of %s to discard' % player.name)
-        for c in cards:
-            if c == o['card']:
-                player.output("%s discarded %s" % (choser.name, o['card'].name))
-                player.discardCard(o['card'])
+            if c == to_discard:
+                player.discardCard(to_discard)
             else:
-                player.pickupCard(card=c)
+                player.addCard(c, 'hand')
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    # Discard the card that costs the most
+    cardlist = [(c.cost, c) for c in kwargs['cardsrc']]
+    most = sorted(cardlist)[-1]
+    return [most[1]]
 
 
 ###############################################################################
