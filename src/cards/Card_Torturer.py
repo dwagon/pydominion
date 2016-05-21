@@ -38,6 +38,14 @@ class Card_Torturer(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    if kind == 'cards':
+        return player.pick_to_discard(2)
+    if kind == 'choices':
+        return True     # Discard
+
+
+###############################################################################
 class Test_Torturer(unittest.TestCase):
     def setUp(self):
         import Game

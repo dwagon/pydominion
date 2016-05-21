@@ -1,6 +1,7 @@
 import sys
 import colorama
 from Player import Player
+import inspect
 
 if sys.version[0] == "3":
     raw_input = input
@@ -59,25 +60,52 @@ class BotPlayer(Player):
         return opts['quit']
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
-        import inspect
+    def getCallingCard(self):
+        """ Get the module that represents the card doing requiring the response """
         stack = inspect.stack()
-        parent = stack[3][0]
-        mod = inspect.getmodule(parent)
+        for st in stack:
+            mod = inspect.getmodule(st[0])
+            if mod.__name__ not in ('BotPlayer', 'Player', '__main__'):
+                mod = inspect.getmodule(st[0])
+                return mod
+
+    ###########################################################################
+    def cardSel(self, num=1, **kwargs):
+        mod = self.getCallingCard()
         if hasattr(mod, 'botresponse'):
-            ans = mod.botresponse(hand=self.hand)
+            ans = mod.botresponse(self, 'cards', kwargs=kwargs)
             return ans
         assert False, "BigMoneyBot can't select cards from %s" % mod.__name__
 
     ###########################################################################
     def plrChooseOptions(self, prompt, *choices):
-        index = 0
-        options = []
-        for prnt, ans in choices:
-            sel = '%s' % index
-            options.append({'selector': sel, 'print': prnt, 'answer': ans})
-            index += 1
-        o = self.userInput(options, prompt)
-        return o['answer']
+        mod = self.getCallingCard()
+        if hasattr(mod, 'botresponse'):
+            ans = mod.botresponse(self, 'choices', args=choices)
+            return ans
+        assert False, "BigMoneyBot can't choopse options from %s" % mod.__name__
+
+    ###########################################################################
+    def pick_to_discard(self, numtodiscard):
+        """ Return num cards to discard """
+        if numtodiscard <= 0:
+            return []
+        todiscard = []
+
+        # Discard non-treasures first
+        for card in self.hand:
+            if not card.isTreasure():
+                todiscard.append(card)
+        if len(todiscard) >= numtodiscard:
+            return todiscard[:2]
+        for treas in ('Copper', 'Silver', 'Gold'):
+            while len(todiscard) < numtodiscard:
+                for card in self.hand:
+                    if card.name == treas:
+                        todiscard.append(card)
+        if len(todiscard) >= numtodiscard:
+            return todiscard[:2]
+        print "Couldn't find cards to discard from %s" % (", ".join([c.name for c in self.hand]))
+
 
 # EOF
