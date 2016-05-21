@@ -120,6 +120,7 @@ class Game(object):
         total = sum([x for x in count.values()])
         if verbose:
             sys.stderr.write("countCards() %d = %s\n" % (total, count))
+            sys.stderr.write("trash: %s\n" % ([c.name for c in self.trashpile]))
         return total
 
     ###########################################################################
