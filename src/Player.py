@@ -857,7 +857,7 @@ class Player(object):
         return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
-    def countCards(self, verbose=False):
+    def countCards(self):
         count = {}
         stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
@@ -865,10 +865,6 @@ class Player(object):
             ('Played', self.played), ('Duration', self.durationpile))
         for name, stack in stacklist:
             count[name] = len(stack)
-        if verbose:
-            for name, stack in stacklist:
-                sys.stderr.write("%s %s (%d):\t%s\n" % (self.name, name, len(stack), ", ".join([c.name for c in stack])))
-            sys.stderr.write("%s secret %d\n" % (self.name, self.secret_count))
         total = sum([x for x in count.values()])
         total += self.secret_count
         return total
