@@ -314,11 +314,41 @@ class Game(object):
         return scores
 
     ###########################################################################
+    def count_all_cards(self):
+        for pile in self.cardpiles.values():
+            total = pile.numcards
+            sys.stderr.write("%-15s  " % pile.name)
+            if total:
+                sys.stderr.write("pile=%d " % total)
+            for plr in self.playerList():
+                stacklist = (
+                    ('Discard', plr.discardpile), ('Hand', plr.hand),
+                    ('Reserve', plr.reserve), ('Deck', plr.deck),
+                    ('Played', plr.played), ('Duration', plr.durationpile))
+                for stackname, stack in stacklist:
+                    count = 0
+                    for card in stack:
+                        if card.name == pile.name:
+                            count += 1
+                    total += count
+                    if count:
+                        sys.stderr.write("%s:%s=%s " % (plr.name, stackname, count))
+            count = 0
+            for card in self.trashpile:
+                if card.name == pile.name:
+                    count += 1
+            if count:
+                sys.stderr.write("Trash=%s " % count)
+            total += count
+            sys.stderr.write(" = %d\n" % total)
+
+    ###########################################################################
     def turn(self):
         try:
             assert(self.countCards() == self.numcards)
         except AssertionError:
-            sys.stderr.write("current = %s\n" % self.countCards(verbose=True))
+            self.count_all_cards()
+            sys.stderr.write("current = %s\n" % self.countCards())
             sys.stderr.write("original = %d\n" % self.numcards)
             raise
         self.currentPlayer = self.playerToLeft(self.currentPlayer)
