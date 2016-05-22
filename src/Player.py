@@ -402,11 +402,16 @@ class Player(object):
     def eventSelection(self, index):
         options = []
         for op in self.game.events.values():
+            index += 1
             if op.cost <= self.coin:
                 sel = chr(ord('a') + index)
                 tp = 'Use event %s: %s (%d coins)' % (op.name, op.desc, op.cost)
-                index += 1
-                options.append({'selector': sel, 'print': tp, 'card': op, 'action': 'event'})
+                action = 'event'
+            else:
+                sel = '-'
+                tp = 'Event %s: %s (%d coins)' % (op.name, op.desc, op.cost)
+                action = None
+            options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
 
         return options, index
 
