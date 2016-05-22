@@ -58,7 +58,6 @@ class TextPlayer(Player):
             * force
                 True - Have to select num cards
                 False - Can pick less than num cards [Default]
-            * chooser - Which player does the selecting [player]
             * cardsrc
                 hand - Select the cards from the players hand
                 played - Select the cards from the cards played
@@ -82,10 +81,6 @@ class TextPlayer(Player):
                 selectfrom = kwargs['cardsrc']
         else:
             selectfrom = self.hand
-        if 'chooser' in kwargs and kwargs['chooser']:
-            chooser = kwargs['chooser']
-        else:
-            chooser = self
         if 'force' in kwargs and kwargs['force']:
             force = True
         else:
@@ -96,7 +91,7 @@ class TextPlayer(Player):
             verbs = ('Select', 'Unselect')
 
         if 'prompt' in kwargs:
-            chooser.output(kwargs['prompt'])
+            self.output(kwargs['prompt'])
 
         if 'anynum' in kwargs and kwargs['anynum']:
             anynum = True
@@ -121,9 +116,9 @@ class TextPlayer(Player):
                     verb = verbs[1]
                 pr = "%s %s" % (verb, c.name)
                 if 'printcost' in kwargs and kwargs['printcost']:
-                    pr += " (%d coin)" % chooser.cardCost(c)
+                    pr += " (%d coin)" % self.cardCost(c)
                 options.append({'selector': sel, 'print': pr, 'card': c})
-            o = chooser.userInput(options, "Select which card?")
+            o = self.userInput(options, "Select which card?")
             if not o['card']:
                 break
             if o['card'] in selected:
