@@ -29,6 +29,12 @@ class Card_Goons(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    numtodiscard = len(player.hand) - 3
+    return player.pick_to_discard(numtodiscard)
+
+
+###############################################################################
 class Test_Goons(unittest.TestCase):
     def setUp(self):
         import Game
