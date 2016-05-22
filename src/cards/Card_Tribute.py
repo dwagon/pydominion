@@ -36,6 +36,7 @@ class Card_Tribute(Card):
                 player.output("Gained two coin")
                 player.addCoin(2)
             elif c.isVictory():
+                player.output("Gained two cards")
                 player.pickupCards(2)
 
 
