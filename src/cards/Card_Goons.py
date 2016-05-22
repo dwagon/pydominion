@@ -13,6 +13,7 @@ class Card_Goons(Card):
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6
+        self.cost = 1
         self.buy = 1
         self.coin = 2
 
@@ -26,6 +27,12 @@ class Card_Goons(Card):
         """ While this card is in play, when you buy a card +1 VP """
         player.output("Scored 1 more from goons")
         player.addScore('Goons', 1)
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    numtodiscard = len(player.hand) - 3
+    return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
