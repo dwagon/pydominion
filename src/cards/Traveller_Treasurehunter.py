@@ -19,7 +19,11 @@ class Card_Treasurehunter(Card):
 
     def special(self, game, player):
         """ Gain a Silver per card the player to your right gained in his last turn """
-        pass    # TODO
+        righty = game.playerToRight(player)
+        numsilver = righty.stats['gain']
+        player.output("Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver))
+        for i in range(numsilver):
+            player.gainCard('silver')
 
     def hook_discardCard(self, game, player):
         """ Replace with Warrior """

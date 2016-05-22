@@ -134,7 +134,7 @@ class Game(object):
     def loadTravellers(self):
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            self.cardpiles[trav] = CardPile(trav, cardpath=self.cardpath)
+            self.cardpiles[trav] = CardPile(trav, cardpath=self.cardpath, numcards=5)
 
     ###########################################################################
     def loadEvents(self):
@@ -299,6 +299,13 @@ class Game(object):
         """ Return the player to the 'left' of the one specified """
         players = self.playerList()
         place = players.index(plr) - 1
+        return players[place]
+
+    ###########################################################################
+    def playerToRight(self, plr):
+        """ Return the player to the 'right' of the one specified """
+        players = self.playerList()
+        place = (players.index(plr) + 1) % len(players)
         return players[place]
 
     ###########################################################################

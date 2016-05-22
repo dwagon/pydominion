@@ -37,6 +37,7 @@ class Player(object):
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
+        self.stats = {}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
 
@@ -84,6 +85,9 @@ class Player(object):
         if src not in self.played:
             self.output("Not activating %s traveller as not played" % src.name)
             return
+        sys.stderr.write("SRC=%s %s\n" % (src, type(src)))
+        sys.stderr.write("DST=%s %s\n" % (dst, type(dst)))
+
         choice = self.plrChooseOptions(
             "Replace Traveller",
             ('Keep %s' % src, 'keep'),
@@ -99,6 +103,13 @@ class Player(object):
                 cardpile = self.game.cardpiles[src.name]
                 cardpile.add()
                 self.played.remove(src)
+
+    ###########################################################################
+    def name_to_cardpile(self, name):
+        for cp in self.game.cardpiles.values():
+            if cp.name == name:
+                return cp
+        sys.stderr.write("%s not found in cardpiles = %s\n" % (name, self.game.cardpiles.keys()))
 
     ###########################################################################
     def flip_journey_token(self):
@@ -622,6 +633,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
+        self.stats = {}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
@@ -744,6 +756,7 @@ class Player(object):
             return newcard
         self.hook_gainThisCard(newcard)
         self.addCard(newcard, destination)
+        self.stats['gain'] = self.stats.get('gain', 0) + 1
         return newcard
 
     ###########################################################################
