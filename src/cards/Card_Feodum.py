@@ -12,6 +12,7 @@ class Card_Feodum(Card):
         self.base = 'darkages'
         self.desc = "1VP / 3 silvers - trash for 3 silvers"
         self.name = 'Feodum'
+        self.playable = False
         self.cost = 4
 
     def special_score(self, game, player):
