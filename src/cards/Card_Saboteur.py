@@ -40,6 +40,18 @@ class Card_Saboteur(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    toget = []
+    for card in kwargs['cardsrc']:
+        if card.name in ('Copper', 'Silver', 'Gold'):
+            toget.append((card.cost, card))
+    if toget:
+        return [sorted(toget)[-1][1]]
+    else:
+        return []
+
+
+###############################################################################
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
         import Game
