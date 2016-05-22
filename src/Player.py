@@ -71,19 +71,30 @@ class Player(object):
     def replace_traveller(self, src, dst):
         """ For traveller cards replace the src card with a copy of the
         dst card """
+        assert(isinstance(src, Card))
+        assert(isinstance(dst, str))
+        dstcp = None
+        for cp in self.game.cardpiles.values():
+            if cp.name == dst:
+                dstcp = cp
+                break
+        else:
+            assert dstcp is not None, "Couldn't find cardpile %s" % dst
+
         if src not in self.played:
             self.output("Not activating %s traveller as not played" % src.name)
             return
         choice = self.plrChooseOptions(
             "Replace Traveller",
-            ('Replace with a %s?' % dst, 'replace'),
-            ('Keep %s' % src, 'keep')
+            ('Keep %s' % src, 'keep'),
+            ('Replace with a %s?' % dstcp.name, 'replace')
         )
         if choice == 'keep':
             return
         if choice == 'replace':
             # New card goes into hand as it is about to be discarded
-            newcard = self.gainCard(cardpile=dst, destination='hand')
+
+            newcard = self.gainCard(cardpile=dstcp, destination='hand')
             if newcard:
                 cardpile = self.game.cardpiles[src.name]
                 cardpile.add()
