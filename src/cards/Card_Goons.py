@@ -13,7 +13,6 @@ class Card_Goons(Card):
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6
-        self.cost = 1
         self.buy = 1
         self.coin = 2
 
