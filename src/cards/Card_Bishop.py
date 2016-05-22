@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Bishop(Card):
     def __init__(self):
         Card.__init__(self)
@@ -35,9 +36,26 @@ class Card_Bishop(Card):
         player.addScore('bishop', points)
         player.output("Trashing %s for %d points" % (card.name, points))
 
-    def trashOtherCard(self, game, player, plr):
-        plr.output("%s's bishop lets you trash a card" % player.name)
-        plr.plrTrashCard()
+    def trashOtherCard(self, game, player, victim):
+        victim.output("%s's bishop lets you trash a card" % player.name)
+        tc = victim.plrTrashCard()
+        if tc:
+            victim.output("Trashing %s" % tc[0].name)
+        else:
+            victim.output("All mine I tell you, all mine")
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    # Trash an estate, then a copper else nothing
+    es = player.inHand('estate')
+    if es:
+        return [es]
+    cu = player.inHand('copper')
+    if cu:
+        return [cu]
+    else:
+        return []
 
 
 ###############################################################################
