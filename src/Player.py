@@ -918,10 +918,13 @@ class Player(object):
         return trash
 
     ###########################################################################
-    def plrGainCard(self, cost, modifier='less', types={}, chooser=None, force=False, destination='discard'):
-        """ Gain a card of 'chooser's choice up to cost coin
-        if actiononly then gain only action cards
+    def plrGainCard(self, cost, modifier='less', types={}, recipient=None, force=False, destination='discard'):
+        """ Gain a card up to cost coin
+            if actiononly then gain only action cards
+            if recipient defined then that player gets the card
         """
+        if recipient is None:
+            recipient = self
         types = self.typeSelector(types)
         if modifier == 'less':
             prompt = "Gain a card costing up to %d" % cost
@@ -931,12 +934,12 @@ class Player(object):
             buyable = self.cardsWorth(cost, types=types)
         buyable = [c for c in buyable if c.purchasable]
         cards = self.cardSel(
-            cardsrc=buyable, chooser=chooser, verbs=('Get', 'Unget'),
+            cardsrc=buyable, recipient=recipient, verbs=('Get', 'Unget'),
             force=force, prompt=prompt)
         if cards:
             card = cards[0]
-            self.output("Got a %s" % card.name)
-            self.addCard(card.remove(), destination)
+            recipient.output("Got a %s" % card.name)
+            recipient.addCard(card.remove(), destination)
             return card
 
     ###########################################################################

@@ -22,8 +22,9 @@ class Card_Swindler(Card):
         for victim in player.attackVictims():
             card = victim.pickupCard()
             victim.trashCard(card)
+            victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
             player.output("Pick which card %s will get" % victim.name)
-            c = victim.plrGainCard(card.cost, modifier='equal', chooser=player, force=True)
+            c = player.plrGainCard(card.cost, modifier='equal', recipient=victim, force=True)
             victim.output("%s picked a %s to replace your trashed %s" % (player.name, c.name, card.name))
 
 
