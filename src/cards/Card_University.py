@@ -25,10 +25,10 @@ class Card_University(Card):
 class Test_University(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['university'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.university = self.g['university'].remove()
+        self.university = self.g['University'].remove()
         self.plr.addCard(self.university, 'hand')
 
     def test_gain(self):

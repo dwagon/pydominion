@@ -11,7 +11,7 @@ class Card_Candlestickmaker(Card):
         self.cardtype = 'action'
         self.base = 'guilds'
         self.desc = "+1 action, +1 buy, +1 special coin"
-        self.name = 'Candlestick maker'
+        self.name = 'Candlestick Maker'
         self.actions = 1
         self.buys = 1
         self.cost = 2
@@ -25,10 +25,10 @@ class Card_Candlestickmaker(Card):
 class Test_Candlestickmaker(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['candlestickmaker'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Candlestick Maker'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['candlestickmaker'].remove()
+        self.card = self.g['Candlestick Maker'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

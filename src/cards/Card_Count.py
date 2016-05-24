@@ -29,7 +29,7 @@ class Card_Count(Card):
         )
         if ans == 'copper':
             player.output("Gained a copper")
-            player.gainCard('copper')
+            player.gainCard('Copper')
         elif ans == 'putcard':
             self.putCard(game, player)
         else:
@@ -40,7 +40,7 @@ class Card_Count(Card):
             ('+3 coin', 'coin'), ('Trash hand', 'trash'), ('Gain Duchy', 'duchy'))
         if ans == 'duchy':
             player.output("Gained a duchy")
-            player.gainCard('duchy')
+            player.gainCard('Duchy')
         elif ans == 'trash':
             for c in player.hand[:]:
                 player.output("Trashing %s" % c.name)
@@ -68,11 +68,11 @@ class Card_Count(Card):
 class Test_Count(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['count'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Count'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['count'].remove()
-        self.plr.setHand('copper', 'estate', 'silver', 'province', 'gold')
+        self.card = self.g['Count'].remove()
+        self.plr.setHand('Copper', 'Estate', 'Silver', 'Province', 'Gold')
 
     def test_discard(self):
         self.plr.addCard(self.card, 'hand')
@@ -83,7 +83,7 @@ class Test_Count(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 3)
 
     def test_topdeck(self):
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         # top deck, card select, +3 coin
         self.plr.test_input = ['top of your deck', 'put gold', '+3 coin']

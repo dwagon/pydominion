@@ -27,23 +27,23 @@ class Card_Farmland(Card):
 class Test_Farmland(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['farmland', 'militia'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farmland', 'Militia'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['farmland'].remove()
+        self.card = self.g['Farmland'].remove()
 
     def test_gain(self):
         """ Gain a farmland """
-        self.plr.setHand('estate', 'estate')
+        self.plr.setHand('Estate', 'Estate')
         self.plr.test_input = ['1', '1']
-        self.plr.gainCard('farmland')
+        self.plr.gainCard('Farmland')
         self.assertEqual(self.g.trashSize(), 1)
         self.assertEqual(self.plr.handSize(), 1)
         # 1 for farmland, 1 for gained card
         self.assertEqual(self.plr.discardSize(), 2)
 
     def test_score(self):
-        self.plr.setDeck('farmland')
+        self.plr.setDeck('Farmland')
         sd = self.plr.getScoreDetails()
         self.assertEquals(sd['Farmland'], 2)
 

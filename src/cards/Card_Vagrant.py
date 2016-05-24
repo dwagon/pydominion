@@ -32,15 +32,15 @@ class Card_Vagrant(Card):
 class Test_Vagrant(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['vagrant'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vagrant'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['vagrant'].remove()
+        self.card = self.g['Vagrant'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play the vagrant with unexciting next card"""
-        self.plr.setDeck('gold', 'silver', 'copper')
+        self.plr.setDeck('Gold', 'Silver', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 6)
@@ -48,11 +48,11 @@ class Test_Vagrant(unittest.TestCase):
 
     def test_play_exciting(self):
         """ Play the vagrant with an exciting next card"""
-        self.plr.setDeck('estate', 'province', 'duchy')
+        self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 7)
-        self.assertTrue(self.plr.inHand('province'))
+        self.assertTrue(self.plr.inHand('Province'))
 
 
 ###############################################################################

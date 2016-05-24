@@ -44,10 +44,10 @@ class Card_Warrior(Card):
 class Test_Warrior(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['warrior'].remove()
+        self.card = self.g['Warrior'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_warrior(self):
@@ -57,8 +57,8 @@ class Test_Warrior(unittest.TestCase):
 
     def test_with_trash(self):
         """ Play a warrior with something to trash """
-        self.victim.setDeck('silver', 'silver')
-        self.plr.setPlayed('page')
+        self.victim.setDeck('Silver', 'Silver')
+        self.plr.setPlayed('Page')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 2)
 

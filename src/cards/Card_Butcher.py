@@ -41,10 +41,10 @@ class Card_Butcher(Card):
 class Test_Butcher(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['butcher'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Butcher'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['butcher'].remove()
+        self.card = self.g['Butcher'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -56,7 +56,7 @@ class Test_Butcher(unittest.TestCase):
 
     def test_trash_gold(self):
         """ Trash a gold """
-        self.plr.setHand('copper', 'gold', 'silver')
+        self.plr.setHand('Copper', 'Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.specialcoins = 0
         # Trash a card

@@ -29,12 +29,12 @@ class Card_Embassy(Card):
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['embassy'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embassy'])
         self.g.startGame()
         self.plr, self.other = self.g.playerList()
-        self.card = self.g['embassy'].remove()
-        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'estate')
-        self.plr.setHand('copper', 'silver', 'gold', 'estate', 'duchy')
+        self.card = self.g['Embassy'].remove()
+        self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
+        self.plr.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Duchy')
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -43,7 +43,7 @@ class Test_Embassy(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
 
     def test_gain(self):
-        self.plr.gainCard('embassy')
+        self.plr.gainCard('Embassy')
         self.assertEqual(self.other.discardpile[-1].name, 'Silver')
 
 

@@ -31,12 +31,12 @@ class Test_Ironworks(unittest.TestCase):
     def setUp(self):
         import Game
         # Make most of the cards too expensive to ensure we can select what we want
-        initcards = ['ironworks', 'greathall', 'apprentice', 'banditcamp',
-                     'city', 'count', 'duke', 'library', 'market', 'rebuild']
+        initcards = ['Iron Works', 'Great Hall', 'Apprentice', 'Bandit Camp',
+                     'City', 'Count', 'Duke', 'Library', 'Market', 'Rebuild']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['ironworks'].remove()
+        self.card = self.g['Iron Works'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play_great_hall(self):

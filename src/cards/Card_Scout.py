@@ -36,10 +36,10 @@ class Card_Scout(Card):
 class Test_Scout(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['scout'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scout'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.scout = self.g['scout'].remove()
+        self.scout = self.g['Scout'].remove()
 
     def test_play(self):
         self.plr.addCard(self.scout, 'hand')
@@ -56,7 +56,7 @@ class Test_Scout(unittest.TestCase):
     def test_deck(self):
         self.plr.setHand()
         self.plr.addCard(self.scout, 'hand')
-        self.plr.setDeck('copper', 'copper', 'copper', 'duchy')
+        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Duchy')
         self.plr.playCard(self.scout)
         self.assertEqual(self.plr.hand[0].name, 'Duchy')
         for c in self.plr.deck:

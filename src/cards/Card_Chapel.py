@@ -23,11 +23,11 @@ class Card_Chapel(Card):
 class Test_Chapel(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['chapel'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Chapel'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.ccard = self.g['chapel'].remove()
-        self.plr.setHand('copper', 'silver', 'estate')
+        self.ccard = self.g['Chapel'].remove()
+        self.plr.setHand('Copper', 'Silver', 'Estate')
         self.plr.addCard(self.ccard, 'hand')
 
     def test_trashnone(self):

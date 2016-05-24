@@ -33,10 +33,10 @@ class Card_Royalseal(Card):
 class Test_Royalseal(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['royalseal'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Royal Seal'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['royalseal'].remove()
+        self.card = self.g['Royal Seal'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -46,18 +46,18 @@ class Test_Royalseal(unittest.TestCase):
 
     def test_discard(self):
         """ Have a Royal Seal  - discard the gained card"""
-        self.plr.setPlayed('royalseal')
+        self.plr.setPlayed('Royal Seal')
         self.plr.test_input = ['0']
-        self.plr.gainCard('gold')
+        self.plr.gainCard('Gold')
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
         self.assertFalse(self.plr.inHand('Gold'))
 
     def test_deck(self):
         """ Have a Royal Seal  - the gained card on the deck"""
-        self.plr.setPlayed('royalseal')
+        self.plr.setPlayed('Royal Seal')
         self.plr.test_input = ['1']
-        self.plr.gainCard('gold')
+        self.plr.gainCard('Gold')
         g = self.plr.nextCard()
         self.assertEqual(g.name, 'Gold')
         self.assertFalse(self.plr.inHand('Gold'))

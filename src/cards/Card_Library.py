@@ -37,21 +37,21 @@ class Card_Library(Card):
 class Test_Library(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['library', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Library', 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['library'].remove()
+        self.card = self.g['Library'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_noactions(self):
         """ Play a library where no actions are drawn """
-        self.plr.setDeck('duchy', 'copper', 'gold')
+        self.plr.setDeck('Duchy', 'Copper', 'Gold')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 7)
 
     def test_actions_discard(self):
         """ Play a library where actions are drawn and discarded"""
-        self.plr.setDeck('duchy', 'moat', 'gold')
+        self.plr.setDeck('Duchy', 'Moat', 'Gold')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Moat')
@@ -59,7 +59,7 @@ class Test_Library(unittest.TestCase):
 
     def test_actions_keep(self):
         """ Play a library where actions are drawn and kept"""
-        self.plr.setDeck('duchy', 'moat', 'gold')
+        self.plr.setDeck('Duchy', 'Moat', 'Gold')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.discardpile.isEmpty())

@@ -49,14 +49,14 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Advisor(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['advisor'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Advisor'])
         self.g.startGame()
         self.plr, self.plr2 = self.g.playerList()
-        self.acard = self.g['advisor'].remove()
+        self.acard = self.g['Advisor'].remove()
         self.plr.addCard(self.acard, 'hand')
 
     def test_defended(self):
-        self.plr.setDeck('copper', 'silver', 'gold')
+        self.plr.setDeck('Copper', 'Silver', 'Gold')
         self.plr2.test_input = ['discard gold']
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.getActions(), 1)

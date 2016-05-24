@@ -25,21 +25,21 @@ class Card_Cellar(Card):
 class Test_Cellar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['cellar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cellar'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.ccard = self.g['cellar'].remove()
+        self.ccard = self.g['Cellar'].remove()
 
     def test_none(self):
-        self.plr.setHand('estate', 'copper', 'silver')
+        self.plr.setHand('Estate', 'Copper', 'Silver')
         self.plr.addCard(self.ccard, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
         self.assertEquals(self.plr.handSize(), 3)
 
     def test_one(self):
-        self.plr.setHand('estate', 'copper', 'silver')
-        self.plr.setDeck('province', 'gold')
+        self.plr.setHand('Estate', 'Copper', 'Silver')
+        self.plr.setDeck('Province', 'Gold')
         self.plr.addCard(self.ccard, 'hand')
         self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)

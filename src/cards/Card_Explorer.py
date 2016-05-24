@@ -29,14 +29,14 @@ class Card_Explorer(Card):
 class Test_Explorer(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['explorer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Explorer'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['explorer'].remove()
+        self.card = self.g['Explorer'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_province(self):
-        self.plr.gainCard('province', 'hand')
+        self.plr.gainCard('Province', 'hand')
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Gold'))
         # 5 + province + gold

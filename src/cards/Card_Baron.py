@@ -29,26 +29,26 @@ class Card_Baron(Card):
                 player.addCoin(4)
                 return
         player.output("Gained an Estate")
-        player.gainCard('estate')
+        player.gainCard('Estate')
 
 
 ###############################################################################
 class Test_Baron(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['baron'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Baron'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.baron = self.g['baron'].remove()
+        self.baron = self.g['Baron'].remove()
 
     def test_play(self):
         self.plr.addCard(self.baron, 'hand')
-        self.plr.test_input = ['keep']
+        self.plr.test_input = ['Keep']
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_noestate(self):
-        self.plr.setHand('copper', 'copper', 'copper')
+        self.plr.setHand('Copper', 'Copper', 'Copper')
         self.plr.addCard(self.baron, 'hand')
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getCoin(), 0)
@@ -56,7 +56,7 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 1)
 
     def test_discardestate(self):
-        self.plr.setHand('gold', 'estate', 'copper')
+        self.plr.setHand('Gold', 'Estate', 'Copper')
         self.plr.addCard(self.baron, 'hand')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.baron)
@@ -66,9 +66,9 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.inHand('Estate'), None)
 
     def test_keepestate(self):
-        self.plr.setHand('estate', 'gold', 'copper')
+        self.plr.setHand('Estate', 'Gold', 'Copper')
         self.plr.addCard(self.baron, 'hand')
-        self.plr.test_input = ['keep']
+        self.plr.test_input = ['Keep']
         self.plr.playCard(self.baron)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')

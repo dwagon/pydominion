@@ -42,10 +42,10 @@ class Card_Mystic(Card):
 class Test_Mystic(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['mystic'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mystic'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['mystic'].remove()
+        self.card = self.g['Mystic'].remove()
 
     def test_play(self):
         """ No guess should still get results """
@@ -58,7 +58,7 @@ class Test_Mystic(unittest.TestCase):
     def test_good(self):
         """ When the guess is good the card should move to the hand """
         self.plr.addCard(self.card, 'hand')
-        self.plr.setDeck('gold')
+        self.plr.setDeck('Gold')
         self.plr.test_input = ['gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
@@ -69,8 +69,8 @@ class Test_Mystic(unittest.TestCase):
     def test_bad(self):
         """ When the guess is bad the card should stay on the deck """
         self.plr.addCard(self.card, 'hand')
-        self.plr.setDeck('province')
-        self.plr.test_input = ['gold']
+        self.plr.setDeck('Province')
+        self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)

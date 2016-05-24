@@ -26,10 +26,10 @@ class Card_Ranger(Card):
 class Test_Ranger(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['ranger'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ranger'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['ranger'].remove()
+        self.card = self.g['Ranger'].remove()
 
     def test_play_first(self):
         """ Play a ranger """

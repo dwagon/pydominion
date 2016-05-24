@@ -25,7 +25,7 @@ class Event_Pathfinding(Event):
 class Test_Pathfinding(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['pathfinding'], initcards=['moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Pathfinding'], initcards=['Moat'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Pathfinding']
@@ -35,7 +35,7 @@ class Test_Pathfinding(unittest.TestCase):
         self.plr.addCoin(8)
         self.plr.test_input = ['moat']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.tokens['+Card'], 'moat')
+        self.assertEqual(self.plr.tokens['+Card'], 'Moat')
         self.assertEqual(self.plr.getCoin(), 0)
 
 

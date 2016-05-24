@@ -30,10 +30,10 @@ class Card_Treasurehunter(Card):
 class Test_Treasurehunter(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['treasurehunter'].remove()
+        self.card = self.g['Treasure Hunter'].remove()
 
     def test_treasure_hunter(self):
         """ Play a treasure_hunter """

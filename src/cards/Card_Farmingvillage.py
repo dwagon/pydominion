@@ -33,15 +33,15 @@ class Card_Farmingvillage(Card):
 class Test_Farmingvillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['farmingvillage'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farming Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['farmingvillage'].remove()
+        self.card = self.g['Farming Village'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play_treasure(self):
         """ Play farming village with a treasure in deck """
-        self.plr.setDeck('estate', 'estate', 'silver', 'estate', 'estate')
+        self.plr.setDeck('Estate', 'Estate', 'Silver', 'Estate', 'Estate')
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Silver'))
         self.assertEqual(self.plr.discardSize(), 2)
@@ -50,7 +50,7 @@ class Test_Farmingvillage(unittest.TestCase):
 
     def test_play_action(self):
         """ Play farming village with an action in deck"""
-        self.plr.setDeck('estate', 'estate', 'farmingvillage', 'estate', 'estate')
+        self.plr.setDeck('Estate', 'Estate', 'Farming Village', 'Estate', 'Estate')
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Farming Village'))
         self.assertEqual(self.plr.discardSize(), 2)

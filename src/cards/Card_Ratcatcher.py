@@ -31,10 +31,10 @@ class Card_Ratcatcher(Card):
 class Test_Ratcatcher(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['ratcatcher'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ratcatcher'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['ratcatcher'].remove()
+        self.card = self.g['Ratcatcher'].remove()
 
     def test_play(self):
         """ Play a ratcatcher """
@@ -50,9 +50,9 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_call(self):
         """ Call from Reserve"""
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['gold']
+        self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         c = self.plr.callReserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')

@@ -38,14 +38,14 @@ class Card_Miser(Card):
 class Test_Miser(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['miser'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Miser'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
-        self.card = self.g['miser'].remove()
+        self.card = self.g['Miser'].remove()
 
     def test_put(self):
         """ Play a miser with coppers in hand"""
-        self.plr.setHand('copper', 'estate')
+        self.plr.setHand('Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['put']
         self.plr.playCard(self.card)
@@ -55,7 +55,7 @@ class Test_Miser(unittest.TestCase):
 
     def test_put_none(self):
         """ Play a miser with no coppers in hand"""
-        self.plr.setHand('estate', 'estate')
+        self.plr.setHand('Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.inReserve('Copper'))
@@ -63,8 +63,8 @@ class Test_Miser(unittest.TestCase):
 
     def test_add(self):
         """ Play a miser with coppers in reserve """
-        self.plr.setHand('copper', 'estate')
-        self.plr.setReserve('copper', 'copper')
+        self.plr.setHand('Copper', 'Estate')
+        self.plr.setReserve('Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['add']
         self.plr.playCard(self.card)

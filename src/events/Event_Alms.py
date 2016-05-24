@@ -16,7 +16,7 @@ class Event_Alms(Event):
     def special(self, game, player):
         """ Once per turn: If you have no treasures in play, gain a
         card costing up to 4"""
-        if not player.do_once('alms'):
+        if not player.do_once('Alms'):
             player.output("Already used Alms this turn")
             return
         found = False
@@ -36,26 +36,26 @@ class Event_Alms(Event):
 class Test_Alms(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['alms'], initcards=['feast'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], initcards=['Feast'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Alms']
 
     def test_with_treasure(self):
         """ Use Alms with treasures"""
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.performEvent(self.card)
 
     def test_without_treasure(self):
         """ Use Alms with no treasures"""
-        self.plr.setHand('estate')
-        self.plr.test_input = ['feast']
+        self.plr.setHand('Estate')
+        self.plr.test_input = ['Feast']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile[0].name, 'Feast')
 
     def test_twice(self):
         """ Use Alms twice"""
-        self.plr.setHand('estate')
+        self.plr.setHand('Estate')
         self.plr.test_input = ['feast']
         self.plr.performEvent(self.card)
         self.plr.performEvent(self.card)

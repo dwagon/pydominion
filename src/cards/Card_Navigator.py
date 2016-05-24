@@ -39,21 +39,21 @@ class Card_Navigator(Card):
 class Test_Navigator(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['navigator'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Navigator'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.navigator = self.g['navigator'].remove()
+        self.navigator = self.g['Navigator'].remove()
         self.plr.addCard(self.navigator, 'hand')
 
     def test_discard(self):
-        self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
+        self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 5)
         self.assertEqual(self.plr.deckSize(), 1)
 
     def test_keep(self):
-        self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
+        self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['return']
         self.plr.playCard(self.navigator)
         self.assertEqual(self.plr.discardSize(), 0)

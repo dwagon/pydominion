@@ -31,10 +31,10 @@ class Card_Grandmarket(Card):
 class Test_Grandmarket(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['grandmarket'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Grand Market'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.gm = self.g['grandmarket'].remove()
+        self.gm = self.g['Grand Market'].remove()
 
     def test_play(self):
         self.plr.addCard(self.gm, 'hand')
@@ -45,7 +45,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_nobuy(self):
-        self.plr.setHand('copper', 'gold', 'gold')
+        self.plr.setHand('Copper', 'Gold', 'Gold')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection(phase='buy')
@@ -54,8 +54,8 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
-        self.plr.setHand('gold', 'gold', 'gold')
-        self.plr.setPlayed('copper')
+        self.plr.setHand('Gold', 'Gold', 'Gold')
+        self.plr.setPlayed('Copper')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection(phase='buy')
@@ -64,7 +64,7 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
-        self.plr.setHand('gold', 'gold', 'gold')
+        self.plr.setHand('Gold', 'Gold', 'Gold')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.choiceSelection(phase='buy')

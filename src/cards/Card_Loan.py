@@ -38,10 +38,10 @@ class Card_Loan(Card):
 class Test_Loan(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['loan'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Loan'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.loan = self.plr.gainCard('loan', 'hand')
+        self.loan = self.plr.gainCard('Loan', 'hand')
 
     def test_play(self):
         self.plr.test_input = ['0']
@@ -49,7 +49,7 @@ class Test_Loan(unittest.TestCase):
         self.assertEquals(self.plr.getCoin(), 1)
 
     def test_discard(self):
-        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
+        self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
         self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
@@ -58,7 +58,7 @@ class Test_Loan(unittest.TestCase):
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trash(self):
-        self.plr.setDeck('estate', 'gold', 'estate', 'duchy')
+        self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
         self.assertEquals(self.g.trashSize(), 1)

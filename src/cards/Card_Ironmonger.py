@@ -42,10 +42,10 @@ class Card_Ironmonger(Card):
 class Test_Ironmonger(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['ironmonger'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Iron Monger'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.im = self.g['ironmonger'].remove()
+        self.im = self.g['Iron Monger'].remove()
         self.plr.addCard(self.im, 'hand')
 
     def test_play(self):
@@ -57,33 +57,33 @@ class Test_Ironmonger(unittest.TestCase):
 
     def test_victory(self):
         self.plr.test_input = ['put back']
-        self.plr.setDeck('duchy', 'estate')
+        self.plr.setDeck('Duchy', 'Estate')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.handSize(), 7)
 
     def test_treasure(self):
         self.plr.test_input = ['put back']
-        self.plr.setDeck('copper', 'gold')
+        self.plr.setDeck('Copper', 'Gold')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_action(self):
         self.plr.test_input = ['put back']
-        self.plr.setDeck('ironmonger', 'ironmonger')
+        self.plr.setDeck('Iron Monger', 'Iron Monger')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
 
     def test_discard(self):
         self.plr.test_input = ['discard']
-        self.plr.setDeck('ironmonger', 'gold')
+        self.plr.setDeck('Iron Monger', 'Gold')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.discardpile[0].name, 'Iron Monger')
 
     def test_putback(self):
         self.plr.test_input = ['put back']
-        self.plr.setDeck('copper', 'gold')
+        self.plr.setDeck('Copper', 'Gold')
         self.plr.playCard(self.im)
         self.assertEqual(self.plr.deck[0].name, 'Copper')
 

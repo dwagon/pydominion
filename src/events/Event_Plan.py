@@ -25,7 +25,7 @@ class Event_Plan(Event):
 class Test_Plan(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['plan'], initcards=['moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Plan'], initcards=['Moat'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Plan']
@@ -33,9 +33,9 @@ class Test_Plan(unittest.TestCase):
     def test_play(self):
         """ Perform a Plan """
         self.plr.addCoin(3)
-        self.plr.test_input = ['moat']
+        self.plr.test_input = ['Moat']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.tokens['Trashing'], 'moat')
+        self.assertEqual(self.plr.tokens['Trashing'], 'Moat')
         self.assertEqual(self.plr.getCoin(), 0)
 
 

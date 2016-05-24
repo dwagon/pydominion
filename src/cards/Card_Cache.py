@@ -25,13 +25,13 @@ class Card_Cache(Card):
 class Test_Cache(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['cache'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cache'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.cache = self.g['cache'].remove()
+        self.cache = self.g['Cache'].remove()
 
     def test_gain(self):
-        self.plr.gainCard('cache')
+        self.plr.gainCard('Cache')
         sdp = sorted([c.name for c in self.plr.discardpile])
         self.assertEqual(sorted(['Copper', 'Copper', 'Cache']), sdp)
 

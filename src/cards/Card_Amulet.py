@@ -33,18 +33,18 @@ class Card_Amulet(Card):
         if choice == 'trash':
             player.plrTrashCard(num=1)
         if choice == 'silver':
-            player.gainCard('silver')
+            player.gainCard('Silver')
 
 
 ###############################################################################
 class Test_Amulet(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['amulet'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Amulet'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['amulet'].remove()
-        self.plr.setHand('duchy')
+        self.card = self.g['Amulet'].remove()
+        self.plr.setHand('Duchy')
         self.plr.addCard(self.card, 'hand')
 
     def test_play_coin(self):
@@ -52,34 +52,34 @@ class Test_Amulet(unittest.TestCase):
         self.plr.test_input = ['coin', 'coin']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.getCoin(), 1)
-        self.assertIsNone(self.plr.inDiscard('silver'))
+        self.assertIsNone(self.plr.inDiscard('Silver'))
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEquals(self.plr.getCoin(), 1)
-        self.assertIsNone(self.plr.inDiscard('silver'))
+        self.assertIsNone(self.plr.inDiscard('Silver'))
 
     def test_play_silver(self):
         """ Play an amulet with coin """
         self.plr.test_input = ['silver', 'silver']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('silver'))
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEquals(self.plr.getCoin(), 0)
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEquals(self.plr.getCoin(), 0)
-        self.assertIsNotNone(self.plr.inDiscard('silver'))
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
     def test_play_trash(self):
         """ Play an amulet with trash """
         self.plr.test_input = ['trash', 'duchy', 'finish', 'trash', '1', 'finish']
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('silver'))
-        self.assertIsNotNone(self.g.inTrash('duchy'))
+        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.g.inTrash('Duchy'))
         self.assertEquals(self.plr.getCoin(), 0)
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEquals(self.plr.getCoin(), 0)
-        self.assertIsNone(self.plr.inDiscard('silver'))
+        self.assertIsNone(self.plr.inDiscard('Silver'))
         self.assertEqual(self.g.trashSize(), 2)
 
 ###############################################################################

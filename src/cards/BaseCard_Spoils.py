@@ -27,7 +27,7 @@ class Card_Spoils(Card):
 class Test_Spoils(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['banditcamp'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bandit Camp'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 

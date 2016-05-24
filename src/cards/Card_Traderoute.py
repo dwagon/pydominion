@@ -43,10 +43,10 @@ class Card_Traderoute(Card):
 class Test_Traderoute(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['traderoute'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Trade Route'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.traderoute = self.g['traderoute'].remove()
+        self.traderoute = self.g['Trade Route'].remove()
         self.plr.addCard(self.traderoute, 'hand')
 
     def test_playZero(self):
@@ -56,14 +56,14 @@ class Test_Traderoute(unittest.TestCase):
 
     def test_playOne(self):
         self.plr.test_input = ['finish selecting']
-        self.g['estate'].remove()
+        self.g['Estate'].remove()
         self.plr.playCard(self.traderoute)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ['finish selecting']
-        self.g['estate'].remove()
-        self.g['province'].remove()
+        self.g['Estate'].remove()
+        self.g['Province'].remove()
         self.plr.playCard(self.traderoute)
         self.assertEqual(self.plr.getCoin(), 2)
 

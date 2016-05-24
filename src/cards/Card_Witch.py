@@ -20,18 +20,18 @@ class Card_Witch(Card):
         """ All other players gain a curse """
         for pl in player.attackVictims():
             player.output("%s got cursed" % pl.name)
-            pl.gainCard('curse')
+            pl.gainCard('Curse')
 
 
 ###############################################################################
 class Test_Witch(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['witch', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Witch', 'Moat'])
         self.g.startGame()
         self.attacker, self.victim = self.g.playerList()
-        self.wcard = self.g['witch'].remove()
-        self.mcard = self.g['moat'].remove()
+        self.wcard = self.g['Witch'].remove()
+        self.mcard = self.g['Moat'].remove()
         self.attacker.addCard(self.wcard, 'hand')
 
     def test_defended(self):

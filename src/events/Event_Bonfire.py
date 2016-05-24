@@ -22,23 +22,23 @@ class Event_Bonfire(Event):
 class Test_Bonfire(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['bonfire'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Bonfire'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Bonfire']
-        self.copper = self.g['copper'].remove()
-        self.gold = self.g['gold'].remove()
-        self.estate = self.g['estate'].remove()
+        self.copper = self.g['Copper'].remove()
+        self.gold = self.g['Gold'].remove()
+        self.estate = self.g['Estate'].remove()
 
     def test_bonfire(self):
         """ Use Bonfire """
         self.plr.addCoin(3)
-        self.plr.setHand('estate')
+        self.plr.setHand('Estate')
         self.plr.addCard(self.copper, 'hand')
         self.plr.playCard(self.copper)
         self.plr.addCard(self.gold, 'hand')
         self.plr.playCard(self.gold)
-        self.plr.test_input = ['copper', 'gold', 'finish']
+        self.plr.test_input = ['Copper', 'Gold', 'Finish']
         self.plr.performEvent(self.card)
         self.assertEqual(self.g.trashSize(), 2)
 

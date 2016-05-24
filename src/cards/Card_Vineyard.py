@@ -29,20 +29,20 @@ class Card_Vineyard(Card):
 class Test_Vineyard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['vineyard', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vineyard', 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_scoreOne(self):
-        self.plr.setHand('vineyard')
-        self.plr.setDeck('copper')
-        self.plr.setDiscard('moat', 'moat', 'moat', 'moat')
+        self.plr.setHand('Vineyard')
+        self.plr.setDeck('Copper')
+        self.plr.setDiscard('Moat', 'Moat', 'Moat', 'Moat')
         self.assertEquals(self.plr.getScoreDetails()['Vineyard'], 1)
 
     def test_scoreTwo(self):
-        self.plr.setHand('vineyard')
-        self.plr.setDeck('vineyard')
-        self.plr.setDiscard('moat', 'moat', 'moat', 'moat', 'moat', 'moat')
+        self.plr.setHand('Vineyard')
+        self.plr.setDeck('Vineyard')
+        self.plr.setDiscard('Moat', 'Moat', 'Moat', 'Moat', 'Moat', 'Moat')
         self.assertEquals(self.plr.getScoreDetails()['Vineyard'], 4)
 
 ###############################################################################

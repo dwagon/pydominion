@@ -40,10 +40,10 @@ class Card_Wishingwell(Card):
 class Test_Wishingwell(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['wishingwell'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wishing Well'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['wishingwell'].remove()
+        self.card = self.g['Wishing Well'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -55,15 +55,15 @@ class Test_Wishingwell(unittest.TestCase):
 
     def test_good(self):
         """ A good guess means the card ends up in the hand"""
-        self.plr.setDeck('gold', 'copper')
-        self.plr.test_input = ['gold']
+        self.plr.setDeck('Gold', 'Copper')
+        self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Gold'))
 
     def test_bad(self):
         """ Guessing badly should result in the card staying on the deck """
-        self.plr.setDeck('province', 'copper')
-        self.plr.test_input = ['gold']
+        self.plr.setDeck('Province', 'Copper')
+        self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertTrue(not self.plr.inHand('Gold'))
         self.assertTrue(not self.plr.inHand('Province'))

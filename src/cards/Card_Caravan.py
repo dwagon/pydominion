@@ -25,10 +25,10 @@ class Card_Caravan(Card):
 class Test_Caravan(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['caravan'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Caravan'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['caravan'].remove()
+        self.card = self.g['Caravan'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_playcard(self):

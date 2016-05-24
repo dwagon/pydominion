@@ -18,7 +18,7 @@ class Card_Bureaucrat(Card):
         other player reveals a victory card from his hand and puts
         it on his deck (or reveals a hand with no victory cards)
         """
-        player.gainCard('silver', 'topdeck')
+        player.gainCard('Silver', 'topdeck')
         player.output("Added silver to deck")
 
         for pl in player.attackVictims():
@@ -37,31 +37,31 @@ class Card_Bureaucrat(Card):
 class Test_Bureaucrat(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['bureaucrat', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bureaucrat', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.bcard = self.g['bureaucrat'].remove()
+        self.bcard = self.g['Bureaucrat'].remove()
         self.plr.addCard(self.bcard, 'hand')
 
     def test_hasvictory(self):
-        self.victim.setHand('estate', 'copper', 'copper')
-        self.victim.setDeck('silver')
+        self.victim.setHand('Estate', 'Copper', 'Copper')
+        self.victim.setDeck('Silver')
         self.plr.playCard(self.bcard)
         self.assertEquals(self.victim.deck[-1].name, 'Estate')
         self.assertIsNone(self.victim.inHand('Estate'))
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
     def test_novictory(self):
-        self.victim.setHand('copper', 'copper', 'copper')
-        self.victim.setDeck('province')
-        self.plr.setDeck('province')
+        self.victim.setHand('Copper', 'Copper', 'Copper')
+        self.victim.setDeck('Province')
+        self.plr.setDeck('Province')
         self.plr.playCard(self.bcard)
         self.assertEquals(self.victim.deck[-1].name, 'Province')
         self.assertEquals(self.plr.deck[-1].name, 'Silver')
 
     def test_defense(self):
-        self.victim.setDeck('province')
-        self.victim.setHand('estate', 'duchy', 'moat')
+        self.victim.setDeck('Province')
+        self.victim.setHand('Estate', 'Duchy', 'Moat')
         self.plr.playCard(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
         self.assertEquals(self.victim.deck[-1].name, 'Province')

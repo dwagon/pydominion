@@ -27,10 +27,10 @@ class Card_Relic(Card):
 class Test_Relic(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['relic'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Relic'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['relic'].remove()
+        self.card = self.g['Relic'].remove()
 
     def test_play(self):
         """ Play a relic """

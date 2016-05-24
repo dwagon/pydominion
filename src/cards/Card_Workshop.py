@@ -23,10 +23,10 @@ class Card_Workshop(Card):
 class Test_Workshop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['workshop', 'feast'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Feast'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.wcard = self.g['workshop'].remove()
+        self.wcard = self.g['Workshop'].remove()
         self.plr.addCard(self.wcard, 'hand')
 
     def test_gainzero(self):

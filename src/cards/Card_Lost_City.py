@@ -28,10 +28,10 @@ class Card_Lost_City(Card):
 class Test_Lost_City(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['lost_city'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Lost City'])
         self.g.startGame()
         self.plr, self.other = self.g.playerList()
-        self.card = self.g['lost_city'].remove()
+        self.card = self.g['Lost City'].remove()
 
     def test_play(self):
         """ Play a lost_city """

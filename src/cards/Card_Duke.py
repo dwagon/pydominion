@@ -28,14 +28,14 @@ class Card_Duke(Card):
 class Test_Duke(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['duke'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duke'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_score(self):
-        self.plr.setDeck('duchy', 'duchy', 'estate')
-        self.plr.setHand('silver')
-        self.plr.setDiscard('duke')
+        self.plr.setDeck('Duchy', 'Duchy', 'Estate')
+        self.plr.setHand('Silver')
+        self.plr.setDiscard('Duke')
         sc = self.plr.getScore()
         self.assertEqual(sc, 9)     # 3 per duchy, 1 per estate, 2 from duke
 

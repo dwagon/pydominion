@@ -83,10 +83,10 @@ class Card_Rogue(Card):
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['rogue', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['rogue'].remove()
+        self.card = self.g['Rogue'].remove()
 
     def test_play(self):
         """ Nothing should happen """
@@ -98,14 +98,14 @@ class Test_Rogue(unittest.TestCase):
         """ Victim has a defense """
         self.plr.hand.empty()
         self.plr.addCard(self.card, 'hand')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.playCard(self.card)
 
     def test_good_trash(self):
         """ Rogue to get something juicy from the trash """
         for i in range(2):
-            gold = self.g['gold'].remove()
+            gold = self.g['Gold'].remove()
             self.plr.trashCard(gold)
         self.plr.test_input = ['1']
         self.plr.addCard(self.card, 'hand')
@@ -116,7 +116,7 @@ class Test_Rogue(unittest.TestCase):
 
     def test_good_player(self):
         """ Rogue to trash something from another player """
-        self.victim.setDeck('gold', 'duchy')
+        self.victim.setDeck('Gold', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
@@ -127,7 +127,7 @@ class Test_Rogue(unittest.TestCase):
 
     def test_bad_player(self):
         """ Rogue to trash nothing from another player """
-        self.victim.setDeck('gold', 'province', 'province')
+        self.victim.setDeck('Gold', 'Province', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.g.print_state()

@@ -20,10 +20,10 @@ class Card_Moat(Card):
 class Test_Library(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['moat'].remove()
+        self.card = self.g['Moat'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

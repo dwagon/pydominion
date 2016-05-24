@@ -29,10 +29,10 @@ class Card_Courtyard(Card):
 class Test_Courtyard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['courtyard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Courtyard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.cy = self.g['courtyard'].remove()
+        self.cy = self.g['Courtyard'].remove()
 
     def test_play(self):
         """ Play courtyard """
@@ -43,7 +43,7 @@ class Test_Courtyard(unittest.TestCase):
 
     def test_putcard(self):
         """ Use courtyard to put a card to the top of the deck """
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.cy, 'hand')
         self.plr.test_input = ['put gold']
         self.plr.playCard(self.cy)

@@ -27,10 +27,10 @@ class Card_Remodel(Card):
 class Test_Remodel(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['remodel'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Remodel'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.rcard = self.g['remodel'].remove()
+        self.rcard = self.g['Remodel'].remove()
 
     def test_nothing(self):
         self.plr.addCard(self.rcard, 'hand')

@@ -20,17 +20,17 @@ class Card_Talisman(Card):
             or less that is not a victory card, gain a copy of it."""
         if card.cost <= 4 and not card.isVictory():
             player.output("Gained another %s from Talisman" % card.name)
-            player.addCard(game[card.cardname].remove())
+            player.addCard(game[card.name].remove())
 
 
 ###############################################################################
 class Test_Talisman(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['talisman'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Talisman'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['talisman'].remove()
+        self.card = self.g['Talisman'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -39,21 +39,21 @@ class Test_Talisman(unittest.TestCase):
 
     def test_buy(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['copper'])
+        self.plr.buyCard(self.g['Copper'])
         self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Copper')
 
     def test_tooexpensive(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['gold'])
+        self.plr.buyCard(self.g['Gold'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Gold')
 
     def test_victory(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['duchy'])
+        self.plr.buyCard(self.g['Duchy'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Duchy')

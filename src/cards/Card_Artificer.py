@@ -31,14 +31,14 @@ class Card_Artificer(Card):
 class Test_Artificer(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['artificer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Artificer'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
-        self.card = self.g['artificer'].remove()
+        self.card = self.g['Artificer'].remove()
 
     def test_play(self):
         """ Play an artificer - discard none and pick up a copper """
-        self.plr.setDeck('province')
+        self.plr.setDeck('Province')
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['finish', 'copper']
@@ -50,8 +50,8 @@ class Test_Artificer(unittest.TestCase):
 
     def test_play_more(self):
         """ Play an artificer - discard three and pick up a silver """
-        self.plr.setDeck('gold')
-        self.plr.setHand('estate', 'duchy', 'province')
+        self.plr.setDeck('Gold')
+        self.plr.setHand('Estate', 'Duchy', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['estate', 'duchy', 'province', 'finish', 'silver']
         self.plr.playCard(self.card)

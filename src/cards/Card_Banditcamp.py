@@ -26,12 +26,12 @@ class Card_Banditcamp(Card):
 class Test_Banditcamp(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['banditcamp'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bandit Camp'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_play(self):
-        bc = self.g['banditcamp'].remove()
+        bc = self.g['Bandit Camp'].remove()
         self.plr.addCard(bc, 'hand')
         self.plr.playCard(bc)
         self.assertEqual(self.plr.getActions(), 2)

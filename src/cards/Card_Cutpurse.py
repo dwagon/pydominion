@@ -31,20 +31,20 @@ class Card_Cutpurse(Card):
 class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['cutpurse'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cutpurse'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['cutpurse'].remove()
+        self.card = self.g['Cutpurse'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play_coppers(self):
-        self.victim.setHand('copper', 'copper', 'estate')
+        self.victim.setHand('Copper', 'Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.discardpile[-1].name, 'Copper')
         self.assertEqual(self.victim.handSize(), 2)
 
     def test_play_none(self):
-        self.victim.setHand('estate', 'estate', 'estate')
+        self.victim.setHand('Estate', 'Estate', 'Estate')
         self.plr.playCard(self.card)
         self.assertTrue(self.victim.discardpile.isEmpty())
         self.assertEqual(self.victim.handSize(), 3)

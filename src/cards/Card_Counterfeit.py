@@ -39,10 +39,10 @@ class Card_Counterfeit(Card):
 class Test_Counterfiet(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['counterfeit'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Counterfeit'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['counterfeit'].remove()
+        self.card = self.g['Counterfeit'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -52,14 +52,14 @@ class Test_Counterfiet(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_notreasures(self):
-        self.plr.setHand('estate', 'estate', 'estate')
+        self.plr.setHand('Estate', 'Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.test_input, ['0'])
 
     def test_twice(self):
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)

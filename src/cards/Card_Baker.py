@@ -30,10 +30,10 @@ class Card_Baker(Card):
 class Test_Baker(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['baker'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Baker'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['baker'].remove()
+        self.card = self.g['Baker'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_setup(self):

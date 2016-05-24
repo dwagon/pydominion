@@ -25,7 +25,7 @@ class Test_Colony(unittest.TestCase):
         self.g = Game.Game(quiet=True, prosperity=True, numplayers=1)
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['colony'].remove()
+        self.card = self.g['Colony'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_score(self):

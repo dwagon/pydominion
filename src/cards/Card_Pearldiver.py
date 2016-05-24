@@ -35,28 +35,28 @@ class Card_Pearldiver(Card):
 class Test_Pearldiver(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['pearldiver'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pearl Diver'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.pearldiver = self.g['pearldiver'].remove()
+        self.pearldiver = self.g['Pearl Diver'].remove()
         self.plr.addCard(self.pearldiver, 'hand')
 
     def test_play(self):
-        self.plr.setDeck('copper', 'gold', 'province', 'silver', 'duchy')
+        self.plr.setDeck('Copper', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.pearldiver)
         self.assertEquals(self.plr.getActions(), 1)
         self.assertEquals(self.plr.handSize(), 6)
 
     def test_donothing(self):
-        self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
+        self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.pearldiver)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
         self.assertEqual(self.plr.deck[0].name, 'Copper')
 
     def test_putontop(self):
-        self.plr.setDeck('copper', 'estate', 'gold', 'province', 'silver', 'duchy')
+        self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.pearldiver)
         # Duchy gets pulled due to +1 card

@@ -29,10 +29,10 @@ class Card_Hero(Card):
 class Test_Hero(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['hero'].remove()
+        self.card = self.g['Hero'].remove()
 
     def test_hero(self):
         """ Play a hero """

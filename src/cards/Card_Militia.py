@@ -33,14 +33,14 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Militia(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['militia', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Militia', 'Moat'])
         self.g.startGame()
         self.attacker, self.defender = self.g.playerList()
-        self.mcard = self.g['militia'].remove()
+        self.mcard = self.g['Militia'].remove()
 
     def test_defense(self):
         self.attacker.addCard(self.mcard, 'hand')
-        self.defender.addCard(self.g['moat'].remove(), 'hand')
+        self.defender.addCard(self.g['Moat'].remove(), 'hand')
         self.attacker.playCard(self.mcard)
         self.assertEquals(self.defender.handSize(), 6)   # Normal + moat
         self.assertEquals(self.attacker.getCoin(), 2)

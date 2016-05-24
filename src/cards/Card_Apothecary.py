@@ -37,22 +37,22 @@ class Card_Apothecary(Card):
 class Test_Apothecary(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['apothecary'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Apothecary'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_none(self):
-        self.plr.setHand('apothecary')
+        self.plr.setHand('Apothecary')
         apoth = self.plr.hand[0]
-        self.plr.setDeck('duchy', 'estate', 'estate', 'estate', 'province')
+        self.plr.setDeck('Duchy', 'Estate', 'Estate', 'Estate', 'Province')
         self.plr.playCard(apoth)
         self.assertEqual(self.plr.handSize(), 1)  # P
         self.assertEqual(self.plr.deckSize(), 4)  # D + E + E + E
 
     def test_some(self):
-        self.plr.setHand('apothecary')
+        self.plr.setHand('Apothecary')
         apoth = self.plr.hand[0]
-        self.plr.setDeck('duchy', 'potion', 'copper', 'estate', 'province')
+        self.plr.setDeck('Duchy', 'Potion', 'Copper', 'Estate', 'Province')
         self.plr.playCard(apoth)
         self.assertEqual(self.plr.handSize(), 3)  # P + C + Pot
         self.assertEqual(self.plr.deckSize(), 2)  # E + D

@@ -23,10 +23,10 @@ class Card_Armory(Card):
 class Test_Armory(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['armory', 'feast'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Armory', 'Feast'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.armory = self.g['armory'].remove()
+        self.armory = self.g['Armory'].remove()
         self.plr.addCard(self.armory, 'hand')
 
     def test_gainzero(self):
@@ -36,7 +36,7 @@ class Test_Armory(unittest.TestCase):
         self.assertTrue(self.plr.discardpile.isEmpty())
 
     def test_gainone(self):
-        self.plr.test_input = ['feast']
+        self.plr.test_input = ['Feast']
         self.plr.deck.empty()
         self.plr.playCard(self.armory)
         self.assertEquals(self.plr.handSize(), 5)

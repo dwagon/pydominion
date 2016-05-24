@@ -30,10 +30,10 @@ class Card_Storeroom(Card):
 class Test_Storeroom(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['storeroom'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Store Room'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['storeroom'].remove()
+        self.card = self.g['Store Room'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

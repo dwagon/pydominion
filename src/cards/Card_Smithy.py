@@ -20,10 +20,10 @@ class Card_Smithy(Card):
 class Test_Smithy(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['smithy'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Smithy'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['smithy'].remove()
+        self.card = self.g['Smithy'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

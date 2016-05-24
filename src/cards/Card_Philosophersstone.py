@@ -27,23 +27,23 @@ class Card_Philosophersstone(Card):
 class Test_Philosophersstone(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['philosophersstone'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Philosopher's Stone"])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['philosophersstone'].remove()
+        self.card = self.g["Philosopher's Stone"].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a philosophers stone with not much on"""
-        self.plr.setDeck('estate')
-        self.plr.setDiscard('estate')
+        self.plr.setDeck('Estate')
+        self.plr.setDiscard('Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_value(self):
         """ Play a philosophers stone with the full Nicholas Flamel """
-        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'silver')
-        self.plr.setDiscard('estate', 'estate', 'estate', 'estate', 'silver')
+        self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Silver')
+        self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Silver')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

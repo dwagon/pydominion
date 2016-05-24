@@ -31,7 +31,7 @@ class Card_Giant(Card):
                 else:
                     victim.output("%s's Giant discarded your %s and cursed you" % (player.name, c.name))
                     victim.addCard(c, 'discard')
-                    victim.gainCard('curse')
+                    victim.gainCard('Curse')
         else:
             player.addCoin(1)
 
@@ -40,31 +40,31 @@ class Card_Giant(Card):
 class Test_Giant(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['giant'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Giant'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['giant'].remove()
+        self.card = self.g['Giant'].remove()
 
     def test_play_journey_trashed(self):
         """ Play a giant - good journey - trashable victim """
         self.plr.setHand()
-        self.victim.setDeck('gold')
+        self.victim.setDeck('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertIsNotNone(self.g.inTrash('gold'))
+        self.assertIsNotNone(self.g.inTrash('Gold'))
 
     def test_play_journey_untrashed(self):
         """ Play a giant - good journey - untrashable victim """
         self.plr.setHand()
-        self.victim.setDeck('copper')
+        self.victim.setDeck('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertIsNone(self.g.inTrash('copper'))
-        self.assertIsNotNone(self.victim.inDiscard('curse'))
+        self.assertIsNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.victim.inDiscard('Curse'))
 
     def test_play_no_journey(self):
         """ Play a giant - bad journey """

@@ -26,10 +26,10 @@ class Card_Hoard(Card):
 class Test_Hoard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['hoard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hoard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['hoard'].remove()
+        self.card = self.g['Hoard'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -39,7 +39,7 @@ class Test_Hoard(unittest.TestCase):
 
     def test_buy_victory(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['estate'])
+        self.plr.buyCard(self.g['Estate'])
         self.assertEqual(self.plr.discardSize(), 2)
         for c in self.plr.discardpile:
             if c.name == 'Gold':
@@ -49,7 +49,7 @@ class Test_Hoard(unittest.TestCase):
 
     def test_buy_nonvictory(self):
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['copper'])
+        self.plr.buyCard(self.g['Copper'])
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[-1].name, 'Copper')
 
