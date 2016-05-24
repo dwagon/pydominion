@@ -7,7 +7,7 @@ import Game
 ###############################################################################
 class Test_load_travellers(unittest.TestCase):
     def test_needtravellers(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.assertTrue(self.g.needtravellers)
 
@@ -15,26 +15,26 @@ class Test_load_travellers(unittest.TestCase):
 ###############################################################################
 class Test_replace_traveller(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['page'].remove()
+        self.card = self.g['Page'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_replace(self):
         """ Replace a traveller """
         self.plr.test_input = ['replace']
         self.plr.playCard(self.card)
-        self.plr.replace_traveller(self.card, 'TreasureHunter')
+        self.plr.replace_traveller(self.card, 'Treasure Hunter')
         self.assertIsNone(self.plr.inHand('Page'))
         self.assertIsNotNone(self.plr.inHand('Treasure Hunter'))
 
     def test_dont_replace(self):
         """ Choose not to replace a traveller """
         self.plr.test_input = ['keep']
-        self.plr.replace_traveller(self.card, 'TreasureHunter')
+        self.plr.replace_traveller(self.card, 'Treasure Hunter')
         self.assertIsNotNone(self.plr.inHand('Page'))
-        self.assertIsNone(self.plr.inHand('TreasureHunter'))
+        self.assertIsNone(self.plr.inHand('Treasure Hunter'))
 
     def test_replacement_not_available(self):
         """ Try and replace a traveller when the replacement isn't available """
@@ -44,9 +44,9 @@ class Test_replace_traveller(unittest.TestCase):
     def test_not_played(self):
         """ Try and replace a traveller when it hasn't been played """
         self.plr.test_input = ['replace']
-        self.plr.replace_traveller(self.card, 'TreasureHunter')
+        self.plr.replace_traveller(self.card, 'Treasure Hunter')
         self.assertIsNotNone(self.plr.inHand('Page'))
-        self.assertIsNone(self.plr.inHand('TreasureHunter'))
+        self.assertIsNone(self.plr.inHand('Treasure Hunter'))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

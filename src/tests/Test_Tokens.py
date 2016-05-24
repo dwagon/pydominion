@@ -7,7 +7,7 @@ import Game
 ###############################################################################
 class TestToken(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
@@ -31,7 +31,7 @@ class TestToken(unittest.TestCase):
         """ Ensure we draw less if the -Card token is in place"""
         self.plr.card_token = True
         self.plr.setHand()
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.handSize(), 1)
         self.plr.playCard(moat)
@@ -42,7 +42,7 @@ class TestToken(unittest.TestCase):
     def test_action_token(self):
         """ Does the +Action token work """
         self.plr.place_token('+Action', 'Moat')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getActions(), 1)
         self.plr.playCard(moat)
@@ -50,7 +50,7 @@ class TestToken(unittest.TestCase):
 
     def test_trashing_token(self):
         """ Does the Trashing token work """
-        self.plr.setHand('gold', 'province', 'duchy')
+        self.plr.setHand('Gold', 'Province', 'Duchy')
         self.plr.place_token('Trashing', 'Moat')
         self.plr.test_input = ['trash province']
         self.plr.buyCard(self.g['Moat'])
@@ -67,7 +67,7 @@ class TestToken(unittest.TestCase):
         """ Does the +Card token work """
         self.plr.setHand()
         self.plr.place_token('+Card', 'Moat')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.handSize(), 1)
         self.plr.playCard(moat)
@@ -77,7 +77,7 @@ class TestToken(unittest.TestCase):
     def test_pluscoin_token(self):
         """ Does the +Coin token work """
         self.plr.place_token('+Coin', 'Moat')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getCoin(), 0)
         self.plr.playCard(moat)
@@ -86,7 +86,7 @@ class TestToken(unittest.TestCase):
     def test_buy_token(self):
         """ Does the +Buy token work """
         self.plr.place_token('+Buy', 'Moat')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getBuys(), 1)
         self.plr.playCard(moat)
