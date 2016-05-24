@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import argparse
 import glob
+import imp
+import os
 import random
 import sys
 import uuid
@@ -30,6 +32,7 @@ class Game(object):
         if self.prosperity:
             self.baseCards.append('Colony')
             self.baseCards.append('Platinum')
+        self.cardmapping = self.getAvailableCardClasses()
 
     ###########################################################################
     def parseArgs(self, **args):
@@ -134,7 +137,8 @@ class Game(object):
     def loadTravellers(self):
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            self.cardpiles[trav] = CardPile(trav, cardpath=self.cardpath)
+            cp = CardPile(trav, self.cardmapping['Traveller'][trav], numcards=5)
+            self.cardpiles[cp.name] = cp
 
     ###########################################################################
     def loadEvents(self):
@@ -152,7 +156,8 @@ class Game(object):
     ###########################################################################
     def loadDecks(self, initcards):
         for card in self.baseCards:
-            self.cardpiles[card] = CardPile(card, numcards=12, cardpath=self.cardpath)
+            cp = CardPile(card, self.cardmapping['BaseCard'][card], numcards=12)
+            self.cardpiles[cp.name] = cp
         self['Copper'].numcards = 60
         self['Silver'].numcards = 40
         self['Gold'].numcards = 30
@@ -164,23 +169,19 @@ class Game(object):
         self.needruins = False
         self.needtravellers = False
         for c in initcards:
-            c = c.strip().lower().title()
-            if c not in available:
-                sys.stderr.write("Card '%s' is not available\n" % c)
-                sys.exit(1)
             self.useCardPile(available, c)
 
         while unfilled:
             c = random.choice(available)
             unfilled -= self.useCardPile(available, c)
         if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', numcards=self.numCurses(), cardpath=self.cardpath)
+            self.cardpiles['Curse'] = CardPile('Curse', self.cardmapping['BaseCard']['Curse'], numcards=self.numCurses())
             self.output("Playing with Curses")
         if self.needpotion:
-            self.cardpiles['Potion'] = CardPile('Potion', numcards=16, cardpath=self.cardpath)
+            self.cardpiles['Potion'] = CardPile('Potion', self.cardmapping['BaseCard']['Potion'], numcards=16)
             self.output("Playing with Potions")
         if self.needspoils:
-            self.cardpiles['Spoils'] = CardPile('Spoils', numcards=16, cardpath=self.cardpath)
+            self.cardpiles['Spoils'] = CardPile('Spoils', self.cardmapping['BaseCard']['Spoils'], numcards=16)
             self.output("Playing with Spoils")
         if self.needruins:
             self.addRuins()
@@ -195,7 +196,7 @@ class Game(object):
     def addRuins(self):
         from RuinCardPile import RuinCardPile
         nc = self.numplayers * 10
-        self.cardpiles['Ruins'] = RuinCardPile(cardpath=self.cardpath, numcards=nc)
+        self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
         self.output("Playing with Ruins")
 
     ###########################################################################
@@ -205,12 +206,9 @@ class Game(object):
 
     ###########################################################################
     def useCardPile(self, available, c):
-        if self.cardbase:
-            cp = CardPile(c, cardpath=self.cardpath, numcards=c.stacksize)
-            if cp.base not in self.cardbase:
-                return 0
         available.remove(c)
-        self.cardpiles[c] = CardPile(c, cardpath=self.cardpath)
+        cp = CardPile(c, self.cardmapping['Card'][c])
+        self.cardpiles[cp.name] = cp
         self.output("Playing with card %s" % self[c].name)
         if self.cardpiles[c].needcurse:
             self.needcurse = True
@@ -230,14 +228,33 @@ class Game(object):
 
     ###########################################################################
     def __getitem__(self, key):
-        key = key.lower().title()
         return self.cardpiles[key]
 
     ###########################################################################
+    def getAvailableCardClasses(self):
+        """ Create a mapping between the cardname and the module """
+        mapping = {}
+        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard'):
+            mapping[prefix] = {}
+            files = glob.glob('%s/%s_*.py' % (self.cardpath, prefix))
+            for fname in [os.path.basename(f) for f in files]:
+                fname = fname.replace('.py', '')
+                fp, pathname, desc = imp.find_module(fname, [self.cardpath, 'cards'])
+                mod = imp.load_module(fname, fp, pathname, desc)
+                classes = dir(mod)
+                for c in classes:
+                    if c.startswith('Card_'):
+                        klass = getattr(mod, c)
+                        break
+                else:
+                    sys.stderr.write("Couldn't find Card Class in %s\n" % pathname)
+                k = klass()
+                mapping[prefix][k.name] = klass
+        return mapping
+
+    ###########################################################################
     def getAvailableCards(self, prefix='Card'):
-        cardfiles = glob.glob('%s/%s_*.py' % (self.cardpath, prefix))
-        cards = [c.replace('%s/%s_' % (self.cardpath, prefix), '').replace('.py', '') for c in cardfiles]
-        return cards
+        return self.cardmapping[prefix].keys()
 
     ###########################################################################
     def getAvailableEvents(self):
@@ -299,6 +316,13 @@ class Game(object):
         """ Return the player to the 'left' of the one specified """
         players = self.playerList()
         place = players.index(plr) - 1
+        return players[place]
+
+    ###########################################################################
+    def playerToRight(self, plr):
+        """ Return the player to the 'right' of the one specified """
+        players = self.playerList()
+        place = (players.index(plr) + 1) % len(players)
         return players[place]
 
     ###########################################################################

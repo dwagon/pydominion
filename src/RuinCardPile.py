@@ -1,20 +1,13 @@
 #!/usr/bin/env python
-import glob
 import random
 from CardPile import CardPile
 
 
 ###############################################################################
 class RuinCardPile(CardPile):
-    def __init__(self, numcards=10, cardpath='cards'):
-        self.cardpath = cardpath
+    def __init__(self, mapping, numcards=10):
         self.numcards = numcards
-        ruinfiles = glob.glob('%s/RuinCard_*.py' % cardpath)
-        ruintypes = {}
-        for r in ruinfiles:
-            cardfile = r.replace('.py', '').replace('%s/' % cardpath, '')
-            cardname = cardfile.replace('RuinCard_', '')
-            ruintypes[cardname] = self.loadClass(cardname, cardfile)
+        ruintypes = mapping
 
         self.ruins = []
         for i in range(numcards):
@@ -39,4 +32,4 @@ class RuinCardPile(CardPile):
 if __name__ == "__main__":
     r = RuinCardPile()
 
-#EOF
+# EOF
