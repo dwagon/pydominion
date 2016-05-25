@@ -871,6 +871,8 @@ class Player(object):
                 continue
             if not c.numcards:
                 continue
+            if coin is None:
+                affordable.add(c)
             if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
         affordable.sort(key=lambda c: self.cardCost(c))
@@ -953,12 +955,15 @@ class Player(object):
         """
         if recipient is None:
             recipient = self
+        prompt = "Gain a card "
         types = self.typeSelector(types)
         if modifier == 'less':
-            prompt = "Gain a card costing up to %d" % cost
+            if cost:
+                prompt += "costing up to %d" % cost
             buyable = self.cardsUnder(cost, types=types)
         elif modifier == 'equal':
-            prompt = "Gain a card costing exactly %d" % cost
+            if cost:
+                prompt += "costing exactly %d" % cost
             buyable = self.cardsWorth(cost, types=types)
         buyable = [c for c in buyable if c.purchasable]
         cards = self.cardSel(
