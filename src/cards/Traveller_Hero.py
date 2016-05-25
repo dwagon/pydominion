@@ -13,12 +13,12 @@ class Card_Hero(Card):
         self.desc = "+2 Coin, Gain a Treasure; Discard to replace with Champion"
         self.name = 'Hero'
         self.purchasable = False
-        self.coins = 2
+        self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
         """ Gain a treasure """
-        pass    # TODO
+        player.plrGainCard(cost=None, types={'treasure': True})
 
     def hook_discardCard(self, game, player):
         """ Replace with Champion """
@@ -33,10 +33,14 @@ class Test_Hero(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Hero'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_hero(self):
         """ Play a hero """
-        pass
+        self.plr.test_input = ['gold']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
 ###############################################################################
