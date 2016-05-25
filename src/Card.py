@@ -113,6 +113,9 @@ class Card(object):
     def special_score(self, game, player):
         return 0    # pragma: nocover
 
+    def hook_postAction(self, game, player):
+        pass    # pragma: no cover
+
     def hook_buyCard(self, game, player, card):
         pass    # pragma: no cover
 

@@ -718,6 +718,10 @@ class Player(object):
             self.card_token = False
             modif = -1
 
+        if card.isAction():
+            for cd in self.played + self.durationpile:
+                cd.hook_postAction(game=self.game, player=self)
+
         for i in range(card.cards + modif):
             self.pickupCard()
         try:
