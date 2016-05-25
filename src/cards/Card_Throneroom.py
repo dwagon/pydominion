@@ -39,14 +39,14 @@ class Card_Throneroom(Card):
 class Test_Throneroom(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['throneroom', 'mine'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Throne Room', 'Mine'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
-        self.plr.setHand('copper', 'mine')
-        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.setHand('Copper', 'Mine')
+        card = self.plr.gainCard('Throne Room', 'hand')
         self.plr.test_input = ['1', '1', '1']
         self.plr.playCard(card)
         self.assertEqual(self.plr.hand[0].name, 'Gold')
@@ -56,14 +56,14 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 0)
 
     def test_donothing(self):
-        self.plr.setHand('copper', 'mine')
-        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.setHand('Copper', 'Mine')
+        card = self.plr.gainCard('Throne Room', 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(card)
 
     def test_noaction(self):
-        self.plr.setHand('copper', 'copper')
-        card = self.plr.gainCard('throneroom', 'hand')
+        self.plr.setHand('Copper', 'Copper')
+        card = self.plr.gainCard('Throne Room', 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(card)
         self.assertEqual(self.plr.test_input, ['0'])

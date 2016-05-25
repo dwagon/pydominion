@@ -32,13 +32,13 @@ class Card_Moneylender(Card):
 class Test_Moneylender(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moneylender'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Money Lender'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['moneylender'].remove()
+        self.card = self.g['Money Lender'].remove()
 
     def test_nocopper(self):
-        self.plr.setHand('estate', 'estate', 'estate')
+        self.plr.setHand('Estate', 'Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertTrue(self.g.trashpile.isEmpty())
@@ -46,7 +46,7 @@ class Test_Moneylender(unittest.TestCase):
 
     def test_trash_copper(self):
         self.plr.test_input = ['1']
-        self.plr.setHand('copper', 'copper', 'estate')
+        self.plr.setHand('Copper', 'Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Copper')
@@ -54,7 +54,7 @@ class Test_Moneylender(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_dont_trash_copper(self):
-        self.plr.setHand('copper', 'copper', 'estate')
+        self.plr.setHand('Copper', 'Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)

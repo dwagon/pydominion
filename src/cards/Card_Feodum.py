@@ -26,32 +26,32 @@ class Card_Feodum(Card):
     def hook_trashThisCard(self, game, player):
         """ When you trash this gain 3 silvers """
         for i in range(3):
-            player.gainCard('silver')
+            player.gainCard('Silver')
 
 
 ###############################################################################
 class Test_Feodum(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['feodum'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feodum'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_scoreOne(self):
-        self.plr.setHand('feodum')
-        self.plr.setDeck('copper')
-        self.plr.setDiscard('silver', 'silver', 'silver', 'silver')
+        self.plr.setHand('Feodum')
+        self.plr.setDeck('Copper')
+        self.plr.setDiscard('Silver', 'Silver', 'Silver', 'Silver')
         self.assertEquals(self.plr.getScoreDetails()['Feodum'], 1)
 
     def test_scoreTwo(self):
-        self.plr.setHand('feodum')
-        self.plr.setDeck('feodum')
-        self.plr.setDiscard('silver', 'silver', 'silver', 'silver', 'silver', 'silver')
+        self.plr.setHand('Feodum')
+        self.plr.setDeck('Feodum')
+        self.plr.setDiscard('Silver', 'Silver', 'Silver', 'Silver', 'Silver', 'Silver')
         self.assertEquals(self.plr.getScoreDetails()['Feodum'], 4)
 
     def test_trash(self):
-        """ Trash a feodum card """
-        card = self.g['feodum'].remove()
+        """ Trash a Feodum card """
+        card = self.g['Feodum'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.trashCard(card)
         self.assertEquals(self.plr.discardSize(), 3)

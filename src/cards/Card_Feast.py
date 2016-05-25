@@ -50,19 +50,19 @@ class Card_Feast(Card):
 class Test_Feast(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['feast'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_dontTrash(self):
-        self.plr.setHand('feast')
+        self.plr.setHand('Feast')
         self.plr.test_input = ['0']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEquals(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
-        self.plr.setHand('feast')
+        self.plr.setHand('Feast')
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.plr.hand.isEmpty())
@@ -71,7 +71,7 @@ class Test_Feast(unittest.TestCase):
         self.assertTrue(self.plr.played.isEmpty())
 
     def test_trashForSomething(self):
-        self.plr.setHand('feast')
+        self.plr.setHand('Feast')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.g.trashSize(), 1)

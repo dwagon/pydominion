@@ -28,14 +28,14 @@ class Card_Shantytown(Card):
 class Test_Shantytown(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['shantytown', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shanty Town', 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['shantytown'].remove()
+        self.card = self.g['Shanty Town'].remove()
 
     def test_no_actions(self):
         """ Test Shany Town with no actions"""
-        self.plr.setHand('estate', 'estate', 'gold')
+        self.plr.setHand('Estate', 'Estate', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
@@ -43,7 +43,7 @@ class Test_Shantytown(unittest.TestCase):
 
     def test_actions(self):
         """ Test Shany Town with actions"""
-        self.plr.setHand('moat', 'estate', 'gold')
+        self.plr.setHand('Moat', 'Estate', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)

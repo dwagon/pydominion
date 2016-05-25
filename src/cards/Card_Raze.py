@@ -39,24 +39,24 @@ class Card_Raze(Card):
 class Test_Raze(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['raze'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Raze'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['raze'].remove()
+        self.card = self.g['Raze'].remove()
 
     def test_play(self):
         """ Play a raze - trashing itself """
         self.plr.addCard(self.card, 'hand')
-        self.plr.setDeck('silver', 'gold', 'province')
-        self.plr.test_input = ['raze', 'gold']
+        self.plr.setDeck('Silver', 'Gold', 'Province')
+        self.plr.test_input = ['Raze', 'Gold']
         self.plr.playCard(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('province'))
-        self.assertIsNotNone(self.plr.inHand('gold'))
-        self.assertIsNotNone(self.plr.inDeck('silver'))
-        self.assertIsNotNone(self.g.inTrash('raze'))
+        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNotNone(self.g.inTrash('Raze'))
 
 
 ###############################################################################

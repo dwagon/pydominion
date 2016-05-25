@@ -48,10 +48,10 @@ class Card_Secretchamber(Card):
 class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['secretchamber'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['secretchamber'].remove()
+        self.card = self.g['Secret Chamber'].remove()
 
     def test_play_none(self):
         """ Play the Secret Chamber - discard none"""
@@ -63,7 +63,7 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_play_three(self):
         """ Play the Secret Chamber - discard three"""
-        self.plr.setHand('copper', 'silver', 'gold', 'province', 'estate')
+        self.plr.setHand('Copper', 'Silver', 'Gold', 'Province', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)

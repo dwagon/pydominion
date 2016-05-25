@@ -39,14 +39,14 @@ class Card_Catacombs(Card):
 class Test_Catacombs(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['catacombs'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Catacombs'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.cat = self.g['catacombs'].remove()
+        self.cat = self.g['Catacombs'].remove()
         self.plr.addCard(self.cat, 'hand')
 
     def test_keep(self):
-        self.plr.setDeck('province', 'gold', 'gold', 'gold')
+        self.plr.setDeck('Province', 'Gold', 'Gold', 'Gold')
         self.plr.test_input = ['keep the three']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
@@ -55,7 +55,7 @@ class Test_Catacombs(unittest.TestCase):
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
-        self.plr.setDeck('province', 'province', 'province', 'gold', 'gold', 'gold')
+        self.plr.setDeck('Province', 'Province', 'Province', 'Gold', 'Gold', 'Gold')
         self.plr.test_input = ['discard and draw']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones

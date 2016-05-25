@@ -25,21 +25,21 @@ class Card_Gardens(Card):
 class Test_Gardens(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['gardens'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gardens'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_score_0(self):
-        self.plr.setHand('gardens', 'copper', 'copper')
-        self.plr.setDeck('copper', 'copper', 'copper')
-        self.plr.setDiscard('copper', 'copper', 'copper')
+        self.plr.setHand('Gardens', 'Copper', 'Copper')
+        self.plr.setDeck('Copper', 'Copper', 'Copper')
+        self.plr.setDiscard('Copper', 'Copper', 'Copper')
         score = self.plr.getScoreDetails()
         self.assertEqual(score['Gardens'], 0)
 
     def test_score_1(self):
-        self.plr.setHand('gardens', 'copper', 'copper')
-        self.plr.setDeck('copper', 'copper', 'copper', 'copper')
-        self.plr.setDiscard('copper', 'copper', 'copper')
+        self.plr.setHand('Gardens', 'Copper', 'Copper')
+        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper')
+        self.plr.setDiscard('Copper', 'Copper', 'Copper')
         score = self.plr.getScoreDetails()
         self.assertEqual(score['Gardens'], 1)
 

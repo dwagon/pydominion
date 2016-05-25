@@ -25,20 +25,20 @@ class Card_Fairgrounds(Card):
 class Test_Fairgrounds(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['fairgrounds'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fairgrounds'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['fairgrounds'].remove()
+        self.card = self.g['Fairgrounds'].remove()
 
     def test_zero(self):
         """ Fairground for 4 types """
-        self.plr.setDeck('copper', 'estate', 'silver', 'fairgrounds')
+        self.plr.setDeck('Copper', 'Estate', 'Silver', 'Fairgrounds')
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Fairgrounds'], 0)
 
     def test_one(self):
         """ Fairground for 4 types """
-        self.plr.setDeck('copper', 'estate', 'silver', 'fairgrounds', 'gold')
+        self.plr.setDeck('Copper', 'Estate', 'Silver', 'Fairgrounds', 'Gold')
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Fairgrounds'], 2)
 

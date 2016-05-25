@@ -27,21 +27,21 @@ class Card_Silkroad(Card):
 class Test_Silkroad(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['silkroad'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Silk Road'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_scoreOne(self):
-        self.plr.setHand('silkroad')
-        self.plr.setDeck('copper')
-        self.plr.setDiscard('estate', 'estate', 'estate', 'estate')
+        self.plr.setHand('Silk Road')
+        self.plr.setDeck('Copper')
+        self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate')
         self.assertEquals(self.plr.getScoreDetails()['Silk Road'], 1)
 
     def test_scoreTwo(self):
         """ Score for having two silk roads worth two each """
-        self.plr.setHand('silkroad', 'estate')
-        self.plr.setDeck('estate', 'estate', 'silkroad')
-        self.plr.setDiscard('estate', 'estate', 'estate', 'estate', 'estate')
+        self.plr.setHand('Silk Road', 'Estate')
+        self.plr.setDeck('Estate', 'Estate', 'Silk Road')
+        self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
         self.assertEquals(self.plr.getScoreDetails()['Silk Road'], 2 + 2)
 
 ###############################################################################

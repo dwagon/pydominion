@@ -35,10 +35,10 @@ class Card_Mercenary(Card):
 class Test_Mercenary(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['mercenary', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Mercenary', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['mercenary'].remove()
+        self.card = self.g['Mercenary'].remove()
 
     def test_play(self):
         """ Trash nothing with mercenary - should do nothing """
@@ -51,7 +51,7 @@ class Test_Mercenary(unittest.TestCase):
     def test_defense(self):
         """ Make sure moats work against mercenaries """
         self.plr.addCard(self.card, 'hand')
-        moat = self.g['moat'].remove()
+        moat = self.g['Moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.test_input = ['1', '1', '2', '0']
         self.plr.playCard(self.card)

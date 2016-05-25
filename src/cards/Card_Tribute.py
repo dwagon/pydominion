@@ -44,15 +44,15 @@ class Card_Tribute(Card):
 class Test_Tribute(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['tribute'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tribute'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['tribute'].remove()
+        self.card = self.g['Tribute'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a tribute """
-        self.victim.setDeck('copper', 'estate')
+        self.victim.setDeck('Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.handSize(), 7)
@@ -60,7 +60,7 @@ class Test_Tribute(unittest.TestCase):
 
     def test_same(self):
         """ Victim has the same cards for Tribute"""
-        self.victim.setDeck('tribute', 'tribute')
+        self.victim.setDeck('Tribute', 'Tribute')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)

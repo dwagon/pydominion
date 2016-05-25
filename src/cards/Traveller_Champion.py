@@ -24,10 +24,10 @@ class Card_Champion(Card):
 class Test_Champion(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['champion'].remove()
+        self.card = self.g['Champion'].remove()
 
     def test_champion(self):
         """ Play a champion """

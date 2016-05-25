@@ -43,29 +43,29 @@ class Card_Masquerade(Card):
 class Test_Masquerade(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['masquerade'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Masquerade'])
         self.g.startGame()
         self.plr, self.other = self.g.playerList()
-        self.card = self.g['masquerade'].remove()
+        self.card = self.g['Masquerade'].remove()
 
     def test_play(self):
         """ Play a masquerade """
-        self.other.setHand('copper', 'silver', 'gold')
-        self.plr.setHand('copper', 'silver', 'gold')
-        self.plr.setDeck('estate', 'duchy', 'province')
+        self.other.setHand('Copper', 'Silver', 'Gold')
+        self.plr.setHand('Copper', 'Silver', 'Gold')
+        self.plr.setDeck('Estate', 'Duchy', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['select silver', 'finish']
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.plr.inHand('gold'))
-        self.assertTrue(self.other.inHand('silver'))
+        self.assertTrue(self.plr.inHand('Gold'))
+        self.assertTrue(self.other.inHand('Silver'))
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
-        self.other.setHand('copper', 'silver', 'gold')
-        self.plr.setHand('copper', 'silver', 'gold')
+        self.other.setHand('Copper', 'Silver', 'Gold')
+        self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['select gold', 'trash silver']
         self.other.test_input = ['select gold']

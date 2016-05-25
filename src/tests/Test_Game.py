@@ -15,7 +15,7 @@ class Test_args(unittest.TestCase):
         self.assertEqual(len(g.playerList()), 4)
 
     def test_card(self):
-        g = Game.Game(quiet=True, initcards=['moat'])
+        g = Game.Game(quiet=True, initcards=['Moat'])
         g.startGame()
         self.assertTrue('Moat' in g.cardpiles)
 
@@ -41,24 +41,24 @@ class Test_game_over(unittest.TestCase):
     def test_provinces(self):
         """ Someone took the last province """
         for i in range(200):
-            self.plr.gainCard('province')
+            self.plr.gainCard('Province')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """ Three stacks are empty """
         for i in range(200):
-            self.plr.gainCard('estate')
-            self.plr.gainCard('copper')
-            self.plr.gainCard('silver')
+            self.plr.gainCard('Estate')
+            self.plr.gainCard('Copper')
+            self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """ Two stacks are empty """
         for i in range(200):
-            self.plr.gainCard('estate')
-            self.plr.gainCard('silver')
+            self.plr.gainCard('Estate')
+            self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertFalse(over)
 
@@ -69,7 +69,7 @@ class Test_inTrash(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.trashCard(self.plr.hand[0])
 
     def test_intrash(self):
@@ -79,7 +79,7 @@ class Test_inTrash(unittest.TestCase):
 
     def test_intrash_with_card(self):
         """ Test card is in trash passing a card """
-        cu = self.g['copper'].remove()
+        cu = self.g['Copper'].remove()
         self.assertTrue(self.g.inTrash(cu))
         self.assertEqual(self.g.inTrash(cu).name, 'Copper')
 
@@ -91,7 +91,7 @@ class Test_inTrash(unittest.TestCase):
 ###############################################################################
 class Test_actionpiles(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
         self.g.startGame()
 
     def test_actionpiles(self):

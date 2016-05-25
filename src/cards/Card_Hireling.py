@@ -26,10 +26,10 @@ class Card_Hireling(Card):
 class Test_Hireling(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['hireling'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hireling'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['hireling'].remove()
+        self.card = self.g['Hireling'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play_hireling(self):
@@ -38,7 +38,7 @@ class Test_Hireling(unittest.TestCase):
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEquals(self.plr.handSize(), 6)
-        self.assertIsNone(self.plr.inDiscard('hireling'))
+        self.assertIsNone(self.plr.inDiscard('Hireling'))
 
 
 ###############################################################################

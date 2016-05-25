@@ -21,10 +21,10 @@ class Card_Laboratory(Card):
 class Test_Laboratory(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['laboratory'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Laboratory'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['laboratory'].remove()
+        self.card = self.g['Laboratory'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

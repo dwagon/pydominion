@@ -26,11 +26,11 @@ class Card_Oasis(Card):
 class Test_Oasis(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['oasis'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Oasis'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['oasis'].remove()
-        self.plr.setHand('gold', 'copper', 'copper', 'copper', 'copper')
+        self.card = self.g['Oasis'].remove()
+        self.plr.setHand('Gold', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
 
     def test_playcard(self):

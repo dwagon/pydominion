@@ -55,16 +55,16 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['saboteur'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['saboteur'].remove()
+        self.card = self.g['Saboteur'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a saboteur """
         self.victim.test_input = ['1']
-        self.victim.setDeck('gold', 'copper', 'estate')
+        self.victim.setDeck('Gold', 'Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 1)
         trashed = self.g.trashpile[0]
@@ -75,7 +75,7 @@ class Test_Saboteur(unittest.TestCase):
 
     def test_nomatching(self):
         """ Play a saboteur where the victim doesn't have a suitable card """
-        self.victim.setDeck('copper', 'copper', 'estate')
+        self.victim.setDeck('Copper', 'Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 0)
         for c in self.victim.discardpile:

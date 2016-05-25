@@ -36,10 +36,10 @@ class Card_Steward(Card):
 class Test_Steward(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['steward'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Steward'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['steward'].remove()
+        self.card = self.g['Steward'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_cards(self):
@@ -63,7 +63,7 @@ class Test_Steward(unittest.TestCase):
 
     def test_trash_smallhand(self):
         """ Trash two when there are less than two to trash """
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['2', '1', '0']
         self.plr.playCard(self.card)

@@ -22,17 +22,17 @@ class Card_Familiar(Card):
         """ All other players gain a curse """
         for pl in player.attackVictims():
             player.output("%s got cursed" % pl.name)
-            pl.gainCard('curse')
+            pl.gainCard('Curse')
 
 
 ###############################################################################
 class Test_Familiar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['familiar', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Familiar', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['familiar'].remove()
+        self.card = self.g['Familiar'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -43,7 +43,7 @@ class Test_Familiar(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 1)
 
     def test_defended(self):
-        self.victim.setHand('gold', 'moat')
+        self.victim.setHand('Gold', 'Moat')
         self.plr.playCard(self.card)
         self.assertTrue(self.victim.discardpile.isEmpty())
         self.assertEqual(self.plr.getActions(), 1)

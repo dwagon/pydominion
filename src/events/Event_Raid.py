@@ -22,7 +22,7 @@ class Event_Raid(Event):
         count = 0
         for c in player.hand + player.played:
             if c.name == 'Silver':
-                player.gainCard('silver')
+                player.gainCard('Silver')
                 count += 1
         player.output("Gained %d Silvers from Raid" % count)
 
@@ -31,7 +31,7 @@ class Event_Raid(Event):
 class Test_Raid(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, eventcards=['raid'], initcards=['feast'])
+        self.g = Game.Game(quiet=True, numplayers=2, eventcards=['Raid'], initcards=['Feast'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g.events['Raid']
@@ -39,7 +39,7 @@ class Test_Raid(unittest.TestCase):
     def test_play(self):
         """ Perform a Raid """
         self.plr.addCoin(5)
-        self.plr.setHand('silver', 'silver')
+        self.plr.setHand('Silver', 'Silver')
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.buys, 0)

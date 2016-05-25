@@ -26,10 +26,10 @@ class Card_Page(Card):
 class Test_Page(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['page'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['page'].remove()
+        self.card = self.g['Page'].remove()
 
     def test_page(self):
         """ Play a page """

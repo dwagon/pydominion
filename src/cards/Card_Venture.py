@@ -33,15 +33,15 @@ class Card_Venture(Card):
 class Test_Venture(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['venture'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Venture'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['venture'].remove()
+        self.card = self.g['Venture'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a Venture """
-        self.plr.setDeck('gold')
+        self.plr.setDeck('Gold')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
@@ -53,7 +53,7 @@ class Test_Venture(unittest.TestCase):
 
     def test_discard(self):
         """ Make sure we discard non-treasures """
-        self.plr.setDeck('gold', 'estate', 'estate')
+        self.plr.setDeck('Gold', 'Estate', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:

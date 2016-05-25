@@ -44,27 +44,27 @@ class Card_Gear(Card):
 class Test_Gear(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['gear'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gear'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['gear'].remove()
+        self.card = self.g['Gear'].remove()
 
     def test_playcard(self):
         """ Play a gear """
-        self.plr.setHand('duchy', 'silver', 'gold')
+        self.plr.setHand('Duchy', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['silver', 'gold', 'finish']
         self.plr.playCard(self.card)
         self.assertEquals(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
-        self.assertIsNotNone(self.plr.inHand('duchy'))
+        self.assertIsNotNone(self.plr.inHand('Duchy'))
         self.assertEquals(self.plr.durationSize(), 1)
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEquals(self.plr.durationSize(), 0)
         self.assertEquals(self.plr.playedSize(), 1)
         self.assertEquals(self.plr.played[-1].name, 'Gear')
-        self.assertIsNotNone(self.plr.inHand('silver'))
-        self.assertIsNotNone(self.plr.inHand('gold'))
+        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.inHand('Gold'))
 
 
 ###############################################################################

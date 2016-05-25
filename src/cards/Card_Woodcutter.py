@@ -20,10 +20,10 @@ class Card_Woodcutter(Card):
 class Test_Woodcutter(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['woodcutter'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Woodcutter'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['woodcutter'].remove()
+        self.card = self.g['Woodcutter'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

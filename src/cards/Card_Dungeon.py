@@ -31,15 +31,15 @@ class Card_Dungeon(Card):
 class Test_Dungeon(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['dungeon'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Dungeon'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['dungeon'].remove()
+        self.card = self.g['Dungeon'].remove()
 
     def test_playcard(self):
         """ Play a dungeon """
-        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'estate', 'silver', 'gold')
-        self.plr.setHand('province', 'duchy')
+        self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Estate', 'Silver', 'Gold')
+        self.plr.setHand('Province', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['province', 'duchy', 'finish']
         self.plr.playCard(self.card)

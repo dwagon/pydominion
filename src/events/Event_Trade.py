@@ -25,7 +25,7 @@ class Event_Trade(Event):
 class Test_Trade(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['trade'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Trade'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Trade']
@@ -33,7 +33,7 @@ class Test_Trade(unittest.TestCase):
     def test_play(self):
         """ Perform a Trade """
         self.plr.addCoin(5)
-        self.plr.setHand('copper', 'estate', 'gold')
+        self.plr.setHand('Copper', 'Estate', 'Gold')
         self.plr.test_input = ['copper', 'estate', 'finish']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardSize(), 2)

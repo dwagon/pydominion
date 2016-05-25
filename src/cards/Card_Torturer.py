@@ -34,7 +34,7 @@ class Card_Torturer(Card):
             victim.plrDiscardCards(2)
         else:
             player.output("%s opted for a curse" % victim.name)
-            victim.gainCard('curse', 'hand')
+            victim.gainCard('Curse', 'hand')
 
 
 ###############################################################################
@@ -49,10 +49,10 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Torturer(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['torturer', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Torturer', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['torturer'].remove()
+        self.card = self.g['Torturer'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_opt_curse(self):
@@ -72,7 +72,7 @@ class Test_Torturer(unittest.TestCase):
 
     def test_defended(self):
         """ Defending against a torturer """
-        self.victim.setHand('moat')
+        self.victim.setHand('Moat')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 8)
         self.assertEqual(self.victim.handSize(), 1)

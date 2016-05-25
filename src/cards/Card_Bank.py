@@ -24,19 +24,19 @@ class Card_Bank(Card):
 class Test_Bank(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['bank'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bank'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['bank'].remove()
+        self.card = self.g['Bank'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_gainnothing(self):
-        self.plr.setPlayed('estate', 'estate')
+        self.plr.setPlayed('Estate', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_gainsomething(self):
-        self.plr.setPlayed('copper', 'silver', 'estate')
+        self.plr.setPlayed('Copper', 'Silver', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
 

@@ -62,10 +62,10 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['bishop'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
         self.g.startGame()
         self.plr, self.other = self.g.playerList()
-        self.bishop = self.g['bishop'].remove()
+        self.bishop = self.g['Bishop'].remove()
 
     def test_play(self):
         self.plr.addCard(self.bishop, 'hand')
@@ -75,7 +75,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_trash(self):
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.bishop, 'hand')
         self.plr.test_input = ['trash gold']
         self.other.test_input = ['finish']
@@ -85,8 +85,8 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
 
     def test_bothtrash(self):
-        self.plr.setHand('gold')
-        self.other.setHand('province')
+        self.plr.setHand('Gold')
+        self.other.setHand('Province')
         self.plr.addCard(self.bishop, 'hand')
         self.plr.test_input = ['trash gold']
         self.other.test_input = ['trash province']

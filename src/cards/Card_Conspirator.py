@@ -30,10 +30,10 @@ class Card_Conspirator(Card):
 class Test_Conspirator(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['conspirator', 'witch'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Conspirator', 'Witch'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['conspirator'].remove()
+        self.card = self.g['Conspirator'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -45,7 +45,7 @@ class Test_Conspirator(unittest.TestCase):
 
     def test_actions(self):
         """ Play the conspirator with enough actions """
-        self.plr.setPlayed('witch', 'witch', 'witch')
+        self.plr.setPlayed('Witch', 'Witch', 'Witch')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getActions(), 1)

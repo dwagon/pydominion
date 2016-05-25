@@ -38,10 +38,10 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Goons(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['goons', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Goons', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
-        self.card = self.g['goons'].remove()
+        self.card = self.g['Goons'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
@@ -50,14 +50,14 @@ class Test_Goons(unittest.TestCase):
         self.assertEqual(self.victim.handSize(), 3)
 
     def test_defended(self):
-        self.victim.setHand('moat', 'estate', 'gold', 'copper')
+        self.victim.setHand('Moat', 'Estate', 'Gold', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.handSize(), 4)
 
     def test_buy(self):
-        self.victim.setHand('moat', 'estate', 'gold', 'copper')
+        self.victim.setHand('Moat', 'Estate', 'Gold', 'Copper')
         self.plr.playCard(self.card)
-        self.plr.buyCard(self.g['copper'])
+        self.plr.buyCard(self.g['Copper'])
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Goons'], 1)
 

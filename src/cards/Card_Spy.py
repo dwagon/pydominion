@@ -38,29 +38,29 @@ class Card_Spy(Card):
 class Test_Spy(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['spy', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Spy', 'Moat'])
         self.g.startGame()
         self.attacker, self.defender = self.g.playerList()
-        self.attacker.setDeck('estate', 'province', 'duchy')
-        self.defender.setDeck('estate', 'gold')
+        self.attacker.setDeck('Estate', 'Province', 'Duchy')
+        self.defender.setDeck('Estate', 'Gold')
 
     def test_moat(self):
-        self.defender.setHand('moat')
-        scard = self.attacker.gainCard('spy', 'hand')
+        self.defender.setHand('Moat')
+        scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['0']
         self.attacker.playCard(scard)
         self.assertEquals(self.attacker.deck[-1].name, 'Province')
         self.assertEquals(self.defender.deck[-1].name, 'Gold')
 
     def test_undefended(self):
-        scard = self.attacker.gainCard('spy', 'hand')
+        scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['0', '0']
         self.attacker.playCard(scard)
         self.assertEquals(self.attacker.deck[-1].name, 'Province')
         self.assertEquals(self.defender.deck[-1].name, 'Gold')
 
     def test_discards(self):
-        scard = self.attacker.gainCard('spy', 'hand')
+        scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['1', '1']
         self.attacker.playCard(scard)
         self.assertEquals(self.attacker.deck[-1].name, 'Estate')

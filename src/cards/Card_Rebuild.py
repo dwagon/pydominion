@@ -28,7 +28,7 @@ class Card_Rebuild(Card):
 
 
 ###############################################################################
-class Test_XXX(unittest.TestCase):
+class XTest_XXX(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['xxx'])

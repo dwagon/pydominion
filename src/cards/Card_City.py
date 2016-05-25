@@ -32,10 +32,10 @@ class Card_City(Card):
 class Test_City(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['city', 'moat', 'cellar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['City', 'Moat', 'Cellar'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.city = self.g['city'].remove()
+        self.city = self.g['City'].remove()
         self.plr.addCard(self.city, 'hand')
 
     def test_nostacks(self):
@@ -47,7 +47,7 @@ class Test_City(unittest.TestCase):
     def test_onestack(self):
         """ Play a city with one stacks empty """
         while(True):
-            c = self.g['moat'].remove()
+            c = self.g['Moat'].remove()
             if not c:
                 break
         self.plr.playCard(self.city)
@@ -57,11 +57,11 @@ class Test_City(unittest.TestCase):
     def test_twostack(self):
         """ Play a city with two stacks empty """
         while(True):
-            c = self.g['moat'].remove()
+            c = self.g['Moat'].remove()
             if not c:
                 break
         while(True):
-            c = self.g['cellar'].remove()
+            c = self.g['Cellar'].remove()
             if not c:
                 break
         self.plr.playCard(self.city)

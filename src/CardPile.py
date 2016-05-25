@@ -1,40 +1,17 @@
-import imp
 
 
 ###############################################################################
 class CardPile(object):
-    def __init__(self, cardname, numcards=10, cardpath='cards'):
+    def __init__(self, cardname, klass, numcards=10, cardpath='cards'):
         self.cardpath = cardpath
         self.cardname = cardname
         self.numcards = numcards
-        self.card = self.loadClass(cardname)()
+        self.cardclass = klass
+        self.card = klass()
 
     ###########################################################################
     def __lt__(self, a):
         return self.cardname < a.cardname
-
-    ###########################################################################
-    def loadClass(self, cardname, cardfile=None):
-        cardmodule = self.importCard(cardname=cardname, cardfile=cardfile)
-        self.cardclass = getattr(cardmodule, "Card_%s" % cardname)
-        return self.cardclass
-
-    ###########################################################################
-    def importCard(self, cardname=None, cardfile=None):
-        for i in (cardfile,
-                  "Card_%s" % cardname,
-                  "BaseCard_%s" % cardname,
-                  "Traveller_%s" % cardname,
-                  ):
-            try:
-                fp, pathname, desc = imp.find_module(i, [self.cardpath, 'cards'])
-                break
-            except (ImportError, TypeError):
-                pass
-        else:
-            raise Exception("Couldn't import cardname=%s cardfile=%s" % (cardname, cardfile))
-        cardmodule = imp.load_module(cardname, fp, pathname, desc)
-        return cardmodule
 
     ###########################################################################
     def __getattr__(self, name):

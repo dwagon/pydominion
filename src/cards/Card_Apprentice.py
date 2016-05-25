@@ -31,10 +31,10 @@ class Card_Apprentice(Card):
 class Test_Apprentice(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['apprentice', 'familiar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Apprentice', 'Familiar'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.apprentice = self.g['apprentice'].remove()
+        self.apprentice = self.g['Apprentice'].remove()
 
     def test_trashNone(self):
         self.plr.addCard(self.apprentice, 'hand')
@@ -44,16 +44,16 @@ class Test_Apprentice(unittest.TestCase):
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashCard(self):
-        self.plr.setHand('silver')
+        self.plr.setHand('Silver')
         self.plr.addCard(self.apprentice, 'hand')
         self.plr.test_input = ['silver']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost)
 
     def test_trashPotion(self):
-        self.plr.setHand('familiar')
+        self.plr.setHand('Familiar')
         self.plr.addCard(self.apprentice, 'hand')
-        self.plr.test_input = ['familiar']
+        self.plr.test_input = ['Familiar']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost + 2)
 

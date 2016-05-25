@@ -131,7 +131,7 @@ class Player(object):
     def place_token(self, token, pilename):
         """ Place a token on the specified pile """
         assert(isinstance(pilename, str))
-        self.tokens[token] = pilename.lower()
+        self.tokens[token] = pilename
 
     ###########################################################################
     def which_token(self, pilename):
@@ -139,7 +139,7 @@ class Player(object):
         assert(isinstance(pilename, str))
         onstack = []
         for tk in self.tokens:
-            if self.tokens[tk] == pilename.lower():
+            if self.tokens[tk] == pilename:
                 onstack.append(tk)
         return onstack
 

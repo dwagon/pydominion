@@ -36,13 +36,13 @@ class Card_Herbalist(Card):
 class Test_Herbalist(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['herbalist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herbalist'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.hcard = self.g['herbalist'].remove()
+        self.hcard = self.g['Herbalist'].remove()
 
     def test_putnothing(self):
-        self.plr.setPlayed('gold', 'estate')
+        self.plr.setPlayed('Gold', 'Estate')
         self.plr.addCard(self.hcard, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.hcard)
@@ -50,7 +50,7 @@ class Test_Herbalist(unittest.TestCase):
         self.assertEqual(self.plr.deckSize(), 5)
 
     def test_putgold(self):
-        self.plr.setPlayed('gold', 'estate')
+        self.plr.setPlayed('Gold', 'Estate')
         self.plr.hand.empty()
         self.plr.addCard(self.hcard, 'hand')
         self.plr.test_input = ['1']

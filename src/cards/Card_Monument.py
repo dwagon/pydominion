@@ -23,10 +23,10 @@ class Card_Monument(Card):
 class Test_Monument(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['monument'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Monument'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['monument'].remove()
+        self.card = self.g['Monument'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

@@ -21,7 +21,7 @@ class Card_Seahag(Card):
             c = pl.nextCard()
             pl.discardCard(c)
             pl.output("Discarded your %s" % c.name)
-            pl.gainCard('curse', destination='topdeck')
+            pl.gainCard('Curse', destination='topdeck')
             pl.output("Got cursed by %s's Sea Hag" % player.name)
             player.output("%s got cursed" % pl.name)
 
@@ -30,11 +30,11 @@ class Card_Seahag(Card):
 class Test_Seahag(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['seahag', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Sea Hag', 'Moat'])
         self.g.startGame()
         self.attacker, self.victim = self.g.playerList()
-        self.seahag = self.g['seahag'].remove()
-        self.mcard = self.g['moat'].remove()
+        self.seahag = self.g['Sea Hag'].remove()
+        self.mcard = self.g['Moat'].remove()
         self.attacker.addCard(self.seahag, 'hand')
 
     def test_defended(self):
@@ -45,7 +45,7 @@ class Test_Seahag(unittest.TestCase):
         self.assertTrue(self.victim.discardpile.isEmpty())
 
     def test_nodefense(self):
-        self.victim.setDeck('gold')
+        self.victim.setDeck('Gold')
         self.attacker.playCard(self.seahag)
         self.assertEqual(self.victim.handSize(), 5)
         self.assertEqual(self.victim.discardpile[0].name, 'Gold')

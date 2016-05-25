@@ -18,7 +18,7 @@ class Card_Rats(Card):
 
     def special(self, game, player):
         """ Gain a Rats. Trash a card from your hand other than a Rats. """
-        player.gainCard('rats')
+        player.gainCard('Rats')
         player.plrTrashCard(force=True, exclude=['Rats'])
 
     def hook_trashThisCard(self, game, player):
@@ -30,16 +30,16 @@ class Card_Rats(Card):
 class Test_Rats(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['rats'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rats'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.rats = self.g['rats'].remove()
-        self.plr.setDeck('estate', 'province', 'duchy')
-        self.plr.setHand('copper', 'gold', 'silver', 'rats')
+        self.rats = self.g['Rats'].remove()
+        self.plr.setDeck('Estate', 'Province', 'Duchy')
+        self.plr.setHand('Copper', 'Gold', 'Silver', 'Rats')
         self.plr.addCard(self.rats, 'hand')
 
     def test_play(self):
-        self.plr.setDeck('gold')
+        self.plr.setDeck('Gold')
         self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rats)
         self.plr.addActions(1)

@@ -41,14 +41,14 @@ class Card_Kingscourt(Card):
 class Test_Kingscourt(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['kingscourt', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["King's Court", 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['kingscourt'].remove()
+        self.card = self.g["King's Court"].remove()
 
     def test_play(self):
-        self.plr.setDeck('estate', 'estate', 'gold', 'gold', 'duchy', 'duchy')
-        self.plr.setHand('moat', 'estate')
+        self.plr.setDeck('Estate', 'Estate', 'Gold', 'Gold', 'Duchy', 'Duchy')
+        self.plr.setHand('Moat', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['play moat']
         self.plr.playCard(self.card)
@@ -67,7 +67,7 @@ class Test_Kingscourt(unittest.TestCase):
             self.fail("Didn't put moat in played")
 
     def test_noactions(self):
-        self.plr.setHand('estate', 'estate')
+        self.plr.setHand('Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardSize(), 0)
@@ -75,7 +75,7 @@ class Test_Kingscourt(unittest.TestCase):
 
     def test_picked_nothing(self):
         """ Selected no actions with Kings court """
-        self.plr.setHand('estate', 'estate', 'moat')
+        self.plr.setHand('Estate', 'Estate', 'Moat')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)

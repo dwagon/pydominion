@@ -39,24 +39,24 @@ class Card_Watchtower(Card):
 class Test_Watchtower(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['watchtower'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Watchtower'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['watchtower'].remove()
+        self.card = self.g['Watchtower'].remove()
 
     def test_play(self):
         """ Play a watch tower """
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_react_nothing(self):
         """ React to gaining a card - but do nothing """
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
-        self.plr.gainCard('copper')
+        self.plr.gainCard('Copper')
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.handSize(), 2)
@@ -64,9 +64,9 @@ class Test_Watchtower(unittest.TestCase):
     def test_react_trash(self):
         """ React to gaining a card - discard card"""
         self.plr.test_input = ['1']
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.gainCard('copper')
+        self.plr.gainCard('Copper')
         self.assertEqual(self.g.trashSize(), 1)
         self.assertEqual(self.g.trashpile[-1].name, 'Copper')
         self.assertEqual(self.plr.handSize(), 2)
@@ -75,9 +75,9 @@ class Test_Watchtower(unittest.TestCase):
     def test_react_topdeck(self):
         """ React to gaining a card - put card on deck"""
         self.plr.test_input = ['2']
-        self.plr.setHand('gold')
+        self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.gainCard('silver')
+        self.plr.gainCard('Silver')
         self.assertEqual(self.g.trashSize(), 0)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.inHand('Silver'), None)

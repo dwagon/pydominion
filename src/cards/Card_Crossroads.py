@@ -31,14 +31,14 @@ class Card_Crossroads(Card):
 class Test_Crossroads(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['crossroads'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Crossroads'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['crossroads'].remove()
+        self.card = self.g['Crossroads'].remove()
 
     def test_play(self):
         """ Play crossroads once"""
-        self.plr.setHand('silver', 'estate', 'estate')
+        self.plr.setHand('Silver', 'Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
@@ -46,8 +46,8 @@ class Test_Crossroads(unittest.TestCase):
 
     def test_play_twice(self):
         """ Play crossroads again """
-        self.plr.setHand('silver', 'copper', 'crossroads')
-        self.plr.setPlayed('crossroads')
+        self.plr.setHand('Silver', 'Copper', 'Crossroads')
+        self.plr.setPlayed('Crossroads')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 3)

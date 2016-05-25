@@ -26,10 +26,10 @@ class Card_Fishingvillage(Card):
 class Test_Fishingvillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['fishingvillage'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fishing Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['fishingvillage'].remove()
+        self.card = self.g['Fishing Village'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_playcard(self):

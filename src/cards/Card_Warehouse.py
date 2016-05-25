@@ -24,15 +24,15 @@ class Card_Warehouse(Card):
 class Test_Warehouse(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['warehouse'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Warehouse'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['warehouse'].remove()
+        self.card = self.g['Warehouse'].remove()
 
     def test_playcard(self):
         """ Play a warehouse """
-        self.plr.setHand('estate', 'copper', 'silver', 'gold')
-        self.plr.setDeck('province', 'province', 'province', 'duchy')
+        self.plr.setHand('Estate', 'Copper', 'Silver', 'Gold')
+        self.plr.setDeck('Province', 'Province', 'Province', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['discard estate', 'discard copper', 'discard duchy', 'finish']
         self.plr.playCard(self.card)

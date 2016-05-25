@@ -44,13 +44,13 @@ class Card_Mine(Card):
 class Test_Mine(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['mine'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mine'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['mine'].remove()
+        self.card = self.g['Mine'].remove()
 
     def test_convcopper(self):
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
@@ -62,7 +62,7 @@ class Test_Mine(unittest.TestCase):
         self.assertEquals(self.plr.getActions(), 0)
 
     def test_convnothing(self):
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)

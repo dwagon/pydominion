@@ -29,10 +29,10 @@ class Card_Coinoftherealm(Card):
 class Test_Coinoftherealm(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['coinoftherealm'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['coinoftherealm'].remove()
+        self.card = self.g['Coin of the Realm'].remove()
 
     def test_play(self):
         """ Play a coin of the realm """

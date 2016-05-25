@@ -27,13 +27,13 @@ class Card_Expand(Card):
 class Test_Expand(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['expand'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Expand'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.expand = self.g['expand'].remove()
+        self.expand = self.g['Expand'].remove()
 
     def test_play(self):
-        self.plr.setHand('copper')
+        self.plr.setHand('Copper')
         self.plr.addCard(self.expand, 'hand')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.expand)

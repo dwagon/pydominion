@@ -36,10 +36,10 @@ class Card_Alchemist(Card):
 class Test_Alchemist(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['alchemist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Alchemist'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.alchemist = self.g['alchemist'].remove()
+        self.alchemist = self.g['Alchemist'].remove()
         self.plr.addCard(self.alchemist, 'hand')
 
     def test_play(self):
@@ -53,7 +53,7 @@ class Test_Alchemist(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
-        self.plr.setPlayed('potion')
+        self.plr.setPlayed('Potion')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
@@ -61,7 +61,7 @@ class Test_Alchemist(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Alchemist'))
 
     def test_keep(self):
-        self.plr.setPlayed('potion')
+        self.plr.setPlayed('Potion')
         self.plr.test_input = ['top of deck']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()

@@ -41,12 +41,12 @@ class Card_Haven(Card):
 class Test_Haven(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['haven'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Haven'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['haven'].remove()
-        self.plr.setDiscard('copper', 'copper', 'copper', 'copper', 'copper')
-        self.plr.setDeck('estate', 'estate', 'estate', 'estate', 'gold')
+        self.card = self.g['Haven'].remove()
+        self.plr.setDiscard('Copper', 'Copper', 'Copper', 'Copper', 'Copper')
+        self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Gold')
         self.plr.addCard(self.card, 'hand')
 
     def test_playcard(self):

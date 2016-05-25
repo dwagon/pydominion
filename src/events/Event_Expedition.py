@@ -21,7 +21,7 @@ class Event_Expedition(Event):
 class Test_Expedition(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['expedition'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Expedition'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g.events['Expedition']

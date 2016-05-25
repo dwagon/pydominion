@@ -32,13 +32,13 @@ class Card_Adventurer(Card):
 class Test_Adventurer(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['adventurer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Adventurer'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
     def test_treasures(self):
-        self.plr.setDeck('copper', 'silver', 'gold', 'estate')
-        self.plr.setHand('adventurer')
+        self.plr.setDeck('Copper', 'Silver', 'Gold', 'Estate')
+        self.plr.setHand('Adventurer')
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(sorted(['Silver', 'Gold']), sorted([c.name for c in self.plr.hand]))
         self.assertIsNotNone(self.plr.inDiscard('Estate'))

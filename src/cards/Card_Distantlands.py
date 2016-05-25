@@ -35,10 +35,10 @@ class Card_Distantlands(Card):
 class Test_Distantlands(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['distantlands'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Distant Lands'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['distantlands'].remove()
+        self.card = self.g['Distant Lands'].remove()
 
     def test_play(self):
         """ Play a distant lands"""
@@ -49,19 +49,19 @@ class Test_Distantlands(unittest.TestCase):
         self.assertIsNotNone(self.plr.inReserve('Distant Lands'))
 
     def test_notonmat(self):
-        self.plr.setHand('distantlands')
+        self.plr.setHand('Distant Lands')
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()['Distant Lands'], 0)
 
     def test_onmat(self):
         """ Distant lands on mat """
-        self.plr.setReserve('distantlands')
+        self.plr.setReserve('Distant Lands')
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()['Distant Lands'], 4)
 
     def test_onmat_twice(self):
         """ Two Distant lands on mat """
-        self.plr.setReserve('distantlands', 'distantlands')
+        self.plr.setReserve('Distant Lands', 'Distant Lands')
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()['Distant Lands'], 8)
 

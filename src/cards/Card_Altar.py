@@ -22,10 +22,10 @@ class Card_Altar(Card):
 class Test_Altar(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['altar', 'upgrade'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Altar', 'Upgrade'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.altar = self.g['altar'].remove()
+        self.altar = self.g['Altar'].remove()
         self.plr.addCard(self.altar, 'hand')
 
     def test_gainzero(self):

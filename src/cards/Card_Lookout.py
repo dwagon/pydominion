@@ -61,15 +61,15 @@ class Card_Lookout(Card):
 class Test_Lookout(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['lookout'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lookout'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.lookout = self.g['lookout'].remove()
+        self.lookout = self.g['Lookout'].remove()
 
     def test_actions(self):
-        self.plr.setDeck('copper', 'estate', 'gold', 'province')
+        self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province')
         self.plr.addCard(self.lookout, 'hand')
-        self.plr.test_input = ['province', 'gold']
+        self.plr.test_input = ['Province', 'Gold']
         self.plr.playCard(self.lookout)
         self.assertIsNotNone(self.g.inTrash('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))

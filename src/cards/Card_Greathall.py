@@ -24,10 +24,10 @@ class Card_Greathall(Card):
 class Test_Greathall(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['greathall'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Great Hall'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['greathall'].remove()
+        self.card = self.g['Great Hall'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):

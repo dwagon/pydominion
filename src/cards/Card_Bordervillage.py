@@ -26,10 +26,10 @@ class Card_Bordervillage(Card):
 class Test_Bordervillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['bordervillage'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Border Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.bv = self.g['bordervillage'].remove()
+        self.bv = self.g['Border Village'].remove()
         self.plr.addCard(self.bv, 'hand')
 
     def test_play(self):
@@ -39,7 +39,7 @@ class Test_Bordervillage(unittest.TestCase):
 
     def test_gain(self):
         self.plr.test_input = ['get estate']
-        self.plr.gainCard('bordervillage')
+        self.plr.gainCard('Border Village')
         self.assertEqual(self.plr.discardSize(), 2)
 
 

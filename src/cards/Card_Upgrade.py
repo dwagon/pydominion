@@ -29,10 +29,10 @@ class Card_Upgrade(Card):
 class Test_Upgrade(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['upgrade'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Upgrade'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['upgrade'].remove()
+        self.card = self.g['Upgrade'].remove()
 
     def test_play(self):
         """ Play the Upgrade """
@@ -45,7 +45,7 @@ class Test_Upgrade(unittest.TestCase):
 
     def test_trash(self):
         """ Trash an upgrade """
-        self.plr.setHand('estate', 'estate')
+        self.plr.setHand('Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.card)

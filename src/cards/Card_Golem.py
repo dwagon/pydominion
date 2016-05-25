@@ -44,15 +44,15 @@ class Card_Golem(Card):
 class Test_Golem(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['golem', 'village', 'moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Golem', 'Village', 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['golem'].remove()
+        self.card = self.g['Golem'].remove()
 
     def test_actions(self):
         """ Ensure two actions are picked up and played, others are discarded """
         self.plr.setHand()
-        self.plr.setDeck('gold', 'gold', 'gold', 'village', 'moat', 'estate', 'copper')
+        self.plr.setDeck('Gold', 'Gold', 'Gold', 'Village', 'Moat', 'Estate', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
@@ -61,15 +61,15 @@ class Test_Golem(unittest.TestCase):
     def test_golem(self):
         """ Ensure golem isn't picked up """
         self.plr.setHand()
-        self.plr.setDeck('gold', 'gold', 'gold', 'village', 'golem', 'moat', 'estate', 'copper')
+        self.plr.setDeck('Gold', 'Gold', 'Gold', 'Village', 'Golem', 'Moat', 'Estate', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(['Golem', 'Moat', 'Village'], [c.name for c in self.plr.played])
         self.assertEqual(['Copper', 'Estate', 'Golem'], [c.name for c in self.plr.discardpile])
 
     def test_nocards(self):
-        self.plr.setHand('copper', 'copper', 'copper')
-        self.plr.setDeck('copper', 'copper', 'copper')
+        self.plr.setHand('Copper', 'Copper', 'Copper')
+        self.plr.setDeck('Copper', 'Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
 

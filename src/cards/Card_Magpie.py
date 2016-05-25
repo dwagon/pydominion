@@ -27,21 +27,21 @@ class Card_Magpie(Card):
             player.addCard(c, 'deck')
             if c.isAction() or c.isVictory():
                 player.output("Revealed %s so gaining magpie" % c.name)
-                player.gainCard('magpie')
+                player.gainCard('Magpie')
 
 
 ###############################################################################
 class Test_Magpie(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['magpie'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Magpie'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['magpie'].remove()
+        self.card = self.g['Magpie'].remove()
 
     def test_treasure(self):
         """ Play a magpie with treasure """
-        self.plr.setDeck('gold', 'copper')
+        self.plr.setDeck('Gold', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.g.print_state()
@@ -51,7 +51,7 @@ class Test_Magpie(unittest.TestCase):
 
     def test_victory(self):
         """ Play a magpie with treasure """
-        self.plr.setDeck('duchy', 'copper')
+        self.plr.setDeck('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)

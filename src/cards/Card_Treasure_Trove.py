@@ -17,8 +17,8 @@ class Card_Treasure_Trove(Card):
 
     def special(self, game, player):
         """ When you play this, gain a Gold and a Copper """
-        player.gainCard('copper')
-        player.gainCard('gold')
+        player.gainCard('Copper')
+        player.gainCard('Gold')
         player.output("Gained a Copper and a Gold")
 
 
@@ -26,10 +26,10 @@ class Card_Treasure_Trove(Card):
 class Test_Treasure_Trove(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['treasure_trove'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasure Trove'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['treasure_trove'].remove()
+        self.card = self.g['Treasure Trove'].remove()
 
     def test_play(self):
         """ Play a treasure trove"""
