@@ -9,10 +9,10 @@ class Card_Traderoute(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 buy, +1 coin per token, trash card"
+        self.desc = "+1 buy, +1 coin per token, trash card from your hand"
         self.name = 'Trade Route'
         self.cost = 3
-        self.buy = 1
+        self.buys = 1
 
     @classmethod
     def setup(cls, game):
@@ -53,6 +53,7 @@ class Test_Traderoute(unittest.TestCase):
         self.plr.test_input = ['finish selecting']
         self.plr.playCard(self.traderoute)
         self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.getBuys(), 2)
 
     def test_playOne(self):
         self.plr.test_input = ['finish selecting']
