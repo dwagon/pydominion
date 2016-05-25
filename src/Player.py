@@ -37,7 +37,7 @@ class Player(object):
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
-        self.stats = {}
+        self.stats = {'gain': 0}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
 
@@ -633,7 +633,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = {}
+        self.stats = {'gain': 0}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
@@ -749,6 +749,7 @@ class Player(object):
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
             return
+        self.stats['gain'] += 1
         if 'destination' in options:
             destination = options['destination']
         if 'trash' in options and options['trash']:
@@ -756,7 +757,6 @@ class Player(object):
             return newcard
         self.hook_gainThisCard(newcard)
         self.addCard(newcard, destination)
-        self.stats['gain'] = self.stats.get('gain', 0) + 1
         return newcard
 
     ###########################################################################

@@ -13,8 +13,8 @@ class Card_Treasurehunter(Card):
         self.desc = "+1 Action, +1 Coin; Gain Silvers. Discard to replace with Warrior"
         self.name = 'Treasure Hunter'
         self.purchasable = False
-        self.action = 1
-        self.coins = 1
+        self.actions = 1
+        self.coin = 1
         self.cost = 3
 
     def special(self, game, player):
@@ -23,7 +23,7 @@ class Card_Treasurehunter(Card):
         numsilver = righty.stats['gain']
         player.output("Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver))
         for i in range(numsilver):
-            player.gainCard('silver')
+            player.gainCard('Silver')
 
     def hook_discardCard(self, game, player):
         """ Replace with Warrior """
@@ -34,14 +34,21 @@ class Card_Treasurehunter(Card):
 class Test_Treasurehunter(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr, self.other = self.g.playerList()
         self.card = self.g['Treasure Hunter'].remove()
 
     def test_treasure_hunter(self):
         """ Play a treasure_hunter """
-        pass
+        self.other.gainCard('Copper')
+        self.other.gainCard('Estate')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
 
 ###############################################################################
