@@ -12,6 +12,7 @@ class Card_Silkroad(Card):
         self.base = 'hinterlands'
         self.desc = "num victory cards / 4 VP"
         self.name = 'Silk Road'
+        self.playable = False
         self.cost = 4
 
     def special_score(self, game, player):
