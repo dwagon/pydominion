@@ -85,8 +85,6 @@ class Player(object):
         if src not in self.played:
             self.output("Not activating %s traveller as not played" % src.name)
             return
-        sys.stderr.write("SRC=%s %s\n" % (src, type(src)))
-        sys.stderr.write("DST=%s %s\n" % (dst, type(dst)))
 
         choice = self.plrChooseOptions(
             "Replace Traveller",
@@ -465,7 +463,7 @@ class Player(object):
                 sel = '-'
                 action = None
                 verb = card.name
-            tp = '%s (%s) %s (%d left)' % (verb, self.coststr(card), card.desc, card.numcards)
+            tp = '%s (%s %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
@@ -567,6 +565,8 @@ class Player(object):
 
     ###########################################################################
     def displayOverview(self):
+        if self.durationpile:
+            self.output("Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.reserve:
             self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
         if self.hand:
