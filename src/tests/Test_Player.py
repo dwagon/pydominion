@@ -558,12 +558,12 @@ class Test_buyableSelection(unittest.TestCase):
 
     def test_buy_token(self):
         self.plr.addCoin(2)
-        self.plr.place_token('+Card', 'Moat')
+        self.plr.place_token('+1 Card', 'Moat')
         opts, ind = self.plr.buyableSelection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i['print'].startswith('Buy Moat'):
-                self.assertIn('[Tkn: +Card]', i['print'])
+                self.assertIn('[Tkn: +1 Card]', i['print'])
                 break
         else:   # pragma: no coverage
             self.fail("Moat not buyable")
@@ -587,13 +587,13 @@ class Test_playableSelection(unittest.TestCase):
         self.assertEqual(ind, 2)
 
     def test_token(self):
-        self.plr.place_token('+Card', 'Moat')
+        self.plr.place_token('+1 Card', 'Moat')
         self.plr.addCard(self.moat, 'hand')
         opts, ind = self.plr.playableSelection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
-        self.assertTrue('[Tkn: +Card]' in opts[0]['print'])
+        self.assertTrue('[Tkn: +1 Card]' in opts[0]['print'])
         self.assertEqual(ind, 2)
 
 

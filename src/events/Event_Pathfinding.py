@@ -18,7 +18,7 @@ class Event_Pathfinding(Event):
         actionpiles = game.getActionPiles()
         stacks = player.cardSel(num=1, prompt='What stack to add the +1 Card Token to?', cardsrc=actionpiles)
         if stacks:
-            player.place_token('+Card', stacks[0].name)
+            player.place_token('+1 Card', stacks[0].name)
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_Pathfinding(unittest.TestCase):
         self.plr.addCoin(8)
         self.plr.test_input = ['moat']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.tokens['+Card'], 'Moat')
+        self.assertEqual(self.plr.tokens['+1 Card'], 'Moat')
         self.assertEqual(self.plr.getCoin(), 0)
 
 

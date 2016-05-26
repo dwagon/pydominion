@@ -58,14 +58,14 @@ class Player(object):
         self.tokens = {
             'Trashing': None,
             'Estate': None,
-            '+Card': None,
-            '+Action': None,
-            '+Buy': None,
-            '+Coin': None,
-            '-Cost': None,
-            # '-Card': Handled elsewhere
-            # 'Journey': Handled elsewhere
-            # '-Coin': Handled elsewhere
+            '+1 Card': None,
+            '+1 Action': None,
+            '+1 Buy': None,
+            '+1 Coin': None,
+            '-2 Cost': None,
+            # '-1 Card': Handled by card_token
+            # 'Journey': Handled by journey_token
+            # '-1 Coin': Handled by coin_token
         }
 
     ###########################################################################
@@ -697,17 +697,17 @@ class Player(object):
             return
         self.output("Played %s" % card.name)
         tkns = self.which_token(card.name)
-        if '+Action' in tkns:
-            self.output("Gaining action from +Action token")
+        if '+1 Action' in tkns:
+            self.output("Gaining action from +1 Action token")
             self.actions += 1
-        if '+Card' in tkns:
+        if '+1 Card' in tkns:
             c = self.pickupCard()
-            self.output("Picked up %s from +Card token" % c.name)
-        if '+Coin' in tkns:
-            self.output("Gaining coin from +Coin token")
+            self.output("Picked up %s from +1 Card token" % c.name)
+        if '+1 Coin' in tkns:
+            self.output("Gaining coin from +1 Coin token")
             self.coin += 1
-        if '+Buy' in tkns:
-            self.output("Gaining buy from +Buy token")
+        if '+1 Buy' in tkns:
+            self.output("Gaining buy from +1 Buy token")
             self.buys += 1
         if discard:
             if card.isDuration():
@@ -722,7 +722,7 @@ class Player(object):
 
         modif = 0
         if self.card_token and card.cards:
-            self.output("-Card token reduces cards drawn")
+            self.output("-1 Card token reduces cards drawn")
             self.card_token = False
             modif = -1
 
