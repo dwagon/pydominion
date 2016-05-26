@@ -567,7 +567,7 @@ class Player(object):
         if self.card_token:
             tknoutput.append("-1 Card")
         if self.coin_token:
-            tknoutput.append("-2 Coin")
+            tknoutput.append("-1 Coin")
         if self.journey_token:
             tknoutput.append("Journey Faceup")
         else:
@@ -745,7 +745,7 @@ class Player(object):
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
-        for c in self.hand + self.played:
+        for c in self.hand + self.played + self.durationpile:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
         return max(0, cost)
 

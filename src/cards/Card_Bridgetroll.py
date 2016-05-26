@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Bridgetroll(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['action', 'attack', 'duration']
+        self.base = 'adventure'
+        self.desc = """Each other player takes his -1 Coin token.
+        Now and at the start of your next turn: +1 Buy.
+        While this is in play cards cost 1 less"""
+        self.name = 'Bridge Troll'
+        self.buys = 1
+        self.cost = 5
+        self._played = False
+
+    def special(self, game, player):
+        self._played = True
+        for plr in player.attackVictims():
+            plr.output("%s's Bridge Troll set your -1 Coin token" % player.name)
+            plr.coin_token = True
+
+    def hook_cardCost(self, game, player, card):
+        if self._played:
+            return -1
+        return 0
+
+    def duration(self, game, player):
+        self._played = False
+        player.addBuys(1)
+
+
+###############################################################################
+class Test_Bridgetroll(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bridge Troll'])
+        self.g.startGame()
+        self.plr, self.victim = self.g.playerList()
+        self.card = self.g['Bridge Troll'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_playcard(self):
+        """ Play a bridge troll """
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertTrue(self.victim.coin_token)
+        self.plr.endTurn()
+        self.plr.startTurn()
+        self.assertEqual(self.plr.getBuys(), 2)
+
+    def test_costreduction(self):
+        self.coin = 1
+        self.assertEqual(self.plr.cardCost(self.g['Gold']), 6)
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.cardCost(self.g['Gold']), 5)
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
