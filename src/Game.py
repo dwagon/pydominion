@@ -142,14 +142,18 @@ class Game(object):
 
     ###########################################################################
     def loadEvents(self):
-        for ev in self.eventcards:
-            evname = ev.title()
-            self.events[evname] = EventPile(evname, eventpath=self.eventpath)
         available = self.getAvailableEvents()
+        # Specified Events
+        for ev in self.eventcards:
+            evklass = self.cardmapping['Event'][ev]
+            self.events[ev] = EventPile(ev, evklass)
+            available.remove(ev)
+        # Events to make up the numbers
         while len(self.events) < self.numevents:
-            c = random.choice(available)
-            if c not in self.events:
-                self.events[c] = EventPile(c, eventpath=self.eventpath)
+            ev = random.choice(available)
+            evklass = self.cardmapping['Event'][ev]
+            self.events[ev] = EventPile(ev, evklass)
+            available.remove(ev)
         for e in self.events:
             self.output("Playing with event %s" % e)
 
@@ -253,21 +257,29 @@ class Game(object):
         """ Create a mapping between the cardname and the module """
         mapping = {}
         for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard'):
-            mapping[prefix] = {}
-            files = glob.glob('%s/%s_*.py' % (self.cardpath, prefix))
-            for fname in [os.path.basename(f) for f in files]:
-                fname = fname.replace('.py', '')
-                fp, pathname, desc = imp.find_module(fname, [self.cardpath, 'cards'])
-                mod = imp.load_module(fname, fp, pathname, desc)
-                classes = dir(mod)
-                for c in classes:
-                    if c.startswith('Card_'):
-                        klass = getattr(mod, c)
-                        break
-                else:
-                    sys.stderr.write("Couldn't find Card Class in %s\n" % pathname)
-                k = klass()
-                mapping[prefix][k.name] = klass
+            mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
+        mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
+        return mapping
+
+    ###########################################################################
+    def getSetCardClasses(self, prefix, path, defdir, class_prefix):
+        """ Import all the modules to determine the real name of the card
+            This is slow, but it is the only way """
+        mapping = {}
+        files = glob.glob('%s/%s_*.py' % (path, prefix))
+        for fname in [os.path.basename(f) for f in files]:
+            fname = fname.replace('.py', '')
+            fp, pathname, desc = imp.find_module(fname, [path, defdir])
+            mod = imp.load_module(fname, fp, pathname, desc)
+            classes = dir(mod)
+            for c in classes:
+                if c.startswith(class_prefix):
+                    klass = getattr(mod, c)
+                    break
+            else:
+                sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
+            k = klass()
+            mapping[k.name] = klass
         return mapping
 
     ###########################################################################
