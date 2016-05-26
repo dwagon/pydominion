@@ -519,7 +519,7 @@ class Test_displayOverview(unittest.TestCase):
 
     def test_duration(self):
         self.plr.messages = []
-        self.plr.durationpile.add(self.game['Copper'].remove())
+        self.plr.durationpile.add(self.g['Copper'].remove())
         self.plr.displayOverview()
         self.assertIn('Duration: Copper', self.plr.messages)
 

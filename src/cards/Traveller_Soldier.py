@@ -27,6 +27,7 @@ class Card_Soldier(Card):
             if c.isAttack():
                 count += 1
         player.addCoin(count)
+        player.output("Gained %d extra coins" % count)
 
     def hook_discardCard(self, game, player):
         """ Replace with Hero """
