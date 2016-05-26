@@ -54,7 +54,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.playCard(self.card)
         # (moat + 2) * 3 + estate
         self.assertEqual(self.plr.handSize(), 2 * 3 + 1)
-        self.assertEqual(len(self.plr.played), 2)
+        self.assertEqual(self.plr.playedSize(), 2)
         for c in self.plr.played:
             if c.name == 'Moat':
                 break
@@ -71,7 +71,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(len(self.plr.played), 1)
+        self.assertEqual(self.plr.playedSize(), 1)
 
     def test_picked_nothing(self):
         """ Selected no actions with Kings court """
@@ -80,7 +80,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(len(self.plr.played), 1)
+        self.assertEqual(self.plr.playedSize(), 1)
 
 
 ###############################################################################
