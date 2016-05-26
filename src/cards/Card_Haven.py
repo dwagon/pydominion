@@ -19,7 +19,7 @@ class Card_Haven(Card):
     def special(self, game, player):
         """ Set aside a card from your hand face down. At the start of
             your next turn, put it into your hand. """
-        c = player.plrPickCard(force=True)
+        c = player.plrPickCard(force=True, prompt='Pick card to put into hand next turn')
         player.addCard(c, 'duration')
         player.hand.remove(c)
         self.savedHavenCard = c

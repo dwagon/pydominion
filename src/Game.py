@@ -154,6 +154,19 @@ class Game(object):
             self.output("Playing with event %s" % e)
 
     ###########################################################################
+    def guess_cardname(self, name):
+        """ Don't force the user to give the exact card name on the command
+        line - maybe we can guess it """
+        available = self.getAvailableCards()
+        if name in available:
+            return name
+        for c in available:
+            newc = c.replace(' ', '').replace("'", "")
+            if newc.lower() == name.lower():
+                return c
+        print "Can't guess what card '%s' is" % name
+
+    ###########################################################################
     def loadDecks(self, initcards):
         for card in self.baseCards:
             cp = CardPile(card, self.cardmapping['BaseCard'][card], numcards=12)
@@ -169,7 +182,8 @@ class Game(object):
         self.needruins = False
         self.needtravellers = False
         for c in initcards:
-            self.useCardPile(available, c)
+            cardname = self.guess_cardname(c)
+            self.useCardPile(available, cardname)
 
         while unfilled:
             c = random.choice(available)
@@ -206,7 +220,11 @@ class Game(object):
 
     ###########################################################################
     def useCardPile(self, available, c):
-        available.remove(c)
+        try:
+            available.remove(c)
+        except ValueError:  # pragma: no cover
+            sys.stderr.write("Unknown card '%s'\n" % c)
+            sys.exit(1)
         cp = CardPile(c, self.cardmapping['Card'][c])
         self.cardpiles[cp.name] = cp
         self.output("Playing with card %s" % self[c].name)
