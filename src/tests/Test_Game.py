@@ -27,6 +27,19 @@ class Test_args(unittest.TestCase):
 
 
 ###############################################################################
+class Test_guess_cardname(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=2)
+        self.g.startGame()
+
+    def test_guesses(self):
+        self.assertEqual(self.g.guess_cardname('moat'), 'Moat')
+        self.assertEqual(self.g.guess_cardname('grandmarket'), 'Grand Market')
+        self.assertEqual(self.g.guess_cardname('philosophersstone'), "Philosopher's Stone")
+        self.assertIsNone(self.g.guess_cardname('nosuchcard'))
+
+
+###############################################################################
 class Test_game_over(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
