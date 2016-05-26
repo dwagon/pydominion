@@ -142,12 +142,16 @@ class Game(object):
 
     ###########################################################################
     def loadEvents(self):
-        available = self.getAvailableEvents()
+        available = self.getAvailableCards('Event')
         # Specified Events
         for ev in self.eventcards:
             evklass = self.cardmapping['Event'][ev]
             self.events[ev] = EventPile(ev, evklass)
-            available.remove(ev)
+            try:
+                available.remove(ev)
+            except ValueError:
+                sys.stderr.write("Unknown event '%s'\n" % ev)
+                sys.exit(1)
         # Events to make up the numbers
         while len(self.events) < self.numevents:
             ev = random.choice(available)
@@ -285,12 +289,6 @@ class Game(object):
     ###########################################################################
     def getAvailableCards(self, prefix='Card'):
         return self.cardmapping[prefix].keys()
-
-    ###########################################################################
-    def getAvailableEvents(self):
-        eventfiles = glob.glob('%s/Event_*.py' % self.eventpath)
-        events = [c.replace('%s/Event_' % self.eventpath, '').replace('.py', '') for c in eventfiles]
-        return events
 
     ###########################################################################
     def getActionPiles(self):
