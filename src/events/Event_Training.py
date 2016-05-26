@@ -18,7 +18,7 @@ class Event_Training(Event):
         actionpiles = game.getActionPiles()
         stacks = player.cardSel(num=1, prompt='What stack to add the +1 Card Token to?', cardsrc=actionpiles)
         if stacks:
-            player.place_token('+Coin', stacks[0].name)
+            player.place_token('+1 Coin', stacks[0].name)
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_Training(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ['moat']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.tokens['+Coin'], 'Moat')
+        self.assertEqual(self.plr.tokens['+1 Coin'], 'Moat')
         self.assertEqual(self.plr.getCoin(), 0)
 
 

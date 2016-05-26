@@ -40,8 +40,8 @@ class TestToken(unittest.TestCase):
         self.assertFalse(self.plr.card_token)
 
     def test_action_token(self):
-        """ Does the +Action token work """
-        self.plr.place_token('+Action', 'Moat')
+        """ Does the +1 Action token work """
+        self.plr.place_token('+1 Action', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getActions(), 1)
@@ -64,9 +64,9 @@ class TestToken(unittest.TestCase):
         self.assertEquals(self.plr.getCoin(), 0)
 
     def test_card_token(self):
-        """ Does the +Card token work """
+        """ Does the +1 Card token work """
         self.plr.setHand()
-        self.plr.place_token('+Card', 'Moat')
+        self.plr.place_token('+1 Card', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.handSize(), 1)
@@ -75,8 +75,8 @@ class TestToken(unittest.TestCase):
         self.assertEquals(self.plr.handSize(), 2 + 1)
 
     def test_pluscoin_token(self):
-        """ Does the +Coin token work """
-        self.plr.place_token('+Coin', 'Moat')
+        """ Does the +1 Coin token work """
+        self.plr.place_token('+1 Coin', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getCoin(), 0)
@@ -84,8 +84,8 @@ class TestToken(unittest.TestCase):
         self.assertEquals(self.plr.getCoin(), 1)
 
     def test_buy_token(self):
-        """ Does the +Buy token work """
-        self.plr.place_token('+Buy', 'Moat')
+        """ Does the +1 Buy token work """
+        self.plr.place_token('+1 Buy', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.assertEquals(self.plr.getBuys(), 1)
