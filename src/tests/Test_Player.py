@@ -497,31 +497,31 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.setHand()
         self.plr.setPlayed()
         self.plr.displayOverview()
-        self.assertIn('Hand: <EMPTY>', self.plr.messages)
-        self.assertIn('Played: <NONE>', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 4)
+        self.assertIn('| Hand: <EMPTY>', self.plr.messages)
+        self.assertIn('| Played: <NONE>', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 5)
 
     def test_non_empty(self):
         self.plr.messages = []
         self.plr.setHand('Copper', 'Estate')
         self.plr.setPlayed('Moat')
         self.plr.displayOverview()
-        self.assertIn('Hand: Copper, Estate', self.plr.messages)
-        self.assertIn('Played: Moat', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 4)
+        self.assertIn('| Hand: Copper, Estate', self.plr.messages)
+        self.assertIn('| Played: Moat', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 5)
 
     def test_reserve(self):
         self.plr.messages = []
         self.plr.setReserve('Copper')
         self.plr.displayOverview()
-        self.assertIn('Reserve: Copper', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 5)
+        self.assertIn('| Reserve: Copper', self.plr.messages)
+        self.assertEquals(len(self.plr.messages), 6)
 
     def test_duration(self):
         self.plr.messages = []
         self.plr.durationpile.add(self.g['Copper'].remove())
         self.plr.displayOverview()
-        self.assertIn('Duration: Copper', self.plr.messages)
+        self.assertIn('| Duration: Copper', self.plr.messages)
 
 
 ###############################################################################

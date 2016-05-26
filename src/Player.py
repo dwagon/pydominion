@@ -563,7 +563,7 @@ class Player(object):
         tknoutput = []
         for tkn in self.tokens:
             if self.tokens[tkn]:
-                tknoutput.append("%s: %s" % (tkn, self.token[tkn]))
+                tknoutput.append("%s: %s" % (tkn, self.tokens[tkn]))
         if self.card_token:
             tknoutput.append("-1 Card")
         if self.coin_token:
@@ -572,19 +572,20 @@ class Player(object):
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
-        self.output("Tokens: %s" % "; ".join(tknoutput))
+        self.output("| Tokens: %s" % "; ".join(tknoutput))
         if self.durationpile:
-            self.output("Duration: %s" % ", ".join([c.name for c in self.durationpile]))
+            self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.reserve:
-            self.output("Reserve: %s" % ", ".join([c.name for c in self.reserve]))
+            self.output("| Reserve: %s" % ", ".join([c.name for c in self.reserve]))
         if self.hand:
-            self.output("Hand: %s" % ", ".join([c.name for c in self.hand]))
+            self.output("| Hand: %s" % ", ".join([c.name for c in self.hand]))
         else:
-            self.output("Hand: <EMPTY>")
+            self.output("| Hand: <EMPTY>")
         if self.played:
-            self.output("Played: %s" % ", ".join([c.name for c in self.played]))
+            self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
-            self.output("Played: <NONE>")
+            self.output("| Played: <NONE>")
+        self.output('-' * 50)
 
     ###########################################################################
     def addScore(self, reason, points):
