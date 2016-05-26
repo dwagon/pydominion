@@ -53,24 +53,27 @@ class Test_game_over(unittest.TestCase):
 
     def test_provinces(self):
         """ Someone took the last province """
-        for i in range(200):
+        while(self.g['Province'].numcards):
             self.plr.gainCard('Province')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """ Three stacks are empty """
-        for i in range(200):
+        while(self.g['Estate'].numcards):
             self.plr.gainCard('Estate')
+        while(self.g['Copper'].numcards):
             self.plr.gainCard('Copper')
+        while(self.g['Silver'].numcards):
             self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """ Two stacks are empty """
-        for i in range(200):
+        while(self.g['Estate'].numcards):
             self.plr.gainCard('Estate')
+        while(self.g['Silver'].numcards):
             self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertFalse(over)
