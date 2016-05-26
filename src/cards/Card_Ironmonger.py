@@ -10,7 +10,7 @@ class Card_Ironmonger(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+1 card, +1 action, reveal top card. Hijinks follow"
+        self.desc = "+1 card, +1 action. Reveal top card and possibly discard it. If action +1 action; treasure +1 coin; victory +1 card"
         self.name = 'Iron Monger'
         self.cost = 4
         self.actions = 1
@@ -31,10 +31,13 @@ class Card_Ironmonger(Card):
         else:
             player.addCard(card, 'topdeck')
         if card.isVictory():
+            player.output("Picking up card as %s was a victory card" % card.name)
             player.pickupCard()
         if card.isAction():
+            player.output("Gaining action as %s was an action card" % card.name)
             player.addActions(1)
         if card.isTreasure():
+            player.output("Gaining a coin as %s was a treasure card" % card.name)
             player.addCoin(1)
 
 

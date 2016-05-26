@@ -9,7 +9,7 @@ class Card_Rabble(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "+3 cards. Other players discard cards"
+        self.desc = "+3 cards. Each other player reveals top 3 cards and discards Actions and Treasures"
         self.name = 'Rabble'
         self.cost = 5
         self.cards = 3

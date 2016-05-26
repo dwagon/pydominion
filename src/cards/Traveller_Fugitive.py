@@ -10,7 +10,7 @@ class Card_Fugitive(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
         self.base = 'adventure'
-        self.desc = "+1 Action, +2 Cards, Discard a card "
+        self.desc = "+1 Action, +2 Cards, Discard a card"
         self.name = 'Fugitive'
         self.purchasable = False
         self.actions = 1

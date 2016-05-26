@@ -10,7 +10,7 @@ class Card_Disciple(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
         self.base = 'adventure'
-        self.desc = """ You may play an Action card from your hand twice. Gain a copy of it"""
+        self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = 'Disciple'
         self.purchasable = False
         self.cost = 5
@@ -30,9 +30,10 @@ class Card_Disciple(Card):
             player.playCard(card, discard=False, costAction=False)
         player.addCard(card, 'played')
         player.hand.remove(card)
-        c = player.gainCard(card.name)
-        if c:
-            player.output("Gained a %s from Disciple" % c.name)
+        if card.purchasable:
+            c = player.gainCard(card.name)
+            if c:
+                player.output("Gained a %s from Disciple" % c.name)
 
     def hook_discardCard(self, game, player):
         """ Replace with Teacher """

@@ -285,6 +285,8 @@ class Game(object):
         """ Return all cardstacks that are action cards """
         actionpiles = []
         for cp in self.cardpiles.values():
+            if not cp.purchasable:
+                continue
             if cp.isAction():
                 actionpiles.append(cp)
         return actionpiles
