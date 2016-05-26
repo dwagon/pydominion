@@ -479,7 +479,7 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('Hand: <EMPTY>', self.plr.messages)
         self.assertIn('Played: <NONE>', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 2)
+        self.assertEquals(len(self.plr.messages), 4)
 
     def test_non_empty(self):
         self.plr.messages = []
@@ -488,14 +488,14 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('Hand: Copper, Estate', self.plr.messages)
         self.assertIn('Played: Moat', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 2)
+        self.assertEquals(len(self.plr.messages), 4)
 
     def test_reserve(self):
         self.plr.messages = []
         self.plr.setReserve('Copper')
         self.plr.displayOverview()
         self.assertIn('Reserve: Copper', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 3)
+        self.assertEquals(len(self.plr.messages), 5)
 
 
 ###############################################################################
@@ -572,6 +572,70 @@ class Test_playableSelection(unittest.TestCase):
 
 
 ###############################################################################
+class Test_choiceSelection(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.moat = self.g['Moat'].remove()
+        self.potion = self.g['Potion'].remove()
+
+    def test_action_phase(self):
+        self.plr.setHand('Moat')
+        opts, prompt = self.plr.choiceSelection('action')
+
+        self.assertEqual(opts[0]['print'], 'End Phase')
+        self.assertEqual(opts[0]['action'], 'quit')
+        self.assertEqual(opts[0]['selector'], '0')
+        self.assertIsNone(opts[0]['card'])
+
+        self.assertTrue(opts[1]['print'].startswith('Play Moat'))
+        self.assertEqual(opts[1]['action'], 'play')
+        self.assertEqual(opts[1]['selector'], 'a')
+
+        self.assertEqual(len(opts), 2)
+
+    def test_buy_phase(self):
+        self.plr.setHand('Copper')
+        opts, prompt = self.plr.choiceSelection('buy')
+
+        self.assertEqual(opts[0]['print'], 'End Phase')
+        self.assertEqual(opts[0]['action'], 'quit')
+        self.assertEqual(opts[0]['selector'], '0')
+        self.assertIsNone(opts[0]['card'])
+
+        self.assertEqual(opts[1]['action'], 'spendall')
+
+        self.assertEqual(opts[2]['action'], 'spend')
+
+    def test_prompt(self):
+        self.plr.actions = 3
+        self.plr.buys = 7
+        self.plr.potions = 9
+        self.plr.coin = 5
+        self.plr.specialcoins = 1
+        opts, prompt = self.plr.choiceSelection('buy')
+        self.assertIn('Actions=3', prompt)
+        self.assertIn('Coins=5', prompt)
+        self.assertIn('Buys=7', prompt)
+        self.assertIn('Potions=9', prompt)
+        self.assertIn('Special Coins=1', prompt)
+
+    def test_nothing_prompt(self):
+        self.plr.actions = 0
+        self.plr.buys = 0
+        self.plr.potions = 0
+        self.plr.coin = 0
+        self.plr.specialcoins = 0
+        opts, prompt = self.plr.choiceSelection('buy')
+        self.assertIn('Actions=0', prompt)
+        self.assertIn('Buys=0', prompt)
+        self.assertNotIn('Coins', prompt)
+        self.assertNotIn('Potions', prompt)
+        self.assertNotIn('Special Coins', prompt)
+
+
+###############################################################################
 class Test_spendableSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'])
@@ -584,16 +648,27 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate')
         self.plr.addCard(self.potion, 'hand')
         self.plr.addCard(self.moat, 'hand')
+        self.plr.gainSpecialCoins(1)
         opts = self.plr.spendableSelection()
         self.assertEqual(opts[0]['selector'], '1')
         self.assertEqual(opts[0]['action'], 'spendall')
         self.assertTrue(opts[0]['print'].startswith('Spend all treasures'))
         self.assertIsNone(opts[0]['card'])
-        self.assertEqual(opts[1]['selector'], '3')
-        self.assertEqual(opts[1]['action'], 'spend')
-        self.assertTrue(opts[1]['print'].startswith('Spend Copper'))
-        self.assertEqual(opts[2]['selector'], '4')
+
+        self.assertEqual(opts[1]['selector'], '2')
+        self.assertEqual(opts[1]['print'], 'Spend Coin')
+        self.assertEqual(opts[1]['action'], 'coin')
+        self.assertIsNone(opts[1]['card'])
+
+        self.assertTrue(opts[2]['print'].startswith('Spend Copper'))
+        self.assertEqual(opts[2]['selector'], '3')
         self.assertEqual(opts[2]['action'], 'spend')
+        self.assertEqual(opts[2]['card'].name, 'Copper')
+
+        self.assertTrue(opts[3]['print'].startswith('Spend Potion'))
+        self.assertEqual(opts[3]['selector'], '4')
+        self.assertEqual(opts[3]['action'], 'spend')
+        self.assertEqual(opts[3]['card'].name, 'Potion')
 
 
 ###############################################################################

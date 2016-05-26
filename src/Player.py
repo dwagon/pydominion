@@ -103,13 +103,6 @@ class Player(object):
                 self.played.remove(src)
 
     ###########################################################################
-    def name_to_cardpile(self, name):
-        for cp in self.game.cardpiles.values():
-            if cp.name == name:
-                return cp
-        sys.stderr.write("%s not found in cardpiles = %s\n" % (name, self.game.cardpiles.keys()))
-
-    ###########################################################################
     def flip_journey_token(self):
         if self.journey_token:
             self.journey_token = False
@@ -481,7 +474,6 @@ class Player(object):
                 options.extend(op)
 
         if phase == 'buy':
-
             if self.buys:
                 op = self.spendableSelection()
                 options.extend(op)
@@ -503,7 +495,7 @@ class Player(object):
         if self.specialcoins:
             status += " Special Coins=%d" % self.specialcoins
         prompt = "What to do (%s)?" % status
-        return self.userInput(options, prompt)
+        return options, prompt
 
     ###########################################################################
     def turn(self):
@@ -519,7 +511,8 @@ class Player(object):
         self.output("************ Action Phase ************")
         while(True):
             self.displayOverview()
-            opt = self.choiceSelection(phase='action')
+            options, prompt = self.choiceSelection(phase='action')
+            opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
                 return
@@ -529,7 +522,8 @@ class Player(object):
         self.output("************ Buy Phase ************")
         while(True):
             self.displayOverview()
-            opt = self.choiceSelection(phase='buy')
+            options, prompt = self.choiceSelection(phase='buy')
+            opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
                 return
@@ -565,6 +559,20 @@ class Player(object):
 
     ###########################################################################
     def displayOverview(self):
+        self.output('-' * 50)
+        tknoutput = []
+        for tkn in self.tokens:
+            if self.tokens[tkn]:
+                tknoutput.append("%s: %s" % (tkn, self.token[tkn]))
+        if self.card_token:
+            tknoutput.append("-1 Card")
+        if self.coin_token:
+            tknoutput.append("-2 Coin")
+        if self.journey_token:
+            tknoutput.append("Journey Faceup")
+        else:
+            tknoutput.append("Journey Facedown")
+        self.output("Tokens: %s" % "; ".join(tknoutput))
         if self.durationpile:
             self.output("Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.reserve:
@@ -976,8 +984,8 @@ class Player(object):
             return card
 
     ###########################################################################
-    def plrPickCard(self, force=False):
-        sel = self.cardSel(force=force)
+    def plrPickCard(self, force=False, **kwargs):
+        sel = self.cardSel(force=force, **kwargs)
         return sel[0]
 
     ###########################################################################
