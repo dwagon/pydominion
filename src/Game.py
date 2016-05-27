@@ -288,7 +288,7 @@ class Game(object):
 
     ###########################################################################
     def getAvailableCards(self, prefix='Card'):
-        return self.cardmapping[prefix].keys()
+        return list(self.cardmapping[prefix].keys())
 
     ###########################################################################
     def getActionPiles(self):
