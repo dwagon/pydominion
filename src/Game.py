@@ -172,7 +172,7 @@ class Game(object):
             newc = c.replace(' ', '').replace("'", "")
             if newc.lower() == name.lower():
                 return c
-        print "Can't guess what card '%s' is" % name
+        print("Can't guess what card '%s' is" % name)
 
     ###########################################################################
     def loadDecks(self, initcards):

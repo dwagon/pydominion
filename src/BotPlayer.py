@@ -43,8 +43,8 @@ class BotPlayer(Player):
                     opts['spendall'] = o
             return opts
         except KeyError as exc:
-            print "Options=%s" % options
-            print "Exception: %s" % str(exc)
+            print("Options=%s" % options)
+            print("Exception: %s" % str(exc))
             raise
 
     ###########################################################################
@@ -112,7 +112,7 @@ class BotPlayer(Player):
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:2]
-        print "Couldn't find cards to discard from %s" % (", ".join([c.name for c in self.hand]))
+        print("Couldn't find cards to discard from %s" % (", ".join([c.name for c in self.hand])))
 
 
 # EOF
