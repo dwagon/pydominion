@@ -152,7 +152,7 @@ class Player(object):
         """ Return named card if cardname is in reserve """
         assert(isinstance(cardname, str))
         for card in self.reserve:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 
@@ -162,7 +162,7 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.hand:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 
@@ -172,7 +172,17 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.discardpile:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
+    def inPlayed(self, cardname):
+        """ Return named card if cardname is in the played pile """
+        assert(isinstance(cardname, str))
+
+        for card in self.played:
+            if card.name == cardname:
                 return card
         return None
 
@@ -182,7 +192,7 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.deck:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 

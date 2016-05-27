@@ -19,7 +19,7 @@ class Card_Cultist(Card):
             from your hand. """
         for plr in player.attackVictims():
             plr.gainCard('Ruins')
-        cultist = player.inHand('cultist')
+        cultist = player.inHand('Cultist')
         if cultist:
             ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play cultist", True))
             if ans:
@@ -70,7 +70,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.played), 1)
+        self.assertEqual(self.plr.playedSize(), 1)
 
     def test_anothercultist_yes(self):
         """ Another cultist can be played for free """
@@ -78,7 +78,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(len(self.plr.played), 2)
+        self.assertEqual(self.plr.playedSize(), 2)
         self.assertEqual(self.plr.getActions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
