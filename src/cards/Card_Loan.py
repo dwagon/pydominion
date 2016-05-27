@@ -9,7 +9,7 @@ class Card_Loan(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'prosperity'
-        self.desc = "+1 Gold, Dig for a treasure and trash or discard it"
+        self.desc = "+1 Coin, Dig for a treasure and trash or discard it"
         self.name = 'Loan'
         self.cost = 3
         self.coin = 1

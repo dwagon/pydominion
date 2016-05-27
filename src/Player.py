@@ -470,7 +470,7 @@ class Player(object):
                 sel = '-'
                 action = None
                 verb = card.name
-            tp = '%s (%s %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
+            tp = '%s (%s; %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
