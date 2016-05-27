@@ -246,14 +246,18 @@ class Player(object):
     def nextCard(self):
         """ Return the next card from the deck """
         if not self.deck:
-            self.shuffleDeck()
-            while self.discardpile:
-                self.addCard(self.discardpile.topcard(), 'deck')
+            self.refill_deck()
         if not self.deck:
             self.output("No more cards in deck")
             return None
         c = self.deck.topcard()
         return c
+
+    ###########################################################################
+    def refill_deck(self):
+        self.shuffleDeck()
+        while self.discardpile:
+            self.addCard(self.discardpile.topcard(), 'deck')
 
     ###########################################################################
     def pickupCards(self, num, verbose=True, verb='Picked up'):

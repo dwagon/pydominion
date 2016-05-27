@@ -18,6 +18,8 @@ class Card_Pearldiver(Card):
 
     def special(self, game, player):
         """ Look at the bottom card of your deck. You may put it on top """
+        if player.deckSize() == 0:
+            player.refill_deck()
         bcard = player.deck[0]
         top = player.plrChooseOptions(
             'What to do with bottom card?',
