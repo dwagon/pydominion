@@ -145,11 +145,11 @@ class Game(object):
         available = self.getAvailableCards('Event')
         # Specified Events
         for ev in self.eventcards:
-            evklass = self.cardmapping['Event'][ev]
-            self.events[ev] = EventPile(ev, evklass)
             try:
+                evklass = self.cardmapping['Event'][ev]
+                self.events[ev] = EventPile(ev, evklass)
                 available.remove(ev)
-            except ValueError:
+            except (ValueError, KeyError):
                 sys.stderr.write("Unknown event '%s'\n" % ev)
                 sys.exit(1)
         # Events to make up the numbers
