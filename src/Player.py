@@ -786,6 +786,13 @@ class Player(object):
             self.plrTrashCard()
         self.hook_buyCard(newcard)
         newcard.hook_buyThisCard(game=self.game, player=self)
+        self.hook_allPlayers_buyCard(newcard)
+
+    ###########################################################################
+    def hook_allPlayers_buyCard(self, card):
+        for player in self.game.playerList():
+            for cd in player.durationpile:
+                cd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def hook_gainCard(self, card):

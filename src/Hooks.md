@@ -8,11 +8,17 @@ It should return True if the card is available to be purchased, or False otherwi
 
 hook_buyCard
 ------------
-This is called after a card has been purchased, and is invoked for every card in the players hand.
+This is called after a card has been purchased, and is invoked for
+every card in the players hand.
 
 hook_buyThisCard
 ------------
 This is called after this card has been purchased.
+
+hook_allPlayers_buyCard
+---------------
+If any player buys a card call this for any card in everyone's duration pile
+
 
 hook_discardCard
 ----------------
@@ -20,7 +26,8 @@ This is called when this card is discarded.
 
 hook_spendValue
 ---------------
-This modifies how much coin value you get for spending the card and is invoked for every card that has been played this turn.
+This modifies how much coin value you get for spending the card and
+is invoked for every card that has been played this turn.
 
 Return the delta. So 0 for no change.
 
