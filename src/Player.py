@@ -686,14 +686,18 @@ class Player(object):
         card.hook_discardCard(game=self.game, player=self)
 
     ###########################################################################
-    def hook_spendValue(self, card):
-        """ How much do you get for spending the card """
+    def hook_spendValue(self, card, actual=False):
+        """ How much do you get for spending the card
+            If actual is True then we are spending the coin rather than
+            just working out what we would get for spending it
+        """
         val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendValue(game=self.game, player=self, card=card)
-        if self.coin_token:
+        if val and self.coin_token:
             val -= 1
-            self.coin_token = False
+            if actual:
+                self.coin_token = False
         return val
 
     ###########################################################################
@@ -731,7 +735,7 @@ class Player(object):
                 self.addCard(card, 'played')
             self.hand.remove(card)
         self.actions += card.actions
-        self.coin += self.hook_spendValue(card)
+        self.coin += self.hook_spendValue(card, actual=True)
         self.buys += card.buys
         self.potions += card.potion
 
