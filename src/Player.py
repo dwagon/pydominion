@@ -432,11 +432,11 @@ class Player(object):
             index += 1
             if op.cost <= self.coin:
                 sel = chr(ord('a') + index)
-                tp = 'Use event %s: %s (%d coins)' % (op.name, op.desc, op.cost)
+                tp = 'Use event %s (%d coins) %s' % (op.name, op.cost, op.desc)
                 action = 'event'
             else:
                 sel = '-'
-                tp = 'Event %s: %s (%d coins)' % (op.name, op.desc, op.cost)
+                tp = 'Event %s (%d coins) %s' % (op.name, op.cost, op.desc)
                 action = None
             options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
 
