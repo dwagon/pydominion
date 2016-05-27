@@ -22,19 +22,19 @@ class Event_Summon(Event):
 
 
 ###############################################################################
-class Test_Summon(unittest.TestCase):
-    def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Summon'], initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
-        self.card = self.g.events['Summon']
-
-    def test_with_summon(self):
-        """ Use Summon """
-        self.plr.addCoin(5)
-        self.plr.test_input = ['moat']
-        self.plr.performEvent(self.card)
+# class XTest_Summon(unittest.TestCase):
+#    def setUp(self):
+#        import Game
+#        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Summon'], initcards=['Moat'])
+#        self.g.startGame()
+#        self.plr = self.g.playerList()[0]
+#        self.card = self.g.events['Summon']
+#
+#    def test_with_summon(self):
+#        """ Use Summon """
+#        self.plr.addCoin(5)
+#        self.plr.test_input = ['moat']
+#        self.plr.performEvent(self.card)
 
 
 ###############################################################################
