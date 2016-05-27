@@ -152,7 +152,7 @@ class Player(object):
         """ Return named card if cardname is in reserve """
         assert(isinstance(cardname, str))
         for card in self.reserve:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 
@@ -162,7 +162,7 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.hand:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 
@@ -172,7 +172,17 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.discardpile:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
+    def inPlayed(self, cardname):
+        """ Return named card if cardname is in the played pile """
+        assert(isinstance(cardname, str))
+
+        for card in self.played:
+            if card.name == cardname:
                 return card
         return None
 
@@ -182,7 +192,7 @@ class Player(object):
         assert(isinstance(cardname, str))
 
         for card in self.deck:
-            if card.name.lower() == cardname.lower():
+            if card.name == cardname:
                 return card
         return None
 
@@ -236,14 +246,18 @@ class Player(object):
     def nextCard(self):
         """ Return the next card from the deck """
         if not self.deck:
-            self.shuffleDeck()
-            while self.discardpile:
-                self.addCard(self.discardpile.topcard(), 'deck')
+            self.refill_deck()
         if not self.deck:
             self.output("No more cards in deck")
             return None
         c = self.deck.topcard()
         return c
+
+    ###########################################################################
+    def refill_deck(self):
+        self.shuffleDeck()
+        while self.discardpile:
+            self.addCard(self.discardpile.topcard(), 'deck')
 
     ###########################################################################
     def pickupCards(self, num, verbose=True, verb='Picked up'):
@@ -456,7 +470,7 @@ class Player(object):
                 sel = '-'
                 action = None
                 verb = card.name
-            tp = '%s (%s %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
+            tp = '%s (%s; %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
@@ -786,6 +800,13 @@ class Player(object):
             self.plrTrashCard()
         self.hook_buyCard(newcard)
         newcard.hook_buyThisCard(game=self.game, player=self)
+        self.hook_allPlayers_buyCard(newcard)
+
+    ###########################################################################
+    def hook_allPlayers_buyCard(self, card):
+        for player in self.game.playerList():
+            for cd in player.durationpile:
+                cd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def hook_gainCard(self, card):
