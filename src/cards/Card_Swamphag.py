@@ -14,7 +14,6 @@ class Card_Swamphag(Card):
         self.needcurse = True
         self.name = 'Swamp Hag'
         self.cost = 5
-        self.cost = 1
 
     def special(self, game, player):
         pass
