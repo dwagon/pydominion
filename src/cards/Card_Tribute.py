@@ -24,6 +24,7 @@ class Card_Tribute(Card):
         cardname = None
         for c in cards:
             player.output("Looking at %s from %s" % (c.name, victim.name))
+            victim.output("%s's Tribute discarded %s" % (player.name, c.name))
             victim.addCard(c, 'discard')
             if c.name == cardname:
                 player.output("Duplicate - no extra")
