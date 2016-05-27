@@ -58,11 +58,11 @@ class BotPlayer(Player):
         self.output("Have %d coins" % coin)
         if coin >= 8:
             return opts['province']
-        if coin >= 6:
+        if coin >= 6 and 'gold' in opts:
             return opts['gold']
-        if coin >= 5:
+        if coin >= 5 and 'duchy' in opts:
             return opts['duchy']
-        if coin >= 3:
+        if coin >= 3 and 'silver' in opts:
             return opts['silver']
         return opts['quit']
 
