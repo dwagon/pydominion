@@ -907,6 +907,7 @@ class Player(object):
                 continue
             if coin is None:
                 affordable.add(c)
+                continue
             if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
         affordable.sort(key=lambda c: self.cardCost(c))
