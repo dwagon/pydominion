@@ -9,13 +9,13 @@ class Card_Baron(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+1 Buy, discard an estate gain +4 Gold, else gain estate"
+        self.desc = "+1 Buy, discard an estate gain +4 Coin, else gain estate"
         self.name = 'Baron'
         self.cost = 4
         self.buys = 1
 
     def special(self, game, player):
-        """ You may discard an Estate card. If you do +4 GP. Otherwise,
+        """ You may discard an Estate card. If you do +4 Coin. Otherwise,
             gain an estate card """
         hasEstate = player.inHand('Estate')
         if hasEstate:

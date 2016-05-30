@@ -10,7 +10,8 @@ class Card_Butcher(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = "+2 special coins - trash a card to buy a card"
+        self.desc = """Take 2 special coins. You may trash a card from your hand and then pay any number of special coins.
+        If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of special coins you paid"""
         self.name = 'Butcher'
         self.cost = 5
 
@@ -18,7 +19,7 @@ class Card_Butcher(Card):
         """ Take 2 Coin tokens. You may trash a card from your hand
             and then pay any number of Coin tokens. If you did trash a
             card, gain a card with a cost up to the cost of the trashed
-        card play the number of Coin tokens you paid """
+            card plus the number of Coin tokens you paid """
         player.gainSpecialCoins(2)
         trash = player.plrChooseOptions(
             'Trash a card to buy a card?',
@@ -32,7 +33,6 @@ class Card_Butcher(Card):
             options.append({'selector': sel, 'print': 'Add %d coins' % i, 'coins': i})
         o = player.userInput(options, "Spend extra coins?")
         cost = card.cost + o['coins']
-        player.trashCard(card)
         player.specialcoins -= o['coins']
         player.plrGainCard(cost=cost)
 
@@ -68,6 +68,7 @@ class Test_Butcher(unittest.TestCase):
         self.assertEqual(self.plr.getSpecialCoins(), 0)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.discardSize(), 1)
+        self.assertIsNotNone(self.g.inTrash('Gold'))
         for m in self.plr.messages:
             if 'Province' in m:
                 break
