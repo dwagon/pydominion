@@ -22,6 +22,7 @@ class Card_Familiar(Card):
         """ All other players gain a curse """
         for pl in player.attackVictims():
             player.output("%s got cursed" % pl.name)
+            pl.output("%s's Familiar cursed you" % player.name)
             pl.gainCard('Curse')
 
 
