@@ -40,6 +40,12 @@ class Card_Masquerade(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    c = player.pick_to_discard(1, keepvic=True)
+    return c
+
+
+###############################################################################
 class Test_Masquerade(unittest.TestCase):
     def setUp(self):
         import Game

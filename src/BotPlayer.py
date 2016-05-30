@@ -93,7 +93,7 @@ class BotPlayer(Player):
         assert False, "BigMoneyBot can't choopse options from %s" % mod.__name__
 
     ###########################################################################
-    def pick_to_discard(self, numtodiscard):
+    def pick_to_discard(self, numtodiscard, keepvic=False):
         """ Many attacks require this sort of response.
         Return num cards to discard """
         if numtodiscard <= 0:
@@ -102,8 +102,11 @@ class BotPlayer(Player):
 
         # Discard non-treasures first
         for card in self.hand:
-            if not card.isTreasure():
-                todiscard.append(card)
+            if card.isTreasure():
+                continue
+            if keepvic and card.isVictory():
+                continue
+            todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
 
@@ -113,7 +116,6 @@ class BotPlayer(Player):
                 for card in self.hand[:]:
                     if card.name == treas:
                         todiscard.append(card)
-                        self.hand.remove(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
         else:   # pragma: no cover
