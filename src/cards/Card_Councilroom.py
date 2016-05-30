@@ -19,7 +19,7 @@ class Card_Councilroom(Card):
         """ Each other player draws a card """
         for pl in game.playerList():
             if pl != player:
-                pl.output("Picking up card due to %s playing a councilroom" % player.name)
+                pl.output("Picking up card due to %s playing a Council Room" % player.name)
                 pl.pickupCard()
 
 

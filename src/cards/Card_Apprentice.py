@@ -9,7 +9,7 @@ class Card_Apprentice(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'alchemy'
-        self.desc = "+1 action, Trash a card, +1 card per cost, +2 cards if it is a potion"
+        self.desc = "+1 action, Trash a card, +1 card per coint it costs, +2 cards if it has a potion cost"
         self.name = 'Apprentice'
         self.cost = 5
         self.actions = 1

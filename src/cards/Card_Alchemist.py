@@ -9,7 +9,7 @@ class Card_Alchemist(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'alchemy'
-        self.desc = "+2 cards, +1 action; can put on top of deck if potion in play"
+        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potoin in play"
         self.name = 'Alchemist'
         self.cards = 2
         self.actions = 1
@@ -28,7 +28,10 @@ class Card_Alchemist(Card):
             'What to do with the alchemist?',
             ('Discard alchemist', False), ('Put on top of deck', True))
         if ans:
-            player.played.remove(self)
+            if self in player.played:
+                player.played.remove(self)
+            elif self in player.hand:
+                player.hand.remove(self)
             player.addCard(self, 'topdeck')
 
 

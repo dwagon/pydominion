@@ -18,10 +18,11 @@ class Card_Cultist(Card):
         """ Each other play gains a Ruins. You may play a Cultist
             from your hand. """
         for plr in player.attackVictims():
+            plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gainCard('Ruins')
         cultist = player.inHand('Cultist')
         if cultist:
-            ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play cultist", True))
+            ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play another cultist", True))
             if ans:
                 player.playCard(cultist, costAction=False)
 

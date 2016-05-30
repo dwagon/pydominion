@@ -16,7 +16,6 @@ class Event_Trade(Event):
     def special(self, game, player):
         """ Trash up to 2 cards from your hand. Gain a Silver per card you trashed """
         trash = player.plrTrashCard(num=2)
-        player.output("trash=%s" % trash)
         for i in trash:
             player.gainCard('Silver')
 

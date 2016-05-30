@@ -17,11 +17,14 @@ class Card_Lost_City(Card):
         self.cost = 5
 
     def special(self, game, player):
+        pass
+
+    def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player draws a card """
         for pl in game.playerList():
             if pl != player:
                 c = pl.pickupCard()
-                pl.output("Picking up a %s due to %s playing a List City" % (c.name, player.name))
+                pl.output("Picking up a %s due to %s playing a Lost City" % (c.name, player.name))
 
 
 ###############################################################################
