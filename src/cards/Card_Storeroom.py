@@ -9,7 +9,7 @@ class Card_Storeroom(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "Discard any number of cards twice"
+        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card discarded. +1 Coin per card discarded the second time """
         self.name = 'Store Room'
         self.buys = 1
         self.cost = 3

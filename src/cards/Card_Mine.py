@@ -22,7 +22,7 @@ class Card_Mine(Card):
         for c in player.hand:
             if c.isTreasure():
                 sel = "%s" % index
-                options.append({'selector': sel, 'print': "Trash %s" % c.name, 'card': c})
+                options.append({'selector': sel, 'print': "Trash/Upgrade %s" % c.name, 'card': c})
                 index += 1
         player.output("Trash a treasure to gain a better one")
         o = player.userInput(options, "Trash which treasure?")
