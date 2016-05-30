@@ -302,6 +302,15 @@ class Game(object):
         return actionpiles
 
     ###########################################################################
+    def getVictoryPiles(self):
+        """ Return all cardstacks that are victory cards """
+        victorypiles = []
+        for cp in self.cardpiles.values():
+            if cp.isVictory():
+                victorypiles.append(cp)
+        return victorypiles
+
+    ###########################################################################
     def isGameOver(self):
         numEmpty = 0
         for c in self.cardpiles:
