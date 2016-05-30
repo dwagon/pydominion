@@ -4,6 +4,7 @@ import sys
 from Card import Card
 from CardPile import CardPile
 from EventPile import EventPile
+from collections import defaultdict
 
 
 ###############################################################################
@@ -40,6 +41,10 @@ class Player(object):
         self.stats = {'gain': 0}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
+        self.stacklist = (
+            ('Discard', self.discardpile), ('Hand', self.hand),
+            ('Reserve', self.reserve), ('Deck', self.deck),
+            ('Played', self.played), ('Duration', self.durationpile))
 
     ###########################################################################
     def initial_Deck(self):
@@ -204,7 +209,7 @@ class Player(object):
         self.game.trashpile.add(card)
         if card in self.played:
             self.played.remove(card)
-        if card in self.hand:
+        elif card in self.hand:
             self.hand.remove(card)
 
     ###########################################################################
@@ -927,13 +932,18 @@ class Player(object):
         return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
+    def getCards(self):
+        """ Return a list of all teh cards owned """
+        cards = defaultdict(int)
+        for name, stack in self.stacklist:
+            for card in stack:
+                cards[card.name] += 1
+        return cards
+
+    ###########################################################################
     def countCards(self):
         count = {}
-        stacklist = (
-            ('Discard', self.discardpile), ('Hand', self.hand),
-            ('Reserve', self.reserve), ('Deck', self.deck),
-            ('Played', self.played), ('Duration', self.durationpile))
-        for name, stack in stacklist:
+        for name, stack in self.stacklist:
             count[name] = len(stack)
         total = sum([x for x in count.values()])
         total += self.secret_count

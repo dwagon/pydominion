@@ -359,9 +359,15 @@ class Game(object):
     def whoWon(self):
         scores = {}
         self.output("")
+        self.output("Scores:")
         for plr in self.playerList():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
+        self.output("")
+        for plr in self.playerList():
+            self.output("Cards of %s:" % plr.name)
+            for k, v in plr.getCards().items():
+                self.output("%s: %s=%s" % (plr.name, k, v))
         return scores
 
     ###########################################################################
