@@ -455,7 +455,11 @@ def runGame(args):
     g.startGame()
     try:
         while not g.gameover:
-            g.turn()
+            try:
+                g.turn()
+            except Exception:
+                g.print_state()
+                raise
     except KeyboardInterrupt:
         g.gameover = True
         pass
