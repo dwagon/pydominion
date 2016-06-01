@@ -10,7 +10,7 @@ class Card_Messenger(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = """+1 Buy, +2 Coin, You may put ypur deck into your discard pile;
+        self.desc = """+1 Buy, +2 Coin, You may put your deck into your discard pile;
         When this is your first buy in a turn, gain a card costing up to 4,
         and each other player gains a copy of it."""
         self.name = 'Messenger'
