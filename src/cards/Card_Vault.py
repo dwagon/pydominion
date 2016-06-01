@@ -29,6 +29,11 @@ class Card_Vault(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return player.pick_to_discard(2)
+
+
+###############################################################################
 class Test_Vault(unittest.TestCase):
     def setUp(self):
         import Game
