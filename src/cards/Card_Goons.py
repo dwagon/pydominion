@@ -13,7 +13,7 @@ class Card_Goons(Card):
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6
-        self.buy = 1
+        self.buys = 1
         self.coin = 2
 
     def special(self, game, player):
@@ -47,6 +47,8 @@ class Test_Goons(unittest.TestCase):
     def test_play(self):
         self.victim.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.victim.handSize(), 3)
 
     def test_defended(self):
