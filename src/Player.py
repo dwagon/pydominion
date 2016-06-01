@@ -372,7 +372,7 @@ class Player(object):
     ###########################################################################
     def playableSelection(self, index):
         options = []
-        playable = [c for c in self.hand if c.playable]
+        playable = [c for c in self.hand if c.playable and c.isAction()]
         for p in playable:
             sel = chr(ord('a') + index)
             pr = "Play %s (%s)" % (p.name, p.desc)
