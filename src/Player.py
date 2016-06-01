@@ -140,17 +140,17 @@ class Player(object):
         return onstack
 
     ###########################################################################
-    def callReserve(self, cardname):
-        assert(isinstance(cardname, str))
-        c = self.inReserve(cardname)
-        if not c:
-            self.output("%s not in reserve" % cardname)
-            return None
-        c.hook_callReserve(game=self.game, player=self)
-        self.output("Calling %s from Reserve" % cardname)
-        self.reserve.remove(c)
-        self.addCard(c, 'played')
-        return c
+    def callReserve(self, card):
+        if isinstance(card, str):
+            card = self.inReserve(card)
+            if not card:
+                return None
+        assert(isinstance(card, Card))
+        card.hook_callReserve(game=self.game, player=self)
+        self.output("Calling %s from Reserve" % card.name)
+        self.reserve.remove(card)
+        self.addCard(card, 'played')
+        return card
 
     ###########################################################################
     def inReserve(self, cardname):
@@ -560,7 +560,7 @@ class Player(object):
         elif opt['action'] == 'event':
             self.performEvent(opt['card'])
         elif opt['action'] == 'reserve':
-            self.callReserve(opt['card'].name)
+            self.callReserve(opt['card'])
         elif opt['action'] == 'coin':
             self.spendCoin()
         elif opt['action'] == 'play':
@@ -649,7 +649,7 @@ class Player(object):
     ###########################################################################
     def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
-        for c in self.played:
+        for c in self.played + self.reserve:
             c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
@@ -775,14 +775,15 @@ class Player(object):
         return max(0, cost)
 
     ###########################################################################
-    def gainCard(self, cardpile=None, destination='discard', newcard=None):
+    def gainCard(self, cardpile=None, destination='discard', newcard=None, callhook=True):
         """ Add a new card to the players set of cards from a cardpile """
+        options = {}
         if not newcard:
             if isinstance(cardpile, str):
                 newcard = self.game[cardpile].remove()
             else:
                 newcard = cardpile.remove()
-        if newcard:
+        if newcard and callhook:
             options = self.hook_gainCard(newcard)
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
@@ -824,9 +825,10 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for c in self.hand:
+        for c in self.hand + self.reserve:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
-            options.update(o)
+            if o:
+                options.update(o)
         return options
 
     ###########################################################################
