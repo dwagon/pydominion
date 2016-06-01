@@ -523,6 +523,8 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
+        for card in self.played + self.reserve:
+            card.hook_endTurn(game=self.game, player=self)
         self.cleanupPhase()
 
     ###########################################################################
