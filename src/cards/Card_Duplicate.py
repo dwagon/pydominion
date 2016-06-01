@@ -16,6 +16,8 @@ class Card_Duplicate(Card):
         self.when = ['special']
 
     def hook_gainCard(self, game, player, card):
+        if not player.inReserve('Duplicate'):
+            return
         if card.cost > 6:
             return
         if not card.purchasable:
@@ -53,10 +55,18 @@ class Test_Duplicate(unittest.TestCase):
         self.plr.setReserve('Duplicate')
         self.plr.test_input = ['Gold']
         self.plr.buyCard(self.g['Gold'])
-        self.g.print_state()
         self.assertEqual(self.plr.discardSize(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Gold')
+        self.assertEqual(self.plr.coin, 0)
+
+    def test_buy_non_reserve(self):
+        """ Buy a card when duplicate just in hand"""
+        self.plr.coin = 6
+        self.plr.setReserve()
+        self.plr.setHand('Duplicate')
+        self.plr.buyCard(self.g['Gold'])
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.coin, 0)
 
 ###############################################################################
