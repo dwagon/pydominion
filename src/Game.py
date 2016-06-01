@@ -183,7 +183,7 @@ class Game(object):
         self['Silver'].numcards = 40
         self['Gold'].numcards = 30
         available = self.getAvailableCards()
-        unfilled = 10 - len(initcards)
+        unfilled = 10
         self.needcurse = False
         self.needspoils = False
         self.needpotion = False
@@ -193,6 +193,7 @@ class Game(object):
             cardname = self.guess_cardname(c)
             if cardname:
                 self.useCardPile(available, cardname)
+                unfilled -= 1
                 continue
             eventname = self.guess_cardname(c, 'Event')
             if eventname:
