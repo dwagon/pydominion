@@ -162,17 +162,17 @@ class Game(object):
             self.output("Playing with event %s" % e)
 
     ###########################################################################
-    def guess_cardname(self, name):
+    def guess_cardname(self, name, prefix='Card'):
         """ Don't force the user to give the exact card name on the command
         line - maybe we can guess it """
-        available = self.getAvailableCards()
+        available = self.getAvailableCards(prefix)
         if name in available:
             return name
         for c in available:
             newc = c.replace(' ', '').replace("'", "")
             if newc.lower() == name.lower():
                 return c
-        print("Can't guess what card '%s' is" % name)
+        return None
 
     ###########################################################################
     def loadDecks(self, initcards):
@@ -191,7 +191,15 @@ class Game(object):
         self.needtravellers = False
         for c in initcards:
             cardname = self.guess_cardname(c)
-            self.useCardPile(available, cardname)
+            if cardname:
+                self.useCardPile(available, cardname)
+                continue
+            eventname = self.guess_cardname(c, 'Event')
+            if eventname:
+                self.eventcards.append(eventname)
+                continue
+            print("Can't guess what card '%s' is" % c)
+            sys.exit(1)
 
         while unfilled:
             c = random.choice(available)
