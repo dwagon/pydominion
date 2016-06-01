@@ -17,10 +17,6 @@ class Card_Ratcatcher(Card):
         self.cost = 2
         self.when = 'start'
 
-    def special(self, game, player):
-        player.played.remove(self)
-        player.addCard(self, 'reserve')
-
     def hook_callReserve(self, game, player):
         """ At the start of your turn, you may call this, to trash a
             card from your hand """

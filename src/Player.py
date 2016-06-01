@@ -736,6 +736,8 @@ class Player(object):
         if discard:
             if card.isDuration():
                 self.addCard(card, 'duration')
+            elif card.isReserve():
+                self.addCard(card, 'reserve')
             else:
                 self.addCard(card, 'played')
             self.hand.remove(card)

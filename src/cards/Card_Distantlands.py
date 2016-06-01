@@ -16,10 +16,6 @@ class Card_Distantlands(Card):
         self.callable = False
         self.counted = False
 
-    def special(self, game, player):
-        player.addCard(self, 'reserve')
-        player.played.remove(self)
-
     def special_score(self, game, player):
         """ Worth 4 VP if on your tavern mat; else 0"""
         score = 0

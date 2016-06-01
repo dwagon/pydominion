@@ -16,10 +16,6 @@ class Card_Coinoftherealm(Card):
         self.cost = 2
         self.when = 'postaction'
 
-    def special(self, game, player):
-        player.addCard(self, 'reserve')
-        player.played.remove(self)
-
     def hook_callReserve(self, game, player):
         """ Directly after resolving an action you may call this for +2 Actions """
         player.addActions(2)
