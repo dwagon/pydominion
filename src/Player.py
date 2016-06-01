@@ -149,7 +149,7 @@ class Player(object):
         c.hook_callReserve(game=self.game, player=self)
         self.output("Calling %s from Reserve" % cardname)
         self.reserve.remove(c)
-        self.addCard(c, 'discard')
+        self.addCard(c, 'played')
         return c
 
     ###########################################################################
