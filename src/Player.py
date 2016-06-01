@@ -38,7 +38,7 @@ class Player(object):
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
-        self.stats = {'gain': 0}
+        self.stats = {'gain': 0, 'buys': 0}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.stacklist = (
@@ -661,7 +661,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = {'gain': 0}
+        self.stats = {'gain': 0, 'buys': 0}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
@@ -806,6 +806,7 @@ class Player(object):
         newcard = self.gainCard(card)
         self.buys -= 1
         self.coin -= self.cardCost(newcard)
+        self.stats['buys'] += 1
         self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
         if 'Trashing' in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
