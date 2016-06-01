@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Duplicate(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['action', 'reserve']
+        self.base = 'adventure'
+        self.desc = "When you gain a card costing up to 6, you may call this to gain a copy of that card"
+        self.name = 'Duplicate'
+        self.cost = 4
+        self.when = ['special']
+
+    def hook_gainCard(self, game, player, card):
+        if card.cost > 6:
+            return
+        if not card.purchasable:
+            return
+        if card.potcost:
+            return
+        print "Duplication!"
+        o = player.plrChooseOptions(
+            'Call Duplicate on %s' % card.name,
+            ('Save for later', False),
+            ('Duplicate %s' % card.name, True)
+            )
+        if o:
+            self._duplicate = card
+            player.callReserve(self)
+        return {}
+
+    def hook_callReserve(self, game, player):
+        card = self._duplicate
+        player.output("Gaining a %s from Duplicate" % card.name)
+        player.gainCard(card.name, callhook=False)
+
+
+###############################################################################
+class Test_Duplicate(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duplicate'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.card = self.g['Duplicate'].remove()
+
+    def test_buy(self):
+        """ Call Duplicate from reserve """
+        self.plr.coin = 6
+        self.plr.setReserve('Duplicate')
+        self.plr.test_input = ['Gold']
+        self.plr.buyCard(self.g['Gold'])
+        self.g.print_state()
+        self.assertEqual(self.plr.discardSize(), 2)
+        for i in self.plr.discardpile:
+            self.assertEqual(i.name, 'Gold')
+        self.assertEqual(self.plr.coin, 0)
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
