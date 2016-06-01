@@ -22,7 +22,7 @@ class Card_Watchtower(Card):
             hand. If you do, either trash that card, or put it on top
             of your deck """
         act = player.plrChooseOptions(
-            "What to do with watchtower?",
+            "What to do with Watchtower?",
             ("Do nothing", 'nothing'),
             ("Trash %s" % card.name, 'trash'),
             ("Put %s on top of deck" % card.name, 'topdeck'))
@@ -55,7 +55,7 @@ class Test_Watchtower(unittest.TestCase):
         """ React to gaining a card - but do nothing """
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['nothing']
         self.plr.gainCard('Copper')
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
         self.assertEqual(self.plr.discardSize(), 1)
@@ -63,7 +63,7 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_trash(self):
         """ React to gaining a card - discard card"""
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['trash']
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.gainCard('Copper')
@@ -74,7 +74,7 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_topdeck(self):
         """ React to gaining a card - put card on deck"""
-        self.plr.test_input = ['2']
+        self.plr.test_input = ['top']
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.gainCard('Silver')

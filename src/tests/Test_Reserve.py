@@ -74,6 +74,7 @@ class Test_Reserve(unittest.TestCase):
         self.assertEquals(c.name, 'Silver')
 
     def test_bad_callReserve(self):
+        """ Call a reserve that isn't there! """
         self.plr.setReserve('Copper')
         c = self.plr.callReserve('Silver')
         self.assertIsNone(c)
