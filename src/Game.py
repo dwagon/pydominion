@@ -389,7 +389,7 @@ class Game(object):
         return scores
 
     ###########################################################################
-    def count_all_cards(self):
+    def count_all_cards(self):  # pragma: no cover
         for pile in self.cardpiles.values():
             total = pile.numcards
             sys.stderr.write("%-15s  " % pile.name)

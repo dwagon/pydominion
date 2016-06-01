@@ -46,7 +46,7 @@ class Card_Bishop(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     # Trash an estate, then a copper else nothing
     es = player.inHand('estate')
     if es:

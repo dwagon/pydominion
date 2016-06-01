@@ -716,7 +716,7 @@ class Player(object):
         # assert(isinstance(card, (Card, CardPile)))
         if card.isAction() and costAction:
             self.actions -= 1
-        if self.actions < 0:
+        if self.actions < 0:    # pragma: no cover
             self.actions = 0
             return
         self.output("Played %s" % card.name)
@@ -800,7 +800,7 @@ class Player(object):
     ###########################################################################
     def buyCard(self, card):
         assert(isinstance(card, CardPile))
-        if not self.buys:
+        if not self.buys:   # pragma: no cover
             return
         newcard = self.gainCard(card)
         self.buys -= 1
