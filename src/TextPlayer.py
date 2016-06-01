@@ -37,7 +37,7 @@ class TextPlayer(Player):
             else:
                 try:
                     inp = raw_input()
-                except IOError:
+                except (IOError, KeyboardInterrupt):
                     self.game.print_state()
                     raise
             if inp:
