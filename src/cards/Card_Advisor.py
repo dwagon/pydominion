@@ -31,9 +31,7 @@ class Card_Advisor(Card):
                     verbs=('Discard', 'Undiscard')
                     )[0]
         player.output("%s discarded %s" % (choser.name, to_discard.name))
-        for c in cards:
-            if c == to_discard:
-                player.discardCard(c)
+        player.discardCard(to_discard)
 
 
 ###############################################################################
