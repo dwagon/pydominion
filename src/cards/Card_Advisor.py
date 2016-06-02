@@ -22,19 +22,18 @@ class Card_Advisor(Card):
         cards = []
         choser = game.playerToLeft(player)
         for i in range(3):
-            cards.append(player.nextCard())
+            card = player.pickupCard()
+            cards.append(card)
         to_discard = choser.cardSel(
                     force=True,
-                    prompt='Pick a card of %s to discard' % player.name,
+                    prompt='Pick a card of %s to discard from Advisor' % player.name,
                     cardsrc=cards,
                     verbs=('Discard', 'Undiscard')
                     )[0]
         player.output("%s discarded %s" % (choser.name, to_discard.name))
         for c in cards:
             if c == to_discard:
-                player.discardCard(to_discard)
-            else:
-                player.addCard(c, 'hand')
+                player.discardCard(c)
 
 
 ###############################################################################
@@ -55,16 +54,15 @@ class Test_Advisor(unittest.TestCase):
         self.acard = self.g['Advisor'].remove()
         self.plr.addCard(self.acard, 'hand')
 
-    def test_defended(self):
-        self.plr.setDeck('Copper', 'Silver', 'Gold')
+    def test_play(self):
+        """" Play an advisor """
+        self.plr.setDeck('Duchy', 'Silver', 'Gold')
         self.plr2.test_input = ['discard gold']
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.getActions(), 1)
-        for c in self.plr.hand:
-            if c.name == 'Gold':    # pragma: no cover
-                self.fail()
-        self.assertEquals(self.plr.handSize(), 7)
+        self.assertEquals(self.plr.handSize(), 5 + 3 - 1)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.inHand('Gold'))
 
 
 ###############################################################################
