@@ -65,6 +65,14 @@ hook_endTurn
 ------------
 Called at the end of the players buy phase
 
+hook_cardCost
+------------
+Modifier to the cost of buying a card. This hook applies to buying another card.
+
+hook_thisCardCost
+-----------------
+Modifier to the cost of buying this card.
+
 setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup

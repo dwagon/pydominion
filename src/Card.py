@@ -137,6 +137,9 @@ class Card(object):
     def hook_cardCost(self, game, player, card):
         return 0    # pragma: no cover
 
+    def hook_thisCardCost(self, game, player):
+        return 0    # pragma: no cover
+
     def hook_coinvalue(self, game, player):
         """ How much coin does this card contribute """
         return self.coin    # pragma: no cover
