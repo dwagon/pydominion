@@ -102,9 +102,16 @@ class Game(object):
         if hasattr(cardname, 'name'):
             cardname = cardname.name
         for c in self.trashpile:
-            if c.cardname.lower() == cardname.lower():
+            if c.name == cardname:
                 return c
         return None
+
+    ###########################################################################
+    def setTrash(self, *cards):
+        """ This is mostly used for testing """
+        self.trashpile.empty()
+        for c in cards:
+            self.trashpile.add(self[c].remove())
 
     ###########################################################################
     def cardSetup(self):
