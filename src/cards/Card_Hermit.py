@@ -57,7 +57,7 @@ class Test_Hermit(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hermit'])
         self.g.startGame()
-        self.plr = self.g.playerList()
+        self.plr = self.g.playerList(0)
         self.card = self.g['Hermit'].remove()
 
     def test_play_discard(self):
