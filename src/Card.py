@@ -16,6 +16,7 @@ class Card(object):
         self.defense = False
         self.needcurse = False
         self.needspoils = False
+        self.needsmadman = False
         self.traveller = False
         self.when = 'any'
         self.actions = 0

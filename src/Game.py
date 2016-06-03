@@ -193,6 +193,7 @@ class Game(object):
         unfilled = 10
         self.needcurse = False
         self.needspoils = False
+        self.needsmadman = False
         self.needpotion = False
         self.needruins = False
         self.needtravellers = False
@@ -221,6 +222,9 @@ class Game(object):
         if self.needspoils:
             self.cardpiles['Spoils'] = CardPile('Spoils', self.cardmapping['BaseCard']['Spoils'], numcards=16)
             self.output("Playing with Spoils")
+        if self.needsmadman:
+            self.cardpiles['Madman'] = CardPile('Madman', self.cardmapping['BaseCard']['Madman'], numcards=10)
+            self.output("Playing with Madman")
         if self.needruins:
             self.addRuins()
 
@@ -262,6 +266,8 @@ class Game(object):
             self.needspoils = True
         if self.cardpiles[c].traveller:
             self.needtravellers = True
+        if self.cardpiles[c].needsmadman:
+            self.needsmadman = True
         return 1
 
     ###########################################################################
