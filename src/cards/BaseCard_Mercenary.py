@@ -4,12 +4,14 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Mercenary(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = "You may trash 2 cards for +2 cards, +2 coin other players discard down to 3"
+        self.desc = """You may trash 2 cards from your hand.
+        If you do, +2 Cards, + Coin2.png, and each other player discards down to 3 cards in hand."""
         self.name = 'Mercenary'
         self.purchasable = False
         self.cost = 0
@@ -29,6 +31,12 @@ class Card_Mercenary(Card):
         player.addCoin(2)
         for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    numtodiscard = len(player.hand) - 3
+    return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
