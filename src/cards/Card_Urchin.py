@@ -71,7 +71,6 @@ class Test_Urchin(unittest.TestCase):
         self.plr.setPlayed('Urchin', 'Militia')
         self.plr.test_input = ['end phase', 'end phase', 'mercenary']
         self.plr.turn()
-        self.g.print_state()
         self.assertIsNotNone(self.plr.inDiscard('Mercenary'))
         self.assertIsNone(self.plr.inHand('Urchin'))
 

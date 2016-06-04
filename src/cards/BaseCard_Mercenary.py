@@ -43,7 +43,7 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Mercenary(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Mercenary', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Urchin', 'Moat'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Mercenary'].remove()
