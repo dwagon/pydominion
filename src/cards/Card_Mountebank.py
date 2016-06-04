@@ -9,7 +9,7 @@ class Card_Mountebank(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'prosperity'
-        self.desc = "+2 coin. Others discard curse or gain one + copper"
+        self.desc = "+2 coin. Others discard curse or gain curse + copper"
         self.name = 'Mountebank'
         self.needcurse = True
         self.coin = 2
@@ -22,10 +22,12 @@ class Card_Mountebank(Card):
             for c in plr.hand:
                 if c.cardname == 'curse':
                     player.output("Player %s discarded a curse" % plr.name)
+                    plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
                     plr.discardCard(c)
                     break
             else:
                 player.output("Player %s gained a curse and a copper" % plr.name)
+                plr.output("Gained a Curse and Copper due to %s's Mountebank" % player.name)
                 plr.addCard(game['Curse'].remove())
                 plr.addCard(game['Copper'].remove())
 
