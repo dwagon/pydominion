@@ -12,6 +12,7 @@ class Card_Rats(Card):
         self.base = 'darkages'
         self.desc = "+1 Card, +1 Action, Gain a Rats, Trash a non-Rats"
         self.name = 'Rats'
+        self.stacksize = 20
         self.cards = 1
         self.actions = 1
         self.cost = 4

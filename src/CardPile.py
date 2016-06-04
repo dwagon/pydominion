@@ -2,12 +2,15 @@
 
 ###############################################################################
 class CardPile(object):
-    def __init__(self, cardname, klass, numcards=10, cardpath='cards'):
+    def __init__(self, cardname, klass, numcards=-1, cardpath='cards'):
         self.cardpath = cardpath
         self.cardname = cardname
-        self.numcards = numcards
         self.cardclass = klass
         self.card = klass()
+        if numcards < 0:
+            self.numcards = self.card.stacksize
+        else:
+            self.numcards = numcards
 
     ###########################################################################
     def __lt__(self, a):
