@@ -198,6 +198,7 @@ class Game(object):
         self.needpotion = False
         self.needruins = False
         self.needtravellers = False
+        foundall = True
         for c in initcards:
             cardname = self.guess_cardname(c)
             if cardname:
@@ -209,6 +210,8 @@ class Game(object):
                 self.eventcards.append(eventname)
                 continue
             print("Can't guess what card '%s' is" % c)
+            foundall = False
+        if not foundall:
             sys.exit(1)
 
         while unfilled:
