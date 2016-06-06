@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Diadem(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['treasure', 'prize']
+        self.base = 'cornucopia'
+        self.name = "Diadem"
+        self.purchasable = False
+        self.cost = 0
+        self.desc = "2 Coin. When you play this, +1 Coin per unused Action you have (Action, not Action card)."
+        self.coin = 2
+
+    def special(self, game, player):
+        player.output("Gaining %d coins from unused actions" % player.actions)
+        player.addCoin(player.actions)
+
+
+###############################################################################
+class Test_Diadem(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tournament'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.card = self.g['Diadem'].remove()
+
+    def test_play(self):
+        self.plr.playCard(self.card)
+        self.plr.actions = 1
+        self.assertEqual(self.getCoin(), 3)
+
+# EOF
