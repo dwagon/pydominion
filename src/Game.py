@@ -24,6 +24,7 @@ class Game(object):
 
         self.players = {}
         self.cardpiles = {}
+        self.prizes = {}
         self.events = {}
         self.trashpile = PlayArea([])
         self.gameover = False
@@ -198,6 +199,7 @@ class Game(object):
         self.needpotion = False
         self.needruins = False
         self.needtravellers = False
+        self.needsprize = False
         foundall = True
         for c in initcards:
             cardname = self.guess_cardname(c)
@@ -232,6 +234,8 @@ class Game(object):
         if self.needsmercenary:
             self.cardpiles['Mercenary'] = CardPile('Mercenary', self.cardmapping['BaseCard']['Mercenary'], numcards=10)
             self.output("Playing with Mercenary")
+        if self.needsprize:
+            self.addPrizes()
         if self.needruins:
             self.addRuins()
 
@@ -247,6 +251,13 @@ class Game(object):
         nc = self.numplayers * 10
         self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
         self.output("Playing with Ruins")
+
+    ###########################################################################
+    def addPrizes(self):
+        from PrizeCardPile import PrizeCardPile
+        for prize in self.getAvailableCards('PrizeCard'):
+            self.prizes[prize] = PrizeCardPile(self.cardmapping['PrizeCard'])
+        self.output("Playing with Prizes")
 
     ###########################################################################
     def addKnights(self):
@@ -277,6 +288,8 @@ class Game(object):
             self.needsmadman = True
         if self.cardpiles[c].needsmercenary:
             self.needsmercenary = True
+        if self.cardpiles[c].needsprize:
+            self.needsprize = True
         return 1
 
     ###########################################################################
@@ -291,7 +304,7 @@ class Game(object):
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard'):
+        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         return mapping

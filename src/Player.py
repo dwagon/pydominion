@@ -888,6 +888,15 @@ class Player(object):
         self.buys += num
 
     ###########################################################################
+    def gainPrize(self):
+        available = [c for c in self.game.prizes.values() if c.numcards]
+        if available:
+            card = self.cardSel(cardsrc=available)
+            self.addCard(card[0].remove())
+        else:
+            self.output("No prizes available")
+
+    ###########################################################################
     def performEvent(self, event):
         assert(issubclass(event.__class__, EventPile))
         if not self.buys:
