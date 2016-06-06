@@ -17,7 +17,8 @@ class Card_Salvager(Card):
 
     def special(self, game, player):
         card = player.plrTrashCard(force=True)
-        player.plrGainCard(cost=card[0].cost, modifier='equal')
+        player.output("Gained %d coin" % card[0].cost)
+        player.addCoin(card[0].cost)
 
 
 ###############################################################################
@@ -33,11 +34,11 @@ class Test_Salvager(unittest.TestCase):
         """ Play a salvage """
         self.plr.setHand('Duchy', 'Estate')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['duchy', 'duchy']
+        self.plr.test_input = ['duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertIsNotNone(self.g.inTrash('Duchy'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertEqual(self.plr.getCoin(), 5)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
