@@ -889,7 +889,7 @@ class Player(object):
 
     ###########################################################################
     def gainPrize(self):
-        available = [c for c in self.game.prizes.values() if c.numcards]
+        available = [c for c in self.game.getPrizes() if c.numcards]
         if available:
             card = self.cardSel(cardsrc=available)
             self.addCard(card[0].remove())

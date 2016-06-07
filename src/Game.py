@@ -24,7 +24,6 @@ class Game(object):
 
         self.players = {}
         self.cardpiles = {}
-        self.prizes = {}
         self.events = {}
         self.trashpile = PlayArea([])
         self.gameover = False
@@ -256,7 +255,7 @@ class Game(object):
     def addPrizes(self):
         from PrizeCardPile import PrizeCardPile
         for prize in self.getAvailableCards('PrizeCard'):
-            self.prizes[prize] = PrizeCardPile(self.cardmapping['PrizeCard'])
+            self.cardpiles[prize] = PrizeCardPile(prize, self.cardmapping['PrizeCard'][prize])
         self.output("Playing with Prizes")
 
     ###########################################################################
@@ -333,6 +332,10 @@ class Game(object):
     ###########################################################################
     def getAvailableCards(self, prefix='Card'):
         return list(self.cardmapping[prefix].keys())
+
+    ###########################################################################
+    def getPrizes(self):
+        return list(self.cardmapping['PrizeCards'].keys())
 
     ###########################################################################
     def getActionPiles(self):
