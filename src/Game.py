@@ -69,9 +69,11 @@ class Game(object):
     def startGame(self, playernames=[], plrKlass=TextPlayer):
         names = playerNames[:]
         self.loadDecks(self.initcards)
-        if self.needtravellers:
-            self.loadTravellers()
         self.loadEvents()
+
+        for c in self.cardpiles.keys():
+            self.checkCardRequirements(c)
+
         for i in range(self.numplayers):
             try:
                 name = playernames.pop()
@@ -191,14 +193,6 @@ class Game(object):
         self['Gold'].numcards = 30
         available = self.getAvailableCards()
         unfilled = 10
-        self.needcurse = False
-        self.needspoils = False
-        self.needsmadman = False
-        self.needsmercenary = False
-        self.needpotion = False
-        self.needruins = False
-        self.needtravellers = False
-        self.needsprize = False
         foundall = True
         for c in initcards:
             cardname = self.guess_cardname(c)
@@ -218,25 +212,9 @@ class Game(object):
         while unfilled:
             c = random.choice(available)
             unfilled -= self.useCardPile(available, c)
-        if self.needcurse:
-            self.cardpiles['Curse'] = CardPile('Curse', self.cardmapping['BaseCard']['Curse'], numcards=self.numCurses())
-            self.output("Playing with Curses")
-        if self.needpotion:
-            self.cardpiles['Potion'] = CardPile('Potion', self.cardmapping['BaseCard']['Potion'], numcards=16)
-            self.output("Playing with Potions")
-        if self.needspoils:
-            self.cardpiles['Spoils'] = CardPile('Spoils', self.cardmapping['BaseCard']['Spoils'], numcards=16)
-            self.output("Playing with Spoils")
-        if self.needsmadman:
-            self.cardpiles['Madman'] = CardPile('Madman', self.cardmapping['BaseCard']['Madman'], numcards=10)
-            self.output("Playing with Madman")
-        if self.needsmercenary:
-            self.cardpiles['Mercenary'] = CardPile('Mercenary', self.cardmapping['BaseCard']['Mercenary'], numcards=10)
-            self.output("Playing with Mercenary")
-        if self.needsprize:
-            self.addPrizes()
-        if self.needruins:
-            self.addRuins()
+
+        for c in self.cardpiles.keys():
+            self.checkCardRequirements(c)
 
     ###########################################################################
     def numCurses(self):
@@ -273,23 +251,34 @@ class Game(object):
         cp = CardPile(c, self.cardmapping['Card'][c])
         self.cardpiles[cp.name] = cp
         self.output("Playing with card %s" % self[c].name)
-        if self.cardpiles[c].needcurse:
-            self.needcurse = True
-        if self.cardpiles[c].potcost:
-            self.needpotion = True
-        if self.cardpiles[c].isLooter():
-            self.needruins = True
-        if self.cardpiles[c].needspoils:
-            self.needspoils = True
-        if self.cardpiles[c].traveller:
-            self.needtravellers = True
-        if self.cardpiles[c].needsmadman:
-            self.needsmadman = True
-        if self.cardpiles[c].needsmercenary:
-            self.needsmercenary = True
-        if self.cardpiles[c].needsprize:
-            self.needsprize = True
         return 1
+
+    ###########################################################################
+    def checkCardRequirements(self, card):
+        if self.cardpiles[card].needcurse and 'Curse' not in self.cardpiles:
+            self.cardpiles['Curse'] = CardPile('Curse', self.cardmapping['BaseCard']['Curse'], numcards=self.numCurses())
+            self.output("Playing with Curses")
+        if self.cardpiles[card].potcost and 'Potion' not in self.cardpiles:
+            self.cardpiles['Potion'] = CardPile('Potion', self.cardmapping['BaseCard']['Potion'], numcards=16)
+            self.output("Playing with Potions")
+        if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
+            from RuinCardPile import RuinCardPile
+            nc = self.numplayers * 10
+            self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
+            self.output("Playing with Ruins")
+        if self.cardpiles[card].needspoils and 'Spoils' not in self.cardpiles:
+            self.cardpiles['Spoils'] = CardPile('Spoils', self.cardmapping['BaseCard']['Spoils'], numcards=16)
+            self.output("Playing with Spoils")
+        if self.cardpiles[card].traveller:
+            self.loadTravellers()
+        if self.cardpiles[card].needsmadman and 'Madman' not in self.cardpiles:
+            self.cardpiles['Madman'] = CardPile('Madman', self.cardmapping['BaseCard']['Madman'], numcards=10)
+            self.output("Playing with Madman")
+        if self.cardpiles[card].needsmercenary and 'Mercenary' not in self.cardpiles:
+            self.cardpiles['Mercenary'] = CardPile('Mercenary', self.cardmapping['BaseCard']['Mercenary'], numcards=10)
+            self.output("Playing with Mercenary")
+        if self.cardpiles[card].needsprize:
+            self.addPrizes()
 
     ###########################################################################
     def cardTypes(self):
