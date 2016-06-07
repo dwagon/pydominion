@@ -223,18 +223,15 @@ class Game(object):
         return max(10, 10 * (self.numplayers - 1))
 
     ###########################################################################
-    def addRuins(self):
-        from RuinCardPile import RuinCardPile
-        nc = self.numplayers * 10
-        self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
-        self.output("Playing with Ruins")
-
-    ###########################################################################
     def addPrizes(self):
         from PrizeCardPile import PrizeCardPile
         for prize in self.getAvailableCards('PrizeCard'):
             self.cardpiles[prize] = PrizeCardPile(prize, self.cardmapping['PrizeCard'][prize])
         self.output("Playing with Prizes")
+
+    ###########################################################################
+    def getPrizes(self):
+        return list(self.cardmapping['PrizeCard'].keys())
 
     ###########################################################################
     def addKnights(self):
@@ -321,10 +318,6 @@ class Game(object):
     ###########################################################################
     def getAvailableCards(self, prefix='Card'):
         return list(self.cardmapping[prefix].keys())
-
-    ###########################################################################
-    def getPrizes(self):
-        return list(self.cardmapping['PrizeCards'].keys())
 
     ###########################################################################
     def getActionPiles(self):
