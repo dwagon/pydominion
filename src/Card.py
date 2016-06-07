@@ -27,19 +27,10 @@ class Card(object):
         self.potion = 0
         self.cards = 0
         self.victory = 0
-        self.cardname = self.getCardName()
-        self.image = self.getImageName()
-
-    def getCardName(self):
-        c = self.__class__.__name__
-        c = c.replace('Card_', '')
-        return c.lower()
+        self.image = None
 
     def __repr__(self):
         return self.name
-
-    def getImageName(self):
-        return 'images/%s.jpg' % self.cardname
 
     def special(self, game, player):
         pass    # pragma: no cover
