@@ -14,7 +14,7 @@ class Card_Bagofgold(Card):
         self.purchasable = False
         self.cost = 0
         self.desc = "+1 Action. Gain a Gold, putting it on top of your deck."
-        self.action = 1
+        self.actions = 1
 
     def special(self, game, player):
         player.gainCard('Gold', 'topdeck')
@@ -28,10 +28,16 @@ class Test_Bagofgold(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Bag of Gold'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.getAction(), 1)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
+        self.assertEqual(self.plr.getActions(), 1)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 # EOF

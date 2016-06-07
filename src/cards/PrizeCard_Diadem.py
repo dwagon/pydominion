@@ -29,10 +29,15 @@ class Test_Diadem(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Diadem'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.playCard(self.card)
         self.plr.actions = 1
-        self.assertEqual(self.getCoin(), 3)
+        self.assertEqual(self.plr.getCoin(), 3)
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 # EOF
