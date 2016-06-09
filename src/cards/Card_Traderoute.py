@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Traderoute(Card):
     def __init__(self):
         Card.__init__(self)
@@ -20,13 +21,13 @@ class Card_Traderoute(Card):
         cls.game = game
         for cp in list(game.cardpiles.values()):
             if cp.isVictory():
-                cls.tokens[cp.cardname] = cp.numcards
+                cls.tokens[cp.name] = cp.numcards
 
     def isWorth(self):
         worth = 0
         for cp in list(self.game.cardpiles.values()):
-            if cp.cardname in self.tokens:
-                if self.tokens[cp.cardname] != cp.numcards:
+            if cp.name in self.tokens:
+                if self.tokens[cp.name] != cp.numcards:
                     worth += 1
         return worth
 

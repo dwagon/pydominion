@@ -19,7 +19,7 @@ class Card_Duke(Card):
         """ Worth 1VP per Duchy you have"""
         vp = 0
         for c in player.allCards():
-            if c.cardname == 'duchy':
+            if c.name == 'Duchy':
                 vp += 1
         return vp
 

@@ -20,7 +20,7 @@ class Card_Mountebank(Card):
             he gains a Curse and a Copper """
         for plr in player.attackVictims():
             for c in plr.hand:
-                if c.cardname == 'curse':
+                if c.name == 'Curse':
                     player.output("Player %s discarded a curse" % plr.name)
                     plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
                     plr.discardCard(c)

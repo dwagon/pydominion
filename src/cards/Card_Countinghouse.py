@@ -18,7 +18,7 @@ class Card_Countinghouse(Card):
             copper cards from it, and put them into your hand """
         count = 0
         for c in player.discardpile:
-            if c.cardname == 'copper':
+            if c.name == 'Copper':
                 player.addCard(c, 'hand')
                 player.discardpile.remove(c)
                 count += 1
