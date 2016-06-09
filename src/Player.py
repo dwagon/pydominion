@@ -1047,10 +1047,13 @@ class Player(object):
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
         """ Get the player to discard exactly num cards """
-        if anynum:
-            msg = "Discard any number of cards"
+        if kwargs['msg']:
+            msg = kwargs['msg']
         else:
-            msg = "Discard %d cards" % num
+            if anynum:
+                msg = "Discard any number of cards"
+            else:
+                msg = "Discard %d cards" % num
         discard = self.cardSel(
             num=num, anynum=anynum, verbs=('Discard', 'Undiscard'),
             prompt=msg, **kwargs)
