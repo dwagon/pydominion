@@ -15,6 +15,8 @@ class RuinCardPile(CardPile):
             self.ruins.append(ruintypes[c]())
 
     def __getattr__(self, key):
+        if key == 'card':
+            return self.ruins[-1]
         return getattr(self.ruins[-1], key)
 
     def remove(self):

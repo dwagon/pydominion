@@ -14,7 +14,7 @@ class CardPile(object):
 
     ###########################################################################
     def __lt__(self, a):
-        return self.cardname < a.cardname
+        return self.card.name < a.card.name
 
     ###########################################################################
     def __getattr__(self, name):
