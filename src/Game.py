@@ -148,6 +148,7 @@ class Game(object):
         for trav in travellers:
             cp = CardPile(trav, self.cardmapping['Traveller'][trav], numcards=5)
             self.cardpiles[cp.name] = cp
+        self.loaded_travellers = True
 
     ###########################################################################
     def loadEvents(self):

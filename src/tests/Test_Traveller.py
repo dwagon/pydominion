@@ -9,7 +9,7 @@ class Test_load_travellers(unittest.TestCase):
     def test_needtravellers(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.startGame()
-        self.assertTrue(self.g.needtravellers)
+        self.assertTrue(self.g.loaded_travellers)
 
 
 ###############################################################################
