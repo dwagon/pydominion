@@ -18,7 +18,7 @@ class Card_Plaza(Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        disc = player.plrDiscardCards(num=1, cardsrc=treasures)
+        disc = player.plrDiscardCards(num=1, cardsrc=treasures, msg="Discard a treasure to gain a special coin")
         if disc:
             player.gainSpecialCoins(1)
 
