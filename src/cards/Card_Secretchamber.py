@@ -16,8 +16,7 @@ class Card_Secretchamber(Card):
 
     def special(self, player, game):
         """ Discard any number of cards, +1 coin per card discarded"""
-        player.output("Select which card(s) to discard (+1 coin per discard)?")
-        todiscard = player.plrDiscardCards(anynum=True)
+        todiscard = player.plrDiscardCards(anynum=True, msg="Select which card(s) to discard (+1 coin per discard)?")
         player.addCoin(len(todiscard))
 
     def hook_underAttack(self, player, game):

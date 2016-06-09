@@ -10,7 +10,8 @@ class Card_Artificer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = """+1 Card, +1 Action, +1 Coin; Discard any number of cards. You may gain a card costing exactly 1 per card discarded, putting it on top of your deck"""
+        self.desc = """+1 Card, +1 Action, +1 Coin; Discard any number of cards.
+        You may gain a card costing exactly 1 per card discarded, putting it on top of your deck"""
         self.name = 'Artificer'
         self.cards = 1
         self.actions = 1
@@ -20,8 +21,7 @@ class Card_Artificer(Card):
     def special(self, game, player):
         """ Discard any number of cards. You may gain a card costing
             exactly 1 per card discarded, putting it on top of your deck """
-        player.output("Select which card(s) to discard")
-        todiscard = player.plrDiscardCards(anynum=True)
+        todiscard = player.plrDiscardCards(anynum=True, msg="Select which card(s) to discard")
         cost = len(todiscard)
         player.output("Gain a card costing %d" % cost)
         player.plrGainCard(cost=cost, modifier='equal', destination='topdeck')
