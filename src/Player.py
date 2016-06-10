@@ -84,7 +84,7 @@ class Player(object):
             if cp.name == dst:
                 dstcp = cp
                 break
-        else:
+        else:   # pragma: no cover
             assert dstcp is not None, "Couldn't find cardpile %s" % dst
 
         if src not in self.played:
@@ -1017,6 +1017,7 @@ class Player(object):
             if actiononly then gain only action cards
             if recipient defined then that player gets the card
         """
+        assert(modifier in ('less', 'equal'))
         if recipient is None:
             recipient = self
         prompt = "Gain a card "
@@ -1066,6 +1067,8 @@ class Player(object):
     def plrDiscardDownTo(self, num):
         """ Get the player to discard down to num cards in their hand """
         numtogo = len(self.hand) - num
+        if numtogo == 0:
+            return
         self.plrDiscardCards(numtogo)
 
 # EOF

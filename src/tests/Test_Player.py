@@ -24,10 +24,19 @@ class TestPlayer(unittest.TestCase):
         self.plr.initial_Deck()
         self.assertEqual(len(self.plr.deck), 10)
 
-    def test_trashcard(self):
-        """ Test that trashing a card works """
+    def test_trashcard_hand(self):
+        """ Test that trashing a card from hand works """
         numcards = self.g.countCards()
         card = self.plr.hand[0]
+        self.plr.trashCard(card)
+        self.assertEqual(numcards, self.g.countCards())
+        self.assertEqual(self.g.trashpile[0], card)
+
+    def test_trashcard_played(self):
+        """ Test that trashing a card from played works """
+        numcards = self.g.countCards()
+        self.plr.setPlayed('Estate')
+        card = self.plr.played[0]
         self.plr.trashCard(card)
         self.assertEqual(numcards, self.g.countCards())
         self.assertEqual(self.g.trashpile[0], card)
@@ -57,6 +66,36 @@ class Test_discardHand(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 0)
         self.assertEqual(self.plr.playedSize(), 0)
         self.assertEqual(self.plr.discardSize(), 4)
+
+
+###############################################################################
+class Test_inPlayed(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_emptydiscard(self):
+        """ Test inPlayed() with no played pile """
+        self.plr.setPlayed()
+        self.assertIsNone(self.plr.inPlayed('Copper'))
+
+    def test_indiscard(self):
+        """ Test inPlayed() with it the only card in the played pile """
+        self.plr.setPlayed('Copper')
+        self.assertIsNotNone(self.plr.inPlayed('Copper'))
+
+    def test_inmultidiscard(self):
+        """ Test inPlayed() with it one of many cards in the played pile """
+        self.plr.setPlayed('Copper', 'Gold', 'Copper')
+        c = self.plr.inPlayed('Gold')
+        self.assertIsNotNone(c)
+        self.assertEqual(c.name, 'Gold')
+
+    def test_notinmultidiscard(self):
+        """ Test inPlayed() with it not one of many cards in the played pile """
+        self.plr.setPlayed('Copper', 'Gold', 'Copper')
+        self.assertIsNone(self.plr.inPlayed('Estate'))
 
 
 ###############################################################################
@@ -717,6 +756,46 @@ class Test_spendCoin(unittest.TestCase):
         self.plr.spendCoin()
         self.assertEqual(self.plr.getSpecialCoins(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
+
+
+###############################################################################
+class Test_plrGainCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_gainCard_equal(self):
+        self.plr.test_input = ['silver']
+        c = self.plr.plrGainCard(3, modifier='equal')
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertEqual(c.name, 'Silver')
+
+    def test_gainCard_less(self):
+        self.plr.test_input = ['silver']
+        c = self.plr.plrGainCard(4, modifier='less')
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertEqual(c.name, 'Silver')
+
+
+###############################################################################
+class Test_plrDiscardDownTo(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_discard_nothing(self):
+        self.plr.setHand('Estate', 'Duchy', 'Province')
+        self.plr.plrDiscardDownTo(3)
+        self.assertEqual(self.plr.discardSize(), 0)
+
+    def test_discard_one(self):
+        self.plr.test_input = ['gold', 'finish']
+        self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
+        self.plr.plrDiscardDownTo(3)
+        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
 ###############################################################################
