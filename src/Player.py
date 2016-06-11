@@ -41,6 +41,7 @@ class Player(object):
         self.stats = {'gain': 0, 'buys': 0}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
+        self.end_of_game_cards = []
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
@@ -1070,5 +1071,11 @@ class Player(object):
         if numtogo == 0:
             return
         self.plrDiscardCards(numtogo)
+
+    ###########################################################################
+    def gameOver(self):
+        """ Game is over - do anything special required """
+        for card in self.end_of_game_cards:
+            card.hook_end_of_game(game=self.game, player=self)
 
 # EOF

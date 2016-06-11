@@ -157,6 +157,9 @@ class Card(object):
     def hook_endTurn(self, game, player):
         pass    # pragma: no cover
 
+    def hook_end_of_game(self, game, player):
+        pass    # pragma: no cover
+
     def knight_special(self, game, player):
         """ Each other player reveals the top 2 cards of his deck,
             trashes one of them costing from 3 to 6 and discards the

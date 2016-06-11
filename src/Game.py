@@ -453,6 +453,8 @@ class Game(object):
         self.currentPlayer.endTurn()
         if self.isGameOver():
             self.gameover = True
+            for plr in self.playerList():
+                plr.gameOver()
 
 
 ###############################################################################

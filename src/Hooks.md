@@ -73,6 +73,10 @@ hook_thisCardCost
 -----------------
 Modifier to the cost of buying this card.
 
+hook_end_of_game
+----------------
+Called at the end of the game if they are registered in player.end_of_game_cards[]
+
 setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup
