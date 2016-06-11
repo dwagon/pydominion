@@ -19,6 +19,7 @@ class Card_Poorhouse(Card):
         for card in player.hand:
             if card.isTreasure():
                 coins -= 1
+        player.output("Gaining %d coins" % max(coins, 0))
         player.addCoin(max(coins, 0))
 
 
