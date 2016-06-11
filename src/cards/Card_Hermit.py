@@ -41,7 +41,7 @@ class Card_Hermit(Card):
     def hook_discardCard(self, game, player):
         # When you discard this from play, if you did not buy any cards this turn,
         # trash this and gain a Madman from the Madman pile
-        if player.stats['buys'] == 0:
+        if not player.stats['bought']:
             trash = player.plrChooseOptions(
                 "Trash this to gain a madman",
                 ("Keep Hermit", False),

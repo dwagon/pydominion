@@ -30,7 +30,7 @@ class Card_Messenger(Card):
                 player.deck.remove(c)
 
     def hook_buyThisCard(self, game, player):
-        if player.stats['buys'] == 1:
+        if len(player.stats['bought']) == 1:
             player.output("Pick a card for everyone to gain")
             c = player.plrGainCard(4)
             for plr in game.playerList():
