@@ -1,4 +1,5 @@
 import random
+import sys
 
 
 ###############################################################################
@@ -10,7 +11,11 @@ class PlayArea(object):
         self.cards.append(card)
 
     def remove(self, card):
-        self.cards.remove(card)
+        try:
+            self.cards.remove(card)
+        except ValueError:
+            sys.stderr.write("Trying to remove a card (%s) that doesn't exist (%s)\n" % (card.name, ", ".join([c.name for c in self.cards])))
+            raise
 
     def addToTop(self, card):
         self.cards.insert(0, card)
