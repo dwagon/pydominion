@@ -31,8 +31,7 @@ class Card_Messenger(Card):
 
     def hook_buyThisCard(self, game, player):
         if len(player.stats['bought']) == 1:
-            player.output("Pick a card for everyone to gain")
-            c = player.plrGainCard(4)
+            c = player.plrGainCard(4, prompt="Pick a card for everyone to gain")
             for plr in game.playerList():
                 if plr != player:
                     plr.gainCard(c)

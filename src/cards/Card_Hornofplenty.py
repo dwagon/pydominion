@@ -20,8 +20,7 @@ class Card_Hornofplenty(Card):
         for c in player.played:
             cards.add(c.name)
 
-        player.output("Gain a card costing up to %d. If it is a victory then this card will be trashed" % len(cards))
-        card = player.plrGainCard(len(cards))
+        card = player.plrGainCard(len(cards), prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed" % len(cards))
         if card.isVictory():
             player.trashCard(self)
 
