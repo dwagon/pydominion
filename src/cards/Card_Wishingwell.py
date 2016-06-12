@@ -10,7 +10,7 @@ class Card_Wishingwell(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+1 card, +1 action, guess top card to get it"
+        self.desc = "+1 Card +1 Action; Name a card, then reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = 'Wishing Well'
         self.actions = 1
         self.cards = 1
@@ -56,10 +56,10 @@ class Test_Wishingwell(unittest.TestCase):
 
     def test_good(self):
         """ A good guess means the card ends up in the hand"""
-        self.plr.setDeck('Gold', 'Copper')
-        self.plr.test_input = ['Gold']
+        self.plr.setDeck('Silver', 'Copper')
+        self.plr.test_input = ['Silver']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Gold'))
+        self.assertTrue(self.plr.inHand('Silver'))
 
     def test_bad(self):
         """ Guessing badly should result in the card staying on the deck """
