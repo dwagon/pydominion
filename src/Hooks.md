@@ -77,6 +77,10 @@ hook_end_of_game
 ----------------
 Called at the end of the game if they are registered in player.end_of_game_cards[]
 
+hook_overpay
+------------
+Overpaying for a card
+
 setup
 -----
 Any setup required before the game starts, but after all the card piles and players have been setup

@@ -804,15 +804,30 @@ class Player(object):
         return newcard
 
     ###########################################################################
+    def overpay(self, card):
+        options = []
+        for i in range(self.coin+1):
+            options.append(("Spend %d more" % i, i))
+        ans = self.plrChooseOptions(
+            "How much do you wish to overpay?",
+            *options
+            )
+        card.hook_overpay(game=self.game, player=self, amount=ans)
+        self.coin -= ans
+
+    ###########################################################################
     def buyCard(self, card):
         assert(isinstance(card, CardPile))
         if not self.buys:   # pragma: no cover
             return
         newcard = self.gainCard(card)
         self.buys -= 1
-        self.coin -= self.cardCost(newcard)
+        cost = self.cardCost(newcard)
+        self.coin -= cost
+        if card.overpay and self.coin:
+            self.overpay(card)
         self.stats['bought'].append(newcard)
-        self.output("Bought %s for %d coin" % (newcard.name, self.cardCost(newcard)))
+        self.output("Bought %s for %d coin" % (newcard.name, cost))
         if 'Trashing' in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
@@ -992,9 +1007,13 @@ class Player(object):
 
     ###########################################################################
     def coststr(self, card):
+        if card.overpay:
+            notes = "Overpay"
+        else:
+            notes = ""
         coincost = "%d coins" % self.cardCost(card)
         potcost = "%d potions" % card.potcost if card.potcost else ""
-        cststr = "%s %s" % (coincost, potcost)
+        cststr = "%s %s %s" % (coincost, potcost, notes)
         return cststr.strip()
 
     ###########################################################################

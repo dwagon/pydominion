@@ -33,7 +33,7 @@ class Test_Plaza(unittest.TestCase):
         self.card = self.g['Plaza'].remove()
 
     def test_play(self):
-        """ Play a baker """
+        """ Play a plaza """
         self.plr.specialcoins = 0
         self.plr.setHand('Gold')
         self.plr.test_input = ['gold']
