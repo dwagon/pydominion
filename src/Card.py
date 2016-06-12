@@ -19,6 +19,7 @@ class Card(object):
         self.needsmadman = False
         self.needsprize = False
         self.needsmercenary = False
+        self.overpay = False
         self.traveller = False
         self.when = 'any'
         self.actions = 0
