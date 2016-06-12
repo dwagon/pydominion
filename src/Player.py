@@ -1033,7 +1033,7 @@ class Player(object):
         return trash
 
     ###########################################################################
-    def plrGainCard(self, cost, modifier='less', types={}, recipient=None, force=False, destination='discard'):
+    def plrGainCard(self, cost, modifier='less', types={}, recipient=None, force=False, destination='discard', **kwargs):
         """ Gain a card up to cost coin
             if actiononly then gain only action cards
             if recipient defined then that player gets the card
@@ -1052,9 +1052,11 @@ class Player(object):
                 prompt += "costing exactly %d" % cost
             buyable = self.cardsWorth(cost, types=types)
         buyable = [c for c in buyable if c.purchasable]
+        if 'prompt' not in kwargs:
+            kwargs['prompt'] = prompt
         cards = self.cardSel(
             cardsrc=buyable, recipient=recipient, verbs=('Get', 'Unget'),
-            force=force, prompt=prompt)
+            force=force, **kwargs)
         if cards:
             card = cards[0]
             recipient.output("Got a %s" % card.name)
