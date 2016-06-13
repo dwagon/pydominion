@@ -179,7 +179,10 @@ class Game(object):
         if name in available:
             return name
         for c in available:
-            newc = c.replace(' ', '').replace("'", "")
+            newc = c.replace("'", "")
+            if newc.lower() == name.lower():
+                return c
+            newc = newc.replace(' ', '')
             if newc.lower() == name.lower():
                 return c
         return None
