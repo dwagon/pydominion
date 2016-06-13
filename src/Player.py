@@ -800,6 +800,7 @@ class Player(object):
             self.trashCard(newcard)
             return newcard
         self.hook_gainThisCard(newcard)
+        self.hook_allPlayers_gainCard(newcard)
         self.addCard(newcard, destination)
         return newcard
 
@@ -838,8 +839,14 @@ class Player(object):
     ###########################################################################
     def hook_allPlayers_buyCard(self, card):
         for player in self.game.playerList():
-            for cd in player.durationpile:
-                cd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
+            for crd in player.durationpile:
+                crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
+
+    ###########################################################################
+    def hook_allPlayers_gainCard(self, card):
+        for player in self.game.playerList():
+            for crd in player.hand:
+                crd.hook_allPlayers_gainCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def hook_gainCard(self, card):
