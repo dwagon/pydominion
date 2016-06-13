@@ -27,6 +27,8 @@ class Card_Fools_Gold(Card):
     def hook_allPlayers_gainCard(self, game, player, owner, card):
         if card.name != 'Province':
             return
+        if owner == player:
+            return
         trash = owner.plrChooseOptions(
             "%s gained a Province. Trash this card to gain a gold?" % player.name,
             ("Keep Fool's Gold", False),
@@ -63,6 +65,12 @@ class Test_Fools_Gold(unittest.TestCase):
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
         self.assertEqual(self.g.trashSize(), 1)
         self.assertIsNotNone(self.g.inTrash("Fool's Gold"))
+
+    def test_self_gain_province(self):
+        self.plr.gainCard('Province')
+        self.assertNotEqual(self.plr.deck[-1].name, 'Gold')
+        self.assertEqual(self.g.trashSize(), 0)
+        self.assertIsNone(self.g.inTrash("Fool's Gold"))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
