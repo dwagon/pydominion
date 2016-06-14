@@ -1028,17 +1028,17 @@ class Player(object):
         return cststr.strip()
 
     ###########################################################################
-    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[], cardsrc='hand'):
+    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=[], cardsrc='hand', **kwargs):
         """ Ask player to trash num cards
         """
-        if anynum:
-            prompt = "Trash any cards"
-        else:
-            prompt = "Trash %d cards" % num
+        if 'prompt' not in kwargs:
+            if anynum:
+                kwargs['prompt'] = "Trash any cards"
+            else:
+                kwargs['prompt'] = "Trash %d cards" % num
         trash = self.cardSel(
             num=num, cardsrc=cardsrc, anynum=anynum, printcost=printcost,
-            force=force, exclude=exclude, verbs=('Trash', 'Untrash'),
-            prompt=prompt)
+            force=force, exclude=exclude, verbs=('Trash', 'Untrash'), **kwargs)
         for c in trash:
             self.trashCard(c)
         return trash
