@@ -647,7 +647,8 @@ class Test_choiceSelection(unittest.TestCase):
 
     def test_action_phase(self):
         self.plr.setHand('Moat')
-        opts, prompt = self.plr.choiceSelection('action')
+        self.plr.phase = 'action'
+        opts, prompt = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['print'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -662,7 +663,8 @@ class Test_choiceSelection(unittest.TestCase):
 
     def test_buy_phase(self):
         self.plr.setHand('Copper')
-        opts, prompt = self.plr.choiceSelection('buy')
+        self.plr.phase = 'buy'
+        opts, prompt = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['print'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -679,7 +681,8 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.potions = 9
         self.plr.coin = 5
         self.plr.specialcoins = 1
-        opts, prompt = self.plr.choiceSelection('buy')
+        self.plr.phase = 'buy'
+        opts, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=3', prompt)
         self.assertIn('Coins=5', prompt)
         self.assertIn('Buys=7', prompt)
@@ -692,7 +695,8 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.potions = 0
         self.plr.coin = 0
         self.plr.specialcoins = 0
-        opts, prompt = self.plr.choiceSelection('buy')
+        self.plr.phase = 'buy'
+        opts, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=0', prompt)
         self.assertIn('Buys=0', prompt)
         self.assertNotIn('Coins', prompt)

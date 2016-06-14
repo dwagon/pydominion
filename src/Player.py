@@ -43,6 +43,7 @@ class Player(object):
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
+        self.phase = None
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
@@ -484,16 +485,16 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def choiceSelection(self, phase='action'):
+    def choiceSelection(self):
         index = 0
         options = [{'selector': '0', 'print': 'End Phase', 'card': None, 'action': 'quit'}]
 
-        if phase == 'action':
+        if self.phase == 'action':
             if self.actions:
                 op, index = self.playableSelection(index)
                 options.extend(op)
 
-        if phase == 'buy':
+        if self.phase == 'buy':
             if self.buys:
                 op = self.spendableSelection()
                 options.extend(op)
@@ -527,13 +528,15 @@ class Player(object):
         for card in self.played + self.reserve:
             card.hook_endTurn(game=self.game, player=self)
         self.cleanupPhase()
+        self.phase = None
 
     ###########################################################################
     def actionPhase(self):
         self.output("************ Action Phase ************")
+        self.phase = 'action'
         while(True):
             self.displayOverview()
-            options, prompt = self.choiceSelection(phase='action')
+            options, prompt = self.choiceSelection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
@@ -542,9 +545,10 @@ class Player(object):
     ###########################################################################
     def buyPhase(self):
         self.output("************ Buy Phase ************")
+        self.phase = 'buy'
         while(True):
             self.displayOverview()
-            options, prompt = self.choiceSelection(phase='buy')
+            options, prompt = self.choiceSelection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
@@ -552,6 +556,7 @@ class Player(object):
 
     ###########################################################################
     def cleanupPhase(self):
+        self.phase = 'cleanup'
         self.discardHand()
         self.pickUpHand()
         self.cleaned = True
