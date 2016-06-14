@@ -71,7 +71,7 @@ class Game(object):
         self.loadDecks(self.initcards)
         self.loadEvents()
 
-        for c in self.cardpiles.keys():
+        for c in list(self.cardpiles.keys()):
             self.checkCardRequirements(c)
 
         for i in range(self.numplayers):
@@ -217,7 +217,7 @@ class Game(object):
             c = random.choice(available)
             unfilled -= self.useCardPile(available, c)
 
-        for c in self.cardpiles.keys():
+        for c in list(self.cardpiles.keys()):
             self.checkCardRequirements(c)
 
     ###########################################################################
