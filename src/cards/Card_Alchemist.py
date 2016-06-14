@@ -9,7 +9,7 @@ class Card_Alchemist(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'alchemy'
-        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potoin in play"
+        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
         self.name = 'Alchemist'
         self.cards = 2
         self.actions = 1
@@ -19,19 +19,17 @@ class Card_Alchemist(Card):
     def hook_discardCard(self, game, player):
         """ When you discard this from play, you may put this on
             top of your deck if you have a Potion in play """
-        for c in player.played:
-            if c.name == 'Potion':
-                break
-        else:
+        # As we can't guarantee where we are in the discard cycle
+        # We have to check the discardpile as well
+        if not player.inPlayed('Potion') and not player.inDiscard('Potion'):
             return
         ans = player.plrChooseOptions(
             'What to do with the alchemist?',
             ('Discard alchemist', False), ('Put on top of deck', True))
         if ans:
-            if self in player.played:
-                player.played.remove(self)
-            elif self in player.hand:
-                player.hand.remove(self)
+            alc = player.inDiscard('Alchemist')
+            if alc:
+                player.discardpile.remove(alc)
             player.addCard(self, 'topdeck')
 
 
@@ -51,11 +49,13 @@ class Test_Alchemist(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 7)
 
     def test_nopotion(self):
+        """ Discard Alchemist with no potion in play """
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
+        """ Discard an Alchemist even if we have a potion in play """
         self.plr.setPlayed('Potion')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.alchemist)
@@ -64,6 +64,7 @@ class Test_Alchemist(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Alchemist'))
 
     def test_keep(self):
+        """ Keep an Alchemist for next turn """
         self.plr.setPlayed('Potion')
         self.plr.test_input = ['top of deck']
         self.plr.playCard(self.alchemist)
