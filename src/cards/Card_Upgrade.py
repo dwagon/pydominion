@@ -18,8 +18,7 @@ class Card_Upgrade(Card):
 
     def special(self, game, player):
         """ Trash a card from your hand. Gain a card costing up to 1 more than it """
-        player.output("Trash a card from your hand. Gain a card costing exactly 1 more than it")
-        tc = player.plrTrashCard(printcost=True)
+        tc = player.plrTrashCard(printcost=True, prompt="Trash a card from your hand. Gain a card costing exactly 1 more than it")
         if tc:
             cost = player.cardCost(tc[0])
             player.plrGainCard(cost + 1, 'equal')

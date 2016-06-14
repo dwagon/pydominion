@@ -16,8 +16,7 @@ class Card_Remodel(Card):
     def special(self, game, player):
         """ Trash a card from your hand. Gain a card costing up to
             2 more than the trashed card """
-        player.output("Trash a card from your hand. Gain another costing up to 2 more than the one you trashed")
-        tc = player.plrTrashCard(printcost=True)
+        tc = player.plrTrashCard(printcost=True, prompt="Trash a card from your hand. Gain another costing up to 2 more than the one you trashed")
         if tc:
             cost = tc[0].cost
             player.plrGainCard(cost + 2)

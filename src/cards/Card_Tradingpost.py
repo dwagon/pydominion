@@ -16,9 +16,8 @@ class Card_Tradingpost(Card):
 
     def special(self, game, player):
         """ Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
-        player.output("Trash two cards to gain a silver")
         num = min(2, player.handSize())
-        trash = player.plrTrashCard(num=num)
+        trash = player.plrTrashCard(num=num, prompt="Trash two cards to gain a silver")
         if len(trash) == 2:
             player.gainCard('Silver', 'hand')
             player.addCoin(2)
