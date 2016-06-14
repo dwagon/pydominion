@@ -48,7 +48,8 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.setHand('Copper', 'Gold', 'Gold')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
-        options, prompt = self.plr.choiceSelection(phase='buy')
+        self.plr.phase = 'buy'
+        options, prompt = self.plr.choiceSelection()
         for msg in options:
             if 'Buy Grand Market' in msg['print']:   # pragma: no cover
                 self.fail("Allowed to buy with copper")
@@ -58,7 +59,8 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.setPlayed('Copper')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
-        options, prompt = self.plr.choiceSelection(phase='buy')
+        self.plr.phase = 'buy'
+        options, prompt = self.plr.choiceSelection()
         for msg in options:
             if 'Buy Grand Market' in msg['print']:   # pragma: no cover
                 self.fail("Allowed to buy with copper")
@@ -67,7 +69,8 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.setHand('Gold', 'Gold', 'Gold')
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
-        options, prompt = self.plr.choiceSelection(phase='buy')
+        self.plr.phase = 'buy'
+        options, prompt = self.plr.choiceSelection()
         for msg in options:
             if 'Buy Grand Market' in msg['print']:
                 break
