@@ -337,6 +337,7 @@ class Player(object):
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
+        self.hook_discardCard(card)
 
     ###########################################################################
     def reserveSize(self):
@@ -364,8 +365,6 @@ class Player(object):
 
     ###########################################################################
     def discardHand(self):
-        for c in self.hand + self.played:
-            self.hook_discardCard(c)
         while self.hand:
             self.discardCard(self.hand.topcard())
         while self.played:
