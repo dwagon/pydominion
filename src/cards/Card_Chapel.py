@@ -15,8 +15,7 @@ class Card_Chapel(Card):
 
     def special(self, game, player):
         """ Trash up to 4 cards from your hand """
-        player.output("Trash up to four cards")
-        player.plrTrashCard(num=4)
+        player.plrTrashCard(num=4, prompt="Trash up to four cards")
 
 
 ###############################################################################

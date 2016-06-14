@@ -16,8 +16,7 @@ class Card_Altar(Card):
 
     def special(self, game, player):
         # Trash a card from your hand
-        player.output("Trash a card from your hand")
-        player.plrTrashCard()
+        player.plrTrashCard(prompt="Trash a card from your hand")
 
         # Gain a card costing up to 5 Coin
         player.plrGainCard(5)

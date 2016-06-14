@@ -16,8 +16,7 @@ class Card_Remake(Card):
 
     def special(self, game, player):
         for i in range(2):
-            player.output("Trash a card and gain one costing 1 more")
-            c = player.plrTrashCard()
+            c = player.plrTrashCard(prompt="Trash a card and gain one costing 1 more")
             if c:
                 player.plrGainCard(cost=c[0].cost+1, modifier='equal')
 
