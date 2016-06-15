@@ -29,6 +29,7 @@ class Card_IGG(Card):
         for plr in player.attackVictims():
             plr.gainCard('Curse')
             plr.output("Cursed because %s gained an Ill-Gotten Gains" % player.name)
+        return {}
 
 
 ###############################################################################

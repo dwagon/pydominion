@@ -29,6 +29,7 @@ class Card_Deathcart(Card):
         for i in range(2):
             c = player.gainCard('Ruins')
             player.output("Gained %s" % c.name)
+        return {}
 
 
 ###############################################################################

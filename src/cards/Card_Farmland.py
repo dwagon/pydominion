@@ -21,6 +21,7 @@ class Card_Farmland(Card):
         """
         c = player.plrTrashCard(force=True)
         player.plrGainCard(cost=c[0].cost + 2, modifier='equal')
+        return {}
 
 
 ###############################################################################

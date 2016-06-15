@@ -25,6 +25,7 @@ class Card_Lost_City(Card):
             if pl != player:
                 c = pl.pickupCard()
                 pl.output("Picking up a %s due to %s playing a Lost City" % (c.name, player.name))
+        return {}
 
 
 ###############################################################################

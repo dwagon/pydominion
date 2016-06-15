@@ -19,6 +19,7 @@ class Card_Bordervillage(Card):
         """ When you gain this, gain a card costing less than this"""
         newcost = self.cost - 1
         player.plrGainCard(cost=newcost, prompt="Gain a card costing %d due to Border Village" % newcost)
+        return {}
 
 
 ###############################################################################

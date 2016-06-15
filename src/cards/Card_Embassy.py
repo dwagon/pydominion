@@ -23,6 +23,7 @@ class Card_Embassy(Card):
             if plr != player:
                 plr.output("Gained a silver from %s's purchase of Embassy" % player.name)
                 plr.gainCard('Silver')
+        return {}
 
 
 ###############################################################################

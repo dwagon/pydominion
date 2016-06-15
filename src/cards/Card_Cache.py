@@ -19,6 +19,7 @@ class Card_Cache(Card):
         player.output("Gained 2 copper from cache")
         for i in range(2):
             player.gainCard('Copper')
+        return {}
 
 
 ###############################################################################
