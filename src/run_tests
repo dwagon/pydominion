@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
 import os
+import sys
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-os.system('py.test --cov-report term-missing --cov . *.py tests/*.py cards/*.py events/*.py')
+cmd = 'py.test --cov-report term-missing --cov . *.py tests/*.py cards/*.py events/*.py'
+rc = os.system(cmd)
+sys.exit(rc >> 8)
 
 # EOF
