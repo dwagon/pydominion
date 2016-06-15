@@ -58,12 +58,12 @@ class Test_Mystic(unittest.TestCase):
     def test_good(self):
         """ When the guess is good the card should move to the hand """
         self.plr.addCard(self.card, 'hand')
-        self.plr.setDeck('Gold')
-        self.plr.test_input = ['gold']
+        self.plr.setDeck('Province')
+        self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertTrue(self.plr.inHand('Gold'))
+        self.assertTrue(self.plr.inHand('Province'))
         self.assertTrue(self.plr.deck.isEmpty())
 
     def test_bad(self):
