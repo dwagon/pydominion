@@ -17,10 +17,10 @@ class Card_Hamlet(Card):
         self.cost = 2
 
     def special(self, game, player):
-        c = player.plrDiscardCards(msg="Discard a card to gain an action")
+        c = player.plrDiscardCards(prompt="Discard a card to gain an action")
         if c:
             player.addActions(1)
-        c = player.plrDiscardCards(msg="Discard card to gain a buy")
+        c = player.plrDiscardCards(prompt="Discard card to gain a buy")
         if c:
             player.addBuys(1)
 

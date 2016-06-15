@@ -19,7 +19,7 @@ class Card_Storeroom(Card):
         """ Discard any number of cards. +1 Card per card discarded.
             Discard any number of cards. +1 GP per card discarded the
             second time"""
-        todiscard = player.plrDiscardCards(0, anynum=True, msg="Discard any number of cards. +1 Card per card discarded")
+        todiscard = player.plrDiscardCards(0, anynum=True, prompt="Discard any number of cards. +1 Card per card discarded")
         player.pickupCards(len(todiscard))
         player.output("Discard any number of cards. +1 GP per card discarded")
         todiscard = player.plrDiscardCards(0, anynum=True)

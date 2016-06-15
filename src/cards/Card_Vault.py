@@ -16,7 +16,7 @@ class Card_Vault(Card):
         self.cost = 5
 
     def special(self, game, player):
-        discards = player.plrDiscardCards(anynum=True, msg="Discard any number of cards. +1 Coin per card discarded")
+        discards = player.plrDiscardCards(anynum=True, prompt="Discard any number of cards. +1 Coin per card discarded")
         player.addCoin(len(discards))
         player.output("Gaining %d coins" % len(discards))
         for plr in game.playerList():

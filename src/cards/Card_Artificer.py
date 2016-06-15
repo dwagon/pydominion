@@ -21,7 +21,7 @@ class Card_Artificer(Card):
     def special(self, game, player):
         """ Discard any number of cards. You may gain a card costing
             exactly 1 per card discarded, putting it on top of your deck """
-        todiscard = player.plrDiscardCards(anynum=True, msg="Select which card(s) to discard")
+        todiscard = player.plrDiscardCards(anynum=True, prompt="Select which card(s) to discard")
         cost = len(todiscard)
         player.plrGainCard(cost=cost, modifier='equal', destination='topdeck', prompt="Gain a card costing %d" % cost)
 
