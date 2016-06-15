@@ -156,7 +156,7 @@ class Card(object):
         pass    # pragma: no cover
 
     def hook_gainThisCard(self, game, player):
-        pass    # pragma: no cover
+        return {}    # pragma: no cover
 
     def hook_endTurn(self, game, player):
         pass    # pragma: no cover

@@ -802,12 +802,12 @@ class Player(object):
             sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
             return
         self.stats['gain'] += 1
+        options.update(self.hook_gainThisCard(newcard))
         if 'destination' in options:
             destination = options['destination']
         if 'trash' in options and options['trash']:
             self.trashCard(newcard)
             return newcard
-        self.hook_gainThisCard(newcard)
         self.hook_allPlayers_gainCard(newcard)
         self.addCard(newcard, destination)
         return newcard
@@ -871,7 +871,7 @@ class Player(object):
     def hook_gainThisCard(self, card):
         """ Hook which is fired by this card being obtained by a player """
         assert(isinstance(card, Card))
-        card.hook_gainThisCard(game=self.game, player=self)
+        return card.hook_gainThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hasDefense(self, attacker, verbose=True):
