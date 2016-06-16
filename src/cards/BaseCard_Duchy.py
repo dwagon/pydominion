@@ -29,6 +29,11 @@ class Card_Duchy(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return False    # Don't gain a duchess
+
+
+###############################################################################
 class Test_Duchy(unittest.TestCase):
     def setUp(self):
         import Game

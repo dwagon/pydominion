@@ -19,14 +19,26 @@ class Card_Duchess(Card):
     def special(self, game, player):
         for plr in game.playerList():
             card = plr.nextCard()
+            if plr == player:
+                name = 'your'
+            else:
+                name = "%s's" % player.name
             keep = plr.plrChooseOptions(
-                "Due to %s's Duchess you can" % player.name,
+                "Due to %s Duchess you can keep or discard the top card" % name,
                 ("Keep %s on top of deck" % card.name, True),
                 ("Discard %s" % card.name, False))
             if keep:
                 plr.addCard(card, 'topdeck')
             else:
+                plr.output("Discarding %s" % card.name)
                 plr.discardCard(card)
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    if 'Estate' in args[0] or 'Duchy' in args[0] or 'Province' in args[0]:
+        return False
+    return True
 
 
 ###############################################################################
