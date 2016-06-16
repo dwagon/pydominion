@@ -31,7 +31,7 @@ class Card_Huntinggrounds(Card):
 class Test_Huntinggrounds(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hunting Grounds'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hunting Grounds'], badcards=['Duchess'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Hunting Grounds'].remove()
