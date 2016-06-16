@@ -41,6 +41,7 @@ class Game(object):
         self.numplayers = 2
         self.numevents = 0
         self.initcards = []
+        self.badcards = []
         self.eventcards = []
         self.cardpath = 'cards'
         self.eventpath = 'events'
@@ -56,6 +57,8 @@ class Game(object):
             self.numevents = args['numevents']
         if 'initcards' in args:
             self.initcards = args['initcards']
+        if 'badcards' in args:
+            self.badcards = args['badcards']
         if 'eventcards' in args:
             self.eventcards = args['eventcards']
         if 'cardpath' in args:
@@ -215,6 +218,9 @@ class Game(object):
 
         while unfilled:
             c = random.choice(available)
+            if c in self.badcards:
+                print "Excluding %s as in badcards %s" % (c, self.badcards)
+                continue
             unfilled -= self.useCardPile(available, c)
 
         for c in list(self.cardpiles.keys()):
@@ -288,6 +294,10 @@ class Game(object):
     ###########################################################################
     def __getitem__(self, key):
         return self.cardpiles[key]
+
+    ###########################################################################
+    def __contains__(self, key):
+        return key in self.cardpiles
 
     ###########################################################################
     def getAvailableCardClasses(self):
@@ -468,6 +478,9 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--card', action='append', dest='initcards',
                         default=[],
                         help='Include card in lineup')
+    parser.add_argument('--bad', action='append', dest='badcards',
+                        default=[],
+                        help='Do not include card in lineup')
     parser.add_argument('--event', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
