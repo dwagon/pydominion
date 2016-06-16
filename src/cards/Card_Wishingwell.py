@@ -41,7 +41,7 @@ class Card_Wishingwell(Card):
 class Test_Wishingwell(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wishing Well'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wishing Well'], badcards=["Fool's Gold", "Tournament"])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Wishing Well'].remove()

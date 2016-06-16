@@ -17,6 +17,16 @@ class Card_Duchy(Card):
         self.cost = 5
         self.victory = 3
 
+    def hook_gainThisCard(self, game, player):
+        if 'Duchess' in game:
+            duchess = player.plrChooseOptions(
+                "Gain a Duchess as well?",
+                ("No thanks", False),
+                ("Gain Duchess", True))
+            if duchess:
+                player.gainCard('Duchess')
+        return {}
+
 
 ###############################################################################
 class Test_Duchy(unittest.TestCase):
