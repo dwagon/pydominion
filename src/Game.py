@@ -219,7 +219,6 @@ class Game(object):
         while unfilled:
             c = random.choice(available)
             if c in self.badcards:
-                print "Excluding %s as in badcards %s" % (c, self.badcards)
                 continue
             unfilled -= self.useCardPile(available, c)
 
