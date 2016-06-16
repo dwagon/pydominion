@@ -794,15 +794,15 @@ class Player(object):
                 newcard = cardpile.remove()
         if newcard and callhook:
             options = self.hook_gainCard(newcard)
-            # Replace is to gain a different card
-            if 'replace' in options:
-                self.game[newcard.name].add()
-                newcard = self.game[options['replace']].remove()
+        options.update(self.hook_gainThisCard(newcard))
+        # Replace is to gain a different card
+        if 'replace' in options:
+            self.game[newcard.name].add()
+            newcard = self.game[options['replace']].remove()
         if not newcard:
             sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
             return
         self.stats['gain'] += 1
-        options.update(self.hook_gainThisCard(newcard))
         if 'destination' in options:
             destination = options['destination']
         if 'trash' in options and options['trash']:
