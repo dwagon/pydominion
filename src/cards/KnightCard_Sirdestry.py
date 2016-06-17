@@ -38,7 +38,7 @@ class Test_Sir_Destry(unittest.TestCase):
         """ Play the Sir"""
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.handSize(), 7)
+        self.assertEqual(self.plr.handSize(), 7)
 
 
 ###############################################################################
