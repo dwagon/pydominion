@@ -302,7 +302,7 @@ class Game(object):
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard'):
+        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         return mapping
