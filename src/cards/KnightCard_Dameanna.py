@@ -33,7 +33,6 @@ class Test_Dame_Anna(unittest.TestCase):
         self.plr = self.g.playerList(0)
         while True:
             self.card = self.g['Knight'].remove()
-            print "self.card=%s" % self.card
             if self.card.name == 'Dame Anna':
                 break
 
