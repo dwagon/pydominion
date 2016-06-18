@@ -558,6 +558,8 @@ class Player(object):
     ###########################################################################
     def cleanupPhase(self):
         self.phase = 'cleanup'
+        for card in self.played:
+            card.hook_cleanup(self.game, self)
         self.discardHand()
         self.pickUpHand()
         self.cleaned = True

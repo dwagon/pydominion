@@ -111,6 +111,9 @@ class Card(object):
     def hook_postAction(self, game, player):
         pass    # pragma: no cover
 
+    def hook_cleanup(self, game, player):
+        pass    # pragma: no cover
+
     def hook_allPlayers_buyCard(self, game, player, owner, card):
         pass    # pragma: no cover
 
