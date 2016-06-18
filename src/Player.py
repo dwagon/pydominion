@@ -317,6 +317,7 @@ class Player(object):
         if not card:   # pragma: no cover
             return
         assert(isinstance(card, Card))
+        assert(pile in ('discard', 'hand', 'topdeck', 'deck', 'played', 'duration', 'reserve'))
         if pile == 'discard':
             self.discardpile.add(card)
         elif pile == 'hand':
