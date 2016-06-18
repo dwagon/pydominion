@@ -483,7 +483,7 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--event', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
-    parser.add_argument('--numevents', type=int, default=2,
+    parser.add_argument('--numevents', type=int, default=0,
                         help='Number of events to use')
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
