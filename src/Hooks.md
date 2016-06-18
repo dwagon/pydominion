@@ -50,6 +50,10 @@ hook_gainThisCard
 -------------
 This is triggered when the card is gained
 
+hook_cleanup
+------------
+Triggered for every played card at the start of the cleanup phase
+
 hook_coinvalue
 --------------
 How much this card is worth
