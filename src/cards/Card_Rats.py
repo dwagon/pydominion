@@ -10,7 +10,9 @@ class Card_Rats(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+1 Card, +1 Action, Gain a Rats, Trash a non-Rats"
+        self.desc = """+1 Card +1 Action Gain a Rats.
+        Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
+        When you trash this, +1 Card."""
         self.name = 'Rats'
         self.stacksize = 20
         self.cards = 1
@@ -19,12 +21,13 @@ class Card_Rats(Card):
 
     def special(self, game, player):
         """ Gain a Rats. Trash a card from your hand other than a Rats. """
+        player.output("Gained a Rays")
         player.gainCard('Rats')
         player.plrTrashCard(force=True, exclude=['Rats'])
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this +1 Card """
-        player.pickupCard()
+        player.pickupCard(verb="Due to trashing Rats picked up")
 
 
 ###############################################################################

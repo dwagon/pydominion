@@ -10,7 +10,7 @@ class Card_Banditcamp(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+1 card, +2 actions, gain a spoils"
+        self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = 'Bandit Camp'
         self.needspoils = True
         self.cost = 5
@@ -19,6 +19,7 @@ class Card_Banditcamp(Card):
 
     def special(self, game, player):
         """ Gain a spoils """
+        player.output("Gained a Spoils")
         player.gainCard('Spoils')
 
 
