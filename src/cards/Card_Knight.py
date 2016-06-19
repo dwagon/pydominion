@@ -31,9 +31,12 @@ class KnightCardPile(CardPile):
         random.shuffle(self.knights)
 
     def __getattr__(self, key):
-        if key == 'card':
-            return self.knights[-1]
-        return getattr(self.knights[-1], key)
+        try:
+            if key == 'card':
+                return self.knights[-1]
+            return getattr(self.knights[-1], key)
+        except IndexError:
+            return None
 
     def remove(self):
         if self.numcards:

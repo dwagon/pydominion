@@ -953,6 +953,8 @@ class Player(object):
         """Return the list of cards for under cost """
         affordable = PlayArea([])
         for c in self.game.cardTypes():
+            if not c.numcards:
+                continue
             cost = self.cardCost(c)
             if not c.purchasable:
                 continue
