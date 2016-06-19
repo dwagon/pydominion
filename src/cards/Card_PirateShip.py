@@ -80,9 +80,15 @@ class Test_PirateShip(unittest.TestCase):
         self.vic.setDeck('Copper', 'Estate')
         self.plr.test_input = ['Each other', 'copper']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.g.trashSize(), 1)
         self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertEqual(self.plr._pirate_ship, 1)
+
+    def test_spend(self):
+        self.plr._pirate_ship = 2
+        self.plr.test_input = ['per treasure']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 2)
 
 
 ###############################################################################
