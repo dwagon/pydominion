@@ -10,7 +10,7 @@ class Card_Spoils(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'darkages'
-        self.desc = "+3 coin - once off"
+        self.desc = "+3 coin. When you play this, return it to the Spoils pile."
         self.basecard = True
         self.purchasable = False
         self.name = 'Spoils'
