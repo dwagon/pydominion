@@ -54,7 +54,7 @@ class Test_Scavenger(unittest.TestCase):
         self.g.print_state()
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck[-1].name, 'Moat')
-        self.assertIsNotNone(self.inDiscard('Witch'))
+        self.assertIsNotNone(self.plr.inDiscard('Witch'))
 
 
 ###############################################################################
