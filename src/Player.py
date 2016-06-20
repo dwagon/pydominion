@@ -209,6 +209,8 @@ class Player(object):
         """ Take a card out of the game """
         assert(isinstance(card, Card))
         card.hook_trashThisCard(game=self.game, player=self)
+        for cd in self.hand:
+            cd.hook_trashCard(game=self.game, player=self, card=card)
         self.game.trashpile.add(card)
         if card in self.played:
             self.played.remove(card)
