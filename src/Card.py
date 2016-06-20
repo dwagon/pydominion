@@ -158,6 +158,9 @@ class Card(object):
     def hook_trashThisCard(self, game, player):
         pass    # pragma: no cover
 
+    def hook_trashCard(self, game, player, card):
+        pass    # pragma: no cover
+
     def hook_gainThisCard(self, game, player):
         return {}    # pragma: no cover
 
