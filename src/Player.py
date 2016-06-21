@@ -208,9 +208,16 @@ class Player(object):
     def trashCard(self, card):
         """ Take a card out of the game """
         assert(isinstance(card, Card))
-        card.hook_trashThisCard(game=self.game, player=self)
+        trashopts = {}
+        rc = card.hook_trashThisCard(game=self.game, player=self)
+        if rc:
+            trashopts.update(rc)
         for cd in self.hand:
-            cd.hook_trashCard(game=self.game, player=self, card=card)
+            rc = cd.hook_trashCard(game=self.game, player=self, card=card)
+            if rc:
+                trashopts.update(rc)
+        if 'trash' in trashopts and not trashopts['trash']:
+            return
         self.game.trashpile.add(card)
         if card in self.played:
             self.played.remove(card)
