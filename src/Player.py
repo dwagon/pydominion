@@ -1118,7 +1118,7 @@ class Player(object):
         numtogo = len(self.hand) - num
         if numtogo == 0:
             return
-        self.plrDiscardCards(numtogo)
+        self.plrDiscardCards(numtogo, force=True)
 
     ###########################################################################
     def gameOver(self):
