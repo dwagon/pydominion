@@ -7,6 +7,9 @@ class PlayArea(object):
     def __init__(self, initial=[]):
         self.cards = initial
 
+    def __repr__(self):
+        return "<PlayArea: %s>" % ", ".join([c.name for c in self.cards])
+
     def add(self, card):
         self.cards.append(card)
 

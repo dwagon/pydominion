@@ -478,7 +478,8 @@ class Player(object):
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
         for card in allcards:
             if not self.hook_allowedToBuy(card):
-                continue
+                if card in buyable:
+                    buyable.remove(card)
             sel = chr(ord('a') + index)
             if card in buyable:
                 action = 'buy'
