@@ -842,12 +842,12 @@ class Player(object):
         assert(isinstance(card, CardPile))
         if not self.buys:   # pragma: no cover
             return
-        newcard = self.gainCard(card)
         self.buys -= 1
-        cost = self.cardCost(newcard)
+        cost = self.cardCost(card)
         self.coin -= cost
         if card.overpay and self.coin:
             self.overpay(card)
+        newcard = self.gainCard(card)
         self.stats['bought'].append(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, cost))
         if 'Trashing' in self.which_token(card.name):
