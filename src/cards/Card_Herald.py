@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_Herald(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = 'treasure'
+        self.base = 'guilds'
+        self.desc = """+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it.
+        When you buy this, you may overpay for it. For each Coin you overpaid, look through your discard pile and put a card from it on top of your deck."""
+        self.name = 'Herald'
+        self.overpay = True
+        self.cards = 1
+        self.action = 1
+        self.cost = 4
+
+    def special(self, game, player):
+        card = player.nextCard()
+        if card.isAction():
+            player.addCard(card, 'hand')
+            player.playCard(card, costAction=False)
+
+    def hook_overpay(self, game, player, amount):
+        for i in range(amount):
+            card = player.cardSel(num=1, force=True, cardsrc='discard', prompt="Look through your discard pile and put a card from it on top of your deck")
+            player.addCard(card[0], 'topdeck')
+
+
+###############################################################################
+class Test_Herald(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herald', 'Moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.card = self.g['Herald'].remove()
+
+    def test_play(self):
+        """ Play a Herald """
+        self.plr.setDeck('Moat', 'Copper')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertIsNotNone(self.plr.inPlayed('Moat'))
+
+    def test_buy(self):
+        """ Buy a Herald """
+        self.plr.coin = 5
+        self.plr.test_input = ['1', 'moat']
+        self.plr.setDiscard('Estate', 'Moat', 'Copper')
+        self.plr.buyCard(self.g['Herald'])
+        self.assertEqual(self.plr.deck[-1].name, 'Moat')
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
