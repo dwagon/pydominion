@@ -498,8 +498,8 @@ class Test_misc(unittest.TestCase):
     def test_coststr(self):
         witch = self.g['Witch'].remove()
         golem = self.g['Golem'].remove()
-        self.assertEqual(self.plr.coststr(witch), "3 coins")
-        self.assertEqual(self.plr.coststr(golem), "4 coins 1 potions")
+        self.assertEqual(self.plr.coststr(witch), "3 Coins")
+        self.assertEqual(self.plr.coststr(golem), "4 Coins & Potion")
 
     def test_inHand(self):
         self.plr.setHand('Silver')
@@ -686,7 +686,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.assertIn('Actions=3', prompt)
         self.assertIn('Coins=5', prompt)
         self.assertIn('Buys=7', prompt)
-        self.assertIn('Potions=9', prompt)
+        self.assertIn('Potion', prompt)
         self.assertIn('Special Coins=1', prompt)
 
     def test_nothing_prompt(self):

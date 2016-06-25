@@ -523,7 +523,7 @@ class Player(object):
         if self.coin:
             status += " Coins=%d" % self.coin
         if self.potions:
-            status += " Potions=%d" % self.potions
+            status += " Potion"
         if self.specialcoins:
             status += " Special Coins=%d" % self.specialcoins
         prompt = "What to do (%s)?" % status
@@ -1041,8 +1041,8 @@ class Player(object):
             notes = "Overpay"
         else:
             notes = ""
-        coincost = "%d coins" % self.cardCost(card)
-        potcost = "%d potions" % card.potcost if card.potcost else ""
+        coincost = "%d Coins" % self.cardCost(card)
+        potcost = "& Potion" if card.potcost else ""
         cststr = "%s %s %s" % (coincost, potcost, notes)
         return cststr.strip()
 
