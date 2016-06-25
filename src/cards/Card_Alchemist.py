@@ -14,7 +14,8 @@ class Card_Alchemist(Card):
         self.cards = 2
         self.actions = 1
         self.cost = 3
-        self.potcost = 1
+        self.potcost = True
+        self.required_cards = ['Potion']
 
     def hook_discardCard(self, game, player):
         """ When you discard this from play, you may put this on

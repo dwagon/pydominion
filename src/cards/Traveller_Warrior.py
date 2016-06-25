@@ -30,7 +30,7 @@ class Card_Warrior(Card):
         for victim in player.attackVictims():
             for i in range(count):
                 c = victim.nextCard()
-                if c.cost in (3, 4) and c.potcost == 0:
+                if c.cost in (3, 4) and not c.potcost:
                     victim.output("Trashing %s due to %s's Warrior" % (c.name, player.name))
                     player.output("Trashing %s from %s" % (c.name, victim.name))
                     victim.trashCard(c)

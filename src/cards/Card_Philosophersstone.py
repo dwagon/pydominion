@@ -13,7 +13,8 @@ class Card_Philosophersstone(Card):
         self.desc = "Gain +1 coin for every 5 cards in deck + discard"
         self.name = "Philosopher's Stone"
         self.cost = 3
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def hook_coinvalue(self, game, player):
         """ When you play this, count your deck and discard pile.

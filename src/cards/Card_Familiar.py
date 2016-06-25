@@ -16,7 +16,8 @@ class Card_Familiar(Card):
         self.cards = 1
         self.actions = 1
         self.cost = 3
-        self.potcost = 1
+        self.required_cards = ['Potion', 'Curse']
+        self.potcost = True
 
     def special(self, game, player):
         """ All other players gain a curse """

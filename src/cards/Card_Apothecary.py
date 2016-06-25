@@ -14,7 +14,8 @@ class Card_Apothecary(Card):
         self.cards = 1
         self.actions = 1
         self.cost = 2
-        self.potcost = 1
+        self.potcost = True
+        self.required_cards = ['Potion']
 
     def special(self, player, game):
         """ Reveal the top 4 cards of your deck. Put the revealed

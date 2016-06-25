@@ -14,7 +14,8 @@ class Card_Vineyard(Card):
         self.name = 'Vineyard'
         self.playable = False
         self.cost = 0
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special_score(self, game, player):
         """ Worth 1VP for every 3 action cards in your deck rounded down """

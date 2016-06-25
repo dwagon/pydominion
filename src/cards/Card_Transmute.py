@@ -13,7 +13,8 @@ class Card_Transmute(Card):
         self.desc = "Trash a card from hand to gain others"
         self.name = 'Transmute'
         self.cost = 0
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special(self, game, player):
         """ Trash a card from your hand. If it is an...

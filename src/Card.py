@@ -7,7 +7,7 @@ class Card(object):
         self.basecard = False
         self.stacksize = 10
         self.cost = -1
-        self.potcost = 0
+        self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
         self.permanent = False
