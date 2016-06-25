@@ -16,6 +16,7 @@ class Card_Treasurehunter(Card):
         self.actions = 1
         self.coin = 1
         self.cost = 3
+        self.numcards = 5
 
     def special(self, game, player):
         """ Gain a Silver per card the player to your right gained in his last turn """

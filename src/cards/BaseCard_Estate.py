@@ -12,5 +12,6 @@ class Card_Estate(Card):
         self.name = 'Estate'
         self.cost = 2
         self.victory = 1
+        self.numcards = 12
 
 # EOF

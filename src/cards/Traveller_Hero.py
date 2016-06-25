@@ -15,6 +15,7 @@ class Card_Hero(Card):
         self.purchasable = False
         self.coin = 2
         self.cost = 5
+        self.numcards = 5
 
     def special(self, game, player):
         """ Gain a treasure """

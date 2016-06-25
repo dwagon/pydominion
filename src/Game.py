@@ -149,7 +149,7 @@ class Game(object):
     def loadTravellers(self):
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            cp = CardPile(trav, self.cardmapping['Traveller'][trav], numcards=5)
+            cp = CardPile(trav, self.cardmapping['Traveller'][trav], self)
             self.cardpiles[cp.name] = cp
         self.loaded_travellers = True
 
@@ -193,7 +193,7 @@ class Game(object):
     ###########################################################################
     def loadDecks(self, initcards):
         for card in self.baseCards:
-            cp = CardPile(card, self.cardmapping['BaseCard'][card], numcards=12)
+            cp = CardPile(card, self.cardmapping['BaseCard'][card], self)
             self.cardpiles[cp.name] = cp
         self['Copper'].numcards = 60
         self['Silver'].numcards = 40
@@ -254,7 +254,7 @@ class Game(object):
         except ValueError:  # pragma: no cover
             sys.stderr.write("Unknown card '%s'\n" % c)
             sys.exit(1)
-        cp = CardPile(c, self.cardmapping['Card'][c])
+        cp = CardPile(c, self.cardmapping['Card'][c], self)
         self.cardpiles[cp.name] = cp
         self.output("Playing with card %s" % self[c].name)
         return 1

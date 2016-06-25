@@ -16,6 +16,7 @@ class Card_Fugitive(Card):
         self.actions = 1
         self.cards = 2
         self.cost = 4
+        self.numcards = 5
 
     def special(self, game, player):
         player.plrDiscardCards(num=1)

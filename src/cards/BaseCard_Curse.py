@@ -18,6 +18,9 @@ class Card_Curse(Card):
         self.cost = 0
         self.victory = -1
 
+    def numcards(self, game):
+        return min(10, 10 * (game.numplayers - 1))
+
 
 ###############################################################################
 class Test_Curse(unittest.TestCase):

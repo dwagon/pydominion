@@ -18,6 +18,7 @@ class Card_Warrior(Card):
         self.purchasable = False
         self.cards = 2
         self.cost = 4
+        self.numcards = 5
 
     def special(self, game, player):
         """ For each Traveller you have in play (including this), each other

@@ -15,6 +15,7 @@ class Card_Champion(Card):
         self.permanent = True
         self.purchasable = False
         self.defense = True
+        self.numcards = 5
         self.cost = 6
 
     def special(self, game, player):
