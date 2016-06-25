@@ -13,7 +13,8 @@ class Card_Golem(Card):
         self.desc = "Dig through deck for 2 action cards and play them"
         self.name = 'Golem'
         self.cost = 4
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special(self, game, player):
         """ Reveal cards from your deck until you reveal 2 Action

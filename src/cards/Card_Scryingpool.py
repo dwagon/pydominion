@@ -17,7 +17,8 @@ class Card_Scryingpool(Card):
         self.name = 'Scrying Pool'
         self.actions = 1
         self.cost = 2
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special(self, game, player):
         for plr in player.attackVictims():

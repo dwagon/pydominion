@@ -18,6 +18,9 @@ class Card_Copper(Card):
         self.coin = 1
         self.cost = 0
 
+    def numcards(self, game):
+        return 60 - game.numplayers * 7
+
 
 ###############################################################################
 class Test_Copper(unittest.TestCase):

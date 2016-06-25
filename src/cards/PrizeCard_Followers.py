@@ -12,7 +12,7 @@ class Card_Followers(Card):
         self.base = 'cornucopia'
         self.name = "Followers"
         self.purchasable = False
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.cost = 0
         self.desc = "+2 Cards. Gain an Estate. Each other player gains a Curse and discards down to 3 cards in hand."
         self.cards = 2

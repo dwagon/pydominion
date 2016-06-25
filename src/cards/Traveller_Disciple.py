@@ -13,6 +13,7 @@ class Card_Disciple(Card):
         self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = 'Disciple'
         self.purchasable = False
+        self.numcards = 5
         self.cost = 5
 
     def special(self, game, player):

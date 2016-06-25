@@ -9,7 +9,8 @@ class Card_Possession(Card):
         self.desc = "Be Evil"
         self.name = 'Possession'
         self.cost = 6
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special(self, game, player):
         """ The player to your left takes an extra turn after this

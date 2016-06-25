@@ -20,8 +20,9 @@ class Card_Crossroads(Card):
             If this is the first time you played a Crossroads this turn,
             +3 Actions """
         vict = sum([1 for c in player.hand if c.isVictory()])
-        for i in range(vict):
-            player.pickupCard()
+        if vict:
+            player.output("Picking up %d cards" % vict)
+            player.pickupCards(vict)
         numcross = sum([1 for c in player.played if c.name == 'Crossroads'])
         if numcross == 1:
             player.addActions(3)

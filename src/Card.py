@@ -7,18 +7,14 @@ class Card(object):
         self.basecard = False
         self.stacksize = 10
         self.cost = -1
-        self.potcost = 0
+        self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
         self.permanent = False
         self.playable = True
         self.callable = True
         self.defense = False
-        self.needcurse = False
-        self.needspoils = False
-        self.needsmadman = False
         self.needsprize = False
-        self.needsmercenary = False
         self.overpay = False
         self.traveller = False
         self.when = 'any'
@@ -28,7 +24,9 @@ class Card(object):
         self.potion = 0
         self.cards = 0
         self.victory = 0
+        self.required_cards = []
         self.image = None
+        self.numcards = 10
 
     def __repr__(self):
         return self.name

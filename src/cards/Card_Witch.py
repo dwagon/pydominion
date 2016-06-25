@@ -11,7 +11,7 @@ class Card_Witch(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'dominion'
         self.desc = "+2 cards, curse everyone else"
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.name = 'Witch'
         self.cards = 2
         self.cost = 3

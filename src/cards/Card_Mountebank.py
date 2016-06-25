@@ -11,7 +11,7 @@ class Card_Mountebank(Card):
         self.base = 'prosperity'
         self.desc = "+2 coin. Others discard curse or gain curse + copper"
         self.name = 'Mountebank'
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.coin = 2
         self.cost = 5
 

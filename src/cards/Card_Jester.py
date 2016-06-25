@@ -13,7 +13,7 @@ class Card_Jester(Card):
         self.desc = """2 Coin. Each other player discards the top card of his deck.
         If it's a Victory card he gains a Curse. Otherwise either he gains a copy of the discarded card or you do, your choice."""
         self.name = 'Jester'
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.coin = 2
         self.cost = 5
 

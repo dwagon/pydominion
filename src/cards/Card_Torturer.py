@@ -11,7 +11,7 @@ class Card_Torturer(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
         self.desc = "+3 cards; Other players discard 2 cards or gain a curse"
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.name = 'Torturer'
         self.cards = 3
         self.cost = 5

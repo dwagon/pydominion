@@ -16,6 +16,7 @@ class Card_Soldier(Card):
         self.purchasable = False
         self.coin = 2
         self.cost = 3
+        self.numcards = 5
 
     def special(self, game, player):
         """+2 Coins; +1 Coin per other Attack you have in play.

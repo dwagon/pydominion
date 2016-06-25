@@ -12,7 +12,8 @@ class Card_University(Card):
         self.desc = "Gain an action card costing up to 5"
         self.name = 'University'
         self.cost = 2
-        self.potcost = 1
+        self.required_cards = ['Potion']
+        self.potcost = True
 
     def special(self, game, player):
         """ Gain an action card costing up to 5"""

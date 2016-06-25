@@ -17,6 +17,12 @@ class Card_Colony(Card):
         self.cost = 11
         self.victory = 10
 
+    def numcards(self, game):
+        if game.numplayers == 2:
+            return 8
+        else:
+            return 12
+
 
 ###############################################################################
 class Test_Colony(unittest.TestCase):

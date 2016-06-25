@@ -12,5 +12,6 @@ class Card_Province(Card):
         self.name = 'Province'
         self.cost = 8
         self.victory = 6
+        self.numcards = 12
 
 # EOF

@@ -12,7 +12,7 @@ class Card_Banditcamp(Card):
         self.base = 'darkages'
         self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = 'Bandit Camp'
-        self.needspoils = True
+        self.required_cards = ['Spoils']
         self.cost = 5
         self.actions = 2
         self.cards = 1

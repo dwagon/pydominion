@@ -16,6 +16,7 @@ class Card_Spoils(Card):
         self.name = 'Spoils'
         self.cost = 0
         self.coin = 3
+        self.numcards = 15
 
     def special(self, player, game):
         """ When you play this return it to the spoils pile """

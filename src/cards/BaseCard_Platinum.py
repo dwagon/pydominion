@@ -16,6 +16,7 @@ class Card_Platinum(Card):
         self.basecard = True
         self.coin = 5
         self.cost = 9
+        self.numcards = 12
 
 
 ###############################################################################

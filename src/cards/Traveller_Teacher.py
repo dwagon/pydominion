@@ -16,6 +16,7 @@ class Card_Teacher(Card):
         self.name = 'Teacher'
         self.purchasable = False
         self.cost = 6
+        self.numcards = 5
 
     def special(self, game, player):
         """At the start of your turn, you may call this, to move your +1 Card,
