@@ -14,7 +14,7 @@ class Card_Hermit(Card):
         Gain a card costing up to 3.
         When you discard this from play, if you did not buy any cards this turn, trash this and gain a Madman from the Madman pile."""
         self.name = 'Hermit'
-        self.needsmadman = True
+        self.required_cards = ['Madman']
         self.cost = 3
 
     def special(self, game, player):

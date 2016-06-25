@@ -12,7 +12,7 @@ class Card_Marauder(Card):
         self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
         self.name = 'Marauder'
         self.cost = 4
-        self.needspoils = True
+        self.required_cards = ['Spoils']
 
     def special(self, game, player):
         for plr in player.attackVictims():

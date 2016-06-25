@@ -11,7 +11,6 @@ class Card_Familiar(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'alchemy'
         self.desc = "+1 card, +1 action, curse everyone else"
-        self.needcurse = True
         self.name = 'Familiar'
         self.cards = 1
         self.actions = 1

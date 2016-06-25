@@ -10,7 +10,7 @@ class Card_Seahag(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'seaside'
         self.desc = "Curse everyone else"
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.name = 'Sea Hag'
         self.cost = 4
 

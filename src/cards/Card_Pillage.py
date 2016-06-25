@@ -12,7 +12,7 @@ class Card_Pillage(Card):
         self.base = 'darkages'
         self.desc = "Trash this and players with 5 or more cards discard a card of your choice"
         self.name = 'Pillage'
-        self.needspoils = True
+        self.required_cards = ['Spoils']
         self.cost = 5
 
     ###########################################################################

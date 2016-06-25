@@ -15,7 +15,7 @@ class Card_Urchin(Card):
         When you play another Attack card with this in play, you may trash this.
         If you do, gain a Mercenary from the Mercenary pile."""
         self.name = 'Urchin'
-        self.needsmercenary = True
+        self.required_cards = ['Mercenary']
         self.actions = 1
         self.cards = 1
         self.cost = 3

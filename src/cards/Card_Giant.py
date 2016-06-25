@@ -12,7 +12,7 @@ class Card_Giant(Card):
         self.base = 'adventure'
         self.desc = "Flip Journey Token; +1 Coin / +5 Coin - trashes other players"
         self.name = 'Giant'
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.cost = 5
 
     def special(self, game, player):

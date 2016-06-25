@@ -12,7 +12,7 @@ class Card_IGG(Card):
         self.base = 'hinterlands'
         self.desc = """1 Coin. When you play this, you may gain a Copper, putting it into your hand.
         When you gain this, each other player gains a Curse."""
-        self.needcurse = True
+        self.required_cards = ['Curse']
         self.name = 'Ill-Gotten Gains'
         self.cost = 5
         self.coin = 1
