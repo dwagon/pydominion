@@ -264,7 +264,7 @@ class Game(object):
                     self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
                     self.output("Playing with %s" % c)
 
-        for card in self.cardpiles.keys():
+        for card in list(self.cardpiles.keys()):
             if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
                 from RuinCardPile import RuinCardPile
                 nc = self.numplayers * 10
