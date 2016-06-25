@@ -74,8 +74,7 @@ class Game(object):
         self.loadDecks(self.initcards)
         self.loadEvents()
 
-        for c in list(self.cardpiles.keys()):
-            self.checkCardRequirements(c)
+        self.checkCardRequirements()
 
         for i in range(self.numplayers):
             try:
@@ -222,14 +221,7 @@ class Game(object):
                 continue
             unfilled -= self.useCardPile(available, c)
 
-        for c in list(self.cardpiles.keys()):
-            self.checkCardRequirements(c)
-
-    ###########################################################################
-    def numCurses(self):
-        # The max here is to help for testing in 1 player games
-        # so the number of curses is never 0
-        return max(10, 10 * (self.numplayers - 1))
+        self.checkCardRequirements()
 
     ###########################################################################
     def addPrizes(self):
@@ -260,31 +252,28 @@ class Game(object):
         return 1
 
     ###########################################################################
-    def checkCardRequirements(self, card):
-        if self.cardpiles[card].needcurse and 'Curse' not in self.cardpiles:
-            self.cardpiles['Curse'] = CardPile('Curse', self.cardmapping['BaseCard']['Curse'], numcards=self.numCurses())
-            self.output("Playing with Curses")
-        if self.cardpiles[card].potcost and 'Potion' not in self.cardpiles:
-            self.cardpiles['Potion'] = CardPile('Potion', self.cardmapping['BaseCard']['Potion'], numcards=16)
-            self.output("Playing with Potions")
-        if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
-            from RuinCardPile import RuinCardPile
-            nc = self.numplayers * 10
-            self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
-            self.output("Playing with Ruins")
-        if self.cardpiles[card].needspoils and 'Spoils' not in self.cardpiles:
-            self.cardpiles['Spoils'] = CardPile('Spoils', self.cardmapping['BaseCard']['Spoils'], numcards=16)
-            self.output("Playing with Spoils")
-        if self.cardpiles[card].traveller:
-            self.loadTravellers()
-        if self.cardpiles[card].needsmadman and 'Madman' not in self.cardpiles:
-            self.cardpiles['Madman'] = CardPile('Madman', self.cardmapping['BaseCard']['Madman'], numcards=10)
-            self.output("Playing with Madman")
-        if self.cardpiles[card].needsmercenary and 'Mercenary' not in self.cardpiles:
-            self.cardpiles['Mercenary'] = CardPile('Mercenary', self.cardmapping['BaseCard']['Mercenary'], numcards=10)
-            self.output("Playing with Mercenary")
-        if self.cardpiles[card].needsprize:
-            self.addPrizes()
+    def checkCardRequirements(self):
+        for card in self.cardpiles.values():
+            for x in card.required_cards:
+                if isinstance(x, tuple):
+                    k, c = x
+                else:
+                    k = 'BaseCard'
+                    c = x
+                if c not in self.cardpiles:
+                    self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
+                    self.output("Playing with %s" % c)
+
+        for card in self.cardpiles.keys():
+            if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
+                from RuinCardPile import RuinCardPile
+                nc = self.numplayers * 10
+                self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
+                self.output("Playing with Ruins")
+            if self.cardpiles[card].traveller:
+                self.loadTravellers()
+            if self.cardpiles[card].needsprize:
+                self.addPrizes()
 
     ###########################################################################
     def cardTypes(self):
