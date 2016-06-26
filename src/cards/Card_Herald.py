@@ -28,6 +28,7 @@ class Card_Herald(Card):
         for i in range(amount):
             card = player.cardSel(num=1, force=True, cardsrc='discard', prompt="Look through your discard pile and put a card from it on top of your deck")
             player.addCard(card[0], 'topdeck')
+            player.discardpile.remove(card[0])
 
 
 ###############################################################################
