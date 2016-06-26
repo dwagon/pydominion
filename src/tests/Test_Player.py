@@ -664,6 +664,7 @@ class Test_choiceSelection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.setHand('Copper')
         self.plr.phase = 'buy'
+        self.plr.specialcoins = 0   # Stop card choice breaking test
         opts, prompt = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['print'], 'End Phase')
@@ -672,7 +673,6 @@ class Test_choiceSelection(unittest.TestCase):
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['action'], 'spendall')
-
         self.assertEqual(opts[2]['action'], 'spend')
 
     def test_prompt(self):
