@@ -35,6 +35,7 @@ class Player(object):
         self.cleaned = False
         self.is_start = False
         self.test_input = []
+        self.forbidden_to_buy = []
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
@@ -481,7 +482,7 @@ class Player(object):
                 if card in buyable:
                     buyable.remove(card)
             sel = chr(ord('a') + index)
-            if card in buyable:
+            if card in buyable and card not in self.forbidden_to_buy:
                 action = 'buy'
                 verb = 'Buy %s' % card.name
             else:
@@ -539,6 +540,7 @@ class Player(object):
         for card in self.played + self.reserve:
             card.hook_endTurn(game=self.game, player=self)
         self.cleanupPhase()
+        self.forbidden_to_buy = []
         self.phase = None
 
     ###########################################################################
