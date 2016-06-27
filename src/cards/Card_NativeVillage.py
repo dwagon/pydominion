@@ -20,6 +20,7 @@ class Card_NativeVillage(Card):
     def special(self, game, player):
         if not hasattr(player, 'native_map'):
             player.native_map = PlayArea([])
+        player.output("Native Village contains: %s" % ", ".join(c.name for c in player.native_map))
         choice = player.plrChooseOptions(
             "Choose One",
             ("Set aside the top card of your deck face down on your Native Village mat", 'push'),
@@ -28,6 +29,7 @@ class Card_NativeVillage(Card):
         if choice == 'push':
             card = player.nextCard()
             player.native_map.add(card)
+            player.output("Adding %s to the Native Village" % card.name)
             player.secret_count += 1
         else:
             self.pull_back(player)
@@ -38,9 +40,9 @@ class Card_NativeVillage(Card):
     def pull_back(self, player):
         for card in player.native_map[:]:
             player.output("Returning %s from Native Map" % card.name)
-            player.addCard(card)
+            player.addCard(card, 'hand')
             player.native_map.remove(card)
-            self.secret_count -= 1
+            player.secret_count -= 1
 
 
 ###############################################################################
@@ -51,15 +53,19 @@ class Test_NativeVillage(unittest.TestCase):
         self.g.startGame()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Native Village'].remove()
-        self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         self.plr.setDeck('Gold')
+        self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Set aside']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
-        self.g.print_state()
         self.assertEqual(self.plr.native_map[0].name, 'Gold')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['Put all']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.secret_count, 0)
+        self.assertIsNotNone(self.plr.inHand('Gold'))
 
 
 ###############################################################################
