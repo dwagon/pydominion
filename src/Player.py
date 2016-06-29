@@ -36,6 +36,7 @@ class Player(object):
         self.is_start = False
         self.test_input = []
         self.forbidden_to_buy = []
+        self.played_events = PlayArea([])
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
@@ -537,11 +538,8 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
-        for card in self.played + self.reserve:
-            card.hook_endTurn(game=self.game, player=self)
         self.cleanupPhase()
         self.forbidden_to_buy = []
-        self.phase = None
 
     ###########################################################################
     def actionPhase(self):
@@ -570,7 +568,7 @@ class Player(object):
     ###########################################################################
     def cleanupPhase(self):
         self.phase = 'cleanup'
-        for card in self.played:
+        for card in self.played + self.reserve:
             card.hook_cleanup(self.game, self)
         self.discardHand()
         self.pickUpHand()
@@ -702,11 +700,15 @@ class Player(object):
 
     ###########################################################################
     def endTurn(self):
-        self.messages = []
-        self.once = {}
         if not self.cleaned:
             self.cleanupPhase()
         self.newhandsize = 5
+        for card in self.played + self.reserve + self.played_events:
+            card.hook_endTurn(game=self.game, player=self)
+        self.played_events = PlayArea([])
+        self.messages = []
+        self.once = {}
+        self.phase = None
 
     ###########################################################################
     def hook_discardCard(self, card):
@@ -962,6 +964,7 @@ class Player(object):
         self.coin -= event.cost
         self.output("Using event %s" % event.name)
         event.special(game=self.game, player=self)
+        self.played_events.add(event)
         return True
 
     ###########################################################################

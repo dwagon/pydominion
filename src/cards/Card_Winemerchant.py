@@ -17,7 +17,7 @@ class Card_Winemerchant(Card):
         self.cost = 5
         self.callable = False
 
-    def hook_endTurn(self, game, player):
+    def hook_cleanup(self, game, player):
         if player.coin >= 2:
             player.output("Discarding Wine Merchant")
             player.reserve.remove(self)
