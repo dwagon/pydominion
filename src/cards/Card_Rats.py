@@ -14,7 +14,7 @@ class Card_Rats(Card):
         Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
         When you trash this, +1 Card."""
         self.name = 'Rats'
-        self.stacksize = 20
+        self.numcards = 20
         self.cards = 1
         self.actions = 1
         self.cost = 4
