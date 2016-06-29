@@ -946,6 +946,10 @@ class Player(object):
             self.output("No prizes available")
 
     ###########################################################################
+    def __str__(self):
+        return "<Player %s>" % self.name
+
+    ###########################################################################
     def performEvent(self, event):
         assert(issubclass(event.__class__, EventPile))
         if not self.buys:
