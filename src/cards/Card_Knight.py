@@ -25,6 +25,7 @@ def botresponse(player, kind, args=[], kwargs={}):
 class KnightCardPile(CardPile):
     def __init__(self, mapping, numcards=10):
         self.numcards = numcards
+        self.embargo_level = 0
         knighttypes = mapping
 
         self.knights = [c() for c in knighttypes.values()]

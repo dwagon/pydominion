@@ -489,7 +489,10 @@ class Player(object):
                 sel = '-'
                 action = None
                 verb = card.name
-            tp = '%s (%s; %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
+            notes = [self.coststr(card), '%d left' % card.numcards]
+            if card.embargo_level:
+                notes.append("Embargo %d" % card.embargo_level)
+            tp = '%s (%s) %s' % (verb, "; ".join(notes), card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
@@ -850,6 +853,10 @@ class Player(object):
         if card.overpay and self.coin:
             self.overpay(card)
         newcard = self.gainCard(card)
+        if self.game[newcard.name].embargo_level:
+            for i in range(self.game[newcard.name].embargo_level):
+                self.gainCard('Curse')
+                self.output("Gained a Curse from embargo")
         self.stats['bought'].append(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, cost))
         if 'Trashing' in self.which_token(card.name):
