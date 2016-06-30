@@ -13,11 +13,25 @@ class Card_Embargo(Card):
         self.desc = """+2 Coin. Trash this card. Put an Embargo token on top of a Supply pile.
         When a player buys a card, he gains a Curse card per Embargo token on that pile."""
         self.name = 'Embargo'
+        self.required_cards = ['Curse']
         self.coin = 2
         self.cost = 2
 
     def special(self, game, player):
-        pass    # TODO
+        trash = player.plrChooseOptions(
+            "Trash this card?",
+            ("Keep this card", False),
+            ("Trash this card to embargo", True))
+        if not trash:
+            return
+        player.trashCard(self)
+        piles = [cp for cp in game.cardpiles.values()]
+        piles.sort()
+        card = player.cardSel(
+            cardsrc=piles,
+            prompt="Which stack to embargo"
+            )
+        game[card[0].name].embargo()
 
 
 ###############################################################################
@@ -31,9 +45,11 @@ class Test_Embargo(unittest.TestCase):
 
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['trash', 'Silver']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.g['Silver'].embargo_level, 1)
+        self.assertIsNotNone(self.g.inTrash('Embargo'))
 
 
 ###############################################################################
