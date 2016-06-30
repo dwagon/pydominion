@@ -25,7 +25,7 @@ class Card_Urchin(Card):
             plr.output("Discard down to 4 cards from %s's Urchin" % player.name)
             plr.plrDiscardDownTo(4)
 
-    def hook_endTurn(self, game, player):
+    def hook_cleanup(self, game, player):
         attacks = 0
         for card in player.played:
             if card.isAttack():
