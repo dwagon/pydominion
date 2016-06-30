@@ -20,8 +20,8 @@ class Card_PirateShip(Card):
     def special(self, game, player):
         choice = player.plrChooseOptions(
             "Pick one",
-            ("Each other player reveals the top 2 cards of his deck, trashes a" +
-                "revealed Treasure that you choose, discards the rest, and if anyone" +
+            ("Each other player reveals the top 2 cards of his deck, trashes a " +
+                "revealed Treasure that you choose, discards the rest, and if anyone " +
                 "trashed a Treasure you take a Coin token", 'attack'),
             ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend'))
         if choice == 'attack':
