@@ -106,20 +106,17 @@ class Card_BandOfMisfits(Card):
 class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Market', 'Moat'], badcards=['Market Square'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Bureaucrat', 'Moat'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Band of Misfits'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play_market(self):
-        """ Make the Band of Misfits be a Market """
-        self.plr.test_input = ['Market']
+        """ Make the Band of Misfits be a Bureaucrat """
+        self.plr.test_input = ['Bureaucrat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertIsNotNone(self.plr.inDeck('Silver'))
 
     def test_play_feast(self):
         """ Make the Band of Misfits be a Feast """
