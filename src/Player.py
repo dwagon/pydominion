@@ -539,9 +539,13 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
+        hooks = []
         for card in self.played + self.reserve:
-            card.hook_endTurn(game=self.game, player=self)
+            if hasattr(card, 'hook_endTurn'):
+                hooks.append(card)
         self.cleanupPhase()
+        for card in hooks:
+            card.hook_endTurn(game=self.game, player=self)
         self.forbidden_to_buy = []
         self.phase = None
 
