@@ -18,7 +18,7 @@ class Card_Caravan(Card):
 
     def duration(self, game, player):
         """ +1 card next turn"""
-        player.pickupCards(1, verb="Picked up (caravan) ")
+        player.pickupCards(1, verb="Picked up from Caravan:")
 
 
 ###############################################################################
