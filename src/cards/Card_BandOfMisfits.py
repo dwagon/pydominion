@@ -15,20 +15,118 @@ class Card_BandOfMisfits(Card):
         self.cost = 5
 
     def special(self, game, player):
-        pass    # TODO
+        actionpiles = game.getActionPiles(self.cost - 1)
+        actions = player.cardSel(
+            prompt="What action card do you want to imitate?",
+            cardsrc=actionpiles)
+        self._action = actions[0]
+        player.addActions(self._action.actions)
+        player.addBuys(self._action.buys)
+        player.addCoin(self._action.coin)
+        player.pickupCards(self._action.cards)
+        self._action.special(game, player)
+
+    def hook_endTurn(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        del self._action
+
+    def hook_discardCard(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_discardCard(game, player)
+
+    def hook_allPlayers_buyCard(self, game, player, owner, card):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_allPlayers_buyCard(game, player, owner, card)
+
+    def hook_allPlayers_gainCard(self, game, player, owner, card):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_allPlayers_gainCard(game, player, owner, card)
+
+    def hook_buyCard(self, game, player, card):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_buyCard(game, player, card)
+
+    def hook_callReserve(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_callReserve(game, player)
+
+    def hook_cardCost(self, game, player, card):
+        if not hasattr(self, '_action'):
+            return 0
+        return self._action.hook_cardCost(game, player, card)
+
+    def hook_cleanup(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_cleanup(game, player)
+
+    def hook_gainCard(self, game, player, card):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_gainCard(game, player, card)
+
+    def hook_postAction(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_postAction(game, player)
+
+    def hook_spendValue(self, game, player, card):
+        if not hasattr(self, '_action'):
+            return 0
+        return self._action.hook_spendValue(game, player, card)
+
+    def hook_trashCard(self, game, player, card):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_trashCard(game, player, card)
+
+    def hook_trashThisCard(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_trashThisCard(game, player)
+
+    def hook_trashcard(self, game, player):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_trashcard(game, player)
+
+    def hook_underAttack(self, player, game):
+        if not hasattr(self, '_action'):
+            return
+        return self._action.hook_underAttack(player, game)
 
 
 ###############################################################################
 class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Market', 'Moat'], badcards=['Market Square'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Band of Misfits'].remove()
         self.plr.addCard(self.card, 'hand')
 
-    def test_play(self):
+    def test_play_market(self):
+        """ Make the Band of Misfits be a Market """
+        self.plr.test_input = ['Market']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.getCoin(), 1)
+
+    def test_play_feast(self):
+        """ Make the Band of Misfits be a Feast """
+        self.plr.test_input = ['Feast', 'trash', 'moat']
+        self.plr.playCard(self.card)
+        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
