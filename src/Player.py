@@ -39,6 +39,7 @@ class Player(object):
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
+        self.turn_number = 0
         self.zero_stats = {'gain': 0, 'bought': []}
         self.stats = self.zero_stats.copy()
         self.pickUpHand()
@@ -532,7 +533,8 @@ class Player(object):
 
     ###########################################################################
     def turn(self):
-        self.output("#" * 50)
+        self.turn_number += 1
+        self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
