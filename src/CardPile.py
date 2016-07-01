@@ -7,10 +7,15 @@ class CardPile(object):
         self.cardname = cardname
         self.cardclass = klass
         self.card = klass()
+        self.embargo_level = 0
         if callable(self.card.numcards):
             self.numcards = self.card.numcards()
         else:
             self.numcards = self.card.numcards
+
+    ###########################################################################
+    def embargo(self):
+        self.embargo_level += 1
 
     ###########################################################################
     def __lt__(self, a):
