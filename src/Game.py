@@ -322,11 +322,13 @@ class Game(object):
         return list(self.cardmapping[prefix].keys())
 
     ###########################################################################
-    def getActionPiles(self):
-        """ Return all cardstacks that are action cards """
+    def getActionPiles(self, cost=999):
+        """ Return all cardstacks that are action cards that cost less than cost """
         actionpiles = []
         for cp in self.cardpiles.values():
             if not cp.purchasable:
+                continue
+            if cp.cost > cost:
                 continue
             if cp.isAction():
                 actionpiles.append(cp)
