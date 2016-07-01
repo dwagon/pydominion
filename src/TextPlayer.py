@@ -108,7 +108,7 @@ class TextPlayer(Player):
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 options.append({'selector': '0', 'print': 'Finish Selecting', 'card': None})
             index = 1
-            for c in selectfrom:
+            for c in sorted(selectfrom):
                 if 'exclude' in kwargs and c.name in kwargs['exclude']:
                     continue
                 sel = "%d" % index
