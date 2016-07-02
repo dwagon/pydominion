@@ -233,10 +233,12 @@ class Test_plrTrashCard(unittest.TestCase):
 
     def test_Two(self):
         self.plr.setHand('Gold', 'Copper', 'Silver')
-        self.plr.test_input = ['1', '2', '0']
+        self.plr.test_input = ['Gold', 'Silver', '0']
         x = self.plr.plrTrashCard(num=2)
         self.assertEqual(len(x), 2)
-        self.assertEqual(self.g.trashpile.cards, x)
+        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.plr.inHand('Copper'))
 
     def test_Trash(self):
         self.plr.setHand('Gold')
