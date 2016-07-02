@@ -190,6 +190,10 @@ class Test_cardsAffordable(unittest.TestCase):
             self.assertEqual(a.cost, price)
             self.assertTrue(a.isVictory())
 
+    def test_nocost(self):
+        ans = self.plr.cardsAffordable('less', coin=None, potions=0, types={'victory': True, 'action': True, 'treasure': True})
+        self.assertIn('Province', [cp.name for cp in ans])
+
 
 ###############################################################################
 class Test_typeSelector(unittest.TestCase):
@@ -453,7 +457,7 @@ class Test_pickupCard(unittest.TestCase):
 ###############################################################################
 class Test_misc(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Golem', 'Witch'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Golem', 'Witch', 'Engineer'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
@@ -500,8 +504,10 @@ class Test_misc(unittest.TestCase):
     def test_coststr(self):
         witch = self.g['Witch'].remove()
         golem = self.g['Golem'].remove()
+        eng = self.g['Engineer'].remove()
         self.assertEqual(self.plr.coststr(witch), "3 Coins")
-        self.assertEqual(self.plr.coststr(golem), "4 Coins & Potion")
+        self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
+        self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
 
     def test_inHand(self):
         self.plr.setHand('Silver')
@@ -732,14 +738,43 @@ class Test_spendableSelection(unittest.TestCase):
         self.assertIsNone(opts[1]['card'])
 
         self.assertTrue(opts[2]['print'].startswith('Spend Copper'))
-        self.assertEqual(opts[2]['selector'], '3')
+        self.assertEqual(opts[2]['selector'], '4')
         self.assertEqual(opts[2]['action'], 'spend')
         self.assertEqual(opts[2]['card'].name, 'Copper')
 
         self.assertTrue(opts[3]['print'].startswith('Spend Potion'))
-        self.assertEqual(opts[3]['selector'], '4')
+        self.assertEqual(opts[3]['selector'], '5')
         self.assertEqual(opts[3]['action'], 'spend')
         self.assertEqual(opts[3]['card'].name, 'Potion')
+
+    def test_debt(self):
+        self.plr.setHand('Copper')
+        self.plr.debt = 1
+        self.plr.coin = 1
+        opts = self.plr.spendableSelection()
+        self.assertEqual(opts[1]['selector'], '3')
+        self.assertEqual(opts[1]['action'], 'payback')
+        self.assertEqual(opts[1]['print'], 'Payback Debt')
+        self.assertIsNone(opts[1]['card'])
+
+
+###############################################################################
+class Test_buyCard(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Embargo'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_debt(self):
+        self.plr.debt = 1
+        self.plr.buyCard(self.g['Copper'])
+        self.assertIn('Must pay off debt first', self.plr.messages)
+
+    def test_embargo(self):
+        self.g['Copper'].embargo()
+        self.plr.buyCard(self.g['Copper'])
+        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertIn('Gained a Curse from embargo', self.plr.messages)
 
 
 ###############################################################################

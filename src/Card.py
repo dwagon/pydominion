@@ -6,6 +6,7 @@ class Card(object):
         self.base = "TODO"
         self.basecard = False
         self.cost = -1
+        self.debtcost = 0
         self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
@@ -49,6 +50,9 @@ class Card(object):
         if 'duration' in self.cardtype:
             return True
         return False
+
+    def isDebt(self):
+        return self.debtcost != 0
 
     def isTreasure(self):
         if 'treasure' in self.cardtype:
