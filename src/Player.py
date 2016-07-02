@@ -1015,10 +1015,10 @@ class Player(object):
             if coin is None:
                 affordable.add(c)
                 continue
-            if oper(cost, coin) and oper(c.potcost, potions):
+            if c.debtcost and not c.cost:
                 affordable.add(c)
                 continue
-            if c.debtcost and not c.cost:
+            if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
                 continue
         affordable.sort(key=lambda c: self.cardCost(c))
@@ -1124,6 +1124,7 @@ class Player(object):
                 prompt += "costing exactly %d" % cost
             buyable = self.cardsWorth(cost, types=types)
         buyable = [c for c in buyable if c.purchasable]
+        buyable = [c for c in buyable if not c.debtcost]
         if 'prompt' not in kwargs:
             kwargs['prompt'] = prompt
         cards = self.cardSel(
