@@ -39,7 +39,7 @@ class Card_Taxman(Card):
 class Test_Taxman(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Taxman'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Taxman'], badcards=["Fool's Gold"])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Taxman'].remove()
