@@ -30,6 +30,9 @@ class Card(object):
     def __repr__(self):
         return self.name
 
+    def __lt__(self, card):
+        return self.name < card.name
+
     def special(self, game, player):
         pass    # pragma: no cover
 
