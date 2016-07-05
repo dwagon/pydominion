@@ -22,7 +22,7 @@ class Card_Royalseal(Card):
         deck = player.plrChooseOptions(
             "Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
-            ("Put %s on top of draw pile" % card.name, True))
+            ("Put %s on top of deck" % card.name, True))
         if deck:
             player.output("Putting %s on deck due to Royal Seal" % card.name)
             mod['destination'] = 'topdeck'
@@ -37,17 +37,17 @@ class Test_Royalseal(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Royal Seal'].remove()
-        self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a Royal Seal """
+        self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_discard(self):
         """ Have a Royal Seal  - discard the gained card"""
         self.plr.setPlayed('Royal Seal')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['discard']
         self.plr.gainCard('Gold')
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
@@ -56,11 +56,10 @@ class Test_Royalseal(unittest.TestCase):
     def test_deck(self):
         """ Have a Royal Seal  - the gained card on the deck"""
         self.plr.setPlayed('Royal Seal')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['deck']
         self.plr.gainCard('Gold')
-        g = self.plr.nextCard()
-        self.assertEqual(g.name, 'Gold')
-        self.assertFalse(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.deck[-1].name, 'Gold')
+        self.assertIsNone(self.plr.inHand('Gold'))
 
 
 ###############################################################################
