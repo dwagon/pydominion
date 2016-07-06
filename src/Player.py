@@ -583,12 +583,10 @@ class Player(object):
 
     ###########################################################################
     def payback(self):
-        if not self.coin:
-            return
-        if self.debt == 0:
-            return
-        self.coin -= 1
-        self.debt -= 1
+        pb = min(self.coin, self.debt)
+        self.output("Paying back %d debt" % pb)
+        self.coin -= pb
+        self.debt -= pb
 
     ###########################################################################
     def perform_action(self, opt):
