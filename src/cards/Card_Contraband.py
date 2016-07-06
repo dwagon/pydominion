@@ -39,7 +39,7 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Contraband(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Contraband'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Contraband'], badcards=["Fool's Gold"])
         self.g.startGame()
         self.plr, self.nbr = self.g.playerList()
         self.card = self.g['Contraband'].remove()
