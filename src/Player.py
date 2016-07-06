@@ -497,6 +497,8 @@ class Player(object):
             notes = [self.coststr(card), '%d left' % card.numcards]
             if card.embargo_level:
                 notes.append("Embargo %d" % card.embargo_level)
+            if card.getVP():
+                notes.append("Gathered %d VP" % card.getVP())
             tp = '%s (%s) %s' % (verb, "; ".join(notes), card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
@@ -829,8 +831,12 @@ class Player(object):
             self.output("No more %s" % cardpile)
             return None
         if callhook:
-            options = self.hook_gainCard(newcard)
-        options.update(self.hook_gainThisCard(newcard))
+            rc = self.hook_gainCard(newcard)
+            if rc:
+                options.update(rc)
+        rc = self.hook_gainThisCard(newcard)
+        if rc:
+            options.update(rc)
         # Replace is to gain a different card
         if 'replace' in options:
             self.game[newcard.name].add()
