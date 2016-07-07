@@ -654,7 +654,7 @@ class Player(object):
         self.output('-' * 50)
 
     ###########################################################################
-    def addScore(self, reason, points):
+    def addScore(self, reason, points=1):
         if reason not in self.score:
             self.score[reason] = 0
         self.score[reason] += points
@@ -953,7 +953,7 @@ class Player(object):
         return self.specialcoins
 
     ###########################################################################
-    def addCoin(self, num):
+    def addCoin(self, num=1):
         assert(isinstance(num, int))
         self.coin += num
 
@@ -962,7 +962,7 @@ class Player(object):
         return self.actions
 
     ###########################################################################
-    def addActions(self, num):
+    def addActions(self, num=1):
         assert(isinstance(num, int))
         self.actions += num
 
@@ -971,7 +971,7 @@ class Player(object):
         return self.buys
 
     ###########################################################################
-    def addBuys(self, num):
+    def addBuys(self, num=1):
         assert(isinstance(num, int))
         self.buys += num
 
