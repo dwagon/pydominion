@@ -11,6 +11,7 @@ class Card_Explorer(Card):
         self.cardtype = 'action'
         self.desc = "Reveal a provice to gain gold else gain silver"
         self.name = 'Explorer'
+        self.base = 'seaside'
         self.cost = 5
 
     def special(self, game, player):

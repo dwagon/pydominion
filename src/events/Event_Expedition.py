@@ -41,7 +41,6 @@ class Test_Expedition(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
         self.plr.performEvent(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getBuys(), 0)
         self.plr.endTurn()

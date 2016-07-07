@@ -13,6 +13,7 @@ class Card_Cutpurse(Card):
         self.name = 'Cutpurse'
         self.coin = 2
         self.cost = 4
+        self.base = 'seaside'
 
     def special(self, game, player):
         """ Each other player discard a Copper card (or reveals a

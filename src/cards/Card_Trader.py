@@ -59,7 +59,6 @@ class Test_Trader(unittest.TestCase):
         self.plr.test_input = ['Instead']
         self.plr.addCard(self.card, 'hand')
         self.plr.buyCard(self.g['Gold'])
-        self.g.print_state()
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNone(self.plr.inDiscard('Gold'))
 

@@ -10,7 +10,7 @@ class Card_Upgrade(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+1 card, +1 action. Trash a card and gain one costing 1 more"
+        self.desc = "+1 Card, +1 Action. Trash a card from your hand. Gain a card costing exactly 1 more than it."
         self.name = 'Upgrade'
         self.cards = 1
         self.actions = 1
@@ -44,16 +44,16 @@ class Test_Upgrade(unittest.TestCase):
 
     def test_trash(self):
         """ Trash an upgrade """
-        self.plr.setHand('Estate', 'Estate')
+        self.plr.setHand('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['1', '1']
+        self.plr.test_input = ['Duchy', 'Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[-1].name, 'Estate')
+        self.assertIsNotNone(self.g.inTrash('Duchy'))
         self.assertEqual(self.plr.discardSize(), 1)
-        self.assertEqual(self.plr.discardpile[-1].cost, 3)
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
 ###############################################################################

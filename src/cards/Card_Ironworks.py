@@ -41,7 +41,7 @@ class Test_Ironworks(unittest.TestCase):
 
     def test_play_great_hall(self):
         """ Use Ironworks to gain a Great Hall """
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['great']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
         self.assertEqual(self.plr.getActions(), 1)
@@ -50,7 +50,7 @@ class Test_Ironworks(unittest.TestCase):
 
     def test_play_silver(self):
         """ Use Ironworks to gain a Silver """
-        self.plr.test_input = ['5']
+        self.plr.test_input = ['Silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Silver')
         self.assertEqual(self.plr.getActions(), 0)
@@ -59,7 +59,7 @@ class Test_Ironworks(unittest.TestCase):
 
     def test_play_ironworks(self):
         """ Use Ironworks to gain an Ironworks """
-        self.plr.test_input = ['2']
+        self.plr.test_input = ['iron']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Iron Works')
         self.assertEqual(self.plr.getActions(), 1)

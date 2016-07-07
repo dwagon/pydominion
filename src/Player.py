@@ -23,6 +23,7 @@ class Player(object):
         self.deck = PlayArea([])
         self.played = PlayArea([])
         self.discardpile = PlayArea([])
+        self.debt = 0
         self.reserve = PlayArea([])
         self.buys = 1
         self.actions = 1
@@ -36,6 +37,7 @@ class Player(object):
         self.is_start = False
         self.test_input = []
         self.forbidden_to_buy = []
+        self.played_events = PlayArea([])
         self.initial_Deck()
         self.initial_tokens()
         self.once = {}
@@ -409,7 +411,10 @@ class Player(object):
         if self.specialcoins:
             options.append({'selector': '2', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
 
-        index = 3
+        if self.debt and self.coin:
+            options.append({'selector': '3', 'print': 'Payback Debt', 'card': None, 'action': 'payback'})
+
+        index = 4
         for s in spendable:
             tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
             options.append({'selector': str(index), 'print': tp, 'card': s, 'action': 'spend'})
@@ -483,14 +488,19 @@ class Player(object):
                 if card in buyable:
                     buyable.remove(card)
             sel = chr(ord('a') + index)
-            if card in buyable and card not in self.forbidden_to_buy:
+            if not self.debt and self.buys and card in buyable and card not in self.forbidden_to_buy:
                 action = 'buy'
                 verb = 'Buy %s' % card.name
             else:
                 sel = '-'
                 action = None
                 verb = card.name
-            tp = '%s (%s; %d left) %s' % (verb, self.coststr(card), card.numcards, card.desc)
+            notes = [self.coststr(card), '%d left' % card.numcards]
+            if card.embargo_level:
+                notes.append("Embargo %d" % card.embargo_level)
+            if card.getVP():
+                notes.append("Gathered %d VP" % card.getVP())
+            tp = '%s (%s) %s' % (verb, "; ".join(notes), card.desc)
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
@@ -508,14 +518,12 @@ class Player(object):
                 options.extend(op)
 
         if self.phase == 'buy':
-            if self.buys:
-                op = self.spendableSelection()
-                options.extend(op)
-                op, index = self.buyableSelection(index)
-                options.extend(op)
-            if self.game.events and self.buys:
-                op, index = self.eventSelection(index)
-                options.extend(op)
+            op = self.spendableSelection()
+            options.extend(op)
+            op, index = self.buyableSelection(index)
+            options.extend(op)
+            op, index = self.eventSelection(index)
+            options.extend(op)
 
         if self.reserveSize():
             op, index = self.reserveSelection(index)
@@ -524,6 +532,8 @@ class Player(object):
         status = "Actions=%d Buys=%d" % (self.actions, self.buys)
         if self.coin:
             status += " Coins=%d" % self.coin
+        if self.debt:
+            status += " Debt=%s" % self.debt
         if self.potions:
             status += " Potion"
         if self.specialcoins:
@@ -547,7 +557,6 @@ class Player(object):
         for card in hooks:
             card.hook_endTurn(game=self.game, player=self)
         self.forbidden_to_buy = []
-        self.phase = None
 
     ###########################################################################
     def actionPhase(self):
@@ -576,11 +585,18 @@ class Player(object):
     ###########################################################################
     def cleanupPhase(self):
         self.phase = 'cleanup'
-        for card in self.played:
+        for card in self.played + self.reserve:
             card.hook_cleanup(self.game, self)
         self.discardHand()
         self.pickUpHand()
         self.cleaned = True
+
+    ###########################################################################
+    def payback(self):
+        pb = min(self.coin, self.debt)
+        self.output("Paying back %d debt" % pb)
+        self.coin -= pb
+        self.debt -= pb
 
     ###########################################################################
     def perform_action(self, opt):
@@ -596,13 +612,15 @@ class Player(object):
             self.playCard(opt['card'])
         elif opt['action'] == 'spend':
             self.playCard(opt['card'])
+        elif opt['action'] == 'payback':
+            self.payback()
         elif opt['action'] == 'spendall':
             self.spendAllCards()
         elif opt['action'] == 'quit':
             return
-        else:
+        else:   # pragma: no cover
             sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
-            return
+            sys.exit(1)
         self.is_start = False
 
     ###########################################################################
@@ -708,11 +726,15 @@ class Player(object):
 
     ###########################################################################
     def endTurn(self):
-        self.messages = []
-        self.once = {}
         if not self.cleaned:
             self.cleanupPhase()
         self.newhandsize = 5
+        for card in self.played + self.reserve + self.played_events:
+            card.hook_endTurn(game=self.game, player=self)
+        self.played_events = PlayArea([])
+        self.messages = []
+        self.once = {}
+        self.phase = None
 
     ###########################################################################
     def hook_discardCard(self, card):
@@ -813,16 +835,20 @@ class Player(object):
                 newcard = self.game[cardpile].remove()
             else:
                 newcard = cardpile.remove()
-        if newcard and callhook:
-            options = self.hook_gainCard(newcard)
-        options.update(self.hook_gainThisCard(newcard))
+        if not newcard:
+            self.output("No more %s" % cardpile)
+            return None
+        if callhook:
+            rc = self.hook_gainCard(newcard)
+            if rc:
+                options.update(rc)
+        rc = self.hook_gainThisCard(newcard)
+        if rc:
+            options.update(rc)
         # Replace is to gain a different card
         if 'replace' in options:
             self.game[newcard.name].add()
             newcard = self.game[options['replace']].remove()
-        if not newcard:
-            sys.stderr.write("ERROR: Getting from empty cardpile %s\n" % cardpile)
-            return
         self.stats['gain'] += 1
         if 'destination' in options:
             destination = options['destination']
@@ -850,12 +876,21 @@ class Player(object):
         assert(isinstance(card, CardPile))
         if not self.buys:   # pragma: no cover
             return
+        if self.debt != 0:
+            self.output("Must pay off debt first")
+            return
         self.buys -= 1
         cost = self.cardCost(card)
+        if card.isDebt():
+            self.debt += card.debtcost
         self.coin -= cost
         if card.overpay and self.coin:
             self.overpay(card)
         newcard = self.gainCard(card)
+        if self.game[newcard.name].embargo_level:
+            for i in range(self.game[newcard.name].embargo_level):
+                self.gainCard('Curse')
+                self.output("Gained a Curse from embargo")
         self.stats['bought'].append(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, cost))
         if 'Trashing' in self.which_token(card.name):
@@ -882,7 +917,7 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for c in self.hand + self.reserve:
+        for c in self.hand + self.played + self.reserve:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             if o:
                 options.update(o)
@@ -952,11 +987,17 @@ class Player(object):
             self.output("No prizes available")
 
     ###########################################################################
+    def __str__(self):
+        return "<Player %s>" % self.name
+
+    ###########################################################################
     def performEvent(self, event):
         assert(issubclass(event.__class__, EventPile))
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
+        if self.debt != 0:
+            self.output("Must pay off debt first")
         if self.coin < event.cost:
             self.output("Need %d coints to perform this event" % event.cost)
             return False
@@ -964,10 +1005,11 @@ class Player(object):
         self.coin -= event.cost
         self.output("Using event %s" % event.name)
         event.special(game=self.game, player=self)
+        self.played_events.add(event)
         return True
 
     ###########################################################################
-    def cardsAffordable(self, oper, coin, potions=0, types={}):
+    def cardsAffordable(self, oper, coin, potions, types):
         """Return the list of cards for under cost """
         affordable = PlayArea([])
         for c in self.game.cardTypes():
@@ -982,13 +1024,15 @@ class Player(object):
                 continue
             if c.isTreasure() and not types['treasure']:
                 continue
-            if not c.numcards:
-                continue
             if coin is None:
+                affordable.add(c)
+                continue
+            if c.debtcost and not c.cost:
                 affordable.add(c)
                 continue
             if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
+                continue
         affordable.sort(key=lambda c: self.cardCost(c))
         affordable.sort(key=lambda c: c.basecard)
         return affordable
@@ -1045,13 +1089,15 @@ class Player(object):
 
     ###########################################################################
     def coststr(self, card):
+        cost = []
+        cost.append("%d Coins" % self.cardCost(card))
+        if card.debtcost:
+            cost.append("%d Debt" % card.debtcost)
+        if card.potcost:
+            cost.append("Potion")
         if card.overpay:
-            notes = "Overpay"
-        else:
-            notes = ""
-        coincost = "%d Coins" % self.cardCost(card)
-        potcost = "& Potion" if card.potcost else ""
-        cststr = "%s %s %s" % (coincost, potcost, notes)
+            cost.append("Overpay")
+        cststr = ", ".join(cost)
         return cststr.strip()
 
     ###########################################################################
@@ -1090,6 +1136,7 @@ class Player(object):
                 prompt += "costing exactly %d" % cost
             buyable = self.cardsWorth(cost, types=types)
         buyable = [c for c in buyable if c.purchasable]
+        buyable = [c for c in buyable if not c.debtcost]
         if 'prompt' not in kwargs:
             kwargs['prompt'] = prompt
         cards = self.cardSel(

@@ -39,7 +39,7 @@ class Card_Feast(Card):
     def trashCard(self, player):
         ans = player.plrChooseOptions(
             "Trash this card?",
-            ("Don't trash this card", False), ("Trash this card", True))
+            ("Keep this card", False), ("Trash this card", True))
         if ans:
             player.trashCard(self)
             return True
@@ -56,14 +56,14 @@ class Test_Feast(unittest.TestCase):
 
     def test_dontTrash(self):
         self.plr.setHand('Feast')
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['keep']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEquals(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
         self.plr.setHand('Feast')
-        self.plr.test_input = ['1', '0']
+        self.plr.test_input = ['trash', '0']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.plr.hand.isEmpty())
         self.assertEquals(self.g.trashSize(), 1)
@@ -72,7 +72,7 @@ class Test_Feast(unittest.TestCase):
 
     def test_trashForSomething(self):
         self.plr.setHand('Feast')
-        self.plr.test_input = ['1', '1']
+        self.plr.test_input = ['trash', '1']
         self.plr.playCard(self.plr.hand[0])
         self.assertEquals(self.g.trashSize(), 1)
         self.assertEquals(self.g.trashpile[0].name, 'Feast')

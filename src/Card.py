@@ -5,8 +5,8 @@ class Card(object):
         self.name = "TODO"
         self.base = "TODO"
         self.basecard = False
-        self.stacksize = 10
         self.cost = -1
+        self.debtcost = 0
         self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
@@ -27,9 +27,24 @@ class Card(object):
         self.required_cards = []
         self.image = None
         self.numcards = 10
+        self.gatheredvp = 0
 
     def __repr__(self):
         return self.name
+
+    def __lt__(self, card):
+        return self.name < card.name
+
+    def addVP(self, num=1):
+        self.gatheredvp += num
+
+    def getVP(self):
+        return self.gatheredvp
+
+    def drainVP(self):
+        num = self.gatheredvp
+        self.gatheredvp = 0
+        return num
 
     def special(self, game, player):
         pass    # pragma: no cover
@@ -47,6 +62,9 @@ class Card(object):
         if 'duration' in self.cardtype:
             return True
         return False
+
+    def isDebt(self):
+        return self.debtcost != 0
 
     def isTreasure(self):
         if 'treasure' in self.cardtype:

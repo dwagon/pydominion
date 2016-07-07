@@ -15,7 +15,7 @@ class Card_Port(Card):
         self.cards = 1
         self.actions = 2
         self.cost = 4
-        self.stacksize = 12
+        self.numcards = 12
 
     def hook_buyThisCard(self, game, player):
         """ Gain another Port"""
