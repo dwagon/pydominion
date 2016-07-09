@@ -11,7 +11,7 @@ class Card_Mercenary(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
         self.desc = """You may trash 2 cards from your hand.
-        If you do, +2 Cards, + Coin2.png, and each other player discards down to 3 cards in hand."""
+        If you do, +2 Cards, +2 Coin, and each other player discards down to 3 cards in hand."""
         self.name = 'Mercenary'
         self.purchasable = False
         self.cost = 0
