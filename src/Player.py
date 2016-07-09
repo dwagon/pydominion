@@ -450,6 +450,15 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def landmarkSelection(self, index):
+        options = []
+        for lm in self.game.landmarks.values():
+            tp = 'Landmark %s: %s' % (lm.name, lm.desc)
+            options.append({'selector': '-', 'print': tp, 'card': lm, 'action': None})
+
+        return options, index
+
+    ###########################################################################
     def eventSelection(self, index):
         options = []
         for op in self.game.events.values():
@@ -528,6 +537,9 @@ class Player(object):
         if self.reserveSize():
             op, index = self.reserveSelection(index)
             options.extend(op)
+
+        op, index = self.landmarkSelection(index)
+        options.extend(op)
 
         status = "Actions=%d Buys=%d" % (self.actions, self.buys)
         if self.coin:
@@ -917,6 +929,10 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
+        for lm in list(self.game.landmarks.values()):
+            o = lm.hook_gainCard(game=self.game, player=self, card=card)
+            if o:
+                options.update(o)
         for c in self.hand + self.played + self.reserve:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             if o:

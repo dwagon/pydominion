@@ -11,6 +11,7 @@ from TextPlayer import TextPlayer
 from BotPlayer import BotPlayer
 from CardPile import CardPile
 from EventPile import EventPile
+from LandmarkPile import LandmarkPile
 from PlayArea import PlayArea
 from Names import playerNames
 
@@ -25,6 +26,7 @@ class Game(object):
         self.players = {}
         self.cardpiles = {}
         self.events = {}
+        self.landmarks = {}
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -40,11 +42,14 @@ class Game(object):
         self.quiet = False
         self.numplayers = 2
         self.numevents = 0
+        self.numlandmarks = 0
         self.initcards = []
         self.badcards = []
         self.eventcards = []
+        self.landmarkcards = []
         self.cardpath = 'cards'
         self.eventpath = 'events'
+        self.landmarkpath = 'landmarks'
         self.cardbase = []
         self.bot = False
         if 'prosperity' in args:
@@ -53,14 +58,10 @@ class Game(object):
             self.quiet = args['quiet']
         if 'numplayers' in args:
             self.numplayers = args['numplayers']
-        if 'numevents' in args:
-            self.numevents = args['numevents']
         if 'initcards' in args:
             self.initcards = args['initcards']
         if 'badcards' in args:
             self.badcards = args['badcards']
-        if 'eventcards' in args:
-            self.eventcards = args['eventcards']
         if 'cardpath' in args:
             self.cardpath = args['cardpath']
         if 'cardbase' in args:
@@ -68,11 +69,22 @@ class Game(object):
         if 'bot' in args:
             self.bot = args['bot']
 
+        if 'eventcards' in args:
+            self.eventcards = args['eventcards']
+        if 'numevents' in args:
+            self.numevents = args['numevents']
+
+        if 'landmarkcards' in args:
+            self.landmarkcards = args['landmarkcards']
+        if 'numlandmarks' in args:
+            self.numlandmarks = args['numlandmarks']
+
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
         names = playerNames[:]
         self.loadDecks(self.initcards)
         self.loadEvents()
+        self.loadLandmarks()
 
         self.checkCardRequirements()
 
@@ -154,24 +166,32 @@ class Game(object):
 
     ###########################################################################
     def loadEvents(self):
-        available = self.getAvailableCards('Event')
-        # Specified Events
-        for ev in self.eventcards:
+        self.loadNonKingdomCards('Event', self.eventcards, self.numevents, EventPile, self.events)
+
+    ###########################################################################
+    def loadLandmarks(self):
+        self.loadNonKingdomCards('Landmark', self.landmarkcards, self.numlandmarks, LandmarkPile, self.landmarks)
+
+    ###########################################################################
+    def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
+        available = self.getAvailableCards(cardtype)
+        # Specified cards
+        for nkc in specified:
             try:
-                evklass = self.cardmapping['Event'][ev]
-                self.events[ev] = EventPile(ev, evklass)
-                available.remove(ev)
+                klass = self.cardmapping[cardtype][nkc]
+                dest[nkc] = cardKlass(nkc, klass)
+                available.remove(nkc)
             except (ValueError, KeyError):
-                sys.stderr.write("Unknown event '%s'\n" % ev)
+                sys.stderr.write("Unknown %s '%s'\n" % (cardtype, nkc))
                 sys.exit(1)
-        # Events to make up the numbers
-        while len(self.events) < self.numevents:
-            ev = random.choice(available)
-            evklass = self.cardmapping['Event'][ev]
-            self.events[ev] = EventPile(ev, evklass)
-            available.remove(ev)
-        for e in self.events:
-            self.output("Playing with event %s" % e)
+        # To make up the numbers
+        while len(dest) < numspecified:
+            nkc = random.choice(available)
+            klass = self.cardmapping[cardtype][nkc]
+            dest[nkc] = cardKlass(nkc, klass)
+            available.remove(nkc)
+        for l in dest:
+            self.output("Playing with %s %s" % (cardtype, l))
 
     ###########################################################################
     def guess_cardname(self, name, prefix='Card'):
@@ -209,6 +229,10 @@ class Game(object):
             eventname = self.guess_cardname(c, 'Event')
             if eventname:
                 self.eventcards.append(eventname)
+                continue
+            landmarkname = self.guess_cardname(c, 'Landmark')
+            if landmarkname:
+                self.landmarkcards.append(landmarkname)
                 continue
             print("Can't guess what card '%s' is" % c)
             foundall = False
@@ -294,6 +318,7 @@ class Game(object):
         for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
+        mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
         return mapping
 
     ###########################################################################
@@ -471,11 +496,16 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--bad', action='append', dest='badcards',
                         default=[],
                         help='Do not include card in lineup')
+    parser.add_argument('--numevents', type=int, default=0,
+                        help='Number of events to use')
     parser.add_argument('--event', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
-    parser.add_argument('--numevents', type=int, default=0,
-                        help='Number of events to use')
+    parser.add_argument('--numlandmarks', type=int, default=0,
+                        help='Number of landmarks to use')
+    parser.add_argument('--landmark', action='append', dest='landmarkcards',
+                        default=[],
+                        help='Include landmark')
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
     parser.add_argument('--cardbase', action='append',
