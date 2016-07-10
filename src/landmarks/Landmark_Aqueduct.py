@@ -26,7 +26,6 @@ class Landmark_Aqueduct(Landmark):
                 self._silvervp -= 1
                 self._vp += 1
                 player.output("%d VP left on Silver; %d VP on Aqueduct" % (self._silvervp, self._vp))
-        print "card=%s" % card
         if card.isVictory():
             player.output("Gained %d VP from Aqueduct" % self._vp)
             player.addScore('Aqueduct', self._vp)
@@ -47,7 +46,6 @@ class Test_Aqueduct(unittest.TestCase):
         self.assertEqual(self.g.landmarks['Aqueduct']._vp, 1)
         self.assertEqual(self.g.landmarks['Aqueduct']._silvervp, 7)
         self.plr.buyCard(self.g["Duchy"])
-        self.g.print_state()
         self.assertEqual(self.plr.getScoreDetails()['Aqueduct'], 1)
 
 
