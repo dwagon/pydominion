@@ -186,4 +186,7 @@ class Card(object):
     def hook_end_of_game(self, game, player):
         pass    # pragma: no cover
 
+    def hook_preBuy(self, game, player):
+        pass    # pragma: no cover
+
 # EOF

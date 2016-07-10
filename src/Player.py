@@ -465,11 +465,11 @@ class Player(object):
             index += 1
             if op.cost <= self.coin:
                 sel = chr(ord('a') + index)
-                tp = 'Use event %s (%d coins) %s' % (op.name, op.cost, op.desc)
+                tp = 'Use event %s (%s) %s' % (op.name, self.coststr(op), op.desc)
                 action = 'event'
             else:
                 sel = '-'
-                tp = 'Event %s (%d coins) %s' % (op.name, op.cost, op.desc)
+                tp = 'Event %s (%s) %s' % (op.name, self.coststr(op), op.desc)
                 action = None
             options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
 
@@ -836,7 +836,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert(isinstance(card, (Card, CardPile)))
+        assert(isinstance(card, (Card, CardPile, EventPile)))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
