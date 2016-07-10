@@ -391,7 +391,7 @@ class Player(object):
         playable = [c for c in self.hand if c.playable and c.isAction()]
         for p in playable:
             sel = chr(ord('a') + index)
-            pr = "Play %s (%s)" % (p.name, p.desc)
+            pr = "Play %s (%s)" % (p.name, p.description(self))
             for tkn in self.which_token(p.name):
                 pr += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
@@ -443,7 +443,7 @@ class Player(object):
             if card.when not in whens:
                 continue
             sel = chr(ord('a') + index)
-            tp = 'Call %s from reserve (%s)' % (card.name, card.desc)
+            tp = 'Call %s from reserve (%s)' % (card.name, card.description(self))
             index += 1
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': 'reserve'})
 
@@ -453,7 +453,7 @@ class Player(object):
     def landmarkSelection(self, index):
         options = []
         for lm in self.game.landmarks.values():
-            tp = 'Landmark %s: %s' % (lm.name, lm.desc)
+            tp = 'Landmark %s: %s' % (lm.name, lm.description(self))
             options.append({'selector': '-', 'print': tp, 'card': lm, 'action': None})
 
         return options, index
@@ -465,11 +465,11 @@ class Player(object):
             index += 1
             if op.cost <= self.coin:
                 sel = chr(ord('a') + index)
-                tp = 'Use event %s (%s) %s' % (op.name, self.coststr(op), op.desc)
+                tp = 'Use event %s (%s) %s' % (op.name, self.coststr(op), op.description(self))
                 action = 'event'
             else:
                 sel = '-'
-                tp = 'Event %s (%s) %s' % (op.name, self.coststr(op), op.desc)
+                tp = 'Event %s (%s) %s' % (op.name, self.coststr(op), op.description(self))
                 action = None
             options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
 
@@ -509,7 +509,7 @@ class Player(object):
                 notes.append("Embargo %d" % card.embargo_level)
             if card.getVP():
                 notes.append("Gathered %d VP" % card.getVP())
-            tp = '%s (%s) %s' % (verb, "; ".join(notes), card.desc)
+            tp = '%s (%s) %s' % (verb, "; ".join(notes), card.description(self))
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})

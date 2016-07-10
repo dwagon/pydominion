@@ -10,12 +10,17 @@ class Card_Port(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = "+1 Card, +2 Actions; When you buy this, gain another Port"
         self.name = 'Port'
         self.cards = 1
         self.actions = 2
         self.cost = 4
         self.numcards = 12
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+1 Card, +2 Actions; When you buy this, gain another Port"
+        else:
+            return "+1 Card, +2 Actions"
 
     def hook_buyThisCard(self, game, player):
         """ Gain another Port"""
