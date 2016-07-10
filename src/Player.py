@@ -1027,6 +1027,7 @@ class Player(object):
         self.buys -= 1
         self.coin -= event.cost
         self.debt += event.debtcost
+        self.buys += event.buys
         self.output("Using event %s" % event.name)
         event.special(game=self.game, player=self)
         self.played_events.add(event)
