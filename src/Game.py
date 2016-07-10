@@ -134,6 +134,8 @@ class Game(object):
         """ Run the setup() method for all cards """
         for cp in list(self.cardpiles.values()):
             cp.setup(game=self)
+        for lm in list(self.landmarks.values()):
+            lm.setup(game=self)
 
     ###########################################################################
     def countCards(self):
