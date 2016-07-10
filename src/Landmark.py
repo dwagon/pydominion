@@ -7,4 +7,10 @@ class Landmark(object):
     def hook_endTurn(self, game, player):   # pragma: no cover
         return
 
+    def hook_preBuy(self, game, player):    # pragma: no cover
+        return
+
+    def hook_gainCard(self, game, player, card):    # pragma: no cover
+        return
+
 # EOF
