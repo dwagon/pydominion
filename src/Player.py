@@ -586,6 +586,7 @@ class Player(object):
     def buyPhase(self):
         self.output("************ Buy Phase ************")
         self.phase = 'buy'
+        self.hook_preBuy()
         while(True):
             self.displayOverview()
             options, prompt = self.choiceSelection()
@@ -699,6 +700,12 @@ class Player(object):
         if verbose:
             self.game.output("%s: %s" % (self.name, scr))
         return vp
+
+    ###########################################################################
+    def hook_preBuy(self):
+        """ Hook that fires off before the buy phase """
+        for lm in list(self.game.landmarks.values()):
+            lm.hook_preBuy(game=self.game, player=self)
 
     ###########################################################################
     def hook_allowedToBuy(self, card):
