@@ -1,11 +1,8 @@
-class Event(object):
-    def __init__(self):
-        self.image = None
-        self.cost = 0
-        self.debtcost = 0
-        self.desc = 'TODO'
+from Card import Card
 
-    def hook_endTurn(self, game, player):   # pragma: no cover
-        return
+
+class Event(Card):
+    pass
+
 
 # EOF
