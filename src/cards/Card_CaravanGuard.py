@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+import unittest
+from Card import Card
+
+
+###############################################################################
+class Card_CaravanGuard(Card):
+    def __init__(self):
+        Card.__init__(self)
+        self.cardtype = ['action', 'duration', 'reaction']
+        self.base = 'adventures'
+        self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
+        When another player plays an Attack card, you may play this from your hand. (+1 Action has no effect if it's not your turn.)"""
+        self.name = 'Caravan Guard'
+        self.cost = 3
+
+    def special(self, game, player):
+        player.addActions(1)
+        player.pickupCards(1)
+
+    def duration(self, game, player):
+        player.addCoin(1)
+
+    def hook_underAttack(self, game, player, attacker):
+        player.output("Under attack from %s" % attacker.name)
+        player.addActions(1)
+        player.pickupCards(1)
+        player.addCard(self, 'duration')
+        player.hand.remove(player.inHand('Caravan Guard'))
+
+
+###############################################################################
+class Test_CaravanGuard(unittest.TestCase):
+    def setUp(self):
+        import Game
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Caravan Guard', 'Militia', 'Moat'])
+        self.g.startGame()
+        self.plr, self.attacker = self.g.playerList()
+        self.card = self.g['Caravan Guard'].remove()
+        self.militia = self.g['Militia'].remove()
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play(self):
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.endTurn()
+        self.plr.startTurn()
+        self.assertEqual(self.plr.getCoin(), 1)
+
+    def test_attack(self):
+        self.plr.setHand('Caravan Guard', 'Moat')
+        self.attacker.addCard(self.militia, 'hand')
+        self.attacker.playCard(self.militia)
+        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.getActions(), 2)
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
+
+# EOF
