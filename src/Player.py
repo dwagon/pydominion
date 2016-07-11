@@ -1197,7 +1197,7 @@ class Player(object):
     def plrDiscardDownTo(self, num):
         """ Get the player to discard down to num cards in their hand """
         numtogo = len(self.hand) - num
-        if numtogo == 0:
+        if numtogo <= 0:
             return
         self.plrDiscardCards(numtogo, force=True)
 
