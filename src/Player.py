@@ -956,7 +956,7 @@ class Player(object):
     def hasDefense(self, attacker, verbose=True):
         assert(isinstance(attacker, Player))
         for c in self.hand:
-            c.hook_underAttack(game=self.game, player=self)
+            c.hook_underAttack(game=self.game, player=self, attacker=attacker)
             if c.hasDefense():
                 if verbose:
                     attacker.output("Player %s is defended" % self.name)

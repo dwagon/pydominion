@@ -105,4 +105,8 @@ duration
 --------
 Gets invoked for duration cards the next turn
 
+hook_underAttack
+----------------
+Called if you get under attack
+
 #EOF

@@ -96,10 +96,10 @@ class Card_BandOfMisfits(Card):
             return
         return self._action.hook_trashcard(game, player)
 
-    def hook_underAttack(self, player, game):
+    def hook_underAttack(self, player, game, attacker):
         if not hasattr(self, '_action'):
             return
-        return self._action.hook_underAttack(player, game)
+        return self._action.hook_underAttack(player, game, attacker)
 
 
 ###############################################################################

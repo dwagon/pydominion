@@ -165,7 +165,7 @@ class Card(object):
         """ Does this card make any  modifications on the value of spending a card """
         return 0    # pragma: no cover
 
-    def hook_underAttack(self, game, player):
+    def hook_underAttack(self, game, player, attacker):
         pass    # pragma: no cover
 
     def hook_discardCard(self, game, player):
