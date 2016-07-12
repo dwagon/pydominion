@@ -1,7 +1,6 @@
 class Card(object):
     def __init__(self):
         self.image = None
-        self.desc = "TODO"
         self.name = "TODO"
         self.base = "TODO"
         self.basecard = False
@@ -34,6 +33,12 @@ class Card(object):
 
     def __lt__(self, card):
         return self.name < card.name
+
+    def description(self, player):
+        if callable(self.desc):
+            return self.desc(player)
+        else:
+            return self.desc
 
     def addVP(self, num=1):
         self.gatheredvp += num
