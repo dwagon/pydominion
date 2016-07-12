@@ -45,7 +45,7 @@ class Card_YoungWitch(Card):
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber'])
         self.g.startGame()
         self.attacker, self.victim = self.g.playerList()
         self.card = self.g['Young Witch'].remove()
