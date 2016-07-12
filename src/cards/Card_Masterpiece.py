@@ -10,11 +10,16 @@ class Card_Masterpiece(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'guilds'
-        self.desc = "+1 Coin. When you buy this, you may overpay for it. If you do, gain a Silver per coin you overpaid."
         self.name = 'Masterpiece'
         self.overpay = True
         self.coin = 1
         self.cost = 3
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+1 Coin. When you buy this, you may overpay for it. If you do, gain a Silver per coin you overpaid."
+        else:
+            return "+1 Coin"
 
     def hook_overpay(self, game, player, amount):
         player.output("Gained %d Silvers" % amount)

@@ -19,10 +19,11 @@ class Card_Secretchamber(Card):
         todiscard = player.plrDiscardCards(anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?")
         player.addCoin(len(todiscard))
 
-    def hook_underAttack(self, player, game):
+    def hook_underAttack(self, player, game, attacker):
         """ When another player plays an Attack card, you may reveal
             this from you hand. If you do +2 cards, then put 2 cards
             from your hand on top of your deck """
+        player.output("Under attack from %s" % attacker.name)
         if not self.revealCard(player):
             return
         player.pickupCards(2)

@@ -10,11 +10,16 @@ class Card_Forum(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'empires'
-        self.desc = "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
         self.name = 'Forum'
         self.cards = 3
         self.actions = 1
         self.cost = 5
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
+        else:
+            return "+3 Cards, +1 Action, Discard 2 cards."
 
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
