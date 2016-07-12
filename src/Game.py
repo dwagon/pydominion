@@ -101,8 +101,8 @@ class Game(object):
             else:
                 self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
             self.players[u].uuid = u
-        self.numcards = self.countCards()
         self.cardSetup()
+        self.numcards = self.countCards()
         self.currentPlayer = self.playerList(0)
 
     ###########################################################################
