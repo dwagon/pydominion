@@ -21,7 +21,7 @@ class Card_Hornofplenty(Card):
             cards.add(c.name)
 
         card = player.plrGainCard(len(cards), prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed" % len(cards))
-        if card.isVictory():
+        if card and card.isVictory():
             player.trashCard(self)
 
 
@@ -51,6 +51,15 @@ class Test_Hornofplenty(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertIsNone(self.plr.inPlayed('Horn of Plenty'))
         self.assertIsNotNone(self.g.inTrash('Horn of Plenty'))
+
+    def test_play_nothing(self):
+        """ Horn of Plenty - gaining nothing """
+        self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Moat')
+        self.plr.test_input = ['finish']
+        self.plr.playCard(self.card)
+        self.assertIsNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.inPlayed('Horn of Plenty'))
+        self.assertIsNone(self.g.inTrash('Horn of Plenty'))
 
 
 ###############################################################################
