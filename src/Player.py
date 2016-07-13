@@ -717,6 +717,8 @@ class Player(object):
         """ Hook for after purchasing a card """
         for c in self.played + self.reserve:
             c.hook_buyCard(game=self.game, player=self, card=card)
+        for lm in list(self.game.landmarks.values()):
+            lm.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
     def startTurn(self):
