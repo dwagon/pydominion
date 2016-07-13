@@ -906,8 +906,8 @@ class Player(object):
         if card.overpay and self.coin:
             self.overpay(card)
         newcard = self.gainCard(card)
-        if self.game[newcard.name].embargo_level:
-            for i in range(self.game[newcard.name].embargo_level):
+        if card.embargo_level:
+            for i in range(card.embargo_level):
                 self.gainCard('Curse')
                 self.output("Gained a Curse from embargo")
         self.stats['bought'].append(newcard)
