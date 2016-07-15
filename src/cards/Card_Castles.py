@@ -33,7 +33,7 @@ class CastleCardPile(CardPile):
             return None
 
     def remove(self):
-        if self.numcards:
+        if self.castles:
             self.numcards -= 1
             return self.castles.pop()
         else:
