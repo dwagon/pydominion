@@ -863,7 +863,7 @@ class Player(object):
             rc = self.hook_gainCard(newcard)
             if rc:
                 options.update(rc)
-        rc = self.hook_gainThisCard(newcard)
+        rc = newcard.hook_gainThisCard(game=self.game, player=self)
         if rc:
             options.update(rc)
         # Replace is to gain a different card
@@ -908,8 +908,8 @@ class Player(object):
         if card.overpay and self.coin:
             self.overpay(card)
         newcard = self.gainCard(card)
-        if self.game[newcard.name].embargo_level:
-            for i in range(self.game[newcard.name].embargo_level):
+        if card.embargo_level:
+            for i in range(card.embargo_level):
                 self.gainCard('Curse')
                 self.output("Gained a Curse from embargo")
         self.stats['bought'].append(newcard)
@@ -947,12 +947,6 @@ class Player(object):
             if o:
                 options.update(o)
         return options
-
-    ###########################################################################
-    def hook_gainThisCard(self, card):
-        """ Hook which is fired by this card being obtained by a player """
-        assert(isinstance(card, Card))
-        return card.hook_gainThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hasDefense(self, attacker, verbose=True):

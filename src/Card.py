@@ -111,6 +111,11 @@ class Card(object):
             return True
         return False
 
+    def isCastle(self):
+        if 'castle' in self.cardtype:
+            return True
+        return False
+
     def isKnight(self):
         if 'knight' in self.cardtype:
             return True

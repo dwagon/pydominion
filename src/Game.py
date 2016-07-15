@@ -261,11 +261,6 @@ class Game(object):
         return list(self.cardmapping['PrizeCard'].keys())
 
     ###########################################################################
-    def addKnights(self):
-        from KnightCardPile import KnightCardPile
-        self.cardpiles['Knights'] = KnightCardPile(cardpath=self.cardpath)
-
-    ###########################################################################
     def useCardPile(self, available, c):
         try:
             available.remove(c)
@@ -317,7 +312,7 @@ class Game(object):
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard'):
+        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
