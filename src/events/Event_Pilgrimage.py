@@ -39,7 +39,7 @@ class Event_Pilgrimage(Event):
                 break
         for card in selected:
             player.gainCard(card)
-            player.output("Gained a %s" % card.name)
+            player.output("Gained a %s" % card)
 
 
 ###############################################################################
