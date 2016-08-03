@@ -17,13 +17,19 @@ class Test_args(unittest.TestCase):
     def test_card(self):
         g = Game.Game(quiet=True, initcards=['Moat'])
         g.startGame()
-        self.assertTrue('Moat' in g.cardpiles)
+        self.assertIn('Moat', g.cardpiles)
 
     def test_prosperity(self):
         g = Game.Game(quiet=True, prosperity=True)
         g.startGame()
-        self.assertTrue('Colony' in g.cardpiles)
-        self.assertTrue('Platinum' in g.cardpiles)
+        self.assertIn('Colony', g.cardpiles)
+        self.assertIn('Platinum', g.cardpiles)
+
+    def test_event(self):
+        """ Test that we can specify an event on the command line """
+        g = Game.Game(quiet=True, eventcards=['Alms'])
+        g.startGame()
+        self.assertIn('Alms', g.events)
 
 
 ###############################################################################
@@ -147,6 +153,28 @@ class Test_parse_args(unittest.TestCase):
     def test_numplayers(self):
         args = Game.parseArgs(['--numplayers', '4'])
         self.assertEqual(args.numplayers, 4)
+
+    def test_events(self):
+        args = Game.parseArgs(['--events', 'Alms'])
+        self.assertEqual(args.eventcards, ['Alms'])
+
+    def test_use_events(self):
+        args = Game.parseArgs(['--quiet', '--events', 'Alms'])
+        g = Game.Game(**vars(args))
+        g.startGame()
+        self.assertIn('Alms', g.events)
+
+    def test_use_card(self):
+        args = Game.parseArgs(['--quiet', '--card', 'Moat'])
+        g = Game.Game(**vars(args))
+        g.startGame()
+        self.assertIn('Moat', g.cardpiles)
+
+    def test_use_landmark(self):
+        args = Game.parseArgs(['--quiet', '--landmark', 'Aqueduct'])
+        g = Game.Game(**vars(args))
+        g.startGame()
+        self.assertIn('Aqueduct', g.landmarks)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
