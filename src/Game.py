@@ -180,6 +180,8 @@ class Game(object):
         # Specified cards
         for nkc in specified:
             try:
+                if nkc not in self.cardmapping[cardtype]:
+                    nkc = self.guess_cardname(nkc, cardtype)
                 klass = self.cardmapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
                 available.remove(nkc)
