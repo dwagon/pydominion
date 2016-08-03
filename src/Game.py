@@ -514,6 +514,9 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--bot', action='store_true', dest='bot',
                         default=False,
                         help='Bot Player')
+    parser.add_argument('--quiet', action='store_true', dest='quiet',
+                        default=False,
+                        help="Supress a lot of output")
     namespace = parser.parse_args(args)
     return namespace
 
