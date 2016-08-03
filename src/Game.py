@@ -495,7 +495,7 @@ def parseArgs(args=sys.argv[1:]):
                         help='Do not include card in lineup')
     parser.add_argument('--numevents', type=int, default=0,
                         help='Number of events to use')
-    parser.add_argument('--event', action='append', dest='eventcards',
+    parser.add_argument('--events', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
     parser.add_argument('--numlandmarks', type=int, default=0,
