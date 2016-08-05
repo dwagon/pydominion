@@ -42,8 +42,7 @@ class Player(object):
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
-        self.zero_stats = {'gain': 0, 'bought': []}
-        self.stats = self.zero_stats.copy()
+        self.stats = {'gained': [], 'bought': []}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
@@ -729,7 +728,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = self.zero_stats.copy()
+        self.stats = {'gained': [], 'bought': []}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
@@ -870,13 +869,13 @@ class Player(object):
         if 'replace' in options:
             self.game[newcard.name].add()
             newcard = self.game[options['replace']].remove()
-        self.stats['gain'] += 1
+        self.stats['gained'].append(newcard)
         if 'destination' in options:
             destination = options['destination']
+        self.hook_allPlayers_gainCard(newcard)
         if 'trash' in options and options['trash']:
             self.trashCard(newcard)
             return newcard
-        self.hook_allPlayers_gainCard(newcard)
         self.addCard(newcard, destination)
         return newcard
 
