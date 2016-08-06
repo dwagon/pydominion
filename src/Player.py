@@ -560,14 +560,7 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
-        hooks = []
-        for card in self.played + self.reserve:
-            if hasattr(card, 'hook_endTurn'):
-                hooks.append(card)
         self.cleanupPhase()
-        for card in hooks:
-            card.hook_endTurn(game=self.game, player=self)
-        self.forbidden_to_buy = []
 
     ###########################################################################
     def actionPhase(self):
@@ -751,8 +744,11 @@ class Player(object):
         self.newhandsize = 5
         for card in self.played + self.reserve + self.played_events:
             card.hook_endTurn(game=self.game, player=self)
+        for card in self.game.landmarks.values():
+            card.hook_endTurn(game=self.game, player=self)
         self.played_events = PlayArea([])
         self.messages = []
+        self.forbidden_to_buy = []
         self.once = {}
         self.phase = None
 
