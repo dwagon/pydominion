@@ -215,7 +215,7 @@ class Player(object):
         rc = card.hook_trashThisCard(game=self.game, player=self)
         if rc:
             trashopts.update(rc)
-        for cd in self.hand:
+        for cd in self.hand + self.game.landmarks:
             rc = cd.hook_trashCard(game=self.game, player=self, card=card)
             if rc:
                 trashopts.update(rc)
@@ -707,10 +707,8 @@ class Player(object):
     ###########################################################################
     def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
-        for c in self.played + self.reserve:
+        for c in self.played + self.reserve + self.game.landmarks:
             c.hook_buyCard(game=self.game, player=self, card=card)
-        for lm in list(self.game.landmarks.values()):
-            lm.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
     def startTurn(self):
@@ -742,9 +740,7 @@ class Player(object):
         if not self.cleaned:
             self.cleanupPhase()
         self.newhandsize = 5
-        for card in self.played + self.reserve + self.played_events:
-            card.hook_endTurn(game=self.game, player=self)
-        for card in self.game.landmarks.values():
+        for card in self.played + self.reserve + self.played_events + self.game.landmarks:
             card.hook_endTurn(game=self.game, player=self)
         self.played_events = PlayArea([])
         self.messages = []
@@ -933,11 +929,7 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for lm in list(self.game.landmarks.values()):
-            o = lm.hook_gainCard(game=self.game, player=self, card=card)
-            if o:
-                options.update(o)
-        for c in self.hand + self.played + self.reserve:
+        for c in self.hand + self.played + self.reserve + self.game.landmarks:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             if o:
                 options.update(o)
