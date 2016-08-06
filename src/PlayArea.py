@@ -46,7 +46,10 @@ class PlayArea(object):
 
     def __add__(self, a):
         x = self.cards[:]
-        x.extend(a.cards[:])
+        if hasattr(a, 'values'):
+            x.extend(a.values())
+        elif isinstance(a, PlayArea):
+            x.extend(a.cards[:])
         return PlayArea(x)
 
     def __iter__(self):
