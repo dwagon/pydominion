@@ -24,6 +24,8 @@ class Card_YoungWitch(Card):
             card = klass()
             if card.name in game:
                 continue
+            if card.name in game.badcards:
+                continue
             if card.cost in (2, 3):
                 banes.append(card.name)
         game._bane = random.choice(banes)
