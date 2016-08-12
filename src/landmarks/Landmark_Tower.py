@@ -13,10 +13,11 @@ class Landmark_Tower(Landmark):
         self.name = "Tower"
 
     def hook_end_of_game(self, game, player):
-        empties = [1 for st in game.cardpiles if game[st].isEmpty() and not game[st].isVictory()]
+        player.addScore('Tower', 0)
+        empties = [st for st in game.cardpiles if game[st].isEmpty() and not game[st].isVictory()]
         for emp in empties:
             for card in player.allCards():
-                if card.anem == emp.name:
+                if card.name == emp:
                     player.addScore('Tower', 1)
 
 
@@ -24,16 +25,24 @@ class Landmark_Tower(Landmark):
 class Test_Tower(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Tower'])
+        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Tower'], initcards=['Moat'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
 
-    def test_gain(self):
+    def test_none(self):
         """ Use Tower """
-        self.plr.setDiscard('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Duchy')
-        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Duchy')
+        self.plr.setHand('Moat', 'Moat')
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Tower'], 15)
+        self.assertEqual(self.plr.getScoreDetails()['Tower'], 0)
+
+    def test_one(self):
+        self.plr.setHand('Moat', 'Moat')
+        while(True):
+            c = self.g['Moat'].remove()
+            if not c:
+                break
+        self.plr.gameOver()
+        self.assertEqual(self.plr.getScoreDetails()['Tower'], 2)
 
 
 ###############################################################################
