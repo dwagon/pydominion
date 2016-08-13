@@ -70,7 +70,11 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.addCard(self.card, 'hand')
         self.attacker.test_input = ['Duchy', 'Province', 'finish']
         self.attacker.playCard(self.card)
-        self.assertIsNone(self.victim.inDiscard('Curse'))
+        try:
+            self.assertIsNone(self.victim.inDiscard('Curse'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
