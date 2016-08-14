@@ -25,6 +25,7 @@ class Landmark_Keep(Landmark):
         for card in cards:
             m = max(cards[card].values())
             if cards[card][player] == m:
+                player.output("Gaining 5 as you have the most %s (%d)" % (card, m))
                 player.addScore('Keep', 5)
 
 
