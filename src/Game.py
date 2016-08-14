@@ -323,13 +323,14 @@ class Game(object):
     ###########################################################################
     def getSetCardClasses(self, prefix, path, defdir, class_prefix):
         """ Import all the modules to determine the real name of the card
-            This is slow, but it is the only way """
+            This is slow, but it is the only way that I can think of """
         mapping = {}
         files = glob.glob('%s/%s_*.py' % (path, prefix))
         for fname in [os.path.basename(f) for f in files]:
             fname = fname.replace('.py', '')
             fp, pathname, desc = imp.find_module(fname, [path, defdir])
             mod = imp.load_module(fname, fp, pathname, desc)
+            fp.close()
             classes = dir(mod)
             for c in classes:
                 if c.startswith(class_prefix):
