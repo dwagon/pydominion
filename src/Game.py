@@ -276,7 +276,7 @@ class Game(object):
 
     ###########################################################################
     def checkCardRequirements(self):
-        for card in list(self.cardpiles.values()):
+        for card in list(self.cardpiles.values()) + list(self.events.values()):
             for x in card.required_cards:
                 if isinstance(x, tuple):
                     k, c = x
