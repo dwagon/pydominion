@@ -11,21 +11,17 @@ class Event_Donate(Event):
         self.base = 'empires'
         self.desc = "After this turn, put all cards from your deck and discard pile into your hand, trash any number, shuffle your hand into your deck, then draw 5 cards."
         self.name = "Donate"
+        self.cost = 0
         self.debtcost = 8
 
     def hook_endTurn(self, game, player):
-        for card in player.deck:
-            player.addCard(card, 'hand')
-            player.deck.remove(card)
-        for card in player.discardpile:
-            player.addCard(card, 'hand')
-            player.discardpile.remove(card)
-        player.plrTrashCard(anynum=True)
-        for card in player.hand:
-            player.addCard(card, 'deck')
-            player.hand.remove(card)
-        player.shuffleDeck()
-        player.pickUpHand(5)
+        for area in (player.hand, player.deck, player.played, player.discardpile):
+            for card in area[:]:
+                player.addCard(card, 'hand')
+                area.remove(card)
+        player.plrTrashCard(anynum=True, prompt="Donate allows you to trash any cards")
+        player.discardHand()
+        player.pickupCards(5)
 
 
 ###############################################################################
@@ -34,22 +30,26 @@ class Test_Donate(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Donate'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.playerList()[0]
         self.card = self.g.events['Donate']
 
-    def test_play(self):
-        """ Perform a Donate """
-        self.plr.setHand('Gold', 'Duchy')
-        self.plr.setDeck('Copper', 'Silver')
-        self.plr.setDiscard('Estate', 'Province')
+    def test_with_treasure(self):
+        """ Use Donate """
+        self.plr.setHand('Gold', 'Estate', 'Copper', 'Copper')
+        self.plr.setDiscard('Province', 'Estate', 'Copper', 'Copper')
+        self.plr.setDeck('Silver', 'Estate', 'Copper', 'Copper')
         self.plr.performEvent(self.card)
-        self.plr.test_input = ['Copper', 'Silver', 'Estate', 'Duchy', 'finish']
+        self.assertEqual(self.plr.debt, 8)
+        self.plr.test_input = ['Gold', 'Province', 'Silver', 'finish']
         self.plr.endTurn()
-        self.assertEqual(self.g.trashSize(), 4)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.g.inTrash('Copper'))
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.g.print_state()
+        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNone(self.plr.inDeck('Gold'))
+        self.assertEqual(self.g.trashSize(), 3)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.discardSize(), 0)
 
 
 ###############################################################################
