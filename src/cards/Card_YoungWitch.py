@@ -24,6 +24,8 @@ class Card_YoungWitch(Card):
             card = klass()
             if card.name in game:
                 continue
+            if card.name in game.badcards:
+                continue
             if card.cost in (2, 3):
                 banes.append(card.name)
         game._bane = random.choice(banes)
@@ -68,7 +70,11 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.addCard(self.card, 'hand')
         self.attacker.test_input = ['Duchy', 'Province', 'finish']
         self.attacker.playCard(self.card)
-        self.assertIsNone(self.victim.inDiscard('Curse'))
+        try:
+            self.assertIsNone(self.victim.inDiscard('Curse'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

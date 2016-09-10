@@ -42,8 +42,7 @@ class Player(object):
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
-        self.zero_stats = {'gain': 0, 'bought': []}
-        self.stats = self.zero_stats.copy()
+        self.stats = {'gained': [], 'bought': []}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
@@ -216,7 +215,7 @@ class Player(object):
         rc = card.hook_trashThisCard(game=self.game, player=self)
         if rc:
             trashopts.update(rc)
-        for cd in self.hand:
+        for cd in self.hand + self.game.landmarks:
             rc = cd.hook_trashCard(game=self.game, player=self, card=card)
             if rc:
                 trashopts.update(rc)
@@ -561,14 +560,7 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
-        hooks = []
-        for card in self.played + self.reserve:
-            if hasattr(card, 'hook_endTurn'):
-                hooks.append(card)
         self.cleanupPhase()
-        for card in hooks:
-            card.hook_endTurn(game=self.game, player=self)
-        self.forbidden_to_buy = []
 
     ###########################################################################
     def actionPhase(self):
@@ -715,10 +707,8 @@ class Player(object):
     ###########################################################################
     def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
-        for c in self.played + self.reserve:
+        for c in self.played + self.reserve + self.game.landmarks:
             c.hook_buyCard(game=self.game, player=self, card=card)
-        for lm in list(self.game.landmarks.values()):
-            lm.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
     def startTurn(self):
@@ -729,7 +719,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = self.zero_stats.copy()
+        self.stats = {'gained': [], 'bought': []}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             card.duration(game=self.game, player=self)
@@ -750,10 +740,11 @@ class Player(object):
         if not self.cleaned:
             self.cleanupPhase()
         self.newhandsize = 5
-        for card in self.played + self.reserve + self.played_events:
+        for card in self.played + self.reserve + self.played_events + self.game.landmarks:
             card.hook_endTurn(game=self.game, player=self)
         self.played_events = PlayArea([])
         self.messages = []
+        self.forbidden_to_buy = []
         self.once = {}
         self.phase = None
 
@@ -870,13 +861,13 @@ class Player(object):
         if 'replace' in options:
             self.game[newcard.name].add()
             newcard = self.game[options['replace']].remove()
-        self.stats['gain'] += 1
+        self.stats['gained'].append(newcard)
         if 'destination' in options:
             destination = options['destination']
+        self.hook_allPlayers_gainCard(newcard)
         if 'trash' in options and options['trash']:
             self.trashCard(newcard)
             return newcard
-        self.hook_allPlayers_gainCard(newcard)
         self.addCard(newcard, destination)
         return newcard
 
@@ -938,11 +929,7 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for lm in list(self.game.landmarks.values()):
-            o = lm.hook_gainCard(game=self.game, player=self, card=card)
-            if o:
-                options.update(o)
-        for c in self.hand + self.played + self.reserve:
+        for c in self.hand + self.played + self.reserve + self.game.landmarks:
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             if o:
                 options.update(o)
