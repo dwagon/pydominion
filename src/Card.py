@@ -178,7 +178,7 @@ class Card(object):
     def hook_underAttack(self, game, player, attacker):
         pass    # pragma: no cover
 
-    def hook_discardCard(self, game, player):
+    def hook_discardThisCard(self, game, player):
         pass    # pragma: no cover
 
     def hook_trashThisCard(self, game, player):

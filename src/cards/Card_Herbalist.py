@@ -15,7 +15,7 @@ class Card_Herbalist(Card):
         self.buys = 1
         self.coin = 1
 
-    def hook_discardCard(self, game, player):
+    def hook_discardThisCard(self, game, player):
         """ When you discard this from play, you may put one of
             your Treasures from play on top of your deck """
         options = [{'selector': '0', 'print': 'Do nothing', 'card': None}]

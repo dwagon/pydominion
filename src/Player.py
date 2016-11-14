@@ -351,7 +351,7 @@ class Player(object):
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
-        self.hook_discardCard(card)
+        self.hook_discardThisCard(card)
 
     ###########################################################################
     def reserveSize(self):
@@ -749,9 +749,9 @@ class Player(object):
         self.phase = None
 
     ###########################################################################
-    def hook_discardCard(self, card):
+    def hook_discardThisCard(self, card):
         """ A card has been discarded """
-        card.hook_discardCard(game=self.game, player=self)
+        card.hook_discardThisCard(game=self.game, player=self)
 
     ###########################################################################
     def hook_spendValue(self, card, actual=False):

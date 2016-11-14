@@ -31,10 +31,10 @@ class Card_BandOfMisfits(Card):
             return
         del self._action
 
-    def hook_discardCard(self, game, player):
+    def hook_discardThisCard(self, game, player):
         if not hasattr(self, '_action'):
             return
-        return self._action.hook_discardCard(game, player)
+        return self._action.hook_discardThisCard(game, player)
 
     def hook_allPlayers_buyCard(self, game, player, owner, card):
         if not hasattr(self, '_action'):
