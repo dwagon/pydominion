@@ -48,6 +48,7 @@ class TextPlayer(Player):
                     if inp.lower() in o['print'].lower():
                         matching.append(o)
                 if len(matching) == 1:
+                    if matching[0]['action'] is not None:
                     return matching[0]
             self.output("Invalid Option (%s)" % inp)
 
