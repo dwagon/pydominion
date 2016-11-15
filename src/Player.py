@@ -462,13 +462,13 @@ class Player(object):
         options = []
         for op in self.game.events.values():
             index += 1
-            if op.cost <= self.coin:
+            if op.cost <= self.coin and self.buys:
                 sel = chr(ord('a') + index)
-                tp = 'Use event %s (%s) %s' % (op.name, self.coststr(op), op.description(self))
+                tp = 'Use event %s (%s): %s' % (op.name, self.coststr(op), op.description(self))
                 action = 'event'
             else:
                 sel = '-'
-                tp = 'Event %s (%s) %s' % (op.name, self.coststr(op), op.description(self))
+                tp = 'Event %s (%s): %s' % (op.name, self.coststr(op), op.description(self))
                 action = None
             options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
 
@@ -508,7 +508,7 @@ class Player(object):
                 notes.append("Embargo %d" % card.embargo_level)
             if card.getVP():
                 notes.append("Gathered %d VP" % card.getVP())
-            tp = '%s (%s) %s' % (verb, "; ".join(notes), card.description(self))
+            tp = '%s (%s): %s' % (verb, "; ".join(notes), card.description(self))
             for tkn in self.which_token(card.name):
                 tp += "[Tkn: %s]" % tkn
             options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
