@@ -14,17 +14,21 @@ class Landmark_Keep(Landmark):
 
     def hook_end_of_game(self, game, player):
         cards = {}
+        # For each type of treasure card work out who has how many
         for pl in game.playerList():
+            plname = pl.name
             for card in pl.allCards():
                 if card.isTreasure():
                     if card.name not in cards:
                         cards[card.name] = {}
-                    if pl not in cards[card.name]:
-                        cards[card.name][pl] = 0
-                    cards[card.name][pl] += 1
+                    if plname not in cards[card.name]:
+                        cards[card.name][plname] = 0
+                    cards[card.name][plname] += 1
+
+        # If player is the one who has the most, gain the points
         for card in cards:
             m = max(cards[card].values())
-            if cards[card][player] == m:
+            if cards[card][player.name] == m:
                 player.output("Gaining 5 as you have the most %s (%d)" % (card, m))
                 player.addScore('Keep', 5)
 
