@@ -10,7 +10,7 @@ class Card_Capital(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'empires'
-        self.desc = "6 Coin +1 Buy. When you discard this from play, take 6 Debt, and then you may pay off Debt"
+        self.desc = "6 Coin +1 Buy. When you discard this from play, take 6 Debt"
         self.name = 'Capital'
         self.coin = 6
         self.buys = 1

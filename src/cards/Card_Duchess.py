@@ -10,8 +10,7 @@ class Card_Duchess(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck, and discards it or puts it back.
-        In games using this, when you gain a Duchy, you may gain a Duchess."""
+        self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck, and discards it or puts it back."""
         self.name = 'Duchess'
         self.coin = 2
         self.cost = 2
