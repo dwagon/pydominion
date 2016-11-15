@@ -24,7 +24,7 @@ class Card_Dungeon(Card):
     def sifter(self, game, player):
         """ +2 Cards, then discard 2 cards. """
         player.pickupCards(2)
-        player.plrDiscardCards(num=2)
+        player.plrDiscardCards(num=2, force=True)
 
 
 ###############################################################################
@@ -43,18 +43,18 @@ class Test_Dungeon(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['province', 'duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 2)   # 2 picked up from dungeon -2 discard
+        self.assertEqual(self.plr.handSize(), 2)   # 2 picked up from dungeon -2 discard
         self.assertIsNone(self.plr.inHand('duchy'))
-        self.assertEquals(self.plr.durationSize(), 1)
-        self.assertEquals(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.discardSize(), 2)
         self.plr.endTurn()
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.startTurn()
-        self.assertEquals(self.plr.durationSize(), 0)
-        self.assertEquals(self.plr.playedSize(), 1)
-        self.assertEquals(self.plr.played[-1].name, 'Dungeon')
-        self.assertEquals(self.plr.discardSize(), 2)
-        self.assertEquals(self.plr.handSize(), 5)   # 5 dealt + 2 from dungeon -2 discard
+        self.assertEqual(self.plr.durationSize(), 0)
+        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played[-1].name, 'Dungeon')
+        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.handSize(), 5)   # 5 dealt + 2 from dungeon -2 discard
 
 
 ###############################################################################
