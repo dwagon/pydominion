@@ -45,10 +45,9 @@ class TextPlayer(Player):
                 for o in options:
                     if o['selector'] == inp:
                         return o
-                    if inp.lower() in o['print'].lower():
+                    if inp.lower() in o['print'].lower() and o['selector'] != '-':
                         matching.append(o)
                 if len(matching) == 1:
-                    if matching[0]['action'] is not None:
                     return matching[0]
             self.output("Invalid Option (%s)" % inp)
 
