@@ -17,6 +17,7 @@ class Card_Beggar(Card):
         self.cost = 2
 
     def special(self, game, player):
+        player.output("Gaining 3 coppers")
         for i in range(3):
             player.gainCard('Copper', 'hand')
 

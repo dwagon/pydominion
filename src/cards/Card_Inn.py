@@ -10,12 +10,19 @@ class Card_Inn(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = """+2 Cards, +2 Actions, Discard 2 cards.
-        When you gain this, look through your discard pile (including this), reveal any number of Action cards from it, and shuffle them into your deck."""
         self.name = 'Inn'
         self.cards = 2
         self.actions = 2
         self.cost = 5
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """+2 Cards, +2 Actions, Discard 2 cards.
+            When you gain this, look through your discard pile
+            (including this), reveal any number of Action cards
+            from it, and shuffle them into your deck."""
+        else:
+            return "+2 Cards, +2 Actions, Discard 2 cards"
 
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
