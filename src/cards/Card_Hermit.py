@@ -38,7 +38,7 @@ class Card_Hermit(Card):
         # Gain a card costing up to 3.
         player.plrGainCard(3)
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         # When you discard this from play, if you did not buy any cards this turn,
         # trash this and gain a Madman from the Madman pile
         if not player.stats['bought']:

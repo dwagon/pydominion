@@ -19,7 +19,7 @@ class Card_Treasury(Card):
         self.actions = 1
         self.coin = 1
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         vict = False
         for card in player.stats['bought']:
             if card.isVictory():

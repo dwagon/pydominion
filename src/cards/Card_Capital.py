@@ -16,7 +16,8 @@ class Card_Capital(Card):
         self.buys = 1
         self.cost = 5
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
+        if source == 'played':
         player.debt += 6
         player.payback()
 
@@ -34,11 +35,20 @@ class Test_Capital(unittest.TestCase):
         """ Play a Capital """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getBuys(), 2)
-        self.assertEquals(self.plr.getCoin(), 6)
+        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.getCoin(), 6)
         self.plr.coin = 3
-        self.plr.discardCard(self.card)
+        self.plr.discardCard(self.card, 'played')
         self.assertEqual(self.plr.debt, 3)
+        self.assertEqual(self.plr.coin, 0)
+
+    def test_dontplay(self):
+        """ Dont play a Capital """
+        self.plr.addCard(self.card, 'hand')
+        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.discardCard(self.card)
+        self.assertEqual(self.plr.debt, 0)
         self.assertEqual(self.plr.coin, 0)
 
 

@@ -15,7 +15,7 @@ class Card_Tunnel(Card):
         self.cost = 3
         self.victory = 2
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         if player.phase == 'cleanup':
             return
         gain = player.plrChooseOptions(

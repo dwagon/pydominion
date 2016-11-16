@@ -346,12 +346,12 @@ class Player(object):
             self.reserve.add(card)
 
     ###########################################################################
-    def discardCard(self, card):
+    def discardCard(self, card, source=None):
         assert(isinstance(card, Card))
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
-        self.hook_discardThisCard(card)
+        self.hook_discardThisCard(card, source)
 
     ###########################################################################
     def reserveSize(self):
@@ -380,9 +380,9 @@ class Player(object):
     ###########################################################################
     def discardHand(self):
         while self.hand:
-            self.discardCard(self.hand.topcard())
+            self.discardCard(self.hand.topcard(), 'hand')
         while self.played:
-            self.discardCard(self.played.topcard())
+            self.discardCard(self.played.topcard(), 'played')
 
     ###########################################################################
     def playableSelection(self, index):
@@ -749,9 +749,9 @@ class Player(object):
         self.phase = None
 
     ###########################################################################
-    def hook_discardThisCard(self, card):
+    def hook_discardThisCard(self, card, source=None):
         """ A card has been discarded """
-        card.hook_discardThisCard(game=self.game, player=self)
+        card.hook_discardThisCard(game=self.game, player=self, source=source)
 
     ###########################################################################
     def hook_spendValue(self, card, actual=False):

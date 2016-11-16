@@ -30,7 +30,7 @@ class Card_Soldier(Card):
         player.addCoin(count)
         player.output("Gained %d extra coins" % count)
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         """ Replace with Hero """
         player.replace_traveller(self, 'Fugitive')
 

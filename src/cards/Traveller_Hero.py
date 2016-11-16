@@ -21,7 +21,7 @@ class Card_Hero(Card):
         """ Gain a treasure """
         player.plrGainCard(cost=None, types={'treasure': True})
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         """ Replace with Champion """
         player.replace_traveller(self, 'Champion')
 

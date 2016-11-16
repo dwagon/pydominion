@@ -21,7 +21,7 @@ class Card_Fugitive(Card):
     def special(self, game, player):
         player.plrDiscardCards(num=1)
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         """ Replace with Warrior """
         player.replace_traveller(self, 'Disciple')
 

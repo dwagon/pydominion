@@ -17,7 +17,7 @@ class Card_Peasant(Card):
         self.coin = 1
         self.cost = 2
 
-    def hook_discardThisCard(self, game, player):
+    def hook_discardThisCard(self, game, player, source):
         """ Replace with Treasure Hunter """
         player.replace_traveller(self, 'Soldier')
 
