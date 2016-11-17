@@ -10,7 +10,7 @@ class Card_Storeroom(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card discarded. +1 Coin per card discarded the second time """
+        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card discarded. Discard any number of cards. +1 Coin per card discarded the second time """
         self.name = 'Store Room'
         self.buys = 1
         self.cost = 3
@@ -20,9 +20,11 @@ class Card_Storeroom(Card):
             Discard any number of cards. +1 GP per card discarded the
             second time"""
         todiscard = player.plrDiscardCards(0, anynum=True, prompt="Discard any number of cards. +1 Card per card discarded")
+        player.output("Gaining %d cards from Storeroom" % len(todiscard))
         player.pickupCards(len(todiscard))
         player.output("Discard any number of cards. +1 GP per card discarded")
         todiscard = player.plrDiscardCards(0, anynum=True)
+        player.output("Gaining %d coins from Storeroom" % len(todiscard))
         player.addCoin(len(todiscard))
 
 
