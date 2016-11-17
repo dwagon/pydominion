@@ -10,12 +10,15 @@ class Landmark_Baths(Landmark):
         Landmark.__init__(self)
         self.base = 'empires'
         self.name = "Baths"
-        self.desc = "When you end your turn without having gained a card, take 2VP from here."
+
+    def desc(self, player):
+        return "When you end your turn without having gained a card, take 2VP from here. (%d left)" % self._vp
 
     def hook_endTurn(self, game, player):
         if not player.stats['gained']:
             player.output("Gaining 2 from Baths as no cards gained")
             player.addScore('Baths', 2)
+            self._vp -= 2
 
     def setup(self, game):
         self._vp = 6 * game.numplayers
