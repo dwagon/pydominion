@@ -1153,7 +1153,7 @@ class Player(object):
         if cards:
             card = cards[0]
             recipient.output("Got a %s" % card.name)
-            recipient.addCard(card.remove(), destination)
+            recipient.gainCard(card, destination)
             return card
 
     ###########################################################################
