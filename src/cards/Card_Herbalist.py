@@ -9,7 +9,7 @@ class Card_Herbalist(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'alchemy'
-        self.desc = "+1 buy, +1 coin, can put treasures on top of deck"
+        self.desc = "+1 buy, +1 coin. When you discard this from play, you may put one of your Treasures from play on top of your deck"
         self.name = 'Herbalist'
         self.cost = 2
         self.buys = 1
@@ -18,18 +18,23 @@ class Card_Herbalist(Card):
     def hook_discardThisCard(self, game, player, source):
         """ When you discard this from play, you may put one of
             your Treasures from play on top of your deck """
-        options = [{'selector': '0', 'print': 'Do nothing', 'card': None}]
-        index = 1
-        player.output("Herbalist lets you put treasures on top of deck")
-        for c in player.played:
-            if c.isTreasure():
-                sel = "%d" % index
-                options.append({'selector': sel, 'print': 'Put %s' % c.name, 'card': c})
-                index += 1
-        o = player.userInput(options, "Put a card on the top of your deck?")
-        if o['card']:
-            player.played.remove(o['card'])
-            player.addCard(o['card'], 'topdeck')
+        if source == 'played':
+            options = [{'selector': '0', 'print': 'Do nothing', 'card': None}]
+            index = 1
+            player.output("Herbalist lets you put treasures on top of deck")
+            for c in player.played:
+                if c.isTreasure():
+                    sel = "%d" % index
+                    options.append({'selector': sel, 'print': 'Put %s' % c.name, 'card': c})
+                    index += 1
+            print("index=%d" % index)
+            if index != 1:
+                o = player.userInput(options, "Put a card on the top of your deck?")
+                if o['card']:
+                    player.played.remove(o['card'])
+                    player.addCard(o['card'], 'topdeck')
+            else:
+                player.output("No suitable treasures = %s" % ",".join([c.name for c in player.played]))
 
 
 ###############################################################################
