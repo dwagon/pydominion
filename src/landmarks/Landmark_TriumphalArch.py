@@ -19,7 +19,10 @@ class Landmark_TriumphalArch(Landmark):
             if card.isAction():
                 cards[card.name] += 1
         nums = sorted(cards.values())
+        try:
         player.addScore('Triumphal Arch', nums[-2] * 3)
+        except IndexError:
+            player.output("No score from Triumphal Arch as insufficient action cards")
 
 
 ###############################################################################
@@ -36,6 +39,14 @@ class Test_TriumphalArch(unittest.TestCase):
         self.plr.setDeck('Militia', 'Militia', 'Militia', 'Militia')
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()['Triumphal Arch'], 3 * 3)
+
+    def test_noactions(self):
+        """ Test Triumphal Arch"""
+        self.plr.setHand('Copper', 'Copper', 'Copper')
+        self.plr.setDeck('Duchy', 'Duchy', 'Duchy', 'Duchy')
+        self.plr.gameOver()
+        sd = self.plr.getScoreDetails()
+        self.assertNotIn('Triumphal Arch', sd)
 
 
 ###############################################################################
