@@ -16,6 +16,7 @@ class Landmark_Fountain(Landmark):
         numcu = sum([1 for c in player.allCards() if c.name == 'Copper'])
         if numcu >= 10:
             player.addScore('Fountain', 15)
+            player.output("Gained 15VP from Fountain")
 
 
 ###############################################################################
