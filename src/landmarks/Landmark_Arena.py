@@ -9,8 +9,10 @@ class Landmark_Arena(Landmark):
     def __init__(self):
         Landmark.__init__(self)
         self.base = 'empires'
-        self.desc = """At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here."""
         self.name = "Arena"
+
+    def desc(self, player):
+        return "At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. (%d left)" % self._vp
 
     def setup(self, game):
         self._vp = 6 * game.numplayers
