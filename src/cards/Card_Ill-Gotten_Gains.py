@@ -10,12 +10,16 @@ class Card_IGG(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'hinterlands'
-        self.desc = """1 Coin. When you play this, you may gain a Copper, putting it into your hand.
-        When you gain this, each other player gains a Curse."""
         self.required_cards = ['Curse']
         self.name = 'Ill-Gotten Gains'
         self.cost = 5
         self.coin = 1
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """1 Coin. When you play this, you may gain a Copper, putting it into your hand. When you gain this, each other player gains a Curse."""
+        else:
+            return """1 Coin. When you play this, you may gain a Copper, putting it into your hand."""
 
     def special(self, game, player):
         ans = player.plrChooseOptions(
