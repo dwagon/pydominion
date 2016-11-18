@@ -22,12 +22,18 @@ class Card_Alchemist(Card):
             top of your deck if you have a Potion in play """
         # As we can't guarantee where we are in the discard cycle
         # We have to check the discardpile as well
+        if source != 'played':
+            return
         if not player.inPlayed('Potion') and not player.inDiscard('Potion'):
             return
         ans = player.plrChooseOptions(
             'What to do with the alchemist?',
             ('Discard alchemist', False), ('Put on top of deck', True))
         if ans:
+            alc = player.inPlayed('Alchemist')
+            if alc:
+                player.played.remove(alc)
+            else:
             alc = player.inDiscard('Alchemist')
             if alc:
                 player.discardpile.remove(alc)
