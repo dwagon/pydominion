@@ -10,11 +10,16 @@ class Card_Lost_City(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = "+2 Cards, +2 Actions; When you gain this every else gains a card"
         self.name = 'Lost City'
         self.cards = 2
         self.actions = 2
         self.cost = 5
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+2 Cards, +2 Actions; When you gain this every else gains a card"
+        else:
+            return "+2 Cards, +2 Actions"
 
     def special(self, game, player):
         pass
