@@ -13,6 +13,7 @@ class Landmark_Tomb(Landmark):
         self.name = "Tomb"
 
     def hook_trashCard(self, game, player, card):
+        player.output("Gained 1 VP from Tomb")
         player.addScore('Tomb', 1)
 
 
