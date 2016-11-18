@@ -34,9 +34,9 @@ class Card_Alchemist(Card):
             if alc:
                 player.played.remove(alc)
             else:
-            alc = player.inDiscard('Alchemist')
-            if alc:
-                player.discardpile.remove(alc)
+                alc = player.inDiscard('Alchemist')
+                if alc:
+                    player.discardpile.remove(alc)
             player.addCard(self, 'topdeck')
 
 
