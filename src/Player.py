@@ -346,12 +346,13 @@ class Player(object):
             self.reserve.add(card)
 
     ###########################################################################
-    def discardCard(self, card, source=None):
+    def discardCard(self, card, source=None, hook=True):
         assert(isinstance(card, Card))
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
-        self.hook_discardThisCard(card, source)
+        if hook:
+            self.hook_discardThisCard(card, source)
 
     ###########################################################################
     def reserveSize(self):
@@ -379,10 +380,18 @@ class Player(object):
 
     ###########################################################################
     def discardHand(self):
+        # Activate hooks first so they can still access contents of the
+        # players hand etc. before they get discarded
+        for card in self.hand:
+            self.hook_discardThisCard(card, 'hand')
+        for card in self.played:
+            self.hook_discardThisCard(card, 'played')
         while self.hand:
-            self.discardCard(self.hand.topcard(), 'hand')
+            card = self.hand.topcard()
+            self.discardCard(card, 'hand', hook=False)
         while self.played:
-            self.discardCard(self.played.topcard(), 'played')
+            card = self.played.topcard()
+            self.discardCard(card, 'played', hook=False)
 
     ###########################################################################
     def playableSelection(self, index):
