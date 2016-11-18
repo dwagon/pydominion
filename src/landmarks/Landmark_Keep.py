@@ -28,7 +28,7 @@ class Landmark_Keep(Landmark):
         # If player is the one who has the most, gain the points
         for card in cards:
             m = max(cards[card].values())
-            if player.anem in cards[card] and cards[card][player.name] == m:
+            if player.name in cards[card] and cards[card][player.name] == m:
                 player.output("Gaining 5 from Landmark as you have the most %s (%d)" % (card, m))
                 player.addScore('Keep', 5)
 
