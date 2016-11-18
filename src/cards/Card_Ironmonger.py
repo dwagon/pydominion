@@ -10,7 +10,9 @@ class Card_Ironmonger(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "+1 card, +1 action. Reveal top card and possibly discard it. If action +1 action; treasure +1 coin; victory +1 card"
+        self.desc = """+1 card, +1 action. Reveal the top card of your deck; you may
+        discard it.  Either way, if it is an... Action card, +1 Action;
+        Treasure Card, +1 coin; Victory Card, +1 card"""
         self.name = 'Iron Monger'
         self.cost = 4
         self.actions = 1
