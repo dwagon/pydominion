@@ -76,9 +76,8 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ['top of deck']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertEqual(self.plr.discardSize(), 8)  # 5 for hand, +2 cards, pot
         self.assertIsNone(self.plr.inDiscard('Alchemist'))
-        self.assertEquals(self.plr.deck[-1].name, 'Alchemist')
+        self.assertEqual(self.plr.deck[-1].name, 'Alchemist')
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
