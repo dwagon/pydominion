@@ -31,7 +31,7 @@ class Event_Alms(Event):
             player.output("Already used Alms this turn")
             return
 
-        if self.trasures(player) == 0:
+        if self.treasures(player) == 0:
             player.plrGainCard(4)
 
 
