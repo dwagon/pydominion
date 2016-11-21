@@ -19,16 +19,11 @@ class Event_Alms(Event):
         if not player.do_once('Alms'):
             player.output("Already used Alms this turn")
             return
-        found = False
-        for c in player.played:
-            if c.isTreasure():
-                found = True
-        for c in player.hand:
-            if c.isTreasure():
-                found = True
-        if not found:
-            if c.isTreasure():
-                found = True
+
+        t = 0
+        t += sum([1 for c in player.played if c.isTreasure()])
+        t += sum([1 for c in player.hand if c.isTreasure()])
+        if t == 0:
             player.plrGainCard(4)
 
 
@@ -45,12 +40,14 @@ class Test_Alms(unittest.TestCase):
         """ Use Alms with treasures"""
         self.plr.setHand('Copper')
         self.plr.performEvent(self.card)
+        self.assertEqual(self.plr.discardSize(), 0)
 
     def test_without_treasure(self):
         """ Use Alms with no treasures"""
         self.plr.setHand('Estate')
         self.plr.test_input = ['Feast']
         self.plr.performEvent(self.card)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Feast')
 
     def test_twice(self):
@@ -59,8 +56,8 @@ class Test_Alms(unittest.TestCase):
         self.plr.test_input = ['feast']
         self.plr.performEvent(self.card)
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardpile[0].name, 'Feast')
         self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile[0].name, 'Feast')
 
 
 ###############################################################################
