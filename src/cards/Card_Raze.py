@@ -10,7 +10,9 @@ class Card_Raze(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = "+1 Action; Trash stuff"
+        self.desc = """+1 Action; Trash this or a card from your hand. Look at a number
+            of cards from the top of your deck equal to the cost in Coin of the
+            trashed card. Put one into your hand and discard the rest """
         self.name = 'Raze'
         self.actions = 1
         self.cost = 2
@@ -24,15 +26,16 @@ class Card_Raze(Card):
             cards_to_trash.append(c)
         trash = player.plrTrashCard(cardsrc=cards_to_trash, force=True)
         cost = trash[0].cost
-        cards = []
-        for c in range(cost):
-            cards.append(player.nextCard())
-        ans = player.cardSel(force=True, prompt="Pick a card to put into your hand", cardsrc=cards)
-        for c in cards:
-            if c == ans[0]:
-                player.addCard(c, 'hand')
-            else:
-                player.addCard(c, 'discard')
+        if cost:
+            cards = []
+            for c in range(cost):
+                cards.append(player.nextCard())
+            ans = player.cardSel(force=True, prompt="Pick a card to put into your hand", cardsrc=cards)
+            for c in cards:
+                if c == ans[0]:
+                    player.addCard(c, 'hand')
+                else:
+                    player.addCard(c, 'discard')
 
 
 ###############################################################################
@@ -50,7 +53,6 @@ class Test_Raze(unittest.TestCase):
         self.plr.setDeck('Silver', 'Gold', 'Province')
         self.plr.test_input = ['Raze', 'Gold']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Province'))
@@ -58,6 +60,15 @@ class Test_Raze(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDeck('Silver'))
         self.assertIsNotNone(self.g.inTrash('Raze'))
 
+    def test_copper(self):
+        """ Play a raze - trashing copper - a zero value card """
+        self.plr.setHand('Copper')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.setDeck('Silver', 'Gold', 'Province')
+        self.plr.test_input = ['Copper', 'Gold']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertIsNotNone(self.g.inTrash('Copper'))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
