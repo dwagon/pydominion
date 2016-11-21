@@ -9,9 +9,20 @@ class Event_Alms(Event):
     def __init__(self):
         Event.__init__(self)
         self.base = 'adventure'
-        self.desc = "If you have no treasures in play, gain a card costing up to 4"
         self.name = "Alms"
         self.cost = 0
+
+    def desc(self, player):
+        if self.treasures(player):
+            return "You have treasures in play so you can't gain a card costing up to 4"
+        else:
+            return "You have no treasures in play, gain a card costing up to 4"
+
+    def treasures(self, player):
+        t = 0
+        t += sum([1 for c in player.played if c.isTreasure()])
+        t += sum([1 for c in player.hand if c.isTreasure()])
+        return t
 
     def special(self, game, player):
         """ Once per turn: If you have no treasures in play, gain a
@@ -20,10 +31,7 @@ class Event_Alms(Event):
             player.output("Already used Alms this turn")
             return
 
-        t = 0
-        t += sum([1 for c in player.played if c.isTreasure()])
-        t += sum([1 for c in player.hand if c.isTreasure()])
-        if t == 0:
+        if self.trasures(player) == 0:
             player.plrGainCard(4)
 
 
