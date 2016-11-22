@@ -9,7 +9,9 @@ class Card_Procession(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "You may play an action card from your hand twice. Trash it. Gain an Action card costing exactly 1 more than it."
+        self.desc = """You may play an action card from your
+            hand twice. Trash it. Gain an Action
+            card costing exactly 1 more than it."""
         self.name = 'Procession'
         self.cost = 4
 
