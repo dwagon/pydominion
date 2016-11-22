@@ -1,6 +1,6 @@
 playerNames = ['Adam', 'Alan', 'Alexander', 'Amanda', 'Amy', 'Andrew', 'Angela',
                'Anne', 'Anthony', 'Barbara', 'Benjamin', 'Brian',
-               'Catherine', 'Chloe', 'Christine', 'Christopher',
+               'Catherine', 'Chloe', 'Christine', 'Chris',
                'Colin', 'Craig', 'Daniel', 'Darren', 'David',
                'Elizabeth', 'Emily', 'Emma', 'Fiona', 'Gary',
                'Geoffrey', 'George', 'Graeme', 'Gregory', 'Heather',
