@@ -2,6 +2,7 @@ from PlayArea import PlayArea
 import operator
 import sys
 from Card import Card
+from Msg import Msg, Option
 from CardPile import CardPile
 from EventPile import EventPile
 from collections import defaultdict
@@ -94,7 +95,7 @@ class Player(object):
             assert dstcp is not None, "Couldn't find cardpile %s" % dst
 
         if src not in self.played:
-            self.output("Not activating %s traveller as not played" % src.name)
+            self.output(Msg("Not activating %s traveller as not played" % src.name))
             return
 
         choice = self.plrChooseOptions(
@@ -153,7 +154,7 @@ class Player(object):
                 return None
         assert(isinstance(card, Card))
         card.hook_callReserve(game=self.game, player=self)
-        self.output("Calling %s from Reserve" % card.name)
+        self.output(Msg("Calling %s from Reserve" % card.name))
         self.reserve.remove(card)
         self.addCard(card, 'played')
         return card
@@ -268,7 +269,7 @@ class Player(object):
         if not self.deck:
             self.refill_deck()
         if not self.deck:
-            self.output("No more cards in deck")
+            self.output(Msg("No more cards in deck"))
             return None
         c = self.deck.topcard()
         return c
@@ -292,17 +293,17 @@ class Player(object):
         if card is None:
             card = self.nextCard()
             if not card:
-                self.output("No more cards to pickup")
+                self.output(Msg("No more cards to pickup"))
                 return None
         assert(isinstance(card, Card))
         self.addCard(card, 'hand')
         if verbose:
-            self.output("%s %s" % (verb, card.name))
+            self.output(Msg("%s %s" % (verb, card.name)))
         return card
 
     ###########################################################################
     def shuffleDeck(self):
-        self.output("Shuffling Pile of %d cards" % len(self.discardpile))
+        self.output(Msg("Shuffling Pile of %d cards" % len(self.discardpile)))
         self.discardpile.shuffle()
 
     ###########################################################################
@@ -310,13 +311,13 @@ class Player(object):
         if handsize is None:
             handsize = self.newhandsize
         if self.card_token:
-            self.output("-Card token reduce draw by one")
+            self.output(Msg("-Card token reduce draw by one"))
             handsize -= 1
             self.card_token = False
         while self.handSize() < handsize:
             c = self.pickupCard(verb='Dealt')
             if not c:
-                self.output("Not enough cards to fill hand")
+                self.output(Msg("Not enough cards to fill hand"))
                 break
 
     ###########################################################################
@@ -399,10 +400,12 @@ class Player(object):
         playable = [c for c in self.hand if c.playable and c.isAction()]
         for p in playable:
             sel = chr(ord('a') + index)
-            pr = "Play %s (%s)" % (p.name, p.description(self))
+            o = Option(verb="Play", selector=sel, name=p.name, desc=p.description(self).strip(), action='play', card=p)
+            notes = ""
             for tkn in self.which_token(p.name):
-                pr += "[Tkn: %s]" % tkn
-            options.append({'selector': sel, 'print': pr, 'card': p, 'action': 'play'})
+                notes += "[Tkn: %s]" % tkn
+            o['notes'] = notes
+            options.append(o)
             index += 1
         return options, index
 
@@ -413,19 +416,23 @@ class Player(object):
         totcoin = sum([self.hook_spendValue(c) for c in spendable])
         numpots = sum([1 for c in spendable if c.name == 'Potion'])
         potstr = ", %d potions" % numpots if numpots else ""
-        tp = 'Spend all treasures (%d coin%s)' % (totcoin, potstr)
+        details = '%d coin%s' % (totcoin, potstr)
         if spendable:
-            options.append({'selector': '1', 'print': tp, 'card': None, 'action': 'spendall'})
+            o = Option(selector='1', verb='Spend all treasures', details=details, card=None, action='spendall')
+            options.append(o)
         if self.specialcoins:
-            options.append({'selector': '2', 'print': 'Spend Coin', 'card': None, 'action': 'coin'})
+            o = Option(selector='2', verb='Spend Coin', card=None, action='coin')
+            options.append(o)
 
         if self.debt and self.coin:
-            options.append({'selector': '3', 'print': 'Payback Debt', 'card': None, 'action': 'payback'})
+            o = Option(selector='3', verb='Payback Debt', card=None, action='payback')
+            options.append(o)
 
         index = 4
         for s in spendable:
-            tp = 'Spend %s (%d coin)' % (s.name, self.hook_spendValue(s))
-            options.append({'selector': str(index), 'print': tp, 'card': s, 'action': 'spend'})
+            tp = '%d coin' % self.hook_spendValue(s)
+            o = Option(selector=str(index), name=s.name, details=tp, verb='Spend', card=s, action='spend')
+            options.append(o)
             index += 1
 
         return options
@@ -453,7 +460,8 @@ class Player(object):
             sel = chr(ord('a') + index)
             tp = 'Call %s from reserve (%s)' % (card.name, card.description(self))
             index += 1
-            options.append({'selector': sel, 'print': tp, 'card': card, 'action': 'reserve'})
+            o = Option(selector=sel, output=tp, card=card, action='reserve')
+            options.append(o)
 
         return options, index
 
@@ -461,8 +469,8 @@ class Player(object):
     def landmarkSelection(self, index):
         options = []
         for lm in self.game.landmarks.values():
-            tp = 'Landmark %s: %s' % (lm.name, lm.description(self))
-            options.append({'selector': '-', 'print': tp, 'card': lm, 'action': None})
+            o = Option(selector='-', desc=lm.description(self), name=lm.name, card=lm, action=None)
+            options.append(o)
 
         return options, index
 
@@ -473,13 +481,12 @@ class Player(object):
             index += 1
             if op.cost <= self.coin and self.buys:
                 sel = chr(ord('a') + index)
-                tp = 'Use event %s (%s): %s' % (op.name, self.coststr(op), op.description(self))
                 action = 'event'
             else:
                 sel = '-'
-                tp = 'Event %s (%s): %s' % (op.name, self.coststr(op), op.description(self))
                 action = None
-            options.append({'selector': sel, 'print': tp, 'card': op, 'action': action})
+            o = Option(selector=sel, verb='Use', desc=op.description(self), name=op.name, details=self.coststr(op), card=op, action=action)
+            options.append(o)
 
         return options, index
 
@@ -507,27 +514,28 @@ class Player(object):
             sel = chr(ord('a') + index)
             if not self.debt and self.buys and card in buyable and card not in self.forbidden_to_buy:
                 action = 'buy'
-                verb = 'Buy %s' % card.name
+                verb = 'Buy'
             else:
                 sel = '-'
+                verb = ''
                 action = None
-                verb = card.name
             notes = [self.coststr(card), '%d left' % card.numcards]
             if card.embargo_level:
                 notes.append("Embargo %d" % card.embargo_level)
             if card.getVP():
                 notes.append("Gathered %d VP" % card.getVP())
-            tp = '%s (%s): %s' % (verb, "; ".join(notes), card.description(self))
             for tkn in self.which_token(card.name):
-                tp += "[Tkn: %s]" % tkn
-            options.append({'selector': sel, 'print': tp, 'card': card, 'action': action})
+                notes.append("[Tkn: %s]" % tkn)
+            o = Option(selector=sel, verb=verb, desc=card.description(self), name=card.name, details="; ".join(notes), card=card, action=action)
+            options.append(o)
             index += 1
         return options, index
 
     ###########################################################################
     def choiceSelection(self):
         index = 0
-        options = [{'selector': '0', 'print': 'End Phase', 'card': None, 'action': 'quit'}]
+        o = Option(selector='0', verb='End Phase', card=None, action='quit')
+        options = [o]
 
         if self.phase == 'action':
             if self.actions:
@@ -564,16 +572,16 @@ class Player(object):
     ###########################################################################
     def turn(self):
         self.turn_number += 1
-        self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
+        self.output(Msg("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20)))
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
-        self.output("%s's Turn %s" % (self.name, stats))
+        self.output(Msg("%s's Turn %s" % (self.name, stats)))
         self.actionPhase()
         self.buyPhase()
         self.cleanupPhase()
 
     ###########################################################################
     def actionPhase(self):
-        self.output("************ Action Phase ************")
+        self.output(Msg("************ Action Phase ************"))
         self.phase = 'action'
         while(True):
             self.displayOverview()
@@ -585,7 +593,7 @@ class Player(object):
 
     ###########################################################################
     def buyPhase(self):
-        self.output("************ Buy Phase ************")
+        self.output(Msg("************ Buy Phase ************"))
         self.phase = 'buy'
         self.hook_preBuy()
         while(True):
@@ -608,7 +616,7 @@ class Player(object):
     ###########################################################################
     def payback(self):
         pb = min(self.coin, self.debt)
-        self.output("Paying back %d debt" % pb)
+        self.output(Msg("Paying back %d debt" % pb))
         self.coin -= pb
         self.debt -= pb
 

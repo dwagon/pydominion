@@ -1,6 +1,7 @@
 import sys
 import colorama
 from Player import Player
+from Msg import Msg, Option
 
 if sys.version[0] == "3":
     raw_input = input
@@ -22,13 +23,52 @@ class TextPlayer(Player):
     def output(self, msg, end='\n'):
         if not self.quiet:
             sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
-            sys.stdout.write("%s%s" % (msg, end))
+            if isinstance(msg, Msg):
+                sys.stdout.write("%s%s" % (msg, end))
+            else:
+                sys.stdout.write("%s%s" % (msg, end))
         self.messages.append(msg)
+
+    ###########################################################################
+    def wrap(self, text, first=0, indent=15, maxwidth=75):
+        """ Wrap the text so that it doesn't take more than maxwidth chars.
+        The first line already has "first" characters in it. Subsequent lines
+        should be indented "indent" spaces
+        """
+        outstr = []
+        sentence = []
+        for word in text.split():
+            if len(" ".join(sentence)) + len(word) + first > maxwidth:
+                outstr.append(" ".join(sentence))
+                sentence = [" " * indent, word]
+                first = 0
+            else:
+                sentence.append(word.strip())
+        outstr.append(" ".join(sentence))
+        return "\n".join(outstr)
+
+    ###########################################################################
+    def selectorLine(self, o):
+        output = []
+        output.append("%s)" % o['selector'])
+        if o['verb']:
+            output.append(o['verb'])
+        if o['name']:
+            output.append(o['name'])
+        if o['details']:
+            output.append("(%s)" % o['details'])
+
+        first = len(" ".join(output))
+        strout = self.wrap(o['desc'], first=first, indent=len(self.name)+4)
+        output.append(strout)
+        return " ".join(output)
 
     ###########################################################################
     def userInput(self, options, prompt):
         for o in options:
-            self.output("%s)  %s" % (o['selector'], o['print']))
+            line = self.selectorLine(o)
+            o.line = line
+            self.output(line)
         self.output(prompt, end=' ')
         while(1):
             if self.test_input:
@@ -45,7 +85,7 @@ class TextPlayer(Player):
                 for o in options:
                     if o['selector'] == inp:
                         return o
-                    if inp.lower() in o['print'].lower() and o['selector'] != '-':
+                    if inp.lower() in o['line'].lower() and o['selector'] != '-':
                         matching.append(o)
                 if len(matching) == 1:
                     return matching[0]
@@ -106,7 +146,8 @@ class TextPlayer(Player):
         while(True):
             options = []
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
-                options.append({'selector': '0', 'print': 'Finish Selecting', 'card': None})
+                o = Option(selector='0', verb='Finish Selecting', card=None)
+                options.append(o)
             index = 1
             for c in sorted(selectfrom):
                 if 'exclude' in kwargs and c.name in kwargs['exclude']:
@@ -117,10 +158,10 @@ class TextPlayer(Player):
                     verb = verbs[0]
                 else:
                     verb = verbs[1]
-                pr = "%s %s" % (verb, c.name)
+                o = Option(selector=sel, verb=verb, card=c, name=c.name)
                 if 'printcost' in kwargs and kwargs['printcost']:
-                    pr += " (%d coin)" % self.cardCost(c)
-                options.append({'selector': sel, 'print': pr, 'card': c})
+                    o['desc'] = self.cardCost(c)
+                options.append(o)
             o = self.userInput(options, "Select which card?")
             if not o['card']:
                 break
