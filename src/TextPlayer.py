@@ -59,6 +59,8 @@ class TextPlayer(Player):
             output.append(o['name'])
         if o['details']:
             output.append("(%s)" % o['details'])
+        if o['name'] and not o['details'] and o['desc']:
+            output.append("-")
 
         first = len(" ".join(output))
         strout = self.wrap(o['desc'], first=first, indent=len(self.name)+4)
