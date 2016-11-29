@@ -50,6 +50,8 @@ class TextPlayer(Player):
     ###########################################################################
     def selectorLine(self, o):
         output = []
+        if not isinstance(o, Option):
+            sys.stderr.write("o is %s\n" % type(o))
         output.append("%s)" % o['selector'])
         if o['verb']:
             output.append(o['verb'])
