@@ -50,7 +50,14 @@ class TextPlayer(Player):
     ###########################################################################
     def selectorLine(self, o):
         output = []
-        if not isinstance(o, Option):
+        if isinstance(o, dict):
+            verb = o['print']
+            del o['print']
+            newopt = Option(verb=verb, **o)
+            o = newopt
+        elif isinstance(o, Option):
+            pass
+        else:
             sys.stderr.write("o is %s\n" % type(o))
         output.append("%s)" % o['selector'])
         if o['verb']:
@@ -71,7 +78,7 @@ class TextPlayer(Player):
     def userInput(self, options, prompt):
         for o in options:
             line = self.selectorLine(o)
-            o.line = line
+            o['line'] = line
             self.output(line)
         self.output(prompt, end=' ')
         while(1):
