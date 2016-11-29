@@ -178,8 +178,7 @@ class TextPlayer(Player):
         index = 0
         options = []
         for prnt, ans in choices:
-            sel = '%s' % index
-            options.append({'selector': sel, 'print': prnt, 'answer': ans})
+            options.append(Option(selector='%s' % index, verb=prnt, answer=ans))
             index += 1
         o = self.userInput(options, prompt)
         return o['answer']

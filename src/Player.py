@@ -469,7 +469,7 @@ class Player(object):
     def landmarkSelection(self, index):
         options = []
         for lm in self.game.landmarks.values():
-            o = Option(selector='-', desc=lm.description(self), name=lm.name, card=lm, action=None)
+            o = Option(selector='-', desc=lm.description(self), name=lm.name, card=lm, action=None, details="Landmark")
             options.append(o)
 
         return options, index
@@ -485,7 +485,8 @@ class Player(object):
             else:
                 sel = '-'
                 action = None
-            o = Option(selector=sel, verb='Use', desc=op.description(self), name=op.name, details=self.coststr(op), card=op, action=action)
+            details = "Event; %s" % self.coststr(op)
+            o = Option(selector=sel, verb='Use', desc=op.description(self), name=op.name, details=details, card=op, action=action)
             options.append(o)
 
         return options, index
