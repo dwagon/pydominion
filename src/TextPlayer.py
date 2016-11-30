@@ -23,7 +23,7 @@ class TextPlayer(Player):
     def output(self, msg, end='\n'):
         if not self.quiet:
             sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
-                sys.stdout.write("%s%s" % (msg, end))
+            sys.stdout.write("%s%s" % (msg, end))
         self.messages.append(msg)
 
     ###########################################################################
@@ -65,6 +65,8 @@ class TextPlayer(Player):
             output.append("(%s)" % o['details'])
         if o['name'] and not o['details'] and o['desc']:
             output.append("-")
+        if o['notes']:
+            output.append(o['notes'])
 
         first = len(" ".join(output))
         strout = self.wrap(o['desc'], first=first, indent=len(self.name)+4)
@@ -168,15 +170,15 @@ class TextPlayer(Player):
                     verb = verbs[1]
                 o = Option(selector=sel, verb=verb, card=c, name=c.name)
                 if 'printcost' in kwargs and kwargs['printcost']:
-                    o['desc'] = self.cardCost(c)
+                    o['desc'] = str(self.cardCost(c))
                 options.append(o)
-            o = self.userInput(options, "Select which card?")
-            if not o['card']:
+            ui = self.userInput(options, "Select which card?")
+            if not ui['card']:
                 break
-            if o['card'] in selected:
-                selected.remove(o['card'])
+            if ui['card'] in selected:
+                selected.remove(ui['card'])
             else:
-                selected.append(o['card'])
+                selected.append(ui['card'])
             if num == 1 and len(selected) == 1:
                 break
         return selected

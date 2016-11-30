@@ -52,7 +52,7 @@ class Test_Contraband(unittest.TestCase):
         self.plr.phase = 'buy'
         options, prompt = self.plr.choiceSelection()
         for msg in options:
-            if 'Buy Gold' in msg['print']:
+            if 'Buy Gold' in msg['line']:
                 self.fail("Allowed to buy Gold")
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.getBuys(), 2)

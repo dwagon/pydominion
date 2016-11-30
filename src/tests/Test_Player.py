@@ -449,7 +449,7 @@ class Test_pickupCard(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 3)
         count = 0
         for msg in self.plr.messages:
-            if msg.startswith('test'):
+            if 'test' in msg:
                 count += 1
         self.assertEqual(count, 3)
 
@@ -584,7 +584,8 @@ class Test_buyableSelection(unittest.TestCase):
         opts, ind = self.plr.buyableSelection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
-            if i['print'].startswith('Buy Moat'):
+            if i['name'] == 'Moat':
+                self.assertEqual(i['verb'], 'Buy')
                 self.assertEqual(i['action'], 'buy')
                 self.assertEqual(i['card'], self.g['Moat'])
                 break
@@ -596,7 +597,7 @@ class Test_buyableSelection(unittest.TestCase):
         opts, ind = self.plr.buyableSelection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
-            if i['print'].startswith('Buy Copper'):
+            if i['name'].startswith('Copper'):
                 self.assertEqual(i['action'], 'buy')
                 self.assertEqual(i['card'], self.g['Copper'])
                 break
@@ -609,8 +610,8 @@ class Test_buyableSelection(unittest.TestCase):
         opts, ind = self.plr.buyableSelection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
-            if i['print'].startswith('Buy Moat'):
-                self.assertIn('[Tkn: +1 Card]', i['print'])
+            if i['name'] == 'Moat':
+                self.assertIn('[Tkn: +1 Card]', i['details'])
                 break
         else:   # pragma: no coverage
             self.fail("Moat not buyable")
@@ -630,7 +631,9 @@ class Test_playableSelection(unittest.TestCase):
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
-        self.assertEqual(opts[0]['print'], 'Play Moat (+2 cards, defense)')
+        self.assertEqual(opts[0]['desc'], '+2 cards, defense')
+        self.assertEqual(opts[0]['verb'], 'Play')
+        self.assertEqual(opts[0]['name'], 'Moat')
         self.assertEqual(ind, 2)
 
     def test_token(self):
@@ -640,7 +643,7 @@ class Test_playableSelection(unittest.TestCase):
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
-        self.assertTrue('[Tkn: +1 Card]' in opts[0]['print'])
+        self.assertTrue('[Tkn: +1 Card]' in opts[0]['notes'])
         self.assertEqual(ind, 2)
 
 
@@ -658,12 +661,13 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.phase = 'action'
         opts, prompt = self.plr.choiceSelection()
 
-        self.assertEqual(opts[0]['print'], 'End Phase')
+        self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
         self.assertEqual(opts[0]['selector'], '0')
         self.assertIsNone(opts[0]['card'])
 
-        self.assertTrue(opts[1]['print'].startswith('Play Moat'))
+        self.assertEqual(opts[1]['verb'], 'Play')
+        self.assertEqual(opts[1]['name'], 'Moat')
         self.assertEqual(opts[1]['action'], 'play')
         self.assertEqual(opts[1]['selector'], 'a')
 
@@ -675,7 +679,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.specialcoins = 0   # Stop card choice breaking test
         opts, prompt = self.plr.choiceSelection()
 
-        self.assertEqual(opts[0]['print'], 'End Phase')
+        self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
         self.assertEqual(opts[0]['selector'], '0')
         self.assertIsNone(opts[0]['card'])
@@ -729,20 +733,21 @@ class Test_spendableSelection(unittest.TestCase):
         opts = self.plr.spendableSelection()
         self.assertEqual(opts[0]['selector'], '1')
         self.assertEqual(opts[0]['action'], 'spendall')
-        self.assertTrue(opts[0]['print'].startswith('Spend all treasures'))
+        self.assertIn('Spend all treasures', opts[0]['verb'])
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['selector'], '2')
-        self.assertEqual(opts[1]['print'], 'Spend Coin')
+        self.assertEqual(opts[1]['verb'], 'Spend Coin')
         self.assertEqual(opts[1]['action'], 'coin')
         self.assertIsNone(opts[1]['card'])
 
-        self.assertTrue(opts[2]['print'].startswith('Spend Copper'))
+        self.assertEqual(opts[2]['verb'], 'Spend')
+        self.assertEqual(opts[2]['name'], 'Copper')
         self.assertEqual(opts[2]['selector'], '4')
         self.assertEqual(opts[2]['action'], 'spend')
         self.assertEqual(opts[2]['card'].name, 'Copper')
 
-        self.assertTrue(opts[3]['print'].startswith('Spend Potion'))
+        self.assertEqual(opts[3]['verb'], 'Spend')
         self.assertEqual(opts[3]['selector'], '5')
         self.assertEqual(opts[3]['action'], 'spend')
         self.assertEqual(opts[3]['card'].name, 'Potion')
@@ -754,7 +759,7 @@ class Test_spendableSelection(unittest.TestCase):
         opts = self.plr.spendableSelection()
         self.assertEqual(opts[1]['selector'], '3')
         self.assertEqual(opts[1]['action'], 'payback')
-        self.assertEqual(opts[1]['print'], 'Payback Debt')
+        self.assertEqual(opts[1]['verb'], 'Payback Debt')
         self.assertIsNone(opts[1]['card'])
 
 
