@@ -2,7 +2,7 @@ from PlayArea import PlayArea
 import operator
 import sys
 from Card import Card
-from Msg import Msg, Option
+from Option import Option
 from CardPile import CardPile
 from EventPile import EventPile
 from collections import defaultdict
@@ -95,7 +95,7 @@ class Player(object):
             assert dstcp is not None, "Couldn't find cardpile %s" % dst
 
         if src not in self.played:
-            self.output(Msg("Not activating %s traveller as not played" % src.name))
+            self.output("Not activating %s traveller as not played" % src.name)
             return
 
         choice = self.plrChooseOptions(
@@ -154,7 +154,7 @@ class Player(object):
                 return None
         assert(isinstance(card, Card))
         card.hook_callReserve(game=self.game, player=self)
-        self.output(Msg("Calling %s from Reserve" % card.name))
+        self.output("Calling %s from Reserve" % card.name)
         self.reserve.remove(card)
         self.addCard(card, 'played')
         return card
@@ -269,7 +269,7 @@ class Player(object):
         if not self.deck:
             self.refill_deck()
         if not self.deck:
-            self.output(Msg("No more cards in deck"))
+            self.output("No more cards in deck")
             return None
         c = self.deck.topcard()
         return c
@@ -293,17 +293,17 @@ class Player(object):
         if card is None:
             card = self.nextCard()
             if not card:
-                self.output(Msg("No more cards to pickup"))
+                self.output("No more cards to pickup")
                 return None
         assert(isinstance(card, Card))
         self.addCard(card, 'hand')
         if verbose:
-            self.output(Msg("%s %s" % (verb, card.name)))
+            self.output("%s %s" % (verb, card.name))
         return card
 
     ###########################################################################
     def shuffleDeck(self):
-        self.output(Msg("Shuffling Pile of %d cards" % len(self.discardpile)))
+        self.output("Shuffling Pile of %d cards" % len(self.discardpile))
         self.discardpile.shuffle()
 
     ###########################################################################
@@ -311,13 +311,13 @@ class Player(object):
         if handsize is None:
             handsize = self.newhandsize
         if self.card_token:
-            self.output(Msg("-Card token reduce draw by one"))
+            self.output("-Card token reduce draw by one")
             handsize -= 1
             self.card_token = False
         while self.handSize() < handsize:
             c = self.pickupCard(verb='Dealt')
             if not c:
-                self.output(Msg("Not enough cards to fill hand"))
+                self.output("Not enough cards to fill hand")
                 break
 
     ###########################################################################
@@ -573,16 +573,16 @@ class Player(object):
     ###########################################################################
     def turn(self):
         self.turn_number += 1
-        self.output(Msg("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20)))
+        self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
-        self.output(Msg("%s's Turn %s" % (self.name, stats)))
+        self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
         self.cleanupPhase()
 
     ###########################################################################
     def actionPhase(self):
-        self.output(Msg("************ Action Phase ************"))
+        self.output("************ Action Phase ************")
         self.phase = 'action'
         while(True):
             self.displayOverview()
@@ -594,7 +594,7 @@ class Player(object):
 
     ###########################################################################
     def buyPhase(self):
-        self.output(Msg("************ Buy Phase ************"))
+        self.output("************ Buy Phase ************")
         self.phase = 'buy'
         self.hook_preBuy()
         while(True):
@@ -617,7 +617,7 @@ class Player(object):
     ###########################################################################
     def payback(self):
         pb = min(self.coin, self.debt)
-        self.output(Msg("Paying back %d debt" % pb))
+        self.output("Paying back %d debt" % pb)
         self.coin -= pb
         self.debt -= pb
 

@@ -1,7 +1,7 @@
 import sys
 import colorama
 from Player import Player
-from Msg import Msg, Option
+from Option import Option
 
 if sys.version[0] == "3":
     raw_input = input
@@ -23,9 +23,6 @@ class TextPlayer(Player):
     def output(self, msg, end='\n'):
         if not self.quiet:
             sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
-            if isinstance(msg, Msg):
-                sys.stdout.write("%s%s" % (msg, end))
-            else:
                 sys.stdout.write("%s%s" % (msg, end))
         self.messages.append(msg)
 

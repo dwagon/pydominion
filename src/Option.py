@@ -1,12 +1,3 @@
-class Msg(object):
-    def __init__(self, *args, **kwargs):
-        self.msgs = args
-        self.data = kwargs
-
-    def __repr__(self):
-        return str(self.msgs[0])
-
-
 class Option(object):
     """
      a) Buy Peasant (2 Coins; 9 left): +1 Buy, +1 Coin; Discard to replace with Soldier
@@ -38,5 +29,8 @@ class Option(object):
         if key not in self.data:
             return ''
         return self.data[key]
+
+    def __repr__(self):
+        return "<Option: %s>" % self.data
 
 # EOF
