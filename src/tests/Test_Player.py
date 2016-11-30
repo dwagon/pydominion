@@ -528,8 +528,8 @@ class Test_misc(unittest.TestCase):
     def test_cleanup_phase(self):
         self.plr.setHand('Copper')
         self.plr.cleanupPhase()
-        self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.playedSize(), 0)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.playedSize(), 0)
 
 
 ###############################################################################
@@ -546,7 +546,7 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('| Hand: <EMPTY>', self.plr.messages)
         self.assertIn('| Played: <NONE>', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 5)
+        self.assertEqual(len(self.plr.messages), 5)
 
     def test_non_empty(self):
         self.plr.messages = []
@@ -555,14 +555,14 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('| Hand: Copper, Estate', self.plr.messages)
         self.assertIn('| Played: Moat', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 5)
+        self.assertEqual(len(self.plr.messages), 5)
 
     def test_reserve(self):
         self.plr.messages = []
         self.plr.setReserve('Copper')
         self.plr.displayOverview()
         self.assertIn('| Reserve: Copper', self.plr.messages)
-        self.assertEquals(len(self.plr.messages), 6)
+        self.assertEqual(len(self.plr.messages), 6)
 
     def test_duration(self):
         self.plr.messages = []
