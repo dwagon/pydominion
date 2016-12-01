@@ -52,7 +52,7 @@ class Test_Swindler(unittest.TestCase):
     def test_attack(self):
         """ Swindle an undefended player """
         self.victim.setDeck('Gold')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
         self.assertEqual(self.g.trashSize(), 1)
