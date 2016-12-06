@@ -11,7 +11,7 @@ class Card_HumbleCastle(CastleCard):
         self.cardtype = ['treasure', 'victory', 'castle']
         self.base = 'empires'
         self.cost = 3
-        self.desc = "1 Coin; Worth 1VP per Castle you have."
+        self.desc = "+1 Coin; Worth 1VP per Castle you have."
         self.coin = 1
         self.name = "Humble Castle"
 
