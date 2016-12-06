@@ -10,13 +10,18 @@ class Card_Messenger(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'adventure'
-        self.desc = """+1 Buy, +2 Coin, You may put your deck into your discard pile;
-        When this is your first buy in a turn, gain a card costing up to 4,
-        and each other player gains a copy of it."""
         self.name = 'Messenger'
         self.buys = 1
         self.coin = 2
         self.cost = 4
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
+                When this is your first buy in a turn, gain a card costing up to 4,
+                and each other player gains a copy of it."""
+        else:
+            return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
     def special(self, game, player):
         o = player.plrChooseOptions(
