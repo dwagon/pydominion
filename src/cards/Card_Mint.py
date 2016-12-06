@@ -10,10 +10,15 @@ class Card_Mint(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = """You may reveal a Treasure card from your hand. Gain a copy of it.
-        When you buy this, trash all Treasures you have in play."""
         self.name = 'Mint'
         self.cost = 5
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """You may reveal a Treasure card from your hand. Gain a copy of it.
+            When you buy this, trash all Treasures you have in play."""
+        else:
+            return "You may reveal a Treasure card from your hand. Gain a copy of it."
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
