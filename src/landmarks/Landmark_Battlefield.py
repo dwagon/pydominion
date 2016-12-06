@@ -9,12 +9,16 @@ class Landmark_Battlefield(Landmark):
     def __init__(self):
         Landmark.__init__(self)
         self.base = 'empires'
-        self.desc = "When you gain a Victory card, take 2VP from here."
         self.name = "Battlefield"
+        self._vp = 0
+
+    def desc(self, player):
+        return "When you gain a Victory card, take 2VP from here. (%d left)" % self._vp
 
     def hook_gainCard(self, game, player, card):
         if card.isVictory() and self._vp >= 0:
             self._vp -= 2
+            player.output("Gained 2VP from Battlefield")
             player.addScore('Battlefield', 2)
 
     def setup(self, game):
