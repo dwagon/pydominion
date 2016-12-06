@@ -9,7 +9,7 @@ class Card_Farmingvillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "+2 actions, Pull action or treasure from hand"
+        self.desc = """+2 actions. Reveal cards from the top of your deck until you reveal an Action or Treasure card. Put that card into your hand and discard the other cards."""
         self.name = 'Farming Village'
         self.actions = 2
         self.cost = 4
