@@ -18,7 +18,7 @@ class Landmark_MountainPass(Landmark):
     def hook_endTurn(self, game, player):
         if self._state == "do":
             plr = player
-            curbid = 1
+            curbid = 0
             winning_plr = None
             while True:
                 plr = game.playerToRight(plr)
@@ -30,24 +30,31 @@ class Landmark_MountainPass(Landmark):
                 if plr == player:
                     break
 
-            winning_plr.debt += curbid
-            winning_plr.addScore('Mountain Pass', 8)
-            game.output("%s bid %d for 8VP" % (winning_plr.name, curbid))
-            self._state = "done"
+            if winning_plr:
+                winning_plr.debt += curbid
+                winning_plr.addScore('Mountain Pass', 8)
+                game.output("%s won with a bid of %d for 8VP" % (winning_plr.name, curbid))
+                self._state = "done"
+            else:
+                game.output("No one bid for Mountain Pass")
 
     def hook_gainCard(self, game, player, card):
         if self._state != "un":
             return
-        # if card.name == "Province":
-        if card.name == "Copper":
+        if card.name == "Province":
             self._state = "do"
 
     def generate_bids(self, minbid):
         options = []
-        options.append(("Don't bid", 0))
-        for i in range(minbid, 41):
+        options.append(("Don't bid", -1))
+        for i in range(minbid+1, 41):
             options.append(("Bid %d" % i, i))
         return options
+
+
+###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return 0
 
 
 ###############################################################################
@@ -60,6 +67,7 @@ class Test_MountainPass(unittest.TestCase):
 
     def test_play(self):
         """ Test Mountain Pass"""
+        # TODO
         pass
 
 
