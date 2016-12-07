@@ -9,10 +9,15 @@ class Card_Cache(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+3 coin. Gain two coppers when you gain this"
         self.name = 'Cache'
         self.cost = 5
         self.coin = 3
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+3 coin. Gain two coppers when you gain this"
+        else:
+            return "+3 coin"
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, gain two Coppers"""
