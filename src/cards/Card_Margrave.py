@@ -18,7 +18,7 @@ class Card_Margrave(Card):
 
     def special(self, game, player):
         for plr in player.attackVictims():
-            plr.output("Due to %s's Margrave Gain a card then discard down to 3" % player.name)
+            plr.output("Due to %s's Margrave gain a card then discard down to 3" % player.name)
             plr.pickupCard()
             plr.plrDiscardDownTo(3)
 
