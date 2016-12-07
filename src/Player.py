@@ -458,9 +458,8 @@ class Player(object):
             if card.when not in whens:
                 continue
             sel = chr(ord('a') + index)
-            tp = 'Call %s from reserve (%s)' % (card.name, card.description(self))
             index += 1
-            o = Option(selector=sel, output=tp, card=card, action='reserve')
+            o = Option(selector=sel, name=card.name, verb='Call', card=card, action='reserve')
             options.append(o)
 
         return options, index
