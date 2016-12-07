@@ -10,11 +10,16 @@ class Card_Mandarin(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = """+3 Coins.  Put a card from your hand on top of your deck.
-        When you gain this, put all Treasures you have in play on top of your deck in any order."""
         self.name = 'Mandarin'
         self.coin = 3
         self.cost = 5
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """+3 Coins.  Put a card from your hand on top of your deck.
+            When you gain this, put all Treasures you have in play on top of your deck in any order."""
+        else:
+            return """+3 Coins.  Put a card from your hand on top of your deck."""
 
     def special(self, game, player):
         card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your on top of your deck")
