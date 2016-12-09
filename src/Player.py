@@ -400,7 +400,8 @@ class Player(object):
         playable = [c for c in self.hand if c.playable and c.isAction()]
         for p in playable:
             sel = chr(ord('a') + index)
-            o = Option(verb="Play", selector=sel, name=p.name, desc=p.description(self).strip(), action='play', card=p)
+            details = p.get_cardtype_repr()
+            o = Option(verb="Play", selector=sel, name=p.name, desc=p.description(self).strip(), action='play', card=p, details=details)
             notes = ""
             for tkn in self.which_token(p.name):
                 notes += "[Tkn: %s]" % tkn
@@ -430,7 +431,7 @@ class Player(object):
 
         index = 4
         for s in spendable:
-            tp = '%d coin' % self.hook_spendValue(s)
+            tp = '%d coin %s' % (self.hook_spendValue(s), s.get_cardtype_repr())
             o = Option(selector=str(index), name=s.name, details=tp, verb='Spend', card=s, action='spend')
             options.append(o)
             index += 1
@@ -459,7 +460,8 @@ class Player(object):
                 continue
             sel = chr(ord('a') + index)
             index += 1
-            o = Option(selector=sel, name=card.name, verb='Call', card=card, action='reserve')
+            details = card.get_cardtype_repr()
+            o = Option(selector=sel, name=card.name, verb='Call', details=details, card=card, action='reserve')
             options.append(o)
 
         return options, index
@@ -519,14 +521,16 @@ class Player(object):
                 sel = '-'
                 verb = ''
                 action = None
-            notes = [self.coststr(card), '%d left' % card.numcards]
+            details = [self.coststr(card)]
             if card.embargo_level:
-                notes.append("Embargo %d" % card.embargo_level)
+                details.append("Embargo %d" % card.embargo_level)
             if card.getVP():
-                notes.append("Gathered %d VP" % card.getVP())
+                details.append("Gathered %d VP" % card.getVP())
+            details.append(card.get_cardtype_repr())
+            details.append('%d left' % card.numcards)
             for tkn in self.which_token(card.name):
-                notes.append("[Tkn: %s]" % tkn)
-            o = Option(selector=sel, verb=verb, desc=card.description(self), name=card.name, details="; ".join(notes), card=card, action=action)
+                details.append("[Tkn: %s]" % tkn)
+            o = Option(selector=sel, verb=verb, desc=card.description(self), name=card.name, details="; ".join(details), card=card, action=action)
             options.append(o)
             index += 1
         return options, index
