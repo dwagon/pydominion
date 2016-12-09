@@ -461,7 +461,7 @@ class Player(object):
             sel = chr(ord('a') + index)
             index += 1
             details = card.get_cardtype_repr()
-            o = Option(selector=sel, name=card.name, verb='Call', details=details, card=card, action='reserve')
+            o = Option(selector=sel, name=card.name, verb='Call', details=details, card=card, action='reserve', desc=card.description(self))
             options.append(o)
 
         return options, index
