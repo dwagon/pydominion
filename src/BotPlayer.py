@@ -29,8 +29,12 @@ class BotPlayer(Player):
         try:
             opts = {}
             for o in options:
+                if o['action'] == 'buy' and o['card'].name == 'Colony':
+                    opts['colony'] = o
                 if o['action'] == 'buy' and o['card'].name == 'Province':
                     opts['province'] = o
+                if o['action'] == 'buy' and o['card'].name == 'Platinum':
+                    opts['platinum'] = o
                 if o['action'] == 'buy' and o['card'].name == 'Gold':
                     opts['gold'] = o
                 if o['action'] == 'buy' and o['card'].name == 'Duchy':
@@ -56,6 +60,10 @@ class BotPlayer(Player):
             return opts['quit']
         coin = self.getCoin()
         self.output("Have %d coins" % coin)
+        if coin >= 11 and 'colony' in opts:
+            return opts['colony']
+        if coin >= 9 and 'platinum' in opts:
+            return opts['platinum']
         if coin >= 8:
             return opts['province']
         if coin >= 6 and 'gold' in opts:
