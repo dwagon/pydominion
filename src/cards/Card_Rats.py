@@ -10,7 +10,7 @@ class Card_Rats(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """+1 Card +1 Action Gain a Rats.
+        self.desc = """+1 Card, +1 Action, Gain a Rats.
         Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
         When you trash this, +1 Card."""
         self.name = 'Rats'
