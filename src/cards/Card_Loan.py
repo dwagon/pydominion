@@ -9,7 +9,7 @@ class Card_Loan(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'prosperity'
-        self.desc = "+1 Coin, Dig for a treasure and trash or discard it"
+        self.desc = "+1 Coin; When you play this, reveal cards from your deck until you reveal a Treasure. Discard it or trash it. Discard the other cards."
         self.name = 'Loan'
         self.cost = 3
         self.coin = 1
@@ -46,13 +46,13 @@ class Test_Loan(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
 
     def test_discard(self):
         self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.plr.discardpile[-1].name, 'Gold')
+        self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, 'treasure')
         self.assertTrue(self.g.trashpile.isEmpty())
@@ -61,8 +61,8 @@ class Test_Loan(unittest.TestCase):
         self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
-        self.assertEquals(self.g.trashSize(), 1)
-        self.assertEquals(self.g.trashpile[0].name, 'Gold')
+        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashpile[0].name, 'Gold')
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
 
