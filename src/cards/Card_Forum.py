@@ -43,12 +43,12 @@ class Test_Forum(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['duchy', 'province', 'finish']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.handSize(), 5 + 3 - 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 5 + 3 - 2)
 
     def test_buy(self):
         self.plr.buyCard(self.g['Forum'])
-        self.assertEquals(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.getBuys(), 1)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

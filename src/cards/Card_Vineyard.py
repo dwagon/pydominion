@@ -38,13 +38,13 @@ class Test_Vineyard(unittest.TestCase):
         self.plr.setHand('Vineyard')
         self.plr.setDeck('Copper')
         self.plr.setDiscard('Moat', 'Moat', 'Moat', 'Moat')
-        self.assertEquals(self.plr.getScoreDetails()['Vineyard'], 1)
+        self.assertEqual(self.plr.getScoreDetails()['Vineyard'], 1)
 
     def test_scoreTwo(self):
         self.plr.setHand('Vineyard')
         self.plr.setDeck('Vineyard')
         self.plr.setDiscard('Moat', 'Moat', 'Moat', 'Moat', 'Moat', 'Moat')
-        self.assertEquals(self.plr.getScoreDetails()['Vineyard'], 4)
+        self.assertEqual(self.plr.getScoreDetails()['Vineyard'], 4)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

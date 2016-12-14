@@ -47,24 +47,24 @@ class Test_Bureaucrat(unittest.TestCase):
         self.victim.setHand('Estate', 'Copper', 'Copper')
         self.victim.setDeck('Silver')
         self.plr.playCard(self.bcard)
-        self.assertEquals(self.victim.deck[-1].name, 'Estate')
+        self.assertEqual(self.victim.deck[-1].name, 'Estate')
         self.assertIsNone(self.victim.inHand('Estate'))
-        self.assertEquals(self.plr.deck[-1].name, 'Silver')
+        self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
     def test_novictory(self):
         self.victim.setHand('Copper', 'Copper', 'Copper')
         self.victim.setDeck('Province')
         self.plr.setDeck('Province')
         self.plr.playCard(self.bcard)
-        self.assertEquals(self.victim.deck[-1].name, 'Province')
-        self.assertEquals(self.plr.deck[-1].name, 'Silver')
+        self.assertEqual(self.victim.deck[-1].name, 'Province')
+        self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
     def test_defense(self):
         self.victim.setDeck('Province')
         self.victim.setHand('Estate', 'Duchy', 'Moat')
         self.plr.playCard(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
-        self.assertEquals(self.victim.deck[-1].name, 'Province')
+        self.assertEqual(self.victim.deck[-1].name, 'Province')
         self.assertIsNotNone(self.victim.inHand('Estate'))
 
 ###############################################################################

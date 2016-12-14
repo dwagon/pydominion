@@ -59,25 +59,25 @@ class Test_Feast(unittest.TestCase):
         self.plr.test_input = ['keep']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.g.trashpile.isEmpty())
-        self.assertEquals(self.plr.played[0].name, 'Feast')
+        self.assertEqual(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
         self.plr.setHand('Feast')
         self.plr.test_input = ['trash', '0']
         self.plr.playCard(self.plr.hand[0])
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEquals(self.g.trashSize(), 1)
-        self.assertEquals(self.g.trashpile[0].name, 'Feast')
+        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashpile[0].name, 'Feast')
         self.assertTrue(self.plr.played.isEmpty())
 
     def test_trashForSomething(self):
         self.plr.setHand('Feast')
         self.plr.test_input = ['trash', '1']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEquals(self.g.trashSize(), 1)
-        self.assertEquals(self.g.trashpile[0].name, 'Feast')
+        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashpile[0].name, 'Feast')
         self.assertTrue(self.plr.played.isEmpty())
-        self.assertEquals(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardSize(), 1)
 
 
 ###############################################################################

@@ -37,9 +37,9 @@ class Test_Warehouse(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'discard copper', 'discard duchy', 'finish']
         self.plr.playCard(self.card)
         # Initial hand size - 3 discards + 3 pickups - 1 played
-        self.assertEquals(self.plr.handSize(), 5 - 3 + 3 - 1)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.handSize(), 5 - 3 + 3 - 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.discardSize(), 3)
 
 
 ###############################################################################

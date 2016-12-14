@@ -36,14 +36,14 @@ class Test_Silkroad(unittest.TestCase):
         self.plr.setHand('Silk Road')
         self.plr.setDeck('Copper')
         self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate')
-        self.assertEquals(self.plr.getScoreDetails()['Silk Road'], 1)
+        self.assertEqual(self.plr.getScoreDetails()['Silk Road'], 1)
 
     def test_scoreTwo(self):
         """ Score for having two silk roads worth two each """
         self.plr.setHand('Silk Road', 'Estate')
         self.plr.setDeck('Estate', 'Estate', 'Silk Road')
         self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
-        self.assertEquals(self.plr.getScoreDetails()['Silk Road'], 2 + 2)
+        self.assertEqual(self.plr.getScoreDetails()['Silk Road'], 2 + 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

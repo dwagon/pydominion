@@ -40,18 +40,18 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.setDiscard('Estate', 'Duchy', 'Province')
         self.plr.test_input = ["Don't discard"]
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getCoin(), 2)
-        self.assertEquals(self.plr.deckSize(), 3)
-        self.assertEquals(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.deckSize(), 3)
+        self.assertEqual(self.plr.discardSize(), 3)
 
     def test_discard(self):
         self.plr.setDeck('Copper', 'Silver', 'Gold')
         self.plr.setDiscard('Estate', 'Duchy', 'Province')
         self.plr.test_input = ['discard deck']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.getCoin(), 2)
-        self.assertEquals(self.plr.deckSize(), 0)
-        self.assertEquals(self.plr.discardSize(), 6)
+        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.deckSize(), 0)
+        self.assertEqual(self.plr.discardSize(), 6)
 
 
 ###############################################################################

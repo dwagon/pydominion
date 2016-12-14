@@ -34,11 +34,11 @@ class Test_Councilroom(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
 
     def test_play(self):
-        self.assertEquals(self.other.handSize(), 5)
+        self.assertEqual(self.other.handSize(), 5)
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.other.handSize(), 6)
-        self.assertEquals(self.plr.handSize(), 9)
-        self.assertEquals(self.plr.getBuys(), 2)
+        self.assertEqual(self.other.handSize(), 6)
+        self.assertEqual(self.plr.handSize(), 9)
+        self.assertEqual(self.plr.getBuys(), 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

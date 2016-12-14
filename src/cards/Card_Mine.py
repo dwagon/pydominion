@@ -54,21 +54,21 @@ class Test_Mine(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.hand[0].name, 'Silver')
+        self.assertEqual(self.plr.hand[0].name, 'Silver')
         self.assertTrue(self.plr.discardpile.isEmpty())
-        self.assertEquals(self.plr.handSize(), 1)
-        self.assertEquals(self.plr.getCoin(), 0)
-        self.assertEquals(self.plr.getBuys(), 1)
-        self.assertEquals(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.getActions(), 0)
 
     def test_convnothing(self):
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.hand[0].name, 'Copper')
+        self.assertEqual(self.plr.hand[0].name, 'Copper')
         self.assertTrue(self.plr.discardpile.isEmpty())
-        self.assertEquals(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.handSize(), 1)
 
 
 ###############################################################################

@@ -41,20 +41,20 @@ class Test_Feodum(unittest.TestCase):
         self.plr.setHand('Feodum')
         self.plr.setDeck('Copper')
         self.plr.setDiscard('Silver', 'Silver', 'Silver', 'Silver')
-        self.assertEquals(self.plr.getScoreDetails()['Feodum'], 1)
+        self.assertEqual(self.plr.getScoreDetails()['Feodum'], 1)
 
     def test_scoreTwo(self):
         self.plr.setHand('Feodum')
         self.plr.setDeck('Feodum')
         self.plr.setDiscard('Silver', 'Silver', 'Silver', 'Silver', 'Silver', 'Silver')
-        self.assertEquals(self.plr.getScoreDetails()['Feodum'], 4)
+        self.assertEqual(self.plr.getScoreDetails()['Feodum'], 4)
 
     def test_trash(self):
         """ Trash a Feodum card """
         card = self.g['Feodum'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.trashCard(card)
-        self.assertEquals(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discardSize(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 

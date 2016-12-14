@@ -40,7 +40,7 @@ class Test_Sir_Michael(unittest.TestCase):
         self.vic.test_input = ['1', '2', '0']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEquals(self.vic.handSize(), 3)
+        self.assertEqual(self.vic.handSize(), 3)
 
 
 ###############################################################################

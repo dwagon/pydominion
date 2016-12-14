@@ -36,10 +36,10 @@ class Test_Groundskeeper(unittest.TestCase):
         """ Play a Groundskeeper """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 5 + 1)
         self.plr.buyCard(self.g['Duchy'])
-        self.assertEquals(self.plr.score['Groundskeeper'], 1)
+        self.assertEqual(self.plr.score['Groundskeeper'], 1)
 
 
 ###############################################################################

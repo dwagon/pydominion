@@ -46,8 +46,8 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getActions(), 2)
-        self.assertEquals(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.handSize(), 2)
         self.assertIsNotNone(self.g.inTrash('Moat'))
 
     def test_play_treasure(self):
@@ -56,7 +56,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['silver']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_victory(self):
         """ Sacrifice a Victory """
@@ -65,7 +65,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.test_input = ['duchy']
         self.plr.playCard(self.card)
         sc = self.plr.getScoreDetails()
-        self.assertEquals(sc['Sacrifice'], 2)
+        self.assertEqual(sc['Sacrifice'], 2)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

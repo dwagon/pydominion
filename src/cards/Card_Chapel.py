@@ -32,14 +32,14 @@ class Test_Chapel(unittest.TestCase):
     def test_trashnone(self):
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.handSize(), 3)
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trashtwo(self):
         self.plr.test_input = ['trash copper', 'trash silver', 'finish']
         self.plr.playCard(self.ccard)
-        self.assertEquals(self.plr.handSize(), 1)
-        self.assertEquals(self.g.trashSize(), 2)
+        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.g.trashSize(), 2)
 
 
 ###############################################################################

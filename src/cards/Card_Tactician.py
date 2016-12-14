@@ -48,23 +48,23 @@ class Test_Tactician(unittest.TestCase):
         """ Play a tactician and discard hand"""
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.handSize(), 0)
         self.plr.endTurn()
         self.plr.startTurn()
-        self.assertEquals(self.plr.handSize(), 10)
-        self.assertEquals(self.plr.getActions(), 2)
-        self.assertEquals(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.handSize(), 10)
+        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.getBuys(), 2)
 
     def test_play_keep(self):
         """ Play a tactician and discard hand"""
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.handSize(), 5)
         self.plr.endTurn()
         self.plr.startTurn()
-        self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getBuys(), 1)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

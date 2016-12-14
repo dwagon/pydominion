@@ -55,14 +55,14 @@ class Test_Gear(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['silver', 'gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
+        self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
         self.assertIsNotNone(self.plr.inHand('Duchy'))
-        self.assertEquals(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.durationSize(), 1)
         self.plr.endTurn()
         self.plr.startTurn()
-        self.assertEquals(self.plr.durationSize(), 0)
-        self.assertEquals(self.plr.playedSize(), 1)
-        self.assertEquals(self.plr.played[-1].name, 'Gear')
+        self.assertEqual(self.plr.durationSize(), 0)
+        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played[-1].name, 'Gear')
         self.assertIsNotNone(self.plr.inHand('Silver'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
 

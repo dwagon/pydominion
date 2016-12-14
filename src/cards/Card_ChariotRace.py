@@ -46,10 +46,10 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.setDeck('Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getCoin(), 1)
         self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertEquals(self.plr.score['Chariot Race'], 1)
+        self.assertEqual(self.plr.score['Chariot Race'], 1)
 
     def test_play_lose(self):
         """ Play a Chariot Race and lose """
@@ -58,10 +58,10 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.setDeck('Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNotNone(self.plr.inHand('Silver'))
-        self.assertEquals(self.plr.score['Chariot Race'], 0)
+        self.assertEqual(self.plr.score['Chariot Race'], 0)
 
 
 ###############################################################################

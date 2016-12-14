@@ -51,22 +51,22 @@ class Test_Spy(unittest.TestCase):
         scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['0']
         self.attacker.playCard(scard)
-        self.assertEquals(self.attacker.deck[-1].name, 'Province')
-        self.assertEquals(self.defender.deck[-1].name, 'Gold')
+        self.assertEqual(self.attacker.deck[-1].name, 'Province')
+        self.assertEqual(self.defender.deck[-1].name, 'Gold')
 
     def test_undefended(self):
         scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['0', '0']
         self.attacker.playCard(scard)
-        self.assertEquals(self.attacker.deck[-1].name, 'Province')
-        self.assertEquals(self.defender.deck[-1].name, 'Gold')
+        self.assertEqual(self.attacker.deck[-1].name, 'Province')
+        self.assertEqual(self.defender.deck[-1].name, 'Gold')
 
     def test_discards(self):
         scard = self.attacker.gainCard('Spy', 'hand')
         self.attacker.test_input = ['1', '1']
         self.attacker.playCard(scard)
-        self.assertEquals(self.attacker.deck[-1].name, 'Estate')
-        self.assertEquals(self.defender.deck[-1].name, 'Estate')
+        self.assertEqual(self.attacker.deck[-1].name, 'Estate')
+        self.assertEqual(self.defender.deck[-1].name, 'Estate')
 
 
 ###############################################################################

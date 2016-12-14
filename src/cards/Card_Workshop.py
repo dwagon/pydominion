@@ -32,14 +32,14 @@ class Test_Workshop(unittest.TestCase):
     def test_gainzero(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.wcard)
-        self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.discardSize(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.wcard)
-        self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.discardSize(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 4)
 
 

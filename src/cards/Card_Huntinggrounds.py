@@ -40,7 +40,7 @@ class Test_Huntinggrounds(unittest.TestCase):
     def test_play(self):
         """ Play a Hunting Ground """
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 5 + 4)
+        self.assertEqual(self.plr.handSize(), 5 + 4)
 
     def test_trash_estate(self):
         """ Trash a hunting ground and gain estates """

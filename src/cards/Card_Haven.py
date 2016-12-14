@@ -53,15 +53,15 @@ class Test_Haven(unittest.TestCase):
         """ Play a haven """
         self.plr.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEquals(self.plr.handSize(), 5)
-        self.assertEquals(self.plr.getActions(), 1)
-        self.assertEquals(self.plr.durationSize(), 2)
+        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.durationSize(), 2)
         self.plr.endTurn()
         self.plr.startTurn()
-        self.assertEquals(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.playedSize(), 1)
         self.assertTrue(self.plr.inHand('Gold'))
-        self.assertEquals(self.plr.handSize(), 6)
-        self.assertEquals(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.getActions(), 1)
 
 
 ###############################################################################

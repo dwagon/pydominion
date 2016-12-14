@@ -46,7 +46,7 @@ class Test_Farmland(unittest.TestCase):
     def test_score(self):
         self.plr.setDeck('Farmland')
         sd = self.plr.getScoreDetails()
-        self.assertEquals(sd['Farmland'], 2)
+        self.assertEqual(sd['Farmland'], 2)
 
 
 ###############################################################################

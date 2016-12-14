@@ -83,17 +83,17 @@ class Test_Thief(unittest.TestCase):
         self.victim.setDeck('Copper', 'Silver', 'Gold')
         self.thief.playCard(self.thiefcard)
         self.assertIn('Player victim is defended', self.thief.messages)
-        self.assertEquals(self.victim.deckSize(), 3)
-        self.assertEquals(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.deckSize(), 3)
+        self.assertEqual(self.victim.discardSize(), 0)
 
     def test_do_nothing(self):
         self.victim.setHand('Copper', 'Copper')
         self.victim.setDeck('Copper', 'Silver', 'Gold')
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.thiefcard)
-        self.assertEquals(self.victim.deckSize(), 1)
-        self.assertEquals(self.victim.discardSize(), 2)
-        self.assertEquals(self.thief.discardSize(), 0)
+        self.assertEqual(self.victim.deckSize(), 1)
+        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.thief.discardSize(), 0)
 
     def test_trash_treasure(self):
         self.victim.setHand('Copper', 'Copper')
@@ -101,10 +101,10 @@ class Test_Thief(unittest.TestCase):
         self.thief.test_input = ['trash gold']
         self.thief.playCard(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
-        self.assertEquals(self.g.trashpile[0].name, 'Gold')
+        self.assertEqual(self.g.trashpile[0].name, 'Gold')
         for c in self.victim.deck:
-            self.assertNotEquals(c.name, 'Gold')
-        self.assertEquals(self.victim.discardpile[0].name, 'Silver')
+            self.assertNotEqual(c.name, 'Gold')
+        self.assertEqual(self.victim.discardpile[0].name, 'Silver')
 
     def test_steal_treasure(self):
         self.victim.setHand('Copper', 'Copper')
@@ -113,7 +113,7 @@ class Test_Thief(unittest.TestCase):
         self.thief.playCard(self.thiefcard)
         self.assertTrue(self.g.trashpile.isEmpty())
         for c in self.victim.deck:
-            self.assertNotEquals(c.name, 'Gold')
+            self.assertNotEqual(c.name, 'Gold')
         for c in self.thief.discardpile:
             if c.name == 'Gold':
                 break
