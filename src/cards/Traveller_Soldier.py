@@ -29,6 +29,10 @@ class Card_Soldier(Card):
                 count += 1
         player.addCoin(count)
         player.output("Gained %d extra coins" % count)
+        for plr in player.attackVictims():
+            if plr.handSize() >= 4:
+                plr.output("%s's Soldier: Discard a card" % player.name)
+                plr.plrDiscardCards(force=True)
 
     def hook_discardThisCard(self, game, player, source):
         """ Replace with Hero """
@@ -36,27 +40,42 @@ class Card_Soldier(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return player.pick_to_discard(1)
+
+
+###############################################################################
 class Test_Soldier(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peasant', 'Militia'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Peasant', 'Militia'])
         self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.plr, self.vic = self.g.playerList()
         self.card = self.g['Soldier'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_soldier(self):
         """ Play a soldier with no extra attacks """
+        self.vic.setHand('Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_soldier_more(self):
         """ Play a soldier with no extra attacks """
+        self.vic.setHand('Copper')
         mil = self.g['Militia'].remove()
         self.plr.addCard(mil, 'played')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
 
+    def test_soldier_attack(self):
+        """ Play a soldier with more than 4 cards"""
+        self.vic.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Duchy')
+        self.vic.test_input = ['Gold']
+        self.plr.playCard(self.card)
+        self.assertIsNotNone(self.vic.inDiscard('Gold'))
+        self.assertIsNone(self.vic.inHand('Gold'))
+        self.assertEqual(self.vic.handSize(), 4)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
