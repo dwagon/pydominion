@@ -9,7 +9,7 @@ class Card_Hoard(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.desc = "+2 coin; Gain gold if buy victory"
+        self.desc = "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
         self.name = 'Hoard'
         self.playable = False
         self.coin = 2
