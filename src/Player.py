@@ -431,7 +431,7 @@ class Player(object):
 
         index = 4
         for s in spendable:
-            tp = '%d coin %s' % (self.hook_spendValue(s), s.get_cardtype_repr())
+            tp = '%d coin; %s' % (self.hook_spendValue(s), s.get_cardtype_repr())
             o = Option(selector=str(index), name=s.name, details=tp, verb='Spend', card=s, action='spend', desc=s.description(self))
             options.append(o)
             index += 1
