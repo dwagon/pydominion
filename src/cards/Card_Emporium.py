@@ -22,6 +22,7 @@ class Card_Emporium(Card):
         count = sum([1 for c in player.played if c.isAction()])
         if count >= 5:
             player.addScore('Emporium', 2)
+            player.output("Gained 2VP from Emporium")
 
 
 ###############################################################################
