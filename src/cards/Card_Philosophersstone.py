@@ -10,7 +10,7 @@ class Card_Philosophersstone(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'alchemy'
-        self.desc = "Gain +1 coin for every 5 cards in deck + discard"
+        self.desc = "When you play this, count your deck and discard pile. Worth 1 Coin per 5 cards total between them (rounded down)"
         self.name = "Philosopher's Stone"
         self.cost = 3
         self.required_cards = ['Potion']
