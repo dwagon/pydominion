@@ -10,11 +10,16 @@ class Card_Stonemason(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = """Trash a card from your hand. Gain 2 cards each costing less than it.
-        When you buy this, you may overpay for it. If you do, gain 2 Actions each costing the amount you overpaid."""
         self.name = 'Stonemason'
         self.overpay = True
         self.cost = 2
+
+    def desc(self, player):
+        if player.phase == 'buy':
+            return """Trash a card from your hand. Gain 2 cards each costing less than it.
+        When you buy this, you may overpay for it. If you do, gain 2 Actions each costing the amount you overpaid."""
+        else:
+            return "Trash a card from your hand. Gain 2 cards each costing less than it."
 
     def special(self, game, player):
         tc = player.plrTrashCard(printcost=True, prompt="Trash a card from your hand. Gain 2 cards each costing less than it.")
