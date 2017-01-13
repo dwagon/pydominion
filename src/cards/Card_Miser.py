@@ -24,7 +24,7 @@ class Card_Miser(Card):
             deposit = player.plrChooseOptions(
                 "Which to do?",
                 ("Put a copper onto tavern mat?", True),
-                ("Add %d coins" % coins, False))
+                ("%d coins from mat" % coins, False))
             if deposit:
                 cu = player.inHand('Copper')
                 player.addCard(cu, 'reserve')
