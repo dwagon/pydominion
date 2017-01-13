@@ -66,7 +66,7 @@ class Test_Miser(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate')
         self.plr.setReserve('Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['add']
+        self.plr.test_input = ['coins from mat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.reserveSize(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
