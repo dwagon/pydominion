@@ -63,16 +63,16 @@ class KnightCard(Card):
         cards = []
         for i in range(2):
             c = victim.nextCard()
-            if not c.potcost and 3 <= c.cost and c.cost <= 6:
+            if c.cost in (3, 4, 5, 6):
                 cards.append(c)
             else:
                 victim.output("%s's %s discarded your %s" % (player.name, self.name, c.name))
                 victim.discardCard(c)
-        player.output("Looking at %s" % ", ".join([x.name for x in cards]))
         if not cards:
             return
+        player.output("Looking at %s" % ", ".join([x.name for x in cards]))
 
-        trash = victim.plrTrashCard(cardsrc=cards, force=True, prompt="%s's %s trashes one of your cards" % (player, self.name))
+        trash = victim.plrTrashCard(cardsrc=cards, force=True, prompt="%s's %s trashes one of your cards" % (player.name, self.name))
         to_trash = trash[0]
         player.output("%s trashed a %s" % (victim.name, to_trash.name))
 
@@ -90,16 +90,27 @@ class KnightCard(Card):
 class Test_Knight(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr, self.vic = self.g.playerList()
+        self.card = None
         self.card = self.g['Knight'].remove()
         self.plr.setHand('Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
 
-    def test_playcard(self):
-        """ Play a knight """
-        pass
+    def test_playcard_nosuitable(self):
+        """ Play a knight woth no suitable cards"""
+        self.vic.setDeck('Copper', 'Copper')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.vic.discardSize(), 2)
+
+    def test_playcard_one_suitable(self):
+        """ Play a knight with one suitable card """
+        self.vic.setDeck('Copper', 'Duchy')
+        self.vic.test_input = ['Duchy']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.vic.discardSize(), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
