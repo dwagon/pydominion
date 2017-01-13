@@ -10,7 +10,7 @@ class Card_Crossroads(Card):
         Card.__init__(self)
         self.cardtype = ['action']
         self.base = 'hinterlands'
-        self.desc = "+1 card per victory card in hand, +3 actions first time"
+        self.desc = "Reveal your hand. +1 Card per Victory card revealed. If this is the first time you played a Crossroads this turn, +3 Actions."
         self.name = 'Crossroads'
         self.cost = 2
 
