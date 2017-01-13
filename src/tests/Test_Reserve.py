@@ -106,7 +106,7 @@ class Test_reserveSelection(unittest.TestCase):
         self.assertEquals(len(output), 1)
         self.assertEquals(output[0]['action'], 'reserve')
         self.assertEquals(output[0]['card'], gold)
-        self.assertEquals(output[0]['selector'], 'b')
+        self.assertEquals(output[0]['selector'], 'c')
         self.assertEquals(index, 2)
 
     def test_not_callable(self):
