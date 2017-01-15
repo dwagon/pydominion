@@ -9,7 +9,7 @@ class Card_Lookout(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "Look at the top 3 cards of your deck. Trash 1, Discard 1, Deck 1"
+        self.desc = "+1 Action; Look at the top 3 cards of your deck. Trash one of them. Discard one of them. Put the ther one on top of your deck"
         self.name = 'Lookout'
         self.actions = 1
         self.cost = 3
