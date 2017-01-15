@@ -9,8 +9,7 @@ class Card_Swamphag(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'duration']
         self.base = 'adventure'
-        self.desc = """Until your next turn, when any other player buys a card, he gains a Curse.
-        At the start of your next turn: +3 Coin"""
+        self.desc = "Until your next turn, when any other player buys a card, he gains a Curse. At the start of your next turn: +3 Coin"
         self.required_cards = ['Curse']
         self.name = 'Swamp Hag'
         self.cost = 5
