@@ -44,12 +44,22 @@ class Test_Aqueduct(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList()[0]
 
-    def test_gain(self):
+    def test_gain_silver(self):
         """ Use Aqueduct gaining Silver"""
         self.plr.addBuys(2)
         self.plr.buyCard(self.g["Silver"])
         self.assertEqual(self.g.landmarks['Aqueduct']._vp, 1)
         self.assertEqual(self.g.landmarks['Aqueduct']._silvervp, 7)
+        self.plr.buyCard(self.g["Duchy"])
+        self.assertEqual(self.plr.getScoreDetails()['Aqueduct'], 1)
+
+    def test_gain_gold(self):
+        """ Use Aqueduct gaining Gold"""
+        self.plr.addBuys(2)
+        self.plr.buyCard(self.g["Gold"])
+        self.assertEqual(self.g.landmarks['Aqueduct']._vp, 1)
+        self.assertEqual(self.g.landmarks['Aqueduct']._goldvp, 7)
+        self.assertEqual(self.g.landmarks['Aqueduct']._silvervp, 8)
         self.plr.buyCard(self.g["Duchy"])
         self.assertEqual(self.plr.getScoreDetails()['Aqueduct'], 1)
 
