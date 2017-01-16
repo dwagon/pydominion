@@ -10,7 +10,9 @@ class Card_Library(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "Draw up to 7 cards"
+        self.desc = """Draw until you have 7 cards in hand. You may set aside
+            any Action cards drawn this way, as you draw them; discard the set
+            aside cards after you finish drawing"""
         self.name = 'Library'
         self.cost = 5
 
