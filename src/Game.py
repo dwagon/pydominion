@@ -404,7 +404,7 @@ class Game(object):
             print("%s's messages: %s" % (p.name, p.messages))
             print("%s's score: %s" % (p.name, p.score))
             print("%s's tokens: %s" % (p.name, p.tokens))
-            print("%s's turn: coin=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.actions, p.buys, p.specialcoins, p.potions))
+            print("%s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.specialcoins, p.potions))
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
         print("%s" % ", ".join(cpls))
 
