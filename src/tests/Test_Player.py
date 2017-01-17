@@ -694,10 +694,12 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.coin = 5
         self.plr.specialcoins = 1
         self.plr.phase = 'buy'
+        self.plr.debt = 2
         opts, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=3', prompt)
         self.assertIn('Coins=5', prompt)
         self.assertIn('Buys=7', prompt)
+        self.assertIn('Debt=2', prompt)
         self.assertIn('Potion', prompt)
         self.assertIn('Special Coins=1', prompt)
 
