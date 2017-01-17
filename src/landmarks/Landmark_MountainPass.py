@@ -66,14 +66,24 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_MountainPass(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Mountain Pass'])
+        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Mountain Pass'])
         self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.plr, self.other = self.g.playerList()
+        self.mp = self.g.landmarks['Mountain Pass']
 
     def test_play(self):
         """ Test Mountain Pass"""
-        # TODO
-        pass
+        self.assertEqual(self.mp._state, 'un')
+        self.plr.gainCard('Province')
+        self.assertEqual(self.mp._state, 'do')
+        self.other.test_input = ['24']
+        self.plr.test_input = ['25']
+        self.plr.endTurn()
+        self.assertEqual(self.plr.debt, 25)
+        self.assertEqual(self.other.debt, 0)
+        self.assertEqual(self.plr.getScoreDetails()['Mountain Pass'], 8)
+        self.assertNotIn('Mountain Pass', self.other.getScoreDetails())
+        self.assertEqual(self.mp._state, 'done')
 
 
 ###############################################################################
