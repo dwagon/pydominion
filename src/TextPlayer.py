@@ -23,6 +23,10 @@ class TextPlayer(Player):
     def output(self, msg, end='\n'):
         if not self.quiet:
             sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
+            try:
+                sys.stdout.write("%s: " % (self.currcards[0].name))
+            except IndexError:
+                pass
             sys.stdout.write("%s%s" % (msg, end))
         self.messages.append(msg)
 
@@ -69,7 +73,12 @@ class TextPlayer(Player):
             output.append(o['notes'])
 
         first = len(" ".join(output))
-        strout = self.wrap(o['desc'], first=first, indent=len(self.name)+4)
+        indent = len(self.name) + 4
+        try:
+            indent += len(self.currcards[0].name)
+        except IndexError:
+            pass
+        strout = self.wrap(o['desc'], first=first, indent=indent)
         output.append(strout)
         return " ".join(output)
 
