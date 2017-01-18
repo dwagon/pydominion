@@ -775,7 +775,9 @@ class Player(object):
     ###########################################################################
     def hook_discardThisCard(self, card, source=None):
         """ A card has been discarded """
+        self.currcards.append(card)
         card.hook_discardThisCard(game=self.game, player=self, source=source)
+        self.currcards.pop()
 
     ###########################################################################
     def hook_spendValue(self, card, actual=False):
