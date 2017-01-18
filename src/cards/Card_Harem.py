@@ -10,11 +10,16 @@ class Card_Harem(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'victory']
         self.base = 'intrigue'
-        self.desc = "+2 coin; 2 VPs"
         self.name = 'Harem'
         self.coin = 2
         self.victory = 2
         self.cost = 6
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return "+2 coin; 2 VPs"
+        else:
+            return "+2 coin"
 
 
 ###############################################################################
