@@ -95,6 +95,11 @@ class Test_Knight(unittest.TestCase):
         self.plr, self.vic = self.g.playerList()
         self.card = None
         self.card = self.g['Knight'].remove()
+
+        # Makes testing harder due to card actions
+        while self.card.name in ('Dame Anna', 'Dame Natalie', 'Sir Michael'):
+            self.card = self.g['Knight'].remove()
+
         self.plr.setHand('Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
 

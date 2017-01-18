@@ -21,6 +21,7 @@ class Card_Shantytown(Card):
             if c.isAction():
                 break
         else:
+            player.output("No actions - picking up 2 cards")
             player.pickupCards(2)
 
 

@@ -32,14 +32,15 @@ class Card_Inn(Card):
         for card in player.discardpile[:]:
             if card.isAction():
                 cards.append(card)
-        if not cards:
-            player.output("No suitable cards in discardpile")
-            return {}
+        cards.append(self)
         back = player.cardSel(anynum=True, prompt="Select cards to shuffle back into your deck", cardsrc=cards)
         for card in back:
-            player.discardpile.remove(card)
-            player.addCard(card, 'deck')
-            player.deck.shuffle()
+            if card.name == 'Inn':
+                return {'destination': 'deck', 'shuffle': True}
+            else:
+                player.discardpile.remove(card)
+                player.addCard(card, 'deck')
+                player.deck.shuffle()
         return {}
 
 
@@ -66,6 +67,12 @@ class Test_Inn(unittest.TestCase):
         self.plr.test_input = ['Moat', 'finish']
         self.plr.gainCard('Inn')
         self.assertIsNotNone(self.plr.inDeck('Moat'))
+
+    def test_gain_self(self):
+        self.plr.setDiscard()
+        self.plr.test_input = ['Inn', 'finish']
+        self.plr.gainCard('Inn')
+        self.assertIsNotNone(self.plr.inDeck('Inn'))
 
 
 ###############################################################################

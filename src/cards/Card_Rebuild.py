@@ -53,7 +53,7 @@ class Card_Rebuild(Card):
 class Test_Rebuild(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'], badcards=['Duchess'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
         self.card = self.g['Rebuild'].remove()

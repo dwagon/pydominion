@@ -898,6 +898,8 @@ class Player(object):
             self.trashCard(newcard)
             return newcard
         self.addCard(newcard, destination)
+        if 'shuffle' in options and options['shuffle']:
+            self.deck.shuffle()
         return newcard
 
     ###########################################################################
