@@ -15,6 +15,7 @@ class Player(object):
     def __init__(self, game, name):
         self.game = game
         self.name = name
+        self.currcards = []
         game.output("Player %s is at the table" % name)
         self.score = {}
         self.specialcoins = 0
@@ -153,8 +154,10 @@ class Player(object):
             if not card:
                 return None
         assert(isinstance(card, Card))
-        card.hook_callReserve(game=self.game, player=self)
         self.output("Calling %s from Reserve" % card.name)
+        self.currcards.append(card)
+        card.hook_callReserve(game=self.game, player=self)
+        self.currcards.pop()
         self.reserve.remove(card)
         self.addCard(card, 'played')
         return card
@@ -798,12 +801,14 @@ class Player(object):
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
         # assert(isinstance(card, (Card, CardPile)))
+        self.output("Playing %s" % card.name)
+        self.currcards.append(card)
         if card.isAction() and costAction:
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
             self.actions = 0
+            self.currcards.pop()
             return
-        self.output("Played %s" % card.name)
         tkns = self.which_token(card.name)
         if '+1 Action' in tkns:
             self.output("Gaining action from +1 Action token")
@@ -847,6 +852,7 @@ class Player(object):
         except KeyboardInterrupt:   # pragma: no cover
             sys.stderr.write("\nFailed: %s\n" % self.messages)
             sys.exit(1)
+        self.currcards.pop()
 
     ###########################################################################
     def cardCost(self, card):
@@ -951,7 +957,9 @@ class Player(object):
         assert(isinstance(card, Card))
         options = {}
         for c in self.hand + self.played + self.reserve + self.game.landmarks:
+            self.currcards.append(c)
             o = c.hook_gainCard(game=self.game, player=self, card=card)
+            self.currcards.pop()
             if o:
                 options.update(o)
         return options
@@ -1033,7 +1041,9 @@ class Player(object):
         self.debt += event.debtcost
         self.buys += event.buys
         self.output("Using event %s" % event.name)
+        self.currcards.append(event)
         event.special(game=self.game, player=self)
+        self.currcards.pop()
         self.played_events.add(event)
         return True
 
