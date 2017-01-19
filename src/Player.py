@@ -765,7 +765,9 @@ class Player(object):
             self.cleanupPhase()
         self.newhandsize = 5
         for card in self.played + self.reserve + self.played_events + self.game.landmarks:
+            self.currcards.append(card)
             card.hook_endTurn(game=self.game, player=self)
+            self.currcards.pop()
         self.played_events = PlayArea([])
         self.messages = []
         self.forbidden_to_buy = []
