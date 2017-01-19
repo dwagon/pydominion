@@ -12,7 +12,7 @@ class Card_Transmogrify(Card):
         self.base = 'adventure'
         self.desc = """+1 Action; At the start of your turn, you may call this,
         to trash a card from your hand, gain a card costing up to 1 coin more
-        than it, and put that card intro your hand"""
+        than it, and put that card into your hand"""
         self.name = 'Transmogrify'
         self.actions = 1
         self.when = 'start'
