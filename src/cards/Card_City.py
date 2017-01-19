@@ -10,7 +10,8 @@ class Card_City(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 card, +2 action, more if stacks empty"
+        self.desc = """+1 card, +2 action; If there are one or more empty Supply
+            piles, +1 card. If there are two or more, +1 coin, +1 buy """
         self.name = 'City'
         self.cost = 5
         self.cards = 1
@@ -18,8 +19,6 @@ class Card_City(Card):
 
     ###########################################################################
     def special(self, game, player):
-        """ If there are one or more empty Supply piles, +1 card.
-        If there are two or more, +1 coin, +1 buy """
         empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
         if empties >= 1:
             player.pickupCard()
