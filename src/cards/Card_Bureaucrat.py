@@ -9,15 +9,14 @@ class Card_Bureaucrat(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'dominion'
-        self.desc = "Gain a silver"
+        self.desc = """ Gain a Silver; put it on top of your deck. Each
+        other player reveals a victory card from his hand and puts
+        it on his deck (or reveals a hand with no victory cards)
+        """
         self.name = 'Bureaucrat'
         self.cost = 4
 
     def special(self, game, player):
-        """ Gain a silver card and put it on top of your deck. Each
-        other player reveals a victory card from his hand and puts
-        it on his deck (or reveals a hand with no victory cards)
-        """
         player.gainCard('Silver', 'topdeck')
         player.output("Added silver to deck")
 
