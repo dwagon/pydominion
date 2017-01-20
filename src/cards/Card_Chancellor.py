@@ -10,13 +10,12 @@ class Card_Chancellor(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+2 coin, Discard deck"
+        self.desc = "+2 Coin; You may immediately put your deck into your discard pile."
         self.name = 'Chancellor'
         self.coin = 2
         self.cost = 3
 
     def special(self, game, player):
-        """ You may immediately put your deck into your discard pile """
         ans = player.plrChooseOptions("Discard deck?", ("Don't Discard", False), ("Discard Deck", True))
         if ans:
             for c in player.deck[:]:
