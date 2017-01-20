@@ -10,13 +10,12 @@ class Card_Cellar(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
-        self.desc = "+1 action, Discard and redraw cards"
+        self.desc = "+1 Action; Discard any number of cards. +1 card per card discarded."
         self.name = 'Cellar'
         self.actions = 1
         self.cost = 2
 
     def special(self, game, player):
-        """ Discard any number of cards, +1 card per card discarded """
         todiscard = player.plrDiscardCards(0, anynum=True, prompt="Discard any number of cards and gain one per card discarded")
         player.pickupCards(len(todiscard))
 
