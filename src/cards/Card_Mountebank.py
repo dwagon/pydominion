@@ -9,15 +9,13 @@ class Card_Mountebank(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'prosperity'
-        self.desc = "+2 coin. Others discard curse or gain curse + copper"
+        self.desc = "+2 coin. Each other player may discard a Curse. If he doesn't, he gains a Curse and a Copper."
         self.name = 'Mountebank'
         self.required_cards = ['Curse']
         self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
-        """ Each other player may discard a Curse. If he doesnt,
-            he gains a Curse and a Copper """
         for plr in player.attackVictims():
             for c in plr.hand:
                 if c.name == 'Curse':
