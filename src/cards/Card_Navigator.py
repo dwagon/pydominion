@@ -10,15 +10,12 @@ class Card_Navigator(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "+2 coin. Discard top 5 cards, or put them back on deck"
+        self.desc = "+2 coin. Look at the top 5 cards of your deck. Either discard all of them, or put them back on top of your deck in any order"
         self.name = 'Navigator'
         self.coin = 2
         self.cost = 4
 
     def special(self, game, player):
-        """ Look at the top 5 cards of your deck. Either discard
-            all of them, or put them back on top of your deck in any
-            order """
         cards = []
         for i in range(5):
             cards.append(player.nextCard())
