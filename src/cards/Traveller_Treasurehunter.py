@@ -10,7 +10,7 @@ class Card_Treasurehunter(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
         self.base = 'adventure'
-        self.desc = "+1 Action, +1 Coin; Gain Silvers. Discard to replace with Warrior"
+        self.desc = "+1 Action, +1 Coin; Gain a Silver per card the player to your right gained in his last turn. Discard to replace with Warrior"
         self.name = 'Treasure Hunter'
         self.purchasable = False
         self.actions = 1
