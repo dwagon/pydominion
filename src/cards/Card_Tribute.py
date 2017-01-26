@@ -10,15 +10,14 @@ class Card_Tribute(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "Player to left discards 2 cards from deck; you get goodies"
+        self.desc = """ The player to your left reveals then discards the top
+            2 cards of his deck. For each differently named card revealed,
+            if is an Action card, +2 actions; treasure card, +2 coin;
+            victory card, +2 cards """
         self.name = 'Tribute'
         self.cost = 5
 
     def special(self, game, player):
-        """ The player to your left reveals then discards the top
-            2 cards of his deck. For each differently named card revealed,
-            if is an Action card, +2 actions; treasure card, +2 coin;
-            victory card, +2 cards """
         victim = game.playerToLeft(player)
         cards = [victim.nextCard(), victim.nextCard()]
         cardname = None
