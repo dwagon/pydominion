@@ -20,8 +20,11 @@ class Card_Outpost(Card):
         player.newhandsize = 3
 
     def hook_endTurn(self, game, player):
-        game.currentPlayer = game.playerToRight(player)
-        player.output("Having a second turn due to Output")
+        if player.newhandsize == 3:
+            player.output("Having a second turn due to Output")
+            game.currentPlayer = game.playerToRight(player)
+        else:
+            player.output("Already had one extra turn")
 
 
 ###############################################################################
