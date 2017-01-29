@@ -613,6 +613,8 @@ class Player(object):
 
     ###########################################################################
     def cleanupPhase(self):
+        # Save the cards we had so that the hook_endTurn has something to apply against
+        self.hadcards = [card for card in self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile]
         self.phase = 'cleanup'
         for card in self.played + self.reserve:
             card.hook_cleanup(self.game, self)
@@ -746,7 +748,9 @@ class Player(object):
         self.stats = {'gained': [], 'bought': []}
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
+            self.currcards.append(card)
             card.duration(game=self.game, player=self)
+            self.currcards.pop()
             if not card.permanent:
                 self.addCard(card, 'played')
                 self.durationpile.remove(card)
@@ -763,16 +767,17 @@ class Player(object):
     def endTurn(self):
         if not self.cleaned:
             self.cleanupPhase()
-        self.newhandsize = 5
-        for card in self.played + self.reserve + self.played_events + self.game.landmarks:
+        for card in self.hadcards:
             self.currcards.append(card)
             card.hook_endTurn(game=self.game, player=self)
             self.currcards.pop()
+        self.newhandsize = 5
         self.played_events = PlayArea([])
         self.messages = []
         self.forbidden_to_buy = []
         self.once = {}
         self.phase = None
+        self.hadcards = []
 
     ###########################################################################
     def hook_discardThisCard(self, card, source=None):
