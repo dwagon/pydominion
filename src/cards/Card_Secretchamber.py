@@ -10,7 +10,10 @@ class Card_Secretchamber(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
         self.base = 'intrigue'
-        self.desc = "Discard any number of cards; +1 coin per card discarded"
+        self.desc = """Discard any number of cards; +1 coin per card discarded
+            When another player plays an Attack card, you may reveal
+            this from you hand. If you do +2 cards, then put 2 cards
+            from your hand on top of your deck """
         self.name = 'Secret Chamber'
         self.cost = 2
 
@@ -20,9 +23,6 @@ class Card_Secretchamber(Card):
         player.addCoin(len(todiscard))
 
     def hook_underAttack(self, player, game, attacker):
-        """ When another player plays an Attack card, you may reveal
-            this from you hand. If you do +2 cards, then put 2 cards
-            from your hand on top of your deck """
         player.output("Under attack from %s" % attacker.name)
         if not self.revealCard(player):
             return
@@ -37,8 +37,8 @@ class Card_Secretchamber(Card):
 
     def revealCard(self, player):
         options = [
-            {'selector': '0', 'print': "Don't reveal", 'reveal': False},
-            {'selector': '1', 'print': 'Reveal', 'reveal': True}
+            {'selector': '0', 'print': "Do nothing", 'reveal': False},
+            {'selector': '1', 'print': 'Reveal for +2 cards then put 2 cards from you hand on top of your deck', 'reveal': True}
         ]
         o = player.userInput(options, "Reveal Secret Chamber?")
         return o['reveal']
@@ -48,9 +48,9 @@ class Card_Secretchamber(Card):
 class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber', 'Militia'])
         self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.plr, self.att = self.g.playerList()
         self.card = self.g['Secret Chamber'].remove()
 
     def test_play_none(self):
@@ -71,10 +71,32 @@ class Test_Secretchamber(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_underattack(self):
-        """ Secret chamber is under attack """
-        # TODO
-        pass
+        """ Secret chamber is under attack - use it """
+        mil = self.g['Militia'].remove()
+        self.plr.setDeck('Duchy', 'Province')
+        self.att.addCard(mil, 'hand')
+        self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
+        self.plr.test_input = ['Reveal', 'Silver', 'Gold', 'Finish']
+        self.att.playCard(mil)
+        self.assertIsNotNone(self.plr.inHand('Province'))
+        self.assertIsNotNone(self.plr.inHand('Duchy'))
+        self.assertIsNone(self.plr.inDeck('Province'))
+        self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNone(self.plr.inHand('Silver'))
 
+    def test_underattack_pass(self):
+        """ Secret chamber is under attack - use it """
+        mil = self.g['Militia'].remove()
+        self.plr.setDeck('Duchy', 'Province')
+        self.att.addCard(mil, 'hand')
+        self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
+        self.plr.test_input = ['nothing']
+        self.att.playCard(mil)
+        self.assertIsNotNone(self.plr.inDeck('Province'))
+        self.assertIsNotNone(self.plr.inDeck('Duchy'))
+        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.inHand('Silver'))
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
