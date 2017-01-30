@@ -10,16 +10,15 @@ class Card_Giant(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'adventure'
-        self.desc = "Flip Journey Token; +1 Coin / +5 Coin - trashes other players"
+        self.desc = """ Turn your Journey token over (it starts face up). If it's face
+            down, +1 Coin. If it's face up, +5 Coin, and each other player
+            reveals the top card of his deck, trashes it if it costs
+            from 3 to 6, and otherwise discards it and gains a Curse """
         self.name = 'Giant'
         self.required_cards = ['Curse']
         self.cost = 5
 
     def special(self, game, player):
-        """ Turn your Journey token over (it starts face up). If it's face
-            down, +1 Coin. If it's face up, +5 Coin, and each other player
-            reveals the top card of his deck, trashes it if it costs
-            from 3 to 6, and otherwise discards it and gains a Curse """
         if player.flip_journey_token():
             player.addCoin(5)
             for victim in player.attackVictims():
