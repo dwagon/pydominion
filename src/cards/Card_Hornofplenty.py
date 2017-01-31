@@ -29,7 +29,7 @@ class Card_Hornofplenty(Card):
 class Test_Hornofplenty(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horn of Plenty', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horn of Plenty', 'Moat'], badcards=['Duchess'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Horn of Plenty'].remove()
