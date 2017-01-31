@@ -29,6 +29,11 @@ class Card_HauntedCastle(CastleCard):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return player.pick_to_discard(2)
+
+
+###############################################################################
 class Test_HauntedCastle(unittest.TestCase):
     def setUp(self):
         import Game
