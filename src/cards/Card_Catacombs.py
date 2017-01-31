@@ -10,13 +10,12 @@ class Card_Catacombs(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = "Look at top 3 cards and put them in hand or discard for +3 cards"
+        self.desc = """Look at the top 3 cards of your deck. Choose one: Put them
+            into your hand; or discard them and +3 cards. When you trash this, gain a cheaper card."""
         self.name = 'Catacombs'
         self.cost = 5
 
     def special(self, game, player):
-        """ Look at the top 3 cards of your deck. Choose one: Put them
-            into your hand; or discard them and +3 cards """
         cards = []
         for i in range(3):
             cards.append(player.nextCard())
