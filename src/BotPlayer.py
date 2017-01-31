@@ -46,7 +46,7 @@ class BotPlayer(Player):
                 if o['action'] == 'spendall':
                     opts['spendall'] = o
             return opts
-        except KeyError as exc:
+        except KeyError as exc:     # pragma: no cover
             print("Options=%s" % options)
             print("Exception: %s" % str(exc))
             raise
