@@ -10,7 +10,7 @@ class Card_Duke(Card):
         Card.__init__(self)
         self.cardtype = 'victory'
         self.base = 'intrigue'
-        self.desc = "Worth 1 per duchy"
+        self.desc = "Worth 1 VP per duchy"
         self.name = 'Duke'
         self.playable = False
         self.cost = 5
