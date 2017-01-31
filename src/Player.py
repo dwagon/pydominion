@@ -746,6 +746,8 @@ class Player(object):
         self.cleaned = False
         self.is_start = True
         self.stats = {'gained': [], 'bought': []}
+        if self.durationpile:
+            self.displayOverview()
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             self.currcards.append(card)
