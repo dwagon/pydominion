@@ -30,7 +30,7 @@ class Landmark_Aqueduct(Landmark):
                 self._silvervp -= 1
                 self._vp += 1
                 player.output("%d VP left on Silver; %d VP on Aqueduct" % (self._silvervp, self._vp))
-        if card.isVictory():
+        if self._vp and card.isVictory():
             player.output("Gained %d VP from Aqueduct" % self._vp)
             player.addScore('Aqueduct', self._vp)
             self._vp = 0
