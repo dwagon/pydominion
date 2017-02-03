@@ -23,6 +23,9 @@ class Application(tk.Frame):
         self.quitButton.pack()
 
     def createCardStacks(self):
+        self.bigcard = tk.Button(self)
+        self.bigcard.pack(side="left")
+        self.bigcard["text"] = "Hi there"
         self.basecardframe = tk.Frame(self)
         self.kdomcardframe = tk.Frame(self)
         cardpiles = domget('/deck/list')
@@ -30,28 +33,39 @@ class Application(tk.Frame):
         for card in cardpiles:
             carddetails = domget('/card/%s' % card)
             if carddetails['basecard']:
-                self.cardpiles[card] = CardStack(card, carddetails, self.basecardframe)
+                self.cardpiles[card] = CardStack(card, carddetails, self.basecardframe, self.bigcard)
             else:
-                self.cardpiles[card] = CardStack(card, carddetails, self.kdomcardframe)
+                self.cardpiles[card] = CardStack(card, carddetails, self.kdomcardframe, self.bigcard)
         self.basecardframe.pack(side="top")
         self.kdomcardframe.pack(side="top")
 
 
 ##############################################################################
 class CardStack(tk.Frame):
-    def __init__(self, card, details={}, master=None):
+    def __init__(self, card, details={}, master=None, bigcard=None):
         super().__init__(master)
+        self.card = card
+        self.details = details
+        self.bigcard = bigcard
         self.button = tk.Button(master)
         self.button["text"] = card
         if details['image']:
-            image = Image.open(details['image'])
-            # Most imges are 296, 473
-            image = image.resize((148, 236), Image.ANTIALIAS)
+            # Most images are 296, 473
+            img = Image.open(details['image'])
+            bigimage = img.resize((296, 473), Image.ANTIALIAS)
+            self.bigimage = ImageTk.PhotoImage(bigimage)
+            image = img.resize((74, 118), Image.ANTIALIAS)
             self.button._img = ImageTk.PhotoImage(image)
             self.button["image"] = self.button._img
-            # self.button.bind("<Enter>", self.on_enter)
-            # self.button.bind("<Leave>", self.on_leave)
+            self.button.bind("<Enter>", self.on_enter)
+            self.button.bind("<Leave>", self.on_leave)
         self.button.pack(side=tk.LEFT)
+
+    def on_enter(self, event):
+        self.bigcard.configure(image=self.bigimage)
+
+    def on_leave(self, event):
+        pass
 
 
 ##############################################################################
