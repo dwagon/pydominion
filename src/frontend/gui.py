@@ -22,10 +22,16 @@ class Application(tk.Frame):
         self.quitButton = tk.Button(self, text='Quit', command=self.quit)
         self.quitButton.pack()
 
-    def createCardStacks(self):
+    def createBigcard(self):
         self.bigcard = tk.Button(self)
+        img = Image.open('images/_card_back.jpg')
+        img = img.resize((296, 473), Image.ANTIALIAS)
+        self.bigcard._img = ImageTk.PhotoImage(img)
+        self.bigcard["image"] = self.bigcard._img
         self.bigcard.pack(side="left")
-        self.bigcard["text"] = "Hi there"
+
+    def createCardStacks(self):
+        self.createBigcard()
         self.basecardframe = tk.Frame(self)
         self.kdomcardframe = tk.Frame(self)
         cardpiles = domget('/deck/list')
