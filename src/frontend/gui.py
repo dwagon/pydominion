@@ -14,36 +14,66 @@ domurl = 'http://localhost:5000'
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        self.cardcache = {}
+        self["borderwidth"] = 3
+        self["relief"] = tk.GROOVE
+        self["bg"] = "blue"
+        self.getPlayers()
         self.pack()
-        self.createWidgets()
-        self.createCardStacks()
+        self.createWidgets(self)
+        self.createBigcard(self)
+        self.createCardStacks(self)
+        self.createActionBar(self)
+        self.createHand(self)
 
-    def createWidgets(self):
-        self.quitButton = tk.Button(self, text='Quit', command=self.quit)
+    def getPlayers(self):
+        self.players = domget('/players/list')
+
+    def getCard(self, cardname):
+        if cardname not in self.cardcache:
+            self.cardcache[cardname] = domget('/card/%s' % cardname)
+        return self.cardcache[cardname]
+
+    def createActionBar(self, master):
+        self.etButton = tk.Button(master, text='End Turn')
+        self.etButton.pack()
+
+    def createWidgets(self, master):
+        self.quitButton = tk.Button(master, text='Quit', command=self.quit)
         self.quitButton.pack()
 
-    def createBigcard(self):
-        self.bigcard = tk.Button(self)
+    def createHand(self, master):
+        self.handframe = tk.Frame(self, bg="orange")
+        hand = domget('/%s/hand' % self.players[0])
+        for card in hand:
+            carddetails = self.getCard(card)
+            self.cardpiles[card] = CardStack(card, carddetails, self.handframe, self.bigcard)
+        self.handframe.pack(side="top")
+
+    def createBigcard(self, master):
+        self.bigcard = tk.Button(master)
         img = Image.open('images/_card_back.jpg')
         img = img.resize((296, 473), Image.ANTIALIAS)
         self.bigcard._img = ImageTk.PhotoImage(img)
         self.bigcard["image"] = self.bigcard._img
         self.bigcard.pack(side="left")
 
-    def createCardStacks(self):
-        self.createBigcard()
-        self.basecardframe = tk.Frame(self)
-        self.kdomcardframe = tk.Frame(self)
+    def createCardStacks(self, frame):
+        self.cardstacks = tk.Frame(frame)
+        self.cardstacks["bg"] = "red"
+        self.basecardframe = tk.Frame(self.cardstacks)
+        self.kdomcardframe = tk.Frame(self.cardstacks)
         cardpiles = domget('/deck/list')
         self.cardpiles = {}
         for card in cardpiles:
-            carddetails = domget('/card/%s' % card)
+            carddetails = self.getCard(card)
             if carddetails['basecard']:
                 self.cardpiles[card] = CardStack(card, carddetails, self.basecardframe, self.bigcard)
             else:
                 self.cardpiles[card] = CardStack(card, carddetails, self.kdomcardframe, self.bigcard)
         self.basecardframe.pack(side="top")
         self.kdomcardframe.pack(side="top")
+        self.cardstacks.pack(side="top")
 
 
 ##############################################################################
