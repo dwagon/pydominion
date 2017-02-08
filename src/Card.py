@@ -1,6 +1,5 @@
 class Card(object):
     def __init__(self):
-        self.image = None
         self.name = "TODO"
         self.base = "TODO"
         self.basecard = False

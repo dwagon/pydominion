@@ -11,6 +11,7 @@ class Card_Farmingvillage(Card):
         self.cardtype = 'action'
         self.desc = """+2 actions. Reveal cards from the top of your deck until you reveal an Action or Treasure card. Put that card into your hand and discard the other cards."""
         self.name = 'Farming Village'
+        self.image = 'farmingvillage.jpg'
         self.actions = 2
         self.cost = 4
 

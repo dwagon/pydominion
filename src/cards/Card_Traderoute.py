@@ -12,6 +12,7 @@ class Card_Traderoute(Card):
         self.base = 'prosperity'
         self.desc = "+1 buy, +1 coin per token, trash card from your hand"
         self.name = 'Trade Route'
+        self.image = 'traderoute.jpg'
         self.cost = 3
         self.buys = 1
 

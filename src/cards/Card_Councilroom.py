@@ -9,6 +9,7 @@ class Card_Councilroom(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'dominion'
+        self.image = 'councilroom.jpg'
         self.desc = "+4 cards, +1 buy. Everyone else +1 card"
         self.name = 'Council Room'
         self.cards = 4

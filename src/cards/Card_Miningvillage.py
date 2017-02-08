@@ -12,6 +12,7 @@ class Card_Miningvillage(Card):
         self.base = 'intrigue'
         self.desc = "+1 card, +2 actions, trash self for +2 coin"
         self.name = 'Mining Village'
+        self.image = 'miningvillage.jpg'
         self.cards = 1
         self.actions = 2
         self.cost = 4
