@@ -1,1 +1,4 @@
 colorama
+Pillow
+requests
+flask

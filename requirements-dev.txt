@@ -4,3 +4,6 @@ pytest-xdist
 python-coveralls
 colorama
 py-cpuinfo
+Pillow
+requests
+flask
