@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 try:
     import tkinter as tk
 except ImportError:
@@ -8,6 +9,10 @@ from PIL import Image, ImageTk
 import requests
 
 domurl = 'http://localhost:5000'
+try:
+    plrnum = int(sys.argv[1])
+except:
+    plrnum = 0
 
 
 ##############################################################################
@@ -18,16 +23,34 @@ class Application(tk.Frame):
         self["borderwidth"] = 3
         self["relief"] = tk.GROOVE
         self["bg"] = "blue"
-        self.getPlayers()
         self.pack()
+        self.getPlayers()
         self.createWidgets(self)
         self.createBigcard(self)
         self.createCardStacks(self)
         self.createActionBar(self)
         self.createHand(self)
+        self.createMessages(self)
+        self.update_message()
+        self.get_inputs()
+
+    def get_inputs(self):
+        inp = domget('/player/%s/inputs' % self.players[plrnum])
+        print("inp=%s" % inp)
+        self.after(500, self.get_inputs)
+
+    def update_message(self):
+        msg = domget('/player/%s/messages' % self.players[plrnum])
+        self.messagebox.insert(tk.END, msg)
+        self.after(500, self.update_message)
+
+    def createMessages(self, master):
+        self.messagebox = tk.Listbox(master, height=5)
+        self.messagebox.pack()
 
     def getPlayers(self):
-        self.players = domget('/players/list')
+        self.players = domget('/player/list')
+        print("players=%s" % self.players)
 
     def getCard(self, cardname):
         if cardname not in self.cardcache:
@@ -35,8 +58,11 @@ class Application(tk.Frame):
         return self.cardcache[cardname]
 
     def createActionBar(self, master):
-        self.etButton = tk.Button(master, text='End Turn')
+        self.etButton = tk.Button(master, text='End Turn', command=self.action_endturn)
         self.etButton.pack()
+
+    def action_endturn(self):
+        self.players = domget('/endturn')
 
     def createWidgets(self, master):
         self.quitButton = tk.Button(master, text='Quit', command=self.quit)
@@ -44,7 +70,7 @@ class Application(tk.Frame):
 
     def createHand(self, master):
         self.handframe = tk.Frame(self, bg="orange")
-        hand = domget('/%s/hand' % self.players[0])
+        hand = domget('/player/%s/hand' % self.players[plrnum])
         for card in hand:
             carddetails = self.getCard(card)
             self.cardpiles[card] = CardStack(card, carddetails, self.handframe, self.bigcard)
@@ -67,6 +93,8 @@ class Application(tk.Frame):
         self.cardpiles = {}
         for card in cardpiles:
             carddetails = self.getCard(card)
+            if not carddetails['purchasable']:
+                continue
             if carddetails['basecard']:
                 self.cardpiles[card] = CardStack(card, carddetails, self.basecardframe, self.bigcard)
             else:
@@ -108,14 +136,18 @@ class CardStack(tk.Frame):
 def domget(url):
     full_url = '%s%s' % (domurl, url)
     r = requests.get(full_url)
+    if r.status_code != 200:
+        sys.stderr.write("Got a %s from %s\n" % (r.status_code, full_url))
+        sys.exit(1)
     return r.json()
 
 
 ##############################################################################
 def main():
     root = tk.Tk()
-    app = Application(master=root)
-    app.mainloop()
+    guiapp = Application(master=root)
+    guiapp.mainloop()
+
 
 ##############################################################################
 if __name__ == "__main__":
