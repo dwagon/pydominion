@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import threading
 try:
     import tkinter as tk
 except ImportError:
@@ -16,9 +17,10 @@ except:
 
 
 ##############################################################################
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
+class Application(threading.Thread):
+    def __init__(self):
+        self.root = tk.Tk()
+        self.frame = tk.Frame()
         self.cardcache = {}
         self["borderwidth"] = 3
         self["relief"] = tk.GROOVE
@@ -33,6 +35,10 @@ class Application(tk.Frame):
         self.createMessages(self)
         self.update_message()
         self.get_inputs()
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.run.mainloop()
 
     def get_inputs(self):
         inp = domget('/player/%s/inputs' % self.players[plrnum])
@@ -144,8 +150,7 @@ def domget(url):
 
 ##############################################################################
 def main():
-    root = tk.Tk()
-    guiapp = Application(master=root)
+    guiapp = Application()
     guiapp.mainloop()
 
 
