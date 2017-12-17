@@ -430,7 +430,7 @@ class Game(object):
         if boon.retain_boon:
             self.retained_boons.append(boon)
         else:
-        self.discarded_boons.append(boon)
+            self.discarded_boons.append(boon)
 
     ###########################################################################
     def print_state(self):  # pragma: no cover
