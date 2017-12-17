@@ -36,7 +36,7 @@ class Test_Bard(unittest.TestCase):
         self.plr.gainCard('Silver')
         self.plr.test_input = ['Duchy']
         self.plr.playCard(self.bard)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertGreaterEqual(self.plr.getCoin(), 2)  # 2 for bard +x for boon
 
 
 ###############################################################################

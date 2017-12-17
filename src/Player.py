@@ -133,6 +133,7 @@ class Player(object):
             self.pickupCard()
         self.actions += boon.actions
         self.buys += boon.buys
+        self.coin += self.hook_spendValue(boon, actual=True)
         boon.special(game=self.game, player=self)
         self.game.discard_boon(boon)
 
@@ -662,6 +663,7 @@ class Player(object):
         # Save the cards we had so that the hook_endTurn has something to apply against
         self.hadcards = [card for card in self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile]
         self.phase = 'cleanup'
+        self.game.cleanup_boons()
         for card in self.played + self.reserve:
             card.hook_cleanup(self.game, self)
         self.discardHand()

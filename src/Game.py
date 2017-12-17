@@ -30,6 +30,7 @@ class Game(object):
         self.landmarks = {}
         self.boons = []
         self.discarded_boons = []
+        self.retained_boons = []
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -184,6 +185,7 @@ class Game(object):
         d = {}
         self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
         self.boons = list(d.values())
+        random.shuffle(self.boons)
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
@@ -413,9 +415,22 @@ class Game(object):
         return boon
 
     ###########################################################################
+    def cleanup_boons(self):
+        for boon in self.retained_boons[:]:
+            self.discarded_boons.append(boon)
+        self.retained_boons = []
+        for boon in self.discarded_boons[:]:
+            self.boons.append(boon)
+        random.shuffle(self.boons)
+        self.discarded_boons = []
+
+    ###########################################################################
     def discard_boon(self, boon):
         """ Return a boon """
-        self.discarded_boons.append(boon)
+        if boon.retain_boon:
+            self.retained_boons.append(boon)
+        else:
+            self.discarded_boons.append(boon)
 
     ###########################################################################
     def print_state(self):  # pragma: no cover
