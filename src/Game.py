@@ -357,7 +357,7 @@ class Game(object):
                 if c.startswith(class_prefix):
                     klass = getattr(mod, c)
                     break
-            else:
+            else:   # pragma: no cover
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
             k = klass()
             mapping[k.name] = klass
@@ -564,7 +564,7 @@ def parseArgs(args=sys.argv[1:]):
 
 
 ###############################################################################
-def runGame(args):
+def runGame(args):      # pragma: no cover
     cards = args['initcards']
     if args['cardset']:
         for line in args['cardset']:
@@ -586,7 +586,7 @@ def runGame(args):
 
 
 ###############################################################################
-def main():
+def main():     # pragma: no cover
     args = parseArgs()
     runGame(vars(args))
 
