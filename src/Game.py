@@ -185,6 +185,7 @@ class Game(object):
         d = {}
         self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
         self.boons = list(d.values())
+        random.shuffle(self.boons)
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
