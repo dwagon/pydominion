@@ -91,6 +91,11 @@ class Card(object):
             return True
         return False
 
+    def isFate(self):
+        if 'fate' in self.cardtype:
+            return True
+        return False
+
     def isLooter(self):
         if 'looter' in self.cardtype:
             return True

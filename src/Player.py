@@ -124,6 +124,19 @@ class Player(object):
         return self.journey_token
 
     ###########################################################################
+    def receive_boon(self, boon=None):
+        if boon is None:
+            boon = self.game.receive_boon()
+        self.output("Received {} as a boon".format(boon))
+        self.output("{}".format(boon.description(self)))
+        for i in range(boon.cards):
+            self.pickupCard()
+        self.actions += boon.actions
+        self.buys += boon.buys
+        boon.special(game=self.game, player=self)
+        self.game.discard_boon(boon)
+
+    ###########################################################################
     def do_once(self, name):
         """ Allow a player to do something once per turn """
         if name in self.once:

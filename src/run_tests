@@ -8,7 +8,7 @@ numcpu = cpuinfo.get_cpu_info()['count']
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-cmd = 'py.test -n %d --cov-report term-missing --cov . *.py tests/*.py cards/*.py events/*.py landmarks/*.py' % numcpu
+cmd = 'py.test -n %d --cov-report term-missing --cov . *.py tests/*.py cards/*.py events/*.py landmarks/*.py boons/*.py' % numcpu
 rc = os.system(cmd)
 sys.exit(rc >> 8)
 

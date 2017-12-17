@@ -12,6 +12,7 @@ from BotPlayer import BotPlayer
 from CardPile import CardPile
 from EventPile import EventPile
 from LandmarkPile import LandmarkPile
+from BoonPile import BoonPile
 from PlayArea import PlayArea
 from Names import playerNames
 
@@ -27,6 +28,8 @@ class Game(object):
         self.cardpiles = {}
         self.events = {}
         self.landmarks = {}
+        self.boons = []
+        self.discarded_boons = []
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -50,6 +53,7 @@ class Game(object):
         self.cardpath = 'cards'
         self.eventpath = 'events'
         self.landmarkpath = 'landmarks'
+        self.boonpath = 'boons'
         self.cardbase = []
         self.bot = False
         if 'prosperity' in args:
@@ -141,6 +145,7 @@ class Game(object):
     def countCards(self):
         count = {}
         count['trash'] = self.trashSize()
+        count['boons'] = len(self.boons) + len(self.discarded_boons)
         for cp in list(self.cardpiles.values()):
             count['pile_%s' % cp.name] = cp.numcards
         for pl in self.playerList():
@@ -175,25 +180,38 @@ class Game(object):
         self.loadNonKingdomCards('Landmark', self.landmarkcards, self.numlandmarks, LandmarkPile, self.landmarks)
 
     ###########################################################################
+    def loadBoons(self):
+        d = {}
+        self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
+        self.boons = list(d.values())
+
+    ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
         available = self.getAvailableCards(cardtype)
         # Specified cards
-        for nkc in specified:
-            try:
-                if nkc not in self.cardmapping[cardtype]:
-                    nkc = self.guess_cardname(nkc, cardtype)
+        if specified is not None:
+            for nkc in specified:
+                try:
+                    if nkc not in self.cardmapping[cardtype]:
+                        nkc = self.guess_cardname(nkc, cardtype)
+                    klass = self.cardmapping[cardtype][nkc]
+                    dest[nkc] = cardKlass(nkc, klass)
+                    available.remove(nkc)
+                except (ValueError, KeyError):
+                    sys.stderr.write("Unknown %s '%s'\n" % (cardtype, nkc))
+                    sys.exit(1)
+        if numspecified is not None:
+            # To make up the numbers
+            while len(dest) < numspecified:
+                nkc = random.choice(available)
                 klass = self.cardmapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
                 available.remove(nkc)
-            except (ValueError, KeyError):
-                sys.stderr.write("Unknown %s '%s'\n" % (cardtype, nkc))
-                sys.exit(1)
-        # To make up the numbers
-        while len(dest) < numspecified:
-            nkc = random.choice(available)
-            klass = self.cardmapping[cardtype][nkc]
-            dest[nkc] = cardKlass(nkc, klass)
-            available.remove(nkc)
+        else:
+            for nkc in available:
+                klass = self.cardmapping[cardtype][nkc]
+                dest[nkc] = cardKlass(nkc, klass)
+
         for l in dest:
             self.output("Playing with %s %s" % (cardtype, l))
 
@@ -293,6 +311,8 @@ class Game(object):
                 nc = self.numplayers * 10
                 self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
                 self.output("Playing with Ruins")
+            if self.cardpiles[card].isFate():
+                self.loadBoons()
             if self.cardpiles[card].traveller:
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
@@ -318,6 +338,7 @@ class Game(object):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
+        mapping['Boon'] = self.getSetCardClasses('Boon', self.boonpath, 'boons', 'Boon_')
         return mapping
 
     ###########################################################################
@@ -382,10 +403,28 @@ class Game(object):
         return False
 
     ###########################################################################
+    def receive_boon(self):
+        """ Receive a boon """
+        if not self.boons:
+            self.boons = self.discarded_boons[:]
+            self.discarded_boons = []
+            random.shuffle(self.boons)
+        boon = self.boons.pop()
+        return boon
+
+    ###########################################################################
+    def discard_boon(self, boon):
+        """ Return a boon """
+        self.discarded_boons.append(boon)
+
+    ###########################################################################
     def print_state(self):  # pragma: no cover
         """ This is used for debugging """
         print("#" * 40)
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
+        print("Boons")
+        for b in self.boons:
+            print("  {}".format(b))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():
