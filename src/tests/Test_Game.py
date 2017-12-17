@@ -123,6 +123,39 @@ class Test_actionpiles(unittest.TestCase):
 
 
 ###############################################################################
+class Test_boon(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_receive_boon_empty(self):
+        self.g.boons = []
+        self.g.discarded_boons = ['a', 'b', 'c', 'd']
+        b = self.g.receive_boon()
+        self.assertIn(b, ['a', 'b', 'c', 'd'])
+        self.assertEqual(self.g.discarded_boons, [])
+        self.assertEqual(len(self.g.boons), 3)
+        self.assertNotIn(b, self.g.boons)
+
+    def test_receive_boon_non_empty(self):
+        self.g.boons = ['a', 'b']
+        self.g.discarded_boons = ['c', 'd']
+        b = self.g.receive_boon()
+        self.assertIn(b, ['a', 'b'])
+        self.assertEqual(self.g.discarded_boons, ['c', 'd'])
+        self.assertEqual(len(self.g.boons), 1)
+        self.assertNotIn(b, self.g.boons)
+
+    def test_discard_boon(self):
+        self.g.boons = ['b']
+        self.g.discarded_boons = ['c', 'd']
+        self.g.discard_boon('a')
+        self.assertEqual(self.g.discarded_boons, ['c', 'd', 'a'])
+        self.assertEqual(self.g.boons, ['b'])
+
+
+###############################################################################
 class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
