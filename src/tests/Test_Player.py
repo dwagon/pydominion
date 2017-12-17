@@ -719,6 +719,29 @@ class Test_choiceSelection(unittest.TestCase):
 
 
 ###############################################################################
+class Test_nightSelection(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Monastery', 'Moat'])
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+        self.moat = self.g['Moat'].remove()
+
+    def test_play(self):
+        self.plr.setHand('Copper', 'Moat', 'Monastery')
+        opts, idx = self.plr.nightSelection(1)
+        self.assertEqual(idx, 2)
+        self.assertEqual(opts[0]['selector'], 'b')
+        self.assertEqual(opts[0]['verb'], 'Play')
+        self.assertEqual(opts[0]['action'], 'play')
+        self.assertEqual(opts[0]['card'].name, 'Monastery')
+
+    def test_no_night(self):
+        self.plr.setHand('Copper', 'Moat')
+        opts = self.plr.nightSelection(0)
+        self.assertEqual(opts, ([], 0))
+
+
+###############################################################################
 class Test_spendableSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'])

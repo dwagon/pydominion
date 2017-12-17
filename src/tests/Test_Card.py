@@ -60,6 +60,15 @@ class Test_is_card(unittest.TestCase):
         self.assertTrue(moat.isReaction())
         self.assertFalse(page.isReaction())
 
+    def test_isNight(self):
+        """ Test isReaction """
+        g = Game.Game(quiet=True, numplayers=1, initcards=['Monastery', 'Moat'])
+        g.startGame()
+        monastery = g['Monastery'].remove()
+        moat = g['Moat'].remove()
+        self.assertTrue(monastery.isNight())
+        self.assertFalse(moat.isNight())
+
     def test_isAttack(self):
         """ Test isReaction """
         g = Game.Game(quiet=True, numplayers=1, initcards=['Militia', 'Moat'])

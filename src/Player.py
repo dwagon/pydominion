@@ -414,6 +414,19 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def nightSelection(self, index):
+        options = []
+        nights = [c for c in self.hand if c.isNight()]
+        if nights:
+            for n in nights:
+                sel = chr(ord('a') + index)
+                details = n.get_cardtype_repr()
+                o = Option(verb="Play", selector=sel, name=n.name, details=details, card=n, action='play', desc=n.description(self))
+                options.append(o)
+                index += 1
+        return options, index
+
+    ###########################################################################
     def spendableSelection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
@@ -557,6 +570,10 @@ class Player(object):
             op, index = self.eventSelection(index)
             options.extend(op)
 
+        if self.phase == 'night':
+            op, index = self.nightSelection(index)
+            options.extend(op)
+
         if self.reserveSize():
             op, index = self.reserveSelection(index)
             options.extend(op)
@@ -584,7 +601,23 @@ class Player(object):
         self.output("%s's Turn %s" % (self.name, stats))
         self.actionPhase()
         self.buyPhase()
+        self.nightPhase()
         self.cleanupPhase()
+
+    ###########################################################################
+    def nightPhase(self):
+        nights = [c for c in self.hand if c.isNight()]
+        if not nights:
+            return
+        self.output("************ Night Phase ************")
+        self.phase = 'night'
+        while(True):
+            self.displayOverview()
+            options, prompt = self.choiceSelection()
+            opt = self.userInput(options, prompt)
+            self.perform_action(opt)
+            if opt['action'] == 'quit':
+                return
 
     ###########################################################################
     def actionPhase(self):

@@ -86,6 +86,11 @@ class Card(object):
             return True
         return False
 
+    def isNight(self):
+        if 'night' in self.cardtype:
+            return True
+        return False
+
     def isLooter(self):
         if 'looter' in self.cardtype:
             return True
