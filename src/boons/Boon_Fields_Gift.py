@@ -14,7 +14,7 @@ class Boon_Fields_Gift(Boon):
         self.name = "The Field's Gift"
         self.purchasable = False
         self.coin = 1
-        self.action = 1
+        self.actions = 1
         self.retain_boon = True
 
 
@@ -22,18 +22,21 @@ class Boon_Fields_Gift(Boon):
 class Test_Fields_Gift(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['Champion'].remove()
+        for b in self.g.boons[:]:
+            if b.name != "The Field's Gift":
+                self.g.discarded_boons.append(b)
+                self.g.boons.remove(b)
+        self.card = self.g['Bard'].remove()
 
-    def test_champion(self):
-        """ Play a champion """
-        self.plr.addCard(self.card, 'duration')
-        self.assertEqual(self.plr.getActions(), 1)
-        moat = self.g['Moat'].remove()
-        self.plr.addCard(moat, 'hand')
-        self.plr.playCard(moat)
+    def test_fields_gift(self):
+        self.coin = 0
+        self.action = 0
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
         self.assertEqual(self.plr.getActions(), 1)
 
 
