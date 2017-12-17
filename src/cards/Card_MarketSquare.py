@@ -10,7 +10,7 @@ class Card_MarketSquare(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
         self.base = 'darkages'
-        self.desc = """+1 Card +1 Action +1 Buy.
+        self.desc = """+1 Card, +1 Action, +1 Buy.
         When one of your cards is trashed, you may discard this from your hand. If you do, gain a Gold."""
         self.name = 'Market Square'
         self.cards = 1

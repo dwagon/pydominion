@@ -10,15 +10,13 @@ class Card_Swindler(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
-        self.desc = "+2 coin. Other players trash top card and gain one with the same cost"
+        self.desc = """+2 Coin. Each other player trashed the top card of his deck and
+            gains a card with the same cost that you choose."""
         self.name = 'Swindler'
         self.cost = 3
         self.coin = 2
 
     def special(self, game, player):
-        """ Each other player trashed the top card of his deck and
-            gains a card with the same cost that you choose """
-
         for victim in player.attackVictims():
             card = victim.pickupCard()
             victim.trashCard(card)
