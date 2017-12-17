@@ -179,6 +179,7 @@ class Test_cardsAffordable(unittest.TestCase):
     def test_under(self):
         price = 4
         ans = self.plr.cardsUnder(price, types={'action': True})
+        print("test_under: ans={}".format(ans))
         for a in ans:
             self.assertLessEqual(a.cost, price)
             self.assertTrue(a.isAction())
