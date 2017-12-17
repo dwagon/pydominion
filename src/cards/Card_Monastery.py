@@ -18,7 +18,8 @@ class Card_Monastery(Card):
         numgained = len(player.stats['gained'])
         if not numgained:
             return
-        player.plrTrashCard(num=numgained)
+        selectfrom = player.hand + [_ for _ in player.played if _.name == 'Copper']
+        player.plrTrashCard(num=numgained, cardsrc=selectfrom)
 
 
 ###############################################################################
@@ -29,12 +30,30 @@ class Test_Monastery(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.monastery = self.g['Monastery'].remove()
-        self.plr.addCard(self.monastery, 'hand')
 
     def test_play_card(self):
         """ Play Monastery """
+        self.plr.setHand('Duchy')
+        self.plr.addCard(self.monastery, 'hand')
         self.plr.gainCard('Silver')
+        self.plr.test_input = ['Duchy']
+        self.plr.playCard(self.monastery)
+        self.assertIsNotNone(self.g.inTrash('Duchy'))
 
+    def test_play_no_gained(self):
+        """ Play Monastery when you didn't gain a card """
+        self.plr.setHand('Duchy')
+        self.plr.addCard(self.monastery, 'hand')
+        self.plr.playCard(self.monastery)
+
+    def test_play_copper(self):
+        """ Play Monastery when you have a copper """
+        self.plr.setHand('Duchy')
+        self.plr.setPlayed('Copper')
+        self.plr.addCard(self.monastery, 'hand')
+        self.plr.gainCard('Silver')
+        self.plr.test_input = ['Copper']
+        self.plr.playCard(self.monastery)
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
