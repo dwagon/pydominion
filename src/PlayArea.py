@@ -50,6 +50,10 @@ class PlayArea(object):
             x.extend(a.values())
         elif isinstance(a, PlayArea):
             x.extend(a.cards[:])
+        elif isinstance(a, list):
+            x.extend(a[:])
+        else:
+            sys.stderr.write("Unhandled _add__ operand: {}\n".format(type(a)))
         return PlayArea(x)
 
     def __iter__(self):
