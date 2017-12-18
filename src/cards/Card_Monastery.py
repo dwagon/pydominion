@@ -55,6 +55,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.playCard(self.monastery)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
