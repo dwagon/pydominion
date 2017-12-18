@@ -90,6 +90,7 @@ class Game(object):
         self.loadDecks(self.initcards)
         self.loadEvents()
         self.loadLandmarks()
+        self.enable_heirlooms()
 
         self.checkCardRequirements()
 
@@ -295,6 +296,15 @@ class Game(object):
         return 1
 
     ###########################################################################
+    def enable_heirlooms(self):
+        """ Go through the cardpiles and see if any require heirloom cards
+        to be brought into the game """
+        heirlooms = set()
+        for card in list(self.cardpiles.values()):
+            if card.heirloom is not None:
+                heirlooms.add(card.heirloom)
+
+    ###########################################################################
     def checkCardRequirements(self):
         for card in list(self.cardpiles.values()) + list(self.events.values()):
             for x in card.required_cards:
@@ -336,7 +346,7 @@ class Game(object):
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle'):
+        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')

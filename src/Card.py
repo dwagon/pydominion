@@ -28,6 +28,7 @@ class Card(object):
         self.numcards = 10
         self.gatheredvp = 0
         self.retain_boon = False
+        self.heirloom = None
 
     ##########################################################################
     def get_cardtype_repr(self):
