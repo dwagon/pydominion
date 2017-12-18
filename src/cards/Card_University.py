@@ -26,7 +26,7 @@ class Card_University(Card):
 class Test_University(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.university = self.g['University'].remove()
@@ -35,9 +35,13 @@ class Test_University(unittest.TestCase):
     def test_gain(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.university)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertTrue(self.plr.discardpile[0].isAction())
-        self.assertLessEqual(self.plr.discardpile[0].cost, 5)
+        try:
+            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertTrue(self.plr.discardpile[0].isAction())
+            self.assertLessEqual(self.plr.discardpile[0].cost, 5)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_none(self):
         self.plr.test_input = ['0']

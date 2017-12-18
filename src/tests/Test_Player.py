@@ -179,10 +179,13 @@ class Test_cardsAffordable(unittest.TestCase):
     def test_under(self):
         price = 4
         ans = self.plr.cardsUnder(price, types={'action': True})
-        print("test_under: ans={}".format(ans))
         for a in ans:
-            self.assertLessEqual(a.cost, price)
-            self.assertTrue(a.isAction())
+            try:
+                self.assertLessEqual(a.cost, price)
+                self.assertTrue(a.isAction())
+            except AssertionError:
+                self.g.print_state()
+                raise
 
     def test_worth(self):
         price = 5
@@ -575,7 +578,7 @@ class Test_displayOverview(unittest.TestCase):
 ###############################################################################
 class Test_buyableSelection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], badcards=['Coppersmith'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.moat = self.g['Moat'].remove()
@@ -599,8 +602,12 @@ class Test_buyableSelection(unittest.TestCase):
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i['name'].startswith('Copper'):
-                self.assertEqual(i['action'], 'buy')
-                self.assertEqual(i['card'], self.g['Copper'])
+                try:
+                    self.assertEqual(i['action'], 'buy')
+                    self.assertEqual(i['card'], self.g['Copper'])
+                except AssertionError:
+                    self.g.print_state()
+                    raise
                 break
         else:   # pragma: no coverage
             self.fail("Copper not buyable")
