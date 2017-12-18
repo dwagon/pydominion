@@ -184,6 +184,7 @@ class Test_cardsAffordable(unittest.TestCase):
                 self.assertLessEqual(a.cost, price)
                 self.assertTrue(a.isAction())
             except AssertionError:
+                print("a={}".format(a))
                 self.g.print_state()
                 raise
 
@@ -789,11 +790,15 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.debt = 1
         self.plr.coin = 1
-        opts = self.plr.spendableSelection()
-        self.assertEqual(opts[1]['selector'], '3')
-        self.assertEqual(opts[1]['action'], 'payback')
-        self.assertEqual(opts[1]['verb'], 'Payback Debt')
-        self.assertIsNone(opts[1]['card'])
+        try:
+            opts = self.plr.spendableSelection()
+            self.assertEqual(opts[1]['selector'], '3')
+            self.assertEqual(opts[1]['action'], 'payback')
+            self.assertEqual(opts[1]['verb'], 'Payback Debt')
+            self.assertIsNone(opts[1]['card'])
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
