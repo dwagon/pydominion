@@ -607,6 +607,7 @@ class Test_buyableSelection(unittest.TestCase):
                     self.assertEqual(i['action'], 'buy')
                     self.assertEqual(i['card'], self.g['Copper'])
                 except AssertionError:
+                    print("Buy Copper {}".format(i))
                     self.g.print_state()
                     raise
                 break
@@ -798,6 +799,7 @@ class Test_spendableSelection(unittest.TestCase):
             self.assertEqual(opts[1]['verb'], 'Payback Debt')
             self.assertIsNone(opts[1]['card'])
         except AssertionError:
+            print("debt")
             self.g.print_state()
             raise
 

@@ -437,9 +437,13 @@ class Game(object):
         """ This is used for debugging """
         print("#" * 40)
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
-        print("Boons")
+        print("Boons:")
         for b in self.boons:
-            print("  {}".format(b))
+            print(" boon  {}".format(b))
+        for b in self.discarded_boons:
+            print(" discarded {}".format(b))
+        for b in self.retained_boons:
+            print(" retained {}".format(b))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():
