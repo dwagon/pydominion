@@ -32,7 +32,6 @@ class Test_Flames_Gift(unittest.TestCase):
         self.card = self.g['Bard'].remove()
 
     def test_earths_gift(self):
-        self.coins = 0
         self.plr.setHand('Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy']
