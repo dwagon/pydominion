@@ -1124,6 +1124,8 @@ class Player(object):
                 continue
             if c.isTreasure() and not types['treasure']:
                 continue
+            if c.isNight() and not types['night']:
+                continue
             if coin is None:
                 affordable.add(c)
                 continue
@@ -1168,10 +1170,11 @@ class Player(object):
         return total
 
     ###########################################################################
-    def typeSelector(self, types):
+    def typeSelector(self, types={}):
+        assert set(types.keys()) <= set(['action', 'victory', 'treasure', 'night'])
         if not types:
-            return {'action': True, 'victory': True, 'treasure': True}
-        _types = {'action': False, 'victory': False, 'treasure': False}
+            return {'action': True, 'victory': True, 'treasure': True, 'night': True}
+        _types = {'action': False, 'victory': False, 'treasure': False, 'night': False}
         _types.update(types)
         return _types
 
