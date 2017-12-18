@@ -27,16 +27,18 @@ class Test_Bard(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.bard = self.g['Bard'].remove()
+        for b in self.g.boons[:]:
+            if b.name != "The Mountain's Gift":
+                self.g.discarded_boons.append(b)
+                self.g.boons.remove(b)
 
     def test_play_card(self):
         """ Play Bard """
-        self.coin = 0
-        self.plr.setHand('Duchy')
         self.plr.addCard(self.bard, 'hand')
-        self.plr.gainCard('Silver')
-        self.plr.test_input = ['Duchy']
         self.plr.playCard(self.bard)
-        self.assertGreaterEqual(self.plr.getCoin(), 2)  # 2 for bard +x for boon
+        self.assertGreaterEqual(self.plr.getCoin(), 2)
+        # Check boon happened
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
 
 ###############################################################################
