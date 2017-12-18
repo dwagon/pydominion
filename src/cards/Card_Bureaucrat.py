@@ -66,6 +66,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.assertEqual(self.victim.deck[-1].name, 'Province')
         self.assertIsNotNone(self.victim.inHand('Estate'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
