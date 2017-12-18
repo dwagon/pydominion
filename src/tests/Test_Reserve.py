@@ -117,6 +117,7 @@ class Test_reserveSelection(unittest.TestCase):
         self.assertEquals(len(output), 0)
         self.assertEquals(index, 1)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

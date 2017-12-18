@@ -212,6 +212,7 @@ class Test_parse_args(unittest.TestCase):
         g.startGame()
         self.assertIn('Aqueduct', g.landmarks)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

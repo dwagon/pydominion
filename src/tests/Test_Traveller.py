@@ -48,6 +48,7 @@ class Test_replace_traveller(unittest.TestCase):
         self.assertIsNotNone(self.plr.inHand('Page'))
         self.assertIsNone(self.plr.inHand('Treasure Hunter'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

@@ -78,6 +78,7 @@ class Test_is_card(unittest.TestCase):
         self.assertTrue(militia.isAttack())
         self.assertFalse(moat.isAttack())
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

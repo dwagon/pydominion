@@ -94,6 +94,7 @@ class Test_eventRandom(unittest.TestCase):
         self.assertEqual(len(self.g.events), 2)
         self.assertIn('Alms', self.g.events)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
