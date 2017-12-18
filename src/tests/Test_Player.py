@@ -790,6 +790,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.debt = 1
         self.plr.coin = 1
+        self.plr.specialcoin = 0
         try:
             opts = self.plr.spendableSelection()
             self.assertEqual(opts[1]['selector'], '3')
