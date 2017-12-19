@@ -31,8 +31,15 @@ class Test_Pasture(unittest.TestCase):
         self.card = self.g['Pasture'].remove()
 
     def test_play(self):
+        self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
+
+    def test_score(self):
+        self.plr.setHand('Estate', 'Pasture')
+        self.plr.setDeck('Estate')
+        score = self.plr.getScoreDetails()
+        self.assertEqual(score['Pasture'], 2)
 
 
 ###############################################################################
