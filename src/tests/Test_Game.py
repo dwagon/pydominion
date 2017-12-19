@@ -162,8 +162,8 @@ class Test_boon(unittest.TestCase):
 class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
-        self.g = Game.Game(quiet=True, numplayers=self.numplayers)
-        self.g.startGame(badcards=['Shepherd'])
+        self.g = Game.Game(quiet=True, numplayers=self.numplayers, badcards=['Shepherd'])
+        self.g.startGame()
 
     def test_whoWon(self):
         scores = self.g.whoWon()
