@@ -32,6 +32,7 @@ class Test_Fairgrounds(unittest.TestCase):
 
     def test_zero(self):
         """ Fairground for 4 types """
+        self.plr.setHand('Copper', 'Estate', 'Silver', 'Fairgrounds')
         self.plr.setDeck('Copper', 'Estate', 'Silver', 'Fairgrounds')
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Fairgrounds'], 0)
@@ -41,6 +42,7 @@ class Test_Fairgrounds(unittest.TestCase):
         self.plr.setDeck('Copper', 'Estate', 'Silver', 'Fairgrounds', 'Gold')
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Fairgrounds'], 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
