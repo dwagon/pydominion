@@ -13,12 +13,12 @@ class Card_Shepherd(Card):
         self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = 'Shepherd'
         self.cost = 2
-        self.action = 1
+        self.actions = 1
         self.heirloom = 'Pasture'
 
     def special(self, game, player):
-        pass
-        # TODO
+        todiscard = player.plrDiscardCards(num=0, anynum=True, type={'victory': True})
+        player.pickupCards(2*len(todiscard))
 
 
 ###############################################################################
@@ -32,8 +32,13 @@ class Test_Shepherd(unittest.TestCase):
 
     def test_play(self):
         """ Play a Shepherd """
+        self.plr.setHand('Estate', 'Province', 'Duchy')
         self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['Estate', 'Duchy', 'Finish']
         self.plr.playCard(self.card)
+        self.g.print_state()
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.handSize(), 5)
 
 
 ###############################################################################
