@@ -754,7 +754,7 @@ class Test_nightSelection(unittest.TestCase):
 ###############################################################################
 class Test_spendableSelection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'], badcards=['Baker'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.moat = self.g['Moat'].remove()
