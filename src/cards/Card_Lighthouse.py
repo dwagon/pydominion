@@ -36,7 +36,6 @@ class Test_Lighthouse(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.plr.endTurn()

@@ -45,7 +45,6 @@ class Test_Wanderingminstrel(unittest.TestCase):
         """ Wandering Minstrel """
         self.plr.setDeck('Duchy', 'Moat', 'Silver', 'Gold')
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertIsNotNone(self.plr.inDeck('Moat'))

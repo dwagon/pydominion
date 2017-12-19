@@ -88,10 +88,10 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.vic.discardSize(), 1)
         self.assertIsNotNone(self.vic.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

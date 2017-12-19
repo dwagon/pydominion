@@ -51,7 +51,6 @@ class Test_Scavenger(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Put', 'Moat']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck[-1].name, 'Moat')
         self.assertIsNotNone(self.plr.inDiscard('Witch'))

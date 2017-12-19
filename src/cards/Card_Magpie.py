@@ -44,7 +44,6 @@ class Test_Magpie(unittest.TestCase):
         self.plr.setDeck('Gold', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.g.print_state()
         # Hand of 5, the card gained and the treasure
         self.assertEqual(self.plr.handSize(), 5 + 1 + 1)
         self.assertTrue(self.plr.inHand('Gold'))

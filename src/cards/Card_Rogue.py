@@ -129,7 +129,6 @@ class Test_Rogue(unittest.TestCase):
         self.victim.setDeck('Gold', 'Province', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.g.trashSize(), 0)
         self.assertEqual(self.victim.discardSize(), 2)
 

@@ -38,7 +38,6 @@ class Test_Madman(unittest.TestCase):
         """ Play a Madman """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.handSize(), 5 * 2)
 

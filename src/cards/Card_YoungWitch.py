@@ -76,6 +76,7 @@ class Test_YoungWitch(unittest.TestCase):
             self.g.print_state()
             raise
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
