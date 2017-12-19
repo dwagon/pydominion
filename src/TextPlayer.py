@@ -17,7 +17,8 @@ class TextPlayer(Player):
         colorama.init()
         self.colour = colours[kwargs['number']]
         self.quiet = quiet
-        Player.__init__(self, game, name)
+        del kwargs['number']
+        Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
     def output(self, msg, end='\n'):

@@ -42,47 +42,21 @@ class Game(object):
 
     ###########################################################################
     def parseArgs(self, **args):
-        self.prosperity = False
-        self.quiet = False
-        self.numplayers = 2
-        self.numevents = 0
-        self.numlandmarks = 0
-        self.initcards = []
-        self.badcards = []
-        self.eventcards = []
-        self.landmarkcards = []
-        self.cardpath = 'cards'
         self.eventpath = 'events'
         self.landmarkpath = 'landmarks'
         self.boonpath = 'boons'
-        self.cardbase = []
-        self.bot = False
-        if 'prosperity' in args:
-            self.prosperity = args['prosperity']
-        if 'quiet' in args:
-            self.quiet = args['quiet']
-        if 'numplayers' in args:
-            self.numplayers = args['numplayers']
-        if 'initcards' in args:
-            self.initcards = args['initcards']
-        if 'badcards' in args:
-            self.badcards = args['badcards']
-        if 'cardpath' in args:
-            self.cardpath = args['cardpath']
-        if 'cardbase' in args:
-            self.cardbase = args['cardbase']
-        if 'bot' in args:
-            self.bot = args['bot']
-
-        if 'eventcards' in args:
-            self.eventcards = args['eventcards']
-        if 'numevents' in args:
-            self.numevents = args['numevents']
-
-        if 'landmarkcards' in args:
-            self.landmarkcards = args['landmarkcards']
-        if 'numlandmarks' in args:
-            self.numlandmarks = args['numlandmarks']
+        self.prosperity = args['prosperity'] if 'prosperity' in args else False
+        self.quiet = args['quiet'] if 'quiet' in args else False
+        self.numplayers = args['numplayers'] if 'numplayers' in args else 2
+        self.initcards = args['initcards'] if 'initcards' in args else []
+        self.badcards = args['badcards'] if 'badcards' in args else []
+        self.cardpath = args['cardpath'] if 'cardpath' in args else 'cards'
+        self.cardbase = args['cardbase'] if 'cardbase' in args else []
+        self.bot = args['bot'] if 'bot' in args else False
+        self.eventcards = args['eventcards'] if 'eventcards' in args else []
+        self.numevents = args['numevents'] if 'numevents' in args else 0
+        self.landmarkcards = args['landmarkcards'] if 'landmarkcards' in args else []
+        self.numlandmarks = args['numlandmarks'] if 'numlandmarks' in args else 0
 
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
@@ -90,7 +64,7 @@ class Game(object):
         self.loadDecks(self.initcards)
         self.loadEvents()
         self.loadLandmarks()
-        self.enable_heirlooms()
+        heirlooms = self.enable_heirlooms()
 
         self.checkCardRequirements()
 
@@ -102,10 +76,10 @@ class Game(object):
                 names.remove(name)
             u = uuid.uuid4().hex
             if self.bot:
-                self.players[u] = BotPlayer(game=self, quiet=self.quiet, name='%sBot' % name)
+                self.players[u] = BotPlayer(game=self, quiet=self.quiet, name='%sBot' % name, heirlooms=heirlooms)
                 self.bot = False
             else:
-                self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i)
+                self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
             self.players[u].uuid = u
         self.cardSetup()
         self.numcards = self.countCards()
@@ -303,6 +277,10 @@ class Game(object):
         for card in list(self.cardpiles.values()):
             if card.heirloom is not None:
                 heirlooms.add(card.heirloom)
+                cp = CardPile(card.heirloom, self.cardmapping['Heirloom'][card.heirloom], self)
+                self.cardpiles[cp.name] = cp
+
+        return list(heirlooms)
 
     ###########################################################################
     def checkCardRequirements(self):

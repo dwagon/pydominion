@@ -12,7 +12,7 @@ from collections import defaultdict
 ###############################################################################
 ###############################################################################
 class Player(object):
-    def __init__(self, game, name):
+    def __init__(self, game, name, heirlooms=[]):
         self.game = game
         self.name = name
         self.currcards = []
@@ -40,7 +40,7 @@ class Player(object):
         self.test_input = []
         self.forbidden_to_buy = []
         self.played_events = PlayArea([])
-        self.initial_Deck()
+        self.initial_Deck(heirlooms)
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
@@ -55,12 +55,16 @@ class Player(object):
             ('Played', self.played), ('Duration', self.durationpile))
 
     ###########################################################################
-    def initial_Deck(self):
+    def initial_Deck(self, heirlooms=[]):
         """ Provide the initial deck - cards don't come from the piles
-            hence add them back """
-        self.game['Copper'].numcards += 7
-        for i in range(7):
+            hence add them back
+        """
+        self.game['Copper'].numcards += 7 - len(heirlooms)
+        for i in range(7 - len(heirlooms)):
             self.deck.add(self.game['Copper'].remove())
+        for hl in heirlooms:
+            print("Adding {}".format(hl))
+            self.deck.add(self.game[hl].remove())
         self.game['Estate'].numcards += 3
         for i in range(3):
             self.deck.add(self.game['Estate'].remove())

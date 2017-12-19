@@ -15,7 +15,7 @@ class BotPlayer(Player):
         colorama.init()
         self.colour = "%s%s" % (colorama.Back.BLACK, colorama.Fore.RED)
         self.quiet = quiet
-        Player.__init__(self, game, name)
+        Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
     def output(self, msg, end='\n'):

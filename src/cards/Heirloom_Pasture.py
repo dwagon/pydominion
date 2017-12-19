@@ -14,6 +14,7 @@ class Card_Pasture(Card):
         self.name = 'Pasture'
         self.cost = 2
         self.coin = 1
+        self.purchasable = False
 
     def special_score(self, game, player):
         estates = sum([1 for _ in player.allCards() if _.name == "Estate"])
@@ -24,7 +25,7 @@ class Card_Pasture(Card):
 class Test_Pasture(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pasture'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shepherd'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Pasture'].remove()
