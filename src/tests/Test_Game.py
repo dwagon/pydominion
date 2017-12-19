@@ -163,7 +163,7 @@ class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
         self.g = Game.Game(quiet=True, numplayers=self.numplayers)
-        self.g.startGame()
+        self.g.startGame(badcards=['Shepherd'])
 
     def test_whoWon(self):
         scores = self.g.whoWon()
