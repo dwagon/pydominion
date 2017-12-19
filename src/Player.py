@@ -63,7 +63,6 @@ class Player(object):
         for i in range(7 - len(heirlooms)):
             self.deck.add(self.game['Copper'].remove())
         for hl in heirlooms:
-            print("Adding {}".format(hl))
             self.deck.add(self.game[hl].remove())
         self.game['Estate'].numcards += 3
         for i in range(3):
