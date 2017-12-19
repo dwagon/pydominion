@@ -8,17 +8,14 @@ from Card import Card
 class Card_Pouch(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'victory', 'heirloom']
+        self.cardtype = ['treasure', 'heirloom']
         self.base = 'nocturne'
-        self.desc = "+1 Coin; Worth 1VP per Estate you have"
+        self.desc = "+1 Coin, +1 Buy"
         self.name = 'Pouch'
         self.cost = 2
         self.coin = 1
+        self.buys = 1
         self.purchasable = False
-
-    def special_score(self, game, player):
-        estates = sum([1 for _ in player.allCards() if _.name == "Estate"])
-        return estates
 
 
 ###############################################################################
@@ -32,14 +29,10 @@ class Test_Pouch(unittest.TestCase):
 
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
+        self.plr.buys = 0
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-
-    def test_score(self):
-        self.plr.setHand('Estate', 'Pouch')
-        self.plr.setDeck('Estate')
-        score = self.plr.getScoreDetails()
-        self.assertEqual(score['Pouch'], 2)
+        self.assertEqual(self.plr.getBuys(), 1)
 
 
 ###############################################################################
