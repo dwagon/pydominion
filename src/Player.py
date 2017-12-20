@@ -798,6 +798,7 @@ class Player(object):
         self.cleaned = False
         self.is_start = True
         self.stats = {'gained': [], 'bought': []}
+        self.hook_startTurn()
         if self.durationpile:
             self.displayOverview()
         for card in self.durationpile:
@@ -808,6 +809,11 @@ class Player(object):
             if not card.permanent:
                 self.addCard(card, 'played')
                 self.durationpile.remove(card)
+
+    ###########################################################################
+    def hook_startTurn(self):
+        for c in self.hand + self.states:
+            c.hook_startTurn(self.game, self)
 
     ###########################################################################
     def spendCoin(self):

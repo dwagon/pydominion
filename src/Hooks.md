@@ -81,6 +81,10 @@ hook_endTurn
 ------------
 Called at the end of the players buy phase
 
+hook_startTurn
+--------------
+Called at the start of a players turn
+
 hook_cardCost
 ------------
 Modifier to the cost of buying a card. This hook applies to buying another card.
