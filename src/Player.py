@@ -49,6 +49,7 @@ class Player(object):
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
         self.phase = None
+        self.states = []
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
@@ -797,6 +798,7 @@ class Player(object):
         self.cleaned = False
         self.is_start = True
         self.stats = {'gained': [], 'bought': []}
+        self.hook_startTurn()
         if self.durationpile:
             self.displayOverview()
         for card in self.durationpile:
@@ -807,6 +809,11 @@ class Player(object):
             if not card.permanent:
                 self.addCard(card, 'played')
                 self.durationpile.remove(card)
+
+    ###########################################################################
+    def hook_startTurn(self):
+        for c in self.hand + self.states:
+            c.hook_startTurn(self.game, self)
 
     ###########################################################################
     def spendCoin(self):
@@ -1258,6 +1265,14 @@ class Player(object):
     def plrPickCard(self, force=False, **kwargs):
         sel = self.cardSel(force=force, **kwargs)
         return sel[0]
+
+    ###########################################################################
+    def assign_state(self, state):
+        if state.unique_state:
+            for pl in self.game.playerList():
+                if state in pl.states:
+                    pl.states.remove(state)
+        self.states.append(state)
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
