@@ -196,7 +196,7 @@ class Test_cardsAffordable(unittest.TestCase):
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
-        ans = self.plr.cardsAffordable('less', coin=None, potions=0, types={'victory': True, 'action': True, 'treasure': True})
+        ans = self.plr.cardsAffordable('less', coin=None, potions=0, types={'victory': True, 'action': True, 'treasure': True, 'night': True})
         self.assertIn('Province', [cp.name for cp in ans])
 
 

@@ -37,7 +37,11 @@ class Test_WolfDen(unittest.TestCase):
         """ Use Wolf Den """
         self.plr.setDiscard('Gold', 'Silver')
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Wolf Den'], -6)
+        try:
+            self.assertEqual(self.plr.getScoreDetails()['Wolf Den'], -6)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
