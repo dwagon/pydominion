@@ -59,6 +59,7 @@ class Test_Bridgetroll(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.cardCost(self.g['Gold']), 5)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
