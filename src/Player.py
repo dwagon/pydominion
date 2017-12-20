@@ -774,7 +774,7 @@ class Player(object):
     ###########################################################################
     def hook_preBuy(self):
         """ Hook that fires off before the buy phase """
-        for lm in list(self.game.landmarks.values()):
+        for lm in list(self.game.landmarks.values()) + self.states:
             lm.hook_preBuy(game=self.game, player=self)
 
     ###########################################################################
@@ -929,7 +929,7 @@ class Player(object):
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
-        for c in self.hand + self.played + self.durationpile:
+        for c in self.hand + self.played + self.durationpile + self.states:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
         cost += card.hook_thisCardCost(game=self.game, player=self)
         return max(0, cost)
@@ -1276,7 +1276,7 @@ class Player(object):
 
     ###########################################################################
     def remove_state(self, state):
-        self.states.remove(state)
+        self.states.remove([_ for _ in self.states if _.name == state.name][0])
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
