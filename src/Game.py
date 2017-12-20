@@ -13,6 +13,7 @@ from CardPile import CardPile
 from EventPile import EventPile
 from LandmarkPile import LandmarkPile
 from BoonPile import BoonPile
+from StatePile import StatePile
 from PlayArea import PlayArea
 from Names import playerNames
 
@@ -45,6 +46,7 @@ class Game(object):
         self.eventpath = 'events'
         self.landmarkpath = 'landmarks'
         self.boonpath = 'boons'
+        self.statepath = 'states'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
@@ -161,6 +163,13 @@ class Game(object):
         self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
         self.boons = list(d.values())
         random.shuffle(self.boons)
+
+    ###########################################################################
+    def loadStates(self):
+        d = {}
+        self.loadNonKingdomCards('State', None, None, StatePile, d)
+        for st in self.getAvailableCards('State'):
+            self.cardpiles[st] = StatePile(st, self.cardmapping['State'][st])
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
@@ -307,6 +316,7 @@ class Game(object):
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
                 self.addPrizes()
+        self.loadStates()
 
     ###########################################################################
     def cardTypes(self):
@@ -329,6 +339,7 @@ class Game(object):
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
         mapping['Boon'] = self.getSetCardClasses('Boon', self.boonpath, 'boons', 'Boon_')
+        mapping['State'] = self.getSetCardClasses('State', self.statepath, 'states', 'State_')
         return mapping
 
     ###########################################################################
@@ -441,6 +452,7 @@ class Game(object):
 
             print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].numcards, tokens))
         for p in self.playerList():
+            print("%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
             print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
             print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
