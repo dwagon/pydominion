@@ -27,6 +27,7 @@ class Game(object):
 
         self.players = {}
         self.cardpiles = {}
+        self.states = {}
         self.events = {}
         self.landmarks = {}
         self.boons = []
@@ -169,7 +170,7 @@ class Game(object):
         d = {}
         self.loadNonKingdomCards('State', None, None, StatePile, d)
         for st in self.getAvailableCards('State'):
-            self.cardpiles[st] = StatePile(st, self.cardmapping['State'][st])
+            self.states[st] = StatePile(st, self.cardmapping['State'][st])
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):

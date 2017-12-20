@@ -32,7 +32,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.state = self.g['Lost in the Woods']
+        self.state = self.g.states['Lost in the Woods']
 
     def test_lost_in_woods(self):
         self.plr.setHand('Copper', 'Estate', 'Gold')
