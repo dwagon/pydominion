@@ -1275,6 +1275,10 @@ class Player(object):
         self.states.append(state)
 
     ###########################################################################
+    def remove_state(self, state):
+        self.states.remove(state)
+
+    ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
         """ Get the player to discard exactly num cards """
         if 'prompt' not in kwargs:
