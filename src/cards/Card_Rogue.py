@@ -82,7 +82,7 @@ class Card_Rogue(Card):
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'], badcards=['Pooka'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Rogue'].remove()
