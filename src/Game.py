@@ -36,7 +36,6 @@ class Game(object):
         self.retained_boons = []
         self.hexes = []
         self.discarded_hexes = []
-        self.retained_hexes = []
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -75,6 +74,7 @@ class Game(object):
         heirlooms = self.enable_heirlooms()
 
         self.checkCardRequirements()
+        self.loadStates()
 
         for i in range(self.numplayers):
             try:
@@ -323,15 +323,14 @@ class Game(object):
                 nc = self.numplayers * 10
                 self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
                 self.output("Playing with Ruins")
-            if self.cardpiles[card].isFate():
+            if self.cardpiles[card].isFate() and not self.boons:
                 self.loadBoons()
-            if self.cardpiles[card].isDoom():
+            if self.cardpiles[card].isDoom() and not self.hexes:
                 self.loadHexes()
             if self.cardpiles[card].traveller:
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
                 self.addPrizes()
-        self.loadStates()
 
     ###########################################################################
     def cardTypes(self):
@@ -431,9 +430,6 @@ class Game(object):
 
     ###########################################################################
     def cleanup_hexes(self):
-        for hx in self.retained_hexes[:]:
-            self.discarded_hexes.append(hx)
-        self.retained_hexes = []
         for hx in self.discarded_hexes[:]:
             self.hexes.append(hx)
         random.shuffle(self.hexes)
@@ -442,10 +438,7 @@ class Game(object):
     ###########################################################################
     def discard_hex(self, hx):
         """ Return a hex """
-        if hx.retain_hex:
-            self.retained_hexes.append(hx)
-        else:
-            self.discarded_hexes.append(hx)
+        self.discarded_hexes.append(hx)
 
     ###########################################################################
     def receive_boon(self):
@@ -488,12 +481,10 @@ class Game(object):
         for b in self.retained_boons:
             print(" retained {}".format(b))
         print("Hexes:")
-        for b in self.hexes:
-            print(" hex  {}".format(b))
-        for b in self.discarded_hexes:
-            print(" discarded {}".format(b))
-        for b in self.retained_hexes:
-            print(" retained {}".format(b))
+        for h in self.hexes:
+            print(" hex  {}".format(h))
+        for h in self.discarded_hexes:
+            print(" discarded {}".format(h))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():

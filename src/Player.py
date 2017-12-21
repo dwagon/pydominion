@@ -128,6 +128,20 @@ class Player(object):
         return self.journey_token
 
     ###########################################################################
+    def receive_hex(self, hx=None):
+        if hx is None:
+            hx = self.game.receive_hex()
+        self.output("Received {} as a hex".format(hx))
+        self.output("{}".format(hx.description(self)))
+        for i in range(hx.cards):
+            self.pickupCard()
+        self.actions += hx.actions
+        self.buys += hx.buys
+        self.coin += self.hook_spendValue(hx, actual=True)
+        hx.special(game=self.game, player=self)
+        self.game.discard_hex(hx)
+
+    ###########################################################################
     def receive_boon(self, boon=None):
         if boon is None:
             boon = self.game.receive_boon()
