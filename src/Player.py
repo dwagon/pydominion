@@ -1272,6 +1272,7 @@ class Player(object):
 
     ###########################################################################
     def assign_state(self, state):
+        assert isinstance(state, str)
         statecard = self.game.states[state]
 
         if statecard.unique_state:
