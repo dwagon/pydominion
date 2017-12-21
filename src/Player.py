@@ -1267,12 +1267,20 @@ class Player(object):
         return sel[0]
 
     ###########################################################################
+    def has_state(self, state):
+        return state in [_.name for _ in self.states]
+
+    ###########################################################################
     def assign_state(self, state):
-        if state.unique_state:
+        statecard = self.game.states[state]
+
+        if statecard.unique_state:
             for pl in self.game.playerList():
-                if state in pl.states:
-                    pl.states.remove(state)
-        self.states.append(state)
+                for st in pl.states[:]:
+                    if st.name == state:
+                        pl.states.remove(st)
+                        break
+        self.states.append(statecard)
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
