@@ -10,7 +10,7 @@ class Card_Cartographer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = "+1 Card +1 Action Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order."
+        self.desc = "+1 Card; +1 Action; Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order."
         self.name = 'Cartographer'
         self.cards = 1
         self.actions = 1
