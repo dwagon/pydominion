@@ -422,9 +422,7 @@ class Game(object):
     def receive_hex(self):
         """ Receive a hex """
         if not self.hexes:
-            self.hexes = self.discarded_hexes[:]
-            self.discarded_hexes = []
-            random.shuffle(self.hexes)
+            self.cleanup_hexes()
         hx = self.hexes.pop()
         return hx
 
