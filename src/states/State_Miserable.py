@@ -5,7 +5,7 @@ from State import State
 
 
 ###############################################################################
-class State_Misrable(State):
+class State_Miserable(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
@@ -17,7 +17,7 @@ class State_Misrable(State):
 
 
 ###############################################################################
-class Test_Misrable(unittest.TestCase):
+class Test_Miserable(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
