@@ -15,7 +15,6 @@ class Hex_Delusion(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        print("player.states={}".format(player.states))
         if player.has_state('Deluded') or player.has_state('Envious'):
             return
         player.assign_state('Deluded')
@@ -40,7 +39,6 @@ class Test_Delusion(unittest.TestCase):
 
     def test_normal(self):
         self.plr.gainCard('Cursed Village')
-        self.g.print_state()
         self.assertTrue(self.plr.has_state('Deluded'))
 
 
