@@ -13,6 +13,7 @@ from CardPile import CardPile
 from EventPile import EventPile
 from LandmarkPile import LandmarkPile
 from BoonPile import BoonPile
+from HexPile import HexPile
 from StatePile import StatePile
 from PlayArea import PlayArea
 from Names import playerNames
@@ -33,6 +34,8 @@ class Game(object):
         self.boons = []
         self.discarded_boons = []
         self.retained_boons = []
+        self.hexes = []
+        self.discarded_hexes = []
         self.trashpile = PlayArea([])
         self.gameover = False
         self.currentPlayer = None
@@ -47,6 +50,7 @@ class Game(object):
         self.eventpath = 'events'
         self.landmarkpath = 'landmarks'
         self.boonpath = 'boons'
+        self.hexpath = 'hexes'
         self.statepath = 'states'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
@@ -70,6 +74,7 @@ class Game(object):
         heirlooms = self.enable_heirlooms()
 
         self.checkCardRequirements()
+        self.loadStates()
 
         for i in range(self.numplayers):
             try:
@@ -164,6 +169,13 @@ class Game(object):
         self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
         self.boons = list(d.values())
         random.shuffle(self.boons)
+
+    ###########################################################################
+    def loadHexes(self):
+        d = {}
+        self.loadNonKingdomCards('Hex', None, None, HexPile, d)
+        self.hexes = list(d.values())
+        random.shuffle(self.hexes)
 
     ###########################################################################
     def loadStates(self):
@@ -311,13 +323,14 @@ class Game(object):
                 nc = self.numplayers * 10
                 self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
                 self.output("Playing with Ruins")
-            if self.cardpiles[card].isFate():
+            if self.cardpiles[card].isFate() and not self.boons:
                 self.loadBoons()
+            if self.cardpiles[card].isDoom() and not self.hexes:
+                self.loadHexes()
             if self.cardpiles[card].traveller:
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
                 self.addPrizes()
-        self.loadStates()
 
     ###########################################################################
     def cardTypes(self):
@@ -340,6 +353,7 @@ class Game(object):
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
         mapping['Boon'] = self.getSetCardClasses('Boon', self.boonpath, 'boons', 'Boon_')
+        mapping['Hex'] = self.getSetCardClasses('Hex', self.hexpath, 'hexes', 'Hex_')
         mapping['State'] = self.getSetCardClasses('State', self.statepath, 'states', 'State_')
         return mapping
 
@@ -405,6 +419,26 @@ class Game(object):
         return False
 
     ###########################################################################
+    def receive_hex(self):
+        """ Receive a hex """
+        if not self.hexes:
+            self.cleanup_hexes()
+        hx = self.hexes.pop()
+        return hx
+
+    ###########################################################################
+    def cleanup_hexes(self):
+        for hx in self.discarded_hexes[:]:
+            self.hexes.append(hx)
+        random.shuffle(self.hexes)
+        self.discarded_hexes = []
+
+    ###########################################################################
+    def discard_hex(self, hx):
+        """ Return a hex """
+        self.discarded_hexes.append(hx)
+
+    ###########################################################################
     def receive_boon(self):
         """ Receive a boon """
         if not self.boons:
@@ -444,6 +478,11 @@ class Game(object):
             print(" discarded {}".format(b))
         for b in self.retained_boons:
             print(" retained {}".format(b))
+        print("Hexes:")
+        for h in self.hexes:
+            print(" hex  {}".format(h))
+        for h in self.discarded_hexes:
+            print(" discarded {}".format(h))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():
