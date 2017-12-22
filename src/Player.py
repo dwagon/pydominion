@@ -870,6 +870,8 @@ class Player(object):
         val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
             val += c.hook_spendValue(game=self.game, player=self, card=card)
+        for s in self.states:
+            val += s.hook_spendValue(game=self.game, player=self, card=card)
         if val and self.coin_token:
             val -= 1
             if actual:
