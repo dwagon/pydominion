@@ -34,7 +34,7 @@ class Test_Famine(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for h in self.g.hexes[:]:
-            if h.name != "The Flame's Gift":
+            if h.name != "Famine":
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
         self.card = self.g['Cursed Village'].remove()
