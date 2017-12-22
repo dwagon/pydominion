@@ -34,7 +34,7 @@ class Test_Deluded(unittest.TestCase):
         self.state = self.g.states['Deluded']
 
     def test_deluded(self):
-        self.plr.assign_state(self.state)
+        self.plr.assign_state('Deluded')
         self.plr.test_input = ['Estate']
         self.assertGreater(self.plr.cardCost(self.g['Bard']), 99)
         self.plr.test_input = ['End Phase']
