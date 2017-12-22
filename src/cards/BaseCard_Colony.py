@@ -39,6 +39,7 @@ class Test_Colony(unittest.TestCase):
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Colony'], 10)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
