@@ -49,7 +49,7 @@ class Test_Keep(unittest.TestCase):
             self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
         except AssertionError:
             self.g.print_state()
-            self.raise
+            raise
 
 
 ###############################################################################
