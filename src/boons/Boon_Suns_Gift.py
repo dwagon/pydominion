@@ -1,20 +1,18 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+from Boon import Boon
 
 
 ###############################################################################
-class Card_Cartographer(Card):
+class Boon_Suns_Gift(Boon):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
-        self.desc = "+1 Card; +1 Action; Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order."
-        self.name = 'Cartographer'
-        self.cards = 1
-        self.actions = 1
-        self.cost = 5
+        Boon.__init__(self)
+        self.cardtype = 'boon'
+        self.base = 'nocture'
+        self.desc = "Look at the top 4 cards of your deck. Discard any number of them and put the rest back in any order."
+        self.name = "The Sun's Gift"
+        self.purchasable = False
 
     def special(self, game, player):
         cards = []
@@ -29,21 +27,23 @@ class Card_Cartographer(Card):
 
 
 ###############################################################################
-class Test_Cartographer(unittest.TestCase):
+class Test_Suns_Gift(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cartographer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        self.card = self.g['Cartographer'].remove()
+        for b in self.g.boons[:]:
+            if b.name != "The Sun's Gift":
+                self.g.discarded_boons.append(b)
+                self.g.boons.remove(b)
+        self.card = self.g['Bard'].remove()
         self.plr.addCard(self.card, 'hand')
 
-    def test_play(self):
+    def test_suns_gift(self):
         self.plr.setDeck('Silver', 'Gold', 'Province', 'Duchy', 'Copper')
         self.plr.test_input = ['Province', 'Duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.plr.inDeck('Silver'))
         self.assertIsNotNone(self.plr.inDeck('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))

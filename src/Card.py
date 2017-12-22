@@ -116,6 +116,12 @@ class Card(object):
         return False
 
     ##########################################################################
+    def isDoom(self):
+        if 'doom' in self.cardtype:
+            return True
+        return False
+
+    ##########################################################################
     def isLooter(self):
         if 'looter' in self.cardtype:
             return True

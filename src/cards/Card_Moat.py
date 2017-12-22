@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Moat(Card):
     def __init__(self):
         Card.__init__(self)
@@ -17,7 +18,7 @@ class Card_Moat(Card):
 
 
 ###############################################################################
-class Test_Library(unittest.TestCase):
+class Test_Moat(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])

@@ -84,6 +84,7 @@ class Test_Lookout(unittest.TestCase):
         self.assertEqual(self.g.trashSize(), 0)
         self.assertEqual(self.plr.discardSize(), 0)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
