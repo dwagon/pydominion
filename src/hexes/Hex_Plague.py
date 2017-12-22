@@ -31,7 +31,7 @@ class Test_Plague(unittest.TestCase):
                 self.g.discarded_hexes.append(h)
                 self.g.hexes.remove(h)
 
-    def test_famine(self):
+    def test_plague(self):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
         self.plr.gainCard('Cursed Village')
         self.assertIsNotNone(self.plr.inHand('Curse'))
