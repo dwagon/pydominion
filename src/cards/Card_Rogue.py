@@ -89,9 +89,13 @@ class Test_Rogue(unittest.TestCase):
 
     def test_play(self):
         """ Nothing should happen """
-        self.plr.addCard(self.card, 'hand')
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        try:
+            self.plr.addCard(self.card, 'hand')
+            self.plr.playCard(self.card)
+            self.assertEqual(self.plr.getCoin(), 2)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_defended(self):
         """ Victim has a defense """
