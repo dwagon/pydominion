@@ -45,7 +45,11 @@ class Test_Keep(unittest.TestCase):
         """ Use Keep when we have the most Silver"""
         self.plr.setDeck('Silver')
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
+        try:
+            self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
+        except AssertionError:
+            self.g.print_state()
+            self.raise
 
 
 ###############################################################################
