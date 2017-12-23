@@ -80,6 +80,7 @@ class Test_Island(unittest.TestCase):
         score = self.plr.getScoreDetails()
         self.assertEqual(score['Island'], 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
