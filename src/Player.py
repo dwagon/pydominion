@@ -885,16 +885,7 @@ class Player(object):
                 self.playCard(card)
 
     ###########################################################################
-    def playCard(self, card, discard=True, costAction=True):
-        # assert(isinstance(card, (Card, CardPile)))
-        self.output("Playing %s" % card.name)
-        self.currcards.append(card)
-        if card.isAction() and costAction:
-            self.actions -= 1
-        if self.actions < 0:    # pragma: no cover
-            self.actions = 0
-            self.currcards.pop()
-            return
+    def playCard_Tokens(self, card):
         tkns = self.which_token(card.name)
         if '+1 Action' in tkns:
             self.output("Gaining action from +1 Action token")
@@ -908,6 +899,19 @@ class Player(object):
         if '+1 Buy' in tkns:
             self.output("Gaining buy from +1 Buy token")
             self.buys += 1
+
+    ###########################################################################
+    def playCard(self, card, discard=True, costAction=True):
+        # assert(isinstance(card, (Card, CardPile)))
+        self.output("Playing %s" % card.name)
+        self.currcards.append(card)
+        if card.isAction() and costAction:
+            self.actions -= 1
+        if self.actions < 0:    # pragma: no cover
+            self.actions = 0
+            self.currcards.pop()
+            return
+        self.playCard_Tokens(card)
         if discard:
             if card.isDuration():
                 self.addCard(card, 'duration')
