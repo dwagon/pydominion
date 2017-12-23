@@ -112,6 +112,21 @@ class TextPlayer(Player):
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
+    def cardSelSource(self, **kwargs):
+        if 'cardsrc' in kwargs:
+            if kwargs['cardsrc'] == 'hand':
+                selectfrom = self.hand
+            elif kwargs['cardsrc'] == 'played':
+                selectfrom = self.played
+            elif kwargs['cardsrc'] == 'discard':
+                selectfrom = self.discardpile
+            else:
+                selectfrom = kwargs['cardsrc']
+        else:
+            selectfrom = self.hand
+        return selectfrom
+
+    ###########################################################################
     def cardSel(self, num=1, **kwargs):
         """ Most interactions with players are the selection of cards
             either from the hand, the drawpiles, or a subset
@@ -133,17 +148,7 @@ class TextPlayer(Player):
             * anynum
                 True - Any number of cards can be selected
         """
-        if 'cardsrc' in kwargs:
-            if kwargs['cardsrc'] == 'hand':
-                selectfrom = self.hand
-            elif kwargs['cardsrc'] == 'played':
-                selectfrom = self.played
-            elif kwargs['cardsrc'] == 'discard':
-                selectfrom = self.discardpile
-            else:
-                selectfrom = kwargs['cardsrc']
-        else:
-            selectfrom = self.hand
+        selectfrom = self.cardSelSource(kwargs)
         if 'force' in kwargs and kwargs['force']:
             force = True
         else:
