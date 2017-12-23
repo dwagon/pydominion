@@ -82,6 +82,7 @@ class Test_Amulet(unittest.TestCase):
         self.assertIsNone(self.plr.inDiscard('Silver'))
         self.assertEqual(self.g.trashSize(), 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
