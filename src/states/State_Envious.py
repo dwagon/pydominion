@@ -30,7 +30,7 @@ class State_Envious(State):
 class Test_Envious(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 

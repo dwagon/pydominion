@@ -73,8 +73,9 @@ class Game(object):
         self.loadLandmarks()
         heirlooms = self.enable_heirlooms()
 
+        if self.hexes or self.boons:
+            self.loadStates()
         self.checkCardRequirements()
-        self.loadStates()
 
         for i in range(self.numplayers):
             try:
@@ -306,13 +307,12 @@ class Game(object):
 
     ###########################################################################
     def checkCardRequirements(self):
-        for card in list(self.cardpiles.values()) + list(self.events.values()):
+        for card in list(self.cardpiles.values()) + list(self.events.values()) + list(self.hexes) + list(self.boons):
             for x in card.required_cards:
                 if isinstance(x, tuple):
                     k, c = x
                 else:
-                    k = 'BaseCard'
-                    c = x
+                    k, c = 'BaseCard', x
                 if c not in self.cardpiles:
                     self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
                     self.output("Playing with %s" % c)
