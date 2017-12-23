@@ -47,7 +47,7 @@ class Test_CursedVillage(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Cursed Village')
-        self.plr.has_state('Deluded')
+        self.assertTrue(self.plr.has_state('Deluded'))
 
 
 ###############################################################################
