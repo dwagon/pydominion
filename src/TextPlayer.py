@@ -148,7 +148,7 @@ class TextPlayer(Player):
             * anynum
                 True - Any number of cards can be selected
         """
-        selectfrom = self.cardSelSource(kwargs)
+        selectfrom = self.cardSelSource(**kwargs)
         if 'force' in kwargs and kwargs['force']:
             force = True
         else:
