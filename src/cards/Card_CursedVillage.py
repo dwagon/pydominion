@@ -33,6 +33,10 @@ class Test_CursedVillage(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Cursed Village'].remove()
+        for h in self.g.hexes[:]:
+            if h.name != "Delusion":
+                self.g.discarded_hexes.append(h)
+                self.g.hexes.remove(h)
 
     def test_play_card(self):
         """ Play Cursed Village """
@@ -43,6 +47,7 @@ class Test_CursedVillage(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Cursed Village')
+        self.plr.has_state('Deluded')
 
 
 ###############################################################################
