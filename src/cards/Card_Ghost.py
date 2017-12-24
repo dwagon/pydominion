@@ -53,6 +53,7 @@ class Test_Ghost(unittest.TestCase):
 
     def test_play_with_no_actions(self):
         """ Play a Ghost with no actions """
+        self.plr.phase = 'night'
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
