@@ -907,7 +907,7 @@ class Player(object):
         # assert(isinstance(card, (Card, CardPile)))
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
-        if card.isAction() and costAction:
+        if card.isAction() and costAction and self.phase != 'night':
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
             self.actions = 0
