@@ -74,10 +74,14 @@ class Test_Feast(unittest.TestCase):
         self.plr.setHand('Feast')
         self.plr.test_input = ['trash', '1']
         self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Feast')
-        self.assertTrue(self.plr.played.isEmpty())
-        self.assertEqual(self.plr.discardSize(), 1)
+        try:
+            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashpile[0].name, 'Feast')
+            self.assertTrue(self.plr.played.isEmpty())
+            self.assertEqual(self.plr.discardSize(), 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
