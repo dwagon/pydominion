@@ -18,9 +18,11 @@ class Card_Conclave(Card):
     def special(self, game, player):
         ac = [_ for _ in player.hand if _.isAction()]
         if not ac:
+            player.output("No actions to play")
             return
         sac = [_ for _ in ac if not player.inPlayed(_.name)]
         if not sac:
+            player.output("No suitable actions to play")
             return
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
         index = 1
