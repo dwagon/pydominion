@@ -45,6 +45,7 @@ class Test_Silkroad(unittest.TestCase):
         self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
         self.assertEqual(self.plr.getScoreDetails()['Silk Road'], 2 + 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
