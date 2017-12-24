@@ -22,6 +22,11 @@ class Hex_Fear(Hex):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):
+    return player.pick_to_discard(1, keepvic=True)
+
+
+###############################################################################
 class Test_Fear(unittest.TestCase):
     def setUp(self):
         import Game
