@@ -34,14 +34,18 @@ class Test_Plaza(unittest.TestCase):
 
     def test_play(self):
         """ Play a plaza """
-        self.plr.specialcoins = 0
-        self.plr.setHand('Gold')
-        self.plr.test_input = ['gold']
-        self.plr.addCard(self.card, 'hand')
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getSpecialCoins(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 1)
+        try:
+            self.plr.specialcoins = 0
+            self.plr.setHand('Gold')
+            self.plr.test_input = ['gold']
+            self.plr.addCard(self.card, 'hand')
+            self.plr.playCard(self.card)
+            self.assertEqual(self.plr.getSpecialCoins(), 1)
+            self.assertEqual(self.plr.getActions(), 2)
+            self.assertEqual(self.plr.handSize(), 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
