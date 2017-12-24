@@ -29,7 +29,7 @@ class Card_Devils_Workshop(Card):
 class Test_Devils_Workshop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Devil's Workshop"])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Devil's Workshop", "Moat"])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g["Devil's Workshop"].remove()
@@ -41,9 +41,9 @@ class Test_Devils_Workshop(unittest.TestCase):
 
     def test_play_1(self):
         self.plr.gainCard('Copper')
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
-        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
+        self.assertLessEqual(self.plr.discardpile[0].name, 'Moat')
 
     def test_play_2(self):
         self.plr.gainCard('Copper')
