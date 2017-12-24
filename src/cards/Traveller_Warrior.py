@@ -57,7 +57,11 @@ class Test_Warrior(unittest.TestCase):
     def test_warrior(self):
         """ Play a warrior nothing to trash """
         self.plr.playCard(self.card)
-        self.assertEqual(self.victim.discardSize(), 1)
+        try:
+            self.assertEqual(self.victim.discardSize(), 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_with_trash(self):
         """ Play a warrior with something to trash """
