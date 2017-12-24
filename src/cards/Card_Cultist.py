@@ -94,6 +94,7 @@ class Test_Cultist(unittest.TestCase):
         self.assertEqual(self.g.trashpile[0].name, 'Cultist')
         self.assertEqual(self.plr.handSize(), 8)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
