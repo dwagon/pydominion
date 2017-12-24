@@ -16,7 +16,7 @@ class Card_Ghost(Card):
         self.purchasable = False
         self.cost = 4
 
-    def special(self, game, player):
+    def night(self, game, player):
         if not hasattr(player, '_ghost_reserve'):
             player._ghost_reserve = PlayArea([])
         count = len(player.allCards())
@@ -33,6 +33,8 @@ class Card_Ghost(Card):
             return
 
     def duration(self, game, player):
+        if not hasattr(player, '_ghost_reserve'):
+            return
         for card in player._ghost_reserve[:]:
             for i in range(2):
                 player.playCard(card, discard=False, costAction=False)

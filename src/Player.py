@@ -939,11 +939,10 @@ class Player(object):
 
         for i in range(card.cards + modif):
             self.pickupCard()
-        try:
+        if self.phase == 'night':
+            card.night(game=self.game, player=self)
+        else:
             card.special(game=self.game, player=self)
-        except KeyboardInterrupt:   # pragma: no cover
-            sys.stderr.write("\nFailed: %s\n" % self.messages)
-            sys.exit(1)
         self.currcards.pop()
 
     ###########################################################################
