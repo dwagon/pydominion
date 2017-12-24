@@ -12,7 +12,7 @@ class Card_WilloWisp(Card):
         self.base = 'nocturne'
         self.desc = "+1 Card; +1 Action; Reveal the top card of your deck. If it costs 2 or less, put it into your hand."
         self.name = "Will-o'-Wisp"
-        self.purchasable = True
+        self.purchasable = False
         self.card = 1
         self.actions = 1
         self.cost = 0
