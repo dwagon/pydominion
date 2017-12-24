@@ -49,6 +49,7 @@ class Test_Legionary(unittest.TestCase):
         self.assertEqual(self.victim.handSize(), 3)
         self.assertEqual(self.victim.discardSize(), 3)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

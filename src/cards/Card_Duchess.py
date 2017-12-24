@@ -81,6 +81,7 @@ class Test_Duchess(unittest.TestCase):
         self.assertIsNone(self.plr.inDiscard('Duchess'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
