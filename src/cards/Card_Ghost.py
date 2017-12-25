@@ -58,12 +58,16 @@ class Test_Ghost(unittest.TestCase):
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
     def test_duration(self):
-        self.plr.setDeck('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
-        self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
-        self.plr.playCard(self.card)
-        self.plr.endTurn()
-        self.plr.startTurn()
-        self.assertEqual(self.plr.handSize(), 5 + 2 * 2)    # Hand + Moat *2
+        try:
+            self.plr.setDeck('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
+            self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
+            self.plr.playCard(self.card)
+            self.plr.endTurn()
+            self.plr.startTurn()
+            self.assertEqual(self.plr.handSize(), 5 + 2 * 2)    # Hand + Moat *2
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
