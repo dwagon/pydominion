@@ -41,7 +41,7 @@ class Test_Farmland(unittest.TestCase):
             self.assertEqual(self.plr.handSize(), 1)
             # 1 for farmland, 1 for gained card
             self.assertEqual(self.plr.discardSize(), 2)
-        except AssertionError:
+        except (AssertionError, IOError):
             self.g.print_state()
             raise
 
