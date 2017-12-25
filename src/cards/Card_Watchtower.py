@@ -64,14 +64,18 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_trash(self):
         """ React to gaining a card - discard card"""
-        self.plr.test_input = ['trash']
-        self.plr.setHand('Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.gainCard('Copper')
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[-1].name, 'Copper')
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.inHand('Copper'), None)
+        try:
+            self.plr.test_input = ['trash']
+            self.plr.setHand('Gold')
+            self.plr.addCard(self.card, 'hand')
+            self.plr.gainCard('Copper')
+            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashpile[-1].name, 'Copper')
+            self.assertEqual(self.plr.handSize(), 2)
+            self.assertEqual(self.plr.inHand('Copper'), None)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_react_topdeck(self):
         """ React to gaining a card - put card on deck"""
