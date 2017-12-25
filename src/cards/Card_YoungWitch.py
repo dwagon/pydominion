@@ -59,9 +59,14 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.addCard(self.card, 'hand')
         self.attacker.test_input = ['Duchy', 'Province', 'finish']
         self.attacker.playCard(self.card)
-        self.assertIn(self.g[self.g._bane].cost, (2, 3))
-        self.assertEqual(self.attacker.handSize(), 5 + 2 - 2)
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        try:
+            self.assertIn(self.g[self.g._bane].cost, (2, 3))
+            self.assertEqual(self.attacker.handSize(), 5 + 2 - 2)
+            self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        except AssertionError:
+            print("Bane={}".format(self.g._bane))
+            self.g.print_state()
+            raise
 
     def test_play_bane(self):
         """ Play the young witch without a bane """
@@ -73,6 +78,7 @@ class Test_YoungWitch(unittest.TestCase):
         try:
             self.assertIsNone(self.victim.inDiscard('Curse'))
         except AssertionError:
+            print("Bane={}".format(self.g._bane))
             self.g.print_state()
             raise
 
