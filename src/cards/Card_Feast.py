@@ -53,27 +53,29 @@ class Test_Feast(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
+        self.card = self.g['Feast'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_dontTrash(self):
-        self.plr.setHand('Feast')
         self.plr.test_input = ['keep']
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.playCard(self.card)
         self.assertTrue(self.g.trashpile.isEmpty())
         self.assertEqual(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
-        self.plr.setHand('Feast')
-        self.plr.test_input = ['trash', '0']
-        self.plr.playCard(self.plr.hand[0])
-        self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Feast')
-        self.assertTrue(self.plr.played.isEmpty())
+        try:
+            self.plr.test_input = ['trash', 'nothing']
+            self.plr.playCard(self.card)
+            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashpile[0].name, 'Feast')
+            self.assertTrue(self.plr.played.isEmpty())
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_trashForSomething(self):
-        self.plr.setHand('Feast')
         self.plr.test_input = ['trash', '1']
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.playCard(self.card)
         try:
             self.assertEqual(self.g.trashSize(), 1)
             self.assertEqual(self.g.trashpile[0].name, 'Feast')
