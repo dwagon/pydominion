@@ -17,6 +17,7 @@ class Card_Devils_Workshop(Card):
 
     def night(self, game, player):
         nc = len(player.stats['gained'])
+        player.output("You gained {} cards this turn".format(nc))
         if nc >= 2:
             player.gainCard('Imp')
         elif nc == 1:
@@ -36,6 +37,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play_0(self):
+        self.plr.phase = 'night'
         self.plr.playCard(self.card)
         try:
             self.assertIsNotNone(self.plr.inDiscard('Gold'))
@@ -44,6 +46,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_1(self):
+        self.plr.phase = 'night'
         self.plr.gainCard('Copper')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
@@ -54,6 +57,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_2(self):
+        self.plr.phase = 'night'
         self.plr.gainCard('Copper')
         self.plr.gainCard('Estate')
         self.plr.playCard(self.card)
