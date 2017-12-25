@@ -15,8 +15,9 @@ class Card_Devils_Workshop(Card):
         self.cost = 4
         self.required_cards = [('Card', 'Imp')]
 
-    def special(self, game, player):
+    def night(self, game, player):
         nc = len(player.stats['gained'])
+        player.output("You gained {} cards this turn".format(nc))
         if nc >= 2:
             player.gainCard('Imp')
         elif nc == 1:
@@ -36,20 +37,35 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play_0(self):
+        self.plr.phase = 'night'
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        try:
+            self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_play_1(self):
+        self.plr.phase = 'night'
         self.plr.gainCard('Copper')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
-        self.assertLessEqual(self.plr.discardpile[0].name, 'Moat')
+        try:
+            self.assertLessEqual(self.plr.discardpile[0].name, 'Moat')
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_play_2(self):
+        self.plr.phase = 'night'
         self.plr.gainCard('Copper')
         self.plr.gainCard('Estate')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Imp'))
+        try:
+            self.assertIsNotNone(self.plr.inDiscard('Imp'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

@@ -76,6 +76,10 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
+    def night(self, game, player):
+        pass    # pragma: no cover
+
+    ##########################################################################
     def duration(self, game, player):
         pass    # pragma: no cover
 

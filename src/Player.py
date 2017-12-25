@@ -907,7 +907,7 @@ class Player(object):
         # assert(isinstance(card, (Card, CardPile)))
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
-        if card.isAction() and costAction:
+        if card.isAction() and costAction and self.phase != 'night':
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
             self.actions = 0
@@ -939,11 +939,10 @@ class Player(object):
 
         for i in range(card.cards + modif):
             self.pickupCard()
-        try:
+        if self.phase == 'night':
+            card.night(game=self.game, player=self)
+        else:
             card.special(game=self.game, player=self)
-        except KeyboardInterrupt:   # pragma: no cover
-            sys.stderr.write("\nFailed: %s\n" % self.messages)
-            sys.exit(1)
         self.currcards.pop()
 
     ###########################################################################
