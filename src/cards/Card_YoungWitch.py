@@ -24,6 +24,8 @@ class Card_YoungWitch(Card):
             card = klass()
             if card.name in game:
                 continue
+            if not card.insupply or not card.purchasable:
+                continue
             if card.name in game.badcards:
                 continue
             if card.cost in (2, 3):
