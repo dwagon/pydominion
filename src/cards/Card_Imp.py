@@ -13,6 +13,7 @@ class Card_Imp(Card):
         self.desc = "+2 Cards; You may play an Action card from your hand that you don't have a copy of in play."
         self.name = "Imp"
         self.purchasable = False
+        self.insupply = False
         self.cards = 2
         self.cost = 2
         self.numcards = 13

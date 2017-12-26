@@ -14,6 +14,7 @@ class Card_Ghost(Card):
         self.desc = "Reveal cards from your deck until you reveal an Action. Discard the other cards and set aside the Action. At the start of your next turn, play it twice."
         self.name = 'Ghost'
         self.purchasable = False
+        self.insupply = False
         self.cost = 4
 
     def night(self, game, player):

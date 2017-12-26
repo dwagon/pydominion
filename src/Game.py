@@ -245,7 +245,7 @@ class Game(object):
         for c in initcards:
             cardname = self.guess_cardname(c)
             if cardname:
-                self.useCardPile(available, cardname)
+                self.useCardPile(available, cardname, force=True)
                 unfilled -= 1
                 continue
             eventname = self.guess_cardname(c, 'Event')
@@ -281,13 +281,15 @@ class Game(object):
         return list(self.cardmapping['PrizeCard'].keys())
 
     ###########################################################################
-    def useCardPile(self, available, c):
+    def useCardPile(self, available, c, force=False):
         try:
             available.remove(c)
         except ValueError:  # pragma: no cover
             sys.stderr.write("Unknown card '%s'\n" % c)
             sys.exit(1)
         cp = CardPile(c, self.cardmapping['Card'][c], self)
+        if not force and not cp.insupply:
+            return 0
         self.cardpiles[cp.name] = cp
         self.output("Playing with card %s" % self[c].name)
         return 1
