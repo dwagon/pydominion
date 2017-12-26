@@ -50,11 +50,12 @@ class TestToken(unittest.TestCase):
 
     def test_trashing_token(self):
         """ Does the Trashing token work """
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold', 'Province', 'Duchy')
         self.plr.place_token('Trashing', 'Moat')
         self.plr.test_input = ['trash province']
         self.plr.buyCard(self.g['Moat'])
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
 
     def test_cost_token(self):
         """ Does the -Cost token work """

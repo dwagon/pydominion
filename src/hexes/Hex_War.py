@@ -41,9 +41,10 @@ class Test_War(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_war(self):
+        tsize = self.g.trashSize()
         self.plr.setDeck('Duchy', 'Cursed Village', 'Silver')
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash('Silver'))
 
 

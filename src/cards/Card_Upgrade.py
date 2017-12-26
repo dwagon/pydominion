@@ -44,13 +44,14 @@ class Test_Upgrade(unittest.TestCase):
 
     def test_trash(self):
         """ Trash an upgrade """
+        tsize = self.g.trashSize()
         self.plr.setHand('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash('Duchy'))
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))

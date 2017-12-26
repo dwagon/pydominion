@@ -44,7 +44,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertIsNone(self.g.inTrash('Mining Village'))
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
 
     def test_trash(self):
@@ -55,7 +55,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertTrue(self.plr.played.isEmpty())
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.g.trashpile[-1].name, 'Mining Village')
+        self.assertIsNotNone(self.g.inTrash('Mining Village'))
 
 
 ###############################################################################

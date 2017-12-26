@@ -101,7 +101,7 @@ class Test_Thief(unittest.TestCase):
         self.thief.test_input = ['trash gold']
         self.thief.playCard(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertIsNotNone(self.g.inTrash('Gold'))
         for c in self.victim.deck:
             self.assertNotEqual(c.name, 'Gold')
         self.assertEqual(self.victim.discardpile[0].name, 'Silver')
