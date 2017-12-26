@@ -36,7 +36,7 @@ class Test_FaithfulHound(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5+2)
 
     def test_discard(self):
-        pass
+        pass    # TODO
 
 
 ###############################################################################
