@@ -12,6 +12,7 @@ class Card_Madman(Card):
         self.base = 'darkages'
         self.desc = """+2 Actions. Return this to the Madman pile. If you do, +1 Card per card in your hand."""
         self.name = 'Madman'
+        self.insupply = False
         self.actions = 2
         self.cost = 0
         self.purchasable = False

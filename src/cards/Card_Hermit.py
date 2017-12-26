@@ -88,6 +88,7 @@ class Test_Hermit(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Madman'))
         self.assertIsNone(self.plr.inHand('Hermit'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
