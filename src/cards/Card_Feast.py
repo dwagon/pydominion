@@ -75,7 +75,6 @@ class Test_Feast(unittest.TestCase):
 
     def test_trashForSomething(self):
         tsize = self.g.trashSize()
-        self.plr.setHand('Feast')
         self.plr.test_input = ['trash', '1']
         self.plr.playCard(self.card)
         try:
