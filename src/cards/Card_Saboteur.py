@@ -57,7 +57,7 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'], badcards=['Blessed Village'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Saboteur'].remove()
@@ -65,15 +65,19 @@ class Test_Saboteur(unittest.TestCase):
 
     def test_play(self):
         """ Play a saboteur """
-        self.victim.test_input = ['1']
-        self.victim.setDeck('Gold', 'Copper', 'Estate')
-        self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        trashed = self.g.trashpile[0]
-        self.assertTrue(trashed.cost >= 3)
-        for c in self.victim.discardpile[:-1]:
-            self.assertTrue(c.cost < 3)
-        self.assertTrue(self.victim.discardpile[-1].cost <= trashed.cost - 2)
+        try:
+            self.victim.test_input = ['1']
+            self.victim.setDeck('Gold', 'Copper', 'Estate')
+            self.plr.playCard(self.card)
+            self.assertEqual(self.g.trashSize(), 1)
+            trashed = self.g.trashpile[0]
+            self.assertTrue(trashed.cost >= 3)
+            for c in self.victim.discardpile[:-1]:
+                self.assertTrue(c.cost < 3)
+            self.assertTrue(self.victim.discardpile[-1].cost <= trashed.cost - 2)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_nomatching(self):
         """ Play a saboteur where the victim doesn't have a suitable card """
