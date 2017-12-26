@@ -15,6 +15,7 @@ class Card_WilloWisp(Card):
         self.purchasable = False
         self.card = 1
         self.actions = 1
+        self.insupply = False
         self.cost = 0
 
     def special(self, game, player):
