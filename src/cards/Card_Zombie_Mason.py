@@ -13,7 +13,7 @@ class Card_Zombie_Mason(Card):
         self.desc = "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
         self.name = 'Zombie Mason'
         self.cost = 3
-        self.purchaseable = False
+        self.purchasable = False
         self.numcards = 1
 
     def setup(self, game):
