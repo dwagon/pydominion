@@ -58,13 +58,15 @@ class Test_Loan(unittest.TestCase):
         self.assertTrue(self.g.trashpile.isEmpty())
 
     def test_trash(self):
+        tsize = self.g.trashSize()
         self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.inTrash('Gold'))
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

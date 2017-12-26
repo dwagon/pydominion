@@ -14,6 +14,7 @@ class Card_Ghost(Card):
         self.desc = "Reveal cards from your deck until you reveal an Action. Discard the other cards and set aside the Action. At the start of your next turn, play it twice."
         self.name = 'Ghost'
         self.purchasable = False
+        self.insupply = False
         self.cost = 4
 
     def night(self, game, player):
@@ -36,6 +37,7 @@ class Card_Ghost(Card):
         if not hasattr(player, '_ghost_reserve'):
             return
         for card in player._ghost_reserve[:]:
+            player.output("Ghost playing {}".format(card.name))
             for i in range(2):
                 player.playCard(card, discard=False, costAction=False)
             player._ghost_reserve.remove(card)
@@ -61,6 +63,7 @@ class Test_Ghost(unittest.TestCase):
         try:
             self.plr.setDeck('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
             self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
+            self.plr.phase = 'night'
             self.plr.playCard(self.card)
             self.plr.endTurn()
             self.plr.startTurn()

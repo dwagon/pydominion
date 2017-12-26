@@ -81,7 +81,7 @@ class Test_Bishop(unittest.TestCase):
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertIsNotNone(self.g.inTrash('Gold'))
 
     def test_bothtrash(self):
         self.plr.setHand('Gold')

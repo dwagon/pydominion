@@ -14,7 +14,7 @@ class Card_Hermit(Card):
         Gain a card costing up to 3.
         When you discard this from play, if you did not buy any cards this turn, trash this and gain a Madman from the Madman pile."""
         self.name = 'Hermit'
-        self.required_cards = ['Madman']
+        self.required_cards = [('Card', 'Madman')]
         self.cost = 3
 
     def special(self, game, player):
@@ -87,6 +87,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.discardHand()
         self.assertIsNotNone(self.plr.inDiscard('Madman'))
         self.assertIsNone(self.plr.inHand('Hermit'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
