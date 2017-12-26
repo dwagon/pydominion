@@ -28,12 +28,16 @@ class Test_Cobbler(unittest.TestCase):
         self.card = self.g['Cobbler'].remove()
 
     def test_duration(self):
-        self.plr.addCard(self.card, 'hand')
-        self.plr.playCard(self.card)
-        self.plr.endTurn()
-        self.plr.test_input = ['1']
-        self.plr.startTurn()
-        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
+        try:
+            self.plr.addCard(self.card, 'hand')
+            self.plr.playCard(self.card)
+            self.plr.endTurn()
+            self.plr.test_input = ['1']
+            self.plr.startTurn()
+            self.assertLessEqual(self.plr.discardpile[0].cost, 4)
+        except (AssertionError, IOError):
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
