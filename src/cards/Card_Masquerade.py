@@ -56,6 +56,7 @@ class Test_Masquerade(unittest.TestCase):
 
     def test_play(self):
         """ Play a masquerade """
+        tsize = self.g.trashSize()
         self.other.setHand('Copper', 'Silver', 'Gold')
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.setDeck('Estate', 'Duchy', 'Province')
@@ -66,10 +67,11 @@ class Test_Masquerade(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertTrue(self.other.inHand('Silver'))
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
+        tsize = self.g.trashSize()
         self.other.setHand('Copper', 'Silver', 'Gold')
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
@@ -77,7 +79,7 @@ class Test_Masquerade(unittest.TestCase):
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
 
 
 ###############################################################################

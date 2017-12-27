@@ -43,20 +43,22 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play(self):
         """ Play a death cart - no actions """
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash('Death Cart'))
 
     def test_play_trash(self):
         """ Play a death cart - no actions """
+        tsize = self.g.trashSize()
         self.plr.setHand('Copper', 'Moat')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash('Moat'))
         self.assertIsNone(self.g.inTrash('Death Cart'))
 
