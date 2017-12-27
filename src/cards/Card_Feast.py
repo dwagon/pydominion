@@ -50,7 +50,7 @@ class Card_Feast(Card):
 class Test_Feast(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'], badcards=['Den of Sin'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'], badcards=['Den of Sin', 'Ghost Town'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Feast'].remove()
