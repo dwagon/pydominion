@@ -23,7 +23,7 @@ class Card_Workshop(Card):
 class Test_Workshop(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Feast'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Feast'], badcards=['Blessed Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.wcard = self.g['Workshop'].remove()
