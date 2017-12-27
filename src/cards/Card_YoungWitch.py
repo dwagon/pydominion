@@ -49,7 +49,7 @@ class Card_YoungWitch(Card):
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
         self.g.startGame()
         self.attacker, self.victim = self.g.playerList()
         self.card = self.g['Young Witch'].remove()
@@ -71,7 +71,7 @@ class Test_YoungWitch(unittest.TestCase):
             raise
 
     def test_play_bane(self):
-        """ Play the young witch without a bane """
+        """ Play the young witch with a bane """
         self.victim.setHand('Copper', 'Silver', self.g._bane)
         self.attacker.setHand('Copper', 'Silver', 'Gold', 'Duchy', 'Province')
         self.attacker.addCard(self.card, 'hand')

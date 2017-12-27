@@ -57,7 +57,7 @@ def botresponse(player, kind, args=[], kwargs={}):
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'], badcards=['Blessed Village'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'], badcards=['Blessed Village', 'Cemetery'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Saboteur'].remove()

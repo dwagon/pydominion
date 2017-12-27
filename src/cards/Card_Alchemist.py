@@ -79,6 +79,7 @@ class Test_Alchemist(unittest.TestCase):
         self.assertIsNone(self.plr.inDiscard('Alchemist'))
         self.assertEqual(self.plr.deck[-1].name, 'Alchemist')
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
