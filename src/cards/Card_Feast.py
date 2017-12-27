@@ -63,10 +63,11 @@ class Test_Feast(unittest.TestCase):
         self.assertEqual(self.plr.played[0].name, 'Feast')
 
     def test_trashForNothing(self):
+        tsize = self.g.trashSize()
         try:
             self.plr.test_input = ['trash', 'nothing']
             self.plr.playCard(self.card)
-            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.g.trashpile[0].name, 'Feast')
             self.assertTrue(self.plr.played.isEmpty())
         except AssertionError:
