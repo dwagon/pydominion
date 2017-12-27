@@ -65,10 +65,11 @@ class Test_Warrior(unittest.TestCase):
 
     def test_with_trash(self):
         """ Play a warrior with something to trash """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Silver', 'Silver')
         self.plr.setPlayed('Page')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_end_turn(self):
         """ End the turn with a played warrior """
