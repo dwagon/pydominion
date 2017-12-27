@@ -28,9 +28,9 @@ class Test_Bard(unittest.TestCase):
         self.plr = self.g.playerList(0)
         self.bard = self.g['Bard'].remove()
         for b in self.g.boons[:]:
-            if b.name != "The Mountain's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Mountain's Gift":
+                self.g.boons = [b]
+                break
 
     def test_play_card(self):
         """ Play Bard """

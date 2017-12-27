@@ -27,9 +27,9 @@ class Test_Winds_Gift(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons[:]:
-            if b.name != "The Wind's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Wind's Gift":
+                self.g.boons = [b]
+                break
         self.card = self.g['Bard'].remove()
 
     def test_winds_gift(self):
