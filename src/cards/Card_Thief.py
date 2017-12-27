@@ -107,11 +107,12 @@ class Test_Thief(unittest.TestCase):
         self.assertEqual(self.victim.discardpile[0].name, 'Silver')
 
     def test_steal_treasure(self):
+        tsize = self.g.trashSize()
         self.victim.setHand('Copper', 'Copper')
         self.victim.setDeck('Copper', 'Silver', 'Gold')
         self.thief.test_input = ['steal gold']
         self.thief.playCard(self.thiefcard)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.deck:
             self.assertNotEqual(c.name, 'Gold')
         for c in self.thief.discardpile:
