@@ -22,16 +22,18 @@ class Card_Imp(Card):
         # Get action cards in hand
         ac = [_ for _ in player.hand if _.isAction()]
         if not ac:
+            player.output("No action cards")
             return
         # Select ones that haven't been played
         sac = [_ for _ in ac if not player.inPlayed(_.name)]
         if not sac:
+            player.output("No unplayed action cards")
             return
         options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
         index = 1
         for p in sac:
             selector = "{}".format(index)
-            toprint = 'Play {}'.format(p.name)
+            toprint = 'Play {} ({})'.format(p.name, p.description(player))
             options.append({'selector': selector, 'print': toprint, 'card': p})
             index += 1
         o = player.userInput(options, "What card do you want to play?")
