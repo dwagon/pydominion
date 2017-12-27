@@ -22,7 +22,7 @@ class Card_Cobbler(Card):
 class Test_Cobbler(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cobbler'], badcards=['Blessed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cobbler'], badcards=['Blessed Village', 'Cemetery'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Cobbler'].remove()
@@ -35,7 +35,7 @@ class Test_Cobbler(unittest.TestCase):
             self.plr.test_input = ['1']
             self.plr.startTurn()
             self.assertLessEqual(self.plr.discardpile[0].cost, 4)
-        except (AssertionError, IOError):
+        except (AssertionError, IOError, OSError):
             self.g.print_state()
             raise
 
