@@ -41,9 +41,10 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.card = self.g['Zombie Apprentice'].remove()
 
     def test_play_noactions(self):
+        tsize = self.g.trashSize()
         self.plr.playCard(self.card, discard=False, costAction=False)
         self.assertIsNotNone(self.g.inTrash('Zombie Apprentice'))
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_play_action(self):
         self.plr.setHand('Moat')
