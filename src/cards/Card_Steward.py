@@ -55,21 +55,24 @@ class Test_Steward(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_trash(self):
+        tsize = self.g.trashSize()
         self.plr.test_input = ['2', '1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.handSize(), 3)
 
     def test_trash_smallhand(self):
         """ Trash two when there are less than two to trash """
+        tsize = self.g.trashSize()
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['2', '1', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.handSize(), 0)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
