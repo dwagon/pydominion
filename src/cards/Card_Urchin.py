@@ -10,10 +10,7 @@ class Card_Urchin(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = """+1 Card +1 Action
-        Each other player discards down to 4 cards in hand.
-        When you play another Attack card with this in play, you may trash this.
-        If you do, gain a Mercenary from the Mercenary pile."""
+        self.desc = "+1 Card; +1 Action; Each other player discards down to 4 cards. When you play another Attack card with this in play, you may trash this. If you do, gain a Mercenary."
         self.name = 'Urchin'
         self.required_cards = [('Card', 'Mercenary')]
         self.actions = 1
