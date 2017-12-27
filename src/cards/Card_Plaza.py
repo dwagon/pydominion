@@ -37,7 +37,7 @@ class Test_Plaza(unittest.TestCase):
         try:
             self.plr.specialcoins = 0
             self.plr.setHand('Gold')
-            self.plr.test_input = ['gold']
+            self.plr.test_input = ['discard gold']
             self.plr.addCard(self.card, 'hand')
             self.plr.playCard(self.card)
             self.assertEqual(self.plr.getSpecialCoins(), 1)
