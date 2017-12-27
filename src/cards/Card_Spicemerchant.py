@@ -54,11 +54,12 @@ class Test_SpiceMerchant(unittest.TestCase):
 
     def test_play_coins(self):
         """ Play an Spice Merchant and select coins"""
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Gold', 'coins']
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash('Gold'))
         self.assertEqual(self.plr.handSize(), 0)
         self.assertEqual(self.plr.getActions(), 0)
