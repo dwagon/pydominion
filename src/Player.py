@@ -142,7 +142,7 @@ class Player(object):
         self.game.discard_hex(hx)
 
     ###########################################################################
-    def receive_boon(self, boon=None):
+    def receive_boon(self, boon=None, discard=True):
         if boon is None:
             boon = self.game.receive_boon()
         self.output("Received {} as a boon".format(boon))
@@ -153,7 +153,9 @@ class Player(object):
         self.buys += boon.buys
         self.coin += self.hook_spendValue(boon, actual=True)
         boon.special(game=self.game, player=self)
-        self.game.discard_boon(boon)
+        if discard:
+            self.game.discard_boon(boon)
+        return boon
 
     ###########################################################################
     def do_once(self, name):
