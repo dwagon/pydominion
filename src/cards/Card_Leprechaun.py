@@ -16,6 +16,7 @@ class Card_Leprechaun(Card):
         self.cost = 5
 
     def special(self, game, player):
+        player.output("Gained a gold")
         player.gainCard('Gold')
         if player.playedSize() + player.durationSize() == 7:
             player.gainCard('Wish')
