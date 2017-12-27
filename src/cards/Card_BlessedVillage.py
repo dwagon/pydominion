@@ -10,11 +10,16 @@ class Card_BlessedVillage(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'fate']
         self.base = 'nocturne'
-        self.desc = "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
         self.name = 'Blessed Village'
         self.actions = 2
         self.cards = 1
         self.cost = 4
+
+    def desc(self, player):
+        if player.phase == "buy":
+            self.desc = "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
+        else:
+            self.desc = "+1 Card; +2 Actions"
 
     def hook_gainThisCard(self, game, player):
         player.receive_boon()
@@ -42,7 +47,7 @@ class Test_BlessedVillage(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Blessed Village')
-        self.assertEqual(self.plr.handSize(), 6)    # 1 from boon
+        self.assertEqual(self.plr.handSize(), 5 + 1)    # 1 from boon
 
 
 ###############################################################################
