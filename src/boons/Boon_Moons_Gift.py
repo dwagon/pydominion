@@ -23,7 +23,7 @@ class Boon_Moons_Gift(Boon):
             if c.name not in cardnames:
                 cards.append(c)
                 cardnames.add(c.name)
-        card = player.cardSel(force=True, cardsrc=cards, prompt="Pull card from discard and add to top of your deck")
+        card = player.cardSel(cardsrc=cards, prompt="Pull card from discard and add to top of your deck")
         player.addCard(card[0], 'topdeck')
         player.discardpile.remove(card[0])
 
