@@ -18,6 +18,7 @@ class Boon_Skys_Gift(Boon):
         dc = player.plrDiscardCards(anynum=True, prompt="Discard 3 cards to gain a Gold")
         if len(dc) >= 3:
             player.gainCard('Gold')
+            player.output("Gained a Gold")
 
 
 ###############################################################################
