@@ -37,8 +37,12 @@ class Test_Winds_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        try:
+            self.assertEqual(self.plr.handSize(), 3)
+            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
