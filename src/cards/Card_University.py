@@ -26,7 +26,7 @@ class Card_University(Card):
 class Test_University(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn', 'Death Cart', 'Blessed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.university = self.g['University'].remove()
