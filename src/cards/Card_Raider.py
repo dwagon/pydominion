@@ -55,6 +55,13 @@ class Test_Raider(unittest.TestCase):
         except AssertionError:
             self.g.print_state()
             raise
+        self.plr.endTurn()
+        self.plr.startTurn()
+        try:
+            self.assertEqual(self.plr.getCoin(), 3)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

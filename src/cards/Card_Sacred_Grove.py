@@ -50,13 +50,18 @@ class Test_SacredGrove(unittest.TestCase):
 
     def test_play_no_share(self):
         """ Play a Sacred Grove with a gift that shouldn't share """
-        for b in self.g.boons[:]:
+        for b in self.g.boons:
             if b.name == "The Field's Gift":
-                self.g.boons = [b]
+                myboon = b
                 break
+        self.g.boons = [myboon]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3 + 1)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
+        try:
+            self.assertEqual(self.plr.getCoin(), 3 + 1)
+            self.assertEqual(self.plr.getBuys(), 1 + 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_play_share(self):
         """ Play a Sacred Grove with a shared gift """
@@ -66,9 +71,13 @@ class Test_SacredGrove(unittest.TestCase):
                 break
         self.vic.test_input = ['Accept']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
-        self.assertEqual(self.vic.handSize(), 5 + 1)
+        try:
+            self.assertEqual(self.plr.getCoin(), 3)
+            self.assertEqual(self.plr.getBuys(), 1 + 1)
+            self.assertEqual(self.vic.handSize(), 5 + 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

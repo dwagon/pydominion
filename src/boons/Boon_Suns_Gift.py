@@ -30,7 +30,7 @@ class Boon_Suns_Gift(Boon):
 class Test_Suns_Gift(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons:

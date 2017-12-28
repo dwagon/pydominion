@@ -33,10 +33,11 @@ class Test_BlessedVillage(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Blessed Village'].remove()
-        for b in self.g.boons[:]:
-            if b.name != "The Sea's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+        for b in self.g.boons:
+            if b.name == "The Sea's Gift":
+                myboon = b
+                break
+        self.g.boons = [myboon]
 
     def test_play_card(self):
         """ Play Blessed Village """
