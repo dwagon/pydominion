@@ -30,8 +30,6 @@ class Test_Fields_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.g.discarded_boons = []
-        self.g.retained_boons = []
         self.card = self.g['Bard'].remove()
 
     def test_fields_gift(self):
