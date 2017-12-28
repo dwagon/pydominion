@@ -58,7 +58,7 @@ class Landmark_MountainPass(Landmark):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return 0
 
 

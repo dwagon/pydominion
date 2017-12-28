@@ -38,7 +38,7 @@ class Card_Torturer(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     if kind == 'cards':
         return player.pick_to_discard(2)
     if kind == 'choices':

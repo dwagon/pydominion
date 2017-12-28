@@ -40,7 +40,7 @@ class Card_Masquerade(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     c = player.pick_to_discard(1, keepvic=True)
     return c
 

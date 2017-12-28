@@ -33,7 +33,7 @@ class Card_Ghostship(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     # Not the best strategy
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)

@@ -40,7 +40,7 @@ class Card_Soldier(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return player.pick_to_discard(1)
 
 
@@ -76,6 +76,7 @@ class Test_Soldier(unittest.TestCase):
         self.assertIsNotNone(self.vic.inDiscard('Gold'))
         self.assertIsNone(self.vic.inHand('Gold'))
         self.assertEqual(self.vic.handSize(), 4)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

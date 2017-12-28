@@ -34,7 +34,7 @@ class Card_SacredGrove(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return False    # Don't accept a boon
 
 
@@ -51,9 +51,9 @@ class Test_SacredGrove(unittest.TestCase):
     def test_play_no_share(self):
         """ Play a Sacred Grove with a gift that shouldn't share """
         for b in self.g.boons[:]:
-            if b.name != "The Field's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Field's Gift":
+                self.g.boons = [b]
+                break
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3 + 1)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
@@ -61,9 +61,9 @@ class Test_SacredGrove(unittest.TestCase):
     def test_play_share(self):
         """ Play a Sacred Grove with a shared gift """
         for b in self.g.boons[:]:
-            if b.name != "The Sea's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Sea's Gift":
+                self.g.boons = [b]
+                break
         self.vic.test_input = ['Accept']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)

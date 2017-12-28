@@ -32,9 +32,9 @@ class Test_Earths_Gift(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons[:]:
-            if b.name != "The Earth's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Earth's Gift":
+                self.g.boons = [b]
+                break
         self.card = self.g['Bard'].remove()
 
     def test_earths_gift(self):
@@ -43,9 +43,13 @@ class Test_Earths_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper', 'Silver']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        try:
+            self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
+            self.assertIsNotNone(self.plr.inDiscard('Silver'))
+            self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

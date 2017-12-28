@@ -39,6 +39,8 @@ class TextPlayer(Player):
         """
         outstr = []
         sentence = []
+        if not text:
+            return ""
         for word in text.split():
             if len(" ".join(sentence)) + len(word) + first > maxwidth:
                 outstr.append(" ".join(sentence))
