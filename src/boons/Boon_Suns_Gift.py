@@ -34,9 +34,9 @@ class Test_Suns_Gift(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons[:]:
-            if b.name != "The Sun's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Sun's Gift":
+                self.g.boons = [b]
+                break
         self.card = self.g['Bard'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -44,10 +44,14 @@ class Test_Suns_Gift(unittest.TestCase):
         self.plr.setDeck('Silver', 'Gold', 'Province', 'Duchy', 'Copper')
         self.plr.test_input = ['Province', 'Duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        try:
+            self.assertIsNotNone(self.plr.inDeck('Silver'))
+            self.assertIsNotNone(self.plr.inDeck('Gold'))
+            self.assertIsNotNone(self.plr.inDiscard('Province'))
+            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
