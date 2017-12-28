@@ -42,7 +42,7 @@ class Test_Pixie(unittest.TestCase):
     def test_play_keep(self):
         """ Play a Pixie """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Discard']
+        self.plr.test_input = ['Discard The']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
