@@ -15,7 +15,7 @@ class Card_Raider(Card):
         self.cost = 6
 
     def duration(self, game, player):
-        self.gainCoin(3)
+        player.addCoin(3)
 
     def special(self, game, player):
         inplay = set([_.name for _ in player.played])
