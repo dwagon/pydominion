@@ -30,7 +30,7 @@ class Card_Duchy(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return False    # Don't gain a duchess
 
 

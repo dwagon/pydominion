@@ -34,7 +34,7 @@ class Card_SacredGrove(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return False    # Don't accept a boon
 
 

@@ -42,7 +42,7 @@ class Card_Saboteur(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):      # pragma: no coverage
     toget = []
     for card in kwargs['cardsrc']:
         if card.name in ('Copper', 'Silver', 'Gold'):

@@ -34,7 +34,7 @@ class Card_Duchess(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     if 'Estate' in args[0] or 'Duchy' in args[0] or 'Province' in args[0]:
         return False
     return True

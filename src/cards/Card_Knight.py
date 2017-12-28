@@ -17,7 +17,7 @@ class Card_Knight(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return player.pick_to_discard(2)
 
 

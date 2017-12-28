@@ -40,7 +40,7 @@ class Card_Urchin(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     numtodiscard = len(player.hand) - 4
     return player.pick_to_discard(numtodiscard)
 

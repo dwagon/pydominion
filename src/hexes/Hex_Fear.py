@@ -22,7 +22,7 @@ class Hex_Fear(Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return player.pick_to_discard(1, keepvic=True)
 
 

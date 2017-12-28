@@ -28,7 +28,7 @@ class Card_Vault(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return player.pick_to_discard(2)
 
 

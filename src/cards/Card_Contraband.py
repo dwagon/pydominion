@@ -31,7 +31,7 @@ class Card_Contraband(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return 'Province'
 
 
