@@ -27,7 +27,7 @@ class Card_Sirmichael(KnightCard):
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka'])
         self.g.startGame()
         self.plr, self.vic = self.g.playerList()
         while True:
@@ -36,7 +36,7 @@ class Test_Sir_Michael(unittest.TestCase):
                 break
 
     def test_score(self):
-        """ Play the Sir"""
+        """ Play the Sir """
         self.vic.test_input = ['1', '2', '0']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)

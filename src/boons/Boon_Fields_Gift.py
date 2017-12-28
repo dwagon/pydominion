@@ -25,10 +25,13 @@ class Test_Fields_Gift(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
-        for b in self.g.boons[:]:
-            if b.name != "The Field's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+        for b in self.g.boons:
+            if b.name == "The Field's Gift":
+                myboon = b
+                break
+        self.g.boons = [myboon]
+        self.g.discarded_boons = []
+        self.g.retained_boons = []
         self.card = self.g['Bard'].remove()
 
     def test_fields_gift(self):
@@ -36,8 +39,12 @@ class Test_Fields_Gift(unittest.TestCase):
         self.plr.action = 0
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
-        self.assertEqual(self.plr.getActions(), 1)
+        try:
+            self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
+            self.assertEqual(self.plr.getActions(), 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

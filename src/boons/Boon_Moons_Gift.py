@@ -36,9 +36,8 @@ class Test_Moons_Gift(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons[:]:
-            if b.name != "The Moon's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Moon's Gift":
+                self.g.boons = [b]
         self.card = self.g['Bard'].remove()
 
     def test_moons_gift(self):

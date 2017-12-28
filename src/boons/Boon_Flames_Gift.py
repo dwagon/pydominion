@@ -26,9 +26,8 @@ class Test_Flames_Gift(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
         for b in self.g.boons[:]:
-            if b.name != "The Flame's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Flame's Gift":
+                self.g.boons = [b]
         self.card = self.g['Bard'].remove()
 
     def test_flames_gift(self):

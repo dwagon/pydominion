@@ -28,7 +28,6 @@ class Test_Mountains_Gift(unittest.TestCase):
         for b in self.g.boons[:]:
             if b.name == "The Mountain's Gift":
                 self.g.boons = [b]
-                break
         self.card = self.g['Bard'].remove()
 
     def test_mountains_gift(self):

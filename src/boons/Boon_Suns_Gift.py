@@ -36,7 +36,6 @@ class Test_Suns_Gift(unittest.TestCase):
         for b in self.g.boons[:]:
             if b.name == "The Sun's Gift":
                 self.g.boons = [b]
-                break
         self.card = self.g['Bard'].remove()
         self.plr.addCard(self.card, 'hand')
 

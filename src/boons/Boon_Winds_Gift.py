@@ -29,7 +29,6 @@ class Test_Winds_Gift(unittest.TestCase):
         for b in self.g.boons[:]:
             if b.name == "The Wind's Gift":
                 self.g.boons = [b]
-                break
         self.card = self.g['Bard'].remove()
 
     def test_winds_gift(self):
