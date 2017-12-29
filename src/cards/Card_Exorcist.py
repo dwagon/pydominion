@@ -16,9 +16,21 @@ class Card_Exorcist(Card):
         self.required_cards = [('Card', 'Ghost'), ('Card', 'Imp'), ('Card', "Will-o'-Wisp")]
 
     def special(self, game, player):
-        card = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")
-        cost = card[0].cost
-        player.plrGainCard(cost=cost, types={'spirit': True}, prompt="Gain a spirit costing up to {}".format(cost))
+        trashed = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")
+        cost = trashed[0].cost
+        options = []
+        idx = 0
+        for card in ('Ghost', 'Imp', "Will-o'-Wisp"):
+            if game[card].cost < cost:
+                sel = "{}".format(idx)
+                toprint = "Get {}".format(card)
+                options.append({'selector': sel, 'print': toprint, 'card': card})
+                idx += 1
+        if idx:
+            o = player.userInput(options, "Gain a spirit")
+            player.gainCard(o['card'])
+        else:
+            player.output("No spirits available at that price")
 
 
 ###############################################################################
@@ -32,9 +44,11 @@ class Test_Exorcist(unittest.TestCase):
 
     def test_play(self):
         self.plr.setHand('Silver', 'Gold', 'Province')
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Silver', 'Imp']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
+        self.assertIsNotNone(self.plr.inDiscard('Imp'))
+        self.assertIsNotNone(self.g.inTrash('Silver'))
         self.g.print_state()
 
 
