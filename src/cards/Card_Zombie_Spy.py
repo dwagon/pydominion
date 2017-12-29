@@ -14,7 +14,7 @@ class Card_Zombie_Spy(Card):
         self.name = 'Zombie Spy'
         self.cost = 3
         self.insupply = False
-        self.purchaseable = False
+        self.purchasable = False
         self.numcards = 1
         self.cards = 1
         self.actions = 1
