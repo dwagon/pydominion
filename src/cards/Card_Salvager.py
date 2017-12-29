@@ -40,6 +40,7 @@ class Test_Salvager(unittest.TestCase):
         self.assertIsNotNone(self.g.inTrash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 5)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

@@ -55,6 +55,7 @@ class Test_Taxman(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertIsNotNone(self.victim.inDiscard('Silver'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

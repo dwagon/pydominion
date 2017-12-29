@@ -67,6 +67,7 @@ class Test_Sacrifice(unittest.TestCase):
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Sacrifice'], 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

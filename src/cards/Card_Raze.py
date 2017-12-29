@@ -70,6 +70,7 @@ class Test_Raze(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.g.inTrash('Copper'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
