@@ -17,7 +17,7 @@ class Card_Shepherd(Card):
         self.heirloom = 'Pasture'
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(num=0, anynum=True, type={'victory': True})
+        todiscard = player.plrDiscardCards(num=0, anynum=True, types={'victory': True})
         player.pickupCards(2*len(todiscard))
 
 

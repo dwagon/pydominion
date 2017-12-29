@@ -170,6 +170,8 @@ class TextPlayer(Player):
             anynum = False
 
         selected = []
+        types = kwargs['types'] if 'types' in kwargs else {}
+        types = self.typeSelector(types)
         while(True):
             options = []
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
@@ -178,6 +180,8 @@ class TextPlayer(Player):
             index = 1
             for c in sorted(selectfrom):
                 if 'exclude' in kwargs and c.name in kwargs['exclude']:
+                    continue
+                if not self.select_by_type(c, types):
                     continue
                 sel = "%d" % index
                 index += 1

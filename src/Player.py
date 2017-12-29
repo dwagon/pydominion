@@ -907,6 +907,9 @@ class Player(object):
     ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
         # assert(isinstance(card, (Card, CardPile)))
+        if card not in self.hand and discard:
+            self.output("{} is no longer available".format(card.name))
+            return
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction() and costAction and self.phase != 'night':
@@ -1143,6 +1146,18 @@ class Player(object):
         return True
 
     ###########################################################################
+    def select_by_type(self, card, types):
+        if card.isAction() and not types['action']:
+            return False
+        if card.isVictory() and not types['victory']:
+            return False
+        if card.isTreasure() and not types['treasure']:
+            return False
+        if card.isNight() and not types['night']:
+            return False
+        return True
+
+    ###########################################################################
     def cardsAffordable(self, oper, coin, potions, types):
         """Return the list of cards for under cost """
         affordable = PlayArea([])
@@ -1150,15 +1165,9 @@ class Player(object):
             if not c.numcards:
                 continue
             cost = self.cardCost(c)
+            if not self.select_by_type(c, types):
+                continue
             if not c.purchasable:
-                continue
-            if c.isAction() and not types['action']:
-                continue
-            if c.isVictory() and not types['victory']:
-                continue
-            if c.isTreasure() and not types['treasure']:
-                continue
-            if c.isNight() and not types['night']:
                 continue
             if coin is None:
                 affordable.add(c)
@@ -1246,6 +1255,8 @@ class Player(object):
                 kwargs['prompt'] = "Trash any cards"
             else:
                 kwargs['prompt'] = "Trash %d cards" % num
+        if len(cardsrc) == 0:
+            return None
         trash = self.cardSel(
             num=num, cardsrc=cardsrc, anynum=anynum, printcost=printcost,
             force=force, exclude=exclude, verbs=('Trash', 'Untrash'), **kwargs)
