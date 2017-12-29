@@ -21,6 +21,11 @@ class Card_Goat(Card):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+    return []
+
+
+###############################################################################
 class Test_Goat(unittest.TestCase):
     def setUp(self):
         import Game
