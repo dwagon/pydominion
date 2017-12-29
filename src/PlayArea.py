@@ -35,6 +35,9 @@ class PlayArea(object):
     def empty(self):
         self.cards = []
 
+    def count(self, key):
+        return self.cards.count(key)
+
     def isEmpty(self):
         return self.cards == []
 
