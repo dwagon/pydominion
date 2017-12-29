@@ -29,7 +29,7 @@ class Landmark_WolfDen(Landmark):
 class Test_WolfDen(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Wolf Den'], badcards=['Shepherd', 'Pooka', 'Fool', 'Tracker', 'Cemetery', 'Pixie'])
+        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Wolf Den'], badcards=['Shepherd', 'Pooka', 'Fool', 'Tracker', 'Cemetery', 'Pixie', 'Secret Cave'])
         self.g.startGame()
         self.plr = self.g.playerList()[0]
 
