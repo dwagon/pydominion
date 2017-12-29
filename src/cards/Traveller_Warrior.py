@@ -48,7 +48,7 @@ class Card_Warrior(Card):
 class Test_Warrior(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'], badcards=['Pooka'])
         self.g.startGame()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Warrior'].remove()
