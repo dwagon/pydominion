@@ -27,7 +27,7 @@ class Card_Sirmichael(KnightCard):
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka', 'Fool'])
         self.g.startGame()
         self.plr, self.vic = self.g.playerList()
         while True:
