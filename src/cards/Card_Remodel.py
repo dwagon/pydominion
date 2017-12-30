@@ -32,26 +32,29 @@ class Test_Remodel(unittest.TestCase):
         self.rcard = self.g['Remodel'].remove()
 
     def test_nothing(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.rcard, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.rcard)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
     def test_trash_gainnothing(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.rcard, 'hand')
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.rcard)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.discardSize(), 0)
         self.assertEqual(self.plr.handSize(), 4)
 
     def test_trash_gainsomething(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.rcard, 'hand')
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.rcard)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.handSize(), 4)
 
