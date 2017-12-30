@@ -42,7 +42,7 @@ class Test_Earths_Gift(unittest.TestCase):
         self.coins = 0
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Copper', 'Silver']
+        self.plr.test_input = ['Discard Copper', 'Get Silver']
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard

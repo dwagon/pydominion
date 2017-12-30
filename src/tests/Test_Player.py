@@ -854,13 +854,13 @@ class Test_plrGainCard(unittest.TestCase):
         self.plr = self.g.playerList(0)
 
     def test_gainCard_equal(self):
-        self.plr.test_input = ['silver']
+        self.plr.test_input = ['get silver']
         c = self.plr.plrGainCard(3, modifier='equal')
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEqual(c.name, 'Silver')
 
     def test_gainCard_less(self):
-        self.plr.test_input = ['silver']
+        self.plr.test_input = ['get silver']
         c = self.plr.plrGainCard(4, modifier='less')
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEqual(c.name, 'Silver')

@@ -38,10 +38,14 @@ class Test_Hero(unittest.TestCase):
 
     def test_hero(self):
         """ Play a hero """
-        self.plr.test_input = ['gold']
+        self.plr.test_input = ['get gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        try:
+            self.assertEqual(self.plr.getCoin(), 2)
+            self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
