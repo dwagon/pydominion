@@ -62,6 +62,8 @@ class Card_Rogue(Card):
         picked = set()
         index = 1
         for c in game.trashpile:
+            if not c.insupply:
+                continue
             if c.name in picked:
                 continue
             if 3 <= c.cost <= 6:
@@ -107,24 +109,30 @@ class Test_Rogue(unittest.TestCase):
 
     def test_good_trash(self):
         """ Rogue to get something juicy from the trash """
+        tsize = self.g.trashSize()
         for i in range(2):
             gold = self.g['Gold'].remove()
             self.plr.trashCard(gold)
         self.plr.test_input = ['1']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
+        try:
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_good_player(self):
         """ Rogue to trash something from another player """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Gold', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[-1].name, 'Duchy')
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.inTrash('Duchy'))
         self.assertEqual(self.victim.discardSize(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 
