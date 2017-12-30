@@ -86,18 +86,23 @@ class Player(object):
         }
 
     ###########################################################################
-    def replace_traveller(self, src, dst):
+    def find_cardpile(self, cname):
+        dstcp = None
+        for cp in self.game.cardpiles.values():
+            if cp.name == cname:
+                dstcp = cp
+                break
+        else:   # pragma: no cover
+            assert dstcp is not None, "Couldn't find cardpile %s" % cname
+        return dstcp
+
+    ###########################################################################
+    def replace_traveller(self, src, dst, **kwargs):
         """ For traveller cards replace the src card with a copy of the
         dst card """
         assert(isinstance(src, Card))
         assert(isinstance(dst, str))
-        dstcp = None
-        for cp in self.game.cardpiles.values():
-            if cp.name == dst:
-                dstcp = cp
-                break
-        else:   # pragma: no cover
-            assert dstcp is not None, "Couldn't find cardpile %s" % dst
+        dstcp = self.find_cardpile(dst)
 
         if src not in self.played:
             self.output("Not activating %s traveller as not played" % src.name)
@@ -111,13 +116,19 @@ class Player(object):
         if choice == 'keep':
             return
         if choice == 'replace':
-            # New card goes into hand as it is about to be discarded
+            self.replace_card(src, dst, destination='hand')
 
-            newcard = self.gainCard(cardpile=dstcp, destination='hand')
-            if newcard:
-                cardpile = self.game.cardpiles[src.name]
-                cardpile.add()
-                self.played.remove(src)
+    ###########################################################################
+    def replace_card(self, src, dst, **kwargs):
+        # New card goes into hand as it is about to be discarded
+        destination = kwargs['destination'] if 'destination' in kwargs else 'discard'
+
+        dstcp = self.find_cardpile(dst)
+        newcard = self.gainCard(cardpile=dstcp, destination=destination)
+        if newcard:
+            cardpile = self.game.cardpiles[src.name]
+            cardpile.add()
+            self.played.remove(src)
 
     ###########################################################################
     def flip_journey_token(self):
