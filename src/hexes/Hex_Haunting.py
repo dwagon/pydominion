@@ -21,6 +21,11 @@ class Hex_Haunting(Hex):
 
 
 ###############################################################################
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+    return player.pick_to_discard(1)
+
+
+###############################################################################
 class Test_Haunting(unittest.TestCase):
     def setUp(self):
         import Game
