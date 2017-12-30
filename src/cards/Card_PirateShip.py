@@ -77,12 +77,17 @@ class Test_PirateShip(unittest.TestCase):
         self.plr.gainCard(newcard=self.card, destination='hand')
 
     def test_play_attack(self):
+        tsize = self.g.trashSize()
         self.vic.setDeck('Copper', 'Estate')
         self.plr.test_input = ['Each other', 'copper']
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
-        self.assertEqual(self.plr._pirate_ship, 1)
+        try:
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertIsNotNone(self.g.inTrash('Copper'))
+            self.assertEqual(self.plr._pirate_ship, 1)
+        except AssertionError:
+            self.g.print_state()
+            raise
 
     def test_spend(self):
         self.plr._pirate_ship = 2
