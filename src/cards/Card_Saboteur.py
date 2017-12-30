@@ -65,11 +65,12 @@ class Test_Saboteur(unittest.TestCase):
 
     def test_play(self):
         """ Play a saboteur """
+        tsize = self.g.trashSize()
         try:
             self.victim.test_input = ['1']
             self.victim.setDeck('Gold', 'Copper', 'Estate')
             self.plr.playCard(self.card)
-            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashSize(), tsize + 1)
             trashed = self.g.trashpile[0]
             self.assertTrue(trashed.cost >= 3)
             for c in self.victim.discardpile[:-1]:
@@ -81,9 +82,10 @@ class Test_Saboteur(unittest.TestCase):
 
     def test_nomatching(self):
         """ Play a saboteur where the victim doesn't have a suitable card """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Copper', 'Copper', 'Estate')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.discardpile:
             self.assertTrue(c.cost < 3)
 
