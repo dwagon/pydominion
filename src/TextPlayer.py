@@ -155,6 +155,10 @@ class TextPlayer(Player):
             force = True
         else:
             force = False
+        if 'showdesc' in kwargs and not kwargs['showdesc']:
+            showdesc = False
+        else:
+            showdesc = True
         if 'verbs' in kwargs:
             verbs = kwargs['verbs']
         else:
@@ -190,8 +194,10 @@ class TextPlayer(Player):
                 else:
                     verb = verbs[1]
                 o = Option(selector=sel, verb=verb, card=c, name=c.name)
+                if showdesc:
+                    o['desc'] = c.description(self)
                 if 'printcost' in kwargs and kwargs['printcost']:
-                    o['desc'] = str(self.cardCost(c))
+                    o['details'] = str(self.cardCost(c))
                 options.append(o)
             ui = self.userInput(options, "Select which card?")
             if not ui['card']:
