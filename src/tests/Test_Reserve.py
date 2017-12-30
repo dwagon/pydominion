@@ -7,7 +7,7 @@ import Game
 ###############################################################################
 class Test_getWhens(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], badcards=['Pixie'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
