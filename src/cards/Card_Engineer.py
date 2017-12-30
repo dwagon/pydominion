@@ -39,7 +39,7 @@ class Test_Engineer(unittest.TestCase):
     def test_play_trash(self):
         """ Play an Engineer and trash it"""
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Silver', 'Trash', 'Moat']
+        self.plr.test_input = ['Get Silver', 'Trash', 'Moat']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Moat'))
@@ -48,11 +48,12 @@ class Test_Engineer(unittest.TestCase):
     def test_play_keep(self):
         """ Play an Engineer and keep it """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Silver', 'Keep']
+        self.plr.test_input = ['Get Silver', 'Keep']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inPlayed('Engineer'))
         self.assertIsNone(self.g.inTrash('Engineer'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
