@@ -30,7 +30,7 @@ class Test_Banquet(unittest.TestCase):
 
     def test_event(self):
         """ Use the event """
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Get Silver']
         self.plr.addCoin(3)
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Copper'))
