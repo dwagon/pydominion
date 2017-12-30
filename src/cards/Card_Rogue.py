@@ -138,10 +138,11 @@ class Test_Rogue(unittest.TestCase):
 
     def test_bad_player(self):
         """ Rogue to trash nothing from another player """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Gold', 'Province', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.victim.discardSize(), 2)
 
 
