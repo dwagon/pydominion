@@ -30,9 +30,9 @@ class Card_Hermit(Card):
             verbs=('Trash', 'Untrash')
             )
         if choice:
-            try:
+            if player.inDiscard(choice[0].name):
                 player.discardpile.remove(choice[0])
-            except ValueError:
+            else:
                 player.hand.remove(choice[0])
             player.trashCard(choice[0])
         # Gain a card costing up to 3.
@@ -63,7 +63,7 @@ class Test_Hermit(unittest.TestCase):
     def test_play_discard(self):
         """ Play a Hermit trashing card from discard """
         self.plr.setDiscard('Province', 'Gold')
-        self.plr.test_input = ['province', 'silver']
+        self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.inTrash('Province'))
@@ -73,7 +73,7 @@ class Test_Hermit(unittest.TestCase):
     def test_play_hand(self):
         """ Play a Hermit trashing card from hand """
         self.plr.setHand('Province')
-        self.plr.test_input = ['province', 'silver']
+        self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.inTrash('Province'))
