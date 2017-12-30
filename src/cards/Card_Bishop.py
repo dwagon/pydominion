@@ -84,6 +84,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertIsNotNone(self.g.inTrash('Gold'))
 
     def test_bothtrash(self):
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.other.setHand('Province')
         self.plr.addCard(self.bishop, 'hand')
@@ -93,7 +94,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertTrue(self.plr.hand.isEmpty())
         self.assertTrue(self.other.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
 
 
 ###############################################################################
