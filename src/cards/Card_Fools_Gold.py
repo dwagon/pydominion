@@ -60,17 +60,20 @@ class Test_Fools_Gold(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 4)
 
     def test_gain_province(self):
+        tsize = self.g.trashSize()
         self.plr.test_input = ['trash']
         self.other.gainCard('Province')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.inTrash("Fool's Gold"))
 
     def test_self_gain_province(self):
+        tsize = self.g.trashSize()
         self.plr.gainCard('Province')
         self.assertNotEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.g.trashSize(), tsize)
         self.assertIsNone(self.g.inTrash("Fool's Gold"))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
