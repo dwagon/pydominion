@@ -52,13 +52,14 @@ class Test_Artificer(unittest.TestCase):
         self.plr.setDeck('Gold')
         self.plr.setHand('Estate', 'Duchy', 'Province')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['estate', 'duchy', 'province', 'finish', 'silver']
+        self.plr.test_input = ['discard estate', 'discard duchy', 'discard province', 'finish', 'get silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 1)
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Silver')
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
