@@ -47,7 +47,7 @@ class Test_Upgrade(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.setHand('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Duchy', 'Gold']
+        self.plr.test_input = ['Duchy', 'Get Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
