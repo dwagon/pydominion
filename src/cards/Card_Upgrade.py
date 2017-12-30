@@ -35,12 +35,13 @@ class Test_Upgrade(unittest.TestCase):
 
     def test_play(self):
         """ Play the Upgrade """
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
         """ Trash an upgrade """
