@@ -83,11 +83,15 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.gainCard('Silver')
-        self.assertEqual(self.g.trashSize(), 0)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.inHand('Silver'), None)
-        c = self.plr.nextCard()
-        self.assertEqual(c.name, 'Silver')
+        try:
+            self.assertEqual(self.g.trashSize(), 0)
+            self.assertEqual(self.plr.handSize(), 2)
+            self.assertEqual(self.plr.inHand('Silver'), None)
+            c = self.plr.nextCard()
+            self.assertEqual(c.name, 'Silver')
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
