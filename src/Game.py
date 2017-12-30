@@ -130,7 +130,6 @@ class Game(object):
     def countCards(self):
         count = {}
         count['trash'] = self.trashSize()
-        count['boons'] = len(self.boons) + len(self.discarded_boons)
         for cp in list(self.cardpiles.values()):
             count['pile_%s' % cp.name] = cp.numcards
         for pl in self.playerList():
