@@ -29,7 +29,7 @@ class Card_BlessedVillage(Card):
 class Test_BlessedVillage(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Blessed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Blessed Village'], badcards=['Druid'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Blessed Village'].remove()
