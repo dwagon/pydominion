@@ -35,6 +35,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
             sel = "{}".format(index)
             pr = "Exchange for {}".format(card.name)
             options.append({'selector': sel, 'print': pr, 'card': card})
+            index += 1
         o = player.userInput(options, "Trash Changeling to gain a card")
         if o['card']:
             player.trashCard(self)
