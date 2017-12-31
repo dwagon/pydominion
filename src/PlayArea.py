@@ -35,8 +35,12 @@ class PlayArea(object):
     def empty(self):
         self.cards = []
 
-    def count(self, key):
-        return self.cards.count(key)
+    def count(self, card):
+        if hasattr(card, 'name'):
+            cname = card.name
+        else:
+            cname = card
+        return [_.name for _ in self.cards].count(cname)
 
     def isEmpty(self):
         return self.cards == []

@@ -5,12 +5,19 @@ from PlayArea import PlayArea
 
 
 ###############################################################################
+class CardTester(object):
+    def __init__(self, name):
+        self.name = name
+
+
+###############################################################################
 class Test_PlayArea(unittest.TestCase):
     def test_count(self):
         """ Test count """
-        s = PlayArea(['a', 'b', 'c', 'c'])
+        CT = CardTester
+        s = PlayArea([CT('a'), CT('b'), CT('c'), CT('c')])
         self.assertEqual(s.count('a'), 1)
-        self.assertEqual(s.count('c'), 2)
+        self.assertEqual(s.count(CT('c')), 2)
 
     def test_add(self):
         s = PlayArea(['a'])
