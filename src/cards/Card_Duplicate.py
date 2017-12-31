@@ -69,6 +69,7 @@ class Test_Duplicate(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertEqual(self.plr.coin, 0)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

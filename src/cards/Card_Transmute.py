@@ -83,6 +83,7 @@ class Test_Transmute(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

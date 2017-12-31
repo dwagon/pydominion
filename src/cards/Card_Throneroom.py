@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Throneroom(Card):
     def __init__(self):
         Card.__init__(self)
@@ -67,6 +68,7 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(card)
         self.assertEqual(self.plr.test_input, ['0'])
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
