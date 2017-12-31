@@ -1278,7 +1278,6 @@ class Player(object):
     ###########################################################################
     def plrGainCard(self, cost, modifier='less', types={}, recipient=None, force=False, destination='discard', **kwargs):
         """ Gain a card up to cost coin
-            if actiononly then gain only action cards
             if recipient defined then that player gets the card
         """
         assert(modifier in ('less', 'equal'))

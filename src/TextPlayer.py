@@ -151,14 +151,8 @@ class TextPlayer(Player):
                 True - Any number of cards can be selected
         """
         selectfrom = self.cardSelSource(**kwargs)
-        if 'force' in kwargs and kwargs['force']:
-            force = True
-        else:
-            force = False
-        if 'showdesc' in kwargs and not kwargs['showdesc']:
-            showdesc = False
-        else:
-            showdesc = True
+        force = kwargs['force'] if 'force' in kwargs else False
+        showdesc = kwargs['showdesc'] if 'showdesc' in kwargs else True
         if 'verbs' in kwargs:
             verbs = kwargs['verbs']
         else:
