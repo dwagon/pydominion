@@ -491,7 +491,7 @@ class Game(object):
             print("%s's reserve: %s" % (p.name, ", ".join([c.name for c in p.reserve])))
             print("%s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
             print("%s's messages: %s" % (p.name, p.messages))
-            print("%s's score: %s" % (p.name, p.score))
+            print("%s's score: %s %s" % (p.name, p.score, p.getScoreDetails()))
             print("%s's tokens: %s" % (p.name, p.tokens))
             print("%s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.specialcoins, p.potions))
         cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
