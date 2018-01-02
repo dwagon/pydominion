@@ -34,7 +34,7 @@ class Card_Pixie(Card):
 class Test_Pixie(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pixie'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pixie'], badcards=['Druid'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Pixie'].remove()

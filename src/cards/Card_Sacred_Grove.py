@@ -42,7 +42,7 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 class Test_SacredGrove(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Sacred Grove', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Sacred Grove', 'Moat'], badcards=['Druid'])
         self.g.startGame()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Sacred Grove'].remove()
