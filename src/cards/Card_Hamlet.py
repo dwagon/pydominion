@@ -38,14 +38,14 @@ class Test_Hamlet(unittest.TestCase):
 
     def test_playcard(self):
         """ Play a hamlet """
-        self.plr.test_input = ['finish', 'finish']
+        self.plr.test_input = ['finish selecting', 'finish selecting']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 3)
         self.assertEqual(self.plr.getActions(), 1)
 
     def test_discard_action(self):
         """ Play a hamlet and discard to gain an action """
-        self.plr.test_input = ['silver', 'finish']
+        self.plr.test_input = ['discard silver', 'finish selecting']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 2)
@@ -54,7 +54,7 @@ class Test_Hamlet(unittest.TestCase):
 
     def test_discard_buy(self):
         """ Play a hamlet and discard to gain a buy """
-        self.plr.test_input = ['finish', 'gold']
+        self.plr.test_input = ['finish selecting', 'discard gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
