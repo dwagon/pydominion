@@ -15,8 +15,13 @@ class Card_Exorcist(Card):
         self.cost = 4
         self.required_cards = [('Card', 'Ghost'), ('Card', 'Imp'), ('Card', "Will-o'-Wisp")]
 
-    def special(self, game, player):
+    def night(self, game, player):
+        if player.hand.isEmpty():
+            player.output("No cards to trash")
+            return
         trashed = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")
+        if not trashed:
+            return
         cost = trashed[0].cost
         options = []
         idx = 0
@@ -43,6 +48,7 @@ class Test_Exorcist(unittest.TestCase):
         self.card = self.g['Exorcist'].remove()
 
     def test_play(self):
+        self.plr.phase = 'night'
         self.plr.setHand('Silver', 'Gold', 'Province')
         self.plr.test_input = ['Silver', 'Imp']
         self.plr.addCard(self.card, 'hand')

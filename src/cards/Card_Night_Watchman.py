@@ -14,7 +14,7 @@ class Card_NightWatchman(Card):
         self.name = 'Night Watchman'
         self.cost = 3
 
-    def special(self, game, player):
+    def night(self, game, player):
         cards = []
         for i in range(5):
             c = player.nextCard()
@@ -45,6 +45,7 @@ class Test_NightWatchman(unittest.TestCase):
         self.card = self.g['Night Watchman'].remove()
 
     def test_play(self):
+        self.plr.phase = 'night'
         self.plr.setDeck('Gold', 'Province', 'Gold', 'Duchy', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Return Silver', 'Discard Duchy', 'Return Gold', 'Discard Province', 'Return Gold']

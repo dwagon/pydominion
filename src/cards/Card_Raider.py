@@ -17,7 +17,7 @@ class Card_Raider(Card):
     def duration(self, game, player):
         player.addCoin(3)
 
-    def special(self, game, player):
+    def night(self, game, player):
         inplay = set([_.name for _ in player.played])
         for pl in player.attackVictims():
             if pl.handSize() >= 5:
@@ -44,6 +44,7 @@ class Test_Raider(unittest.TestCase):
 
     def test_play(self):
         """ Play a Raider """
+        self.plr.phase = 'night'
         self.plr.setPlayed('Gold', 'Silver')
         self.vic.setHand('Silver', 'Gold', 'Estate', 'Copper', 'Copper')
         self.plr.playCard(self.card)
