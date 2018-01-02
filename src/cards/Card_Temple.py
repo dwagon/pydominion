@@ -10,11 +10,17 @@ class Card_Temple(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'gathering']
         self.base = 'empires'
-        self.desc = """+1 VP. Trash from 1 to 3 differently named cards from your hand. Add 1 VP
-        to the Temple Supply pile. When you gain this, take the VP from the
-        Temple Supply pile."""
         self.name = 'Temple'
         self.cost = 4
+
+    def desc(self, player):
+        if player.phase == 'buy':
+            return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
+            Add 1 VP to the Temple Supply pile. When you gain this, take the VP from the
+            Temple Supply pile ({} VP).""".format(player.game['Temple'].getVP())
+        else:
+            return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
+            Add 1 VP to the Temple Supply pile ({} VP).""".format(player.game['Temple'].getVP())
 
     def special(self, game, player):
         player.addScore('Temple', 1)
