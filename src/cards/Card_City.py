@@ -71,6 +71,7 @@ class Test_City(unittest.TestCase):
         # 5 for hand, 1 for city, 1 for one stack
         self.assertEqual(self.plr.handSize(), 7)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
