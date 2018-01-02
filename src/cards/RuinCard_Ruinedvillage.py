@@ -12,7 +12,7 @@ class Card_Ruinedvillage(Card):
         self.name = "Ruined Village"
         self.purchasable = False
         self.cost = 0
-        self.card = "+1 Action"
+        self.desc = "+1 Action"
         self.actions = 1
 
 # EOF
