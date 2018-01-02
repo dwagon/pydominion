@@ -37,10 +37,11 @@ class Test_Tradingpost(unittest.TestCase):
 
     def test_play(self):
         """ Play Trading Post """
+        tsize = self.g.trashSize()
         self.plr.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_trash_little(self):
         """ Play a trading post but don't trash enough """
