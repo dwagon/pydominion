@@ -45,13 +45,14 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_call(self):
         """ Call from Reserve"""
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         c = self.plr.callReserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.g.trashpile[0].name, 'Gold')
 
 
