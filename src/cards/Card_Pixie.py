@@ -56,9 +56,13 @@ class Test_Pixie(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 2)
-        for c in self.plr.discardpile:
-            self.assertEqual(c.name, 'Silver')
+        try:
+            self.assertEqual(self.plr.discardSize(), 2)
+            for c in self.plr.discardpile:
+                self.assertEqual(c.name, 'Silver')
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
