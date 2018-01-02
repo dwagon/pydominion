@@ -13,6 +13,7 @@ class Card_FaithfulHound(Card):
         self.desc = "+2 Cards; When you discard this other than during Clean-up, you may set it aside, and put it into your hand at end of turn."
         self.name = 'Faithful Hound'
         self.cards = 2
+        self.cost = 2
 
     def hook_discardThisCard(self, game, player, source):
         if player.phase != 'cleanup':
