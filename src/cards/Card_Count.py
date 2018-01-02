@@ -104,11 +104,12 @@ class Test_Count(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_trashhand(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['gain a copper', 'trash hand']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 5)
+        self.assertEqual(self.g.trashSize(), tsize + 5)
 
     def test_gainDuchy(self):
         self.plr.addCard(self.card, 'hand')
