@@ -53,7 +53,7 @@ class Test_Ratcatcher(unittest.TestCase):
         c = self.plr.callReserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertIsNotNone(self.g.inTrash('Gold'))
 
 
 ###############################################################################
