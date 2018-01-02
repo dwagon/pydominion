@@ -916,13 +916,25 @@ class Player(object):
             self.buys += 1
 
     ###########################################################################
+    def hook_allPlayers_preAction(self, card):
+        options = {}
+        for player in self.game.playerList():
+            for crd in player.durationpile:
+                ans = crd.hook_allPlayers_preAction(game=self.game, player=self, owner=player, card=card)
+                if ans:
+                    options.update(ans)
+        return options
+
+    ###########################################################################
     def playCard(self, card, discard=True, costAction=True):
-        # assert(isinstance(card, (Card, CardPile)))
+        options = {'skip_card': False}
         if card not in self.hand and discard:
             self.output("{} is no longer available".format(card.name))
             return
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
+        if card.isAction():
+            options.update(self.hook_allPlayers_preAction(card))
         if card.isAction() and costAction and self.phase != 'night':
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
@@ -938,6 +950,13 @@ class Player(object):
             else:
                 self.addCard(card, 'played')
             self.hand.remove(card)
+
+        if not options['skip_card']:
+            self.card_benefits(card)
+        self.currcards.pop()
+
+    ###########################################################################
+    def card_benefits(self, card):
         self.actions += card.actions
         self.coin += self.hook_spendValue(card, actual=True)
         self.buys += card.buys
@@ -955,11 +974,11 @@ class Player(object):
 
         for i in range(card.cards + modif):
             self.pickupCard()
+
         if self.phase == 'night':
             card.night(game=self.game, player=self)
         else:
             card.special(game=self.game, player=self)
-        self.currcards.pop()
 
     ###########################################################################
     def cardCost(self, card):

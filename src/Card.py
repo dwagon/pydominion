@@ -205,6 +205,10 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
+    def hook_allPlayers_preAction(self, game, player, owner, card):
+        pass    # pragma: no cover
+
+    ##########################################################################
     def hook_allPlayers_buyCard(self, game, player, owner, card):
         pass    # pragma: no cover
 
