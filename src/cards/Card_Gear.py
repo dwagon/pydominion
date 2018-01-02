@@ -53,7 +53,7 @@ class Test_Gear(unittest.TestCase):
         """ Play a gear """
         self.plr.setHand('Duchy', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['silver', 'gold', 'finish']
+        self.plr.test_input = ['set silver', 'set gold', 'finish']
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
