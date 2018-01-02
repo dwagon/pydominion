@@ -1,6 +1,17 @@
 In order to have a large number of the card effects work there are a number of hooks (growing daily).
 These are generally invoked from Player.py and defined in the Card.py and over-ridden in each card as required.
 
+special(game, player)
+---------------------
+Almost every card has this - it is what makes the cards special.
+Called when the card is played during the action phase
+* player - current player
+
+night(game, player)
+-------------------
+In night cards only - called when the card is active during the night phase
+* player - current player
+
 hook_allowedToBuy
 ----------------
 This is called before any card is available to purchase.
@@ -73,6 +84,15 @@ hook_callReserve
 --------------
 Called when a card is pulled from the Reserve
 
+hook_allPlayers_preAction(game, player, owner, card)
+----------------------------------------------------
+Called before action cards are played.
+* player - current player
+* owner - owner of the card with the hook
+* card - card with the hook
+Returns None or a dictionary with keys:
+    skip_card - if true then the benefits of the card is skipped
+
 hook_postAction
 ---------------
 Called for every card in played + duration pile after an action has happened
@@ -101,12 +121,12 @@ hook_overpay
 ------------
 Overpaying for a card
 
-setup
------
+setup(game)
+-----------
 Any setup required before the game starts, but after all the card piles and players have been setup
 
-duration
---------
+duration(game, player)
+----------------------
 Gets invoked for duration cards the next turn
 
 hook_underAttack
