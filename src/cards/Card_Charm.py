@@ -39,7 +39,7 @@ class Card_Charm(Card):
 class Test_Charm(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Charm'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Charm'], badcards=['Duchess'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
         self.card = self.g['Charm'].remove()
