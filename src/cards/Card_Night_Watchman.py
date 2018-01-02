@@ -50,15 +50,19 @@ class Test_NightWatchman(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Return Silver', 'Discard Duchy', 'Return Gold', 'Discard Province', 'Return Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        try:
+            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertIsNotNone(self.plr.inDiscard('Province'))
+            self.assertIsNone(self.plr.inDiscard('Gold'))
+            self.assertIsNone(self.plr.inDiscard('Silver'))
 
-        self.assertIsNone(self.plr.inDeck('Duchy'))
-        self.assertIsNone(self.plr.inDeck('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+            self.assertIsNone(self.plr.inDeck('Duchy'))
+            self.assertIsNone(self.plr.inDeck('Province'))
+            self.assertIsNotNone(self.plr.inDeck('Gold'))
+            self.assertIsNotNone(self.plr.inDeck('Silver'))
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
