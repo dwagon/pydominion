@@ -43,7 +43,7 @@ class Test_Hero(unittest.TestCase):
         try:
             self.assertEqual(self.plr.getCoin(), 2)
             self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

@@ -60,7 +60,7 @@ class Test_NightWatchman(unittest.TestCase):
             self.assertIsNone(self.plr.inDeck('Province'))
             self.assertIsNotNone(self.plr.inDeck('Gold'))
             self.assertIsNotNone(self.plr.inDeck('Silver'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

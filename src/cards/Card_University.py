@@ -39,7 +39,7 @@ class Test_University(unittest.TestCase):
             self.assertEqual(self.plr.discardSize(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
             self.assertLessEqual(self.plr.discardpile[0].cost, 5)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

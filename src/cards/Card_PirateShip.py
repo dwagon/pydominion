@@ -85,7 +85,7 @@ class Test_PirateShip(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.inTrash('Copper'))
             self.assertEqual(self.plr._pirate_ship, 1)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

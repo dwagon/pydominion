@@ -76,7 +76,7 @@ class Test_Saboteur(unittest.TestCase):
             for c in self.victim.discardpile[:-1]:
                 self.assertTrue(c.cost < 3)
             self.assertTrue(self.victim.discardpile[-1].cost <= trashed.cost - 2)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

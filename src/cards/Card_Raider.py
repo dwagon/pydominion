@@ -53,14 +53,14 @@ class Test_Raider(unittest.TestCase):
             self.assertIsNotNone(self.vic.inDiscard('Silver'))
             self.assertIsNone(self.vic.inHand('Gold'))
             self.assertIsNone(self.vic.inHand('Silver'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
         self.plr.endTurn()
         self.plr.startTurn()
         try:
             self.assertEqual(self.plr.getCoin(), 3)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

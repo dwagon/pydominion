@@ -43,7 +43,7 @@ class Test_Plaza(unittest.TestCase):
             self.assertEqual(self.plr.getSpecialCoins(), 1)
             self.assertEqual(self.plr.getActions(), 2)
             self.assertEqual(self.plr.handSize(), 1)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

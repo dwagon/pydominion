@@ -66,7 +66,7 @@ class Test_Gear(unittest.TestCase):
             self.assertEqual(self.plr.played[-1].name, 'Gear')
             self.assertIsNotNone(self.plr.inHand('Silver'))
             self.assertIsNotNone(self.plr.inHand('Gold'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

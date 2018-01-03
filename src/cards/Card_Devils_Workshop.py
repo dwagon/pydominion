@@ -41,7 +41,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
@@ -52,7 +52,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertLessEqual(self.plr.discardpile[0].name, 'Moat')
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
@@ -63,7 +63,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertIsNotNone(self.plr.inDiscard('Imp'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

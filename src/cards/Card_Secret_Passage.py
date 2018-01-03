@@ -50,7 +50,7 @@ class Test_SecretPassage(unittest.TestCase):
             self.assertEqual(self.plr.getActions(), 1)
             self.assertEqual(self.plr.handSize(), 5 + 2 - 1)    # Hand + SP - back on deck
             self.assertEqual(self.plr.deck[0].name, 'Province')
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

@@ -59,7 +59,7 @@ class Test_Warrior(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.victim.discardSize(), 1)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

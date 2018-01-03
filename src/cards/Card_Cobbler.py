@@ -35,7 +35,7 @@ class Test_Cobbler(unittest.TestCase):
             self.plr.test_input = ['1']
             self.plr.startTurn()
             self.assertLessEqual(self.plr.discardpile[0].cost, 4)
-        except (AssertionError, IOError, OSError):
+        except (AssertionError, IOError, OSError):  # pragma: no cover
             self.g.print_state()
             raise
 

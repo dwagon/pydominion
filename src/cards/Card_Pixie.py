@@ -60,7 +60,7 @@ class Test_Pixie(unittest.TestCase):
             self.assertEqual(self.plr.discardSize(), 2)
             for c in self.plr.discardpile:
                 self.assertEqual(c.name, 'Silver')
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

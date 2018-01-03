@@ -95,7 +95,7 @@ class Test_Rogue(unittest.TestCase):
             self.plr.addCard(self.card, 'hand')
             self.plr.playCard(self.card)
             self.assertEqual(self.plr.getCoin(), 2)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
@@ -120,7 +120,7 @@ class Test_Rogue(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.discardSize(), 1)
             self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

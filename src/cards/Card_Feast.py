@@ -63,7 +63,7 @@ class Test_Feast(unittest.TestCase):
         self.assertEqual(self.g.trashSize(), tsize)
         try:
             self.assertEqual(self.plr.played[0].name, 'Feast')
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
@@ -75,7 +75,7 @@ class Test_Feast(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.inTrash('Feast'))
             self.assertTrue(self.plr.played.isEmpty())
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
@@ -89,7 +89,7 @@ class Test_Feast(unittest.TestCase):
             self.assertTrue(self.plr.played.isEmpty())
             self.assertEqual(self.plr.discardSize(), 1)
             self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 
