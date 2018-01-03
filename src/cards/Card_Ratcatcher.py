@@ -48,7 +48,7 @@ class Test_Ratcatcher(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Gold']
+        self.plr.test_input = ['Trash Gold']
         self.plr.playCard(self.card)
         c = self.plr.callReserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
