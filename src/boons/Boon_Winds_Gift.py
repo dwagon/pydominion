@@ -36,12 +36,12 @@ class Test_Winds_Gift(unittest.TestCase):
     def test_winds_gift(self):
         self.plr.setHand('Duchy', 'Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Duchy', 'Gold', 'Finish']
+        self.plr.test_input = ['Discard Duchy', 'Discard Gold', 'Finish Selecting']
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.handSize(), 3)
             self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 
