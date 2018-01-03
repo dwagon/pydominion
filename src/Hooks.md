@@ -35,8 +35,8 @@ hook_discardThisCard
 ----------------
 This is called when this card is discarded.
 
-hook_spendValue
----------------
+hook_spendValue(game, player, card)
+-----------------------------------
 This modifies how much coin value you get for spending the card and
 is invoked for every card that has been played this turn.
 
