@@ -28,10 +28,15 @@ class Card_Harbinger(Card):
             options.append({'selector': sel, 'print': pr, 'card': c})
             already.append(c.name)
             index += 1
-        o = player.userInput(options, "Look through your discard pile. You may put a card from it onto your deck.")
+        if not already:
+            player.output("No suitable cards")
+            return
+        player.output("Look through your discard pile. You may put a card from it onto your deck.")
+        o = player.userInput(options, "Which Card? ")
         if not o['card']:
             return
         player.addCard(o['card'], 'topdeck')
+        player.discardpile.remove(o['card'])
 
 
 ###############################################################################
@@ -51,6 +56,7 @@ class Test_Harbinger(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
 ###############################################################################
