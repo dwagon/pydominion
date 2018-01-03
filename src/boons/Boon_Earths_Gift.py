@@ -48,7 +48,7 @@ class Test_Earths_Gift(unittest.TestCase):
             self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
             self.assertIsNotNone(self.plr.inDiscard('Silver'))
             self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 

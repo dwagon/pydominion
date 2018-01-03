@@ -40,7 +40,7 @@ class Test_Fields_Gift(unittest.TestCase):
         try:
             self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
             self.assertEqual(self.plr.getActions(), 1)
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 

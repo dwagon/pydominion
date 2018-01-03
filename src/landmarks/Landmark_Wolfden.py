@@ -39,7 +39,7 @@ class Test_WolfDen(unittest.TestCase):
         self.plr.gameOver()
         try:
             self.assertEqual(self.plr.getScoreDetails()['Wolf Den'], -6)
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 

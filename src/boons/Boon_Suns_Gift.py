@@ -50,7 +50,7 @@ class Test_Suns_Gift(unittest.TestCase):
             self.assertIsNotNone(self.plr.inDeck('Gold'))
             self.assertIsNotNone(self.plr.inDiscard('Province'))
             self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 

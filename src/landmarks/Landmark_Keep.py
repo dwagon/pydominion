@@ -47,7 +47,7 @@ class Test_Keep(unittest.TestCase):
         self.plr.gameOver()
         try:
             self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
-        except AssertionError:
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 
