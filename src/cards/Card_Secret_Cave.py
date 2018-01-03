@@ -41,15 +41,19 @@ class Test_SecretCave(unittest.TestCase):
     def test_play_keep(self):
         """ Play a Secret Cave """
         self.plr.setHand('Silver', 'Estate', 'Duchy', 'Province', 'Copper')
-        self.plr.test_input = ['Silver', 'Duchy', 'Province', 'Finish']
+        self.plr.test_input = ['Discard Silver', 'Discard Duchy', 'Discard Province', 'Finish']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 3)
-        self.assertEqual(self.plr.handSize(), 5 + 1 - 3)
-        self.plr.endTurn()
-        self.plr.startTurn()
-        self.assertEqual(self.plr.getCoin(), 3)
+        try:
+            self.assertEqual(self.plr.getActions(), 1)
+            self.assertEqual(self.plr.discardSize(), 3)
+            self.assertEqual(self.plr.handSize(), 5 + 1 - 3)
+            self.plr.endTurn()
+            self.plr.startTurn()
+            self.assertEqual(self.plr.getCoin(), 3)
+        except AssertionError:  # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
