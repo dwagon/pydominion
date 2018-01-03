@@ -46,9 +46,13 @@ class Test_SecretPassage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Select Province', 'Bottom']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertEqual(self.plr.deck[0].name, 'Province')
+        try:
+            self.assertEqual(self.plr.getActions(), 1)
+            self.assertEqual(self.plr.handSize(), 5 + 2 - 1)    # Hand + SP - back on deck
+            self.assertEqual(self.plr.deck[0].name, 'Province')
+        except AssertionError:
+            self.g.print_state()
+            raise
 
 
 ###############################################################################
