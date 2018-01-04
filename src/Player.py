@@ -1349,7 +1349,11 @@ class Player(object):
 
     ###########################################################################
     def remove_state(self, state):
-        self.states.remove([_ for _ in self.states if _.name == state.name][0])
+        if isinstance(state, str):
+            name = state
+        else:
+            name = state.name
+        self.states.remove([_ for _ in self.states if _.name == name][0])
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):
