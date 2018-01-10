@@ -49,9 +49,10 @@ class Game(object):
     def parseArgs(self, **args):
         self.eventpath = 'events'
         self.landmarkpath = 'landmarks'
-        self.boonpath = 'boons'
         self.hexpath = 'hexes'
-        self.statepath = 'states'
+        self.numstacks = args['numstacks'] if 'numstacks' in args else 10
+        self.boonpath = args['boonpath'] if 'boonpath' in args else 'boons'
+        self.statepath = args['statepath'] if 'statepath' in args else 'states'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
@@ -68,7 +69,7 @@ class Game(object):
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
         names = playerNames[:]
-        self.loadDecks(self.initcards)
+        self.loadDecks(self.initcards, self.numstacks)
         self.loadEvents()
         self.loadLandmarks()
         heirlooms = self.enable_heirlooms()
@@ -165,6 +166,9 @@ class Game(object):
 
     ###########################################################################
     def loadBoons(self):
+        if self.boons:
+            return
+        self.output("Using boons")
         d = {}
         self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
         self.boons = list(d.values())
@@ -172,14 +176,20 @@ class Game(object):
 
     ###########################################################################
     def loadHexes(self):
+        if self.hexes:
+            return
         d = {}
+        self.output("Using hexes")
         self.loadNonKingdomCards('Hex', None, None, HexPile, d)
         self.hexes = list(d.values())
         random.shuffle(self.hexes)
 
     ###########################################################################
     def loadStates(self):
+        if self.states:
+            return
         d = {}
+        self.output("Using states")
         self.loadNonKingdomCards('State', None, None, StatePile, d)
         for st in self.getAvailableCards('State'):
             self.states[st] = StatePile(st, self.cardmapping['State'][st])
@@ -231,7 +241,7 @@ class Game(object):
         return None
 
     ###########################################################################
-    def loadDecks(self, initcards):
+    def loadDecks(self, initcards, numstacks):
         for card in self.baseCards:
             cp = CardPile(card, self.cardmapping['BaseCard'][card], self)
             self.cardpiles[cp.name] = cp
@@ -239,7 +249,7 @@ class Game(object):
         self['Silver'].numcards = 40
         self['Gold'].numcards = 30
         available = self.getAvailableCards()
-        unfilled = 10
+        unfilled = numstacks
         foundall = True
         for c in initcards:
             cardname = self.guess_cardname(c)
@@ -601,6 +611,9 @@ def parseArgs(args=sys.argv[1:]):
                         help='Include only cards from the specified base')
     parser.add_argument('--cardpath', default='cards',
                         help='Where to find card definitions')
+    parser.add_argument('--statepath', default='states', help=argparse.SUPPRESS)
+    parser.add_argument('--boonpath', default='boons', help=argparse.SUPPRESS)
+    parser.add_argument('--numstacks', default=10, help=argparse.SUPPRESS)
     parser.add_argument('--prosperity', default=False, action='store_true',
                         help='Use colonies and platinums')
     parser.add_argument('--bot', action='store_true', dest='bot',
