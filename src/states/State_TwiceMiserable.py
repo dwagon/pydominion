@@ -12,7 +12,6 @@ class State_Twice_Miserable(State):
         self.base = 'nocture'
         self.desc = "-4 VP"
         self.name = "Twice Miserable"
-        self.purchasable = False
         self.victory = -4
 
 

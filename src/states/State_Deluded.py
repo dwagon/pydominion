@@ -12,7 +12,6 @@ class State_Deluded(State):
         self.base = 'nocture'
         self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
-        self.purchasable = False
 
     def hook_preBuy(self, game, player):
         player.remove_state(self)

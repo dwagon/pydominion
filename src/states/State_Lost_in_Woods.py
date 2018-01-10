@@ -12,7 +12,6 @@ class State_Lost_in_woods(State):
         self.base = 'nocture'
         self.desc = "At the start of your turn, you may discard a card to receive a Boon."
         self.name = "Lost in the Woods"
-        self.purchasable = False
         self.unique_state = True
 
     def hook_startTurn(self, game, player):

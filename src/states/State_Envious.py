@@ -12,7 +12,6 @@ class State_Envious(State):
         self.base = 'nocture'
         self.desc = "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
         self.name = "Envious"
-        self.purchasable = False
 
     def hook_preBuy(self, game, player):
         player.remove_state(self)
