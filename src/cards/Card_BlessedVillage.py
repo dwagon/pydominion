@@ -17,9 +17,9 @@ class Card_BlessedVillage(Card):
 
     def desc(self, player):
         if player.phase == "buy":
-            self.desc = "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
+            return "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
         else:
-            self.desc = "+1 Card; +2 Actions"
+            return "+1 Card; +2 Actions"
 
     def hook_gainThisCard(self, game, player):
         player.receive_boon()
