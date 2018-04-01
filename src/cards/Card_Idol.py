@@ -18,9 +18,9 @@ class Card_Idol(Card):
 
     def special(self, game, player):
         idols = player.played.count('Idol') + player.hand.count('Idol')
-        if idols % 2 == 0:
+        if idols % 2 == 1:      # Odd
             player.receive_boon()
-        else:
+        else:                   # Even
             for pl in player.attackVictims():
                 pl.output("{}'s Idol cursed you".format(player.name))
                 pl.gainCard('Curse')
@@ -46,7 +46,8 @@ class Test_Idol(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))  # From Mountain boon
+        self.assertIsNotNone(self.vic.inDiscard('Curse'))
+        self.assertIsNone(self.plr.inDiscard('Silver'))
 
     def test_play_odd(self):
         """ Play an odd number of Idol """
@@ -54,8 +55,8 @@ class Test_Idol(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.vic.inDiscard('Curse'))
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.vic.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.inDiscard('Silver'))  # From Mountain boon
 
 
 ###############################################################################
