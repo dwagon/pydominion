@@ -13,7 +13,7 @@ class Card_WilloWisp(Card):
         self.desc = "+1 Card; +1 Action; Reveal the top card of your deck. If it costs 2 or less, put it into your hand."
         self.name = "Will-o'-Wisp"
         self.purchasable = False
-        self.card = 1
+        self.cards = 1
         self.actions = 1
         self.insupply = False
         self.cost = 0
@@ -39,22 +39,24 @@ class Test_WilloWisp(unittest.TestCase):
 
     def test_special_cheap(self):
         self.plr.setHand()
-        self.plr.setDeck('Copper')
+        self.plr.setDeck('Copper', 'Estate')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.getActions(), 1)
+        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertIsNotNone(self.plr.inHand('Estate'))
+
+    def test_special_expensive(self):
+        self.plr.setHand()
+        self.plr.setDeck('Gold', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Copper'))
-
-    def test_special_expensive(self):
-        self.plr.setHand()
-        self.plr.setDeck('Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.inHand('Estate'))
 
 
 ###############################################################################
