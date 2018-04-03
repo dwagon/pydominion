@@ -10,7 +10,7 @@ class Card_Raider(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration', 'attack']
         self.base = 'nocturne'
-        self.desc = "Each other player with 5 or more cards in hand discards a copy of a card you have in play (or reveals they can't). At the start of your next turn, +3"
+        self.desc = "Each other player with 5 or more cards in hand discards a copy of a card you have in play (or reveals they can't). At the start of your next turn, +3 Coins"
         self.name = 'Raider'
         self.cost = 6
 
