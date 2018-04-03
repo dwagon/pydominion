@@ -57,6 +57,7 @@ class Test_Herald(unittest.TestCase):
         self.plr.buyCard(self.g['Herald'])
         self.assertEqual(self.plr.deck[-1].name, 'Moat')
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
