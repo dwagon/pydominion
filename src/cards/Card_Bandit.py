@@ -16,6 +16,7 @@ class Card_Bandit(Card):
 
     def special(self, game, player):
         player.gainCard('Gold')
+        player.output("Gained a Gold")
         for pl in player.attackVictims():
             self.thieveOn(pl, player)
 
