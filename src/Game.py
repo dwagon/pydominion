@@ -534,6 +534,7 @@ class Game(object):
             self.output("Cards of %s:" % plr.name)
             for k, v in plr.getCards().items():
                 self.output("%s: %s=%s" % (plr.name, k, v))
+        self.output("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
         return scores
 
     ###########################################################################
