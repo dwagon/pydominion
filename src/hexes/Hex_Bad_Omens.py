@@ -23,6 +23,7 @@ class Hex_BadOmens(Hex):
             if c.name == 'Copper':
                 numcu += 1
                 player.addCard(c, 'deck')
+                player.discardpile.remove(c)
                 if numcu == 2:
                     break
 
