@@ -20,10 +20,12 @@ class Card_Devils_Workshop(Card):
         player.output("You gained {} cards this turn".format(nc))
         if nc >= 2:
             player.gainCard('Imp')
+            player.output("Gained an Imp")
         elif nc == 1:
             player.plrGainCard(4)
         else:
             player.gainCard('Gold')
+            player.output("Gained a Gold")
 
 
 ###############################################################################
