@@ -18,7 +18,7 @@ class Card_Junkdealer(Card):
         self.cost = 2
 
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plrTrashCard(force=True)
 
 
 ###############################################################################
@@ -32,15 +32,6 @@ class Test_Junkdealer(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver', 'Silver', 'Gold')
         self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.addCard(self.jd, 'hand')
-
-    def test_play(self):
-        tsize = self.g.trashSize()
-        self.plr.test_input = ['finish']
-        self.plr.playCard(self.jd)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
         tsize = self.g.trashSize()
