@@ -10,9 +10,14 @@ class Card_Den_of_Sin(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
         self.base = 'nocturne'
-        self.desc = "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         self.name = 'Den of Sin'
         self.cost = 2
+
+    def desc(self, player):
+        if player.phase == 'buy':
+            return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
+        else:
+            return "At the start of your next turn, +2 Cards"
 
     def duration(self, game, player):
         for i in range(2):

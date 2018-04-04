@@ -11,8 +11,13 @@ class Card_Ghost_Town(Card):
         self.cardtype = ['night', 'duration']
         self.base = 'nocturne'
         self.name = 'Ghost Town'
-        self.desc = "At the start of your next turn, +1 Card and +1 Action. This is gained to your hand (instead of your discard pile)."
         self.cost = 3
+
+    def desc(self, player):
+        if player.phase == 'buy':
+            return "At the start of your next turn, +1 Card and +1 Action. This is gained to your hand (instead of your discard pile)."
+        else:
+            return "At the start of your next turn, +1 Card and +1 Action."
 
     def hook_gainThisCard(self, game, player):
         return {'destination': 'hand'}
