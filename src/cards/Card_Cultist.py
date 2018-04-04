@@ -9,7 +9,7 @@ class Card_Cultist(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'looter']
         self.base = 'darkages'
-        self.desc = "+2 cards, All others gain a ruin. Trash for +3 cards"
+        self.desc = """+2 Cards; Each other player gains a Ruins. You may play a Cultist from your hand.  When you trash this, +3 Cards."""
         self.name = 'Cultist'
         self.cost = 5
         self.cards = 2
