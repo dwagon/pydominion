@@ -49,6 +49,7 @@ class Test_Masterpiece(unittest.TestCase):
         self.plr.buyCard(self.g['Masterpiece'])
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
