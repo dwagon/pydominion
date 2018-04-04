@@ -37,7 +37,7 @@ class Card_Golem(Card):
                 player.discardCard(c)
         # TODO - let the player choose the order
         for card in actions:
-            player.output("Playing %s" % c.name)
+            player.output("Golem playing %s" % card.name)
             player.playCard(card, costAction=False)
 
 
