@@ -23,6 +23,8 @@ class Card_Crossroads(Card):
         if vict:
             player.output("Picking up %d cards" % vict)
             player.pickupCards(vict)
+        else:
+            player.output("No victory cards")
         numcross = sum([1 for c in player.played if c.name == 'Crossroads'])
         if numcross == 1:
             player.addActions(3)
