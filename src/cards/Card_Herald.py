@@ -10,13 +10,18 @@ class Card_Herald(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'guilds'
-        self.desc = """+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it.
-        When you buy this, you may overpay for it. For each Coin you overpaid, look through your discard pile and put a card from it on top of your deck."""
         self.name = 'Herald'
         self.overpay = True
         self.cards = 1
         self.action = 1
         self.cost = 4
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it.
+            When you buy this, you may overpay for it. For each Coin you overpaid, look through your discard pile and put a card from it on top of your deck."""
+        else:
+            return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game, player):
         card = player.nextCard()

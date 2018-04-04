@@ -10,11 +10,16 @@ class Card_Doctor(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = """Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order.
-        When you buy this, you may overpay for it. For each 1 you overpaid, look at the top card of your deck; trash it, discard it, or put it back."""
         self.name = 'Doctor'
         self.overpay = True
         self.cost = 3
+
+    def desc(self, player):
+        if player.phase == "buy":
+            return """Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order.
+            When you buy this, you may overpay for it. For each 1 you overpaid, look at the top card of your deck; trash it, discard it, or put it back."""
+        else:
+            return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
 
     def special(self, game, player):
         options = []
