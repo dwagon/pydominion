@@ -687,7 +687,7 @@ class Test_choiceSelection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.setHand('Copper')
         self.plr.phase = 'buy'
-        self.plr.specialcoins = 0   # Stop card choice breaking test
+        self.plr.coffer = 0   # Stop card choice breaking test
         opts, prompt = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
@@ -703,7 +703,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.buys = 7
         self.plr.potions = 9
         self.plr.coin = 5
-        self.plr.specialcoins = 1
+        self.plr.coffer = 1
         self.plr.phase = 'buy'
         self.plr.debt = 2
         opts, prompt = self.plr.choiceSelection()
@@ -719,7 +719,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.buys = 0
         self.plr.potions = 0
         self.plr.coin = 0
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.phase = 'buy'
         opts, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=0', prompt)
@@ -765,7 +765,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate')
         self.plr.addCard(self.potion, 'hand')
         self.plr.addCard(self.moat, 'hand')
-        self.plr.gainSpecialCoins(1)
+        self.plr.gainCoffer(1)
         opts = self.plr.spendableSelection()
         self.assertEqual(opts[0]['selector'], '1')
         self.assertEqual(opts[0]['action'], 'spendall')
@@ -792,7 +792,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.debt = 1
         self.plr.coin = 1
-        self.plr.specialcoin = 0
+        self.plr.coffer = 0
         try:
             opts = self.plr.spendableSelection()
             self.assertEqual(opts[1]['selector'], '3')
@@ -833,16 +833,16 @@ class Test_spendCoin(unittest.TestCase):
 
     def test_spendCoin(self):
         """ Spend a coin that the player has """
-        self.plr.specialcoins = 1
+        self.plr.coffer = 1
         self.plr.spendCoin()
-        self.assertEqual(self.plr.getSpecialCoins(), 0)
+        self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_spendNothing(self):
         """ Spend a coin that the player doesn't have """
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.spendCoin()
-        self.assertEqual(self.plr.getSpecialCoins(), 0)
+        self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
 
 

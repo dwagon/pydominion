@@ -503,7 +503,7 @@ class Game(object):
             print("  %s's messages: %s" % (p.name, p.messages))
             print("  %s's score: %s %s" % (p.name, p.getScore(), p.getScoreDetails()))
             print("  %s's tokens: %s" % (p.name, p.tokens))
-            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.specialcoins, p.potions))
+            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.coffer, p.potions))
 
     ###########################################################################
     def playerToLeft(self, plr):

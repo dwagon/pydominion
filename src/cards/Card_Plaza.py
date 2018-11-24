@@ -20,7 +20,7 @@ class Card_Plaza(Card):
         treasures = [c for c in player.hand if c.isTreasure()]
         disc = player.plrDiscardCards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a special coin")
         if disc:
-            player.gainSpecialCoins(1)
+            player.gainCoffer(1)
 
 
 ###############################################################################
@@ -35,12 +35,12 @@ class Test_Plaza(unittest.TestCase):
     def test_play(self):
         """ Play a plaza """
         try:
-            self.plr.specialcoins = 0
+            self.plr.coffer = 0
             self.plr.setHand('Gold')
             self.plr.test_input = ['discard gold']
             self.plr.addCard(self.card, 'hand')
             self.plr.playCard(self.card)
-            self.assertEqual(self.plr.getSpecialCoins(), 1)
+            self.assertEqual(self.plr.getCoffer(), 1)
             self.assertEqual(self.plr.getActions(), 2)
             self.assertEqual(self.plr.handSize(), 1)
         except AssertionError:      # pragma: no cover

@@ -18,7 +18,7 @@ class Player(object):
         self.currcards = []
         game.output("Player %s is at the table" % name)
         self.score = {}
-        self.specialcoins = 0
+        self.coffer = 0
         self.messages = []
         self.hand = PlayArea([])
         self.durationpile = PlayArea([])
@@ -369,9 +369,9 @@ class Player(object):
                 break
 
     ###########################################################################
-    def gainSpecialCoins(self, num=1):
+    def gainCoffer(self, num=1):
         """ Gain a number of coin tokens """
-        self.specialcoins += num
+        self.coffer += num
 
     ###########################################################################
     def addCard(self, card, pile='discard'):
@@ -482,7 +482,7 @@ class Player(object):
         if spendable:
             o = Option(selector='1', verb='Spend all treasures', details=details, card=None, action='spendall')
             options.append(o)
-        if self.specialcoins:
+        if self.coffer:
             o = Option(selector='2', verb='Spend Coin', card=None, action='coin')
             options.append(o)
 
@@ -633,8 +633,8 @@ class Player(object):
             status += " Debt=%s" % self.debt
         if self.potions:
             status += " Potion"
-        if self.specialcoins:
-            status += " Special Coins=%d" % self.specialcoins
+        if self.coffer:
+            status += " Special Coins=%d" % self.coffer
         prompt = "What to do (%s)?" % status
         return options, prompt
 
@@ -847,9 +847,9 @@ class Player(object):
 
     ###########################################################################
     def spendCoin(self):
-        if self.specialcoins <= 0:
+        if self.coffer <= 0:
             return
-        self.specialcoins -= 1
+        self.coffer -= 1
         self.coin += 1
         self.output("Spent a coin")
 
@@ -1112,8 +1112,8 @@ class Player(object):
         return self.coin
 
     ###########################################################################
-    def getSpecialCoins(self):
-        return self.specialcoins
+    def getCoffer(self):
+        return self.coffer
 
     ###########################################################################
     def addCoin(self, num=1):

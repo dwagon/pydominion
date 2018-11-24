@@ -20,7 +20,7 @@ class Card_Butcher(Card):
             and then pay any number of Coin tokens. If you did trash a
             card, gain a card with a cost up to the cost of the trashed
             card plus the number of Coin tokens you paid """
-        player.gainSpecialCoins(2)
+        player.gainCoffer(2)
         trash = player.plrChooseOptions(
             'Trash a card to buy a card?',
             ("Don't trash cards", False), ('Trash a card', True))
@@ -28,12 +28,12 @@ class Card_Butcher(Card):
             return
         card = player.plrTrashCard(force=True)[0]
         options = []
-        for i in range(player.getSpecialCoins() + 1):
+        for i in range(player.getCoffer() + 1):
             sel = '%d' % i
             options.append({'selector': sel, 'print': 'Add %d coins' % i, 'coins': i})
         o = player.userInput(options, "Spend extra coins?")
         cost = card.cost + o['coins']
-        player.specialcoins -= o['coins']
+        player.coffer -= o['coins']
         player.plrGainCard(cost=cost)
 
 
@@ -49,23 +49,23 @@ class Test_Butcher(unittest.TestCase):
 
     def test_play(self):
         """ Play a butcher"""
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.test_input = ["Don't trash"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getSpecialCoins(), 2)
+        self.assertEqual(self.plr.getCoffer(), 2)
 
     def test_trash_gold(self):
         """ Trash a gold """
         self.plr.setHand('Copper', 'Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         # Trash a card
         # Trash card 3
         # Spend 2 coin
         # Buy card 1
         self.plr.test_input = ['trash a card', 'trash gold', 'add 2', 'get silver']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getSpecialCoins(), 0)
+        self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.g.inTrash('Gold'))

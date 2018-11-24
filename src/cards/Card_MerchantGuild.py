@@ -18,7 +18,7 @@ class Card_MerchantGuild(Card):
 
     def hook_buyCard(self, game, player, card):
         player.output("Gaining Coin token from Merchant Guild")
-        player.gainSpecialCoins()
+        player.gainCoffer()
 
 
 ###############################################################################
@@ -39,10 +39,11 @@ class Test_MerchantGuild(unittest.TestCase):
 
     def test_buy(self):
         """ Play the card """
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.playCard(self.card)
         self.plr.buyCard(self.g['Estate'])
-        self.assertEqual(self.plr.getSpecialCoins(), 1)
+        self.assertEqual(self.plr.getCoffer(), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

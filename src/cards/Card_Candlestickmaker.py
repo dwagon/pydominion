@@ -18,7 +18,7 @@ class Card_Candlestickmaker(Card):
 
     def special(self, game, player):
         """ Take a Coin Token """
-        player.gainSpecialCoins(1)
+        player.gainCoffer(1)
 
 
 ###############################################################################
@@ -33,9 +33,9 @@ class Test_Candlestickmaker(unittest.TestCase):
 
     def test_play(self):
         """ Play a candlestick maker """
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getSpecialCoins(), 1)
+        self.assertEqual(self.plr.getCoffer(), 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 
