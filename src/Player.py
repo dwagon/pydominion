@@ -501,7 +501,7 @@ class Player(object):
             o = Option(selector='4', verb='Payback Debt', card=None, action='payback')
             options.append(o)
 
-        index = 4
+        index = 5
         for s in spendable:
             tp = '%d coin; %s' % (self.hook_spendValue(s), s.get_cardtype_repr())
             o = Option(selector=str(index), name=s.name, details=tp, verb='Spend', card=s, action='spend', desc=s.description(self))
