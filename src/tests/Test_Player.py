@@ -795,7 +795,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.coffer = 0
         try:
             opts = self.plr.spendableSelection()
-            self.assertEqual(opts[1]['selector'], '3')
+            self.assertEqual(opts[1]['selector'], '4')
             self.assertEqual(opts[1]['action'], 'payback')
             self.assertEqual(opts[1]['verb'], 'Payback Debt')
             self.assertIsNone(opts[1]['card'])
@@ -834,14 +834,14 @@ class Test_spendCoffer(unittest.TestCase):
     def test_spendCoffer(self):
         """ Spend a coffer that the player has """
         self.plr.coffer = 1
-        self.plr.spendCoin()
+        self.plr.spendCoffer()
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_spendNothing(self):
         """ Spend a coffer that the player doesn't have """
         self.plr.coffer = 0
-        self.plr.spendCoin()
+        self.plr.spendCoffer()
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
 
@@ -856,7 +856,7 @@ class Test_spendVillager(unittest.TestCase):
     def test_spendVillager(self):
         """ Spend a Villager that the player has """
         self.plr.villager = 1
-        self.plr.spendCoin()
+        self.plr.spendVillager()
         self.assertEqual(self.plr.getVillager(), 0)
         self.assertEqual(self.plr.getActions(), 1)
 
