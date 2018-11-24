@@ -712,7 +712,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.assertIn('Buys=7', prompt)
         self.assertIn('Debt=2', prompt)
         self.assertIn('Potion', prompt)
-        self.assertIn('Special Coins=1', prompt)
+        self.assertIn('Coffer=1', prompt)
 
     def test_nothing_prompt(self):
         self.plr.actions = 0
@@ -726,7 +726,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.assertIn('Buys=0', prompt)
         self.assertNotIn('Coins', prompt)
         self.assertNotIn('Potions', prompt)
-        self.assertNotIn('Special Coins', prompt)
+        self.assertNotIn('Coffer', prompt)
 
 
 ###############################################################################
@@ -825,25 +825,47 @@ class Test_buyCard(unittest.TestCase):
 
 
 ###############################################################################
-class Test_spendCoin(unittest.TestCase):
+class Test_spendCoffer(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
-    def test_spendCoin(self):
-        """ Spend a coin that the player has """
+    def test_spendCoffer(self):
+        """ Spend a coffer that the player has """
         self.plr.coffer = 1
         self.plr.spendCoin()
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_spendNothing(self):
-        """ Spend a coin that the player doesn't have """
+        """ Spend a coffer that the player doesn't have """
         self.plr.coffer = 0
         self.plr.spendCoin()
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
+
+
+###############################################################################
+class Test_spendVillager(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.startGame()
+        self.plr = self.g.playerList(0)
+
+    def test_spendVillager(self):
+        """ Spend a Villager that the player has """
+        self.plr.villager = 1
+        self.plr.spendCoin()
+        self.assertEqual(self.plr.getVillager(), 0)
+        self.assertEqual(self.plr.getActions(), 1)
+
+    def test_spendNothing(self):
+        """ Spend a Villager that the player doesn't have """
+        self.plr.villager = 0
+        self.plr.spendVillager()
+        self.assertEqual(self.plr.getVillager(), 0)
+        self.assertEqual(self.plr.getActions(), 0)
 
 
 ###############################################################################

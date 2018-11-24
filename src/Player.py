@@ -19,6 +19,7 @@ class Player(object):
         game.output("Player %s is at the table" % name)
         self.score = {}
         self.coffer = 0
+        self.villager = 0
         self.messages = []
         self.hand = PlayArea([])
         self.durationpile = PlayArea([])
@@ -369,8 +370,13 @@ class Player(object):
                 break
 
     ###########################################################################
+    def gainVillager(self, num=1):
+        """ Gain a number of villager """
+        self.villager += num
+
+    ###########################################################################
     def gainCoffer(self, num=1):
-        """ Gain a number of coin tokens """
+        """ Gain a number of coffer """
         self.coffer += num
 
     ###########################################################################
@@ -482,12 +488,17 @@ class Player(object):
         if spendable:
             o = Option(selector='1', verb='Spend all treasures', details=details, card=None, action='spendall')
             options.append(o)
+
         if self.coffer:
-            o = Option(selector='2', verb='Spend Coin', card=None, action='coin')
+            o = Option(selector='2', verb='Spend Coffer', card=None, action='coffer')
+            options.append(o)
+
+        if self.villager:
+            o = Option(selector='3', verb='Spend Villager', card=None, action='villager')
             options.append(o)
 
         if self.debt and self.coin:
-            o = Option(selector='3', verb='Payback Debt', card=None, action='payback')
+            o = Option(selector='4', verb='Payback Debt', card=None, action='payback')
             options.append(o)
 
         index = 4
@@ -634,7 +645,9 @@ class Player(object):
         if self.potions:
             status += " Potion"
         if self.coffer:
-            status += " Special Coins=%d" % self.coffer
+            status += " Coffer=%d" % self.coffer
+        if self.villager:
+            status += " Villager=%d" % self.villager
         prompt = "What to do (%s)?" % status
         return options, prompt
 
@@ -717,8 +730,10 @@ class Player(object):
             self.performEvent(opt['card'])
         elif opt['action'] == 'reserve':
             self.callReserve(opt['card'])
-        elif opt['action'] == 'coin':
-            self.spendCoin()
+        elif opt['action'] == 'coffer':
+            self.spendCoffer()
+        elif opt['action'] == 'villager':
+            self.spendVillager()
         elif opt['action'] == 'play':
             self.playCard(opt['card'])
         elif opt['action'] == 'spend':
@@ -846,12 +861,20 @@ class Player(object):
             c.hook_startTurn(self.game, self)
 
     ###########################################################################
-    def spendCoin(self):
+    def spendCoffer(self):
         if self.coffer <= 0:
             return
         self.coffer -= 1
         self.coin += 1
-        self.output("Spent a coin")
+        self.output("Spent a coffer")
+
+    ###########################################################################
+    def spendVillager(self):
+        if self.villager <= 0:
+            return
+        self.villager -= 1
+        self.actions += 1
+        self.output("Spent a villager")
 
     ###########################################################################
     def endTurn(self):
@@ -1114,6 +1137,10 @@ class Player(object):
     ###########################################################################
     def getCoffer(self):
         return self.coffer
+
+    ###########################################################################
+    def getVillager(self):
+        return self.villager
 
     ###########################################################################
     def addCoin(self, num=1):
