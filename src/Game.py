@@ -493,19 +493,17 @@ class Game(object):
 
             print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].numcards, tokens))
         for p in self.playerList():
-            print("%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
-            print("%s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
-            print("%s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
-            print("%s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
-            print("%s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
-            print("%s's reserve: %s" % (p.name, ", ".join([c.name for c in p.reserve])))
-            print("%s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
-            print("%s's messages: %s" % (p.name, p.messages))
-            print("%s's score: %s %s" % (p.name, p.score, p.getScoreDetails()))
-            print("%s's tokens: %s" % (p.name, p.tokens))
-            print("%s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.specialcoins, p.potions))
-        cpls = ["%s=%s" % (name, cp.numcards) for name, cp in self.cardpiles.items()]
-        print("%s" % ", ".join(cpls))
+            print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
+            print("  %s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
+            print("  %s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
+            print("  %s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
+            print("  %s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
+            print("  %s's reserve: %s" % (p.name, ", ".join([c.name for c in p.reserve])))
+            print("  %s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
+            print("  %s's messages: %s" % (p.name, p.messages))
+            print("  %s's score: %s %s" % (p.name, p.getScore(), p.getScoreDetails()))
+            print("  %s's tokens: %s" % (p.name, p.tokens))
+            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d special coins=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.specialcoins, p.potions))
 
     ###########################################################################
     def playerToLeft(self, plr):
