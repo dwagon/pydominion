@@ -773,7 +773,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['selector'], '2')
-        self.assertEqual(opts[1]['verb'], 'Spend Coin')
+        self.assertEqual(opts[1]['verb'], 'Spend Coffer')
         self.assertEqual(opts[1]['action'], 'coin')
         self.assertIsNone(opts[1]['card'])
 
@@ -858,14 +858,14 @@ class Test_spendVillager(unittest.TestCase):
         self.plr.villager = 1
         self.plr.spendVillager()
         self.assertEqual(self.plr.getVillager(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getActions(), 2)
 
     def test_spendNothing(self):
         """ Spend a Villager that the player doesn't have """
         self.plr.villager = 0
         self.plr.spendVillager()
         self.assertEqual(self.plr.getVillager(), 0)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.getActions(), 1)
 
 
 ###############################################################################
