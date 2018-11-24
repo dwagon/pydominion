@@ -766,6 +766,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.addCard(self.potion, 'hand')
         self.plr.addCard(self.moat, 'hand')
         self.plr.gainCoffer(1)
+        self.plr.gainVillager(1)
         opts = self.plr.spendableSelection()
         self.assertEqual(opts[0]['selector'], '1')
         self.assertEqual(opts[0]['action'], 'spendall')
@@ -777,21 +778,21 @@ class Test_spendableSelection(unittest.TestCase):
         self.assertEqual(opts[1]['action'], 'coffer')
         self.assertIsNone(opts[1]['card'])
 
-        self.assertEqual(opts[1]['selector'], '3')
-        self.assertEqual(opts[1]['verb'], 'Spend Villager')
-        self.assertEqual(opts[1]['action'], 'villager')
-        self.assertIsNone(opts[1]['card'])
+        self.assertEqual(opts[2]['selector'], '3')
+        self.assertEqual(opts[2]['verb'], 'Spend Villager')
+        self.assertEqual(opts[2]['action'], 'villager')
+        self.assertIsNone(opts[2]['card'])
 
-        self.assertEqual(opts[2]['selector'], '5')
-        self.assertEqual(opts[2]['verb'], 'Spend')
-        self.assertEqual(opts[2]['name'], 'Copper')
-        self.assertEqual(opts[2]['action'], 'spend')
-        self.assertEqual(opts[2]['card'].name, 'Copper')
-
+        self.assertEqual(opts[3]['selector'], '5')
         self.assertEqual(opts[3]['verb'], 'Spend')
-        self.assertEqual(opts[3]['selector'], '6')
+        self.assertEqual(opts[3]['name'], 'Copper')
         self.assertEqual(opts[3]['action'], 'spend')
-        self.assertEqual(opts[3]['card'].name, 'Potion')
+        self.assertEqual(opts[3]['card'].name, 'Copper')
+
+        self.assertEqual(opts[4]['verb'], 'Spend')
+        self.assertEqual(opts[4]['selector'], '6')
+        self.assertEqual(opts[4]['action'], 'spend')
+        self.assertEqual(opts[4]['card'].name, 'Potion')
 
     def test_debt(self):
         self.plr.setHand('Copper')
