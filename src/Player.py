@@ -51,6 +51,7 @@ class Player(object):
         self.end_of_game_cards = []
         self.phase = None
         self.states = []
+        self.artifacts = []
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
@@ -709,7 +710,7 @@ class Player(object):
         self.phase = 'cleanup'
         self.game.cleanup_boons()
         self.game.cleanup_hexes()
-        for card in self.played + self.reserve:
+        for card in self.played + self.reserve + self.artifacts:
             card.hook_cleanup(self.game, self)
         self.discardHand()
         self.pickUpHand()
@@ -773,6 +774,8 @@ class Player(object):
             self.output("| Hand: %s" % ", ".join([c.name for c in self.hand]))
         else:
             self.output("| Hand: <EMPTY>")
+        if self.artifacts:
+            self.output("| Artifacts: %s" % ", ".join([c.name for c in self.artifacts]))
         if self.played:
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
@@ -1362,6 +1365,10 @@ class Player(object):
         return state in [_.name for _ in self.states]
 
     ###########################################################################
+    def has_artifact(self, artifact):
+        return artifact in [_.name for _ in self.artifacts]
+
+    ###########################################################################
     def assign_state(self, state):
         assert isinstance(state, str)
         statecard = self.game.states[state]
@@ -1375,12 +1382,31 @@ class Player(object):
         self.states.append(statecard)
 
     ###########################################################################
+    def assign_artifact(self, artifact):
+        assert isinstance(artifact, str)
+        artifactcard = self.game.artifacts[artifact]
+        for pl in self.game.playerList():
+            for st in pl.artifacts[:]:
+                if st.name == artifact:
+                    pl.artifacts.remove(st)
+                    break
+        self.artifacts.append(artifactcard)
+
+    ###########################################################################
     def remove_state(self, state):
         if isinstance(state, str):
             name = state
         else:
             name = state.name
         self.states.remove([_ for _ in self.states if _.name == name][0])
+
+    ###########################################################################
+    def remove_artifact(self, artifact):
+        if isinstance(artifact, str):
+            name = artifact
+        else:
+            name = artifact.name
+        self.artifacts.remove([_ for _ in self.artifacts if _.name == name][0])
 
     ###########################################################################
     def plrDiscardCards(self, num=1, anynum=False, **kwargs):

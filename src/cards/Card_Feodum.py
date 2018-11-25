@@ -58,6 +58,7 @@ class Test_Feodum(unittest.TestCase):
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

@@ -15,6 +15,7 @@ from LandmarkPile import LandmarkPile
 from BoonPile import BoonPile
 from HexPile import HexPile
 from StatePile import StatePile
+from ArtifactPile import ArtifactPile
 from PlayArea import PlayArea
 from Names import playerNames
 
@@ -29,6 +30,7 @@ class Game(object):
         self.players = {}
         self.cardpiles = {}
         self.states = {}
+        self.artifacts = {}
         self.events = {}
         self.landmarks = {}
         self.boons = []
@@ -53,6 +55,7 @@ class Game(object):
         self.numstacks = args['numstacks'] if 'numstacks' in args else 10
         self.boonpath = args['boonpath'] if 'boonpath' in args else 'boons'
         self.statepath = args['statepath'] if 'statepath' in args else 'states'
+        self.artifactpath = args['artifactpath'] if 'artifactpath' in args else 'artifacts'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
@@ -193,6 +196,16 @@ class Game(object):
         self.loadNonKingdomCards('State', None, None, StatePile, d)
         for st in self.getAvailableCards('State'):
             self.states[st] = StatePile(st, self.cardmapping['State'][st])
+
+    ###########################################################################
+    def loadArtifacts(self):
+        if self.artifacts:
+            return
+        d = {}
+        self.output("Using artifacts")
+        self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, d)
+        for st in self.getAvailableCards('Artifact'):
+            self.artifacts[st] = ArtifactPile(st, self.cardmapping['Artifact'][st])
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
@@ -342,6 +355,8 @@ class Game(object):
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
                 self.addPrizes()
+            if self.cardpiles[card].needsartifacts:
+                self.loadArtifacts()
 
     ###########################################################################
     def cardTypes(self):
@@ -366,6 +381,7 @@ class Game(object):
         mapping['Boon'] = self.getSetCardClasses('Boon', self.boonpath, 'boons', 'Boon_')
         mapping['Hex'] = self.getSetCardClasses('Hex', self.hexpath, 'hexes', 'Hex_')
         mapping['State'] = self.getSetCardClasses('State', self.statepath, 'states', 'State_')
+        mapping['Artifact'] = self.getSetCardClasses('Artifact', self.artifactpath, 'artifacts', 'Artifact_')
         return mapping
 
     ###########################################################################
@@ -494,6 +510,7 @@ class Game(object):
             print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].numcards, tokens))
         for p in self.playerList():
             print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
+            print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
             print("  %s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("  %s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
             print("  %s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
@@ -611,6 +628,7 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--cardpath', default='cards',
                         help='Where to find card definitions')
     parser.add_argument('--statepath', default='states', help=argparse.SUPPRESS)
+    parser.add_argument('--artifactpath', default='artifacts', help=argparse.SUPPRESS)
     parser.add_argument('--boonpath', default='boons', help=argparse.SUPPRESS)
     parser.add_argument('--numstacks', default=10, help=argparse.SUPPRESS)
     parser.add_argument('--prosperity', default=False, action='store_true',
