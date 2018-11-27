@@ -60,6 +60,7 @@ class Game(object):
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
+        self.initartifacts = args['initartifacts'] if 'initartifacts' in args else []
         self.badcards = args['badcards'] if 'badcards' in args else []
         self.cardpath = args['cardpath'] if 'cardpath' in args else 'cards'
         self.cardbase = args['cardbase'] if 'cardbase' in args else []
@@ -75,6 +76,7 @@ class Game(object):
         self.loadDecks(self.initcards, self.numstacks)
         self.loadEvents()
         self.loadLandmarks()
+        self.loadArtifacts()
         heirlooms = self.enable_heirlooms()
 
         if self.hexes or self.boons:
@@ -205,6 +207,8 @@ class Game(object):
         self.output("Using artifacts")
         self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, d)
         for st in self.getAvailableCards('Artifact'):
+            if self.initartifacts and st not in self.initartifacts:
+                continue
             self.artifacts[st] = ArtifactPile(st, self.cardmapping['Artifact'][st])
 
     ###########################################################################
