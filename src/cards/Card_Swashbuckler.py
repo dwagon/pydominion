@@ -36,6 +36,7 @@ class Test_Swashbuckler(unittest.TestCase):
         self.card = self.g['Swashbuckler'].remove()
 
     def test_play_no_discard(self):
+        self.plr.setCoffer(0)
         self.plr.setDiscard()
         card = self.g['Swashbuckler'].remove()
         self.plr.addCard(card, 'hand')
@@ -43,14 +44,16 @@ class Test_Swashbuckler(unittest.TestCase):
         self.assertEqual(self.plr.getCoffer(), 0)
 
     def test_play_discard(self):
+        self.plr.setCoffer(0)
         self.plr.setDiscard('Copper')
         card = self.g['Swashbuckler'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.playCard(card)
+        self.g.print_state()
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_play_coffers(self):
-        self.plr.gainCoffer(3)
+        self.plr.setCoffer(3)
         self.plr.setDiscard('Copper')
         card = self.g['Swashbuckler'].remove()
         self.plr.addCard(card, 'hand')
