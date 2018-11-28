@@ -49,7 +49,6 @@ class Test_Swashbuckler(unittest.TestCase):
         card = self.g['Swashbuckler'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.playCard(card)
-        self.g.print_state()
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_play_coffers(self):
