@@ -1142,6 +1142,10 @@ class Player(object):
         return self.coffer
 
     ###########################################################################
+    def setCoffer(self, num=0):
+        self.coffer = num
+
+    ###########################################################################
     def getVillager(self):
         return self.villager
 
