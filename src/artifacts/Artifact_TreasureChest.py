@@ -15,6 +15,7 @@ class Artifact_TreasureChest(Artifact):
 
     def hook_preBuy(self, game, player):
         player.gainCard("Gold")
+        player.output("Gained a Gold from Treasure Chest")
 
 
 ###############################################################################

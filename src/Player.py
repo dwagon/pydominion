@@ -1388,6 +1388,7 @@ class Player(object):
         for pl in self.game.playerList():
             for st in pl.artifacts[:]:
                 if st.name == artifact:
+                    pl.output("{} took your {}".format(self.name, artifact))
                     pl.artifacts.remove(st)
                     break
         self.artifacts.append(artifactcard)
