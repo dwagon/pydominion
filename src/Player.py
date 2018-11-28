@@ -822,8 +822,8 @@ class Player(object):
     ###########################################################################
     def hook_preBuy(self):
         """ Hook that fires off before the buy phase """
-        for lm in list(self.game.landmarks.values()) + self.states:
-            lm.hook_preBuy(game=self.game, player=self)
+        for card in list(self.game.landmarks.values()) + self.states + self.artifacts:
+            card.hook_preBuy(game=self.game, player=self)
 
     ###########################################################################
     def hook_allowedToBuy(self, card):
