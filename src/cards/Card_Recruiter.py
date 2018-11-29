@@ -33,7 +33,7 @@ class Test_Recruiter(unittest.TestCase):
     def test_play(self):
         self.plr.setHand('Copper', 'Silver')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Trash Silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2 + 1)
         self.assertEqual(self.plr.getVillager(), 3)
