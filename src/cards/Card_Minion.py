@@ -97,6 +97,7 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.victim.handSize(), 5)
         self.assertEqual(self.victim.discardSize(), 0)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
