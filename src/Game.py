@@ -16,6 +16,7 @@ from BoonPile import BoonPile
 from HexPile import HexPile
 from StatePile import StatePile
 from ArtifactPile import ArtifactPile
+from ProjectPile import ProjectPile
 from PlayArea import PlayArea
 from Names import playerNames
 
@@ -31,6 +32,7 @@ class Game(object):
         self.cardpiles = {}
         self.states = {}
         self.artifacts = {}
+        self.projects = {}
         self.events = {}
         self.landmarks = {}
         self.boons = []
@@ -56,11 +58,13 @@ class Game(object):
         self.boonpath = args['boonpath'] if 'boonpath' in args else 'boons'
         self.statepath = args['statepath'] if 'statepath' in args else 'states'
         self.artifactpath = args['artifactpath'] if 'artifactpath' in args else 'artifacts'
+        self.projectpath = args['projectpath'] if 'projectpath' in args else 'projects'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
         self.initartifacts = args['initartifacts'] if 'initartifacts' in args else []
+        self.initprojects = args['initprojects'] if 'initprojects' in args else []
         self.badcards = args['badcards'] if 'badcards' in args else []
         self.cardpath = args['cardpath'] if 'cardpath' in args else 'cards'
         self.cardbase = args['cardbase'] if 'cardbase' in args else []
@@ -77,6 +81,7 @@ class Game(object):
         self.loadEvents()
         self.loadLandmarks()
         self.loadArtifacts()
+        self.loadProjects()
         heirlooms = self.enable_heirlooms()
 
         if self.hexes or self.boons:
@@ -210,6 +215,18 @@ class Game(object):
             if self.initartifacts and st not in self.initartifacts:
                 continue
             self.artifacts[st] = ArtifactPile(st, self.cardmapping['Artifact'][st])
+
+    ###########################################################################
+    def loadProjects(self):
+        if self.projects:
+            return
+        d = {}
+        self.output("Using projects")
+        self.loadNonKingdomCards('Project', None, None, ProjectPile, d)
+        for st in self.getAvailableCards('Project'):
+            if self.initprojects and st not in self.initprojects:
+                continue
+            self.projects[st] = ProjectPile(st, self.cardmapping['Project'][st])
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
@@ -361,6 +378,8 @@ class Game(object):
                 self.addPrizes()
             if self.cardpiles[card].needsartifacts:
                 self.loadArtifacts()
+            if self.cardpiles[card].needsprojects:
+                self.loadProjects()
 
     ###########################################################################
     def cardTypes(self):
@@ -386,6 +405,7 @@ class Game(object):
         mapping['Hex'] = self.getSetCardClasses('Hex', self.hexpath, 'hexes', 'Hex_')
         mapping['State'] = self.getSetCardClasses('State', self.statepath, 'states', 'State_')
         mapping['Artifact'] = self.getSetCardClasses('Artifact', self.artifactpath, 'artifacts', 'Artifact_')
+        mapping['Project'] = self.getSetCardClasses('Project', self.projectpath, 'projects', 'Project_')
         return mapping
 
     ###########################################################################
@@ -515,6 +535,7 @@ class Game(object):
         for p in self.playerList():
             print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
             print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
+            print("  %s's projects: %s" % (p.name, ", ".join([c.name for c in p.projects])))
             print("  %s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
             print("  %s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
             print("  %s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
@@ -633,6 +654,7 @@ def parseArgs(args=sys.argv[1:]):
                         help='Where to find card definitions')
     parser.add_argument('--statepath', default='states', help=argparse.SUPPRESS)
     parser.add_argument('--artifactpath', default='artifacts', help=argparse.SUPPRESS)
+    parser.add_argument('--projectpath', default='projects', help=argparse.SUPPRESS)
     parser.add_argument('--boonpath', default='boons', help=argparse.SUPPRESS)
     parser.add_argument('--numstacks', default=10, help=argparse.SUPPRESS)
     parser.add_argument('--prosperity', default=False, action='store_true',

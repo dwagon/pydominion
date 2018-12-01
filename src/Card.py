@@ -15,6 +15,7 @@ class Card(object):
         self.defense = False
         self.needsprize = False
         self.needsartifacts = False
+        self.needsprojects = False
         self.overpay = False
         self.insupply = True
         self.traveller = False

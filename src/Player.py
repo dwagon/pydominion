@@ -5,6 +5,7 @@ from Card import Card
 from Option import Option
 from CardPile import CardPile
 from EventPile import EventPile
+from ProjectPile import ProjectPile
 from collections import defaultdict
 
 
@@ -52,6 +53,8 @@ class Player(object):
         self.phase = None
         self.states = []
         self.artifacts = []
+        self.projects = []
+        self.players = []
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
@@ -549,6 +552,27 @@ class Player(object):
         return options, index
 
     ###########################################################################
+    def projectSelection(self, index):
+        if not self.game.projects:
+            return None, index
+        if len(self.projects) == 2:
+            return None, index
+        options = []
+        for op in self.game.projects.values():
+            index += 1
+            if op.cost <= self.coin and self.buys:
+                sel = chr(ord('a') + index)
+                action = 'project'
+            else:
+                sel = '-'
+                action = None
+            details = "Project; %s" % self.coststr(op)
+            o = Option(selector=sel, verb='Buy', desc=op.description(self), name=op.name, details=details, card=op, action=action)
+            options.append(o)
+
+        return options, index
+
+    ###########################################################################
     def eventSelection(self, index):
         options = []
         for op in self.game.events.values():
@@ -626,6 +650,9 @@ class Player(object):
             options.extend(op)
             op, index = self.eventSelection(index)
             options.extend(op)
+            op, index = self.projectSelection(index)
+            if op:
+                options.extend(op)
 
         if self.phase == 'night':
             op, index = self.nightSelection(index)
@@ -729,6 +756,8 @@ class Player(object):
             self.buyCard(opt['card'])
         elif opt['action'] == 'event':
             self.performEvent(opt['card'])
+        elif opt['action'] == 'project':
+            self.buyProject(opt['card'])
         elif opt['action'] == 'reserve':
             self.callReserve(opt['card'])
         elif opt['action'] == 'coffer':
@@ -860,7 +889,7 @@ class Player(object):
 
     ###########################################################################
     def hook_startTurn(self):
-        for c in self.hand + self.states:
+        for c in self.hand + self.states + self.projects:
             c.hook_startTurn(self.game, self)
 
     ###########################################################################
@@ -1188,6 +1217,23 @@ class Player(object):
         return "<Player %s>" % self.name
 
     ###########################################################################
+    def buyProject(self, project):
+        assert(issubclass(project.__class__, ProjectPile))
+        if not self.buys:
+            self.output("Need a buy to buy a project")
+            return False
+        if self.debt != 0:
+            self.output("Must pay off debt first")
+        if self.coin < project.cost:
+            self.output("Need %d coints to buy this project" % project.cost)
+            return False
+        self.buys -= 1
+        self.coin -= project.cost
+        self.debt += project.debtcost
+        self.buys += project.buys
+        return True
+
+    ###########################################################################
     def performEvent(self, event):
         assert(issubclass(event.__class__, EventPile))
         if not self.buys:
@@ -1396,6 +1442,16 @@ class Player(object):
                     pl.artifacts.remove(st)
                     break
         self.artifacts.append(artifactcard)
+
+    ###########################################################################
+    def assign_project(self, project):
+        assert isinstance(project, str)
+        projectcard = self.game.projects[project]
+        if len(self.projects) == 2:
+            self.output("Can't have more than two projects")
+            return False
+        self.projects.append(projectcard)
+        return True
 
     ###########################################################################
     def remove_state(self, state):
