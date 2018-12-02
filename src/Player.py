@@ -1037,7 +1037,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert(isinstance(card, (Card, CardPile, EventPile)))
+        assert(isinstance(card, (Card, CardPile, EventPile, ProjectPile)))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2

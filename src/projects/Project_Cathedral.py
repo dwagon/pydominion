@@ -12,6 +12,7 @@ class Project_Cathedral(Project):
         self.base = 'renaissance'
         self.desc = "At the start of your turn, trash a card from your hand."
         self.name = "Cathedral"
+        self.cost = 3
 
     def hook_startTurn(self, game, player):
         player.plrTrashCard(num=1, force=True, prompt="Cathedral forces you to trash a card")
