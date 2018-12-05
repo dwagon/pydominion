@@ -63,7 +63,6 @@ class Game(object):
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
-        self.initartifacts = args['initartifacts'] if 'initartifacts' in args else []
         self.initprojects = args['initprojects'] if 'initprojects' in args else []
         self.badcards = args['badcards'] if 'badcards' in args else []
         self.cardpath = args['cardpath'] if 'cardpath' in args else 'cards'
@@ -212,8 +211,6 @@ class Game(object):
         self.output("Using artifacts")
         self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, d)
         for st in self.getAvailableCards('Artifact'):
-            if self.initartifacts and st not in self.initartifacts:
-                continue
             self.artifacts[st] = ArtifactPile(st, self.cardmapping['Artifact'][st])
 
     ###########################################################################
@@ -224,7 +221,7 @@ class Game(object):
         self.output("Using projects")
         self.loadNonKingdomCards('Project', None, None, ProjectPile, d)
         for st in self.getAvailableCards('Project'):
-            if self.initprojects and st not in self.initprojects:
+            if self.initprojects and st.lower() not in self.initprojects:
                 continue
             self.projects[st] = ProjectPile(st, self.cardmapping['Project'][st])
 
@@ -633,6 +630,9 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--card', action='append', dest='initcards',
                         default=[],
                         help='Include card in lineup')
+    parser.add_argument('--project', action='append', dest='initprojects',
+                        default=[],
+                        help='Include project')
     parser.add_argument('--bad', action='append', dest='badcards',
                         default=[],
                         help='Do not include card in lineup')

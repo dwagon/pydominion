@@ -560,7 +560,7 @@ class Player(object):
         options = []
         for op in self.game.projects.values():
             index += 1
-            if op.cost <= self.coin and self.buys:
+            if (op.cost <= self.coin and self.buys) or (op not in self.projects):
                 sel = chr(ord('a') + index)
                 action = 'project'
             else:
@@ -797,6 +797,8 @@ class Player(object):
         self.output("| Tokens: %s" % "; ".join(tknoutput))
         if self.durationpile:
             self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
+        if self.projects:
+            self.output("| Project: %s" % ", ".join([p.name for p in self.projects]))
         if self.reserve:
             self.output("| Reserve: %s" % ", ".join([c.name for c in self.reserve]))
         if self.hand:
@@ -1184,6 +1186,11 @@ class Player(object):
         self.coin += num
 
     ###########################################################################
+    def setCoin(self, num=1):
+        assert(isinstance(num, int))
+        self.coin = num
+
+    ###########################################################################
     def getActions(self):
         return self.actions
 
@@ -1200,6 +1207,11 @@ class Player(object):
     def addBuys(self, num=1):
         assert(isinstance(num, int))
         self.buys += num
+
+    ###########################################################################
+    def setBuys(self, num=1):
+        assert(isinstance(num, int))
+        self.buys = num
 
     ###########################################################################
     def gainPrize(self):
@@ -1224,6 +1236,7 @@ class Player(object):
             return False
         if self.debt != 0:
             self.output("Must pay off debt first")
+            return False
         if self.coin < project.cost:
             self.output("Need %d coints to buy this project" % project.cost)
             return False
@@ -1231,6 +1244,7 @@ class Player(object):
         self.coin -= project.cost
         self.debt += project.debtcost
         self.buys += project.buys
+        self.assign_project(project.name)
         return True
 
     ###########################################################################
@@ -1449,6 +1463,9 @@ class Player(object):
         projectcard = self.game.projects[project]
         if len(self.projects) == 2:
             self.output("Can't have more than two projects")
+            return False
+        if project in [_.name for _ in self.projects]:
+            self.output("Already have project {}".format(project))
             return False
         self.projects.append(projectcard)
         return True
