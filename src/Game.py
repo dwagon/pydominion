@@ -221,7 +221,7 @@ class Game(object):
         self.output("Using projects")
         self.loadNonKingdomCards('Project', None, None, ProjectPile, d)
         for st in self.getAvailableCards('Project'):
-            if self.initprojects and st.lower() not in self.initprojects:
+            if self.initprojects and st not in self.initprojects:
                 continue
             self.projects[st] = ProjectPile(st, self.cardmapping['Project'][st])
 
@@ -521,6 +521,7 @@ class Game(object):
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
         print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
         print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
+        print("Projects: {}".format(", ".join([self.projects[_].name for _ in self.projects])))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():

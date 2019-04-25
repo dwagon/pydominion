@@ -4,11 +4,11 @@
 class ProjectPile(object):
     def __init__(self, cardname, klass):
         self.cardname = cardname
-        self.boon = klass()
+        self.project = klass()
 
     ###########################################################################
     def __getattr__(self, name):
-        return getattr(self.boon, name)
+        return getattr(self.project, name)
 
     ###########################################################################
     def __repr__(self):
