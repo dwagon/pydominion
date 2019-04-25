@@ -555,12 +555,13 @@ class Player(object):
     def projectSelection(self, index):
         if not self.game.projects:
             return None, index
+        # Can only have two projects
         if len(self.projects) == 2:
             return None, index
         options = []
         for op in self.game.projects.values():
             index += 1
-            if (op.cost <= self.coin and self.buys) or (op not in self.projects):
+            if (op.cost <= self.coin and self.buys) and (op not in self.projects):
                 sel = chr(ord('a') + index)
                 action = 'project'
             else:

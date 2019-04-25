@@ -521,7 +521,7 @@ class Game(object):
         print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
         print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
         print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
-        print("Projects: {}".format(", ".join([self.projects[_].name for _ in self.projects])))
+        print("Projects: {}".format(", ".join([_.name for _ in self.projects.values()])))
         for cp in self.cardpiles:
             tokens = ""
             for p in self.playerList():
