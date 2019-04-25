@@ -1044,7 +1044,7 @@ class Player(object):
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
-        for c in self.hand + self.played + self.durationpile + self.states:
+        for c in self.hand + self.played + self.durationpile + self.states + self.projects:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
         cost += card.hook_thisCardCost(game=self.game, player=self)
         return max(0, cost)
