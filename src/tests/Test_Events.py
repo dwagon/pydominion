@@ -50,8 +50,8 @@ class Test_eventSelection(unittest.TestCase):
     def test_events(self):
         self.plr.coin = 4
         output, index = self.plr.eventSelection(3)
-        self.assertEquals(index, 6)
-        self.assertEquals(len(output), 3)
+        self.assertEqual(index, 6)
+        self.assertEqual(len(output), 3)
         num_affordable = 0
         num_notaff = 0
         for i in output:
@@ -61,8 +61,8 @@ class Test_eventSelection(unittest.TestCase):
                 num_notaff += 1
             else:   # pragma: no coverage
                 self.fail("Unexpected action %s in %s" % (i['action'], i))
-        self.assertEquals(num_affordable, 2)
-        self.assertEquals(num_notaff, 1)
+        self.assertEqual(num_affordable, 2)
+        self.assertEqual(num_notaff, 1)
 
 
 ###############################################################################
