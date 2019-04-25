@@ -10,7 +10,8 @@ class Test_assignProject(unittest.TestCase):
         self.g = Game.Game(
                 quiet=True, numplayers=2, initcards=['StateTester'],
                 statepath='tests/states', cardpath='tests/cards', numstacks=1,
-                boonpath='tests/boons', projectpath='tests/projects'
+                boonpath='tests/boons', projectpath='tests/projects',
+                initprojects=['ProjectA', 'ProjectB', 'ProjectC']
                 )
         self.g.startGame()
         self.plr, self.plr2 = self.g.playerList()
@@ -51,7 +52,8 @@ class Test_buyProject(unittest.TestCase):
         self.g = Game.Game(
                 quiet=True, numplayers=1, initcards=['StateTester'],
                 statepath='tests/states', cardpath='tests/cards', numstacks=1,
-                boonpath='tests/boons', projectpath='tests/projects'
+                boonpath='tests/boons', projectpath='tests/projects',
+                initprojects=['ProjectA']
                 )
         self.g.startGame()
         self.plr = self.g.playerList(0)
