@@ -51,27 +51,31 @@ class Game(object):
 
     ###########################################################################
     def parseArgs(self, **args):
-        self.eventpath = 'events'
-        self.landmarkpath = 'landmarks'
         self.hexpath = 'hexes'
         self.numstacks = args['numstacks'] if 'numstacks' in args else 10
         self.boonpath = args['boonpath'] if 'boonpath' in args else 'boons'
         self.statepath = args['statepath'] if 'statepath' in args else 'states'
         self.artifactpath = args['artifactpath'] if 'artifactpath' in args else 'artifacts'
-        self.projectpath = args['projectpath'] if 'projectpath' in args else 'projects'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
-        self.initprojects = args['initprojects'] if 'initprojects' in args else []
         self.badcards = args['badcards'] if 'badcards' in args else []
         self.cardpath = args['cardpath'] if 'cardpath' in args else 'cards'
         self.cardbase = args['cardbase'] if 'cardbase' in args else []
         self.bot = args['bot'] if 'bot' in args else False
+
         self.eventcards = args['eventcards'] if 'eventcards' in args else []
+        self.eventpath = 'events'
         self.numevents = args['numevents'] if 'numevents' in args else 0
+
         self.landmarkcards = args['landmarkcards'] if 'landmarkcards' in args else []
+        self.landmarkpath = args['landmarkpath'] if 'landmarkpath' in args else 'landmarks'
         self.numlandmarks = args['numlandmarks'] if 'numlandmarks' in args else 0
+
+        self.numprojects = args['numprojects'] if 'numprojects' in args else 0
+        self.projectpath = args['projectpath'] if 'projectpath' in args else 'projects'
+        self.initprojects = args['initprojects'] if 'initprojects' in args else []
 
     ###########################################################################
     def startGame(self, playernames=[], plrKlass=TextPlayer):
@@ -197,33 +201,22 @@ class Game(object):
     def loadStates(self):
         if self.states:
             return
-        d = {}
         self.output("Using states")
-        self.loadNonKingdomCards('State', None, None, StatePile, d)
-        for st in self.getAvailableCards('State'):
-            self.states[st] = StatePile(st, self.cardmapping['State'][st])
+        self.loadNonKingdomCards('State', None, None, StatePile, self.states)
 
     ###########################################################################
     def loadArtifacts(self):
         if self.artifacts:
             return
-        d = {}
         self.output("Using artifacts")
-        self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, d)
-        for st in self.getAvailableCards('Artifact'):
-            self.artifacts[st] = ArtifactPile(st, self.cardmapping['Artifact'][st])
+        self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, self.artifacts)
 
     ###########################################################################
     def loadProjects(self):
         if self.projects:
             return
-        d = {}
         self.output("Using projects")
-        self.loadNonKingdomCards('Project', None, None, ProjectPile, d)
-        for st in self.getAvailableCards('Project'):
-            if self.initprojects and st not in self.initprojects:
-                continue
-            self.projects[st] = ProjectPile(st, self.cardmapping['Project'][st])
+        self.loadNonKingdomCards('Project', self.initprojects, self.numprojects, ProjectPile, self.projects)
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
@@ -295,6 +288,10 @@ class Game(object):
             landmarkname = self.guess_cardname(c, 'Landmark')
             if landmarkname:
                 self.landmarkcards.append(landmarkname)
+                continue
+            projectname = self.guess_cardname(c, 'Project')
+            if projectname:
+                self.initprojects.append(projectname)
                 continue
             print("Can't guess what card '%s' is" % c)
             foundall = False
@@ -631,9 +628,6 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--card', action='append', dest='initcards',
                         default=[],
                         help='Include card in lineup')
-    parser.add_argument('--project', action='append', dest='initprojects',
-                        default=[],
-                        help='Include project')
     parser.add_argument('--bad', action='append', dest='badcards',
                         default=[],
                         help='Do not include card in lineup')
@@ -642,20 +636,28 @@ def parseArgs(args=sys.argv[1:]):
     parser.add_argument('--events', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
+
     parser.add_argument('--numlandmarks', type=int, default=0,
                         help='Number of landmarks to use')
     parser.add_argument('--landmark', action='append', dest='landmarkcards',
                         default=[],
                         help='Include landmark')
+    parser.add_argument('--landmarkpath', default='landmarks', help=argparse.SUPPRESS)
+
+    parser.add_argument('--numprojects', type=int, default=0,
+                        help='Number of projects to use')
+    parser.add_argument('--project', action='append', dest='initprojects',
+                        default=[],
+                        help='Include project')
+    parser.add_argument('--projectpath', default='projects', help=argparse.SUPPRESS)
+
     parser.add_argument('--cardset', type=argparse.FileType('r'),
                         help='File containing list of cards to use')
     parser.add_argument('--cardbase', action='append',
                         help='Include only cards from the specified base')
     parser.add_argument('--cardpath', default='cards',
                         help='Where to find card definitions')
-    parser.add_argument('--statepath', default='states', help=argparse.SUPPRESS)
     parser.add_argument('--artifactpath', default='artifacts', help=argparse.SUPPRESS)
-    parser.add_argument('--projectpath', default='projects', help=argparse.SUPPRESS)
     parser.add_argument('--boonpath', default='boons', help=argparse.SUPPRESS)
     parser.add_argument('--numstacks', default=10, help=argparse.SUPPRESS)
     parser.add_argument('--prosperity', default=False, action='store_true',
