@@ -232,6 +232,16 @@ class Player(object):
         return None
 
     ###########################################################################
+    def inDuration(self, cardname):
+        """ Return named card if cardname is in the duration pile """
+        assert(isinstance(cardname, str))
+
+        for card in self.durationpile:
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
     def inDiscard(self, cardname):
         """ Return named card if cardname is in the discard pile """
         assert(isinstance(cardname, str))
@@ -870,6 +880,7 @@ class Player(object):
 
     ###########################################################################
     def startTurn(self):
+        self.phase = 'start'
         self.played.empty()
         self.buys = 1
         self.actions = 1
@@ -1052,6 +1063,12 @@ class Player(object):
     ###########################################################################
     def gainCard(self, cardpile=None, destination='discard', newcard=None, callhook=True):
         """ Add a new card to the players set of cards from a cardpile """
+        # Options:
+        #   dontadd: True - adding card handled elsewhere
+        #   replace: <newcard> - Replace the gained card with <newcard>
+        #   destination: <dest> - Move the new card to <dest> rather than discardpile
+        #   trash: True - trash the new card
+        #   shuffle: True - shuffle the deck after gaining new card
         options = {}
         if not newcard:
             if isinstance(cardpile, str):
@@ -1077,11 +1094,12 @@ class Player(object):
         if 'destination' in options:
             destination = options['destination']
         self.hook_allPlayers_gainCard(newcard)
-        if 'trash' in options and options['trash']:
+        if options.get('trash', False):
             self.trashCard(newcard)
             return newcard
-        self.addCard(newcard, destination)
-        if 'shuffle' in options and options['shuffle']:
+        if not options.get('dontadd', False):
+            self.addCard(newcard, destination)
+        if options.get('shuffle', False):
             self.deck.shuffle()
         return newcard
 
@@ -1143,7 +1161,7 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for c in self.hand + self.played + self.reserve + self.game.landmarks:
+        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks:
             self.currcards.append(c)
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             self.currcards.pop()

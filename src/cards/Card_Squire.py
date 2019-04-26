@@ -85,6 +85,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.trashCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Militia'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
