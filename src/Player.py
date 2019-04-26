@@ -1065,9 +1065,10 @@ class Player(object):
             rc = self.hook_gainCard(newcard)
             if rc:
                 options.update(rc)
-        rc = newcard.hook_gainThisCard(game=self.game, player=self)
-        if rc:
-            options.update(rc)
+        if callhook:
+            rc = newcard.hook_gainThisCard(game=self.game, player=self)
+            if rc:
+                options.update(rc)
         # Replace is to gain a different card
         if 'replace' in options:
             self.game[newcard.name].add()
