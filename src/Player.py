@@ -504,11 +504,11 @@ class Player(object):
             options.append(o)
 
         if self.coffer:
-            o = Option(selector='2', verb='Spend Coffer', card=None, action='coffer')
+            o = Option(selector='2', verb='Spend Coffer (1 coin)', card=None, action='coffer')
             options.append(o)
 
         if self.villager:
-            o = Option(selector='3', verb='Spend Villager', card=None, action='villager')
+            o = Option(selector='3', verb='Spend Villager (1 action)', card=None, action='villager')
             options.append(o)
 
         if self.debt and self.coin:
