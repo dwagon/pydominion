@@ -903,7 +903,7 @@ class Player(object):
 
     ###########################################################################
     def hook_startTurn(self):
-        for c in self.hand + self.states + self.projects:
+        for c in self.hand + self.states + self.projects + self.artifacts:
             c.hook_startTurn(self.game, self)
 
     ###########################################################################
