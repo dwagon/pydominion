@@ -774,12 +774,12 @@ class Test_spendableSelection(unittest.TestCase):
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['selector'], '2')
-        self.assertEqual(opts[1]['verb'], 'Spend Coffer')
+        self.assertEqual(opts[1]['verb'], 'Spend Coffer (1 coin)')
         self.assertEqual(opts[1]['action'], 'coffer')
         self.assertIsNone(opts[1]['card'])
 
         self.assertEqual(opts[2]['selector'], '3')
-        self.assertEqual(opts[2]['verb'], 'Spend Villager')
+        self.assertEqual(opts[2]['verb'], 'Spend Villager (1 action)')
         self.assertEqual(opts[2]['action'], 'villager')
         self.assertIsNone(opts[2]['card'])
 
