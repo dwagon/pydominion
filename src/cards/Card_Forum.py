@@ -50,6 +50,7 @@ class Test_Forum(unittest.TestCase):
         self.plr.buyCard(self.g['Forum'])
         self.assertEqual(self.plr.getBuys(), 1)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
