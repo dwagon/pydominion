@@ -47,6 +47,7 @@ class Test_Tunnel(unittest.TestCase):
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Tunnel'], 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
