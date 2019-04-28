@@ -1153,7 +1153,7 @@ class Player(object):
     ###########################################################################
     def hook_allPlayers_gainCard(self, card):
         for player in self.game.playerList():
-            for crd in player.hand:
+            for crd in player.hand + player.projects:
                 crd.hook_allPlayers_gainCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
