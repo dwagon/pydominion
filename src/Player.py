@@ -1161,7 +1161,7 @@ class Player(object):
         """ Hook which is fired by a card being obtained by a player """
         assert(isinstance(card, Card))
         options = {}
-        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks:
+        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects:
             self.currcards.append(c)
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             self.currcards.pop()
