@@ -10,16 +10,12 @@ class Card_Butcher(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = """Take 2 special coins. You may trash a card from your hand and then pay any number of special coins.
-        If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of special coins you paid"""
+        self.desc = """Take 2 coffers. You may trash a card from your hand and then pay any number of coffer.
+        If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of coffers you paid"""
         self.name = 'Butcher'
         self.cost = 5
 
     def special(self, game, player):
-        """ Take 2 Coin tokens. You may trash a card from your hand
-            and then pay any number of Coin tokens. If you did trash a
-            card, gain a card with a cost up to the cost of the trashed
-            card plus the number of Coin tokens you paid """
         player.gainCoffer(2)
         trash = player.plrChooseOptions(
             'Trash a card to buy a card?',

@@ -10,7 +10,7 @@ class Card_Baker(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = "+1 card, +1 action, +1 special coin"
+        self.desc = "+1 card, +1 action, +1 coffer"
         self.name = 'Baker'
         self.actions = 1
         self.cards = 1

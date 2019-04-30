@@ -10,7 +10,7 @@ class Card_Plaza(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = "+1 Card, +2 Actions. You may discard a Treasure card. If you do, take a special Coin."
+        self.desc = "+1 Card, +2 Actions. You may discard a Treasure card. If you do, take a Coffer."
         self.name = 'Plaza'
         self.actions = 2
         self.cards = 1
@@ -18,7 +18,7 @@ class Card_Plaza(Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        disc = player.plrDiscardCards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a special coin")
+        disc = player.plrDiscardCards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer")
         if disc:
             player.gainCoffer(1)
 

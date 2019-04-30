@@ -10,7 +10,7 @@ class Card_MerchantGuild(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = """+1 Buy +1 Coin. While this is in play, when you buy a card, take a Coin token."""
+        self.desc = """+1 Buy +1 Coin. While this is in play, when you buy a card, take a Coffer."""
         self.name = 'Merchant Guild'
         self.coin = 1
         self.buys = 1
