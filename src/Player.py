@@ -466,6 +466,10 @@ class Player(object):
     def playableSelection(self, index):
         options = []
         playable = [c for c in self.hand if c.playable and c.isAction()]
+        if self.villager:
+            o = Option(selector='1', verb='Spend Villager (1 action)', card=None, action='villager')
+            options.append(o)
+
         for p in playable:
             sel = chr(ord('a') + index)
             details = p.get_cardtype_repr()
@@ -507,15 +511,11 @@ class Player(object):
             o = Option(selector='2', verb='Spend Coffer (1 coin)', card=None, action='coffer')
             options.append(o)
 
-        if self.villager:
-            o = Option(selector='3', verb='Spend Villager (1 action)', card=None, action='villager')
-            options.append(o)
-
         if self.debt and self.coin:
-            o = Option(selector='4', verb='Payback Debt', card=None, action='payback')
+            o = Option(selector='3', verb='Payback Debt', card=None, action='payback')
             options.append(o)
 
-        index = 5
+        index = 4
         for s in spendable:
             tp = '%d coin; %s' % (self.hook_spendValue(s), s.get_cardtype_repr())
             o = Option(selector=str(index), name=s.name, details=tp, verb='Spend', card=s, action='spend', desc=s.description(self))
@@ -650,7 +650,7 @@ class Player(object):
         options = [o]
 
         if self.phase == 'action':
-            if self.actions:
+            if self.actions or self.villager:
                 op, index = self.playableSelection(index)
                 options.extend(op)
 
