@@ -1014,6 +1014,7 @@ class Player(object):
         if self.actions < 0:    # pragma: no cover
             self.actions = 0
             self.currcards.pop()
+            self.output("Not enough actions")
             return
         self.playCard_Tokens(card)
         if discard:
