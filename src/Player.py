@@ -232,6 +232,11 @@ class Player(object):
         return None
 
     ###########################################################################
+    def revealCard(self, card):
+        self.game.output("{} reveals {}".format(self.name, card.name))
+        card.hook_revealThisCard(game=self.game, player=self)
+
+    ###########################################################################
     def inDuration(self, cardname):
         """ Return named card if cardname is in the duration pile """
         assert(isinstance(cardname, str))

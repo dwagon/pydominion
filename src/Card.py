@@ -291,4 +291,8 @@ class Card(object):
     def hook_startTurn(self, game, player):
         pass    # pragma: no cover
 
+    ##########################################################################
+    def hook_revealThisCard(self, game, player):
+        pass    # pragma: no cover
+
 # EOF

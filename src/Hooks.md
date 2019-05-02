@@ -113,6 +113,10 @@ hook_thisCardCost
 -----------------
 Modifier to the cost of buying this card.
 
+hook_revealThisCard
+-----------------
+Called when a card is revealed
+
 hook_end_of_game
 ----------------
 Called at the end of the game if they are registered in player.end_of_game_cards[]
