@@ -20,9 +20,9 @@ class Card_Catapult(Card):
 
     def special(self, game, player):
         cards = player.plrTrashCard()
-        card = cards[0]
-        if not card:
+        if not cards:
             return
+        card = cards[0]
         for plr in player.attackVictims():
             if card.cost >= 3:
                 plr.output("%s's Catapult Curses you" % player.name)
