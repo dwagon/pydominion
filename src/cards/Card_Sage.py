@@ -22,10 +22,10 @@ class Card_Sage(Card):
         todiscard = []
         while True:
             card = player.nextCard()
-            player.revealCard(card)
             if not card:
                 player.output("No card costing 3 or more found")
                 break
+            player.revealCard(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
                 player.addCard(card, 'hand')
