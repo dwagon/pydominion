@@ -35,6 +35,7 @@ class Card_Rebuild(Card):
         discards = []
         while True:
             card = player.nextCard()
+            player.revealCard(card)
             if not card:
                 break
             if card.isVictory() and guess.name != card.name:

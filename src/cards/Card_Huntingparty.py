@@ -20,8 +20,11 @@ class Card_Huntingparty(Card):
 
     def special(self, game, player):
         discards = []
+        for card in player.hand:
+            player.revealCard(card)
         while True:
             card = player.nextCard()
+            player.revealCard(card)
             if not card:
                 player.output("No more cards")
                 break

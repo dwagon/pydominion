@@ -18,6 +18,7 @@ class Card_Shantytown(Card):
     def special(self, game, player):
         """ Reveal your hand. If you have no Action cards in hand, +2 cards"""
         for c in player.hand:
+            player.revealCard(c)
             if c.isAction():
                 break
         else:

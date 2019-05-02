@@ -19,6 +19,7 @@ class Card_Patrician(Card):
     ###########################################################################
     def special(self, game, player):
         topcard = player.nextCard()
+        player.revealCard(topcard)
         if topcard.cost >= 5:
             player.addCard(topcard, 'hand')
             player.output("Adding %s to hand" % topcard.name)
@@ -52,6 +53,7 @@ class Test_Patrician(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.plr.inHand('Gold'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

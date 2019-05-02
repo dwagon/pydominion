@@ -19,7 +19,11 @@ class Card_Tribute(Card):
 
     def special(self, game, player):
         victim = game.playerToLeft(player)
-        cards = [victim.nextCard(), victim.nextCard()]
+        cards = []
+        for _ in range(2):
+            card = victim.nextCard()
+            victim.revealCard(card)
+            cards.append(card)
         cardname = None
         for c in cards:
             player.output("Looking at %s from %s" % (c.name, victim.name))

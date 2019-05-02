@@ -21,6 +21,7 @@ class Card_Vagrant(Card):
         """" Reveal the top card of your deck. If it's a Curse,
             Ruins, Shelter or Victory card, put it into your hand """
         c = player.nextCard()
+        player.revealCard(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == 'Ruins':
             player.addCard(c, 'hand')
             player.output("Adding %s to hand" % c.name)

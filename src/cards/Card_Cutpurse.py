@@ -25,6 +25,8 @@ class Card_Cutpurse(Card):
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
                 victim.discardCard(c)
             else:
+                for card in victim.hand:
+                    victim.revealCard(card)
                 player.output("%s had no coppers" % victim.name)
 
 

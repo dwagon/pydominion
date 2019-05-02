@@ -23,6 +23,7 @@ class Card_Advisor(Card):
         choser = game.playerToLeft(player)
         for i in range(3):
             card = player.pickupCard()
+            player.revealCard(card)
             cards.append(card)
         to_discard = choser.cardSel(
                     force=True,

@@ -31,6 +31,7 @@ class Card_Inn(Card):
         cards = []
         for card in player.discardpile[:]:
             if card.isAction():
+                player.revealCard(card)
                 cards.append(card)
         cards.append(self)
         back = player.cardSel(anynum=True, prompt="Select cards to shuffle back into your deck", cardsrc=cards)

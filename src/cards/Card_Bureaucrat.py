@@ -23,6 +23,7 @@ class Card_Bureaucrat(Card):
         for pl in player.attackVictims():
             for c in pl.hand:
                 if c.isVictory():
+                    pl.revealCard(c)
                     pl.addCard(c, 'topdeck')
                     pl.hand.remove(c)
                     pl.output("Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name))

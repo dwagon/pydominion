@@ -24,6 +24,7 @@ class Card_Apothecary(Card):
         unput = []
         for i in range(4):
             c = player.nextCard()
+            player.revealCard(c)
             if c.name in ('Copper', 'Potion'):
                 player.output("Putting %s in hand" % c.name)
                 player.addCard(c, 'hand')

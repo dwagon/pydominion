@@ -17,7 +17,11 @@ class Card_CityQuarter(Card):
         self.coin = 1
 
     def special(self, game, player):
-        actions = sum([1 for c in player.hand if c.isAction()])
+        actions = 0
+        for c in player.hand:
+            player.revealCard(c)
+            if c.isAction():
+                actions += 1
         player.output("Revealed %d actions" % actions)
         player.pickupCards(actions)
 

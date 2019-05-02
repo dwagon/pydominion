@@ -22,7 +22,11 @@ class Card_Oracle(Card):
         player.pickupCards(2)
 
     def attack(self, player, victim, name):
-        cards = [victim.nextCard() for i in range(2)]
+        cards = []
+        for _ in range(2):
+            card = victim.nextCard()
+            victim.revealCard(card)
+            cards.append(card)
         cardnames = ", ".join([c.name for c in cards])
         discard = player.plrChooseOptions(
             "What to do with %s cards: %s" % (name, cardnames),

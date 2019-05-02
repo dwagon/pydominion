@@ -18,6 +18,7 @@ class Card_RoyalBlacksmith(Card):
     def special(self, game, player):
         count = 0
         for card in player.hand:
+            player.revealCard(card)
             if card.name == 'Copper':
                 player.discardCard(card)
                 count += 1

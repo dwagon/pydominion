@@ -23,6 +23,7 @@ class Card_Giant(Card):
             player.addCoin(5)
             for victim in player.attackVictims():
                 c = victim.nextCard()
+                victim.revealCard(c)
                 if c.cost >= 3 and c.cost <= 6:
                     victim.trashCard(c)
                     victim.output("%s's Giant trashed your %s" % (player.name, c.name))
@@ -72,6 +73,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = True
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -23,6 +23,7 @@ class Card_Ghost(Card):
         count = len(player.allCards())
         while count:
             card = player.nextCard()
+            player.revealCard(card)
             if card.isAction():
                 player._ghost_reserve.add(card)
                 break

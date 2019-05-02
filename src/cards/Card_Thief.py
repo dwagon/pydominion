@@ -29,6 +29,7 @@ class Card_Thief(Card):
         treasures = []
         for i in range(2):
             c = victim.nextCard()
+            victim.revealCard(c)
             if c.isTreasure():
                 treasures.append(c)
             else:

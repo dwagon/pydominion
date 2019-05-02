@@ -50,6 +50,7 @@ class Card_Noble_Brigand(Card):
         cards = []
         for i in range(2):
             c = plr.nextCard()
+            plr.revealCard(c)
             if c.isTreasure():
                 cards.append(c)
             else:

@@ -20,6 +20,7 @@ class Card_Fortuneteller(Card):
         for plr in player.attackVictims():
             while True:
                 card = plr.nextCard()
+                plr.revealCard(card)
                 if not card:
                     break
                 if card.isVictory() or card.name == 'Curse':

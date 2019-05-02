@@ -31,6 +31,8 @@ class Card_Villain(Card):
                     player.output("{} discarded {}".format(vic.name, disc[0].name))
                 else:
                     player.output("{} had no appropriate cards".format(vic.name))
+                    for card in vic.hand:
+                        vic.revealCard(card)
             else:
                 player.output("{}'s hand size is too small".format(vic.name))
 

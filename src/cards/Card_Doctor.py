@@ -33,6 +33,7 @@ class Card_Doctor(Card):
         for i in range(3):
             cards.append(player.nextCard())
         for card in cards:
+            player.revealCard(card)
             if card.name == o['card'].name:
                 player.output("Trashing %s" % card.name)
                 player.trashCard(card)

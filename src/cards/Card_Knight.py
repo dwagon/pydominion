@@ -63,6 +63,7 @@ class KnightCard(Card):
         cards = []
         for i in range(2):
             c = victim.nextCard()
+            victim.revealCard(c)
             if c.cost in (3, 4, 5, 6):
                 cards.append(c)
             else:

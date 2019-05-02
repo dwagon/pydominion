@@ -20,6 +20,7 @@ class Card_Adventurer(Card):
         treasures = []
         while len(treasures) < 2:
             c = player.pickupCard(verbose=False)
+            player.revealCard(c)
             if c.isTreasure():
                 treasures.append(c)
                 player.output("Adding %s" % c.name)

@@ -19,7 +19,11 @@ class Card_Crossroads(Card):
         """ Reveal your hand. +1 Card per Victory card revealed.
             If this is the first time you played a Crossroads this turn,
             +3 Actions """
-        vict = sum([1 for c in player.hand if c.isVictory()])
+        vict = 0
+        for card in player.hand:
+            player.revealCard(card)
+            if card.isVictory():
+                vict += 1
         if vict:
             player.output("Picking up %d cards" % vict)
             player.pickupCards(vict)

@@ -69,6 +69,7 @@ class Test_Tournament(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 0)
         self.assertIsNotNone(self.plr.inDiscard('Bag of Gold'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

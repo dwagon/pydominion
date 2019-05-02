@@ -20,6 +20,7 @@ class Card_Magpie(Card):
         """ Reveal the top card of your deck. If it's a treasure, put it into your
         hand. If it's an Action or Victory card, gain a Magpie """
         c = player.nextCard()
+        player.revealCard(c)
         if c.isTreasure():
             player.output("Putting revealed %s into hand" % c.name)
             player.addCard(c, 'hand')

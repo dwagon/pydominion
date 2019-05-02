@@ -28,6 +28,9 @@ class Card_Raider(Card):
                         pl.output("{}'s Raider discarded your {}".format(player.name, c.name))
                         player.output("Raider discarded {}'s {}".format(pl.name, c.name))
                         todiscard.append(c)
+                if not todiscard:
+                    for card in pl.hand:
+                        pl.revealCard(card)
                 for c in todiscard[:]:
                     pl.discardCard(c)
 

@@ -10,16 +10,13 @@ class Card_Pillage(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = "Trash this and players with 5 or more cards discard a card of your choice"
+        self.desc = "Trash this. Each other player with 5 or more cards in hand reveals their hand and discards a card that you choose. Gain 2 Spoils from the Spoils pile."
         self.name = 'Pillage'
         self.required_cards = ['Spoils']
         self.cost = 5
 
     ###########################################################################
     def special(self, game, player):
-        """ Trash this. Each other player with 5 or more cards in
-            hand reveals his hand and discards a card that you choose.
-            Gain 2 Spoils from the Spoils pile """
         player.trashCard(self)
         for plr in player.attackVictims():
             if plr.handSize() < 5:
@@ -31,6 +28,8 @@ class Card_Pillage(Card):
 
     ###########################################################################
     def pickACard(self, victim, player):
+        for card in victim.hand:
+            victim.revealCard(card)
         cards = player.cardSel(
             cardsrc=victim.hand,
             prompt="Which card to discard from %s" % victim.name

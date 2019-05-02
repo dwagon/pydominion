@@ -20,6 +20,7 @@ class Card_Loan(Card):
             other cards """
         while True:
             c = player.nextCard()
+            player.revealCard(c)
             if c.isTreasure():
                 break
             else:
