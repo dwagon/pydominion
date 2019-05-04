@@ -62,6 +62,7 @@ class Test_Pilgrimage(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertTrue(self.plr.journey_token)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
