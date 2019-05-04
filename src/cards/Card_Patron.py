@@ -38,8 +38,9 @@ class Test_Patron(unittest.TestCase):
         self.assertEqual(self.plr.getVillager(), 1)
 
     def test_reveal(self):
+        num = self.plr.getCoffer()
         self.plr.revealCard(self.card)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.getCoffer(), num + 1)
 
 
 ###############################################################################
