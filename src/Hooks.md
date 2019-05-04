@@ -50,6 +50,10 @@ hook_preBuy
 -----------
 Fires off before the buy phase
 
+hook_endBuyPhase
+-----------
+Fires off at the end of the buy phase
+
 hook_gainCard
 -------------
 This hook is triggered for every card in play when you gain

@@ -288,6 +288,10 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
+    def hook_endBuyPhase(self, game, player):
+        pass    # pragma: no cover
+
+    ##########################################################################
     def hook_startTurn(self, game, player):
         pass    # pragma: no cover
 
