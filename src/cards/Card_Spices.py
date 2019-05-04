@@ -18,9 +18,9 @@ class Card_Spices(Card):
     ###########################################################################
     def desc(self, player):
         if player.phase == "buy":
-            return "$2; +1 Buy; When you gain this, +2 Coffers."
+            return "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
         else:
-            return "$2; +1 Buy"
+            return "+2 Coin; +1 Buy"
 
     ###########################################################################
     def hook_gainThisCard(self, game, player):
