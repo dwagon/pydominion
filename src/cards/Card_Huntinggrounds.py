@@ -56,6 +56,7 @@ class Test_Huntinggrounds(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

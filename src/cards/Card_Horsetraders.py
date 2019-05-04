@@ -46,6 +46,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.discardSize(), 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

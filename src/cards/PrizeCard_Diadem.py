@@ -36,6 +36,7 @@ class Test_Diadem(unittest.TestCase):
         self.plr.actions = 1
         self.assertEqual(self.plr.getCoin(), 3)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

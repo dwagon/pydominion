@@ -77,6 +77,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3 * 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

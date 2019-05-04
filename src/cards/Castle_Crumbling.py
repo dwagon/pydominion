@@ -47,6 +47,7 @@ class Test_CrumblingCastle(unittest.TestCase):
         self.assertEqual(self.plr.getScoreDetails()['Crumbling Castle'], 1)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

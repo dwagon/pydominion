@@ -67,6 +67,7 @@ class Test_Disciple(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertIsNotNone(self.plr.inDiscard('Moat'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

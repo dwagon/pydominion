@@ -53,6 +53,7 @@ class Test_Courtyard(unittest.TestCase):
             self.assertNotEqual(c.name, 'Gold')
         self.assertEqual(self.plr.handSize(), 3)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

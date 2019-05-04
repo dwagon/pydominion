@@ -46,6 +46,7 @@ class Test_Vineyard(unittest.TestCase):
         self.plr.setDiscard('Moat', 'Moat', 'Moat', 'Moat', 'Moat', 'Moat')
         self.assertEqual(self.plr.getScoreDetails()['Vineyard'], 4)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

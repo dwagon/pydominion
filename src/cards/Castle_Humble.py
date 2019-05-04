@@ -46,6 +46,7 @@ class Test_HumbleCastle(unittest.TestCase):
         score = self.plr.getScoreDetails()
         self.assertEqual(score['Humble Castle'], 1)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

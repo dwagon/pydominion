@@ -66,6 +66,7 @@ class Test_Herbalist(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertEqual(self.plr.deckSize(), 6)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

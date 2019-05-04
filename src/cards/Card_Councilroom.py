@@ -40,6 +40,7 @@ class Test_Councilroom(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 9)
         self.assertEqual(self.plr.getBuys(), 2)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

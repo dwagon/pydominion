@@ -61,6 +61,7 @@ class Test_Distantlands(unittest.TestCase):
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()['Distant Lands'], 8)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

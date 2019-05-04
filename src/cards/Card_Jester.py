@@ -82,6 +82,7 @@ class Test_Jester(unittest.TestCase):
         self.assertIsNotNone(self.victim.inDiscard('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

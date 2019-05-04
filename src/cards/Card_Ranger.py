@@ -51,6 +51,7 @@ class Test_Ranger(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.journey_token)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

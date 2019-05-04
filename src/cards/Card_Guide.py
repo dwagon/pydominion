@@ -50,6 +50,7 @@ class Test_Guide(unittest.TestCase):
         self.assertIsNone(self.plr.inHand('Estate'))
         self.assertIsNotNone(self.plr.inDiscard('Estate'))
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()

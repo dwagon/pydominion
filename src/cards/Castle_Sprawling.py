@@ -68,6 +68,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Estate'))
         self.assertEqual(self.plr.discardSize(), 3 + 1)
 
+
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
