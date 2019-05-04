@@ -24,6 +24,8 @@ class Card_Research(Card):
             player._research = PlayArea([])
         tc = player.plrTrashCard(num=1, force=True, printcost=True)
         cost = tc[0].cost
+        if cost == 0:
+            return
         cards = player.cardSel(
             prompt='Set aside {} cards for next turn'.format(cost),
             verbs=('Set', 'Unset'),
