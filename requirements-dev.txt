@@ -4,3 +4,4 @@ pytest-xdist
 python-coveralls
 colorama
 py-cpuinfo
+flake8
