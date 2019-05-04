@@ -16,8 +16,10 @@ class Project_Pageant(Project):
 
     def hook_endBuyPhase(self, game, player):
         options = []
-        for num in range(player.coin):
-            options.append(("Buy {} Coffers for {}".format(num, num), num))
+        if player.coin == 0:
+            return
+        for num in range(player.coin+1):
+            options.append(("Buy {} Coffers for {} Coin".format(num, num), num))
         pick = player.plrChooseOptions(
                 "Exchange coin for coffers",
                 *options)
