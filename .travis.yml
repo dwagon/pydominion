@@ -10,7 +10,9 @@ install:
     - "pip install -r requirements.txt"
     - "pip install -r requirements-dev.txt"
 
-script: "./src/run_tests"
+script: 
+    - flake8 src
+    - "./src/run_tests"
 
 after_success:
     coveralls --data_file src/.coverage
