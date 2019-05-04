@@ -18,20 +18,21 @@ class Card_Treasurer(Card):
 
     ###########################################################################
     def special(self, game, player):
+        gain_treas = [_ for _ in game.trashpile if _.isTreasure()]
         choice = player.plrChooseOptions(
                     "Choose one?",
                     ("Trash a treasure from your hand", "trash"),
-                    ("Gain a treasure from the trash", "gain"),
+                    ("Gain a treasure from the trash ({} available)".format(len(gain_treas)), "gain"),
                     ("Take the key", "key")
                     )
         if choice == 'trash':
             treas = [_ for _ in player.hand if _.isTreasure()]
             player.plrTrashCard(cardsrc=treas)
         elif choice == 'gain':
-            treas = [_ for _ in game.trashpile if _.isTreasure()]
-            card = player.cardSel(cardsrc=treas, prompt="Select Treasure from the Trash")
-            game.trashpile.remove(card[0])
-            player.addCard(card[0], 'hand')
+            card = player.cardSel(cardsrc=gain_treas, prompt="Select Treasure from the Trash")
+            if card:
+                game.trashpile.remove(card[0])
+                player.addCard(card[0], 'hand')
         elif choice == 'key':
             player.assign_artifact('Key')
 
