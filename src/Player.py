@@ -744,7 +744,13 @@ class Player(object):
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
-                return
+                break
+        self.hook_endBuyPhase()
+
+    ###########################################################################
+    def hook_endBuyPhase(self):
+        for card in self.projects:
+            card.hook_endBuyPhase(game=self.game, player=self)
 
     ###########################################################################
     def cleanupPhase(self):
