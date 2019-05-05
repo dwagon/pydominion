@@ -1481,13 +1481,16 @@ class Player(object):
     def assign_artifact(self, artifact):
         assert isinstance(artifact, str)
         artifactcard = self.game.artifacts[artifact]
+        # Remove artifact from whoever currently has it
         for pl in self.game.playerList():
             for st in pl.artifacts[:]:
-                if st.name == artifact:
+                if st.name == artifact and self != pl:
                     pl.output("{} took your {}".format(self.name, artifact))
                     pl.artifacts.remove(st)
                     break
-        self.artifacts.append(artifactcard)
+        # If we already have it don't get it again
+        if artifactcard not in self.artifacts:
+            self.artifacts.append(artifactcard)
 
     ###########################################################################
     def assign_project(self, project):
