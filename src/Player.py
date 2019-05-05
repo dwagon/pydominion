@@ -1446,10 +1446,10 @@ class Player(object):
             cardsrc=buyable, recipient=recipient, verbs=('Get', 'Unget'),
             force=force, **kwargs)
         if cards:
-            card = cards[0]
-            recipient.output("Got a %s" % card.name)
-            recipient.gainCard(card, destination)
-            return card
+            cardpile = cards[0]
+            newcard = recipient.gainCard(cardpile, destination)
+            recipient.output("Got a %s" % newcard.name)
+            return newcard
 
     ###########################################################################
     def plrPickCard(self, force=False, **kwargs):
