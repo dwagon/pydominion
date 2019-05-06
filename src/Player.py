@@ -372,6 +372,9 @@ class Player(object):
     ###########################################################################
     def shuffleDeck(self):
         self.output("Shuffling Pile of %d cards" % len(self.discardpile))
+        for card in self.projects:
+            if hasattr(card, 'hook_preShuffle'):
+                card.hook_preShuffle(game=self.game, player=self)
         self.discardpile.shuffle()
 
     ###########################################################################
