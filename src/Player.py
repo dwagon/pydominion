@@ -833,6 +833,7 @@ class Player(object):
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
             self.output("| Played: <NONE>")
+        self.output("| {} cards in discard pile".format(self.discardSize()))
         self.output('-' * 50)
 
     ###########################################################################
@@ -900,9 +901,8 @@ class Player(object):
         self.cleaned = False
         self.is_start = True
         self.stats = {'gained': [], 'bought': []}
+        self.displayOverview()
         self.hook_startTurn()
-        if self.durationpile:
-            self.displayOverview()
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             self.currcards.append(card)

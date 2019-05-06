@@ -541,7 +541,7 @@ class Test_misc(unittest.TestCase):
 ###############################################################################
 class Test_displayOverview(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], initprojects=['Cathedral'])
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
@@ -552,7 +552,6 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('| Hand: <EMPTY>', self.plr.messages)
         self.assertIn('| Played: <NONE>', self.plr.messages)
-        self.assertEqual(len(self.plr.messages), 5)
 
     def test_non_empty(self):
         self.plr.messages = []
@@ -561,20 +560,36 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.displayOverview()
         self.assertIn('| Hand: Copper, Estate', self.plr.messages)
         self.assertIn('| Played: Moat', self.plr.messages)
-        self.assertEqual(len(self.plr.messages), 5)
 
     def test_reserve(self):
         self.plr.messages = []
         self.plr.setReserve('Copper')
         self.plr.displayOverview()
         self.assertIn('| Reserve: Copper', self.plr.messages)
-        self.assertEqual(len(self.plr.messages), 6)
 
     def test_duration(self):
         self.plr.messages = []
         self.plr.durationpile.add(self.g['Copper'].remove())
         self.plr.displayOverview()
         self.assertIn('| Duration: Copper', self.plr.messages)
+
+    def test_discards(self):
+        self.plr.messages = []
+        self.plr.setDiscard('Copper')
+        self.plr.displayOverview()
+        self.assertIn('| 1 cards in discard pile', self.plr.messages)
+
+    def test_project(self):
+        self.plr.messages = []
+        self.plr.assign_project('Cathedral')
+        self.plr.displayOverview()
+        self.assertIn('| Project: Cathedral', self.plr.messages)
+
+    def test_artifact(self):
+        self.plr.messages = []
+        self.plr.assign_artifact('Horn')
+        self.plr.displayOverview()
+        self.assertIn('| Artifacts: Horn', self.plr.messages)
 
 
 ###############################################################################
