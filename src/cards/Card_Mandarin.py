@@ -22,7 +22,7 @@ class Card_Mandarin(Card):
             return "+3 Coins. Put a card from your hand on top of your deck."
 
     def special(self, game, player):
-        card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your on top of your deck")
+        card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your hand on top of your deck")
         player.addCard(card[0], 'topdeck')
         player.hand.remove(card[0])
 
