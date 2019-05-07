@@ -74,6 +74,8 @@ class Card_BandOfMisfits(Card):
     def hook_postAction(self, game, player, card):
         if not hasattr(self, '_action'):
             return
+        if not hasattr(self._action, 'hook_postAction'):
+            return
         return self._action.hook_postAction(game, player, card)
 
     def hook_spendValue(self, game, player, card):
