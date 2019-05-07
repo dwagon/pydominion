@@ -9,7 +9,7 @@ class State_Deluded(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
 

@@ -9,7 +9,7 @@ class Card_Charm(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'empire'
+        self.base = 'empires'
         self.desc = "When you play this, choose one: +1 Buy and +2 Coin; or the next time you buy a card this turn, you may also gain a differently named card with the same cost."
         self.name = 'Charm'
         self.cost = 5

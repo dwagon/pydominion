@@ -9,7 +9,7 @@ class Boon_Flames_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "You may trash a card from your hand"
         self.name = "The Flame's Gift"
         self.purchasable = False

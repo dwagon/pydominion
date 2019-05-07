@@ -9,7 +9,7 @@ class State_Lost_in_woods(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "At the start of your turn, you may discard a card to receive a Boon."
         self.name = "Lost in the Woods"
         self.unique_state = True

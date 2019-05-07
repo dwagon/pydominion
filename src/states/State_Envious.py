@@ -9,7 +9,7 @@ class State_Envious(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
         self.name = "Envious"
 

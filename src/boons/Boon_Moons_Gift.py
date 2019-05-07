@@ -9,7 +9,7 @@ class Boon_Moons_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Look through your discard pile. You may put a card from it onto your deck"
         self.name = "The Moon's Gift"
         self.purchasable = False

@@ -9,7 +9,7 @@ class Hex_Fear(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "If you have at least 5 cards in hand, discard an Action or Treasure"
         self.name = "Fear"
         self.purchasable = False

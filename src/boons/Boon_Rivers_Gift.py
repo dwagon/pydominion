@@ -9,7 +9,7 @@ class Boon_Rivers_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "+1 Card at the end of this turn."
         self.name = "The River's Gift"
         self.purchasable = False

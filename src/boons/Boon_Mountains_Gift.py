@@ -9,7 +9,7 @@ class Boon_Mountains_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Gain a silver"
         self.name = "The Mountain's Gift"
         self.purchasable = False

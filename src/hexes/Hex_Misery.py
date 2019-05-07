@@ -9,7 +9,7 @@ class Hex_Misery(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "If this is your first Misery this game, take Miserable. Otherwise, flip it over to Twice Miserable."
         self.name = "Misery"
         self.purchasable = False

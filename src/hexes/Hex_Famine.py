@@ -9,7 +9,7 @@ class Hex_Famine(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Reveal the top 3 cards of your deck. Discard the Actions. Shuffle the rest into your deck."
         self.name = "Famine"
         self.purchasable = False

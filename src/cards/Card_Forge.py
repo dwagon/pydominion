@@ -9,7 +9,7 @@ class Card_Forge(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = ''
+        self.base = 'prosperity'
         self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"
         self.name = 'Forge'
         self.cost = 7

@@ -9,7 +9,7 @@ class Hex_Poverty(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Discard down to 3 cards in hand"
         self.name = "Poverty"
         self.purchasable = False

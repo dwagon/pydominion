@@ -9,7 +9,7 @@ class Hex_BadOmens(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Put your deck into your discard pile. Look through it and put 2 Coppers from it onto your deck"
         self.name = "Bad Omens"
         self.purchasable = False

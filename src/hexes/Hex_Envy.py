@@ -9,7 +9,7 @@ class Hex_Envy(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "If you don't have Deluded or Envious, take Envious."
         self.name = "Envy"
         self.purchasable = False

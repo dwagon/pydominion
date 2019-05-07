@@ -9,7 +9,7 @@ class Card_Tournament(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'cornucpia'
+        self.base = 'cornucopia'
         self.desc = """+1 Action. Each player may reveal a Province from his hand.
         If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
         putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""

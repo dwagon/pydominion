@@ -9,7 +9,7 @@ class Boon_Swamps_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Gain a Will-o'-Wisp from its pile."
         self.name = "The Swamp's Gift"
         self.purchasable = False
