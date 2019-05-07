@@ -8,7 +8,7 @@ from Card import Card
 class Card_Ducat(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = 'treasure'
         self.base = 'renaissance'
         self.buys = 1
         self.name = 'Ducat'
