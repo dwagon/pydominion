@@ -21,10 +21,10 @@ class Card_Swashbuckler(Card):
         if player.discardSize() >= 1:
             player.output("Gained a coffer")
             player.gainCoffer(1)
-        if player.getCoffer() >= 4:
-            if not player.has_artifact('Treasure Chest'):
-                player.output("Gained the Treasure Chest")
-                player.assign_artifact('Treasure Chest')
+            if player.getCoffer() >= 4:
+                if not player.has_artifact('Treasure Chest'):
+                    player.output("Gained the Treasure Chest")
+                    player.assign_artifact('Treasure Chest')
 
 
 ###############################################################################
@@ -43,6 +43,16 @@ class Test_Swashbuckler(unittest.TestCase):
         self.plr.addCard(card, 'hand')
         self.plr.playCard(card)
         self.assertEqual(self.plr.getCoffer(), 0)
+
+    def test_play_no_discard_coffers(self):
+        """ Player shouldn't get the Treasure Chest if they have no discards """
+        self.plr.setCoffer(4)
+        self.plr.setDiscard()
+        card = self.g['Swashbuckler'].remove()
+        self.plr.addCard(card, 'hand')
+        self.plr.playCard(card)
+        self.assertEqual(self.plr.getCoffer(), 4)
+        self.assertFalse(self.plr.has_artifact('Treasure Chest'))
 
     def test_play_discard(self):
         self.plr.setCoffer(0)
