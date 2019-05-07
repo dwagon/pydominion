@@ -198,10 +198,6 @@ class Card(object):
         return 0    # pragma: nocover
 
     ##########################################################################
-    def hook_postAction(self, game, player):
-        pass    # pragma: no cover
-
-    ##########################################################################
     def hook_cleanup(self, game, player):
         pass    # pragma: no cover
 

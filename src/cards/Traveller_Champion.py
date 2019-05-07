@@ -23,7 +23,7 @@ class Card_Champion(Card):
             it doesn't affect you, and when you play an Action, +1 Action. """
         pass
 
-    def hook_postAction(self, game, player):
+    def hook_postAction(self, game, player, card):
         player.addActions(1)
 
 

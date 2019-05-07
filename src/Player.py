@@ -1009,7 +1009,7 @@ class Player(object):
         return options
 
     ###########################################################################
-    def playCard(self, card, discard=True, costAction=True):
+    def playCard(self, card, discard=True, costAction=True, postActionHook=True):
         options = {'skip_card': False}
         if card not in self.hand and discard:
             self.output("{} is no longer available".format(card.name))
@@ -1038,6 +1038,10 @@ class Player(object):
         if not options['skip_card']:
             self.card_benefits(card)
         self.currcards.pop()
+        if postActionHook and card.isAction():
+            for cd in self.played + self.durationpile + self.projects:
+                if hasattr(cd, 'hook_postAction'):
+                    cd.hook_postAction(game=self.game, player=self, card=card)
 
     ###########################################################################
     def card_benefits(self, card):
@@ -1051,10 +1055,6 @@ class Player(object):
             self.output("-1 Card token reduces cards drawn")
             self.card_token = False
             modif = -1
-
-        if card.isAction():
-            for cd in self.played + self.durationpile:
-                cd.hook_postAction(game=self.game, player=self)
 
         for i in range(card.cards + modif):
             self.pickupCard()
