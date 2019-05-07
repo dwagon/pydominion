@@ -17,7 +17,7 @@ class Card_MountainVillage(Card):
 
     def special(self, game, player):
         if player.discardSize():
-            card = player.cardSel(cardsrc='discard')
+            card = player.cardSel(cardsrc='discard', force=True, prompt="Look through your discard pile and put a card from it into your hand")
             player.discardpile.remove(card[0])
             player.addCard(card[0], 'hand')
         else:
@@ -47,7 +47,6 @@ class Test_MountainVillage(unittest.TestCase):
         self.plr.setDiscard('Gold', 'Silver')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 2)
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNone(self.plr.inDiscard('Gold'))
