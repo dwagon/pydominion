@@ -94,6 +94,12 @@ class Card(object):
         return self.defense
 
     ##########################################################################
+    def isGathering(self):
+        if 'gathering' in self.cardtype:
+            return True
+        return False
+
+    ##########################################################################
     def isDuration(self):
         if 'duration' in self.cardtype:
             return True
