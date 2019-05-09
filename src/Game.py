@@ -356,6 +356,16 @@ class Game(object):
                     self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
                     self.output("Playing with %s" % c)
 
+        for card in self.landmarks.values():
+            for x in card.required_cards:
+                if isinstance(x, tuple):
+                    k, c = x
+                else:
+                    k, c = 'BaseCard', x
+                if c not in self.cardpiles:
+                    self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
+                    self.output("Playing with %s" % c)
+
         for card in list(self.cardpiles.keys()):
             if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
                 from RuinCardPile import RuinCardPile
