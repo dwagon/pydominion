@@ -687,6 +687,9 @@ def runGame(args):      # pragma: no cover
     cards = args['initcards']
     if args['cardset']:
         for line in args['cardset']:
+            if line.startswith('--prosperity'):
+                args['prosperity'] = True
+                continue
             cards.append(line.strip())
     args['initcards'] = cards
     g = Game(**args)
