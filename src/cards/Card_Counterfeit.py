@@ -9,7 +9,7 @@ class Card_Counterfeit(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'darkages'
-        self.desc = "+1 Gold, +1 Buy; May play a treasure twice and trash it"
+        self.desc = "+1 Coin, +1 Buy; May play a treasure twice and trash it"
         self.name = 'Counterfeit'
         self.cost = 5
         self.coin = 1
