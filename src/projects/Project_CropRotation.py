@@ -16,16 +16,11 @@ class Project_CropRotation(Project):
 
     def hook_startTurn(self, game, player):
         vics = [_ for _ in player.hand if _.isVictory()]
-        if vics:
-            choices = [("Crop Rotation: Discard nothing", None)]
-            for card in vics:
-                choices.append(("Crop Rotation: Discard {} for +2 cards".format(card.name), card))
-            ans = player.plrChooseOptions("Discard which victory card? ", *choices)
-            if ans:
-                player.discardCard(ans)
-                player.pickupCards(2)
-        else:
-            player.output("Crop Rotation: No victory cards found")
+        if not vics:
+            return
+        card = player.plrDiscardCards(prompt="Discard a victory for +2 Cards", cardsrc=vics)
+        if card:
+            player.pickupCards(2)
 
 
 ###############################################################################
@@ -36,28 +31,13 @@ class Test_CropRotation(unittest.TestCase):
         self.g.startGame()
         self.plr = self.g.playerList(0)
 
-    def test_play(self):
+    def test_cost(self):
         self.plr.assign_project('Crop Rotation')
-        self.plr.setHand('Estate', 'Province', 'Duchy', 'Copper', 'Copper')
-        self.plr.test_input = ['Discard Duchy']
+        self.plr.setHand('Copper', 'Silver', 'Estate')
+        self.plr.test_input = ['Discard Estate']
         self.plr.startTurn()
-        self.assertEqual(self.plr.handSize(), 5 - 1 + 2)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-
-    def test_discard_nothing(self):
-        self.plr.assign_project('Crop Rotation')
-        self.plr.setHand('Estate', 'Province', 'Duchy', 'Copper', 'Copper')
-        self.plr.test_input = ['Discard nothing']
-        self.plr.startTurn()
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
-
-    def test_no_victory(self):
-        self.plr.assign_project('Crop Rotation')
-        self.plr.setHand('Silver', 'Silver', 'Silver', 'Copper', 'Copper')
-        self.plr.startTurn()
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.handSize(), 3 + 2 - 1)
+        self.assertIsNotNone(self.plr.inDiscard('Estate'))
 
 
 ###############################################################################
