@@ -18,7 +18,7 @@ class Project_CropRotation(Project):
         vics = [_ for _ in player.hand if _.isVictory()]
         if not vics:
             return
-        card = player.plrDiscardCards(prompt="Discard a victory for +2 Cards", cardsrc=vics)
+        card = player.plrDiscardCards(prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics)
         if card:
             player.pickupCards(2)
 
