@@ -8,10 +8,11 @@ class CardPile(object):
         self.cardclass = klass
         self.card = klass()
         self.embargo_level = 0
-        if callable(self.card.numcards):
-            self.pilesize = self.card.numcards()
+        if hasattr(self.card, 'calc_numcards'):
+            self.pilesize = self.card.calc_numcards(game)
         else:
             self.pilesize = self.card.numcards
+        print("{} {}".format(self.card.name, self.pilesize))
 
     ###########################################################################
     def embargo(self):

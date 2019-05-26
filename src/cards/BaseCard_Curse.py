@@ -18,8 +18,10 @@ class Card_Curse(Card):
         self.cost = 0
         self.victory = -1
 
-    def numcards(self, game):
-        return min(10, 10 * (game.numplayers - 1))
+    def calc_numcards(self, game):
+        if game.numplayers == 1:
+            return 10
+        return 10 * (game.numplayers - 1)
 
 
 ###############################################################################

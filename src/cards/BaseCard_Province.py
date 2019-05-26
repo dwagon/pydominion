@@ -17,7 +17,7 @@ class Card_Province(Card):
         self.cost = 8
         self.victory = 6
 
-    def numcards(self, game):
+    def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
         if game.numplayers > 4:
@@ -34,14 +34,14 @@ class Test_Province(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2)
         self.g.startGame()
-        self.assertEqual(self.g['Province'].numcards, 8)
+        self.assertEqual(self.g['Province'].pilesize, 8)
         self.plr = self.g.playerList()[0]
 
     def Xtest_five(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=5)
         self.g.startGame()
-        self.assertEqual(self.g['Province'].numcards, 15)
+        self.assertEqual(self.g['Province'].pilesize, 15)
 
 
 ###############################################################################

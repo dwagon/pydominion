@@ -13,7 +13,7 @@ class Card_Estate(Card):
         self.cost = 2
         self.victory = 1
 
-    def numcards(self, game):
+    def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
         else:

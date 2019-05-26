@@ -17,7 +17,7 @@ class Card_Duchy(Card):
         self.cost = 5
         self.victory = 3
 
-    def numcards(self, game):
+    def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
         else:

@@ -17,7 +17,7 @@ class Card_Colony(Card):
         self.cost = 11
         self.victory = 10
 
-    def numcards(self, game):
+    def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
         else:
