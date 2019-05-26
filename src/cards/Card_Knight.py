@@ -23,8 +23,8 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 
 ###############################################################################
 class KnightCardPile(CardPile):
-    def __init__(self, mapping, numcards=10):
-        self.numcards = numcards
+    def __init__(self, mapping, pilesize=10):
+        self.pilesize = pilesize
         self.embargo_level = 0
         knighttypes = mapping
 
@@ -40,14 +40,14 @@ class KnightCardPile(CardPile):
             return None
 
     def remove(self):
-        if self.numcards:
-            self.numcards -= 1
+        if self.pilesize:
+            self.pilesize -= 1
             return self.knights.pop()
         else:
             return None
 
     def __repr__(self):
-        return "KnightCardPile %s: %d" % (self.name, self.numcards)
+        return "KnightCardPile %s: %d" % (self.name, self.pilesize)
 
 
 ###############################################################################

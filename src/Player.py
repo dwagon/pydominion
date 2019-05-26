@@ -65,12 +65,12 @@ class Player(object):
         """ Provide the initial deck - cards don't come from the piles
             hence add them back
         """
-        self.game['Copper'].numcards += 7 - len(heirlooms)
+        self.game['Copper'].pilesize += 7 - len(heirlooms)
         for i in range(7 - len(heirlooms)):
             self.deck.add(self.game['Copper'].remove())
         for hl in heirlooms:
             self.deck.add(self.game[hl].remove())
-        self.game['Estate'].numcards += 3
+        self.game['Estate'].pilesize += 3
         for i in range(3):
             self.deck.add(self.game['Estate'].remove())
         self.deck.shuffle()
@@ -643,7 +643,7 @@ class Player(object):
             if card.getVP():
                 details.append("Gathered %d VP" % card.getVP())
             details.append(card.get_cardtype_repr())
-            details.append('%d left' % card.numcards)
+            details.append('%d left' % card.pilesize)
             for tkn in self.which_token(card.name):
                 details.append("[Tkn: %s]" % tkn)
             o = Option(selector=sel, verb=verb, desc=card.description(self), name=card.name, details="; ".join(details), card=card, action=action)
@@ -1323,7 +1323,7 @@ class Player(object):
         """Return the list of cards for under cost """
         affordable = PlayArea([])
         for c in self.game.cardTypes():
-            if not c.numcards:
+            if not c.pilesize:
                 continue
             cost = self.cardCost(c)
             if not self.select_by_type(c, types):

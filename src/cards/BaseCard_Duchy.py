@@ -16,7 +16,12 @@ class Card_Duchy(Card):
         self.name = 'Duchy'
         self.cost = 5
         self.victory = 3
-        self.numcards = 12
+
+    def numcards(self, game):
+        if game.numplayers == 2:
+            return 8
+        else:
+            return 12
 
     def hook_gainThisCard(self, game, player):
         if 'Duchess' in game:

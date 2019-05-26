@@ -26,19 +26,19 @@ class TestPlayer(unittest.TestCase):
 
     def test_trashcard_hand(self):
         """ Test that trashing a card from hand works """
-        numcards = self.g.countCards()
+        num_cards = self.g.countCards()
         card = self.plr.hand[0]
         self.plr.trashCard(card)
-        self.assertEqual(numcards, self.g.countCards())
+        self.assertEqual(num_cards, self.g.countCards())
         self.assertIsNotNone(self.g.inTrash(card))
 
     def test_trashcard_played(self):
         """ Test that trashing a card from played works """
-        numcards = self.g.countCards()
+        num_cards = self.g.countCards()
         self.plr.setPlayed('Estate')
         card = self.plr.played[0]
         self.plr.trashCard(card)
-        self.assertEqual(numcards, self.g.countCards())
+        self.assertEqual(num_cards, self.g.countCards())
         self.assertIsNotNone(self.g.inTrash(card))
 
     def test_deckorder(self):

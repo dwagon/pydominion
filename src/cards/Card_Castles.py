@@ -18,7 +18,7 @@ class Card_Castles(Card):
 ###############################################################################
 class CastleCardPile(CardPile):
     def __init__(self, mapping, numcards=10):
-        self.numcards = numcards
+        self.pilesize = numcards
         self.embargo_level = 0
         castletypes = mapping
 
@@ -34,13 +34,13 @@ class CastleCardPile(CardPile):
 
     def remove(self):
         if self.castles:
-            self.numcards -= 1
+            self.pilesize -= 1
             return self.castles.pop()
         else:
             return None
 
     def __repr__(self):
-        return "CastleCardPile %s: %d" % (self.name, self.numcards)
+        return "CastleCardPile %s: %d" % (self.name, self.pilesize)
 
 
 ###############################################################################

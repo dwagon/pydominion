@@ -6,7 +6,7 @@ from Option import Option
 if sys.version[0] == "3":
     raw_input = input
 
-colours = [colorama.Fore.RED, colorama.Fore.GREEN, colorama.Fore.YELLOW, colorama.Fore.BLUE]
+colours = [colorama.Fore.RED, colorama.Fore.GREEN, colorama.Fore.YELLOW, colorama.Fore.BLUE, colorama.Fore.MAGENTA, colorama.Fore.CYAN]
 
 
 ###############################################################################

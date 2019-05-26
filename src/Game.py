@@ -105,7 +105,7 @@ class Game(object):
                 self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
             self.players[u].uuid = u
         self.cardSetup()
-        self.numcards = self.countCards()
+        self.total_cards = self.countCards()
         self.currentPlayer = self.playerList(0)
 
     ###########################################################################
@@ -145,7 +145,7 @@ class Game(object):
         count = {}
         count['trash'] = self.trashSize()
         for cp in list(self.cardpiles.values()):
-            count['pile_%s' % cp.name] = cp.numcards
+            count['pile_%s' % cp.name] = cp.pilesize
         for pl in self.playerList():
             count['player_%s' % pl.name] = pl.countCards()
         total = sum([x for x in count.values()])
@@ -269,9 +269,6 @@ class Game(object):
         for card in self.baseCards:
             cp = CardPile(card, self.cardmapping['BaseCard'][card], self)
             self.cardpiles[cp.name] = cp
-        self['Copper'].numcards = 60
-        self['Silver'].numcards = 40
-        self['Gold'].numcards = 30
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -370,7 +367,7 @@ class Game(object):
             if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
                 from RuinCardPile import RuinCardPile
                 nc = self.numplayers * 10
-                self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], numcards=nc)
+                self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], pilesize=nc)
                 self.output("Playing with Ruins")
             if self.cardpiles[card].isFate() and not self.boons:
                 self.loadBoons()
@@ -536,7 +533,7 @@ class Game(object):
                 if tkns:
                     tokens += "%s[%s]" % (p.name, ",".join(tkns))
 
-            print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].numcards, tokens))
+            print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].pilesize, tokens))
         for p in self.playerList():
             print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
             print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
@@ -585,7 +582,7 @@ class Game(object):
     ###########################################################################
     def count_all_cards(self):  # pragma: no cover
         for pile in self.cardpiles.values():
-            total = pile.numcards
+            total = pile.pilesize
             sys.stderr.write("%-15s  " % pile.name)
             if total:
                 sys.stderr.write("pile=%d " % total)
@@ -614,11 +611,11 @@ class Game(object):
     ###########################################################################
     def turn(self):
         try:
-            assert(self.countCards() == self.numcards)
+            assert(self.countCards() == self.total_cards)
         except AssertionError:
             self.count_all_cards()
             sys.stderr.write("current = %s\n" % self.countCards())
-            sys.stderr.write("original = %d\n" % self.numcards)
+            sys.stderr.write("original = %d\n" % self.total_cards)
             raise
         self.currentPlayer = self.playerToLeft(self.currentPlayer)
         self.currentPlayer.startTurn()

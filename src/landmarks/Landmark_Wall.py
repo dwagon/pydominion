@@ -13,8 +13,8 @@ class Landmark_Wall(Landmark):
         self.name = "Wall"
 
     def hook_end_of_game(self, game, player):
-        numcards = len(player.allCards())
-        score = -(numcards - 15)
+        ncards = len(player.allCards())
+        score = -(ncards - 15)
         player.addScore('Wall', score)
 
 

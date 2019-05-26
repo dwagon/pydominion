@@ -18,13 +18,13 @@ class Card_BorderGuard(Card):
         self.actions = 1
 
     def special(self, game, player):
-        numcards = 3 if player.has_artifact('Lantern') else 2
+        ncards = 3 if player.has_artifact('Lantern') else 2
         cards = []
-        for _ in range(numcards):
+        for _ in range(ncards):
             card = player.nextCard()
             player.revealCard(card)
             cards.append(card)
-        numacts = sum([1 for _ in cards if _.isAction()])
+        nacts = sum([1 for _ in cards if _.isAction()])
         ch = player.cardSel(
                 prompt="Select a card to put into your hand, other will be discarded",
                 cardsrc=cards
@@ -35,7 +35,7 @@ class Card_BorderGuard(Card):
             player.output("Putting {} into the discard pile".format(card.name))
             player.addCard(card, 'discard')
 
-        if numacts == numcards:
+        if nacts == ncards:
             art = player.plrChooseOptions(
                     "Pick an artifact to take",
                     ("Take Lantern (Border Guard reveals 3 cards)", 'Lantern'),

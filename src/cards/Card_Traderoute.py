@@ -17,17 +17,19 @@ class Card_Traderoute(Card):
 
     @classmethod
     def setup(cls, game):
+        """ Setup: Add a Coin token to each Victory Supply pile; move that token
+        to the Trade Route mat when a card is gained from the pile. """
         cls.tokens = {}
         cls.game = game
         for cp in list(game.cardpiles.values()):
             if cp.isVictory():
-                cls.tokens[cp.name] = cp.numcards
+                cls.tokens[cp.name] = cp.pilesize
 
     def isWorth(self):
         worth = 0
         for cp in list(self.game.cardpiles.values()):
             if cp.name in self.tokens:
-                if self.tokens[cp.name] != cp.numcards:
+                if self.tokens[cp.name] != cp.pilesize:
                     worth += 1
         return worth
 
