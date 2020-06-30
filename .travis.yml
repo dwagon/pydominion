@@ -15,7 +15,7 @@ install:
 
 script: 
     - flake8 src
-    - pylint -j 0 src
+    - pylint -j 0 src || true
     - "./src/run_tests"
 
 after_success:

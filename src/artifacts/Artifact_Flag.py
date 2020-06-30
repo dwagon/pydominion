@@ -22,7 +22,7 @@ class Test_Flag(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Flag'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.artifact = self.g.artifacts['Flag']
 

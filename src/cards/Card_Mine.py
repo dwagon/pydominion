@@ -30,7 +30,7 @@ class Card_Mine(Card):
             val = o['card'].cost
             # Make an assumption and pick the best treasure card
             # TODO - let user pick
-            for tc in game.baseCards:
+            for tc in game.base_cards:
                 if game[tc].cost == val + 3:
                     c = player.gainCard(tc, 'hand')
                     player.output("Converted to %s" % c.name)

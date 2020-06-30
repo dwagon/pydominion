@@ -10,16 +10,19 @@ class Test_args(unittest.TestCase):
         pass
 
     def test_numplayers(self):
+        """ TODO """
         g = Game.Game(quiet=True, numplayers=4)
         g.startGame()
         self.assertEqual(len(g.playerList()), 4)
 
     def test_card(self):
+        """ TODO """
         g = Game.Game(quiet=True, initcards=['Moat'])
         g.startGame()
         self.assertIn('Moat', g.cardpiles)
 
     def test_prosperity(self):
+        """ TODO """
         g = Game.Game(quiet=True, prosperity=True)
         g.startGame()
         self.assertIn('Colony', g.cardpiles)
@@ -34,11 +37,13 @@ class Test_args(unittest.TestCase):
 
 ###############################################################################
 class Test_guess_cardname(unittest.TestCase):
+    """ TODO """
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
         self.g.startGame()
 
     def test_guesses(self):
+        """ TODO """
         self.assertEqual(self.g.guess_cardname('moat'), 'Moat')
         self.assertEqual(self.g.guess_cardname('grandmarket'), 'Grand Market')
         self.assertEqual(self.g.guess_cardname('philosophersstone'), "Philosopher's Stone")
@@ -59,27 +64,27 @@ class Test_game_over(unittest.TestCase):
 
     def test_provinces(self):
         """ Someone took the last province """
-        while(self.g['Province'].pilesize):
+        while self.g['Province'].pilesize:
             self.plr.gainCard('Province')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """ Three stacks are empty """
-        while(self.g['Estate'].pilesize):
+        while self.g['Estate'].pilesize:
             self.plr.gainCard('Estate')
-        while(self.g['Copper'].pilesize):
+        while self.g['Copper'].pilesize:
             self.plr.gainCard('Copper')
-        while(self.g['Silver'].pilesize):
+        while self.g['Silver'].pilesize:
             self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """ Two stacks are empty """
-        while(self.g['Estate'].pilesize):
+        while self.g['Estate'].pilesize:
             self.plr.gainCard('Estate')
-        while(self.g['Silver'].pilesize):
+        while self.g['Silver'].pilesize:
             self.plr.gainCard('Silver')
         over = self.g.isGameOver()
         self.assertFalse(over)
@@ -176,38 +181,38 @@ class Test_whowon(unittest.TestCase):
 ###############################################################################
 class Test_parse_args(unittest.TestCase):
     def test_defaults(self):
-        args = Game.parseArgs([])
+        args = Game.parse_args([])
         self.assertEqual(args.numplayers, 2)
         self.assertEqual(args.cardbase, None)
         self.assertEqual(args.prosperity, False)
         self.assertEqual(args.initcards, [])
 
     def test_prosperity(self):
-        args = Game.parseArgs(['--prosperity'])
+        args = Game.parse_args(['--prosperity'])
         self.assertEqual(args.prosperity, True)
 
     def test_numplayers(self):
-        args = Game.parseArgs(['--numplayers', '4'])
+        args = Game.parse_args(['--numplayers', '4'])
         self.assertEqual(args.numplayers, 4)
 
     def test_events(self):
-        args = Game.parseArgs(['--events', 'Alms'])
+        args = Game.parse_args(['--events', 'Alms'])
         self.assertEqual(args.eventcards, ['Alms'])
 
     def test_use_events(self):
-        args = Game.parseArgs(['--quiet', '--events', 'Alms'])
+        args = Game.parse_args(['--quiet', '--events', 'Alms'])
         g = Game.Game(**vars(args))
         g.startGame()
         self.assertIn('Alms', g.events)
 
     def test_use_card(self):
-        args = Game.parseArgs(['--quiet', '--card', 'Moat'])
+        args = Game.parse_args(['--quiet', '--card', 'Moat'])
         g = Game.Game(**vars(args))
         g.startGame()
         self.assertIn('Moat', g.cardpiles)
 
     def test_use_landmark(self):
-        args = Game.parseArgs(['--quiet', '--landmark', 'Aqueduct'])
+        args = Game.parse_args(['--quiet', '--landmark', 'Aqueduct'])
         g = Game.Game(**vars(args))
         g.startGame()
         self.assertIn('Aqueduct', g.landmarks)
