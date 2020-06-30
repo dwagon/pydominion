@@ -32,7 +32,7 @@ class Test_Beggar(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Beggar', 'Militia'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.attacker = self.g.playerList()
         self.card = self.g['Beggar'].remove()
 
