@@ -142,7 +142,10 @@ disable=print-statement,
         no-self-use,
         too-few-public-methods,
         missing-class-docstring,
-        useless-object-inheritance
+        useless-object-inheritance,
+        missing-module-docstring,
+        missing-function-docstring,
+        unused-argument
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
