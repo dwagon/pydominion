@@ -50,7 +50,7 @@ class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber', 'Militia'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.att = self.g.playerList()
         self.card = self.g['Secret Chamber'].remove()
 

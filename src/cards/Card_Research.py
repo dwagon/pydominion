@@ -54,7 +54,7 @@ class Test_Research(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Research', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Research'].remove()
         self.plr.setHand('Gold', 'Silver', 'Copper')

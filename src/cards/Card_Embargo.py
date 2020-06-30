@@ -39,7 +39,7 @@ class Test_Embargo(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embargo'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.card = self.g['Embargo'].remove()
 

@@ -27,7 +27,7 @@ class Test_Ritual(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Ritual'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.event = self.g.events['Ritual']
 

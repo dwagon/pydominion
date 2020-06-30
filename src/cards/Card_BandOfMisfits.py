@@ -109,7 +109,7 @@ class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Bureaucrat', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Band of Misfits'].remove()
         self.plr.addCard(self.card, 'hand')

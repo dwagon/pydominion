@@ -41,7 +41,7 @@ class Test_IGG(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ill-Gotten Gains'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Ill-Gotten Gains'].remove()
 

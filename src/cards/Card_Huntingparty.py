@@ -45,7 +45,7 @@ class Test_Huntingparty(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hunting Party'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Hunting Party'].remove()
         self.plr.setHand('Silver', 'Gold')

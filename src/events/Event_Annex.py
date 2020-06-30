@@ -41,7 +41,7 @@ class Test_Annex(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Annex'], initcards=['Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.card = self.g.events['Annex']
 

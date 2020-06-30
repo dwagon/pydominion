@@ -31,7 +31,7 @@ class Test_Lackeys(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lackeys'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
 
     def test_playCard(self):

@@ -8,7 +8,7 @@ import Game
 class TestArtifact(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
 
     def test_assign_artifact(self):

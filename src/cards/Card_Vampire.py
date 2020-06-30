@@ -28,7 +28,7 @@ class Test_Vampire(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vampire'], badcards=['Duchess'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Vampire'].remove()
         self.plr.addCard(self.card, 'hand')

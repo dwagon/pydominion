@@ -36,7 +36,7 @@ class Test_Treasurehunter(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.card = self.g['Treasure Hunter'].remove()
 

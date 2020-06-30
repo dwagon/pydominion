@@ -26,7 +26,7 @@ class Test_Junkdealer(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Junk Dealer'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.jd = self.g['Junk Dealer'].remove()
         self.plr.setHand('Copper', 'Silver', 'Silver', 'Gold')

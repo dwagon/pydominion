@@ -41,7 +41,7 @@ class Test_Stonemason(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Stonemason', 'Moat'], badcards=["Fool's Gold"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Stonemason'].remove()
 

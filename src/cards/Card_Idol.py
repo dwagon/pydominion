@@ -31,7 +31,7 @@ class Test_Idol(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Idol'], badcards=['Druid'])
-        self.g.startGame()
+        self.g.start_game()
         for b in self.g.boons:
             if b.name == "The Mountain's Gift":
                 myboon = b

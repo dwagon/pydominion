@@ -37,7 +37,7 @@ class Test_DefiledShrine(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Defiled Shrine'], initcards=['Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
 
     def test_use(self):

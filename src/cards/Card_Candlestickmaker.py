@@ -26,7 +26,7 @@ class Test_Candlestickmaker(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Candlestick Maker'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Candlestick Maker'].remove()
         self.plr.addCard(self.card, 'hand')

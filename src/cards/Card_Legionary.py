@@ -37,7 +37,7 @@ class Test_Legionary(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Legionary'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Legionary'].remove()
 

@@ -55,7 +55,7 @@ class Test_Courtier(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Courtier', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Courtier'].remove()
         self.plr.setHand('Copper', 'Moat', 'Estate')

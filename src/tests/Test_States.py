@@ -12,7 +12,7 @@ class Test_assignState(unittest.TestCase):
                 statepath='tests/states', cardpath='tests/cards', numstacks=1,
                 boonpath='tests/boons'
                 )
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
 
     def test_non_unique(self):

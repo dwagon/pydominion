@@ -33,14 +33,14 @@ class Test_Province(unittest.TestCase):
     def test_two_player(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2)
-        self.g.startGame()
+        self.g.start_game()
         self.assertEqual(self.g['Province'].pilesize, 8)
         self.plr = self.g.playerList()[0]
 
     def Xtest_five(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=5)
-        self.g.startGame()
+        self.g.start_game()
         self.assertEqual(self.g['Province'].pilesize, 15)
 
 

@@ -38,7 +38,7 @@ class Test_Keep(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Keep'], badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
 
     def test_most(self):

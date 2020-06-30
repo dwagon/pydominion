@@ -30,7 +30,7 @@ class Test_Transmogrify(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Transmogrify'], badcards=['Duchess', "Fool's Gold"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.trans = self.g['Transmogrify'].remove()
         self.plr.addCard(self.trans, 'hand')

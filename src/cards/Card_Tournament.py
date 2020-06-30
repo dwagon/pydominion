@@ -36,7 +36,7 @@ class Test_Tournament(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.card = self.g['Tournament'].remove()
 

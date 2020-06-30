@@ -29,7 +29,7 @@ class Test_Poverty(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         for h in self.g.hexes[:]:
             if h.name != "Poverty":

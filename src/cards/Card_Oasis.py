@@ -27,7 +27,7 @@ class Test_Oasis(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Oasis'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Oasis'].remove()
         self.plr.setHand('Gold', 'Copper', 'Copper', 'Copper', 'Copper')

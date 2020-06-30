@@ -92,7 +92,7 @@ class Test_Knight(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = None
         self.card = self.g['Knight'].remove()

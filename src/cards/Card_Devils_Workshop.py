@@ -33,7 +33,7 @@ class Test_Devils_Workshop(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Devil's Workshop", "Moat"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g["Devil's Workshop"].remove()
         self.plr.addCard(self.card, 'hand')

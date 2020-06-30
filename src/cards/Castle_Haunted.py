@@ -38,7 +38,7 @@ class Test_HauntedCastle(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         while True:
             self.card = self.g['Castles'].remove()

@@ -28,7 +28,7 @@ class Test_Councilroom(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Council Room'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.ccard = self.g['Council Room'].remove()
         self.plr.addCard(self.ccard, 'hand')

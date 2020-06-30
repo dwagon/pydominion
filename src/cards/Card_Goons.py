@@ -39,7 +39,7 @@ class Test_Goons(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Goons', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.victim = self.g.playerList()
         self.card = self.g['Goons'].remove()
         self.plr.addCard(self.card, 'hand')

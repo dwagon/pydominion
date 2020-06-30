@@ -12,26 +12,26 @@ class Test_args(unittest.TestCase):
     def test_numplayers(self):
         """ TODO """
         g = Game.Game(quiet=True, numplayers=4)
-        g.startGame()
+        g.start_game()
         self.assertEqual(len(g.playerList()), 4)
 
     def test_card(self):
         """ TODO """
         g = Game.Game(quiet=True, initcards=['Moat'])
-        g.startGame()
+        g.start_game()
         self.assertIn('Moat', g.cardpiles)
 
     def test_prosperity(self):
         """ TODO """
         g = Game.Game(quiet=True, prosperity=True)
-        g.startGame()
+        g.start_game()
         self.assertIn('Colony', g.cardpiles)
         self.assertIn('Platinum', g.cardpiles)
 
     def test_event(self):
         """ Test that we can specify an event on the command line """
         g = Game.Game(quiet=True, eventcards=['Alms'])
-        g.startGame()
+        g.start_game()
         self.assertIn('Alms', g.events)
 
 
@@ -40,7 +40,7 @@ class Test_guess_cardname(unittest.TestCase):
     """ TODO """
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
-        self.g.startGame()
+        self.g.start_game()
 
     def test_guesses(self):
         """ TODO """
@@ -54,7 +54,7 @@ class Test_guess_cardname(unittest.TestCase):
 class Test_game_over(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
 
     def test_not_over(self):
@@ -94,7 +94,7 @@ class Test_game_over(unittest.TestCase):
 class Test_inTrash(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.plr.setHand('Copper')
         self.plr.trashCard(self.plr.hand[0])
@@ -119,7 +119,7 @@ class Test_inTrash(unittest.TestCase):
 class Test_actionpiles(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
-        self.g.startGame()
+        self.g.start_game()
 
     def test_actionpiles(self):
         piles = self.g.getActionPiles()
@@ -132,7 +132,7 @@ class Test_boon(unittest.TestCase):
     # TODO - convert to using real boons rather than letters
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
 
     def test_receive_boon_empty(self):
@@ -168,7 +168,7 @@ class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
         self.g = Game.Game(quiet=True, numplayers=self.numplayers, badcards=['Shepherd'])
-        self.g.startGame()
+        self.g.start_game()
 
     def test_whoWon(self):
         scores = self.g.whoWon()
@@ -202,19 +202,19 @@ class Test_parse_args(unittest.TestCase):
     def test_use_events(self):
         args = Game.parse_args(['--quiet', '--events', 'Alms'])
         g = Game.Game(**vars(args))
-        g.startGame()
+        g.start_game()
         self.assertIn('Alms', g.events)
 
     def test_use_card(self):
         args = Game.parse_args(['--quiet', '--card', 'Moat'])
         g = Game.Game(**vars(args))
-        g.startGame()
+        g.start_game()
         self.assertIn('Moat', g.cardpiles)
 
     def test_use_landmark(self):
         args = Game.parse_args(['--quiet', '--landmark', 'Aqueduct'])
         g = Game.Game(**vars(args))
-        g.startGame()
+        g.start_game()
         self.assertIn('Aqueduct', g.landmarks)
 
 

@@ -27,7 +27,7 @@ class Test_Orchard(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Orchard'], initcards=['Moat', 'Militia'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
 
     def test_gain(self):

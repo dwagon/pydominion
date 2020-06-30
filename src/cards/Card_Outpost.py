@@ -32,7 +32,7 @@ class Test_Outpost(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Outpost'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Outpost'].remove()
         self.plr.addCard(self.card, 'hand')

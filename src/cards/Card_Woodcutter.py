@@ -21,7 +21,7 @@ class Test_Woodcutter(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Woodcutter'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Woodcutter'].remove()
         self.plr.addCard(self.card, 'hand')

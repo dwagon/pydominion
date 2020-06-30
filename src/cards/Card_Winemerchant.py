@@ -29,7 +29,7 @@ class Test_Winemerchant(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wine Merchant'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.card = self.g['Wine Merchant'].remove()
 

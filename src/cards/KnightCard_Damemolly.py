@@ -28,7 +28,7 @@ class Test_Dame_Molly(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         while True:
             self.card = self.g['Knight'].remove()

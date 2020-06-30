@@ -44,7 +44,7 @@ class Test_Graverobber(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Graverobber', 'Militia'], badcards=["Fool's Gold"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.card = self.g['Graverobber'].remove()
         self.plr.addCard(self.card, 'hand')

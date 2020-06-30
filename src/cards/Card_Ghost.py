@@ -49,7 +49,7 @@ class Test_Ghost(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ghost', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Ghost'].remove()
         self.plr.addCard(self.card, 'hand')

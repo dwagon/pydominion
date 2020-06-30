@@ -29,7 +29,7 @@ class Test_Leprechaun(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Leprechaun', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Leprechaun'].remove()
         self.plr.addCard(self.card, 'hand')

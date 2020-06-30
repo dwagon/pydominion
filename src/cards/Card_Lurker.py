@@ -45,7 +45,7 @@ class Test_Lurker(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lurker', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Lurker'].remove()
         self.plr.addCard(self.card, 'hand')

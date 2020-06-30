@@ -32,7 +32,7 @@ class Test_Zombie_Mason(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Zombie Mason', 'Guide'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Zombie Mason'].remove()
 

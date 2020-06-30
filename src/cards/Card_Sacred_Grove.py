@@ -43,7 +43,7 @@ class Test_SacredGrove(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Sacred Grove', 'Moat'], badcards=['Druid'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Sacred Grove'].remove()
         self.plr.addCard(self.card, 'hand')

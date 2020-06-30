@@ -43,7 +43,7 @@ class Test_Fools_Gold(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Fool's Gold"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.card = self.g["Fool's Gold"].remove()
         self.plr.addCard(self.card, 'hand')

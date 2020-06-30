@@ -32,7 +32,7 @@ class Test_Cache(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cache'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.cache = self.g['Cache'].remove()
 

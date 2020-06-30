@@ -28,7 +28,7 @@ class Test_SaltEarth(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Salt the Earth'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList()[0]
         self.event = self.g.events['Salt the Earth']
 

@@ -33,7 +33,7 @@ class Test_Improve(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Improve', 'Moat', 'Guide'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Improve'].remove()
 

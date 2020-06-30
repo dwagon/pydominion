@@ -31,7 +31,7 @@ class Test_Embassy(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embassy'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.card = self.g['Embassy'].remove()
         self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Estate')

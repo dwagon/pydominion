@@ -34,7 +34,7 @@ class Test_Militia(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Militia', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.attacker, self.defender = self.g.playerList()
         self.mcard = self.g['Militia'].remove()
 

@@ -40,7 +40,7 @@ class Test_FarmersMarket(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Farmers' Market"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.c1 = self.g["Farmers' Market"].remove()
         self.c2 = self.g["Farmers' Market"].remove()
