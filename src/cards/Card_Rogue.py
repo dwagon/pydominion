@@ -133,7 +133,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.victim.discardSize(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 

@@ -54,7 +54,7 @@ class Test_Trader(unittest.TestCase):
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Silver')
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertIsNotNone(self.g.in_trash('Estate'))
 
     def test_gain(self):
         self.plr.test_input = ['Instead']

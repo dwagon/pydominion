@@ -53,7 +53,7 @@ class Test_Temple(unittest.TestCase):
         self.plr.test_input = ['Copper', 'Silver', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getScoreDetails()['Temple'], 1)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
     def test_gain(self):
         """ Gain a Temple """

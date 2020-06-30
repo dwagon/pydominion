@@ -38,7 +38,7 @@ class Test_SaltEarth(unittest.TestCase):
         self.plr.test_input = ['Province']
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.getScoreDetails()['Salt the Earth'], 1)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
 
 
 ###############################################################################

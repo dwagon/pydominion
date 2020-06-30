@@ -54,7 +54,7 @@ class Test_Swindler(unittest.TestCase):
         self.victim.setDeck('Gold')
         self.plr.test_input = ['Get Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

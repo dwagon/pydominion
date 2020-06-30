@@ -56,7 +56,7 @@ class Test_OldWitch(unittest.TestCase):
         self.vic.test_input = ['Trash Curse']
         self.plr.playCard(self.card)
         self.assertIsNone(self.vic.inHand('Curse'))
-        self.assertIsNotNone(self.g.inTrash('Curse'))
+        self.assertIsNotNone(self.g.in_trash('Curse'))
 
 
 ###############################################################################

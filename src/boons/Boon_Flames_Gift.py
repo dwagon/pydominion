@@ -37,7 +37,7 @@ class Test_Flames_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
 
 
 ###############################################################################

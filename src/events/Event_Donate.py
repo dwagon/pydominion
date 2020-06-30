@@ -44,9 +44,9 @@ class Test_Donate(unittest.TestCase):
         self.plr.test_input = ['Gold', 'Province', 'Silver', 'finish']
         self.plr.endTurn()
         self.g.print_state()
-        self.assertIsNotNone(self.g.inTrash('Gold'))
-        self.assertIsNotNone(self.g.inTrash('Province'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNone(self.plr.inDeck('Gold'))
         self.assertEqual(self.g.trashSize(), tsize + 3)
         self.assertEqual(self.plr.handSize(), 5)

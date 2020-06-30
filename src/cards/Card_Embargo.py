@@ -49,7 +49,7 @@ class Test_Embargo(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.g['Silver'].embargo_level, 1)
-        self.assertIsNotNone(self.g.inTrash('Embargo'))
+        self.assertIsNotNone(self.g.in_trash('Embargo'))
 
 
 ###############################################################################

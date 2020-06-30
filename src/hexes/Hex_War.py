@@ -45,7 +45,7 @@ class Test_War(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Silver')
         self.plr.gainCard('Cursed Village')
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
 
 ###############################################################################

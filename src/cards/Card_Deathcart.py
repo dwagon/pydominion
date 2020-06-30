@@ -48,7 +48,7 @@ class Test_Deathcart(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Death Cart'))
+        self.assertIsNotNone(self.g.in_trash('Death Cart'))
 
     def test_play_trash(self):
         """ Play a death cart - no actions """
@@ -59,8 +59,8 @@ class Test_Deathcart(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
-        self.assertIsNone(self.g.inTrash('Death Cart'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
+        self.assertIsNone(self.g.in_trash('Death Cart'))
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2 + 1)
         self.assertEqual(self.plr.getVillager(), 3)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
 
 ###############################################################################

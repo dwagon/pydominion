@@ -64,7 +64,7 @@ class Test_Changeling(unittest.TestCase):
         self.plr.test_input = ['Exchange for Gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.g.inTrash('Changeling'))
+        self.assertIsNotNone(self.g.in_trash('Changeling'))
 
     def test_gain_keep(self):
         self.plr.test_input = ['Keep Silver']

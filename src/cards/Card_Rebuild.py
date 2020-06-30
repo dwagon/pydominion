@@ -72,7 +72,7 @@ class Test_Rebuild(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertIsNotNone(self.g.in_trash('Estate'))
 
 
 ###############################################################################

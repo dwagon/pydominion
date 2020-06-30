@@ -47,7 +47,7 @@ class Test_Priest(unittest.TestCase):
         self.plr.test_input = ['Trash Moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.plr.trashCard(self.gold)
         self.assertEqual(self.plr.getCoin(), 4)
 

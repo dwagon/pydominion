@@ -127,11 +127,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         if num is None:
             return list(self.players.values())
-        else:
-            return list(self.players.values())[num]
+        return list(self.players.values())[num]
 
     ###########################################################################
-    def inTrash(self, cardname):
+    def in_trash(self, cardname):
         """ Return named card if cardname is in the trash pile """
         if hasattr(cardname, 'name'):
             cardname = cardname.name

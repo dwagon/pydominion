@@ -62,7 +62,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
 
         self.assertEqual(self.plr.handSize(), 5 - 1)    # One trashed
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
 
 
 ###############################################################################

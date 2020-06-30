@@ -68,9 +68,9 @@ class Test_Mint(unittest.TestCase):
         self.plr.setPlayed('Copper', 'Silver', 'Estate', 'Moat')
         self.plr.buyCard(self.g['Mint'])
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
-        self.assertIsNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
+        self.assertIsNone(self.g.in_trash('Gold'))
 
 
 ###############################################################################

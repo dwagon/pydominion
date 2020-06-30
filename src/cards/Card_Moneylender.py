@@ -51,7 +51,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.setHand('Copper', 'Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.getCoin(), 3)
 

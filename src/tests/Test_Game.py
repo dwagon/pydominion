@@ -91,7 +91,7 @@ class Test_game_over(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inTrash(unittest.TestCase):
+class Test_in_trash(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -101,18 +101,18 @@ class Test_inTrash(unittest.TestCase):
 
     def test_intrash(self):
         """ Test card is in trash """
-        self.assertTrue(self.g.inTrash('Copper'))
-        self.assertEqual(self.g.inTrash('Copper').name, 'Copper')
+        self.assertTrue(self.g.in_trash('Copper'))
+        self.assertEqual(self.g.in_trash('Copper').name, 'Copper')
 
     def test_intrash_with_card(self):
         """ Test card is in trash passing a card """
         cu = self.g['Copper'].remove()
-        self.assertTrue(self.g.inTrash(cu))
-        self.assertEqual(self.g.inTrash(cu).name, 'Copper')
+        self.assertTrue(self.g.in_trash(cu))
+        self.assertEqual(self.g.in_trash(cu).name, 'Copper')
 
     def test_notintrash(self):
         """ Test card that isn't in trash """
-        self.assertFalse(self.g.inTrash('Estate'))
+        self.assertFalse(self.g.in_trash('Estate'))
 
 
 ###############################################################################

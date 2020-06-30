@@ -30,7 +30,7 @@ class TestPlayer(unittest.TestCase):
         card = self.plr.hand[0]
         self.plr.trashCard(card)
         self.assertEqual(num_cards, self.g.countCards())
-        self.assertIsNotNone(self.g.inTrash(card))
+        self.assertIsNotNone(self.g.in_trash(card))
 
     def test_trashcard_played(self):
         """ Test that trashing a card from played works """
@@ -39,7 +39,7 @@ class TestPlayer(unittest.TestCase):
         card = self.plr.played[0]
         self.plr.trashCard(card)
         self.assertEqual(num_cards, self.g.countCards())
-        self.assertIsNotNone(self.g.inTrash(card))
+        self.assertIsNotNone(self.g.in_trash(card))
 
     def test_deckorder(self):
         """ Ensure adding cards to decks in the correct order """
@@ -238,15 +238,15 @@ class Test_plrTrashCard(unittest.TestCase):
         self.plr.test_input = ['0']
         x = self.plr.plrTrashCard()
         self.assertEqual(x, [])
-        self.assertIsNone(self.g.inTrash('Gold'))
+        self.assertIsNone(self.g.in_trash('Gold'))
 
     def test_Two(self):
         self.plr.setHand('Gold', 'Copper', 'Silver')
         self.plr.test_input = ['Gold', 'Silver', '0']
         x = self.plr.plrTrashCard(num=2)
         self.assertEqual(len(x), 2)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNotNone(self.plr.inHand('Copper'))
 
     def test_Trash(self):

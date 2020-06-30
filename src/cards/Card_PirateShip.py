@@ -84,7 +84,7 @@ class Test_PirateShip(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
-            self.assertIsNotNone(self.g.inTrash('Copper'))
+            self.assertIsNotNone(self.g.in_trash('Copper'))
             self.assertEqual(self.plr._pirate_ship, 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()

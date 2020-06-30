@@ -76,7 +76,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.setDeck('Silver', 'Province', 'Duchy')
         self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNotNone(self.plr.inDeck('Silver'))
         self.assertIsNotNone(self.plr.inDeck('Duchy'))
 
@@ -86,7 +86,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.test_input = ['3', 'trash', 'discard', 'back on top']
         self.plr.setDeck('Silver', 'Province', 'Duchy')
         self.plr.buyCard(self.g['Doctor'])
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
 

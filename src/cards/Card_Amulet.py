@@ -75,7 +75,7 @@ class Test_Amulet(unittest.TestCase):
         self.plr.test_input = ['trash', 'duchy', 'finish', 'trash', '1', 'finish']
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.endTurn()
         self.plr.startTurn()

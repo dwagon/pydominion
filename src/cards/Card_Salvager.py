@@ -37,7 +37,7 @@ class Test_Salvager(unittest.TestCase):
         self.plr.test_input = ['duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 5)
 
 
