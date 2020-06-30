@@ -50,7 +50,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = 'buy'
         options, prompt = self.plr.choiceSelection()
         for opt in options:
-            if opt['name'] == 'Grand Market'and opt['verb'] == 'Buy':   # pragma: no cover
+            if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
@@ -61,7 +61,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = 'buy'
         options, prompt = self.plr.choiceSelection()
         for opt in options:
-            if opt['name'] == 'Grand Market'and opt['verb'] == 'Buy':   # pragma: no cover
+            if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
@@ -71,7 +71,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.phase = 'buy'
         options, prompt = self.plr.choiceSelection()
         for opt in options:
-            if opt['name'] == 'Grand Market'and opt['verb'] == 'Buy':   # pragma: no cover
+            if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 break
         else:   # pragma: no cover
             self.fail("Not allowed to buy grand market")

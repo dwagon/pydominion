@@ -245,8 +245,8 @@ class Game(object):
                 klass = self.cardmapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
 
-        for l in dest:
-            self.output("Playing with %s %s" % (cardtype, l))
+        for crd in dest:
+            self.output("Playing with %s %s" % (cardtype, crd))
 
     ###########################################################################
     def guess_cardname(self, name, prefix='Card'):
