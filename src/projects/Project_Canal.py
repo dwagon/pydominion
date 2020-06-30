@@ -25,7 +25,7 @@ class Test_Canal(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Canal'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
 
     def test_cost(self):

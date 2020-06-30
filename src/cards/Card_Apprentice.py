@@ -32,7 +32,7 @@ class Test_Apprentice(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Apprentice', 'Familiar'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.apprentice = self.g['Apprentice'].remove()
 

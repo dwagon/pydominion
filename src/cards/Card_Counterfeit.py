@@ -40,7 +40,7 @@ class Test_Counterfiet(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Counterfeit'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Counterfeit'].remove()
         self.plr.addCard(self.card, 'hand')

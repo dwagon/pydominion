@@ -37,7 +37,7 @@ class Test_Wanderingminstrel(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wandering Minstrel', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Wandering Minstrel'].remove()
         self.plr.addCard(self.card, 'hand')

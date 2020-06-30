@@ -29,7 +29,7 @@ class Test_Witch(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Witch', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.attacker, self.victim = self.g.playerList()
         self.wcard = self.g['Witch'].remove()
         self.mcard = self.g['Moat'].remove()

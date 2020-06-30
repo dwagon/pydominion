@@ -32,7 +32,7 @@ class Test_Tormentor(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tormentor"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g["Tormentor"].remove()
         for h in self.g.hexes[:]:

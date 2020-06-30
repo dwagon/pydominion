@@ -39,7 +39,7 @@ class Test_Catacombs(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Catacombs'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.cat = self.g['Catacombs'].remove()
         self.plr.addCard(self.cat, 'hand')
