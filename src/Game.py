@@ -140,7 +140,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         return None
 
     ###########################################################################
-    def setTrash(self, *cards):
+    def set_trash(self, *cards):
         """ This is mostly used for testing """
         self.trashpile.empty()
         for c in cards:

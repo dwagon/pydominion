@@ -55,7 +55,7 @@ class Test_Treasurer(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash('Silver'))
 
     def test_play_recover(self):
-        self.g.setTrash('Gold', 'Estate')
+        self.g.set_trash('Gold', 'Estate')
         self.plr.test_input = ['Gain a treasure', 'Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
