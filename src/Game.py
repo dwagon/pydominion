@@ -109,16 +109,16 @@ class Game(object):     # pylint: disable=too-many-public-methods
             except IndexError:
                 name = random.choice(names)
                 names.remove(name)
-            u = uuid.uuid4().hex
+            the_uuid = uuid.uuid4().hex
             if self.bot:
-                self.players[u] = BotPlayer(
+                self.players[the_uuid] = BotPlayer(
                     game=self, quiet=self.quiet, name='%sBot' % name, heirlooms=heirlooms
                 )
                 self.bot = False
             else:
-                self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
-            self.players[u].uuid = u
-        self.cardSetup()
+                self.players[the_uuid] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
+            self.players[the_uuid].uuid = the_uuid
+        self.card_setup()
         self.total_cards = self.countCards()
         self.current_player = self.player_list(0)
 
@@ -147,10 +147,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
             self.trashpile.add(self[c].remove())
 
     ###########################################################################
-    def cardSetup(self):
+    def card_setup(self):
         """ Run the setup() method for all cards """
-        for cp in list(self.cardpiles.values()):
-            cp.setup(game=self)
+        for cpile in list(self.cardpiles.values()):
+            cpile.setup(game=self)
         for lm in list(self.landmarks.values()):
             lm.setup(game=self)
 
@@ -159,8 +159,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         count = {}
         count['trash'] = self.trashSize()
-        for cp in list(self.cardpiles.values()):
-            count['pile_%s' % cp.name] = cp.pilesize
+        for cpile in list(self.cardpiles.values()):
+            count['pile_%s' % cpile.name] = cpile.pilesize
         for pl in self.player_list():
             count['player_%s' % pl.name] = pl.countCards()
         total = sum([x for x in count.values()])
@@ -182,8 +182,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            cp = CardPile(trav, self.cardmapping['Traveller'][trav], self)
-            self.cardpiles[cp.name] = cp
+            cpile = CardPile(trav, self.cardmapping['Traveller'][trav], self)
+            self.cardpiles[cpile.name] = cpile
         self.loaded_travellers = True
 
     ###########################################################################
@@ -293,8 +293,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
     def loadDecks(self, initcards, numstacks):
         """ TODO """
         for card in self.base_cards:
-            cp = CardPile(card, self.cardmapping['BaseCard'][card], self)
-            self.cardpiles[cp.name] = cp
+            cpile = CardPile(card, self.cardmapping['BaseCard'][card], self)
+            self.cardpiles[cpile.name] = cpile
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -349,10 +349,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
         except ValueError:  # pragma: no cover
             sys.stderr.write("Unknown card '%s'\n" % c)
             sys.exit(1)
-        cp = CardPile(c, self.cardmapping['Card'][c], self)
-        if not force and not cp.insupply:
+        cpile = CardPile(c, self.cardmapping['Card'][c], self)
+        if not force and not cpile.insupply:
             return 0
-        self.cardpiles[cp.name] = cp
+        self.cardpiles[cpile.name] = cpile
         self.output("Playing with card %s" % self[c].name)
         return 1
 
@@ -364,8 +364,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         for card in list(self.cardpiles.values()):
             if card.heirloom is not None:
                 heirlooms.add(card.heirloom)
-                cp = CardPile(card.heirloom, self.cardmapping['Heirloom'][card.heirloom], self)
-                self.cardpiles[cp.name] = cp
+                cpile = CardPile(card.heirloom, self.cardmapping['Heirloom'][card.heirloom], self)
+                self.cardpiles[cpile.name] = cpile
 
         return list(heirlooms)
 
@@ -471,22 +471,22 @@ class Game(object):     # pylint: disable=too-many-public-methods
     def getActionPiles(self, cost=999):
         """ Return all cardstacks that are action cards that cost less than cost """
         actionpiles = []
-        for cp in self.cardpiles.values():
-            if not cp.purchasable:
+        for cpile in self.cardpiles.values():
+            if not cpile.purchasable:
                 continue
-            if cp.cost > cost:
+            if cpile.cost > cost:
                 continue
-            if cp.isAction():
-                actionpiles.append(cp)
+            if cpile.isAction():
+                actionpiles.append(cpile)
         return actionpiles
 
     ###########################################################################
     def getVictoryPiles(self):
         """ Return all cardstacks that are victory cards """
         victorypiles = []
-        for cp in self.cardpiles.values():
-            if cp.isVictory():
-                victorypiles.append(cp)
+        for cpile in self.cardpiles.values():
+            if cpile.isVictory():
+                victorypiles.append(cpile)
         return victorypiles
 
     ###########################################################################
@@ -561,28 +561,29 @@ class Game(object):     # pylint: disable=too-many-public-methods
         print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
         print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
         print("Projects: {}".format(", ".join([_.name for _ in self.projects.values()])))
-        for cp in self.cardpiles:
+        for cpile in self.cardpiles:
             tokens = ""
-            for p in self.player_list():
-                tkns = p.which_token(cp)
+            for plr in self.player_list():
+                tkns = plr.which_token(cpile)
                 if tkns:
-                    tokens += "%s[%s]" % (p.name, ",".join(tkns))
+                    tokens += "%s[%s]" % (plr.name, ",".join(tkns))
 
-            print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].pilesize, tokens))
-        for p in self.player_list():
-            print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
-            print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
-            print("  %s's projects: %s" % (p.name, ", ".join([c.name for c in p.projects])))
-            print("  %s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
-            print("  %s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
-            print("  %s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
-            print("  %s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
-            print("  %s's reserve: %s" % (p.name, ", ".join([c.name for c in p.reserve])))
-            print("  %s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
-            print("  %s's messages: %s" % (p.name, p.messages))
-            print("  %s's score: %s %s" % (p.name, p.getScore(), p.getScoreDetails()))
-            print("  %s's tokens: %s" % (p.name, p.tokens))
-            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d coffers=%d villagers=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.coffer, p.villager, p.potions))
+            print("CardPile %s: %d cards %s" % (cpile, self.cardpiles[cpile].pilesize, tokens))
+        for plr in self.player_list():
+            print("\n%s's state: %s" % (plr.name, ", ".join([s.name for s in plr.states])))
+            print("  %s's artifacts: %s" % (plr.name, ", ".join([c.name for c in plr.artifacts])))
+            print("  %s's projects: %s" % (plr.name, ", ".join([c.name for c in plr.projects])))
+            print("  %s's hand: %s" % (plr.name, ", ".join([c.name for c in plr.hand])))
+            print("  %s's deck: %s" % (plr.name, ", ".join([c.name for c in plr.deck])))
+            print("  %s's discard: %s" % (plr.name, ", ".join([c.name for c in plr.discardpile])))
+            print("  %s's duration: %s" % (plr.name, ", ".join([c.name for c in plr.durationpile])))
+            print("  %s's reserve: %s" % (plr.name, ", ".join([c.name for c in plr.reserve])))
+            print("  %s's played: %s" % (plr.name, ", ".join([c.name for c in plr.played])))
+            print("  %s's messages: %s" % (plr.name, plr.messages))
+            print("  %s's score: %s %s" % (plr.name, plr.getScore(), plr.getScoreDetails()))
+            print("  %s's tokens: %s" % (plr.name, plr.tokens))
+            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d" % (plr.name, plr.coin, plr.debt, plr.actions, plr.buys))
+            print("  %s: coffers=%d villagers=%d potions=%d" % (plr.name, plr.coffer, plr.villager, plr.potions))
 
     ###########################################################################
     def playerToLeft(self, plr):
