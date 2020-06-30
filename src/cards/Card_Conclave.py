@@ -42,7 +42,7 @@ class Test_Conclave(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Conclave', 'Moat'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Conclave'].remove()
 

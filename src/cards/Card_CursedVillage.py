@@ -30,7 +30,7 @@ class Test_CursedVillage(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Cursed Village'].remove()
         for h in self.g.hexes[:]:

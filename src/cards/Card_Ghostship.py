@@ -44,7 +44,7 @@ class Test_Ghostship(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ghost Ship'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Ghost Ship'].remove()
         self.plr.addCard(self.card, 'hand')

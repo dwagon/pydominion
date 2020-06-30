@@ -32,7 +32,7 @@ class Test_Enchantress(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g["Enchantress"].remove()
         self.r1 = self.g["Remodel"].remove()

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 """ Dominion Game Code """
-# Handle python2 as well as python3
-# pylint: disable=useless-object-inheritance
 # pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes
 import argparse
 import glob

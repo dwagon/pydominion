@@ -45,7 +45,7 @@ class Test_Ambassador(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ambassador'], badcards=['Duchess'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.vic = self.g.playerList()
         self.card = self.g['Ambassador'].remove()
 

@@ -62,7 +62,7 @@ class Test_Bishop(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr, self.other = self.g.playerList()
         self.bishop = self.g['Bishop'].remove()
 

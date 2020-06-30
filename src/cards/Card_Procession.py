@@ -38,7 +38,7 @@ class Test_Procession(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Procession', 'Moat', 'Witch'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Procession'].remove()
 

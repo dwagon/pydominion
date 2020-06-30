@@ -39,7 +39,7 @@ class Test_Crossroads(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Crossroads'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Crossroads'].remove()
 
