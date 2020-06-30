@@ -33,7 +33,7 @@ class Test_Ghost_Town(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ghost Town'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.gtown = self.g['Ghost Town'].remove()
 
     def test_play_card(self):

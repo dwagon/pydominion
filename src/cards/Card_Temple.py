@@ -43,7 +43,7 @@ class Test_Temple(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Temple'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Temple'].remove()
 
     def test_play(self):

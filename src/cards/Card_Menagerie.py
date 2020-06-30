@@ -34,7 +34,7 @@ class Test_Menagerie(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Menagerie'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Menagerie'].remove()
 
     def test_play_unique(self):

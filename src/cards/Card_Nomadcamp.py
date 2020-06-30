@@ -31,7 +31,7 @@ class Test_NomadCamp(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nomad Camp'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Nomad Camp'].remove()
 
     def test_play(self):

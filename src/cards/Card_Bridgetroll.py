@@ -40,7 +40,7 @@ class Test_Bridgetroll(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bridge Troll'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Bridge Troll'].remove()
         self.plr.addCard(self.card, 'hand')
 

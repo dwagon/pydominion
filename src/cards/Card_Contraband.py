@@ -41,7 +41,7 @@ class Test_Contraband(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Contraband'], badcards=["Fool's Gold"])
         self.g.start_game()
-        self.plr, self.nbr = self.g.playerList()
+        self.plr, self.nbr = self.g.player_list()
         self.card = self.g['Contraband'].remove()
         self.plr.addCard(self.card, 'hand')
 

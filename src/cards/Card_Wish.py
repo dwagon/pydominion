@@ -37,7 +37,7 @@ class Test_Wish(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Wish"])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g["Wish"].remove()
 
     def test_return(self):

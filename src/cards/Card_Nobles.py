@@ -32,7 +32,7 @@ class Test_Nobles(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nobles'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Nobles'].remove()
         self.plr.addCard(self.card, 'hand')
 

@@ -37,7 +37,7 @@ class Test_Cultist(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cultist', 'Moat'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Cultist'].remove()
 
     def test_play(self):

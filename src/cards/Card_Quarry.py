@@ -27,7 +27,7 @@ class Test_Quarry(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Quarry', 'Moat'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Quarry'].remove()
         self.plr.addCard(self.card, 'hand')
 

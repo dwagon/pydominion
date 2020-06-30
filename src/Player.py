@@ -1001,7 +1001,7 @@ class Player(object):
     ###########################################################################
     def hook_allPlayers_preAction(self, card):
         options = {}
-        for player in self.game.playerList():
+        for player in self.game.player_list():
             for crd in player.durationpile:
                 ans = crd.hook_allPlayers_preAction(game=self.game, player=self, owner=player, card=card)
                 if ans:
@@ -1161,7 +1161,7 @@ class Player(object):
 
     ###########################################################################
     def hook_allPlayers_buyCard(self, card):
-        for player in self.game.playerList():
+        for player in self.game.player_list():
             for crd in player.durationpile:
                 crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
         for crd in self.game.landmarks.values():
@@ -1169,7 +1169,7 @@ class Player(object):
 
     ###########################################################################
     def hook_allPlayers_gainCard(self, card):
-        for player in self.game.playerList():
+        for player in self.game.player_list():
             for crd in player.hand + player.projects:
                 crd.hook_allPlayers_gainCard(game=self.game, player=self, owner=player, card=card)
 
@@ -1475,7 +1475,7 @@ class Player(object):
         statecard = self.game.states[state]
 
         if statecard.unique_state:
-            for pl in self.game.playerList():
+            for pl in self.game.player_list():
                 for st in pl.states[:]:
                     if st.name == state:
                         pl.states.remove(st)
@@ -1487,7 +1487,7 @@ class Player(object):
         assert isinstance(artifact, str)
         artifactcard = self.game.artifacts[artifact]
         # Remove artifact from whoever currently has it
-        for pl in self.game.playerList():
+        for pl in self.game.player_list():
             for st in pl.artifacts[:]:
                 if st.name == artifact and self != pl:
                     pl.output("{} took your {}".format(self.name, artifact))

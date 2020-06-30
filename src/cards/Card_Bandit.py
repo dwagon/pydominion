@@ -57,7 +57,7 @@ class Test_Bandit(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bandit'])
         self.g.start_game()
-        self.thief, self.vic = self.g.playerList()
+        self.thief, self.vic = self.g.player_list()
         self.thief.name = 'MrBandit'
         self.vic.name = 'MrVic'
         self.card = self.g['Bandit'].remove()

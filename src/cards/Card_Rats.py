@@ -36,7 +36,7 @@ class Test_Rats(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rats'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.rats = self.g['Rats'].remove()
         self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.setHand('Copper', 'Gold', 'Silver', 'Rats')

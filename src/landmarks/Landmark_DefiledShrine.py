@@ -38,7 +38,7 @@ class Test_DefiledShrine(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Defiled Shrine'], initcards=['Moat'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
 
     def test_use(self):
         """ Use Defiled Shrine """

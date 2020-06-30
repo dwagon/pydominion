@@ -40,7 +40,7 @@ class Test_Ducat(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ducat'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_play(self):
         card = self.g['Ducat'].remove()

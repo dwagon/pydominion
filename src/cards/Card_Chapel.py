@@ -24,7 +24,7 @@ class Test_Chapel(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Chapel'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.ccard = self.g['Chapel'].remove()
         self.plr.setHand('Copper', 'Silver', 'Estate')
         self.plr.addCard(self.ccard, 'hand')

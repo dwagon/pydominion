@@ -15,7 +15,7 @@ class Landmark_Keep(Landmark):
     def hook_end_of_game(self, game, player):
         cards = {}
         # For each type of treasure card work out who has how many
-        for pl in game.playerList():
+        for pl in game.player_list():
             plname = pl.name
             for card in pl.allCards():
                 if card.isTreasure():
@@ -39,7 +39,7 @@ class Test_Keep(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Keep'], badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
         self.g.start_game()
-        self.plr, self.other = self.g.playerList()
+        self.plr, self.other = self.g.player_list()
 
     def test_most(self):
         """ Use Keep when we have the most Silver"""

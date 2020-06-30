@@ -73,7 +73,7 @@ class Test_PirateShip(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Pirate Ship'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Pirate Ship'].remove()
         self.plr.gainCard(newcard=self.card, destination='hand')
 

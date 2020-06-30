@@ -31,7 +31,7 @@ class Test_Peddler(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peddler', 'Moat'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Peddler'].remove()
 
     def test_play(self):

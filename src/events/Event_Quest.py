@@ -35,7 +35,7 @@ class Test_Quest(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Quest'], initcards=['Witch'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Quest']
 
     def test_with_attack(self):

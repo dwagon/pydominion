@@ -31,7 +31,7 @@ class Test_Conspirator(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Conspirator', 'Witch'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Conspirator'].remove()
         self.plr.addCard(self.card, 'hand')
 

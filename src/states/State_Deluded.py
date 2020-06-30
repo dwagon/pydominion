@@ -29,7 +29,7 @@ class Test_Deluded(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.state = self.g.states['Deluded']
 
     def test_deluded(self):

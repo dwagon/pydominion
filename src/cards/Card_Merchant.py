@@ -32,7 +32,7 @@ class Test_Merchant(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Merchant'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Merchant'].remove()
         self.s1 = self.g['Silver'].remove()
         self.s2 = self.g['Silver'].remove()

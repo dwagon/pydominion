@@ -9,7 +9,7 @@ class TestArtifact(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
 
     def test_assign_artifact(self):
         self.plr.assign_artifact('Flag')

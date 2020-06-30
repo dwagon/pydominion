@@ -42,7 +42,7 @@ class Test_Apothecary(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Apothecary'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_none(self):
         self.plr.setHand('Apothecary')

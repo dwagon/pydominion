@@ -36,7 +36,7 @@ class Test_HauntedWoods(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Haunted Woods'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Haunted Woods'].remove()
         self.plr.addCard(self.card, 'hand')
 

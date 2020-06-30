@@ -27,7 +27,7 @@ class Test_Artisan(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Artisan', 'Festival'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Artisan'].remove()
 
     def test_play(self):

@@ -38,7 +38,7 @@ class Test_ChariotRace(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Chariot Race'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Chariot Race'].remove()
 
     def test_play_win(self):

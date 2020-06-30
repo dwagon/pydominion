@@ -26,7 +26,7 @@ class Test_FaithfulHound(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Faithful Hound'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True
         self.card = self.g['Faithful Hound'].remove()
 

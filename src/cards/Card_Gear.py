@@ -46,7 +46,7 @@ class Test_Gear(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gear'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Gear'].remove()
 
     def test_playcard(self):

@@ -32,7 +32,7 @@ class Test_Fear(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
             if h.name != "Fear":
                 self.g.discarded_hexes.append(h)

@@ -32,7 +32,7 @@ class Test_Familiar(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Familiar', 'Moat'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Familiar'].remove()
         self.plr.addCard(self.card, 'hand')
 

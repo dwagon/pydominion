@@ -68,7 +68,7 @@ class Test_MountainPass(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Mountain Pass'])
         self.g.start_game()
-        self.plr, self.other = self.g.playerList()
+        self.plr, self.other = self.g.player_list()
         self.mp = self.g.landmarks['Mountain Pass']
 
     def test_play(self):

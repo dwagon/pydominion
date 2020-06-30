@@ -28,7 +28,7 @@ class Test_Remodel(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Remodel'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.rcard = self.g['Remodel'].remove()
 
     def test_nothing(self):

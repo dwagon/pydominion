@@ -20,7 +20,7 @@ class Card_Tournament(Card):
 
     def special(self, game, player):
         found = False
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr != player and plr.inHand('Province'):
                 found = True
         if player.inHand('Province'):
@@ -37,7 +37,7 @@ class Test_Tournament(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
         self.g.start_game()
-        self.plr, self.other = self.g.playerList()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Tournament'].remove()
 
     def test_play(self):

@@ -25,7 +25,7 @@ class Test_Swamps_Gift(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         for b in self.g.boons:
             if b.name == "The Swamp's Gift":
                 myboon = b

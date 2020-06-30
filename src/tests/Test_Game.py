@@ -13,7 +13,7 @@ class Test_args(unittest.TestCase):
         """ TODO """
         g = Game.Game(quiet=True, numplayers=4)
         g.start_game()
-        self.assertEqual(len(g.playerList()), 4)
+        self.assertEqual(len(g.player_list()), 4)
 
     def test_card(self):
         """ TODO """
@@ -55,7 +55,7 @@ class Test_game_over(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=2)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_not_over(self):
         """ The game isn't over yet """
@@ -95,7 +95,7 @@ class Test_inTrash(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.plr.setHand('Copper')
         self.plr.trashCard(self.plr.hand[0])
 
@@ -133,7 +133,7 @@ class Test_boon(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_receive_boon_empty(self):
         self.g.boons = []

@@ -29,7 +29,7 @@ class Test_Vampire(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vampire'], badcards=['Duchess'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Vampire'].remove()
         self.plr.addCard(self.card, 'hand')
         for h in self.g.hexes[:]:

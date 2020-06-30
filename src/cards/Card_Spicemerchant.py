@@ -36,7 +36,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Spice Merchant'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Spice Merchant'].remove()
 
     def test_play_card(self):

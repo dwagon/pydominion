@@ -120,10 +120,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
             self.players[u].uuid = u
         self.cardSetup()
         self.total_cards = self.countCards()
-        self.current_player = self.playerList(0)
+        self.current_player = self.player_list(0)
 
     ###########################################################################
-    def playerList(self, num=None):
+    def player_list(self, num=None):
         """ TODO """
         if num is None:
             return list(self.players.values())
@@ -162,7 +162,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         count['trash'] = self.trashSize()
         for cp in list(self.cardpiles.values()):
             count['pile_%s' % cp.name] = cp.pilesize
-        for pl in self.playerList():
+        for pl in self.player_list():
             count['player_%s' % pl.name] = pl.countCards()
         total = sum([x for x in count.values()])
         return total
@@ -564,13 +564,13 @@ class Game(object):     # pylint: disable=too-many-public-methods
         print("Projects: {}".format(", ".join([_.name for _ in self.projects.values()])))
         for cp in self.cardpiles:
             tokens = ""
-            for p in self.playerList():
+            for p in self.player_list():
                 tkns = p.which_token(cp)
                 if tkns:
                     tokens += "%s[%s]" % (p.name, ",".join(tkns))
 
             print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].pilesize, tokens))
-        for p in self.playerList():
+        for p in self.player_list():
             print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
             print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
             print("  %s's projects: %s" % (p.name, ", ".join([c.name for c in p.projects])))
@@ -588,14 +588,14 @@ class Game(object):     # pylint: disable=too-many-public-methods
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        players = self.playerList()
+        players = self.player_list()
         place = players.index(plr) - 1
         return players[place]
 
     ###########################################################################
     def playerToRight(self, plr):
         """ Return the player to the 'right' of the one specified """
-        players = self.playerList()
+        players = self.player_list()
         place = (players.index(plr) + 1) % len(players)
         return players[place]
 
@@ -605,11 +605,11 @@ class Game(object):     # pylint: disable=too-many-public-methods
         scores = {}
         self.output("")
         self.output("Scores:")
-        for plr in self.playerList():
+        for plr in self.player_list():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
         self.output("")
-        for plr in self.playerList():
+        for plr in self.player_list():
             self.output("Cards of %s:" % plr.name)
             for k, v in plr.getCards().items():
                 self.output("%s: %s=%s" % (plr.name, k, v))
@@ -624,7 +624,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             sys.stderr.write("%-15s  " % pile.name)
             if total:
                 sys.stderr.write("pile=%d " % total)
-            for plr in self.playerList():
+            for plr in self.player_list():
                 stacklist = (
                     ('Discard', plr.discardpile), ('Hand', plr.hand),
                     ('Reserve', plr.reserve), ('Deck', plr.deck),
@@ -662,7 +662,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.current_player.endTurn()
         if self.isGameOver():
             self.gameover = True
-            for plr in self.playerList():
+            for plr in self.player_list():
                 plr.gameOver()
 
 

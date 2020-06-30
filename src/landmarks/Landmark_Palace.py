@@ -28,7 +28,7 @@ class Test_Palace(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Palace'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
 
     def test_gain(self):
         """ Use Palace """

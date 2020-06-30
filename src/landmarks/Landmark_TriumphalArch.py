@@ -31,7 +31,7 @@ class Test_TriumphalArch(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Triumphal Arch'], initcards=['Moat', 'Militia'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         """ Test Triumphal Arch"""

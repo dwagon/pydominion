@@ -39,7 +39,7 @@ class Test_Pearldiver(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pearl Diver'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.pearldiver = self.g['Pearl Diver'].remove()
         self.plr.addCard(self.pearldiver, 'hand')
 

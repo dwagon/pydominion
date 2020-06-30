@@ -26,7 +26,7 @@ class Test_LuckyCoin(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fool'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Lucky Coin'].remove()
 
     def test_play(self):

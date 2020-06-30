@@ -41,7 +41,7 @@ class Test_Tracker(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tracker'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True
         self.card = self.g['Tracker'].remove()
 

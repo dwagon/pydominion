@@ -35,7 +35,7 @@ class Test_Forge(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Feast'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.forge = self.g['Forge'].remove()
 
     def test_play(self):

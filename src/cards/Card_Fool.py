@@ -32,7 +32,7 @@ class Test_Fool(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fool'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Fool'].remove()
 
     def test_play_with(self):

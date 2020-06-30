@@ -20,7 +20,7 @@ class Card_Bishop(Card):
         """ Trash a card from your hand. +VP equal to half its cost
         in coins, rounded down. Each other player may trash a card
         from his hand """
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr == player:
                 self.trashOwnCard(game, player)
             else:
@@ -63,7 +63,7 @@ class Test_Bishop(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
         self.g.start_game()
-        self.plr, self.other = self.g.playerList()
+        self.plr, self.other = self.g.player_list()
         self.bishop = self.g['Bishop'].remove()
 
     def test_play(self):

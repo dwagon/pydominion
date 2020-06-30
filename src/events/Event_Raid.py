@@ -33,7 +33,7 @@ class Test_Raid(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, eventcards=['Raid'], initcards=['Feast'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g.events['Raid']
 
     def test_play(self):

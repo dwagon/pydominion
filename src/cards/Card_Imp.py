@@ -47,7 +47,7 @@ class Test_Imp(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Imp", "Moat"])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g["Imp"].remove()
 
     def test_played(self):

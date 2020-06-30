@@ -24,7 +24,7 @@ class Test_Greed(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
             if h.name != "Greed":
                 self.g.discarded_hexes.append(h)

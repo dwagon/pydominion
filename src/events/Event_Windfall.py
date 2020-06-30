@@ -25,7 +25,7 @@ class Test_Windfall(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Windfall'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g.events['Windfall']
 
     def test_play(self):

@@ -51,7 +51,7 @@ class Test_Urchin(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Urchin', 'Militia'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Urchin'].remove()
 
     def test_play(self):

@@ -20,7 +20,7 @@ class Test_Lantern(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Lantern'], initcards=['Border Guard', 'Moat', 'Guide'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.artifact = self.g.artifacts['Lantern']
         self.card = self.g['Border Guard'].remove()
         self.plr.assign_artifact('Lantern')

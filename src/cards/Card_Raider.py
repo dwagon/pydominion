@@ -41,7 +41,7 @@ class Test_Raider(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Raider'])
         self.g.start_game()
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Raider'].remove()
         self.plr.addCard(self.card, 'hand')
 

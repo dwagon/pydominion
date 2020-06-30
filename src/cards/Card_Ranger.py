@@ -28,7 +28,7 @@ class Test_Ranger(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ranger'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Ranger'].remove()
 
     def test_play_first(self):

@@ -37,7 +37,7 @@ class Test_Idol(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.plr, self.vic = self.g.playerList()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Idol'].remove()
 
     def test_play_even(self):

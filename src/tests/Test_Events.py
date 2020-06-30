@@ -9,7 +9,7 @@ class Test_performEvent(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Raid'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g.events['Raid']
 
     def test_perform(self):
@@ -45,7 +45,7 @@ class Test_eventSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms', 'Expedition', 'Raid'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_events(self):
         self.plr.coin = 4
@@ -70,13 +70,13 @@ class Test_eventRandom(unittest.TestCase):
     def test_none(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 0)
 
     def test_specify(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms', 'Raid'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
         self.assertIn('Alms', self.g.events)
         self.assertIn('Raid', self.g.events)
@@ -84,13 +84,13 @@ class Test_eventRandom(unittest.TestCase):
     def test_random(self):
         self.g = Game.Game(quiet=True, numplayers=1, numevents=2)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
 
     def test_both(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], numevents=2)
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
         self.assertIn('Alms', self.g.events)
 

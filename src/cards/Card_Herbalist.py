@@ -43,7 +43,7 @@ class Test_Herbalist(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herbalist'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.hcard = self.g['Herbalist'].remove()
 
     def test_putnothing(self):

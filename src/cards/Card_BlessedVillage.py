@@ -31,7 +31,7 @@ class Test_BlessedVillage(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Blessed Village'], badcards=['Druid'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Blessed Village'].remove()
         for b in self.g.boons:
             if b.name == "The Sea's Gift":

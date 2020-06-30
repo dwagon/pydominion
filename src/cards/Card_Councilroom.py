@@ -17,7 +17,7 @@ class Card_Councilroom(Card):
 
     def special(self, game, player):
         """ Each other player draws a card """
-        for pl in game.playerList():
+        for pl in game.player_list():
             if pl != player:
                 pl.output("Picking up card due to %s playing a Council Room" % player.name)
                 pl.pickupCard()
@@ -29,7 +29,7 @@ class Test_Councilroom(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Council Room'])
         self.g.start_game()
-        self.plr, self.other = self.g.playerList()
+        self.plr, self.other = self.g.player_list()
         self.ccard = self.g['Council Room'].remove()
         self.plr.addCard(self.ccard, 'hand')
 

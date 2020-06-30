@@ -26,7 +26,7 @@ class Test_Ferry(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Ferry'], initcards=['Moat'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Ferry']
 
     def test_play(self):

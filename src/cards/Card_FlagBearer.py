@@ -31,7 +31,7 @@ class Test_FlagBearer(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Flag Bearer'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Flag Bearer'].remove()
 
     def test_gain(self):

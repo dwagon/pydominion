@@ -38,7 +38,7 @@ class Test_Navigator(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Navigator'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.navigator = self.g['Navigator'].remove()
         self.plr.addCard(self.navigator, 'hand')
 

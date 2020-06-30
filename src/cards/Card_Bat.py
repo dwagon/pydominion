@@ -28,7 +28,7 @@ class Test_Bat(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vampire'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Bat'].remove()
 
     def test_play(self):

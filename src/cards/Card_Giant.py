@@ -42,7 +42,7 @@ class Test_Giant(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Giant'])
         self.g.start_game()
-        self.plr, self.victim = self.g.playerList()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Giant'].remove()
 
     def test_play_journey_trashed(self):

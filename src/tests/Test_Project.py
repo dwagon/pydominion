@@ -14,7 +14,7 @@ class Test_assignProject(unittest.TestCase):
                 initprojects=['ProjectA', 'ProjectB', 'ProjectC']
                 )
         self.g.start_game()
-        self.plr, self.plr2 = self.g.playerList()
+        self.plr, self.plr2 = self.g.player_list()
 
     def test_assign(self):
         self.plr.assign_project('ProjectA')
@@ -56,7 +56,7 @@ class Test_buyProject(unittest.TestCase):
                 initprojects=['ProjectA']
                 )
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
 
     def test_buy(self):
         PA = self.g.projects['ProjectA']

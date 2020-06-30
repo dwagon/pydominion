@@ -42,7 +42,7 @@ class Test_Aqueduct(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Aqueduct'], badcards=['Duchess'])
         self.g.start_game()
-        self.plr = self.g.playerList()[0]
+        self.plr = self.g.player_list()[0]
 
     def test_gain_silver(self):
         """ Use Aqueduct gaining Silver"""

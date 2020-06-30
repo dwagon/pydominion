@@ -27,7 +27,7 @@ class Test_Remake(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Remake', 'Moat'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Remake'].remove()
 
     def test_playcard(self):

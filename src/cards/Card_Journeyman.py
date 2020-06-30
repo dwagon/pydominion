@@ -44,7 +44,7 @@ class Test_Journeyman(unittest.TestCase):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Journeyman'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Journeyman'].remove()
         self.plr.addCard(self.card, 'hand')
 
