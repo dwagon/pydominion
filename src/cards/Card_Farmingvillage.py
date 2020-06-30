@@ -18,7 +18,7 @@ class Card_Farmingvillage(Card):
         """ Reveal cards from the top of your deck until you revel
             an Action or Treasure card. Put that card into your hand
             and discard the other cards. """
-        while(1):
+        while True:
             c = player.nextCard()
             player.revealCard(c)
             if c.isTreasure() or c.isAction():

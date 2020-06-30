@@ -45,7 +45,7 @@ class Test_City(unittest.TestCase):
 
     def test_onestack(self):
         """ Play a city with one stacks empty """
-        while(True):
+        while True:
             c = self.g['Moat'].remove()
             if not c:
                 break
@@ -55,11 +55,11 @@ class Test_City(unittest.TestCase):
 
     def test_twostack(self):
         """ Play a city with two stacks empty """
-        while(True):
+        while True:
             c = self.g['Moat'].remove()
             if not c:
                 break
-        while(True):
+        while True:
             c = self.g['Cellar'].remove()
             if not c:
                 break

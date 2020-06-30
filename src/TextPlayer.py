@@ -92,7 +92,7 @@ class TextPlayer(Player):
             o['line'] = line
             self.output(line)
         self.output(prompt, end=' ')
-        while(1):
+        while True:
             if self.test_input:
                 inp = self.test_input.pop(0)
                 self.output("Using '%s' test input" % inp)
@@ -170,7 +170,7 @@ class TextPlayer(Player):
         selected = []
         types = kwargs['types'] if 'types' in kwargs else {}
         types = self.typeSelector(types)
-        while(True):
+        while True:
             options = []
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 o = Option(selector='0', verb='Finish Selecting', card=None)

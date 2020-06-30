@@ -41,7 +41,7 @@ class Test_Poacher(unittest.TestCase):
 
     def test_empty(self):
         self.plr.setHand('Gold', 'Province')
-        while(True):
+        while True:
             c = self.g['Moat'].remove()
             if not c:
                 break

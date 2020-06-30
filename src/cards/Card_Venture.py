@@ -17,7 +17,7 @@ class Card_Venture(Card):
         """ When you play this, reveal cards from your deck until
             you reveal a Treasure. Discard the other cards. Play that
             Treasure """
-        while(1):
+        while True:
             c = player.pickupCard(verbose=False)
             player.revealCard(c)
             if c.isTreasure():

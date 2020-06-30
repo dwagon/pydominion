@@ -16,7 +16,7 @@ class Card_CursedVillage(Card):
         self.cost = 5
 
     def special(self, game, player):
-        while(player.handSize() < 6):
+        while player.handSize() < 6:
             c = player.nextCard()
             player.addCard(c, 'discard')
             player.pickupCard(c)

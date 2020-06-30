@@ -716,7 +716,7 @@ class Player(object):
             return
         self.output("************ Night Phase ************")
         self.phase = 'night'
-        while(True):
+        while True:
             self.displayOverview()
             options, prompt = self.choiceSelection()
             opt = self.userInput(options, prompt)
@@ -728,7 +728,7 @@ class Player(object):
     def actionPhase(self):
         self.output("************ Action Phase ************")
         self.phase = 'action'
-        while(True):
+        while True:
             self.displayOverview()
             options, prompt = self.choiceSelection()
             opt = self.userInput(options, prompt)
@@ -741,7 +741,7 @@ class Player(object):
         self.output("************ Buy Phase ************")
         self.phase = 'buy'
         self.hook_preBuy()
-        while(True):
+        while True:
             self.displayOverview()
             options, prompt = self.choiceSelection()
             opt = self.userInput(options, prompt)

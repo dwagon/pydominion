@@ -25,7 +25,7 @@ class Card_Scryingpool(Card):
             self.discardOrPutBack(plr, player)
         self.discardOrPutBack(player, player)
         revealed = []
-        while(1):
+        while True:
             topcard = player.pickupCard()
             player.revealCard(topcard)
             if not topcard.isAction():

@@ -37,7 +37,7 @@ class Test_Tower(unittest.TestCase):
 
     def test_one(self):
         self.plr.setHand('Moat', 'Moat')
-        while(True):
+        while True:
             c = self.g['Moat'].remove()
             if not c:
                 break
