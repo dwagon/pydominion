@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Hex import Hex
 
 
@@ -22,14 +23,13 @@ class Hex_Haunting(Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(1)
 
 
 ###############################################################################
 class Test_Haunting(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
