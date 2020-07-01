@@ -25,7 +25,7 @@ class Option(object):
 
     def __getitem__(self, key):
         if key == 'print':
-            raise
+            raise Exception('print')
         if key not in self.data:
             return ''
         return self.data[key]

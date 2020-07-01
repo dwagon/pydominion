@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 class Card(object):
     def __init__(self):
         self.image = None

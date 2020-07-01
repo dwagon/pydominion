@@ -4,7 +4,7 @@ from CardPile import CardPile
 
 ###############################################################################
 class PrizeCardPile(CardPile):
-    def __init__(self, cardname, klass):
+    def __init__(self, cardname, klass):    # pylint: disable=super-init-not-called
         self.pilesize = 1
         self.cardname = cardname
         self.cardclass = klass

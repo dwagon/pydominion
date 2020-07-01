@@ -624,7 +624,7 @@ class Player(object):
             if not c.purchasable:
                 continue
             allcards.add(c)
-        allcards.sort(key=lambda c: self.cardCost(c))
+        allcards.sort(key=self.cardCost)
         allcards.sort(key=lambda c: c.basecard)
         return allcards
 
@@ -770,7 +770,7 @@ class Player(object):
     ###########################################################################
     def cleanupPhase(self):
         # Save the cards we had so that the hook_endTurn has something to apply against
-        self.hadcards = [card for card in self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile]
+        self.hadcards = self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile
         self.phase = 'cleanup'
         self.game.cleanup_boons()
         self.game.cleanup_hexes()
@@ -1175,8 +1175,8 @@ class Player(object):
         for player in self.game.player_list():
             for crd in player.durationpile:
                 crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
-        for crd in self.game.landmarks.values():
-            crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
+            for crd in self.game.landmarks.values():
+                crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def hook_allPlayers_gainCard(self, card):
@@ -1350,7 +1350,7 @@ class Player(object):
             if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
                 continue
-        affordable.sort(key=lambda c: self.cardCost(c))
+        affordable.sort(key=self.cardCost)
         affordable.sort(key=lambda c: c.basecard)
         return affordable
 
@@ -1363,8 +1363,10 @@ class Player(object):
         return self.cardsAffordable(operator.le, coin, potions, types)
 
     ###########################################################################
-    def cardsWorth(self, coin, potions=0, types={}):
+    def cardsWorth(self, coin, potions=0, types=None):
         """Return the list of cards that are exactly cost """
+        if types is None:
+            types = {}
         types = self.typeSelector(types)
         return self.cardsAffordable(operator.eq, coin, potions, types)
 
@@ -1382,7 +1384,7 @@ class Player(object):
         count = {}
         for name, stack in self.stacklist:
             count[name] = len(stack)
-        total = sum([x for x in count.values()])
+        total = sum(count.values())
         total += self.secret_count
         return total
 
@@ -1472,6 +1474,7 @@ class Player(object):
             newcard = recipient.gainCard(cardpile, destination)
             recipient.output("Got a %s" % newcard.name)
             return newcard
+        return None
 
     ###########################################################################
     def plrPickCard(self, force=False, **kwargs):
