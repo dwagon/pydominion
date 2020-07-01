@@ -47,7 +47,7 @@ class Test_DefiledShrine(unittest.TestCase):
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.g.landmarks['Defiled Shrine']._vp['Moat'], 1)
         self.plr.buyCard(self.g['Curse'])
-        self.g.print_state()
+        self.assertEqual(self.plr.score['Defiled Shrine'], 1)
 
 
 ###############################################################################

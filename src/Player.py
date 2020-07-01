@@ -1176,8 +1176,8 @@ class Player(object):
         for player in self.game.player_list():
             for crd in player.durationpile:
                 crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
-            for crd in self.game.landmarks.values():
-                crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=player, card=card)
+        for crd in self.game.landmarks.values():
+            crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=self, card=card)
 
     ###########################################################################
     def hook_allPlayers_gainCard(self, card):
