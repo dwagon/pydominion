@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import unittest
 from Card import Card
 from PlayArea import PlayArea
-import unittest
+import Game
 
 
 ###############################################################################
@@ -11,7 +12,9 @@ class Card_Archive(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
         self.base = 'empires'
-        self.desc = "+1 Action; Set aside the top 3 cards of your deck face down (you may look at them). Now and at the start of your next two turns, put one into your hand."
+        self.desc = """+1 Action; Set aside the top 3 cards of your deck face
+            down (you may look at them). Now and at the start of your next two turns,
+            put one into your hand."""
         self.name = 'Archive'
         self.actions = 1
         self.cost = 5
@@ -19,7 +22,7 @@ class Card_Archive(Card):
     def special(self, game, player):
         if not hasattr(player, '_archive_reserve'):
             player._archive_reserve = PlayArea([])
-        for i in range(3):
+        for _ in range(3):
             card = player.nextCard()
             player.output("Putting {} in the archive".format(card.name))
             player._archive_reserve.add(card)
@@ -45,7 +48,6 @@ class Card_Archive(Card):
 ###############################################################################
 class Test_Archive(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Archive'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

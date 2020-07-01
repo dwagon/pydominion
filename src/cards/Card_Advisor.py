@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,16 +22,16 @@ class Card_Advisor(Card):
             the other cards into your hand. """
         cards = []
         choser = game.playerToLeft(player)
-        for i in range(3):
+        for _ in range(3):
             card = player.pickupCard()
             player.revealCard(card)
             cards.append(card)
         to_discard = choser.cardSel(
-                    force=True,
-                    prompt='Pick a card of %s to discard from Advisor' % player.name,
-                    cardsrc=cards,
-                    verbs=('Discard', 'Undiscard')
-                    )[0]
+            force=True,
+            prompt='Pick a card of %s to discard from Advisor' % player.name,
+            cardsrc=cards,
+            verbs=('Discard', 'Undiscard')
+            )[0]
         player.output("%s discarded %s" % (choser.name, to_discard.name))
         player.discardCard(to_discard)
 
@@ -56,7 +57,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Advisor(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Advisor'])
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()

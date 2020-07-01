@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,13 +11,17 @@ class Card_Ambassador(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'seaside'
-        self.desc = """Reveal a card from your hand. Return up to 2 copies of it from your hand to the Supply. Then each other player gains a copy of it."""
+        self.desc = """Reveal a card from your hand. Return up to 2 copies of it
+        from your hand to the Supply. Then each other player gains a copy of it."""
         self.name = 'Ambassador'
         self.cost = 5
 
     def pick_card(self, player):
         while True:
-            choice = player.cardSel(num=2, cardsrc='hand', prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it")
+            choice = player.cardSel(
+                num=2, cardsrc='hand',
+                prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it"
+            )
             if len(choice) == 2:
                 if choice[0].name != choice[1].name:
                     player.output("Has to be the same type of card")
@@ -43,7 +48,6 @@ class Card_Ambassador(Card):
 ###############################################################################
 class Test_Ambassador(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ambassador'], badcards=['Duchess'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

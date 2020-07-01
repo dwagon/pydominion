@@ -6,9 +6,9 @@ python:
     - "2.7"
     - "3.5"
     - "3.6"
-    - "3.7.3"
+    - "3.7"
     - "3.8"
-    - "3.9-dev"
+    - "3.9"
 
 install:
     - "pip install -r requirements.txt"
@@ -16,6 +16,7 @@ install:
 
 script: 
     - flake8 src
+    - pylint --version
     - PYTHONPATH=src pylint --exit-zero -j 0 src
     - "./src/run_tests"
 
