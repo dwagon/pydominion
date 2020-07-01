@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from Landmark import Landmark
 from collections import defaultdict
+import Game
+from Landmark import Landmark
 
 
 ###############################################################################
@@ -25,7 +26,6 @@ class Landmark_Orchard(Landmark):
 ###############################################################################
 class Test_Orchard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Orchard'], initcards=['Moat', 'Militia'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

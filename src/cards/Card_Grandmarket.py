@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -29,7 +30,6 @@ class Card_Grandmarket(Card):
 ###############################################################################
 class Test_Grandmarket(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Grand Market'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -48,7 +48,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.phase = 'buy'
-        options, prompt = self.plr.choiceSelection()
+        options, _ = self.plr.choiceSelection()
         for opt in options:
             if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 self.fail("Allowed to buy with copper")
@@ -59,7 +59,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.phase = 'buy'
-        options, prompt = self.plr.choiceSelection()
+        options, _ = self.plr.choiceSelection()
         for opt in options:
             if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 self.fail("Allowed to buy with copper")
@@ -69,7 +69,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ['0']
         self.plr.phase = 'buy'
-        options, prompt = self.plr.choiceSelection()
+        options, _ = self.plr.choiceSelection()
         for opt in options:
             if opt['name'] == 'Grand Market' and opt['verb'] == 'Buy':   # pragma: no cover
                 break

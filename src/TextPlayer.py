@@ -129,7 +129,7 @@ class TextPlayer(Player):
         return selectfrom
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def cardSel(self, num=1, **kwargs):   # pylint: disable=too-many-locals, too-many-branches
         """ Most interactions with players are the selection of cards
             either from the hand, the drawpiles, or a subset
             * force
@@ -153,10 +153,7 @@ class TextPlayer(Player):
         selectfrom = self.cardSelSource(**kwargs)
         force = kwargs['force'] if 'force' in kwargs else False
         showdesc = kwargs['showdesc'] if 'showdesc' in kwargs else True
-        if 'verbs' in kwargs:
-            verbs = kwargs['verbs']
-        else:
-            verbs = ('Select', 'Unselect')
+        verbs = kwargs.get('verbs', ('Select', 'Unselect'))
 
         if 'prompt' in kwargs:
             self.output(kwargs['prompt'])

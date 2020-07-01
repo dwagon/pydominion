@@ -56,8 +56,7 @@ class Card(object):
     def description(self, player):
         if callable(self.desc):
             return self.desc(player)
-        else:
-            return self.desc
+        return self.desc
 
     ##########################################################################
     def addVP(self, num=1):
