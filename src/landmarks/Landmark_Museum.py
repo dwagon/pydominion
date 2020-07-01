@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -22,7 +23,6 @@ class Landmark_Museum(Landmark):
 ###############################################################################
 class Test_Museum(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Museum'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -35,7 +36,6 @@ class Landmark_DefiledShrine(Landmark):
 ###############################################################################
 class Test_DefiledShrine(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Defiled Shrine'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

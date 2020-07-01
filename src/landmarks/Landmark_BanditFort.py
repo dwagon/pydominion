@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -23,7 +24,6 @@ class Landmark_BanditFort(Landmark):
 ###############################################################################
 class Test_BanditFort(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Bandit Fort'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

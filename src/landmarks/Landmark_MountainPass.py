@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -15,10 +16,9 @@ class Landmark_MountainPass(Landmark):
     def desc(self, player):
         if self._state == "done":
             return "Mountain Pass already claimed"
-        else:
-            return """When you are the first player to gain a Province, after that turn,
-                each player bids once, up to 40 Debt, ending with you.
-                High bidder gets +8VP and takes the Debt they bid."""
+        return """When you are the first player to gain a Province, after that turn,
+            each player bids once, up to 40 Debt, ending with you.
+            High bidder gets +8VP and takes the Debt they bid."""
 
     def hook_endTurn(self, game, player):
         if self._state == "do":
@@ -65,7 +65,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_MountainPass(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Mountain Pass'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -9,7 +10,8 @@ class Landmark_Keep(Landmark):
     def __init__(self):
         Landmark.__init__(self)
         self.base = 'empires'
-        self.desc = """When scoring, 5VP per differently named Treasure you have, that you have more copies of than each other player, or tied for most."""
+        self.desc = """When scoring, 5VP per differently named Treasure you have,
+        that you have more copies of than each other player, or tied for most."""
         self.name = "Keep"
 
     def hook_end_of_game(self, game, player):
@@ -36,8 +38,9 @@ class Landmark_Keep(Landmark):
 ###############################################################################
 class Test_Keep(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Keep'], badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
+        self.g = Game.Game(
+            quiet=True, numplayers=2, landmarkcards=['Keep'],
+            badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
 

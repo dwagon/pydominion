@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -14,8 +15,7 @@ class Landmark_Colonnade(Landmark):
     def desc(self, player):
         if self._vp:
             return "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left" % self._vp
-        else:
-            return "No VP left"
+        return "No VP left"
 
     def setup(self, game):
         self._vp = 6 * game.numplayers
@@ -34,7 +34,6 @@ class Landmark_Colonnade(Landmark):
 ###############################################################################
 class Test_Colonnade(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Colonnade'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

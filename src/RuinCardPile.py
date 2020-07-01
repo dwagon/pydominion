@@ -10,7 +10,7 @@ class RuinCardPile(CardPile):
         ruintypes = mapping
 
         self.ruins = []
-        for i in range(pilesize):
+        for _ in range(pilesize):
             c = random.choice(list(ruintypes.keys()))
             self.ruins.append(ruintypes[c]())
 
@@ -23,15 +23,9 @@ class RuinCardPile(CardPile):
         if self.pilesize:
             self.pilesize -= 1
             return self.ruins.pop()
-        else:
-            return None
+        return None
 
     def __repr__(self):
         return "RuinCardPile %s: %d" % (self.name, self.pilesize)
-
-
-###############################################################################
-if __name__ == "__main__":
-    r = RuinCardPile()
 
 # EOF
