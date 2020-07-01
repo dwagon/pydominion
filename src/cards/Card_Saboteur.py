@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,9 +11,10 @@ class Card_Saboteur(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
-        self.desc = """Each other player reveals cards from the top of his deck until revealing one
-        costing 3 Coin or more. He trashes that card and may gain a card costing at
-        most 2 Coin less than it. He discards the revealed cards."""
+        self.desc = """Each other player reveals cards from the top of his deck
+            until revealing one costing 3 Coin or more. He trashes that card
+            and may gain a card costing at most 2 Coin less than it. He discards
+            the revealed cards."""
         self.name = 'Saboteur'
         self.cost = 5
 
@@ -30,7 +32,7 @@ class Card_Saboteur(Card):
             victim.plrGainCard(card.cost - 2)
 
     def pickCard(self, victim, player):
-        for i in range(len(victim.allCards())):
+        for _ in range(len(victim.allCards())):
             c = victim.nextCard()
             victim.revealCard(c)
             if c.cost >= 3:
@@ -50,14 +52,12 @@ def botresponse(player, kind, args=[], kwargs={}):      # pragma: no coverage
             toget.append((card.cost, card))
     if toget:
         return [sorted(toget)[-1][1]]
-    else:
-        return []
+    return []
 
 
 ###############################################################################
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'], badcards=['Blessed Village', 'Cemetery', 'Necromancer'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

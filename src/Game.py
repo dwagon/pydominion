@@ -53,7 +53,6 @@ class Game(object):     # pylint: disable=too-many-public-methods
             self.base_cards.append('Colony')
             self.base_cards.append('Platinum')
         self.cardmapping = self.getAvailableCardClasses()
-        self.bot = False
         self.total_cards = 0
         self.loaded_travellers = False  # For testing purposes
 
@@ -103,7 +102,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             self.loadStates()
         self.checkCardRequirements()
 
-        for i in range(self.numplayers):
+        for plrnum in range(self.numplayers):
             try:
                 name = playernames.pop()
             except IndexError:
@@ -116,7 +115,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
                 )
                 self.bot = False
             else:
-                self.players[the_uuid] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
+                self.players[the_uuid] = plrKlass(game=self, quiet=self.quiet, name=name, number=plrnum, heirlooms=heirlooms)
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
         self.total_cards = self.countCards()

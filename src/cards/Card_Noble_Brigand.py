@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -48,7 +49,7 @@ class Card_Noble_Brigand(Card):
 
     def getTreasureCards(self, plr, player):
         cards = []
-        for i in range(2):
+        for _ in range(2):
             c = plr.nextCard()
             plr.revealCard(c)
             if c.isTreasure():
@@ -62,7 +63,6 @@ class Card_Noble_Brigand(Card):
 ###############################################################################
 class Test_Noble_Brigand(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Noble Brigand'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

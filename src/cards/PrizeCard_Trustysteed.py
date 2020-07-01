@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,7 @@ class Card_Trustysteed(Card):
             ('+2 cards', 'cards'), ('+2 actions', 'actions'),
             ('+2 Coins', 'coins'), ('4 Silvers', 'silvers')]
         chosen = []
-        for i in range(2):
+        for _ in range(2):
             options = []
             index = 1
             for p, o in selectable:
@@ -46,7 +47,6 @@ class Card_Trustysteed(Card):
 ###############################################################################
 class Test_Trustysteed(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tournament'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

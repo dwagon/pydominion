@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -9,14 +10,16 @@ class Card_Rabble(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = "+3 cards. Each other player reveals the top 3 cards of his deck, discards the revealed Actions and Treasures, and puts the rest back on top in any order he chooses."
+        self.desc = """+3 cards. Each other player reveals the top 3 cards of his
+            deck, discards the revealed Actions and Treasures, and puts the rest
+            back on top in any order he chooses."""
         self.name = 'Rabble'
         self.cost = 5
         self.cards = 3
 
     def attack(self, victim, attacker):
         cards = []
-        for i in range(3):
+        for _ in range(3):
             c = victim.nextCard()
             victim.revealCard(c)
             if c.isAction() or c.isTreasure():
@@ -42,7 +45,6 @@ class Card_Rabble(Card):
 ###############################################################################
 class Test_Rabble(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rabble', 'Moat'])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()

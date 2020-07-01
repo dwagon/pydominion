@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -31,7 +32,7 @@ class Card_Rogue(Card):
     ###########################################################################
     def riffleVictim(self, victim, player):
         cards = []
-        for i in range(2):
+        for _ in range(2):
             c = victim.nextCard()
             victim.revealCard(c)
             if 3 <= c.cost <= 6:
@@ -84,7 +85,6 @@ class Card_Rogue(Card):
 ###############################################################################
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'], badcards=['Pooka', 'Fool'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

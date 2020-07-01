@@ -12,7 +12,6 @@ class CardPile(object):
             self.pilesize = self.card.calc_numcards(game)
         else:
             self.pilesize = self.card.numcards
-        print("{} {}".format(self.card.name, self.pilesize))
 
     ###########################################################################
     def embargo(self):

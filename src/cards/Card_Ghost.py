@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -11,7 +12,9 @@ class Card_Ghost(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration', 'spirit']
         self.base = 'nocturne'
-        self.desc = "Reveal cards from your deck until you reveal an Action. Discard the other cards and set aside the Action. At the start of your next turn, play it twice."
+        self.desc = """Reveal cards from your deck until you reveal an Action.
+            Discard the other cards and set aside the Action. At the start of
+            your next turn, play it twice."""
         self.name = 'Ghost'
         self.purchasable = False
         self.insupply = False
@@ -27,8 +30,7 @@ class Card_Ghost(Card):
             if card.isAction():
                 player._ghost_reserve.add(card)
                 break
-            else:
-                player.addCard(card, 'discard')
+            player.addCard(card, 'discard')
             count -= 1
         else:
             player.output("No action cards in deck")
@@ -39,7 +41,7 @@ class Card_Ghost(Card):
             return
         for card in player._ghost_reserve[:]:
             player.output("Ghost playing {}".format(card.name))
-            for i in range(2):
+            for _ in range(2):
                 player.playCard(card, discard=False, costAction=False)
             player._ghost_reserve.remove(card)
 
@@ -47,7 +49,6 @@ class Card_Ghost(Card):
 ###############################################################################
 class Test_Ghost(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ghost', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

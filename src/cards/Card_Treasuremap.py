@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,7 +12,8 @@ class Card_Treasuremap(Card):
         self.cardtype = 'action'
         self.base = 'seaside'
         self.desc = """Trash this and another copy of Treasure Map from your hand.
-        If you do trash two Treasure Maps, gain 4 Gold cards, putting them on top of your deck."""
+            If you do trash two Treasure Maps, gain 4 Gold cards, putting them
+            on top of your deck."""
         self.name = 'Treasure Map'
         self.cost = 4
 
@@ -25,7 +27,7 @@ class Card_Treasuremap(Card):
             cardsrc=tmaps)
         if t:
             player.output("Gaining 4 Gold")
-            for i in range(4):
+            for _ in range(4):
                 player.gainCard('Gold', destination='topdeck')
         else:
             player.output("Didn't trash two so no Gold")
@@ -34,7 +36,6 @@ class Card_Treasuremap(Card):
 ###############################################################################
 class Test_Treasuremap(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasure Map'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -3,6 +3,7 @@
 import unittest
 from Card import Card
 from cards.Card_Knight import KnightCard
+import Game
 
 
 ###############################################################################
@@ -19,7 +20,7 @@ class Card_Dame_Anna(KnightCard):
         self.cost = 5
 
     def special(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             player.plrTrashCard()
         self.knight_special(game, player)
 
@@ -27,7 +28,6 @@ class Card_Dame_Anna(KnightCard):
 ###############################################################################
 class Test_Dame_Anna(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

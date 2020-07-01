@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,8 +17,11 @@ class Card_Doctor(Card):
 
     def desc(self, player):
         if player.phase == "buy":
-            return """Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order.
-            When you buy this, you may overpay for it. For each 1 you overpaid, look at the top card of your deck; trash it, discard it, or put it back."""
+            return """Name a card. Reveal the top 3 cards of your deck.
+                Trash the matches. Put the rest back on top in any order.
+                When you buy this, you may overpay for it. For each 1 you overpaid,
+                look at the top card of your deck; trash it, discard it,
+                or put it back."""
         else:
             return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
 
@@ -64,7 +68,6 @@ class Card_Doctor(Card):
 ###############################################################################
 class Test_Doctor(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Doctor'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
