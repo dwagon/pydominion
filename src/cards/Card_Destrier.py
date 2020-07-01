@@ -27,14 +27,13 @@ class Test_Destrier(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Destrier'])
         self.g.start_game()
-        self.plr = self.g.playerList(0)
+        self.plr = self.g.player_list(0)
         self.card = self.g['Destrier'].remove()
 
     def test_play(self):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.g.print_state()
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 2)
 
