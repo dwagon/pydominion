@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,7 +27,7 @@ class Card_Deathcart(Card):
             player.trashCard(self)
 
     def hook_gainThisCard(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             c = player.gainCard('Ruins')
             player.output("Gained %s" % c.name)
         return {}
@@ -35,7 +36,6 @@ class Card_Deathcart(Card):
 ###############################################################################
 class Test_Deathcart(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Death Cart', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

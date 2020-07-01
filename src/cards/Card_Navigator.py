@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,14 +11,16 @@ class Card_Navigator(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "+2 coin. Look at the top 5 cards of your deck. Either discard all of them, or put them back on top of your deck in any order"
+        self.desc = """+2 coin. Look at the top 5 cards of your deck.
+            Either discard all of them, or put them back on top of your deck
+            in any order"""
         self.name = 'Navigator'
         self.coin = 2
         self.cost = 4
 
     def special(self, game, player):
         cards = []
-        for i in range(5):
+        for _ in range(5):
             cards.append(player.nextCard())
         player.output("Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards]))
         discard = player.plrChooseOptions(
@@ -27,7 +30,6 @@ class Card_Navigator(Card):
             for c in cards:
                 player.discardCard(c)
         else:
-            # TODO - let player choose order
             for c in cards:
                 player.addCard(c, 'topdeck')
 
@@ -35,7 +37,6 @@ class Card_Navigator(Card):
 ###############################################################################
 class Test_Navigator(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Navigator'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

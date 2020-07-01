@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,7 +18,7 @@ class Card_Catacombs(Card):
 
     def special(self, game, player):
         cards = []
-        for i in range(3):
+        for _ in range(3):
             cards.append(player.nextCard())
         player.output("You drew %s" % ", ".join([c.name for c in cards]))
         ans = player.plrChooseOptions("What do you want to do?", ("Keep the three", True), ("Discard and draw 3 more", False))
@@ -37,7 +38,6 @@ class Card_Catacombs(Card):
 ###############################################################################
 class Test_Catacombs(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Catacombs'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

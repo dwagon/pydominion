@@ -181,38 +181,38 @@ class Test_whowon(unittest.TestCase):
 ###############################################################################
 class Test_parse_args(unittest.TestCase):
     def test_defaults(self):
-        args = Game.parse_args([])
+        args = Game.parse_cli_args([])
         self.assertEqual(args.numplayers, 2)
         self.assertEqual(args.cardbase, None)
         self.assertEqual(args.prosperity, False)
         self.assertEqual(args.initcards, [])
 
     def test_prosperity(self):
-        args = Game.parse_args(['--prosperity'])
+        args = Game.parse_cli_args(['--prosperity'])
         self.assertEqual(args.prosperity, True)
 
     def test_numplayers(self):
-        args = Game.parse_args(['--numplayers', '4'])
+        args = Game.parse_cli_args(['--numplayers', '4'])
         self.assertEqual(args.numplayers, 4)
 
     def test_events(self):
-        args = Game.parse_args(['--events', 'Alms'])
+        args = Game.parse_cli_args(['--events', 'Alms'])
         self.assertEqual(args.eventcards, ['Alms'])
 
     def test_use_events(self):
-        args = Game.parse_args(['--quiet', '--events', 'Alms'])
+        args = Game.parse_cli_args(['--quiet', '--events', 'Alms'])
         g = Game.Game(**vars(args))
         g.start_game()
         self.assertIn('Alms', g.events)
 
     def test_use_card(self):
-        args = Game.parse_args(['--quiet', '--card', 'Moat'])
+        args = Game.parse_cli_args(['--quiet', '--card', 'Moat'])
         g = Game.Game(**vars(args))
         g.start_game()
         self.assertIn('Moat', g.cardpiles)
 
     def test_use_landmark(self):
-        args = Game.parse_args(['--quiet', '--landmark', 'Aqueduct'])
+        args = Game.parse_cli_args(['--quiet', '--landmark', 'Aqueduct'])
         g = Game.Game(**vars(args))
         g.start_game()
         self.assertIn('Aqueduct', g.landmarks)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_NightWatchman(Card):
 
     def night(self, game, player):
         cards = []
-        for i in range(5):
+        for _ in range(5):
             c = player.nextCard()
             cards.append(c)
         player.output("Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards]))
@@ -38,7 +39,6 @@ class Card_NightWatchman(Card):
 ###############################################################################
 class Test_NightWatchman(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Night Watchman'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

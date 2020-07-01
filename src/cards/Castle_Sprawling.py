@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -23,14 +24,13 @@ class Card_SprawlingCastle(CastleCard):
         if ch == 'duchy':
             player.gainCard('Duchy')
         else:
-            for i in range(3):
+            for _ in range(3):
                 player.gainCard('Estate')
 
 
 ###############################################################################
 class Test_SprawlingCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'], badcards=['Duchess'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

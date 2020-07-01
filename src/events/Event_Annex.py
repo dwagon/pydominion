@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -18,10 +19,10 @@ class Event_Annex(Event):
             player.output("Not enough cards to choose")
             return
         cards = player.cardSel(
-                num=5,
-                cardsrc='discard',
-                prompt="Select 5 cards to leave in discard pile"
-                )
+            num=5,
+            cardsrc='discard',
+            prompt="Select 5 cards to leave in discard pile"
+            )
         keep = []
         for card in player.discardpile[:]:
             if card in cards:
@@ -39,7 +40,6 @@ class Event_Annex(Event):
 ###############################################################################
 class Test_Annex(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Annex'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

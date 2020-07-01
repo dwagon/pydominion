@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -27,7 +28,7 @@ class Card_Thief(Card):
 
     def thieveOn(self, victim, thief):
         treasures = []
-        for i in range(2):
+        for _ in range(2):
             c = victim.nextCard()
             victim.revealCard(c)
             if c.isTreasure():
@@ -67,7 +68,6 @@ class Card_Thief(Card):
 ###############################################################################
 class Test_Thief(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Thief', 'Moat'])
         self.g.start_game()
         self.thiefcard = self.g['Thief'].remove()

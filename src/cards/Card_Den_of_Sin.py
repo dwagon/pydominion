@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,11 +17,10 @@ class Card_Den_of_Sin(Card):
     def desc(self, player):
         if player.phase == 'buy':
             return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
-        else:
-            return "At the start of your next turn, +2 Cards"
+        return "At the start of your next turn, +2 Cards"
 
     def duration(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             player.pickupCard()
 
     def hook_gainThisCard(self, game, player):
@@ -30,7 +30,6 @@ class Card_Den_of_Sin(Card):
 ###############################################################################
 class Test_Den_of_Sin(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Den of Sin'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

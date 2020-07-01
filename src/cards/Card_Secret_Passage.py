@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,15 +19,15 @@ class Card_SecretPassage(Card):
 
     def special(self, game, player):
         card = player.cardSel(
-                prompt="Take a card from your hand and put into your deck",
-                cardsrc='hand'
-                )
+            prompt="Take a card from your hand and put into your deck",
+            cardsrc='hand'
+        )
         if card:
             dest = player.plrChooseOptions(
-                    "Put {} into top or bottom of deck".format(card[0].name),
-                    ("Top of deck", "topdeck"),
-                    ("Bottom of deck", "deck")
-                    )
+                "Put {} into top or bottom of deck".format(card[0].name),
+                ("Top of deck", "topdeck"),
+                ("Bottom of deck", "deck")
+            )
             player.addCard(card[0], dest)
             player.hand.remove(card[0])
 
@@ -34,7 +35,6 @@ class Card_SecretPassage(Card):
 ###############################################################################
 class Test_SecretPassage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Secret Passage', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

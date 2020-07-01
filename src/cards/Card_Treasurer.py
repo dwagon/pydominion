@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,11 +21,11 @@ class Card_Treasurer(Card):
     def special(self, game, player):
         gain_treas = [_ for _ in game.trashpile if _.isTreasure()]
         choice = player.plrChooseOptions(
-                    "Choose one?",
-                    ("Trash a treasure from your hand", "trash"),
-                    ("Gain a treasure from the trash ({} available)".format(len(gain_treas)), "gain"),
-                    ("Take the key", "key")
-                    )
+            "Choose one?",
+            ("Trash a treasure from your hand", "trash"),
+            ("Gain a treasure from the trash ({} available)".format(len(gain_treas)), "gain"),
+            ("Take the key", "key")
+        )
         if choice == 'trash':
             treas = [_ for _ in player.hand if _.isTreasure()]
             player.plrTrashCard(cardsrc=treas)
@@ -40,7 +41,6 @@ class Card_Treasurer(Card):
 ###############################################################################
 class Test_Treasurer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasurer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
