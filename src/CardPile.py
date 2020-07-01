@@ -35,8 +35,7 @@ class CardPile(object):
         if self.pilesize:
             self.pilesize -= 1
             return self.cardclass()
-        else:
-            return None
+        return None
 
     ###########################################################################
     def add(self):

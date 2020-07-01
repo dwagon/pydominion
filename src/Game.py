@@ -163,7 +163,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             count['pile_%s' % cpile.name] = cpile.pilesize
         for pl in self.player_list():
             count['player_%s' % pl.name] = pl.countCards()
-        total = sum([x for x in count.values()])
+        total = sum(count.values())
         return total
 
     ###########################################################################
@@ -666,8 +666,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
 
 
 ###############################################################################
-def parse_cli_args(args=sys.argv[1:]):
-    """ Parse the commad line arguments """
+def parse_cli_args(args=None):
+    """ Parse the command line arguments """
+    if args is None:
+        args = sys.argv[1:]
     parser = argparse.ArgumentParser(description='Play dominion')
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')

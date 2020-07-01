@@ -1118,7 +1118,7 @@ class Player(object):
             self.game[newcard.name].add()
             newcard = self.game[options['replace']].remove()
         self.stats['gained'].append(newcard)
-        destination = options.get('destination', None)
+        destination = options.get('destination', 'discard')
         self.hook_allPlayers_gainCard(newcard)
         if options.get('trash', False):
             self.trashCard(newcard)

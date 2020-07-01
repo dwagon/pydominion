@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from Card import Card
-from CardPile import CardPile
 import random
 import unittest
+import Game
+from Card import Card
+from CardPile import CardPile
 
 
 ###############################################################################
@@ -43,8 +44,7 @@ class KnightCardPile(CardPile):
         if self.pilesize:
             self.pilesize -= 1
             return self.knights.pop()
-        else:
-            return None
+        return None
 
     def __repr__(self):
         return "KnightCardPile %s: %d" % (self.name, self.pilesize)
@@ -61,14 +61,14 @@ class KnightCard(Card):
 
     def knight_attack(self, game, player, victim):
         cards = []
-        for i in range(2):
-            c = victim.nextCard()
-            victim.revealCard(c)
-            if c.cost in (3, 4, 5, 6):
-                cards.append(c)
+        for _ in range(2):
+            crd = victim.nextCard()
+            victim.revealCard(crd)
+            if crd.cost in (3, 4, 5, 6):
+                cards.append(crd)
             else:
-                victim.output("%s's %s discarded your %s" % (player.name, self.name, c.name))
-                victim.discardCard(c)
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
+                victim.discardCard(crd)
         if not cards:
             return
         player.output("Looking at %s" % ", ".join([x.name for x in cards]))
@@ -80,17 +80,16 @@ class KnightCard(Card):
         if to_trash.isKnight():
             player.output("%s trashed a knight: %s - trashing your %s" % (victim.name, to_trash.name, self.name))
             player.trashCard(self)
-        for c in cards:
 
-            if c != to_trash:
-                victim.output("%s's %s discarded your %s" % (player.name, self.name, c.name))
-                victim.discardCard(c)
+        for crd in cards:
+            if crd != to_trash:
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
+                victim.discardCard(crd)
 
 
 ###############################################################################
 class Test_Knight(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
