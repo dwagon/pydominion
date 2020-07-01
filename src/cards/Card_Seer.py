@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_Seer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'renaissance'
-        self.desc = """+1 Card; +1 Action; Reveal the top 3 cards of your deck. Put the ones costing from 2 to 4 into your hand. Put the rest back in any order."""
+        self.desc = """+1 Card; +1 Action; Reveal the top 3 cards of your deck.
+            Put the ones costing from 2 to 4 into your hand. Put the rest back in any order."""
         self.cards = 1
         self.actions = 1
         self.name = 'Seer'
@@ -19,7 +21,7 @@ class Card_Seer(Card):
     ###########################################################################
     def special(self, game, player):
         drawn = []
-        for i in range(3):
+        for _ in range(3):
             c = player.nextCard()
             player.revealCard(c)
             if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
@@ -35,7 +37,6 @@ class Card_Seer(Card):
 ###############################################################################
 class Test_Seer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Seer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
