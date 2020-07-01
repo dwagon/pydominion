@@ -23,7 +23,6 @@ class Card_Horse(Card):
 
     def special(self, game, player):
         player.discardCard(self)
-        player.output("Gained a Horse")
         game['Horse'].add()
         player.played.remove(self)
         player.discardpile.remove(self)
