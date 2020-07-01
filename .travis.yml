@@ -16,7 +16,7 @@ install:
 
 script: 
     - flake8 src
-    - PYTHONPATH=src pylint -j 0 src || true
+    - PYTHONPATH=src pylint --exit-zero -j 0 src
     - "./src/run_tests"
 
 after_success:

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+# pylint: disable=protected-access
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -11,7 +13,8 @@ class Card_NativeVillage(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.desc = """+2 Actions
-        Choose one: Set aside the top card of your deck face down on your Native Village mat; or put all the cards from your mat into your hand."""
+        Choose one: Set aside the top card of your deck face down on your
+        Native Village mat; or put all the cards from your mat into your hand."""
         self.name = 'Native Village'
         self.base = 'seaside'
         self.actions = 2
@@ -48,7 +51,6 @@ class Card_NativeVillage(Card):
 ###############################################################################
 class Test_NativeVillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Native Village'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

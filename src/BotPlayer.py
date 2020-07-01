@@ -1,7 +1,7 @@
+import inspect
 import sys
 import colorama
 from Player import Player
-import inspect
 
 if sys.version[0] == "3":   # pragma: no cover
     raw_input = input
@@ -52,7 +52,7 @@ class BotPlayer(Player):
             raise
 
     ###########################################################################
-    def userInput(self, options, prompt):
+    def userInput(self, options, prompt):   # pylint: disable=too-many-return-statements
         opts = self.getOptions(options)
         if 'spendall' in opts:
             return opts['spendall']
@@ -83,22 +83,23 @@ class BotPlayer(Player):
             if mod.__name__ not in ('BotPlayer', 'Player', '__main__'):
                 mod = inspect.getmodule(st[0])
                 return mod
+        return None
 
     ###########################################################################
     def cardSel(self, num=1, **kwargs):
         mod = self.getCallingCard()
         if hasattr(mod, 'botresponse'):
-            ans = mod.botresponse(self, 'cards', kwargs=kwargs)
-            return ans
+            return mod.botresponse(self, 'cards', kwargs=kwargs)
         assert False, "BigMoneyBot can't select cards from %s" % mod.__name__
+        return None
 
     ###########################################################################
     def plrChooseOptions(self, prompt, *choices):
         mod = self.getCallingCard()
         if hasattr(mod, 'botresponse'):
-            ans = mod.botresponse(self, 'choices', args=choices)
-            return ans
+            return mod.botresponse(self, 'choices', args=choices)
         assert False, "BigMoneyBot can't choopse options from %s" % mod.__name__
+        return None
 
     ###########################################################################
     def pick_to_discard(self, numtodiscard, keepvic=False):
@@ -126,9 +127,8 @@ class BotPlayer(Player):
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
-        else:   # pragma: no cover
-            sys.stderr.write("Couldn't find cards to discard %d from %s\n" % (numtodiscard, ", ".join([c.name for c in self.hand])))
-            sys.stderr.write("Managed to get %s so far\n" % (", ".join([c.name for c in todiscard])))
+        sys.stderr.write("Couldn't find cards to discard %d from %s\n" % (numtodiscard, ", ".join([c.name for c in self.hand])))
+        sys.stderr.write("Managed to get %s so far\n" % (", ".join([c.name for c in todiscard])))
 
 
 # EOF

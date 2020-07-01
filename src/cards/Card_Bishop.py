@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Bishop(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 Coin, +1 VP; Trash a card from your hand. +VP equal to half its cost in coins, rounded down. Each other player may trash a card from his hand"
+        self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
+        to half its cost in coins, rounded down. Each other player may trash a
+        card from his hand"""
         self.name = 'Bishop'
         self.coin = 1
         self.victory = 1
@@ -53,14 +56,12 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     cu = player.inHand('copper')
     if cu:
         return [cu]
-    else:
-        return []
+    return []
 
 
 ###############################################################################
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

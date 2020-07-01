@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Pillage(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = "Trash this. Each other player with 5 or more cards in hand reveals their hand and discards a card that you choose. Gain 2 Spoils from the Spoils pile."
+        self.desc = """Trash this. Each other player with 5 or more cards in hand
+        reveals their hand and discards a card that you choose. Gain 2 Spoils
+        from the Spoils pile."""
         self.name = 'Pillage'
         self.required_cards = ['Spoils']
         self.cost = 5
@@ -23,7 +26,7 @@ class Card_Pillage(Card):
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue
             self.pickACard(plr, player)
-        for i in range(2):
+        for _ in range(2):
             player.gainCard('Spoils')
 
     ###########################################################################
@@ -42,7 +45,6 @@ class Card_Pillage(Card):
 ###############################################################################
 class Test_Pillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Pillage'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

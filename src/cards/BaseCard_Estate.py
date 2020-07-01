@@ -16,7 +16,6 @@ class Card_Estate(Card):
     def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
-        else:
-            return 12
+        return 12
 
 # EOF
