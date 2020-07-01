@@ -54,8 +54,8 @@ class Test_Research(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Research', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Research'].remove()
         self.plr.setHand('Gold', 'Silver', 'Copper')
         self.plr.addCard(self.card, 'hand')
@@ -66,7 +66,7 @@ class Test_Research(unittest.TestCase):
         self.plr.test_input = ['Trash Moat', 'Set Gold', 'Set Silver', 'Finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertIsNotNone(self.plr.inHand('Silver'))

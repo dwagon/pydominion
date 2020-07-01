@@ -56,8 +56,8 @@ class Test_Hermit(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hermit'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Hermit'].remove()
 
     def test_play_discard(self):
@@ -66,7 +66,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
@@ -76,7 +76,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNone(self.plr.inHand('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,7 +16,7 @@ class Card_Werewolf(Card):
         self.cost = 5
 
     def special(self, game, player):
-        for i in range(3):
+        for _ in range(3):
             player.pickupCard()
 
     def night(self, game, player):
@@ -27,10 +28,9 @@ class Card_Werewolf(Card):
 ###############################################################################
 class Test_Werewolf(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Werewolf'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Werewolf'].remove()
         self.plr.addCard(self.card, 'hand')
         for h in self.g.hexes[:]:

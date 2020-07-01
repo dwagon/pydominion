@@ -2,6 +2,7 @@
 
 import unittest
 import random
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -20,7 +21,7 @@ class Card_Druid(Card):
     def setup(self, game):
         game._druid_area = PlayArea([])
         random.shuffle(game.boons)
-        for i in range(3):
+        for _ in range(3):
             game._druid_area.add(game.boons.pop())
 
     def special(self, game, player):
@@ -37,10 +38,9 @@ class Card_Druid(Card):
 ###############################################################################
 class Test_Druid(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Druid', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Druid'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -52,8 +52,8 @@ class Test_Druid(unittest.TestCase):
 
     def test_setaside(self):
         """ Test that we don't get a set aside boon """
-        setaside = set([_.name for _ in self.g._druid_area])
-        left = set([_.name for _ in self.g.boons])
+        setaside = {_.name for _ in self.g._druid_area}   # pylint: disable=no-member
+        left = {_.name for _ in self.g.boons}
         if setaside.intersection(left):
             self.fail("Set aside boons not set aside")
 

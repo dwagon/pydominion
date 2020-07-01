@@ -30,8 +30,8 @@ class Test_Transmogrify(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Transmogrify'], badcards=['Duchess', "Fool's Gold"])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.trans = self.g['Transmogrify'].remove()
         self.plr.addCard(self.trans, 'hand')
 
@@ -45,7 +45,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.setReserve('Transmogrify')
         self.plr.test_input = ['trash duchy', 'get gold']
         self.plr.callReserve('Transmogrify')
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
 
 

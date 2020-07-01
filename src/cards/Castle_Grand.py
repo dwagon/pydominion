@@ -37,8 +37,8 @@ class Test_GrandCastle(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
 
     def test_play(self):
         """ Play a sprawling castle"""

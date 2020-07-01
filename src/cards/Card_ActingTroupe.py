@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -23,17 +24,16 @@ class Card_ActingTroupe(Card):
 ###############################################################################
 class Test_ActingTroupe(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Acting Troupe'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_playCard(self):
         self.card = self.g['Acting Troupe'].remove()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertLessEqual(self.plr.getVillager(), 4)
-        self.assertIsNotNone(self.g.inTrash('Acting Troupe'))
+        self.assertIsNotNone(self.g.in_trash('Acting Troupe'))
 
 
 ###############################################################################

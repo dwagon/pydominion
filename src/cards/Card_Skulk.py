@@ -34,8 +34,8 @@ class Test_Skulk(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Skulk'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.Skulk = self.g['Skulk'].remove()
         for h in self.g.hexes[:]:
             if h.name != "Delusion":

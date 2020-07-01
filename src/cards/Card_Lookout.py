@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -9,7 +10,9 @@ class Card_Lookout(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = "+1 Action; Look at the top 3 cards of your deck. Trash one of them. Discard one of them. Put the other one on top of your deck"
+        self.desc = """+1 Action; Look at the top 3 cards of your deck.
+            Trash one of them. Discard one of them. Put the other one on top of
+            your deck"""
         self.name = 'Lookout'
         self.actions = 1
         self.cost = 3
@@ -19,7 +22,7 @@ class Card_Lookout(Card):
             Discard one of them. Put the other one on top of your deck
             """
         cards = []
-        for i in range(3):
+        for _ in range(3):
             cards.append(player.nextCard())
         cards = [c for c in cards if c]
         if not cards:
@@ -60,10 +63,9 @@ class Card_Lookout(Card):
 ###############################################################################
 class Test_Lookout(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lookout'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.lookout = self.g['Lookout'].remove()
 
     def test_actions(self):
@@ -71,7 +73,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.addCard(self.lookout, 'hand')
         self.plr.test_input = ['Province', 'Gold']
         self.plr.playCard(self.lookout)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Copper')
         self.assertEqual(self.plr.deck[1].name, 'Estate')

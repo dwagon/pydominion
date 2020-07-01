@@ -31,8 +31,8 @@ class Test_Goat(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pixie'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Goat'].remove()
 
     def test_play(self):
@@ -41,7 +41,7 @@ class Test_Goat(unittest.TestCase):
         self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
 
 
 ###############################################################################

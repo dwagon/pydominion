@@ -43,8 +43,8 @@ class Test_Exorcist(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Exorcist'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Exorcist'].remove()
 
     def test_play(self):
@@ -54,7 +54,7 @@ class Test_Exorcist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Imp'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.g.print_state()
 
 

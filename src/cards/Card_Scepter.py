@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,10 +19,10 @@ class Card_Scepter(Card):
         acts = [_ for _ in player.played if _.isAction()]
         if acts:
             get_coin = player.plrChooseOptions(
-                    "Pick one? ",
-                    ("2 Coin", True),
-                    ("Replay an action card", False)
-                    )
+                "Pick one? ",
+                ("2 Coin", True),
+                ("Replay an action card", False)
+            )
         else:
             get_coin = True
             player.output("No suitable cards - gaining coin")
@@ -38,10 +39,9 @@ class Card_Scepter(Card):
 ###############################################################################
 class Test_Scepter(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scepter', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Scepter'].remove()
         self.plr.addCard(self.card, 'hand')
 

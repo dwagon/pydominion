@@ -31,8 +31,8 @@ class Test_SilkMerchant(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Silk Merchant'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Silk Merchant'].remove()
         self.plr.setHand()
 

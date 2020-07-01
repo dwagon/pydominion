@@ -26,8 +26,8 @@ class Test_Recruiter(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Recruiter'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Recruiter'].remove()
 
     def test_play(self):
@@ -37,7 +37,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2 + 1)
         self.assertEqual(self.plr.getVillager(), 3)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
 
 ###############################################################################

@@ -47,8 +47,8 @@ class Test_Changeling(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Changeling'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Changeling'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -64,7 +64,7 @@ class Test_Changeling(unittest.TestCase):
         self.plr.test_input = ['Exchange for Gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.g.inTrash('Changeling'))
+        self.assertIsNotNone(self.g.in_trash('Changeling'))
 
     def test_gain_keep(self):
         self.plr.test_input = ['Keep Silver']

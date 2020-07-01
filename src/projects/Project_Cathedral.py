@@ -23,15 +23,15 @@ class Test_Cathedral(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Cathedral'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_flag(self):
         self.plr.assign_project('Cathedral')
         self.plr.setHand('Copper', 'Estate', 'Province')
         self.plr.test_input = ['Copper']
         self.plr.startTurn()
-        self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertIsNone(self.plr.inHand('Copper'))
 
 

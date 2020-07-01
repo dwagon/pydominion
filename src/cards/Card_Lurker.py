@@ -45,22 +45,22 @@ class Test_Lurker(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lurker', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Lurker'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_trash(self):
         self.plr.test_input = ['Trash an Action', 'Moat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.assertEqual(self.plr.getActions(), 0 + 1)
 
     def test_recover(self):
         self.plr.test_input = ['Gain an Action', 'Moat']
-        self.g.setTrash('Moat')
+        self.g.set_trash('Moat')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.g.inTrash('Moat'))
+        self.assertIsNone(self.g.in_trash('Moat'))
         self.assertIsNotNone(self.plr.inDiscard('Moat'))
 
 

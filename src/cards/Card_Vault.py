@@ -19,7 +19,7 @@ class Card_Vault(Card):
         discards = player.plrDiscardCards(anynum=True, prompt="Discard any number of cards. +1 Coin per card discarded")
         player.addCoin(len(discards))
         player.output("Gaining %d coins" % len(discards))
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr != player:
                 plr.output("Due to %s's Vault you may discard two cards. If you do, draw one" % player.name)
                 plrdiscards = plr.plrDiscardCards(num=2)
@@ -37,8 +37,8 @@ class Test_Vault(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vault'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Vault'].remove()
 
     def test_play(self):

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,9 +22,10 @@ class Card_PirateShip(Card):
         choice = player.plrChooseOptions(
             "Pick one",
             ("Each other player reveals the top 2 cards of his deck, trashes a " +
-                "revealed Treasure that you choose, discards the rest, and if anyone " +
-                "trashed a Treasure you take a Coin token", 'attack'),
-            ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend'))
+             "revealed Treasure that you choose, discards the rest, and if anyone " +
+             "trashed a Treasure you take a Coin token", 'attack'),
+            ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend')
+        )
         if choice == 'attack':
             trashed = False
             for victim in player.attackVictims():
@@ -37,7 +39,7 @@ class Card_PirateShip(Card):
     def attack_player(self, player, victim):
         trashed = False
         cards = []
-        for i in range(2):
+        for _ in range(2):
             card = victim.nextCard()
             victim.revealCard(card)
             if card.isTreasure():
@@ -70,10 +72,9 @@ class Card_PirateShip(Card):
 ###############################################################################
 class Test_PirateShip(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Pirate Ship'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Pirate Ship'].remove()
         self.plr.gainCard(newcard=self.card, destination='hand')
 
@@ -84,7 +85,7 @@ class Test_PirateShip(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
-            self.assertIsNotNone(self.g.inTrash('Copper'))
+            self.assertIsNotNone(self.g.in_trash('Copper'))
             self.assertEqual(self.plr._pirate_ship, 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()

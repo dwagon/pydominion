@@ -42,8 +42,8 @@ class Test_Temple(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Temple'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Temple'].remove()
 
     def test_play(self):
@@ -53,7 +53,7 @@ class Test_Temple(unittest.TestCase):
         self.plr.test_input = ['Copper', 'Silver', 'finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getScoreDetails()['Temple'], 1)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
     def test_gain(self):
         """ Gain a Temple """

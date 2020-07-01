@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,10 +21,10 @@ class Card_Pixie(Card):
     def special(self, game, player):
         topboon = game.receive_boon()
         opt = player.plrChooseOptions(
-                "Either:",
-                ("Discard {}".format(topboon.name), False),
-                ("Trash Pixie to get {} twice ({})".format(topboon.name, topboon.description(player)), True)
-                )
+            "Either:",
+            ("Discard {}".format(topboon.name), False),
+            ("Trash Pixie to get {} twice ({})".format(topboon.name, topboon.description(player)), True)
+        )
         if opt:
             player.trashCard(self)
             player.receive_boon(boon=topboon, discard=False)
@@ -33,10 +34,9 @@ class Card_Pixie(Card):
 ###############################################################################
 class Test_Pixie(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pixie'], badcards=['Druid'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Pixie'].remove()
 
     def test_play_keep(self):

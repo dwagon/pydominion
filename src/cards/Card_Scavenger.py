@@ -41,8 +41,8 @@ class Test_Scavenger(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scavenger', 'Moat', 'Witch'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Scavenger'].remove()
 
     def test_play(self):

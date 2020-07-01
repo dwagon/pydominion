@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_Treasurehunter(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
         self.base = 'adventure'
-        self.desc = "+1 Action, +1 Coin; Gain a Silver per card the player to your right gained in his last turn. Discard to replace with Warrior"
+        self.desc = """+1 Action, +1 Coin; Gain a Silver per card the player
+            to your right gained in his last turn. Discard to replace with Warrior"""
         self.name = 'Treasure Hunter'
         self.purchasable = False
         self.actions = 1
@@ -23,7 +25,7 @@ class Card_Treasurehunter(Card):
         righty = game.playerToRight(player)
         numsilver = len(righty.stats['gained'])
         player.output("Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver))
-        for i in range(numsilver):
+        for _ in range(numsilver):
             player.gainCard('Silver')
 
     def hook_discardThisCard(self, game, player, source):
@@ -34,10 +36,9 @@ class Card_Treasurehunter(Card):
 ###############################################################################
 class Test_Treasurehunter(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Treasure Hunter'].remove()
 
     def test_treasure_hunter(self):

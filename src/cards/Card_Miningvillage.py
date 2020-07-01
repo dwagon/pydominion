@@ -32,8 +32,8 @@ class Test_Miningvillage(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mining Village'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Mining Village'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -44,7 +44,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNone(self.g.inTrash('Mining Village'))
+        self.assertIsNone(self.g.in_trash('Mining Village'))
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
 
     def test_trash(self):
@@ -55,7 +55,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertTrue(self.plr.played.isEmpty())
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.g.inTrash('Mining Village'))
+        self.assertIsNotNone(self.g.in_trash('Mining Village'))
 
 
 ###############################################################################

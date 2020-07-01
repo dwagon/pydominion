@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -31,7 +32,7 @@ class Card_Rogue(Card):
     ###########################################################################
     def riffleVictim(self, victim, player):
         cards = []
-        for i in range(2):
+        for _ in range(2):
             c = victim.nextCard()
             victim.revealCard(c)
             if 3 <= c.cost <= 6:
@@ -84,10 +85,9 @@ class Card_Rogue(Card):
 ###############################################################################
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'], badcards=['Pooka', 'Fool'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Rogue'].remove()
 
     def test_play(self):
@@ -133,7 +133,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.victim.discardSize(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 

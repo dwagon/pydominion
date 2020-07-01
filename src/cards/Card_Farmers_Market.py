@@ -40,8 +40,8 @@ class Test_FarmersMarket(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Farmers' Market"])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.c1 = self.g["Farmers' Market"].remove()
         self.c2 = self.g["Farmers' Market"].remove()
 
@@ -56,7 +56,7 @@ class Test_FarmersMarket(unittest.TestCase):
         self.plr.addCard(self.c2, 'hand')
         self.plr.playCard(self.c2)
         self.assertEqual(self.plr.getScoreDetails()["Farmers' Market"], 4)
-        self.assertIsNotNone(self.g.inTrash("Farmers' Market"))
+        self.assertIsNotNone(self.g.in_trash("Farmers' Market"))
 
 
 ###############################################################################

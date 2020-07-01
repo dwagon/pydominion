@@ -33,8 +33,8 @@ class Test_War(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
             if h.name != "War":
                 self.g.discarded_hexes.append(h)
@@ -45,7 +45,7 @@ class Test_War(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Silver')
         self.plr.gainCard('Cursed Village')
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
 
 
 ###############################################################################

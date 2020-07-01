@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,10 +19,11 @@ class Card_Herald(Card):
 
     def desc(self, player):
         if player.phase == "buy":
-            return """+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it.
-            When you buy this, you may overpay for it. For each Coin you overpaid, look through your discard pile and put a card from it on top of your deck."""
-        else:
-            return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
+            return """+1 Card +1 Action. Reveal the top card of your deck.
+                If it is an Action, play it.  When you buy this, you may overpay
+                for it. For each Coin you overpaid, look through your discard pile
+                and put a card from it on top of your deck."""
+        return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game, player):
         card = player.nextCard()
@@ -31,8 +33,11 @@ class Card_Herald(Card):
             player.playCard(card, costAction=False)
 
     def hook_overpay(self, game, player, amount):
-        for i in range(amount):
-            card = player.cardSel(num=1, force=True, cardsrc='discard', prompt="Look through your discard pile and put a card from it on top of your deck")
+        for _ in range(amount):
+            card = player.cardSel(
+                num=1, force=True, cardsrc='discard',
+                prompt="Look through your discard pile and put a card from it on top of your deck"
+            )
             player.addCard(card[0], 'topdeck')
             player.discardpile.remove(card[0])
 
@@ -40,10 +45,9 @@ class Card_Herald(Card):
 ###############################################################################
 class Test_Herald(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herald', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Herald'].remove()
 
     def test_play(self):

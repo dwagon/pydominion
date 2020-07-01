@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Bandit(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'dominion'
-        self.desc = "Gain a Gold. Each other player reveals the top 2 cards of their deck, trashes a revealed Treasure other than Copper, and discards the rest."
+        self.desc = """Gain a Gold. Each other player reveals the top 2 cards
+            of their deck, trashes a revealed Treasure other than Copper, and
+            discards the rest."""
         self.name = 'Bandit'
         self.cost = 5
 
@@ -22,7 +25,7 @@ class Card_Bandit(Card):
 
     def thieveOn(self, victim, bandit):
         treasures = []
-        for i in range(2):
+        for _ in range(2):
             c = victim.nextCard()
             victim.revealCard(c)
             if c.isTreasure() and c.name != 'Copper':
@@ -54,10 +57,9 @@ class Card_Bandit(Card):
 ###############################################################################
 class Test_Bandit(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bandit'])
-        self.g.startGame()
-        self.thief, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.thief, self.vic = self.g.player_list()
         self.thief.name = 'MrBandit'
         self.vic.name = 'MrVic'
         self.card = self.g['Bandit'].remove()
@@ -77,7 +79,7 @@ class Test_Bandit(unittest.TestCase):
         self.thief.test_input = ['trash gold']
         self.thief.playCard(self.card)
         # Make sure the gold ends up in the trashpile and not in the victims deck
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         for c in self.vic.deck:
             self.assertNotEqual(c.name, 'Gold')
         self.assertEqual(self.vic.discardpile[0].name, 'Silver')

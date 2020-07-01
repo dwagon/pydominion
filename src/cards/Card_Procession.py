@@ -38,8 +38,8 @@ class Test_Procession(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Procession', 'Moat', 'Witch'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Procession'].remove()
 
     def test_play(self):
@@ -48,7 +48,7 @@ class Test_Procession(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Moat', 'Witch']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.assertEqual(self.plr.handSize(), 4)
         self.assertIsNotNone(self.plr.inDiscard('Witch'))
 

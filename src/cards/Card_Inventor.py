@@ -29,8 +29,8 @@ class Test_Inventor(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Inventor', 'Feast'], badcards=['Blessed Village', 'Cemetery'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.inventor = self.g['Inventor'].remove()
         self.plr.addCard(self.inventor, 'hand')
 

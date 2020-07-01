@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from Landmark import Landmark
 from collections import defaultdict
+from Landmark import Landmark
+import Game
 
 
 ###############################################################################
@@ -28,10 +29,11 @@ class Landmark_WolfDen(Landmark):
 ###############################################################################
 class Test_WolfDen(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Wolf Den'], badcards=['Shepherd', 'Pooka', 'Fool', 'Tracker', 'Cemetery', 'Pixie', 'Secret Cave'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g = Game.Game(
+            quiet=True, numplayers=1, landmarkcards=['Wolf Den'],
+            badcards=['Shepherd', 'Pooka', 'Fool', 'Tracker', 'Cemetery', 'Pixie', 'Secret Cave'])
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
 
     def test_gain(self):
         """ Use Wolf Den """

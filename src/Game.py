@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+""" Dominion Game Code """
+# pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes
 import argparse
 import glob
 import imp
@@ -7,26 +9,29 @@ import random
 import sys
 import uuid
 
-from TextPlayer import TextPlayer
+from ArtifactPile import ArtifactPile
+from BoonPile import BoonPile
 from BotPlayer import BotPlayer
 from CardPile import CardPile
 from EventPile import EventPile
-from LandmarkPile import LandmarkPile
-from BoonPile import BoonPile
 from HexPile import HexPile
-from StatePile import StatePile
-from ArtifactPile import ArtifactPile
-from ProjectPile import ProjectPile
-from PlayArea import PlayArea
+from LandmarkPile import LandmarkPile
 from Names import playerNames
+from PlayArea import PlayArea
+from PrizeCardPile import PrizeCardPile
+from ProjectPile import ProjectPile
+from RuinCardPile import RuinCardPile
+from StatePile import StatePile
+from TextPlayer import TextPlayer
 
 
 ###############################################################################
 ###############################################################################
 ###############################################################################
-class Game(object):
+class Game(object):     # pylint: disable=too-many-public-methods
+    """ Game class """
     def __init__(self, **kwargs):
-        self.parseArgs(**kwargs)
+        self.parse_args(**kwargs)
 
         self.players = {}
         self.cardpiles = {}
@@ -42,15 +47,18 @@ class Game(object):
         self.discarded_hexes = []
         self.trashpile = PlayArea([])
         self.gameover = False
-        self.currentPlayer = None
-        self.baseCards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
+        self.current_player = None
+        self.base_cards = ['Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province']
         if self.prosperity:
-            self.baseCards.append('Colony')
-            self.baseCards.append('Platinum')
+            self.base_cards.append('Colony')
+            self.base_cards.append('Platinum')
         self.cardmapping = self.getAvailableCardClasses()
+        self.total_cards = 0
+        self.loaded_travellers = False  # For testing purposes
 
     ###########################################################################
-    def parseArgs(self, **args):
+    def parse_args(self, **args):
+        """ Parse the arguments passed to the class """
         self.hexpath = 'hexes'
         self.numstacks = args['numstacks'] if 'numstacks' in args else 10
         self.boonpath = args['boonpath'] if 'boonpath' in args else 'boons'
@@ -78,7 +86,10 @@ class Game(object):
         self.initprojects = args['initprojects'] if 'initprojects' in args else []
 
     ###########################################################################
-    def startGame(self, playernames=[], plrKlass=TextPlayer):
+    def start_game(self, playernames=None, plrKlass=TextPlayer):
+        """ Initialise game bits """
+        if playernames is None:
+            playernames = []
         names = playerNames[:]
         self.loadDecks(self.initcards, self.numstacks)
         self.loadEvents()
@@ -91,64 +102,67 @@ class Game(object):
             self.loadStates()
         self.checkCardRequirements()
 
-        for i in range(self.numplayers):
+        for plrnum in range(self.numplayers):
             try:
                 name = playernames.pop()
             except IndexError:
                 name = random.choice(names)
                 names.remove(name)
-            u = uuid.uuid4().hex
+            the_uuid = uuid.uuid4().hex
             if self.bot:
-                self.players[u] = BotPlayer(game=self, quiet=self.quiet, name='%sBot' % name, heirlooms=heirlooms)
+                self.players[the_uuid] = BotPlayer(
+                    game=self, quiet=self.quiet, name='%sBot' % name, heirlooms=heirlooms
+                )
                 self.bot = False
             else:
-                self.players[u] = plrKlass(game=self, quiet=self.quiet, name=name, number=i, heirlooms=heirlooms)
-            self.players[u].uuid = u
-        self.cardSetup()
+                self.players[the_uuid] = plrKlass(game=self, quiet=self.quiet, name=name, number=plrnum, heirlooms=heirlooms)
+            self.players[the_uuid].uuid = the_uuid
+        self.card_setup()
         self.total_cards = self.countCards()
-        self.currentPlayer = self.playerList(0)
+        self.current_player = self.player_list(0)
 
     ###########################################################################
-    def playerList(self, num=None):
+    def player_list(self, num=None):
+        """ TODO """
         if num is None:
             return list(self.players.values())
-        else:
-            return list(self.players.values())[num]
+        return list(self.players.values())[num]
 
     ###########################################################################
-    def inTrash(self, cardname):
+    def in_trash(self, cardname):
         """ Return named card if cardname is in the trash pile """
         if hasattr(cardname, 'name'):
             cardname = cardname.name
-        for c in self.trashpile:
-            if c.name == cardname:
-                return c
+        for crd in self.trashpile:
+            if crd.name == cardname:
+                return crd
         return None
 
     ###########################################################################
-    def setTrash(self, *cards):
+    def set_trash(self, *cards):
         """ This is mostly used for testing """
         self.trashpile.empty()
-        for c in cards:
-            self.trashpile.add(self[c].remove())
+        for crd in cards:
+            self.trashpile.add(self[crd].remove())
 
     ###########################################################################
-    def cardSetup(self):
+    def card_setup(self):
         """ Run the setup() method for all cards """
-        for cp in list(self.cardpiles.values()):
-            cp.setup(game=self)
+        for cpile in list(self.cardpiles.values()):
+            cpile.setup(game=self)
         for lm in list(self.landmarks.values()):
             lm.setup(game=self)
 
     ###########################################################################
     def countCards(self):
+        """ TODO """
         count = {}
         count['trash'] = self.trashSize()
-        for cp in list(self.cardpiles.values()):
-            count['pile_%s' % cp.name] = cp.pilesize
-        for pl in self.playerList():
+        for cpile in list(self.cardpiles.values()):
+            count['pile_%s' % cpile.name] = cpile.pilesize
+        for pl in self.player_list():
             count['player_%s' % pl.name] = pl.countCards()
-        total = sum([x for x in count.values()])
+        total = sum(count.values())
         return total
 
     ###########################################################################
@@ -159,26 +173,31 @@ class Game(object):
 
     ###########################################################################
     def trashSize(self):
+        """ TODO """
         return len(self.trashpile)
 
     ###########################################################################
     def loadTravellers(self):
+        """ TODO """
         travellers = self.getAvailableCards('Traveller')
         for trav in travellers:
-            cp = CardPile(trav, self.cardmapping['Traveller'][trav], self)
-            self.cardpiles[cp.name] = cp
+            cpile = CardPile(trav, self.cardmapping['Traveller'][trav], self)
+            self.cardpiles[cpile.name] = cpile
         self.loaded_travellers = True
 
     ###########################################################################
     def loadEvents(self):
+        """ TODO """
         self.loadNonKingdomCards('Event', self.eventcards, self.numevents, EventPile, self.events)
 
     ###########################################################################
     def loadLandmarks(self):
+        """ TODO """
         self.loadNonKingdomCards('Landmark', self.landmarkcards, self.numlandmarks, LandmarkPile, self.landmarks)
 
     ###########################################################################
     def loadBoons(self):
+        """ TODO """
         if self.boons:
             return
         self.output("Using boons")
@@ -189,6 +208,7 @@ class Game(object):
 
     ###########################################################################
     def loadHexes(self):
+        """ TODO """
         if self.hexes:
             return
         d = {}
@@ -199,6 +219,7 @@ class Game(object):
 
     ###########################################################################
     def loadStates(self):
+        """ TODO """
         if self.states:
             return
         self.output("Using states")
@@ -206,6 +227,7 @@ class Game(object):
 
     ###########################################################################
     def loadArtifacts(self):
+        """ TODO """
         if self.artifacts:
             return
         self.output("Using artifacts")
@@ -213,6 +235,7 @@ class Game(object):
 
     ###########################################################################
     def loadProjects(self):
+        """ TODO """
         if self.projects:
             return
         self.output("Using projects")
@@ -220,6 +243,7 @@ class Game(object):
 
     ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
+        """ TODO """
         available = self.getAvailableCards(cardtype)
         # Specified cards
         if specified is not None:
@@ -255,77 +279,80 @@ class Game(object):
         available = self.getAvailableCards(prefix)
         if name in available:
             return name
-        for c in available:
-            newc = c.replace("'", "")
+        for crd in available:
+            newc = crd.replace("'", "")
             if newc.lower() == name.lower():
-                return c
+                return crd
             newc = newc.replace(' ', '')
             if newc.lower() == name.lower():
-                return c
+                return crd
         return None
 
     ###########################################################################
     def loadDecks(self, initcards, numstacks):
-        for card in self.baseCards:
-            cp = CardPile(card, self.cardmapping['BaseCard'][card], self)
-            self.cardpiles[cp.name] = cp
+        """ TODO """
+        for card in self.base_cards:
+            cpile = CardPile(card, self.cardmapping['BaseCard'][card], self)
+            self.cardpiles[cpile.name] = cpile
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
-        for c in initcards:
-            cardname = self.guess_cardname(c)
+        for crd in initcards:
+            cardname = self.guess_cardname(crd)
             if cardname:
                 self.useCardPile(available, cardname, force=True)
                 unfilled -= 1
                 continue
-            eventname = self.guess_cardname(c, 'Event')
+            eventname = self.guess_cardname(crd, 'Event')
             if eventname:
                 self.eventcards.append(eventname)
                 continue
-            landmarkname = self.guess_cardname(c, 'Landmark')
+            landmarkname = self.guess_cardname(crd, 'Landmark')
             if landmarkname:
                 self.landmarkcards.append(landmarkname)
                 continue
-            projectname = self.guess_cardname(c, 'Project')
+            projectname = self.guess_cardname(crd, 'Project')
             if projectname:
                 self.initprojects.append(projectname)
                 continue
-            print("Can't guess what card '%s' is" % c)
+            print("Can't guess what card '%s' is" % crd)
             foundall = False
         if not foundall:
             sys.exit(1)
 
         while unfilled:
-            c = random.choice(available)
-            if c in self.badcards:
+            crd = random.choice(available)
+            if crd in self.badcards:
                 continue
-            unfilled -= self.useCardPile(available, c)
+            unfilled -= self.useCardPile(available, crd)
 
         self.checkCardRequirements()
 
     ###########################################################################
     def addPrizes(self):
-        from PrizeCardPile import PrizeCardPile
+        """ TODO """
         for prize in self.getAvailableCards('PrizeCard'):
             self.cardpiles[prize] = PrizeCardPile(prize, self.cardmapping['PrizeCard'][prize])
         self.output("Playing with Prizes")
 
     ###########################################################################
     def getPrizes(self):
+        """ TODO """
         return list(self.cardmapping['PrizeCard'].keys())
 
     ###########################################################################
-    def useCardPile(self, available, c, force=False):
+    def useCardPile(self, available, crd, force=False):
+        """ TODO """
         try:
-            available.remove(c)
+            available.remove(crd)
         except ValueError:  # pragma: no cover
-            sys.stderr.write("Unknown card '%s'\n" % c)
+            sys.stderr.write("Unknown card '%s'\n" % crd)
             sys.exit(1)
-        cp = CardPile(c, self.cardmapping['Card'][c], self)
-        if not force and not cp.insupply:
+        cpile = CardPile(crd, self.cardmapping['Card'][crd], self)
+        if not force and not cpile.insupply:
             return 0
-        self.cardpiles[cp.name] = cp
-        self.output("Playing with card %s" % self[c].name)
+        self.cardpiles[cpile.name] = cpile
+        self.output("Playing with card %s" % self[crd].name)
         return 1
 
     ###########################################################################
@@ -336,36 +363,36 @@ class Game(object):
         for card in list(self.cardpiles.values()):
             if card.heirloom is not None:
                 heirlooms.add(card.heirloom)
-                cp = CardPile(card.heirloom, self.cardmapping['Heirloom'][card.heirloom], self)
-                self.cardpiles[cp.name] = cp
+                cpile = CardPile(card.heirloom, self.cardmapping['Heirloom'][card.heirloom], self)
+                self.cardpiles[cpile.name] = cpile
 
         return list(heirlooms)
 
     ###########################################################################
     def checkCardRequirements(self):
+        """ TODO """
         for card in list(self.cardpiles.values()) + list(self.events.values()) + list(self.hexes) + list(self.boons):
             for x in card.required_cards:
                 if isinstance(x, tuple):
-                    k, c = x
+                    k, crd = x
                 else:
-                    k, c = 'BaseCard', x
-                if c not in self.cardpiles:
-                    self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
-                    self.output("Playing with %s" % c)
+                    k, crd = 'BaseCard', x
+                if crd not in self.cardpiles:
+                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
+                    self.output("Playing with %s" % crd)
 
         for card in self.landmarks.values():
             for x in card.required_cards:
                 if isinstance(x, tuple):
-                    k, c = x
+                    k, crd = x
                 else:
-                    k, c = 'BaseCard', x
-                if c not in self.cardpiles:
-                    self.cardpiles[c] = CardPile(c, self.cardmapping[k][c], self)
-                    self.output("Playing with %s" % c)
+                    k, crd = 'BaseCard', x
+                if crd not in self.cardpiles:
+                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
+                    self.output("Playing with %s" % crd)
 
         for card in list(self.cardpiles.keys()):
             if self.cardpiles[card].isLooter() and 'Ruins' not in self.cardpiles:
-                from RuinCardPile import RuinCardPile
                 nc = self.numplayers * 10
                 self.cardpiles['Ruins'] = RuinCardPile(self.cardmapping['RuinCard'], pilesize=nc)
                 self.output("Playing with Ruins")
@@ -384,14 +411,17 @@ class Game(object):
 
     ###########################################################################
     def cardTypes(self):
+        """ TODO """
         return list(self.cardpiles.values())
 
     ###########################################################################
     def __getitem__(self, key):
+        """ TODO """
         return self.cardpiles[key]
 
     ###########################################################################
     def __contains__(self, key):
+        """ TODO """
         return key in self.cardpiles
 
     ###########################################################################
@@ -415,53 +445,54 @@ class Game(object):
             This is slow, but it is the only way that I can think of """
         mapping = {}
         files = glob.glob('%s/%s_*.py' % (path, prefix))
-        for fname in [os.path.basename(f) for f in files]:
+        for fname in [os.path.basename(_) for _ in files]:
             fname = fname.replace('.py', '')
             fp, pathname, desc = imp.find_module(fname, [path, defdir])
             mod = imp.load_module(fname, fp, pathname, desc)
             fp.close()
             classes = dir(mod)
-            for c in classes:
-                if c.startswith(class_prefix):
-                    klass = getattr(mod, c)
+            for kls in classes:
+                if kls.startswith(class_prefix):
+                    klass = getattr(mod, kls)
                     break
             else:   # pragma: no cover
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
-            k = klass()
-            mapping[k.name] = klass
+            mapping[klass().name] = klass
         return mapping
 
     ###########################################################################
     def getAvailableCards(self, prefix='Card'):
+        """ TODO """
         return list(self.cardmapping[prefix].keys())
 
     ###########################################################################
     def getActionPiles(self, cost=999):
         """ Return all cardstacks that are action cards that cost less than cost """
         actionpiles = []
-        for cp in self.cardpiles.values():
-            if not cp.purchasable:
+        for cpile in self.cardpiles.values():
+            if not cpile.purchasable:
                 continue
-            if cp.cost > cost:
+            if cpile.cost > cost:
                 continue
-            if cp.isAction():
-                actionpiles.append(cp)
+            if cpile.isAction():
+                actionpiles.append(cpile)
         return actionpiles
 
     ###########################################################################
     def getVictoryPiles(self):
         """ Return all cardstacks that are victory cards """
         victorypiles = []
-        for cp in self.cardpiles.values():
-            if cp.isVictory():
-                victorypiles.append(cp)
+        for cpile in self.cardpiles.values():
+            if cpile.isVictory():
+                victorypiles.append(cpile)
         return victorypiles
 
     ###########################################################################
     def isGameOver(self):
+        """ TODO """
         numEmpty = 0
-        for c in self.cardpiles:
-            if self[c].isEmpty():
+        for cpil in self.cardpiles:
+            if self[cpil].isEmpty():
                 numEmpty += 1
         if numEmpty >= 3:
             return True
@@ -480,6 +511,7 @@ class Game(object):
 
     ###########################################################################
     def cleanup_hexes(self):
+        """ TODO """
         for hx in self.discarded_hexes[:]:
             self.hexes.append(hx)
         random.shuffle(self.hexes)
@@ -502,6 +534,7 @@ class Game(object):
 
     ###########################################################################
     def cleanup_boons(self):
+        """ TODO """
         for boon in self.retained_boons[:]:
             self.discarded_boons.append(boon)
         self.retained_boons = []
@@ -522,71 +555,74 @@ class Game(object):
     def print_state(self):  # pragma: no cover
         """ This is used for debugging """
         print("#" * 40)
-        print("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
+        print("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
         print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
         print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
         print("Projects: {}".format(", ".join([_.name for _ in self.projects.values()])))
-        for cp in self.cardpiles:
+        for cpile in self.cardpiles:
             tokens = ""
-            for p in self.playerList():
-                tkns = p.which_token(cp)
+            for plr in self.player_list():
+                tkns = plr.which_token(cpile)
                 if tkns:
-                    tokens += "%s[%s]" % (p.name, ",".join(tkns))
+                    tokens += "%s[%s]" % (plr.name, ",".join(tkns))
 
-            print("CardPile %s: %d cards %s" % (cp, self.cardpiles[cp].pilesize, tokens))
-        for p in self.playerList():
-            print("\n%s's state: %s" % (p.name, ", ".join([s.name for s in p.states])))
-            print("  %s's artifacts: %s" % (p.name, ", ".join([c.name for c in p.artifacts])))
-            print("  %s's projects: %s" % (p.name, ", ".join([c.name for c in p.projects])))
-            print("  %s's hand: %s" % (p.name, ", ".join([c.name for c in p.hand])))
-            print("  %s's deck: %s" % (p.name, ", ".join([c.name for c in p.deck])))
-            print("  %s's discard: %s" % (p.name, ", ".join([c.name for c in p.discardpile])))
-            print("  %s's duration: %s" % (p.name, ", ".join([c.name for c in p.durationpile])))
-            print("  %s's reserve: %s" % (p.name, ", ".join([c.name for c in p.reserve])))
-            print("  %s's played: %s" % (p.name, ", ".join([c.name for c in p.played])))
-            print("  %s's messages: %s" % (p.name, p.messages))
-            print("  %s's score: %s %s" % (p.name, p.getScore(), p.getScoreDetails()))
-            print("  %s's tokens: %s" % (p.name, p.tokens))
-            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d coffers=%d villagers=%d potions=%d" % (p.name, p.coin, p.debt, p.actions, p.buys, p.coffer, p.villager, p.potions))
+            print("CardPile %s: %d cards %s" % (cpile, self.cardpiles[cpile].pilesize, tokens))
+        for plr in self.player_list():
+            print("\n%s's state: %s" % (plr.name, ", ".join([s.name for s in plr.states])))
+            print("  %s's artifacts: %s" % (plr.name, ", ".join([_.name for _ in plr.artifacts])))
+            print("  %s's projects: %s" % (plr.name, ", ".join([_.name for _ in plr.projects])))
+            print("  %s's hand: %s" % (plr.name, ", ".join([_.name for _ in plr.hand])))
+            print("  %s's deck: %s" % (plr.name, ", ".join([_.name for _ in plr.deck])))
+            print("  %s's discard: %s" % (plr.name, ", ".join([_.name for _ in plr.discardpile])))
+            print("  %s's duration: %s" % (plr.name, ", ".join([_.name for _ in plr.durationpile])))
+            print("  %s's reserve: %s" % (plr.name, ", ".join([_.name for _ in plr.reserve])))
+            print("  %s's played: %s" % (plr.name, ", ".join([_.name for _ in plr.played])))
+            print("  %s's messages: %s" % (plr.name, plr.messages))
+            print("  %s's score: %s %s" % (plr.name, plr.getScore(), plr.getScoreDetails()))
+            print("  %s's tokens: %s" % (plr.name, plr.tokens))
+            print("  %s's turn: coin=%d debt=%d actions=%d buys=%d" % (plr.name, plr.coin, plr.debt, plr.actions, plr.buys))
+            print("  %s: coffers=%d villagers=%d potions=%d" % (plr.name, plr.coffer, plr.villager, plr.potions))
 
     ###########################################################################
     def playerToLeft(self, plr):
         """ Return the player to the 'left' of the one specified """
-        players = self.playerList()
+        players = self.player_list()
         place = players.index(plr) - 1
         return players[place]
 
     ###########################################################################
     def playerToRight(self, plr):
         """ Return the player to the 'right' of the one specified """
-        players = self.playerList()
+        players = self.player_list()
         place = (players.index(plr) + 1) % len(players)
         return players[place]
 
     ###########################################################################
     def whoWon(self):
+        """ TODO """
         scores = {}
         self.output("")
         self.output("Scores:")
-        for plr in self.playerList():
+        for plr in self.player_list():
             scores[plr.name] = plr.getScore(verbose=True)
         self.output(scores)
         self.output("")
-        for plr in self.playerList():
+        for plr in self.player_list():
             self.output("Cards of %s:" % plr.name)
             for k, v in plr.getCards().items():
                 self.output("%s: %s=%s" % (plr.name, k, v))
-        self.output("Trash: %s" % ", ".join([c.name for c in self.trashpile]))
+        self.output("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
         return scores
 
     ###########################################################################
     def count_all_cards(self):  # pragma: no cover
+        """ TODO """
         for pile in self.cardpiles.values():
             total = pile.pilesize
             sys.stderr.write("%-15s  " % pile.name)
             if total:
                 sys.stderr.write("pile=%d " % total)
-            for plr in self.playerList():
+            for plr in self.player_list():
                 stacklist = (
                     ('Discard', plr.discardpile), ('Hand', plr.hand),
                     ('Reserve', plr.reserve), ('Deck', plr.deck),
@@ -610,25 +646,29 @@ class Game(object):
 
     ###########################################################################
     def turn(self):
+        """ TODO """
         try:
-            assert(self.countCards() == self.total_cards)
+            assert self.countCards() == self.total_cards
         except AssertionError:
             self.count_all_cards()
             sys.stderr.write("current = %s\n" % self.countCards())
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
-        self.currentPlayer = self.playerToLeft(self.currentPlayer)
-        self.currentPlayer.startTurn()
-        self.currentPlayer.turn()
-        self.currentPlayer.endTurn()
+        self.current_player = self.playerToLeft(self.current_player)
+        self.current_player.startTurn()
+        self.current_player.turn()
+        self.current_player.endTurn()
         if self.isGameOver():
             self.gameover = True
-            for plr in self.playerList():
+            for plr in self.player_list():
                 plr.gameOver()
 
 
 ###############################################################################
-def parseArgs(args=sys.argv[1:]):
+def parse_cli_args(args=None):
+    """ Parse the command line arguments """
+    if args is None:
+        args = sys.argv[1:]
     parser = argparse.ArgumentParser(description='Play dominion')
     parser.add_argument('--numplayers', type=int, default=2,
                         help='How many players')
@@ -681,6 +721,7 @@ def parseArgs(args=sys.argv[1:]):
 
 ###############################################################################
 def runGame(args):      # pragma: no cover
+    """ TODO """
     cards = args['initcards']
     if args['cardset']:
         for line in args['cardset']:
@@ -690,7 +731,7 @@ def runGame(args):      # pragma: no cover
             cards.append(line.strip())
     args['initcards'] = cards
     g = Game(**args)
-    g.startGame()
+    g.start_game()
     try:
         while not g.gameover:
             try:
@@ -700,13 +741,13 @@ def runGame(args):      # pragma: no cover
                 raise
     except KeyboardInterrupt:
         g.gameover = True
-        pass
     g.whoWon()
 
 
 ###############################################################################
 def main():     # pragma: no cover
-    args = parseArgs()
+    """ Command line entry point """
+    args = parse_cli_args()
     runGame(vars(args))
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -29,7 +30,7 @@ class Card_Warrior(Card):
             if c.isTraveller():
                 count += 1
         for victim in player.attackVictims():
-            for i in range(count):
+            for _ in range(count):
                 c = victim.nextCard()
                 if c.cost in (3, 4) and not c.potcost:
                     victim.output("Trashing %s due to %s's Warrior" % (c.name, player.name))
@@ -47,10 +48,9 @@ class Card_Warrior(Card):
 ###############################################################################
 class Test_Warrior(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Page'], badcards=['Pooka', 'Fool'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Warrior'].remove()
         self.plr.addCard(self.card, 'hand')
 

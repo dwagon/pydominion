@@ -32,8 +32,8 @@ class Test_Engineer(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Engineer', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Engineer'].remove()
 
     def test_play_trash(self):
@@ -43,7 +43,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Moat'))
-        self.assertIsNotNone(self.g.inTrash('Engineer'))
+        self.assertIsNotNone(self.g.in_trash('Engineer'))
 
     def test_play_keep(self):
         """ Play an Engineer and keep it """
@@ -52,7 +52,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inPlayed('Engineer'))
-        self.assertIsNone(self.g.inTrash('Engineer'))
+        self.assertIsNone(self.g.in_trash('Engineer'))
 
 
 ###############################################################################

@@ -49,8 +49,8 @@ class Test_Tribute(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tribute'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Tribute'].remove()
         self.plr.addCard(self.card, 'hand')
 

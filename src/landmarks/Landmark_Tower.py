@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -24,10 +25,9 @@ class Landmark_Tower(Landmark):
 ###############################################################################
 class Test_Tower(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Tower'], initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
 
     def test_none(self):
         """ Use Tower """
@@ -37,7 +37,7 @@ class Test_Tower(unittest.TestCase):
 
     def test_one(self):
         self.plr.setHand('Moat', 'Moat')
-        while(True):
+        while True:
             c = self.g['Moat'].remove()
             if not c:
                 break

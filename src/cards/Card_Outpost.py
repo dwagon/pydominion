@@ -22,7 +22,7 @@ class Card_Outpost(Card):
     def hook_endTurn(self, game, player):
         if player.newhandsize == 3:
             player.output("Having a second turn due to Output")
-            game.currentPlayer = game.playerToRight(player)
+            game.current_player = game.playerToRight(player)
         else:
             player.output("Already had one extra turn")
 
@@ -32,8 +32,8 @@ class Test_Outpost(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Outpost'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Outpost'].remove()
         self.plr.addCard(self.card, 'hand')
 

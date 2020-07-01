@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Huntinggrounds(Card):
     def __init__(self):
         Card.__init__(self)
@@ -23,17 +25,16 @@ class Card_Huntinggrounds(Card):
         if choice == 'duchy':
             player.gainCard('Duchy')
         if choice == 'estates':
-            for i in range(3):
+            for _ in range(3):
                 player.gainCard('Estate')
 
 
 ###############################################################################
 class Test_Huntinggrounds(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hunting Grounds'], badcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Hunting Grounds'].remove()
         self.plr.addCard(self.card, 'hand')
 

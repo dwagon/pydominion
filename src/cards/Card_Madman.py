@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,7 @@ class Card_Madman(Card):
     def special(self, game, player):
         handsize = player.handSize()
         player.output("Gaining %d cards from madman" % handsize)
-        for i in range(handsize):
+        for _ in range(handsize):
             player.pickupCard()
         game['Madman'].add()
         player.played.remove(self)
@@ -29,10 +30,9 @@ class Card_Madman(Card):
 ###############################################################################
 class Test_Madman(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hermit'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Madman'].remove()
 
     def test_play(self):

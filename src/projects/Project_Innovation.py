@@ -39,8 +39,8 @@ class Test_Innovation(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Innovation'], initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_play(self):
         self.plr.assign_project('Innovation')

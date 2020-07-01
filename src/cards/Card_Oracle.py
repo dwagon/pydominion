@@ -47,8 +47,8 @@ class Test_Oracle(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Oracle'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Oracle'].remove()
         self.plr.addCard(self.card, 'hand')
 

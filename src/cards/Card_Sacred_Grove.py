@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,30 +22,29 @@ class Card_SacredGrove(Card):
         player.output("{} coin={}".format(b.name, b.coin))
         if b.coin == 1:
             return
-        for pl in game.playerList():
+        for pl in game.player_list():
             if pl == player:
                 continue
             ch = pl.plrChooseOptions(
-                    "Accept a boon of {} from {}'s Sacred Grove?".format(b.name, player.name),
-                    ("Accept ({})".format(b.description(pl)), True),
-                    ("Refuse", False)
-                )
+                "Accept a boon of {} from {}'s Sacred Grove?".format(b.name, player.name),
+                ("Accept ({})".format(b.description(pl)), True),
+                ("Refuse", False)
+            )
             if ch:
                 pl.receive_boon(b, discard=False)
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return False    # Don't accept a boon
 
 
 ###############################################################################
 class Test_SacredGrove(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Sacred Grove', 'Moat'], badcards=['Druid'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Sacred Grove'].remove()
         self.plr.addCard(self.card, 'hand')
 

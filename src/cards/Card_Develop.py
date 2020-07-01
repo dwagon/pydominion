@@ -35,8 +35,8 @@ class Test_Develop(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Develop', 'Smithy'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Develop'].remove()
 
     def test_play(self):
@@ -44,7 +44,7 @@ class Test_Develop(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['trash duchy', 'get gold', 'smithy']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertIsNotNone(self.plr.inDeck('Gold'))
         self.assertIsNotNone(self.plr.inDeck('Smithy'))
 

@@ -43,8 +43,8 @@ class Test_Raze(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Raze'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Raze'].remove()
 
     def test_play(self):
@@ -58,7 +58,7 @@ class Test_Raze(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inDeck('Silver'))
-        self.assertIsNotNone(self.g.inTrash('Raze'))
+        self.assertIsNotNone(self.g.in_trash('Raze'))
 
     def test_copper(self):
         """ Play a raze - trashing copper - a zero value card """
@@ -68,7 +68,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.test_input = ['Copper', 'Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
 
 
 ###############################################################################

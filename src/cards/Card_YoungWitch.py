@@ -50,8 +50,8 @@ class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
-        self.g.startGame()
-        self.attacker, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.attacker, self.victim = self.g.player_list()
         self.card = self.g['Young Witch'].remove()
 
     def test_play_nobane(self):

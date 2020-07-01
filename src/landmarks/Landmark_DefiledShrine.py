@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -35,10 +36,9 @@ class Landmark_DefiledShrine(Landmark):
 ###############################################################################
 class Test_DefiledShrine(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Defiled Shrine'], initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
 
     def test_use(self):
         """ Use Defiled Shrine """
@@ -47,7 +47,7 @@ class Test_DefiledShrine(unittest.TestCase):
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.g.landmarks['Defiled Shrine']._vp['Moat'], 1)
         self.plr.buyCard(self.g['Curse'])
-        self.g.print_state()
+        self.assertEqual(self.plr.score['Defiled Shrine'], 1)
 
 
 ###############################################################################

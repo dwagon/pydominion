@@ -38,8 +38,8 @@ class Test_Butcher(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Butcher'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Butcher'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -64,7 +64,7 @@ class Test_Butcher(unittest.TestCase):
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         for m in self.plr.messages:
             if 'Province' in m:
                 break

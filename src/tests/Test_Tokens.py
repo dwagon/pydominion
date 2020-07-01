@@ -8,8 +8,8 @@ import Game
 class TestToken(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_place_token(self):
         """ Ensure that when we place a token it is there """

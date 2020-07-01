@@ -33,8 +33,8 @@ class Test_Experiment(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Experiment'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_playCard(self):
         self.card = self.g['Experiment'].remove()

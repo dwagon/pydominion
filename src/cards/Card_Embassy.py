@@ -19,7 +19,7 @@ class Card_Embassy(Card):
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player gains a Silver """
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr != player:
                 plr.output("Gained a silver from %s's purchase of Embassy" % player.name)
                 plr.gainCard('Silver')
@@ -31,8 +31,8 @@ class Test_Embassy(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embassy'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Embassy'].remove()
         self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
         self.plr.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Duchy')

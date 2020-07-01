@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_MagicLamp(Card):
         Card.__init__(self)
         self.cardtype = ['treasure', 'heirloom']
         self.base = 'nocturne'
-        self.desc = "When you play this, if there are at least 6 cards that you have exactly 1 copy of in play, trash this. If you do, gain 3 Wishes from their pile."
+        self.desc = """When you play this, if there are at least 6 cards
+            that you have exactly 1 copy of in play, trash this. If you do,
+            gain 3 Wishes from their pile."""
         self.name = 'Magic Lamp'
         self.cost = 0
         self.coin = 1
@@ -24,17 +27,16 @@ class Card_MagicLamp(Card):
                 cards.append(c)
         if len(cards) >= 6:
             player.trashCard(self)
-            for i in range(3):
+            for _ in range(3):
                 player.gainCard('Wish')
 
 
 ###############################################################################
 class Test_MagicLamp(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Secret Cave'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Magic Lamp'].remove()
 
     def test_play_gain(self):

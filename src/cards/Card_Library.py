@@ -20,7 +20,7 @@ class Card_Library(Card):
         """ Draw until you have 7 cards in your hand. You may set
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing """
-        while(player.handSize() < 7):
+        while player.handSize() < 7:
             c = player.nextCard()
             if c.isAction():
                 if self.discardChoice(player, c):
@@ -40,8 +40,8 @@ class Test_Library(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Library', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Library'].remove()
         self.plr.addCard(self.card, 'hand')
 

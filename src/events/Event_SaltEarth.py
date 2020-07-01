@@ -28,8 +28,8 @@ class Test_SaltEarth(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Salt the Earth'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.event = self.g.events['Salt the Earth']
 
     def test_event(self):
@@ -38,7 +38,7 @@ class Test_SaltEarth(unittest.TestCase):
         self.plr.test_input = ['Province']
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.getScoreDetails()['Salt the Earth'], 1)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
 
 
 ###############################################################################

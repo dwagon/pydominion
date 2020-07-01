@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -31,17 +32,16 @@ class Card_Contraband(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return 'Province'
 
 
 ###############################################################################
 class Test_Contraband(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Contraband'], badcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr, self.nbr = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.nbr = self.g.player_list()
         self.card = self.g['Contraband'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -50,7 +50,7 @@ class Test_Contraband(unittest.TestCase):
         self.plr.coins = 6
         self.plr.playCard(self.card)
         self.plr.phase = 'buy'
-        options, prompt = self.plr.choiceSelection()
+        options, _ = self.plr.choiceSelection()
         for msg in options:
             if 'Buy Gold' in msg['line']:
                 self.fail("Allowed to buy Gold")

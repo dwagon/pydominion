@@ -30,8 +30,8 @@ class Test_Soothsayer(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Soothsayer'])
-        self.g.startGame()
-        self.attacker, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g['Soothsayer'].remove()
         self.attacker.addCard(self.wcard, 'hand')
 

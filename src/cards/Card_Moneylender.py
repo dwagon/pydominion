@@ -33,8 +33,8 @@ class Test_Moneylender(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Money Lender'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Money Lender'].remove()
 
     def test_nocopper(self):
@@ -51,7 +51,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.setHand('Copper', 'Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.getCoin(), 3)
 

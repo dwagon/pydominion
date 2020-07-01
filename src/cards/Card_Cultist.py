@@ -36,8 +36,8 @@ class Test_Cultist(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cultist', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Cultist'].remove()
 
     def test_play(self):
@@ -91,7 +91,7 @@ class Test_Cultist(unittest.TestCase):
         """ Trashing a cultist should give 3 more cards """
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Cultist'))
+        self.assertIsNotNone(self.g.in_trash('Cultist'))
         self.assertEqual(self.plr.handSize(), 8)
 
 

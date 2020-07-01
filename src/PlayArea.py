@@ -4,7 +4,9 @@ import sys
 
 ###############################################################################
 class PlayArea(object):
-    def __init__(self, initial=[]):
+    def __init__(self, initial=None):
+        if initial is None:
+            initial = []
         self.cards = initial
 
     def __repr__(self):
@@ -17,7 +19,9 @@ class PlayArea(object):
         try:
             self.cards.remove(card)
         except ValueError:
-            sys.stderr.write("Trying to remove a card (%s) that doesn't exist (%s)\n" % (card.name, ", ".join([c.name for c in self.cards])))
+            sys.stderr.write(
+                "Trying to remove a card (%s) that doesn't exist (%s)\n" %
+                (card.name, ", ".join([c.name for c in self.cards])))
             raise
 
     def addToTop(self, card):
@@ -48,8 +52,7 @@ class PlayArea(object):
     def __eq__(self, a):
         if hasattr(a, 'cards'):
             return self.cards == a.cards
-        else:
-            return self.cards == a
+        return self.cards == a
 
     def __add__(self, a):
         x = self.cards[:]

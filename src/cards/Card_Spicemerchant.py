@@ -35,8 +35,8 @@ class Test_SpiceMerchant(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Spice Merchant'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Spice Merchant'].remove()
 
     def test_play_card(self):
@@ -47,7 +47,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.test_input = ['Gold', 'cards']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
@@ -61,7 +61,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.test_input = ['Gold', 'coins']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.plr.handSize(), 0)
         self.assertEqual(self.plr.getActions(), 0)
         self.assertEqual(self.plr.getBuys(), 2)

@@ -41,8 +41,8 @@ class Test_Teacher(unittest.TestCase):
         import Game
         initcards = ['Page', 'Cellar', 'Chapel', 'Moat', 'Chancellor', 'Village', 'Woodcutter', 'Workshop', 'Bureaucrat', 'Venture']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Teacher'].remove()
         self.plr.addCard(self.card, 'hand')
 

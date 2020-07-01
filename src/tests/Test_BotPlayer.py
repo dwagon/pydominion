@@ -8,8 +8,8 @@ import Game
 class Test_getOptions(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, bot=True)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_getOptions(self):
         options = [
@@ -33,8 +33,8 @@ class Test_getOptions(unittest.TestCase):
 class TestPick_to_discard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, bot=True)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_no_discard(self):
         """ Test pick_to_discard with no discard requirement """

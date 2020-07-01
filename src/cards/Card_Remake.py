@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+from Card import Card
+import Game
 
 
 ###############################################################################
@@ -15,7 +16,7 @@ class Card_Remake(Card):
         self.cost = 4
 
     def special(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             c = player.plrTrashCard(prompt="Trash a card and gain one costing 1 more")
             if c:
                 player.plrGainCard(cost=c[0].cost+1, modifier='equal')
@@ -24,10 +25,9 @@ class Card_Remake(Card):
 ###############################################################################
 class Test_Remake(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Remake', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Remake'].remove()
 
     def test_playcard(self):

@@ -92,7 +92,7 @@ class TextPlayer(Player):
             o['line'] = line
             self.output(line)
         self.output(prompt, end=' ')
-        while(1):
+        while True:
             if self.test_input:
                 inp = self.test_input.pop(0)
                 self.output("Using '%s' test input" % inp)
@@ -129,7 +129,7 @@ class TextPlayer(Player):
         return selectfrom
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def cardSel(self, num=1, **kwargs):   # pylint: disable=too-many-locals, too-many-branches
         """ Most interactions with players are the selection of cards
             either from the hand, the drawpiles, or a subset
             * force
@@ -153,10 +153,7 @@ class TextPlayer(Player):
         selectfrom = self.cardSelSource(**kwargs)
         force = kwargs['force'] if 'force' in kwargs else False
         showdesc = kwargs['showdesc'] if 'showdesc' in kwargs else True
-        if 'verbs' in kwargs:
-            verbs = kwargs['verbs']
-        else:
-            verbs = ('Select', 'Unselect')
+        verbs = kwargs.get('verbs', ('Select', 'Unselect'))
 
         if 'prompt' in kwargs:
             self.output(kwargs['prompt'])
@@ -170,7 +167,7 @@ class TextPlayer(Player):
         selected = []
         types = kwargs['types'] if 'types' in kwargs else {}
         types = self.typeSelector(types)
-        while(True):
+        while True:
             options = []
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 o = Option(selector='0', verb='Finish Selecting', card=None)

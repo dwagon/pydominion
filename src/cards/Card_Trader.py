@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -19,7 +20,7 @@ class Card_Trader(Card):
         card = player.plrTrashCard(prompt="Trash a card from your hand. Gain a number of Silvers equal to its cost in coins.")
         if card:
             player.output("Gaining %d Silvers" % card[0].cost)
-            for i in range(card[0].cost):
+            for _ in range(card[0].cost):
                 player.gainCard('Silver')
 
     def hook_gainCard(self, game, player, card):
@@ -37,10 +38,9 @@ class Card_Trader(Card):
 ###############################################################################
 class Test_Trader(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Trader'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Trader'].remove()
 
     def test_play(self):
@@ -54,7 +54,7 @@ class Test_Trader(unittest.TestCase):
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Silver')
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertIsNotNone(self.g.in_trash('Estate'))
 
     def test_gain(self):
         self.plr.test_input = ['Instead']

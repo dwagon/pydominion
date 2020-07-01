@@ -42,8 +42,8 @@ class Test_Taxman(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Taxman'], badcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Taxman'].remove()
 
     def test_play(self):
@@ -53,7 +53,7 @@ class Test_Taxman(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Silver', 'Get Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertIsNotNone(self.victim.inDiscard('Silver'))
 

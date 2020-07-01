@@ -33,8 +33,8 @@ class Test_Improve(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Improve', 'Moat', 'Guide'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Improve'].remove()
 
     def test_play(self):
@@ -43,7 +43,7 @@ class Test_Improve(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.test_input = ['End phase', 'End phase', 'Trash Moat', 'Get Guide']
         self.plr.turn()
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.assertIsNotNone(self.plr.inDiscard('Guide'))
 
 

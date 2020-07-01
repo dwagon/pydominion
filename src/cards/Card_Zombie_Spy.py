@@ -40,8 +40,8 @@ class Test_Zombie_Spy(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Zombie Spy'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Zombie Spy'].remove()
 
     def test_play_keep(self):

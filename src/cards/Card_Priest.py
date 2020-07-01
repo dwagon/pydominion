@@ -34,8 +34,8 @@ class Test_Priest(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Priest', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Priest'].remove()
         self.plr.addCard(self.card, 'hand')
         self.moat = self.g['Moat'].remove()
@@ -47,7 +47,7 @@ class Test_Priest(unittest.TestCase):
         self.plr.test_input = ['Trash Moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Moat'))
         self.plr.trashCard(self.gold)
         self.assertEqual(self.plr.getCoin(), 4)
 

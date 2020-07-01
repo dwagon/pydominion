@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Counterfeit(Card):
     def __init__(self):
         Card.__init__(self)
@@ -30,7 +32,7 @@ class Card_Counterfeit(Card):
         o = player.userInput(options, 'What to do?')
         if not o['card']:
             return
-        for i in range(2):
+        for _ in range(2):
             player.playCard(o['card'], costAction=False, discard=False)
         player.trashCard(o['card'])
 
@@ -38,10 +40,9 @@ class Card_Counterfeit(Card):
 ###############################################################################
 class Test_Counterfiet(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Counterfeit'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Counterfeit'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -64,7 +65,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         # CF + 2 * Gold
         self.assertEqual(self.plr.getCoin(), 7)
 

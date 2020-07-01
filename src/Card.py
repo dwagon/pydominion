@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 class Card(object):
     def __init__(self):
         self.image = None
@@ -56,8 +57,7 @@ class Card(object):
     def description(self, player):
         if callable(self.desc):
             return self.desc(player)
-        else:
-            return self.desc
+        return self.desc
 
     ##########################################################################
     def addVP(self, num=1):

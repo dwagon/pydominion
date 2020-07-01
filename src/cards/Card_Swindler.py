@@ -30,8 +30,8 @@ class Test_Swindler(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Swindler', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Swindler'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -54,7 +54,7 @@ class Test_Swindler(unittest.TestCase):
         self.victim.setDeck('Gold')
         self.plr.test_input = ['Get Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,9 +27,9 @@ class Card_BorderGuard(Card):
             cards.append(card)
         nacts = sum([1 for _ in cards if _.isAction()])
         ch = player.cardSel(
-                prompt="Select a card to put into your hand, other will be discarded",
-                cardsrc=cards
-                )
+            prompt="Select a card to put into your hand, other will be discarded",
+            cardsrc=cards
+        )
         player.addCard(ch[0], 'hand')
         cards.remove(ch[0])
         for card in cards:
@@ -37,20 +38,20 @@ class Card_BorderGuard(Card):
 
         if nacts == ncards:
             art = player.plrChooseOptions(
-                    "Pick an artifact to take",
-                    ("Take Lantern (Border Guard reveals 3 cards)", 'Lantern'),
-                    ("Take Horn (May put discarded Border Guard into hand)", 'Horn')
-                    )
+                "Pick an artifact to take",
+                ("Take Lantern (Border Guard reveals 3 cards)", 'Lantern'),
+                ("Take Horn (May put discarded Border Guard into hand)", 'Horn')
+            )
             player.assign_artifact(art)
 
     def hook_discardThisCard(self, game, player, source):
         if not player.has_artifact('Horn'):
             return
         ch = player.plrChooseOptions(
-                "Use Horn and put Border Guard into hand?",
-                ("Put into hand", True),
-                ("Keep in discard", False)
-                )
+            "Use Horn and put Border Guard into hand?",
+            ("Put into hand", True),
+            ("Keep in discard", False)
+        )
         if ch:
             player.addCard(self, 'topdeck')
             player.discardpile.remove(self)
@@ -59,10 +60,9 @@ class Card_BorderGuard(Card):
 ###############################################################################
 class Test_BorderGuard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Border Guard', 'Moat', 'Guide'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Border Guard'].remove()
 
     def test_play(self):

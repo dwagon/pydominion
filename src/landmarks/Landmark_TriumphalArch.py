@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from Landmark import Landmark
 from collections import defaultdict
+import Game
+from Landmark import Landmark
 
 
 ###############################################################################
@@ -10,7 +11,8 @@ class Landmark_TriumphalArch(Landmark):
     def __init__(self):
         Landmark.__init__(self)
         self.base = 'empires'
-        self.desc = """When scoring, 3VP per copy you have of the 2nd most common Action card among your cards (if it's a tie, count either)."""
+        self.desc = """When scoring, 3VP per copy you have of the 2nd most common
+        Action card among your cards (if it's a tie, count either)."""
         self.name = "Triumphal Arch"
 
     def hook_end_of_game(self, game, player):
@@ -28,10 +30,9 @@ class Landmark_TriumphalArch(Landmark):
 ###############################################################################
 class Test_TriumphalArch(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Triumphal Arch'], initcards=['Moat', 'Militia'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
 
     def test_play(self):
         """ Test Triumphal Arch"""

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -36,9 +37,9 @@ class Card_Courtier(Card):
             if "gold" not in chosen:
                 choices.append(("Gain Gold", "gold"))
             opt = player.plrChooseOptions(
-                    "Select one",
-                    *choices
-                    )
+                "Select one",
+                *choices
+            )
             chosen.append(opt)
             if opt == 'action':
                 player.addActions(1)
@@ -53,10 +54,9 @@ class Card_Courtier(Card):
 ###############################################################################
 class Test_Courtier(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Courtier', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Courtier'].remove()
         self.plr.setHand('Copper', 'Moat', 'Estate')
         self.plr.addCard(self.card, 'hand')

@@ -55,8 +55,8 @@ class Test_Rebuild(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'], badcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Rebuild'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -72,7 +72,7 @@ class Test_Rebuild(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertIsNotNone(self.g.in_trash('Estate'))
 
 
 ###############################################################################

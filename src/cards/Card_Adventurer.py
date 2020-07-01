@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -32,10 +33,9 @@ class Card_Adventurer(Card):
 ###############################################################################
 class Test_Adventurer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Adventurer'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_treasures(self):
         self.plr.setDeck('Copper', 'Silver', 'Gold', 'Estate')

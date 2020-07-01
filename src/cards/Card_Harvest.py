@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_Harvest(Card):
 
     def special(self, game, player):
         cards = set()
-        for i in range(4):
+        for _ in range(4):
             c = player.nextCard()
             player.revealCard(c)
             cards.add(c.name)
@@ -29,10 +30,9 @@ class Card_Harvest(Card):
 ###############################################################################
 class Test_Harvest(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Harvest'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Harvest'].remove()
         self.plr.addCard(self.card, 'hand')
 

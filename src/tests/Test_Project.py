@@ -13,8 +13,8 @@ class Test_assignProject(unittest.TestCase):
                 boonpath='tests/boons', projectpath='tests/projects',
                 initprojects=['ProjectA', 'ProjectB', 'ProjectC']
                 )
-        self.g.startGame()
-        self.plr, self.plr2 = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.plr2 = self.g.player_list()
 
     def test_assign(self):
         self.plr.assign_project('ProjectA')
@@ -55,8 +55,8 @@ class Test_buyProject(unittest.TestCase):
                 boonpath='tests/boons', projectpath='tests/projects',
                 initprojects=['ProjectA']
                 )
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_buy(self):
         PA = self.g.projects['ProjectA']

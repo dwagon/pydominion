@@ -8,8 +8,8 @@ import Game
 class Test_getWhens(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], badcards=['Pixie'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_start(self):
         self.plr.startTurn()
@@ -46,8 +46,8 @@ class Test_getWhens(unittest.TestCase):
 class Test_Reserve(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_inreserve(self):
         """ Test inReserve() """
@@ -96,8 +96,8 @@ class Test_Reserve(unittest.TestCase):
 class Test_reserveSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_callable(self):
         gold = self.g['Gold'].remove()

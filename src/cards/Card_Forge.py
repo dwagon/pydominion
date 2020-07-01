@@ -34,8 +34,8 @@ class Test_Forge(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Feast'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.forge = self.g['Forge'].remove()
 
     def test_play(self):
@@ -47,7 +47,7 @@ class Test_Forge(unittest.TestCase):
         self.plr.test_input = ['1', '2', 'finish', 'Feast']
         self.plr.playCard(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertIsNotNone(self.g.in_trash('Estate'))
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.handSize(), 1)
 

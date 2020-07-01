@@ -25,8 +25,8 @@ class Test_RoadNetwork(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initprojects=['Road Network'], badcards=["Duchess"])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
 
     def test_victory(self):
         self.plr.assign_project('Road Network')

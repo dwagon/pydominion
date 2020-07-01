@@ -40,8 +40,8 @@ class Test_Loan(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Loan'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.loan = self.plr.gainCard('Loan', 'hand')
 
     def test_play(self):
@@ -65,7 +65,7 @@ class Test_Loan(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
 

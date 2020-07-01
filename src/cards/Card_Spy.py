@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -40,10 +41,9 @@ class Card_Spy(Card):
 ###############################################################################
 class Test_Spy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Spy', 'Moat'])
-        self.g.startGame()
-        self.attacker, self.defender = self.g.playerList()
+        self.g.start_game()
+        self.attacker, self.defender = self.g.player_list()
         self.attacker.setDeck('Estate', 'Province', 'Duchy')
         self.defender.setDeck('Estate', 'Gold')
 
