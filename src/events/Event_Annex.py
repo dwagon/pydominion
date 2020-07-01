@@ -40,7 +40,7 @@ class Event_Annex(Event):
 ###############################################################################
 class Test_Annex(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Annex'], initcards=['Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Annex'], initcards=['Moat'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events['Annex']
