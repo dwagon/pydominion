@@ -26,7 +26,7 @@ class Card_Destrier(Card):
 class Test_Destrier(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Destrier'])
-        self.g.startGame()
+        self.g.start_game()
         self.plr = self.g.playerList(0)
         self.card = self.g['Destrier'].remove()
 
