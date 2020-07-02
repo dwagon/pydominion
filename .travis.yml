@@ -2,13 +2,6 @@ language: python
 sudo: required
 dist: xenial
 
-python:
-    - "2.7"
-    - "3.5"
-    - "3.6"
-    - "3.7"
-    - "3.8"
-    - "3.9-dev"
 
 install:
     - "pip install -r requirements.txt"
@@ -21,9 +14,19 @@ stages:
 jobs:
   include:
     - stage: lint
+      python:
+        - "3.8"
       script: flake8 src
       script: PYTHONPATH=src pylint --exit-zero src
     - stage: test
+      python:
+        - "2.7"
+        - "3.5"
+        - "3.6"
+        - "3.7"
+        - "3.8"
+        - "3.9-dev"
+
       script: "./src/run_tests"
 
 after_success:
