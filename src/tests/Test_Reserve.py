@@ -102,7 +102,7 @@ class Test_reserveSelection(unittest.TestCase):
     def test_callable(self):
         gold = self.g['Gold'].remove()
         self.plr.addCard(gold, 'reserve')
-        output, index = self.plr.reserveSelection(1)
+        output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 1)
         self.assertEqual(output[0]['action'], 'reserve')
         self.assertEqual(output[0]['card'], gold)
@@ -113,7 +113,7 @@ class Test_reserveSelection(unittest.TestCase):
         """ Copper is not callable (Due to miser) """
         copper = self.g['Copper'].remove()
         self.plr.addCard(copper, 'reserve')
-        output, index = self.plr.reserveSelection(1)
+        output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 0)
         self.assertEqual(index, 1)
 

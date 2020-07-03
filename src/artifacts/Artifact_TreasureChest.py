@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Artifact import Artifact
 
 
@@ -21,7 +22,6 @@ class Artifact_TreasureChest(Artifact):
 ###############################################################################
 class Test_TreasureChest(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Treasure Chest'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -29,7 +29,7 @@ class Test_TreasureChest(unittest.TestCase):
     def test_treasurechest(self):
         self.plr.assign_artifact('Treasure Chest')
         self.plr.test_input = ['End Phase']
-        self.plr.buyPhase()
+        self.plr.buy_phase()
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 

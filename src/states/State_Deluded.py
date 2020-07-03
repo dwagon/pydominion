@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from State import State
 
 
@@ -26,7 +27,6 @@ class State_Deluded(State):
 ###############################################################################
 class Test_Deluded(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,7 +37,7 @@ class Test_Deluded(unittest.TestCase):
         self.plr.test_input = ['Estate']
         self.assertGreater(self.plr.cardCost(self.g['Bard']), 99)
         self.plr.test_input = ['End Phase']
-        self.plr.buyPhase()
+        self.plr.buy_phase()
         self.assertEqual(self.plr.states, [])
 
 

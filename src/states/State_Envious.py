@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from State import State
 
 
@@ -28,7 +29,6 @@ class State_Envious(State):
 ###############################################################################
 class Test_Envious(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -36,7 +36,7 @@ class Test_Envious(unittest.TestCase):
     def test_envious_return(self):
         self.plr.assign_state('Envious')
         self.plr.test_input = ['End Phase']
-        self.plr.buyPhase()
+        self.plr.buy_phase()
         self.assertEqual(self.plr.states, [])
 
     def test_envious(self):

@@ -8,6 +8,7 @@ from PlayArea import PlayArea
 from Card import Card
 from Option import Option
 from CardPile import CardPile
+from WayPile import WayPile
 from EventPile import EventPile
 from ProjectPile import ProjectPile
 
@@ -479,7 +480,7 @@ class Player(object):
             self.discardCard(card, 'played', hook=False)
 
     ###########################################################################
-    def playableSelection(self, index):
+    def playable_selection(self, index):
         options = []
         playable = [c for c in self.hand if c.playable and c.isAction()]
         if self.villager:
@@ -499,7 +500,7 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def nightSelection(self, index):
+    def night_selection(self, index):
         options = []
         nights = [c for c in self.hand if c.isNight()]
         if nights:
@@ -512,7 +513,7 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def spendableSelection(self):
+    def spendable_selection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
         totcoin = sum([self.hook_spendValue(c) for c in spendable])
@@ -552,7 +553,7 @@ class Player(object):
         return whens
 
     ###########################################################################
-    def reserveSelection(self, index):
+    def reserve_selection(self, index):
         whens = self.getWhens()
         options = []
         for card in self.reserve:
@@ -569,7 +570,7 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def landmarkSelection(self, index):
+    def landmark_selection(self, index):
         options = []
         for lm in self.game.landmarks.values():
             o = Option(selector='-', desc=lm.description(self), name=lm.name, card=lm, action=None, details="Landmark")
@@ -578,7 +579,7 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def projectSelection(self, index):
+    def project_selection(self, index):
         if not self.game.projects:
             return None, index
         # Can only have two projects
@@ -600,7 +601,24 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def eventSelection(self, index):
+    def way_selection(self, index):
+        options = []
+        for op in self.game.ways.values():
+            index += 1
+            if op.cost <= self.coin and self.buys:
+                sel = chr(ord('a') + index)
+                action = 'ways'
+            else:
+                sel = '-'
+                action = None
+            details = "Way; %s" % self.coststr(op)
+            o = Option(selector=sel, verb='Use', desc=op.description(self), name=op.name, details=details, card=op, action=action)
+            options.append(o)
+
+        return options, index
+
+    ###########################################################################
+    def event_selection(self, index):
         options = []
         for op in self.game.events.values():
             index += 1
@@ -629,7 +647,7 @@ class Player(object):
         return allcards
 
     ###########################################################################
-    def buyableSelection(self, index):
+    def buyable_selection(self, index):
         options = []
         allcards = self.getAllPurchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
@@ -664,36 +682,38 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def choiceSelection(self):
+    def choice_selection(self):
         index = 0
         o = Option(selector='0', verb='End Phase', card=None, action='quit')
         options = [o]
 
         if self.phase == 'action':
             if self.actions or self.villager:
-                op, index = self.playableSelection(index)
+                op, index = self.playable_selection(index)
                 options.extend(op)
 
         if self.phase == 'buy':
-            op = self.spendableSelection()
+            op = self.spendable_selection()
             options.extend(op)
-            op, index = self.buyableSelection(index)
+            op, index = self.buyable_selection(index)
             options.extend(op)
-            op, index = self.eventSelection(index)
+            op, index = self.event_selection(index)
             options.extend(op)
-            op, index = self.projectSelection(index)
+            op, index = self.way_selection(index)
+            options.extend(op)
+            op, index = self.project_selection(index)
             if op:
                 options.extend(op)
 
         if self.phase == 'night':
-            op, index = self.nightSelection(index)
+            op, index = self.night_selection(index)
             options.extend(op)
 
         if self.reserveSize():
-            op, index = self.reserveSelection(index)
+            op, index = self.reserve_selection(index)
             options.extend(op)
 
-        op, index = self.landmarkSelection(index)
+        op, index = self.landmark_selection(index)
         options.extend(op)
 
         status = "Actions=%d Buys=%d" % (self.actions, self.buys)
@@ -716,13 +736,13 @@ class Player(object):
         self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
         stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
         self.output("%s's Turn %s" % (self.name, stats))
-        self.actionPhase()
-        self.buyPhase()
-        self.nightPhase()
-        self.cleanupPhase()
+        self.action_phase()
+        self.buy_phase()
+        self.night_phase()
+        self.cleanup_phase()
 
     ###########################################################################
-    def nightPhase(self):
+    def night_phase(self):
         nights = [c for c in self.hand if c.isNight()]
         if not nights:
             return
@@ -730,32 +750,32 @@ class Player(object):
         self.phase = 'night'
         while True:
             self.displayOverview()
-            options, prompt = self.choiceSelection()
+            options, prompt = self.choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
                 return
 
     ###########################################################################
-    def actionPhase(self):
+    def action_phase(self):
         self.output("************ Action Phase ************")
         self.phase = 'action'
         while True:
             self.displayOverview()
-            options, prompt = self.choiceSelection()
+            options, prompt = self.choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
                 return
 
     ###########################################################################
-    def buyPhase(self):
+    def buy_phase(self):
         self.output("************ Buy Phase ************")
         self.phase = 'buy'
         self.hook_preBuy()
         while True:
             self.displayOverview()
-            options, prompt = self.choiceSelection()
+            options, prompt = self.choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt['action'] == 'quit':
@@ -768,7 +788,7 @@ class Player(object):
             card.hook_endBuyPhase(game=self.game, player=self)
 
     ###########################################################################
-    def cleanupPhase(self):
+    def cleanup_phase(self):
         # Save the cards we had so that the hook_endTurn has something to apply against
         self.hadcards = self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile
         self.phase = 'cleanup'
@@ -793,6 +813,8 @@ class Player(object):
             self.buyCard(opt['card'])
         elif opt['action'] == 'event':
             self.performEvent(opt['card'])
+        elif opt['action'] == 'ways':
+            self.performWay(opt['card'])
         elif opt['action'] == 'project':
             self.buyProject(opt['card'])
         elif opt['action'] == 'reserve':
@@ -951,7 +973,7 @@ class Player(object):
     ###########################################################################
     def endTurn(self):
         if not self.cleaned:
-            self.cleanupPhase()
+            self.cleanup_phase()
         for card in self.hadcards:
             self.currcards.append(card)
             card.hook_endTurn(game=self.game, player=self)
@@ -1294,6 +1316,20 @@ class Player(object):
         self.debt += project.debtcost
         self.buys += project.buys
         self.assign_project(project.name)
+        return True
+
+    ###########################################################################
+    def performWay(self, way):
+        assert issubclass(way.__class__, WayPile)
+        if not self.buys:
+            self.output("Need a buy to perform a way")
+            return False
+        self.buys -= 1
+        self.buys += way.buys
+        self.output("Using way %s" % way.name)
+        self.currcards.append(way)
+        way.special(game=self.game, player=self)
+        self.currcards.pop()
         return True
 
     ###########################################################################
