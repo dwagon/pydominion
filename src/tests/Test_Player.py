@@ -196,7 +196,10 @@ class Test_cardsAffordable(unittest.TestCase):
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
-        ans = self.plr.cardsAffordable('less', coin=None, potions=0, types={'victory': True, 'action': True, 'treasure': True, 'night': True})
+        ans = self.plr.cardsAffordable(
+            'less', coin=None, potions=0,
+            types={'victory': True, 'action': True, 'treasure': True, 'night': True}
+        )
         self.assertIn('Province', [cp.name for cp in ans])
 
 
@@ -685,7 +688,7 @@ class Test_choiceSelection(unittest.TestCase):
     def test_action_phase(self):
         self.plr.setHand('Moat')
         self.plr.phase = 'action'
-        opts, prompt = self.plr.choiceSelection()
+        opts, _ = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -703,7 +706,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.phase = 'buy'
         self.plr.coffer = 0   # Stop card choice breaking test
-        opts, prompt = self.plr.choiceSelection()
+        opts, _ = self.plr.choiceSelection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -721,7 +724,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.coffer = 1
         self.plr.phase = 'buy'
         self.plr.debt = 2
-        opts, prompt = self.plr.choiceSelection()
+        _, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=3', prompt)
         self.assertIn('Coins=5', prompt)
         self.assertIn('Buys=7', prompt)
@@ -736,7 +739,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.coin = 0
         self.plr.coffer = 0
         self.plr.phase = 'buy'
-        opts, prompt = self.plr.choiceSelection()
+        _, prompt = self.plr.choiceSelection()
         self.assertIn('Actions=0', prompt)
         self.assertIn('Buys=0', prompt)
         self.assertNotIn('Coins', prompt)
@@ -902,6 +905,25 @@ class Test_plrGainCard(unittest.TestCase):
         c = self.plr.plrGainCard(4, modifier='less')
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEqual(c.name, 'Silver')
+
+
+###############################################################################
+class Test_exile(unittest.TestCase):
+    """ Test exile pile """
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_in_exile(self):
+        self.plr.set_exile(['Silver'])
+        self.assertIsNotNone(self.plr.in_exile('Silver'))
+
+    def test_exile_card(self):
+        au_card = self.g['Gold'].remove()
+        self.plr.set_exile([])
+        self.plr.exile_card(au_card)
+        self.assertIsNotNone(self.plr.in_exile('Gold'))
 
 
 ###############################################################################
