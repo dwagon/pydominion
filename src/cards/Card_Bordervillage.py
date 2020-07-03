@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,8 +18,7 @@ class Card_Bordervillage(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+1 card, +2 action. When you gain this, gain a card costing less than this"
-        else:
-            return "+1 card, +2 action"
+        return "+1 card, +2 action"
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, gain a card costing less than this"""
@@ -30,7 +30,6 @@ class Card_Bordervillage(Card):
 ###############################################################################
 class Test_Bordervillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Border Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

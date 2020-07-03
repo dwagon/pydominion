@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,8 +21,7 @@ class Card_Duchy(Card):
     def calc_numcards(self, game):
         if game.numplayers == 2:
             return 8
-        else:
-            return 12
+        return 12
 
     def hook_gainThisCard(self, game, player):
         if 'Duchess' in game:
@@ -35,14 +35,13 @@ class Card_Duchy(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return False    # Don't gain a duchess
 
 
 ###############################################################################
 class Test_Duchy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
