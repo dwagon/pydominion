@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,7 +19,7 @@ class Card_Spoils(Card):
         self.coin = 3
         self.numcards = 15
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ When you play this return it to the spoils pile """
         game['Spoils'].add()
         player.played.remove(self)
@@ -27,7 +28,6 @@ class Card_Spoils(Card):
 ###############################################################################
 class Test_Spoils(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bandit Camp'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

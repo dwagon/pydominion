@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,8 +19,7 @@ class Card_BlessedVillage(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
-        else:
-            return "+1 Card; +2 Actions"
+        return "+1 Card; +2 Actions"
 
     def hook_gainThisCard(self, game, player):
         player.receive_boon()
@@ -28,7 +28,6 @@ class Card_BlessedVillage(Card):
 ###############################################################################
 class Test_BlessedVillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Blessed Village'], badcards=['Druid'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

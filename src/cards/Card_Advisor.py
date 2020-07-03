@@ -37,7 +37,7 @@ class Card_Advisor(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Discard the card that costs the most
     cardlist = [(c.cost, c) for c in kwargs['cardsrc'] if c.isTreasure()]
     if cardlist:
