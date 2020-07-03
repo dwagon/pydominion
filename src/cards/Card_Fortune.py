@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+from Card import Card
+import Game
 
 
 ###############################################################################
@@ -27,17 +28,16 @@ class Card_Fortune(Card):
         num_gladiators = sum([1 for c in player.played if c.name == 'Gladiator'])
         if num_gladiators:
             player.output("Gaining %d Gold" % num_gladiators)
-            for i in range(num_gladiators):
+            for _ in range(num_gladiators):
                 player.gainCard('Gold')
 
 
 ###############################################################################
 class Test_Fortune(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fortune'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Fortune'].remove()
 
     def test_play(self):
