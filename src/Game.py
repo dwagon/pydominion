@@ -98,6 +98,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         names = playerNames[:]
         self.loadDecks(self.initcards, self.numstacks)
         self.loadEvents()
+        self.loadWays()
         self.loadLandmarks()
         self.loadArtifacts()
         self.loadProjects()

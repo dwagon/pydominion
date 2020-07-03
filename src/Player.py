@@ -207,7 +207,7 @@ class Player(object):
         return onstack
 
     ###########################################################################
-    def callReserve(self, card):
+    def call_reserve(self, card):
         if isinstance(card, str):
             card = self.inReserve(card)
             if not card:
@@ -818,7 +818,7 @@ class Player(object):
         elif opt['action'] == 'project':
             self.buyProject(opt['card'])
         elif opt['action'] == 'reserve':
-            self.callReserve(opt['card'])
+            self.call_reserve(opt['card'])
         elif opt['action'] == 'coffer':
             self.spendCoffer()
         elif opt['action'] == 'villager':
@@ -1100,7 +1100,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
+        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile, WayPile))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
