@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Boon import Boon
 
 
@@ -21,7 +22,6 @@ class Boon_Rivers_Gift(Boon):
 ###############################################################################
 class Test_Rivers_Gift(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -35,7 +35,7 @@ class Test_Rivers_Gift(unittest.TestCase):
     def test_winds_gift(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertEqual(self.plr.handSize(), 6)
 
 

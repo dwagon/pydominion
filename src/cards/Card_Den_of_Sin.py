@@ -42,7 +42,7 @@ class Test_Den_of_Sin(unittest.TestCase):
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.handSize(), 5 + 2)
 

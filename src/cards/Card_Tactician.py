@@ -49,7 +49,7 @@ class Test_Tactician(unittest.TestCase):
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 0)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.handSize(), 10)
         self.assertEqual(self.plr.getActions(), 2)
@@ -60,7 +60,7 @@ class Test_Tactician(unittest.TestCase):
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getActions(), 1)

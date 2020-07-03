@@ -46,7 +46,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.getCoin(), 1)
 

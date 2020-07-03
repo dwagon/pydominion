@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -52,7 +53,6 @@ class Card_Research(Card):
 ###############################################################################
 class Test_Research(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Research', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -67,7 +67,7 @@ class Test_Research(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.g.in_trash('Moat'))
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertIsNotNone(self.plr.inHand('Silver'))
         self.assertIsNotNone(self.plr.inHand('Gold'))

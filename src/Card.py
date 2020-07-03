@@ -278,7 +278,7 @@ class Card(object):
         return {}    # pragma: no cover
 
     ##########################################################################
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################

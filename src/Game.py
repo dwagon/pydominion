@@ -673,7 +673,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.current_player = self.playerToLeft(self.current_player)
         self.current_player.startTurn()
         self.current_player.turn()
-        self.current_player.endTurn()
+        self.current_player.end_turn()
         if self.isGameOver():
             self.gameover = True
             for plr in self.player_list():

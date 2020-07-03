@@ -35,7 +35,7 @@ class Test_Hireling(unittest.TestCase):
     def test_play_hireling(self):
         """ Play a hireling """
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.handSize(), 6)
         self.assertIsNone(self.plr.inDiscard('Hireling'))

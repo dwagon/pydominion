@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,7 +22,6 @@ class Card_Cobbler(Card):
 ###############################################################################
 class Test_Cobbler(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cobbler'], badcards=['Blessed Village', 'Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -31,7 +31,7 @@ class Test_Cobbler(unittest.TestCase):
         try:
             self.plr.addCard(self.card, 'hand')
             self.plr.playCard(self.card)
-            self.plr.endTurn()
+            self.plr.end_turn()
             self.plr.test_input = ['1']
             self.plr.startTurn()
             self.assertLessEqual(self.plr.discardpile[0].cost, 4)

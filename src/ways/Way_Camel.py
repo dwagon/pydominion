@@ -14,7 +14,8 @@ class Way_Camel(Way):
         self.name = "Camel"
 
     def special(self, game, player):
-        pass
+        card = player.gainCard("Gold")
+        player.exile_card(card)
 
 
 ###############################################################################

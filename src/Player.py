@@ -815,7 +815,7 @@ class Player(object):
 
     ###########################################################################
     def cleanup_phase(self):
-        # Save the cards we had so that the hook_endTurn has something to apply against
+        # Save the cards we had so that the hook_end_turn has something to apply against
         self.hadcards = self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile
         self.phase = 'cleanup'
         self.game.cleanup_boons()
@@ -1005,12 +1005,12 @@ class Player(object):
         self.exilepile.add(card)
 
     ###########################################################################
-    def endTurn(self):
+    def end_turn(self):
         if not self.cleaned:
             self.cleanup_phase()
         for card in self.hadcards:
             self.currcards.append(card)
-            card.hook_endTurn(game=self.game, player=self)
+            card.hook_end_turn(game=self.game, player=self)
             self.currcards.pop()
         self.newhandsize = 5
         self.played_events = PlayArea([])

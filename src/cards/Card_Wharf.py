@@ -38,7 +38,7 @@ class Test_Wharf(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.plr.durationSize(), 1)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.playedSize(), 1)

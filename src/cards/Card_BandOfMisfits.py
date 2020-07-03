@@ -29,7 +29,7 @@ class Card_BandOfMisfits(Card):
         player.pickupCards(self._action.cards)
         self._action.special(game, player)
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         if not hasattr(self, '_action'):
             return
         del self._action

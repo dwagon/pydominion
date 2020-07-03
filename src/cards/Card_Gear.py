@@ -59,7 +59,7 @@ class Test_Gear(unittest.TestCase):
             self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
             self.assertIsNotNone(self.plr.inHand('Duchy'))
             self.assertEqual(self.plr.durationSize(), 1)
-            self.plr.endTurn()
+            self.plr.end_turn()
             self.plr.startTurn()
             self.assertEqual(self.plr.durationSize(), 0)
             self.assertEqual(self.plr.playedSize(), 1)

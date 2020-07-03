@@ -44,12 +44,12 @@ class Test_HauntedWoods(unittest.TestCase):
         """ Play a Haunted Woods """
         self.vic.setHand('Silver', 'Duchy', 'Province')
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.vic.buyCard(self.g['Gold'])
         self.assertIsNotNone(self.vic.inDeck('Silver'))
         self.assertIsNotNone(self.vic.inDeck('Duchy'))
         self.assertIsNotNone(self.vic.inDeck('Province'))
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.handSize(), 8)
 

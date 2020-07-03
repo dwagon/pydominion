@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -20,7 +21,6 @@ class Event_Expedition(Event):
 ###############################################################################
 class Test_Expedition(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Expedition'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -31,7 +31,7 @@ class Test_Expedition(unittest.TestCase):
         self.plr.coin = 3
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertEqual(self.plr.handSize(), 7)
 
     def test_playtwice(self):
@@ -43,7 +43,7 @@ class Test_Expedition(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getBuys(), 0)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertEqual(self.plr.handSize(), 9)
 
 

@@ -49,7 +49,7 @@ class Test_Bridgetroll(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertTrue(self.victim.coin_token)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.getBuys(), 2)
 

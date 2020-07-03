@@ -37,7 +37,7 @@ class Test_Caravan(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.durationSize(), 1)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.startTurn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.playedSize(), 1)

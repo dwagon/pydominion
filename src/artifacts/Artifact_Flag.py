@@ -28,7 +28,7 @@ class Test_Flag(unittest.TestCase):
 
     def test_flag(self):
         self.plr.assign_artifact('Flag')
-        self.plr.endTurn()
+        self.plr.end_turn()
 
 
 ###############################################################################

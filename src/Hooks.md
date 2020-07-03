@@ -101,7 +101,7 @@ hook_postAction
 ---------------
 Called for every card in played + duration pile after an action has happened
 
-hook_endTurn
+hook_end_turn
 ------------
 Called at the end of the players buy phase
 

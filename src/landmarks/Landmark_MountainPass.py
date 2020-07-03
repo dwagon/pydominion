@@ -20,7 +20,7 @@ class Landmark_MountainPass(Landmark):
             each player bids once, up to 40 Debt, ending with you.
             High bidder gets +8VP and takes the Debt they bid."""
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         if self._state == "do":
             plr = player
             curbid = 0
@@ -58,7 +58,7 @@ class Landmark_MountainPass(Landmark):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return 0
 
 
@@ -77,7 +77,7 @@ class Test_MountainPass(unittest.TestCase):
         self.assertEqual(self.mp._state, 'do')
         self.other.test_input = ['24']
         self.plr.test_input = ['25']
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertEqual(self.plr.debt, 25)
         self.assertEqual(self.other.debt, 0)
         self.assertEqual(self.plr.getScoreDetails()['Mountain Pass'], 8)

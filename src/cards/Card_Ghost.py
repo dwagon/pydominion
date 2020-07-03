@@ -67,7 +67,7 @@ class Test_Ghost(unittest.TestCase):
             self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
             self.plr.phase = 'night'
             self.plr.playCard(self.card)
-            self.plr.endTurn()
+            self.plr.end_turn()
             self.plr.startTurn()
             self.assertEqual(self.plr.handSize(), 5 + 2 * 2)    # Hand + Moat *2
         except AssertionError:      # pragma: no cover
