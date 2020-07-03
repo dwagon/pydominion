@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Artifact import Artifact
 
 
@@ -20,7 +21,6 @@ class Artifact_Key(Artifact):
 ###############################################################################
 class Test_Key(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Key'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
