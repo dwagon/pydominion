@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from cards.Card_Knight import KnightCard
 
@@ -13,8 +14,8 @@ class Card_Sir_Martin(KnightCard):
         self.base = 'darkages'
         self.name = "Sir Martin"
         self.desc = """+2 Buys. Each other player reveals the top 2 cards of his deck,
-        trashes one of them costing from 3 to 6, and discards the rest.
-        If a Knight is trashed by this, trash this card."""
+            trashes one of them costing from 3 to 6, and discards the rest.
+            If a Knight is trashed by this, trash this card."""
         self.buys = 2
         self.cost = 4
 
@@ -25,7 +26,6 @@ class Card_Sir_Martin(KnightCard):
 ###############################################################################
 class Test_Sir_Martin(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
