@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -25,8 +26,7 @@ class Event_Alliance(Event):
 ###############################################################################
 class Test_Alliance(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alliance'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alliance'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events['Alliance']
