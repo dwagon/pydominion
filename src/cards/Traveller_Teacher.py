@@ -11,7 +11,7 @@ class Card_Teacher(Card):
         self.cardtype = ['action', 'reserve']
         self.base = 'adventure'
         self.desc = """At the start of your turn, you may call this,
-        to move your +1 Card, +1 Action, +1 Buy of +1 Coin token
+        to move your +1 Card, +1 Action, +1 Buy or +1 Coin token
         to an Action Supply pile you have no tokens on"""
         self.name = 'Teacher'
         self.purchasable = False
@@ -20,7 +20,7 @@ class Card_Teacher(Card):
 
     def special(self, game, player):
         """At the start of your turn, you may call this, to move your +1 Card,
-        +1 Action, +1 Buy of +1 Coin token to an Action Supply pile you have
+        +1 Action, +1 Buy or +1 Coin token to an Action Supply pile you have
         no tokens on"""
         for tkn in ('+1 Card', '+1 Action', '+1 Buy', '+1 Coin'):
             actionpiles = self.which_stacks(game, player)
@@ -41,8 +41,8 @@ class Test_Teacher(unittest.TestCase):
         import Game
         initcards = ['Page', 'Cellar', 'Chapel', 'Moat', 'Chancellor', 'Village', 'Woodcutter', 'Workshop', 'Bureaucrat', 'Venture']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Teacher'].remove()
         self.plr.addCard(self.card, 'hand')
 

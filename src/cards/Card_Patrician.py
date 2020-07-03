@@ -19,6 +19,7 @@ class Card_Patrician(Card):
     ###########################################################################
     def special(self, game, player):
         topcard = player.nextCard()
+        player.revealCard(topcard)
         if topcard.cost >= 5:
             player.addCard(topcard, 'hand')
             player.output("Adding %s to hand" % topcard.name)
@@ -32,8 +33,8 @@ class Test_Patrician(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Patrician'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Patrician'].remove()
 
     def test_play_cheap(self):
@@ -52,6 +53,7 @@ class Test_Patrician(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.plr.inHand('Gold'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

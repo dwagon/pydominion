@@ -21,8 +21,8 @@ class Test_Smithy(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Smithy'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Smithy'].remove()
         self.plr.addCard(self.card, 'hand')
 

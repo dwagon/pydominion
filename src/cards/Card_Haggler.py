@@ -25,8 +25,8 @@ class Test_Haggler(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Haggler'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Haggler'].remove()
 
     def test_play(self):
@@ -37,7 +37,7 @@ class Test_Haggler(unittest.TestCase):
     def test_buy(self):
         """ Buy a Gold and haggle a silver """
         self.plr.setPlayed('Haggler')
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Get Silver']
         self.plr.buyCard(self.g['Gold'])
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))

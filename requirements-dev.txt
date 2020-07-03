@@ -1,6 +1,8 @@
-pytest
+pylint
+pytest>=4.4.0
 pytest-cov
 pytest-xdist
 python-coveralls
 colorama
 py-cpuinfo
+flake8

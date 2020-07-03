@@ -9,7 +9,7 @@ class Boon_Mountains_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "Gain a silver"
         self.name = "The Mountain's Gift"
         self.purchasable = False
@@ -22,13 +22,14 @@ class Boon_Mountains_Gift(Boon):
 class Test_Mountains_Gift(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
-        for b in self.g.boons[:]:
-            if b.name != "The Mountain's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+        for b in self.g.boons:
+            if b.name == "The Mountain's Gift":
+                myboon = b
+                break
+        self.g.boons = [myboon]
         self.card = self.g['Bard'].remove()
 
     def test_mountains_gift(self):

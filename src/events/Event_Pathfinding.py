@@ -26,8 +26,8 @@ class Test_Pathfinding(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Pathfinding'], initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Pathfinding']
 
     def test_with_treasure(self):

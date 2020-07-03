@@ -21,7 +21,9 @@ class Card_GrandCastle(CastleCard):
             return "5VP"
 
     def hook_gainThisCard(self, game, player):
-        vics = sum([1 for card in player.hand if card.isVictory()])
+        for card in player.hand:
+            player.revealCard(card)
+        vics = sum([1 for _ in player.hand if _.isVictory()])
         player.output("Gaining %d VPs from your Victory Cards" % vics)
         player.addScore("Grand Castle", vics)
         for plr in list(game.players.values()):
@@ -35,8 +37,8 @@ class Test_GrandCastle(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
 
     def test_play(self):
         """ Play a sprawling castle"""

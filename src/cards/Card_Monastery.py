@@ -14,7 +14,7 @@ class Card_Monastery(Card):
         self.name = 'Monastery'
         self.cost = 2
 
-    def special(self, game, player):
+    def night(self, game, player):
         numgained = len(player.stats['gained'])
         if not numgained:
             return
@@ -27,27 +27,30 @@ class Test_Monastery(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Monastery'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.monastery = self.g['Monastery'].remove()
 
     def test_play_card(self):
         """ Play Monastery """
+        self.plr.phase = 'night'
         self.plr.setHand('Duchy')
         self.plr.addCard(self.monastery, 'hand')
         self.plr.gainCard('Silver')
         self.plr.test_input = ['Duchy']
         self.plr.playCard(self.monastery)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
 
     def test_play_no_gained(self):
         """ Play Monastery when you didn't gain a card """
+        self.plr.phase = 'night'
         self.plr.setHand('Duchy')
         self.plr.addCard(self.monastery, 'hand')
         self.plr.playCard(self.monastery)
 
     def test_play_copper(self):
         """ Play Monastery when you have a copper """
+        self.plr.phase = 'night'
         self.plr.setHand('Duchy')
         self.plr.setPlayed('Copper')
         self.plr.addCard(self.monastery, 'hand')

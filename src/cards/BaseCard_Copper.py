@@ -18,7 +18,7 @@ class Card_Copper(Card):
         self.coin = 1
         self.cost = 0
 
-    def numcards(self, game):
+    def calc_numcards(self, game):
         return 60 - game.numplayers * 7
 
 
@@ -27,8 +27,8 @@ class Test_Copper(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Copper'].remove()
         self.plr.addCard(self.card, 'hand')
 

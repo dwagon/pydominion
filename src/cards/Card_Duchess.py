@@ -16,7 +16,7 @@ class Card_Duchess(Card):
         self.cost = 2
 
     def special(self, game, player):
-        for plr in game.playerList():
+        for plr in game.player_list():
             card = plr.nextCard()
             if plr == player:
                 name = 'your'
@@ -34,7 +34,7 @@ class Card_Duchess(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     if 'Estate' in args[0] or 'Duchy' in args[0] or 'Province' in args[0]:
         return False
     return True
@@ -45,8 +45,8 @@ class Test_Duchess(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Duchess'].remove()
 
     def test_play(self):
@@ -80,6 +80,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.gainCard('Duchy')
         self.assertIsNone(self.plr.inDiscard('Duchess'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

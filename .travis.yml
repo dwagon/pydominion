@@ -1,14 +1,22 @@
 language: python
+sudo: required
+dist: xenial
 
 python:
     - "2.7"
-    - "3.5"
+    - "3.6"
+    - "3.7"
+    - "3.8"
+    - "3.9-dev"
 
 install:
     - "pip install -r requirements.txt"
     - "pip install -r requirements-dev.txt"
 
-script: "./src/run_tests"
+script: 
+    - flake8 src
+    - PYTHONPATH=src pylint --exit-zero src
+    - "./src/run_tests"
 
 after_success:
     coveralls --data_file src/.coverage

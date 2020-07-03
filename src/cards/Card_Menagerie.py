@@ -18,6 +18,7 @@ class Card_Menagerie(Card):
     def special(self, game, player):
         hand = set()
         for card in player.hand:
+            player.revealCard(card)
             hand.add(card.name)
         if len(hand) == player.handSize():
             player.output("No duplicates - picking up 3 cards")
@@ -32,8 +33,8 @@ class Test_Menagerie(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Menagerie'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Menagerie'].remove()
 
     def test_play_unique(self):

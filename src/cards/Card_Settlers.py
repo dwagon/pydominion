@@ -21,6 +21,7 @@ class Card_Settlers(Card):
         if cu:
             player.addCard(cu, 'hand')
             player.discardpile.remove(cu)
+            player.revealCard(cu)
             player.output("Pulled Copper from discard into hand")
         else:
             player.output("No Copper in discard")
@@ -31,8 +32,8 @@ class Test_Settlers(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Settlers'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Settlers'].remove()
 
     def test_play(self):
@@ -55,6 +56,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.inHand('Copper'))
         self.assertEqual(self.plr.handSize(), 2 + 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

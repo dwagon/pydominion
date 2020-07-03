@@ -23,7 +23,7 @@ class Card_Champion(Card):
             it doesn't affect you, and when you play an Action, +1 Action. """
         pass
 
-    def hook_postAction(self, game, player):
+    def hook_postAction(self, game, player, card):
         player.addActions(1)
 
 
@@ -32,8 +32,8 @@ class Test_Champion(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Champion'].remove()
 
     def test_champion(self):

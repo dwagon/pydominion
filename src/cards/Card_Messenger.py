@@ -37,9 +37,9 @@ class Card_Messenger(Card):
     def hook_buyThisCard(self, game, player):
         if len(player.stats['bought']) == 1:
             c = player.plrGainCard(4, prompt="Pick a card for everyone to gain")
-            for plr in game.playerList():
+            for plr in game.player_list():
                 if plr != player:
-                    plr.gainCard(c)
+                    plr.gainCard(newcard=c)
                     plr.output("Gained a %s from %s's Messenger" % (c.name, player.name))
 
 
@@ -48,8 +48,8 @@ class Test_Messenger(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Messenger'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Messenger'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -72,9 +72,9 @@ class Test_Messenger(unittest.TestCase):
 
     def test_buy(self):
         """ Buy a messenger """
-        self.plr.test_input = ['silver']
+        self.plr.test_input = ['get silver']
         self.plr.buyCard(self.g['Messenger'])
-        for plr in self.g.playerList():
+        for plr in self.g.player_list():
             self.assertIsNotNone(plr.inDiscard('Silver'))
 
 

@@ -17,7 +17,11 @@ class Card_CityQuarter(Card):
         self.coin = 1
 
     def special(self, game, player):
-        actions = sum([1 for c in player.hand if c.isAction()])
+        actions = 0
+        for c in player.hand:
+            player.revealCard(c)
+            if c.isAction():
+                actions += 1
         player.output("Revealed %d actions" % actions)
         player.pickupCards(actions)
 
@@ -27,8 +31,8 @@ class Test_CityQuarter(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['City Quarter', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['City Quarter'].remove()
 
     def test_play(self):

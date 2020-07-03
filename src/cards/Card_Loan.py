@@ -20,6 +20,7 @@ class Card_Loan(Card):
             other cards """
         while True:
             c = player.nextCard()
+            player.revealCard(c)
             if c.isTreasure():
                 break
             else:
@@ -39,8 +40,8 @@ class Test_Loan(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Loan'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.loan = self.plr.gainCard('Loan', 'hand')
 
     def test_play(self):
@@ -49,22 +50,25 @@ class Test_Loan(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_discard(self):
+        tsize = self.g.trashSize()
         self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['0']
         self.plr.playCard(self.loan)
         self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, 'treasure')
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
+        tsize = self.g.trashSize()
         self.plr.setDeck('Estate', 'Gold', 'Estate', 'Duchy')
         self.plr.test_input = ['1']
         self.plr.playCard(self.loan)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         for c in self.plr.discardpile:
             self.assertNotEqual(c.cardtype, 'treasure')
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

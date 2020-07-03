@@ -30,15 +30,15 @@ class Test_Hornofplenty(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horn of Plenty', 'Moat'], badcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Horn of Plenty'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Horn of Plenty """
         self.plr.setPlayed('Copper', 'Silver', 'Silver')
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Get Silver']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inPlayed('Horn of Plenty'))
@@ -46,20 +46,20 @@ class Test_Hornofplenty(unittest.TestCase):
     def test_play_victory(self):
         """ Horn of Plenty - gaining a victory card """
         self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Moat')
-        self.plr.test_input = ['Duchy']
+        self.plr.test_input = ['Get Duchy']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertIsNone(self.plr.inPlayed('Horn of Plenty'))
-        self.assertIsNotNone(self.g.inTrash('Horn of Plenty'))
+        self.assertIsNotNone(self.g.in_trash('Horn of Plenty'))
 
     def test_play_nothing(self):
         """ Horn of Plenty - gaining nothing """
         self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Moat')
-        self.plr.test_input = ['finish']
+        self.plr.test_input = ['finish selecting']
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.inDiscard('Duchy'))
         self.assertIsNotNone(self.plr.inPlayed('Horn of Plenty'))
-        self.assertIsNone(self.g.inTrash('Horn of Plenty'))
+        self.assertIsNone(self.g.in_trash('Horn of Plenty'))
 
 
 ###############################################################################

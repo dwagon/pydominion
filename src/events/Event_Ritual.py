@@ -27,8 +27,8 @@ class Test_Ritual(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Ritual'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.event = self.g.events['Ritual']
 
     def test_ritual(self):
@@ -38,7 +38,7 @@ class Test_Ritual(unittest.TestCase):
         self.plr.test_input = ['Gold']
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.getScoreDetails()['Ritual'], 6)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Curse'))
 
 

@@ -35,8 +35,8 @@ class Test_Rats(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rats'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.rats = self.g['Rats'].remove()
         self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.setHand('Copper', 'Gold', 'Silver', 'Rats')
@@ -50,9 +50,10 @@ class Test_Rats(unittest.TestCase):
         self.assertEqual(self.plr.hand[-1].name, 'Gold')
 
     def test_trashcard(self):
+        tsize = self.g.trashSize()
         self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rats)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertNotEqual(self.g.trashpile[0].name, 'Rats')
 
     def test_gainrats(self):

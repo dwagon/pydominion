@@ -41,8 +41,8 @@ class Test_Watchtower(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Watchtower'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Watchtower'].remove()
 
     def test_play(self):
@@ -64,26 +64,36 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_trash(self):
         """ React to gaining a card - discard card"""
-        self.plr.test_input = ['trash']
-        self.plr.setHand('Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.gainCard('Copper')
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[-1].name, 'Copper')
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.inHand('Copper'), None)
+        tsize = self.g.trashSize()
+        try:
+            self.plr.test_input = ['trash']
+            self.plr.setHand('Gold')
+            self.plr.addCard(self.card, 'hand')
+            self.plr.gainCard('Copper')
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trashpile[-1].name, 'Copper')
+            self.assertEqual(self.plr.handSize(), 2)
+            self.assertEqual(self.plr.inHand('Copper'), None)
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
     def test_react_topdeck(self):
         """ React to gaining a card - put card on deck"""
+        tsize = self.g.trashSize()
         self.plr.test_input = ['top']
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.gainCard('Silver')
-        self.assertEqual(self.g.trashSize(), 0)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.inHand('Silver'), None)
-        c = self.plr.nextCard()
-        self.assertEqual(c.name, 'Silver')
+        try:
+            self.assertEqual(self.g.trashSize(), tsize)
+            self.assertEqual(self.plr.handSize(), 2)
+            self.assertEqual(self.plr.inHand('Silver'), None)
+            c = self.plr.nextCard()
+            self.assertEqual(c.name, 'Silver')
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

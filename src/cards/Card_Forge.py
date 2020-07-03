@@ -9,7 +9,7 @@ class Card_Forge(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = ''
+        self.base = 'prosperity'
         self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"
         self.name = 'Forge'
         self.cost = 7
@@ -34,20 +34,21 @@ class Test_Forge(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Feast'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.forge = self.g['Forge'].remove()
 
     def test_play(self):
         """ Play the Forge """
+        tsize = self.g.trashSize()
         self.plr.setHand('Estate', 'Estate', 'Estate')
         self.plr.addCard(self.forge, 'hand')
         # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ['1', '2', 'finish', 'Feast']
         self.plr.playCard(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
-        self.assertEqual(self.g.trashpile[0].name, 'Estate')
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertIsNotNone(self.g.in_trash('Estate'))
+        self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.handSize(), 1)
 
 

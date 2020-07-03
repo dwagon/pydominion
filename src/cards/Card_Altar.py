@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,10 +26,9 @@ class Card_Altar(Card):
 ###############################################################################
 class Test_Altar(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Altar', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Altar'].remove()
 
     def test_play(self):
@@ -38,7 +38,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.test_input = ['Province', 'Moat']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Moat'))
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
 
 
 ###############################################################################

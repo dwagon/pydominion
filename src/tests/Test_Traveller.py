@@ -8,7 +8,7 @@ import Game
 class Test_load_travellers(unittest.TestCase):
     def test_needtravellers(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
-        self.g.startGame()
+        self.g.start_game()
         self.assertTrue(self.g.loaded_travellers)
 
 
@@ -16,8 +16,8 @@ class Test_load_travellers(unittest.TestCase):
 class Test_replace_traveller(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Page'].remove()
         self.plr.addCard(self.card, 'hand')
 

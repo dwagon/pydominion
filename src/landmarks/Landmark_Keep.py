@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -9,13 +10,14 @@ class Landmark_Keep(Landmark):
     def __init__(self):
         Landmark.__init__(self)
         self.base = 'empires'
-        self.desc = """When scoring, 5VP per differently named Treasure you have, that you have more copies of than each other player, or tied for most."""
+        self.desc = """When scoring, 5VP per differently named Treasure you have,
+        that you have more copies of than each other player, or tied for most."""
         self.name = "Keep"
 
     def hook_end_of_game(self, game, player):
         cards = {}
         # For each type of treasure card work out who has how many
-        for pl in game.playerList():
+        for pl in game.player_list():
             plname = pl.name
             for card in pl.allCards():
                 if card.isTreasure():
@@ -36,16 +38,21 @@ class Landmark_Keep(Landmark):
 ###############################################################################
 class Test_Keep(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Keep'], badcards=['Shepherd'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g = Game.Game(
+            quiet=True, numplayers=2, landmarkcards=['Keep'],
+            badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
 
     def test_most(self):
         """ Use Keep when we have the most Silver"""
         self.plr.setDeck('Silver')
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
+        try:
+            self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
+        except AssertionError:  # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

@@ -16,7 +16,12 @@ class Card_Duchy(Card):
         self.name = 'Duchy'
         self.cost = 5
         self.victory = 3
-        self.numcards = 12
+
+    def calc_numcards(self, game):
+        if game.numplayers == 2:
+            return 8
+        else:
+            return 12
 
     def hook_gainThisCard(self, game, player):
         if 'Duchess' in game:
@@ -30,7 +35,7 @@ class Card_Duchy(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     return False    # Don't gain a duchess
 
 
@@ -39,8 +44,8 @@ class Test_Duchy(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Duchy'].remove()
 
     def test_have(self):

@@ -10,7 +10,6 @@ class Card_Emporium(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'empires'
-        self.desc = "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
         self.name = 'Emporium'
         self.coin = 1
         self.actions = 1
@@ -18,11 +17,20 @@ class Card_Emporium(Card):
         self.cost = 5
 
     ###########################################################################
+    def desc(self, player):
+        if player.phase == 'action':
+            return "+1 Card, +1 Action, +1 Coin"
+        else:
+            return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
+
+    ###########################################################################
     def hook_gainThisCard(self, game, player):
         count = sum([1 for c in player.played if c.isAction()])
         if count >= 5:
             player.addScore('Emporium', 2)
             player.output("Gained 2VP from Emporium")
+        else:
+            player.output("No VP as only have {} action cards in play".format(count))
 
 
 ###############################################################################
@@ -30,8 +38,8 @@ class Test_Emporium(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Emporium', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Emporium'].remove()
 
     def test_play(self):

@@ -9,7 +9,7 @@ class Card_Tunnel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['victory', 'reaction']
-        self.base = 'hinterland'
+        self.base = 'hinterlands'
         self.desc = """2VP. When you discard this other than during a Clean-up phase, you may reveal it. If you do, gain a Gold."""
         self.name = "Tunnel"
         self.cost = 3
@@ -31,8 +31,8 @@ class Test_Tunnel(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tunnel"])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g["Tunnel"].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -46,6 +46,7 @@ class Test_Tunnel(unittest.TestCase):
         """ Score from a Tunnel """
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc['Tunnel'], 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

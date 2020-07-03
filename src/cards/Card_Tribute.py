@@ -19,7 +19,11 @@ class Card_Tribute(Card):
 
     def special(self, game, player):
         victim = game.playerToLeft(player)
-        cards = [victim.nextCard(), victim.nextCard()]
+        cards = []
+        for _ in range(2):
+            card = victim.nextCard()
+            victim.revealCard(card)
+            cards.append(card)
         cardname = None
         for c in cards:
             player.output("Looking at %s from %s" % (c.name, victim.name))
@@ -45,8 +49,8 @@ class Test_Tribute(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tribute'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Tribute'].remove()
         self.plr.addCard(self.card, 'hand')
 

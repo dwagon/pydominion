@@ -18,7 +18,9 @@ class Card_Explorer(Card):
         """ You may reveal a Province card from you hand. If you
             do, gain a Gold card, putting it into your hand. Otherise,
             gain a Silver card, putting it into your hand """
-        if player.inHand('Province'):
+        prov = player.inHand('Province')
+        if prov:
+            player.revealCard(prov)
             player.output("Gained a Gold")
             player.gainCard('Gold', destination='hand')
         else:
@@ -31,8 +33,8 @@ class Test_Explorer(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Explorer'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Explorer'].remove()
         self.plr.addCard(self.card, 'hand')
 

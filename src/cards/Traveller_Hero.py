@@ -31,17 +31,21 @@ class Test_Hero(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'], badcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Hero'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_hero(self):
         """ Play a hero """
-        self.plr.test_input = ['gold']
+        self.plr.test_input = ['get gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        try:
+            self.assertEqual(self.plr.getCoin(), 2)
+            self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

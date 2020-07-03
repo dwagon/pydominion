@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -9,8 +10,9 @@ class Card_Wanderingminstrel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dark ages'
-        self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck. Put the Actions back on top in any order and discard the rest."""
+        self.base = 'darkages'
+        self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck.
+            Put the Actions back on top in any order and discard the rest."""
         self.name = 'Wandering Minstrel'
         self.cards = 1
         self.actions = 2
@@ -18,8 +20,9 @@ class Card_Wanderingminstrel(Card):
 
     def special(self, game, player):
         cards = []
-        for i in range(3):
+        for _ in range(3):
             c = player.nextCard()
+            player.revealCard(c)
             if c.isAction():
                 cards.append(c)
                 player.output("Revealed a %s and put on top of deck" % c.name)
@@ -34,10 +37,9 @@ class Card_Wanderingminstrel(Card):
 ###############################################################################
 class Test_Wanderingminstrel(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wandering Minstrel', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Wandering Minstrel'].remove()
         self.plr.addCard(self.card, 'hand')
 

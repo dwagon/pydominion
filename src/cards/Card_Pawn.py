@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,7 @@ class Card_Pawn(Card):
         ]
         chosen = []
         player.output("Pick two options")
-        for i in range(2):
+        for _ in range(2):
             options = []
             index = 1
             for k, v in selectable:
@@ -50,10 +51,9 @@ class Card_Pawn(Card):
 ###############################################################################
 class Test_Pawn(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pawn'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Pawn'].remove()
         self.plr.addCard(self.card, 'hand')
 

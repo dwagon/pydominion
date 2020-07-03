@@ -24,13 +24,13 @@ class Test_Banquet(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Banquet'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Banquet']
 
     def test_event(self):
         """ Use the event """
-        self.plr.test_input = ['Silver']
+        self.plr.test_input = ['Get Silver']
         self.plr.addCoin(3)
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Copper'))

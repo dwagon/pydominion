@@ -17,6 +17,7 @@ class Card_Poorhouse(Card):
     def special(self, game, player):
         coins = 4
         for card in player.hand:
+            player.revealCard(card)
             if card.isTreasure():
                 coins -= 1
         player.output("Gaining %d coins" % max(coins, 0))
@@ -28,8 +29,8 @@ class Test_Poorhouse(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Poor House'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Poor House'].remove()
 
     def test_play(self):

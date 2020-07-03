@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -31,12 +32,13 @@ class Card_Rogue(Card):
     ###########################################################################
     def riffleVictim(self, victim, player):
         cards = []
-        for i in range(2):
+        for _ in range(2):
             c = victim.nextCard()
+            victim.revealCard(c)
             if 3 <= c.cost <= 6:
                 cards.append(c)
             else:
-                victim.output("Rogue discarded %s as unsuitable" % c.name)
+                victim.output("{}'s Rogue discarded {} as unsuitable".format(player.name, c.name))
                 victim.addCard(c, 'discard')
         if not cards:
             player.output("No suitable cards from %s" % victim.name)
@@ -62,6 +64,8 @@ class Card_Rogue(Card):
         picked = set()
         index = 1
         for c in game.trashpile:
+            if not c.insupply:
+                continue
             if c.name in picked:
                 continue
             if 3 <= c.cost <= 6:
@@ -81,17 +85,20 @@ class Card_Rogue(Card):
 ###############################################################################
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'], badcards=['Pooka'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Rogue', 'Moat'], badcards=['Pooka', 'Fool'])
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Rogue'].remove()
 
     def test_play(self):
         """ Nothing should happen """
-        self.plr.addCard(self.card, 'hand')
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        try:
+            self.plr.addCard(self.card, 'hand')
+            self.plr.playCard(self.card)
+            self.assertEqual(self.plr.getCoin(), 2)
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
     def test_defended(self):
         """ Victim has a defense """
@@ -103,33 +110,40 @@ class Test_Rogue(unittest.TestCase):
 
     def test_good_trash(self):
         """ Rogue to get something juicy from the trash """
+        tsize = self.g.trashSize()
         for i in range(2):
             gold = self.g['Gold'].remove()
             self.plr.trashCard(gold)
         self.plr.test_input = ['1']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
+        try:
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
     def test_good_player(self):
         """ Rogue to trash something from another player """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Gold', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[-1].name, 'Duchy')
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.victim.discardSize(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 
     def test_bad_player(self):
         """ Rogue to trash nothing from another player """
+        tsize = self.g.trashSize()
         self.victim.setDeck('Gold', 'Province', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.victim.discardSize(), 2)
 
 

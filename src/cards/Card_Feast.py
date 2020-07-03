@@ -50,34 +50,48 @@ class Card_Feast(Card):
 class Test_Feast(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'], badcards=['Den of Sin', 'Ghost Town', 'Duchess'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+        self.card = self.g['Feast'].remove()
+        self.plr.addCard(self.card, 'hand')
 
     def test_dontTrash(self):
-        self.plr.setHand('Feast')
-        self.plr.test_input = ['keep']
-        self.plr.playCard(self.plr.hand[0])
-        self.assertTrue(self.g.trashpile.isEmpty())
-        self.assertEqual(self.plr.played[0].name, 'Feast')
+        tsize = self.g.trashSize()
+        self.plr.test_input = ['keep this']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.g.trashSize(), tsize)
+        try:
+            self.assertEqual(self.plr.played[0].name, 'Feast')
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
     def test_trashForNothing(self):
-        self.plr.setHand('Feast')
-        self.plr.test_input = ['trash', '0']
-        self.plr.playCard(self.plr.hand[0])
-        self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Feast')
-        self.assertTrue(self.plr.played.isEmpty())
+        tsize = self.g.trashSize()
+        try:
+            self.plr.test_input = ['trash', 'nothing']
+            self.plr.playCard(self.card)
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertIsNotNone(self.g.in_trash('Feast'))
+            self.assertTrue(self.plr.played.isEmpty())
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
     def test_trashForSomething(self):
-        self.plr.setHand('Feast')
-        self.plr.test_input = ['trash', '1']
-        self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Feast')
-        self.assertTrue(self.plr.played.isEmpty())
-        self.assertEqual(self.plr.discardSize(), 1)
+        tsize = self.g.trashSize()
+        self.plr.test_input = ['trash', 'Get Duchy']
+        self.plr.playCard(self.card)
+        try:
+            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertIsNotNone(self.g.in_trash('Feast'))
+            self.assertTrue(self.plr.played.isEmpty())
+            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        except AssertionError:      # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

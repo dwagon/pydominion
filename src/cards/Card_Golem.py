@@ -25,6 +25,7 @@ class Card_Golem(Card):
         count = 0
         while len(actions) != 2:
             c = player.nextCard()
+            player.revealCard(c)
             count += 1
             if count > maxnum:
                 player.output("Not enough action cards in deck")
@@ -37,7 +38,7 @@ class Card_Golem(Card):
                 player.discardCard(c)
         # TODO - let the player choose the order
         for card in actions:
-            player.output("Playing %s" % c.name)
+            player.output("Golem playing %s" % card.name)
             player.playCard(card, costAction=False)
 
 
@@ -46,8 +47,8 @@ class Test_Golem(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Golem', 'Village', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Golem'].remove()
 
     def test_actions(self):
@@ -73,6 +74,7 @@ class Test_Golem(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -39,17 +39,17 @@ class Test_Embargo(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embargo'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Embargo'].remove()
 
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['trash', 'Silver']
+        self.plr.test_input = ['trash', 'Select Silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.g['Silver'].embargo_level, 1)
-        self.assertIsNotNone(self.g.inTrash('Embargo'))
+        self.assertIsNotNone(self.g.in_trash('Embargo'))
 
 
 ###############################################################################

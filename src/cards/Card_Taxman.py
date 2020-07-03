@@ -31,6 +31,8 @@ class Card_Taxman(Card):
                     vic.discardCard(viccard)
                 else:
                     player.output("%s doesn't have a %s" % (vic.name, card.name))
+                    for c in vic.hand:
+                        vic.revealCard(c)
         cardcost = player.cardCost(card) + 3
         player.plrGainCard(cost=cardcost, types={'treasure': True})
 
@@ -40,8 +42,8 @@ class Test_Taxman(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Taxman'], badcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Taxman'].remove()
 
     def test_play(self):
@@ -49,11 +51,12 @@ class Test_Taxman(unittest.TestCase):
         self.plr.setHand('Silver')
         self.victim.setHand('Copper', 'Copper', 'Estate', 'Duchy', 'Silver')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Silver', 'Gold']
+        self.plr.test_input = ['Trash Silver', 'Get Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertIsNotNone(self.victim.inDiscard('Silver'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

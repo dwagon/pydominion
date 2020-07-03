@@ -29,12 +29,13 @@ class Test_Donate(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Donate'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Donate']
 
     def test_with_treasure(self):
         """ Use Donate """
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold', 'Estate', 'Copper', 'Copper')
         self.plr.setDiscard('Province', 'Estate', 'Copper', 'Copper')
         self.plr.setDeck('Silver', 'Estate', 'Copper', 'Copper')
@@ -43,11 +44,11 @@ class Test_Donate(unittest.TestCase):
         self.plr.test_input = ['Gold', 'Province', 'Silver', 'finish']
         self.plr.endTurn()
         self.g.print_state()
-        self.assertIsNotNone(self.g.inTrash('Gold'))
-        self.assertIsNotNone(self.g.inTrash('Province'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNone(self.plr.inDeck('Gold'))
-        self.assertEqual(self.g.trashSize(), 3)
+        self.assertEqual(self.g.trashSize(), tsize + 3)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discardSize(), 0)
 

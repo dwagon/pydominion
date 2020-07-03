@@ -20,9 +20,9 @@ class Card_Catapult(Card):
 
     def special(self, game, player):
         cards = player.plrTrashCard()
-        card = cards[0]
-        if not card:
+        if not cards:
             return
+        card = cards[0]
         for plr in player.attackVictims():
             if card.cost >= 3:
                 plr.output("%s's Catapult Curses you" % player.name)
@@ -33,7 +33,7 @@ class Card_Catapult(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 
@@ -43,8 +43,8 @@ class Test_Catapult(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Catapult'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Catapult'].remove()
 
     def test_play(self):
@@ -54,7 +54,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.test_input = ['Duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertIsNotNone(self.victim.inDiscard('Curse'))
 
     def test_play_treasure(self):
@@ -64,7 +64,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertEqual(self.victim.handSize(), 3)
 
 

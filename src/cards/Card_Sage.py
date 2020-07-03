@@ -25,6 +25,7 @@ class Card_Sage(Card):
             if not card:
                 player.output("No card costing 3 or more found")
                 break
+            player.revealCard(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
                 player.addCard(card, 'hand')
@@ -40,8 +41,8 @@ class Test_Sage(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Sage'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Sage'].remove()
 
     def test_play(self):

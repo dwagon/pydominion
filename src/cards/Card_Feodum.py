@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,17 +26,16 @@ class Card_Feodum(Card):
 
     def hook_trashThisCard(self, game, player):
         """ When you trash this gain 3 silvers """
-        for i in range(3):
+        for _ in range(3):
             player.gainCard('Silver')
 
 
 ###############################################################################
 class Test_Feodum(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feodum'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
         self.plr.setHand('Feodum')
@@ -57,6 +57,7 @@ class Test_Feodum(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

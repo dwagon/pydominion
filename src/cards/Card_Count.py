@@ -69,8 +69,8 @@ class Test_Count(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Count'], badcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Count'].remove()
         self.plr.setHand('Copper', 'Estate', 'Silver', 'Province', 'Gold')
 
@@ -104,11 +104,12 @@ class Test_Count(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_trashhand(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['gain a copper', 'trash hand']
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 5)
+        self.assertEqual(self.g.trashSize(), tsize + 5)
 
     def test_gainDuchy(self):
         self.plr.addCard(self.card, 'hand')

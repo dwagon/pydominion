@@ -12,6 +12,10 @@ class Card_Estate(Card):
         self.name = 'Estate'
         self.cost = 2
         self.victory = 1
-        self.numcards = 12
+
+    def calc_numcards(self, game):
+        if game.numplayers == 2:
+            return 8
+        return 12
 
 # EOF

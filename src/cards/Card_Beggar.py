@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,10 +19,10 @@ class Card_Beggar(Card):
 
     def special(self, game, player):
         player.output("Gaining 3 coppers")
-        for i in range(3):
+        for _ in range(3):
             player.gainCard('Copper', 'hand')
 
-    def hook_underAttack(self, player, game, attacker):
+    def hook_underAttack(self, game, player, attacker):
         player.output("Gaining silvers as under attack from %s" % attacker.name)
         player.gainCard('Silver', 'topdeck')
         player.gainCard('Silver')
@@ -30,10 +31,9 @@ class Card_Beggar(Card):
 ###############################################################################
 class Test_Beggar(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Beggar', 'Militia'])
-        self.g.startGame()
-        self.plr, self.attacker = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.attacker = self.g.player_list()
         self.card = self.g['Beggar'].remove()
 
     def test_play(self):

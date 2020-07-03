@@ -26,22 +26,23 @@ class Card_Farmland(Card):
 class Test_Farmland(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farmland', 'Militia'], badcards=['Death Cart'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farmland', 'Militia'], badcards=['Death Cart', 'Cemetery', 'Blessed Village'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Farmland'].remove()
 
     def test_gain(self):
         """ Gain a farmland """
         try:
+            tsize = self.g.trashSize()
             self.plr.setHand('Estate', 'Estate')
             self.plr.test_input = ['1', '1']
             self.plr.gainCard('Farmland')
-            self.assertEqual(self.g.trashSize(), 1)
+            self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.handSize(), 1)
             # 1 for farmland, 1 for gained card
             self.assertEqual(self.plr.discardSize(), 2)
-        except AssertionError:
+        except (AssertionError, IOError):       # pragma: no cover
             self.g.print_state()
             raise
 

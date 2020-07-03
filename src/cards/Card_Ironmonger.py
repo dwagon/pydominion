@@ -23,6 +23,7 @@ class Card_Ironmonger(Card):
             Either way, if it is an... Action card, +1 Action; Treasure
             Card, +1 coin; Victory Card, +1 card """
         card = player.nextCard()
+        player.revealCard(card)
         ans = player.plrChooseOptions(
             "What to do with %s" % card.name,
             ('Put back %s' % card.name, False),
@@ -48,8 +49,8 @@ class Test_Ironmonger(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Iron Monger'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.im = self.g['Iron Monger'].remove()
         self.plr.addCard(self.im, 'hand')
 

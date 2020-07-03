@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,13 +17,12 @@ class Card_Cache(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+3 coin. Gain two coppers when you gain this"
-        else:
-            return "+3 coin"
+        return "+3 coin"
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, gain two Coppers"""
         player.output("Gained 2 copper from cache")
-        for i in range(2):
+        for _ in range(2):
             player.gainCard('Copper')
         return {}
 
@@ -30,10 +30,9 @@ class Card_Cache(Card):
 ###############################################################################
 class Test_Cache(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cache'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.cache = self.g['Cache'].remove()
 
     def test_gain(self):

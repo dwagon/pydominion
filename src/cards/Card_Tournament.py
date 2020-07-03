@@ -9,7 +9,7 @@ class Card_Tournament(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'cornucpia'
+        self.base = 'cornucopia'
         self.desc = """+1 Action. Each player may reveal a Province from his hand.
         If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
         putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""
@@ -20,7 +20,7 @@ class Card_Tournament(Card):
 
     def special(self, game, player):
         found = False
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr != player and plr.inHand('Province'):
                 found = True
         if player.inHand('Province'):
@@ -36,8 +36,8 @@ class Test_Tournament(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Tournament'].remove()
 
     def test_play(self):
@@ -68,6 +68,7 @@ class Test_Tournament(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 0)
         self.assertIsNotNone(self.plr.inDiscard('Bag of Gold'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

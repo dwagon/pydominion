@@ -23,6 +23,7 @@ class Card_Giant(Card):
             player.addCoin(5)
             for victim in player.attackVictims():
                 c = victim.nextCard()
+                victim.revealCard(c)
                 if c.cost >= 3 and c.cost <= 6:
                     victim.trashCard(c)
                     victim.output("%s's Giant trashed your %s" % (player.name, c.name))
@@ -40,8 +41,8 @@ class Test_Giant(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Giant'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Giant'].remove()
 
     def test_play_journey_trashed(self):
@@ -52,7 +53,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertIsNotNone(self.g.inTrash('Gold'))
+        self.assertIsNotNone(self.g.in_trash('Gold'))
 
     def test_play_journey_untrashed(self):
         """ Play a giant - good journey - untrashable victim """
@@ -62,7 +63,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertIsNone(self.g.inTrash('Copper'))
+        self.assertIsNone(self.g.in_trash('Copper'))
         self.assertIsNotNone(self.victim.inDiscard('Curse'))
 
     def test_play_no_journey(self):
@@ -72,6 +73,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = True
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -46,8 +46,8 @@ class Test_Minion(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Minion', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Minion'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -96,6 +96,7 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 5 + 1)
         self.assertEqual(self.victim.handSize(), 5)
         self.assertEqual(self.victim.discardSize(), 0)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

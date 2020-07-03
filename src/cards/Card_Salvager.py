@@ -26,8 +26,8 @@ class Test_Salvager(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Salvager'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Salvager'].remove()
 
     def test_play(self):
@@ -37,8 +37,9 @@ class Test_Salvager(unittest.TestCase):
         self.plr.test_input = ['duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 5)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

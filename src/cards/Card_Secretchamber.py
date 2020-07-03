@@ -24,8 +24,9 @@ class Card_Secretchamber(Card):
 
     def hook_underAttack(self, player, game, attacker):
         player.output("Under attack from %s" % attacker.name)
-        if not self.revealCard(player):
+        if not self.doRevealCard(player):
             return
+        player.revealCard(self)
         player.pickupCards(2)
         player.output("Put two cards onto deck")
         cards = player.cardSel(
@@ -35,7 +36,7 @@ class Card_Secretchamber(Card):
             player.addCard(card, 'topdeck')
             player.hand.remove(card)
 
-    def revealCard(self, player):
+    def doRevealCard(self, player):
         options = [
             {'selector': '0', 'print': "Do nothing", 'reveal': False},
             {'selector': '1', 'print': 'Reveal for +2 cards then put 2 cards from you hand on top of your deck', 'reveal': True}
@@ -49,8 +50,8 @@ class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber', 'Militia'])
-        self.g.startGame()
-        self.plr, self.att = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.att = self.g.player_list()
         self.card = self.g['Secret Chamber'].remove()
 
     def test_play_none(self):
@@ -97,6 +98,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDeck('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inHand('Silver'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

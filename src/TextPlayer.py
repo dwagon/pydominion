@@ -6,7 +6,7 @@ from Option import Option
 if sys.version[0] == "3":
     raw_input = input
 
-colours = [colorama.Fore.RED, colorama.Fore.GREEN, colorama.Fore.YELLOW, colorama.Fore.BLUE]
+colours = [colorama.Fore.RED, colorama.Fore.GREEN, colorama.Fore.YELLOW, colorama.Fore.BLUE, colorama.Fore.MAGENTA, colorama.Fore.CYAN]
 
 
 ###############################################################################
@@ -39,6 +39,8 @@ class TextPlayer(Player):
         """
         outstr = []
         sentence = []
+        if not text:
+            return ""
         for word in text.split():
             if len(" ".join(sentence)) + len(word) + first > maxwidth:
                 outstr.append(" ".join(sentence))
@@ -90,7 +92,7 @@ class TextPlayer(Player):
             o['line'] = line
             self.output(line)
         self.output(prompt, end=' ')
-        while(1):
+        while True:
             if self.test_input:
                 inp = self.test_input.pop(0)
                 self.output("Using '%s' test input" % inp)
@@ -112,7 +114,22 @@ class TextPlayer(Player):
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def cardSelSource(self, **kwargs):
+        if 'cardsrc' in kwargs:
+            if kwargs['cardsrc'] == 'hand':
+                selectfrom = self.hand
+            elif kwargs['cardsrc'] == 'played':
+                selectfrom = self.played
+            elif kwargs['cardsrc'] == 'discard':
+                selectfrom = self.discardpile
+            else:
+                selectfrom = kwargs['cardsrc']
+        else:
+            selectfrom = self.hand
+        return selectfrom
+
+    ###########################################################################
+    def cardSel(self, num=1, **kwargs):   # pylint: disable=too-many-locals, too-many-branches
         """ Most interactions with players are the selection of cards
             either from the hand, the drawpiles, or a subset
             * force
@@ -133,25 +150,10 @@ class TextPlayer(Player):
             * anynum
                 True - Any number of cards can be selected
         """
-        if 'cardsrc' in kwargs:
-            if kwargs['cardsrc'] == 'hand':
-                selectfrom = self.hand
-            elif kwargs['cardsrc'] == 'played':
-                selectfrom = self.played
-            elif kwargs['cardsrc'] == 'discard':
-                selectfrom = self.discardpile
-            else:
-                selectfrom = kwargs['cardsrc']
-        else:
-            selectfrom = self.hand
-        if 'force' in kwargs and kwargs['force']:
-            force = True
-        else:
-            force = False
-        if 'verbs' in kwargs:
-            verbs = kwargs['verbs']
-        else:
-            verbs = ('Select', 'Unselect')
+        selectfrom = self.cardSelSource(**kwargs)
+        force = kwargs['force'] if 'force' in kwargs else False
+        showdesc = kwargs['showdesc'] if 'showdesc' in kwargs else True
+        verbs = kwargs.get('verbs', ('Select', 'Unselect'))
 
         if 'prompt' in kwargs:
             self.output(kwargs['prompt'])
@@ -163,7 +165,9 @@ class TextPlayer(Player):
             anynum = False
 
         selected = []
-        while(True):
+        types = kwargs['types'] if 'types' in kwargs else {}
+        types = self.typeSelector(types)
+        while True:
             options = []
             if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
                 o = Option(selector='0', verb='Finish Selecting', card=None)
@@ -172,6 +176,8 @@ class TextPlayer(Player):
             for c in sorted(selectfrom):
                 if 'exclude' in kwargs and c.name in kwargs['exclude']:
                     continue
+                if not self.select_by_type(c, types):
+                    continue
                 sel = "%d" % index
                 index += 1
                 if c not in selected:
@@ -179,8 +185,10 @@ class TextPlayer(Player):
                 else:
                     verb = verbs[1]
                 o = Option(selector=sel, verb=verb, card=c, name=c.name)
+                if showdesc:
+                    o['desc'] = c.description(self)
                 if 'printcost' in kwargs and kwargs['printcost']:
-                    o['desc'] = str(self.cardCost(c))
+                    o['details'] = str(self.cardCost(c))
                 options.append(o)
             ui = self.userInput(options, "Select which card?")
             if not ui['card']:

@@ -23,14 +23,14 @@ class Card_Bard(Card):
 class Test_Bard(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.bard = self.g['Bard'].remove()
         for b in self.g.boons[:]:
-            if b.name != "The Mountain's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+            if b.name == "The Mountain's Gift":
+                self.g.boons = [b]
+                break
 
     def test_play_card(self):
         """ Play Bard """

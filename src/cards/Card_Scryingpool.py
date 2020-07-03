@@ -25,8 +25,9 @@ class Card_Scryingpool(Card):
             self.discardOrPutBack(plr, player)
         self.discardOrPutBack(player, player)
         revealed = []
-        while(1):
+        while True:
             topcard = player.pickupCard()
+            player.revealCard(topcard)
             if not topcard.isAction():
                 break
             revealed.append(topcard)
@@ -39,6 +40,7 @@ class Card_Scryingpool(Card):
         else:
             name = (victim.name, "%s's" % victim.name)
         topcard = victim.nextCard()
+        victim.revealCard(topcard)
         putback = player.plrChooseOptions(
             "For %s which one?" % name[0],
             ('Discard %s' % topcard.name, False),
@@ -56,8 +58,8 @@ class Test_ScryingPool(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Scrying Pool', 'Moat'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Scrying Pool'].remove()
         self.plr.addCard(self.card, 'hand')
 

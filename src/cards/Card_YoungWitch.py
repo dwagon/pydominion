@@ -24,6 +24,8 @@ class Card_YoungWitch(Card):
             card = klass()
             if card.name in game:
                 continue
+            if not card.insupply or not card.purchasable:
+                continue
             if card.name in game.badcards:
                 continue
             if card.cost in (2, 3):
@@ -47,9 +49,9 @@ class Card_YoungWitch(Card):
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess'])
-        self.g.startGame()
-        self.attacker, self.victim = self.g.playerList()
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
+        self.g.start_game()
+        self.attacker, self.victim = self.g.player_list()
         self.card = self.g['Young Witch'].remove()
 
     def test_play_nobane(self):
@@ -59,12 +61,17 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.addCard(self.card, 'hand')
         self.attacker.test_input = ['Duchy', 'Province', 'finish']
         self.attacker.playCard(self.card)
-        self.assertIn(self.g[self.g._bane].cost, (2, 3))
-        self.assertEqual(self.attacker.handSize(), 5 + 2 - 2)
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        try:
+            self.assertIn(self.g[self.g._bane].cost, (2, 3))
+            self.assertEqual(self.attacker.handSize(), 5 + 2 - 2)
+            self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        except AssertionError:      # pragma: no cover
+            print("Bane={}".format(self.g._bane))
+            self.g.print_state()
+            raise
 
     def test_play_bane(self):
-        """ Play the young witch without a bane """
+        """ Play the young witch with a bane """
         self.victim.setHand('Copper', 'Silver', self.g._bane)
         self.attacker.setHand('Copper', 'Silver', 'Gold', 'Duchy', 'Province')
         self.attacker.addCard(self.card, 'hand')
@@ -72,7 +79,8 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.playCard(self.card)
         try:
             self.assertIsNone(self.victim.inDiscard('Curse'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
+            print("Bane={}".format(self.g._bane))
             self.g.print_state()
             raise
 

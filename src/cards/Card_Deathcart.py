@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,7 +27,7 @@ class Card_Deathcart(Card):
             player.trashCard(self)
 
     def hook_gainThisCard(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             c = player.gainCard('Ruins')
             player.output("Gained %s" % c.name)
         return {}
@@ -35,30 +36,31 @@ class Card_Deathcart(Card):
 ###############################################################################
 class Test_Deathcart(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Death Cart', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Death Cart'].remove()
 
     def test_play(self):
         """ Play a death cart - no actions """
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Death Cart'))
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Death Cart'))
 
     def test_play_trash(self):
         """ Play a death cart - no actions """
+        tsize = self.g.trashSize()
         self.plr.setHand('Copper', 'Moat')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Moat'))
-        self.assertIsNone(self.g.inTrash('Death Cart'))
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Moat'))
+        self.assertIsNone(self.g.in_trash('Death Cart'))
 
 
 ###############################################################################

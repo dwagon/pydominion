@@ -1,6 +1,17 @@
 In order to have a large number of the card effects work there are a number of hooks (growing daily).
 These are generally invoked from Player.py and defined in the Card.py and over-ridden in each card as required.
 
+special(game, player)
+---------------------
+Almost every card has this - it is what makes the cards special.
+Called when the card is played during the action phase
+* player - current player
+
+night(game, player)
+-------------------
+In night cards only - called when the card is active during the night phase
+* player - current player
+
 hook_allowedToBuy
 ----------------
 This is called before any card is available to purchase.
@@ -24,8 +35,8 @@ hook_discardThisCard
 ----------------
 This is called when this card is discarded.
 
-hook_spendValue
----------------
+hook_spendValue(game, player, card)
+-----------------------------------
 This modifies how much coin value you get for spending the card and
 is invoked for every card that has been played this turn.
 
@@ -38,6 +49,10 @@ If any player gains a card call this for any card in everyone's hand
 hook_preBuy
 -----------
 Fires off before the buy phase
+
+hook_endBuyPhase
+-----------
+Fires off at the end of the buy phase
 
 hook_gainCard
 -------------
@@ -73,6 +88,15 @@ hook_callReserve
 --------------
 Called when a card is pulled from the Reserve
 
+hook_allPlayers_preAction(game, player, owner, card)
+----------------------------------------------------
+Called before action cards are played.
+* player - current player
+* owner - owner of the card with the hook
+* card - card with the hook
+Returns None or a dictionary with keys:
+    skip_card - if true then the benefits of the card is skipped
+
 hook_postAction
 ---------------
 Called for every card in played + duration pile after an action has happened
@@ -93,6 +117,10 @@ hook_thisCardCost
 -----------------
 Modifier to the cost of buying this card.
 
+hook_revealThisCard
+-----------------
+Called when a card is revealed
+
 hook_end_of_game
 ----------------
 Called at the end of the game if they are registered in player.end_of_game_cards[]
@@ -101,16 +129,20 @@ hook_overpay
 ------------
 Overpaying for a card
 
-setup
------
+setup(game)
+-----------
 Any setup required before the game starts, but after all the card piles and players have been setup
 
-duration
---------
+duration(game, player)
+----------------------
 Gets invoked for duration cards the next turn
 
 hook_underAttack
 ----------------
 Called if you get under attack
+
+hook_preShuffle
+---------------
+Called just before the deck gets shuffled
 
 #EOF

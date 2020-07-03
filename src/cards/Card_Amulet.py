@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -39,10 +40,9 @@ class Card_Amulet(Card):
 ###############################################################################
 class Test_Amulet(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Amulet'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Amulet'].remove()
         self.plr.setHand('Duchy')
         self.plr.addCard(self.card, 'hand')
@@ -71,16 +71,18 @@ class Test_Amulet(unittest.TestCase):
 
     def test_play_trash(self):
         """ Play an amulet with trash """
+        tsize = self.g.trashSize()
         self.plr.test_input = ['trash', 'duchy', 'finish', 'trash', '1', 'finish']
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.endTurn()
         self.plr.startTurn()
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNone(self.plr.inDiscard('Silver'))
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -29,7 +29,7 @@ class Card_Goons(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 
@@ -39,8 +39,8 @@ class Test_Goons(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Goons', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Goons'].remove()
         self.plr.addCard(self.card, 'hand')
 

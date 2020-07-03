@@ -23,6 +23,7 @@ class Card_Bureaucrat(Card):
         for pl in player.attackVictims():
             for c in pl.hand:
                 if c.isVictory():
+                    pl.revealCard(c)
                     pl.addCard(c, 'topdeck')
                     pl.hand.remove(c)
                     pl.output("Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name))
@@ -37,8 +38,8 @@ class Test_Bureaucrat(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bureaucrat', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.bcard = self.g['Bureaucrat'].remove()
         self.plr.addCard(self.bcard, 'hand')
 

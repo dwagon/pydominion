@@ -9,7 +9,7 @@ class Card_Fools_Gold(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'reaction']
-        self.base = 'hinterland'
+        self.base = 'hinterlands'
         self.desc = """If this is the first time you played a Fool's Gold this turn, this is worth 1 Coin, otherwise it's worth 4 Coin.
         When another player gains a Province, you may trash this from your hand. If you do, gain a Gold, putting it on your deck."""
         self.name = "Fool's Gold"
@@ -43,8 +43,8 @@ class Test_Fools_Gold(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g["Fool's Gold"].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -60,17 +60,20 @@ class Test_Fools_Gold(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 4)
 
     def test_gain_province(self):
+        tsize = self.g.trashSize()
         self.plr.test_input = ['trash']
         self.other.gainCard('Province')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash("Fool's Gold"))
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash("Fool's Gold"))
 
     def test_self_gain_province(self):
+        tsize = self.g.trashSize()
         self.plr.gainCard('Province')
         self.assertNotEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertEqual(self.g.trashSize(), 0)
-        self.assertIsNone(self.g.inTrash("Fool's Gold"))
+        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertIsNone(self.g.in_trash("Fool's Gold"))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

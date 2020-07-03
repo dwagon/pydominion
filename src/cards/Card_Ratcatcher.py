@@ -28,8 +28,8 @@ class Test_Ratcatcher(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ratcatcher'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Ratcatcher'].remove()
 
     def test_play(self):
@@ -45,14 +45,15 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_call(self):
         """ Call from Reserve"""
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Gold']
+        self.plr.test_input = ['Trash Gold']
         self.plr.playCard(self.card)
         c = self.plr.callReserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Gold'))
 
 
 ###############################################################################

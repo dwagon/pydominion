@@ -9,7 +9,7 @@ class Card_Cultist(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'looter']
         self.base = 'darkages'
-        self.desc = "+2 cards, All others gain a ruin. Trash for +3 cards"
+        self.desc = """+2 Cards; Each other player gains a Ruins. You may play a Cultist from your hand.  When you trash this, +3 Cards."""
         self.name = 'Cultist'
         self.cost = 5
         self.cards = 2
@@ -36,8 +36,8 @@ class Test_Cultist(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cultist', 'Moat'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Cultist'].remove()
 
     def test_play(self):
@@ -91,8 +91,9 @@ class Test_Cultist(unittest.TestCase):
         """ Trashing a cultist should give 3 more cards """
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
-        self.assertEqual(self.g.trashpile[0].name, 'Cultist')
+        self.assertIsNotNone(self.g.in_trash('Cultist'))
         self.assertEqual(self.plr.handSize(), 8)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

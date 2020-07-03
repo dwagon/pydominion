@@ -18,6 +18,7 @@ class Card_Shantytown(Card):
     def special(self, game, player):
         """ Reveal your hand. If you have no Action cards in hand, +2 cards"""
         for c in player.hand:
+            player.revealCard(c)
             if c.isAction():
                 break
         else:
@@ -30,8 +31,8 @@ class Test_Shantytown(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shanty Town', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Shanty Town'].remove()
 
     def test_no_actions(self):

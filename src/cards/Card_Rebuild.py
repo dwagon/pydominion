@@ -35,6 +35,7 @@ class Card_Rebuild(Card):
         discards = []
         while True:
             card = player.nextCard()
+            player.revealCard(card)
             if not card:
                 break
             if card.isVictory() and guess.name != card.name:
@@ -54,23 +55,24 @@ class Test_Rebuild(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'], badcards=['Duchess'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Rebuild'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a rebuild """
+        tsize = self.g.trashSize()
         self.plr.setDeck('Copper', 'Copper', 'Estate', 'Province', 'Gold')
-        self.plr.test_input = ['Province', 'Duchy']
+        self.plr.test_input = ['Select Province', 'Get Duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.discardSize(), 3)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Estate'))
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Estate'))
 
 
 ###############################################################################

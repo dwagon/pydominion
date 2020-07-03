@@ -71,10 +71,12 @@ class Card_BandOfMisfits(Card):
             return
         return self._action.hook_gainCard(game, player, card)
 
-    def hook_postAction(self, game, player):
+    def hook_postAction(self, game, player, card):
         if not hasattr(self, '_action'):
             return
-        return self._action.hook_postAction(game, player)
+        if not hasattr(self._action, 'hook_postAction'):
+            return
+        return self._action.hook_postAction(game, player, card)
 
     def hook_spendValue(self, game, player, card):
         if not hasattr(self, '_action'):
@@ -107,8 +109,8 @@ class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Bureaucrat', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Band of Misfits'].remove()
         self.plr.addCard(self.card, 'hand')
 

@@ -7,14 +7,14 @@ import Game
 ###############################################################################
 class Test_getWhens(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], badcards=['Pixie'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_start(self):
         self.plr.startTurn()
         whens = self.plr.getWhens()
-        self.assertEquals(whens, ['any', 'start'])
+        self.assertEqual(whens, ['any', 'start'])
 
     def test_not_start(self):
         self.plr.startTurn()
@@ -46,8 +46,8 @@ class Test_getWhens(unittest.TestCase):
 class Test_Reserve(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_inreserve(self):
         """ Test inReserve() """
@@ -68,10 +68,10 @@ class Test_Reserve(unittest.TestCase):
 
     def test_callReserve(self):
         self.plr.setReserve('Silver')
-        self.assertEquals(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserveSize(), 1)
         c = self.plr.callReserve('Silver')
-        self.assertEquals(self.plr.reserveSize(), 0)
-        self.assertEquals(c.name, 'Silver')
+        self.assertEqual(self.plr.reserveSize(), 0)
+        self.assertEqual(c.name, 'Silver')
 
     def test_bad_callReserve(self):
         """ Call a reserve that isn't there! """
@@ -96,26 +96,26 @@ class Test_Reserve(unittest.TestCase):
 class Test_reserveSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_callable(self):
         gold = self.g['Gold'].remove()
         self.plr.addCard(gold, 'reserve')
         output, index = self.plr.reserveSelection(1)
-        self.assertEquals(len(output), 1)
-        self.assertEquals(output[0]['action'], 'reserve')
-        self.assertEquals(output[0]['card'], gold)
-        self.assertEquals(output[0]['selector'], 'c')
-        self.assertEquals(index, 2)
+        self.assertEqual(len(output), 1)
+        self.assertEqual(output[0]['action'], 'reserve')
+        self.assertEqual(output[0]['card'], gold)
+        self.assertEqual(output[0]['selector'], 'c')
+        self.assertEqual(index, 2)
 
     def test_not_callable(self):
         """ Copper is not callable (Due to miser) """
         copper = self.g['Copper'].remove()
         self.plr.addCard(copper, 'reserve')
         output, index = self.plr.reserveSelection(1)
-        self.assertEquals(len(output), 0)
-        self.assertEquals(index, 1)
+        self.assertEqual(len(output), 0)
+        self.assertEqual(index, 1)
 
 
 ###############################################################################

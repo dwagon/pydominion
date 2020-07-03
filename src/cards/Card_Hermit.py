@@ -14,7 +14,7 @@ class Card_Hermit(Card):
         Gain a card costing up to 3.
         When you discard this from play, if you did not buy any cards this turn, trash this and gain a Madman from the Madman pile."""
         self.name = 'Hermit'
-        self.required_cards = ['Madman']
+        self.required_cards = [('Card', 'Madman')]
         self.cost = 3
 
     def special(self, game, player):
@@ -30,9 +30,9 @@ class Card_Hermit(Card):
             verbs=('Trash', 'Untrash')
             )
         if choice:
-            try:
+            if player.inDiscard(choice[0].name):
                 player.discardpile.remove(choice[0])
-            except ValueError:
+            else:
                 player.hand.remove(choice[0])
             player.trashCard(choice[0])
         # Gain a card costing up to 3.
@@ -56,27 +56,27 @@ class Test_Hermit(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hermit'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Hermit'].remove()
 
     def test_play_discard(self):
         """ Play a Hermit trashing card from discard """
         self.plr.setDiscard('Province', 'Gold')
-        self.plr.test_input = ['province', 'silver']
+        self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
     def test_play_hand(self):
         """ Play a Hermit trashing card from hand """
         self.plr.setHand('Province')
-        self.plr.test_input = ['province', 'silver']
+        self.plr.test_input = ['trash province', 'get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.inTrash('Province'))
+        self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNone(self.plr.inHand('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
@@ -87,6 +87,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.discardHand()
         self.assertIsNotNone(self.plr.inDiscard('Madman'))
         self.assertIsNone(self.plr.inHand('Hermit'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -42,8 +42,8 @@ class Test_Herbalist(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herbalist'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.hcard = self.g['Herbalist'].remove()
 
     def test_putnothing(self):
@@ -65,6 +65,7 @@ class Test_Herbalist(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertEqual(self.plr.deckSize(), 6)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

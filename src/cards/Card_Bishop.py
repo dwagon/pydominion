@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Bishop(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 Coin, +1 VP; Trash a card from your hand. +VP equal to half its cost in coins, rounded down. Each other player may trash a card from his hand"
+        self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
+        to half its cost in coins, rounded down. Each other player may trash a
+        card from his hand"""
         self.name = 'Bishop'
         self.coin = 1
         self.victory = 1
@@ -20,7 +23,7 @@ class Card_Bishop(Card):
         """ Trash a card from your hand. +VP equal to half its cost
         in coins, rounded down. Each other player may trash a card
         from his hand """
-        for plr in game.playerList():
+        for plr in game.player_list():
             if plr == player:
                 self.trashOwnCard(game, player)
             else:
@@ -53,17 +56,15 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     cu = player.inHand('copper')
     if cu:
         return [cu]
-    else:
-        return []
+    return []
 
 
 ###############################################################################
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.bishop = self.g['Bishop'].remove()
 
     def test_play(self):
@@ -81,9 +82,10 @@ class Test_Bishop(unittest.TestCase):
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.g.trashpile[0].name, 'Gold')
+        self.assertIsNotNone(self.g.in_trash('Gold'))
 
     def test_bothtrash(self):
+        tsize = self.g.trashSize()
         self.plr.setHand('Gold')
         self.other.setHand('Province')
         self.plr.addCard(self.bishop, 'hand')
@@ -93,7 +95,8 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.score['bishop'], 3)
         self.assertTrue(self.plr.hand.isEmpty())
         self.assertTrue(self.other.hand.isEmpty())
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -45,15 +45,15 @@ class Test_Gear(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gear'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Gear'].remove()
 
     def test_playcard(self):
         """ Play a gear """
         self.plr.setHand('Duchy', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['silver', 'gold', 'finish']
+        self.plr.test_input = ['set silver', 'set gold', 'finish']
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
@@ -66,7 +66,7 @@ class Test_Gear(unittest.TestCase):
             self.assertEqual(self.plr.played[-1].name, 'Gear')
             self.assertIsNotNone(self.plr.inHand('Silver'))
             self.assertIsNotNone(self.plr.inHand('Gold'))
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

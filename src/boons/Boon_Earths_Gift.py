@@ -9,7 +9,7 @@ class Boon_Earths_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "You may discard a Treasure to gain a card costing up to 4"
         self.name = "The Earth's Gift"
         self.purchasable = False
@@ -28,24 +28,29 @@ class Boon_Earths_Gift(Boon):
 class Test_Earths_Gift(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
-        for b in self.g.boons[:]:
-            if b.name != "The Earth's Gift":
-                self.g.discarded_boons.append(b)
-                self.g.boons.remove(b)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+        for b in self.g.boons:
+            if b.name == "The Earth's Gift":
+                myboon = b
+                break
+        self.g.boons = [myboon]
         self.card = self.g['Bard'].remove()
 
     def test_earths_gift(self):
         self.coins = 0
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Copper', 'Silver']
+        self.plr.test_input = ['Discard Copper', 'Get Silver']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        try:
+            self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
+            self.assertIsNotNone(self.plr.inDiscard('Silver'))
+            self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        except AssertionError:  # pragma: no cover
+            self.g.print_state()
+            raise
 
 
 ###############################################################################

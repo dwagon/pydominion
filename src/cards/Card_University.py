@@ -26,9 +26,9 @@ class Card_University(Card):
 class Test_University(unittest.TestCase):
     def setUp(self):
         import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn', 'Death Cart'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village', 'Experiment', 'Ducat'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.university = self.g['University'].remove()
         self.plr.addCard(self.university, 'hand')
 
@@ -39,7 +39,7 @@ class Test_University(unittest.TestCase):
             self.assertEqual(self.plr.discardSize(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
             self.assertLessEqual(self.plr.discardpile[0].cost, 5)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

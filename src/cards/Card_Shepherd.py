@@ -17,7 +17,7 @@ class Card_Shepherd(Card):
         self.heirloom = 'Pasture'
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(num=0, anynum=True, type={'victory': True})
+        todiscard = player.plrDiscardCards(num=0, anynum=True, types={'victory': True})
         player.pickupCards(2*len(todiscard))
 
 
@@ -26,8 +26,8 @@ class Test_Shepherd(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shepherd'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Shepherd'].remove()
 
     def test_play(self):

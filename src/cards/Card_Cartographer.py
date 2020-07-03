@@ -10,7 +10,7 @@ class Card_Cartographer(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = "+1 Card +1 Action Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order."
+        self.desc = "+1 Card; +1 Action; Look at the top 4 cards of your deck. Discard any number of them. Put the rest back on top in any order."
         self.name = 'Cartographer'
         self.cards = 1
         self.actions = 1
@@ -33,8 +33,8 @@ class Test_Cartographer(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cartographer'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Cartographer'].remove()
         self.plr.addCard(self.card, 'hand')
 

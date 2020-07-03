@@ -9,14 +9,13 @@ class State_Lost_in_woods(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "At the start of your turn, you may discard a card to receive a Boon."
         self.name = "Lost in the Woods"
-        self.purchasable = False
         self.unique_state = True
 
     def hook_startTurn(self, game, player):
-        dc = player.plrDiscardCards(prompt="Discard a card to receive a boon")
+        dc = player.plrDiscardCards(prompt="Lost in the Woods: Discard a card to receive a boon")
         if dc:
             # Hack to make testing possible
             if not hasattr(player, '_liw_dont_boon'):
@@ -30,8 +29,8 @@ class Test_Lost_in_woods(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.state = self.g.states['Lost in the Woods']
 
     def test_lost_in_woods(self):

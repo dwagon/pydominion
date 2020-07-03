@@ -19,10 +19,16 @@ class Card_Crossroads(Card):
         """ Reveal your hand. +1 Card per Victory card revealed.
             If this is the first time you played a Crossroads this turn,
             +3 Actions """
-        vict = sum([1 for c in player.hand if c.isVictory()])
+        vict = 0
+        for card in player.hand:
+            player.revealCard(card)
+            if card.isVictory():
+                vict += 1
         if vict:
             player.output("Picking up %d cards" % vict)
             player.pickupCards(vict)
+        else:
+            player.output("No victory cards")
         numcross = sum([1 for c in player.played if c.name == 'Crossroads'])
         if numcross == 1:
             player.addActions(3)
@@ -33,8 +39,8 @@ class Test_Crossroads(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Crossroads'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Crossroads'].remove()
 
     def test_play(self):

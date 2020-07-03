@@ -27,8 +27,8 @@ class Test_Ranger(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ranger'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Ranger'].remove()
 
     def test_play_first(self):
@@ -50,6 +50,7 @@ class Test_Ranger(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.journey_token)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

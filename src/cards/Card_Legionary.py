@@ -17,7 +17,9 @@ class Card_Legionary(Card):
         self.coin = 3
 
     def special(self, game, player):
-        if player.inHand('Gold'):
+        au = player.inHand('Gold')
+        if au:
+            player.revealCard(au)
             for plr in player.attackVictims():
                 plr.output("%s's Legionary forces you to discard down to 2" % player.name)
                 plr.plrDiscardDownTo(2)
@@ -25,7 +27,7 @@ class Card_Legionary(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     numtodiscard = len(player.hand) - 2
     return player.pick_to_discard(numtodiscard)
 
@@ -35,8 +37,8 @@ class Test_Legionary(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Legionary'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Legionary'].remove()
 
     def test_play(self):
@@ -48,6 +50,7 @@ class Test_Legionary(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.victim.handSize(), 3)
         self.assertEqual(self.victim.discardSize(), 3)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

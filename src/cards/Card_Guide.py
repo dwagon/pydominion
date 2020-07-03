@@ -29,8 +29,8 @@ class Test_Guide(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Guide'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Guide'].remove()
 
     def test_play(self):
@@ -49,6 +49,7 @@ class Test_Guide(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertIsNone(self.plr.inHand('Estate'))
         self.assertIsNotNone(self.plr.inDiscard('Estate'))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

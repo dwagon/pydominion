@@ -8,8 +8,8 @@ import Game
 class Test_performEvent(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Raid'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g.events['Raid']
 
     def test_perform(self):
@@ -44,14 +44,14 @@ class Test_performEvent(unittest.TestCase):
 class Test_eventSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms', 'Expedition', 'Raid'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_events(self):
         self.plr.coin = 4
         output, index = self.plr.eventSelection(3)
-        self.assertEquals(index, 6)
-        self.assertEquals(len(output), 3)
+        self.assertEqual(index, 6)
+        self.assertEqual(len(output), 3)
         num_affordable = 0
         num_notaff = 0
         for i in output:
@@ -61,36 +61,36 @@ class Test_eventSelection(unittest.TestCase):
                 num_notaff += 1
             else:   # pragma: no coverage
                 self.fail("Unexpected action %s in %s" % (i['action'], i))
-        self.assertEquals(num_affordable, 2)
-        self.assertEquals(num_notaff, 1)
+        self.assertEqual(num_affordable, 2)
+        self.assertEqual(num_notaff, 1)
 
 
 ###############################################################################
 class Test_eventRandom(unittest.TestCase):
     def test_none(self):
         self.g = Game.Game(quiet=True, numplayers=1)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 0)
 
     def test_specify(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms', 'Raid'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
         self.assertIn('Alms', self.g.events)
         self.assertIn('Raid', self.g.events)
 
     def test_random(self):
         self.g = Game.Game(quiet=True, numplayers=1, numevents=2)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
 
     def test_both(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], numevents=2)
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
         self.assertIn('Alms', self.g.events)
 

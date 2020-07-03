@@ -10,24 +10,26 @@ class Card_Traderoute(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 buy, +1 coin per token, trash card from your hand"
+        self.desc = "+1 Buy; Trash a card from your hand. +1 Coin per Coin token on the Trade Route mat."
         self.name = 'Trade Route'
         self.cost = 3
         self.buys = 1
 
     @classmethod
     def setup(cls, game):
+        """ Setup: Add a Coin token to each Victory Supply pile; move that token
+        to the Trade Route mat when a card is gained from the pile. """
         cls.tokens = {}
         cls.game = game
         for cp in list(game.cardpiles.values()):
             if cp.isVictory():
-                cls.tokens[cp.name] = cp.numcards
+                cls.tokens[cp.name] = cp.pilesize
 
     def isWorth(self):
         worth = 0
         for cp in list(self.game.cardpiles.values()):
             if cp.name in self.tokens:
-                if self.tokens[cp.name] != cp.numcards:
+                if self.tokens[cp.name] != cp.pilesize:
                     worth += 1
         return worth
 
@@ -45,8 +47,8 @@ class Test_Traderoute(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Trade Route'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.traderoute = self.g['Trade Route'].remove()
         self.plr.addCard(self.traderoute, 'hand')
 

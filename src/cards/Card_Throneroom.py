@@ -4,6 +4,7 @@ import unittest
 from Card import Card
 
 
+###############################################################################
 class Card_Throneroom(Card):
     def __init__(self):
         Card.__init__(self)
@@ -40,8 +41,8 @@ class Test_Throneroom(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Throne Room', 'Mine'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
@@ -67,6 +68,7 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(card)
         self.assertEqual(self.plr.test_input, ['0'])
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

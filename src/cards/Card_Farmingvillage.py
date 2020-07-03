@@ -18,8 +18,9 @@ class Card_Farmingvillage(Card):
         """ Reveal cards from the top of your deck until you revel
             an Action or Treasure card. Put that card into your hand
             and discard the other cards. """
-        while(1):
+        while True:
             c = player.nextCard()
+            player.revealCard(c)
             if c.isTreasure() or c.isAction():
                 player.output("Added %s to hand" % c.name)
                 player.addCard(c, 'hand')
@@ -34,8 +35,8 @@ class Test_Farmingvillage(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farming Village'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Farming Village'].remove()
         self.plr.addCard(self.card, 'hand')
 

@@ -33,7 +33,7 @@ class Card_Ghostship(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     # Not the best strategy
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
@@ -44,8 +44,8 @@ class Test_Ghostship(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ghost Ship'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Ghost Ship'].remove()
         self.plr.addCard(self.card, 'hand')
 

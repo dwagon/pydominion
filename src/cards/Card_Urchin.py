@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,12 +11,11 @@ class Card_Urchin(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'darkages'
-        self.desc = """+1 Card +1 Action
-        Each other player discards down to 4 cards in hand.
-        When you play another Attack card with this in play, you may trash this.
-        If you do, gain a Mercenary from the Mercenary pile."""
+        self.desc = """+1 Card; +1 Action; Each other player discards down to 4 cards.
+            When you play another Attack card with this in play, you may trash this.
+            If you do, gain a Mercenary."""
         self.name = 'Urchin'
-        self.required_cards = ['Mercenary']
+        self.required_cards = [('Card', 'Mercenary')]
         self.actions = 1
         self.cards = 1
         self.cost = 3
@@ -43,7 +43,7 @@ class Card_Urchin(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 4
     return player.pick_to_discard(numtodiscard)
 
@@ -51,10 +51,9 @@ def botresponse(player, kind, args=[], kwargs={}):
 ###############################################################################
 class Test_Urchin(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Urchin', 'Militia'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Urchin'].remove()
 
     def test_play(self):

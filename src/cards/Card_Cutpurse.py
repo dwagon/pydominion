@@ -9,7 +9,7 @@ class Card_Cutpurse(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.desc = "+2 coin, other players discard copper"
+        self.desc = "+2 coin; Each other player discards a Copper card (or reveals a hand with no Copper)."
         self.name = 'Cutpurse'
         self.coin = 2
         self.cost = 4
@@ -25,6 +25,8 @@ class Card_Cutpurse(Card):
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
                 victim.discardCard(c)
             else:
+                for card in victim.hand:
+                    victim.revealCard(card)
                 player.output("%s had no coppers" % victim.name)
 
 
@@ -33,8 +35,8 @@ class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cutpurse'])
-        self.g.startGame()
-        self.plr, self.victim = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g['Cutpurse'].remove()
         self.plr.addCard(self.card, 'hand')
 

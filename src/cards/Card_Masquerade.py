@@ -19,7 +19,7 @@ class Card_Masquerade(Card):
         """ Each player passes a card from his hand to the left at
             once. Then you may trash a card from your hand"""
         xfer = {}
-        for plr in game.playerList():
+        for plr in game.player_list():
             xfer[plr] = self.pickCardToXfer(plr, game)
         for plr in list(xfer.keys()):
             newplr = game.playerToLeft(plr)
@@ -40,7 +40,7 @@ class Card_Masquerade(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):
+def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
     c = player.pick_to_discard(1, keepvic=True)
     return c
 
@@ -50,12 +50,13 @@ class Test_Masquerade(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Masquerade'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Masquerade'].remove()
 
     def test_play(self):
         """ Play a masquerade """
+        tsize = self.g.trashSize()
         self.other.setHand('Copper', 'Silver', 'Gold')
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.setDeck('Estate', 'Duchy', 'Province')
@@ -66,10 +67,11 @@ class Test_Masquerade(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertTrue(self.other.inHand('Silver'))
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_play_with_trash(self):
         """ Play a masquerade and trash after """
+        tsize = self.g.trashSize()
         self.other.setHand('Copper', 'Silver', 'Gold')
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
@@ -77,7 +79,7 @@ class Test_Masquerade(unittest.TestCase):
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trashSize(), tsize + 1)
 
 
 ###############################################################################

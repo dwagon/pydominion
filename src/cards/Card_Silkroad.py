@@ -29,8 +29,8 @@ class Test_Silkroad(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Silk Road'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
         self.plr.setHand('Silk Road')
@@ -44,6 +44,7 @@ class Test_Silkroad(unittest.TestCase):
         self.plr.setDeck('Estate', 'Estate', 'Silk Road')
         self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Estate')
         self.assertEqual(self.plr.getScoreDetails()['Silk Road'], 2 + 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Apothecary(Card):
     def __init__(self):
         Card.__init__(self)
@@ -17,13 +19,14 @@ class Card_Apothecary(Card):
         self.potcost = True
         self.required_cards = ['Potion']
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Reveal the top 4 cards of your deck. Put the revealed
             Coppers and Potions into your hand. Put the other cards
             back on top of your deck in any order """
         unput = []
-        for i in range(4):
+        for _ in range(4):
             c = player.nextCard()
+            player.revealCard(c)
             if c.name in ('Copper', 'Potion'):
                 player.output("Putting %s in hand" % c.name)
                 player.addCard(c, 'hand')
@@ -37,10 +40,9 @@ class Card_Apothecary(Card):
 ###############################################################################
 class Test_Apothecary(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Apothecary'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
 
     def test_none(self):
         self.plr.setHand('Apothecary')

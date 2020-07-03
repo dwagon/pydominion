@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Sir_Bailey(KnightCard):
     def __init__(self):
-        Card.__init__(self)
+        super(Card_Sir_Bailey, self).__init__()
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.name = "Sir Bailey"
         self.desc = """+1 Card +1 Action.
-        Each other player reveals the top 2 cards of his deck, trashes one of them
-        costing from 3 to 6, and discards the rest.
-        If a Knight is trashed by this, trash this card."""
+            Each other player reveals the top 2 cards of his deck, trashes one of them
+            costing from 3 to 6, and discards the rest.
+            If a Knight is trashed by this, trash this card."""
         self.cards = 1
         self.actions = 1
         self.cost = 5
@@ -27,10 +27,9 @@ class Card_Sir_Bailey(KnightCard):
 ###############################################################################
 class Test_Sir_Bailey(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         while True:
             self.card = self.g['Knight'].remove()
             if self.card.name == 'Sir Bailey':

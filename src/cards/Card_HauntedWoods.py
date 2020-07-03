@@ -9,7 +9,7 @@ class Card_HauntedWoods(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'adventures'
+        self.base = 'adventure'
         self.desc = """Until you next turn, when any other player buys a card, he puts his hand on top of his deck in any order.
         At the start of your next turn: +3 Cards"""
         self.name = 'Haunted Woods'
@@ -35,8 +35,8 @@ class Test_HauntedWoods(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Haunted Woods'])
-        self.g.startGame()
-        self.plr, self.vic = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.vic = self.g.player_list()
         self.card = self.g['Haunted Woods'].remove()
         self.plr.addCard(self.card, 'hand')
 

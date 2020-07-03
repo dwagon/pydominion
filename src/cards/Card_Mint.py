@@ -30,6 +30,7 @@ class Card_Mint(Card):
             cardsrc=treasures,
             prompt="Reveal a treasure to gain a copy of"
             )
+        player.revealCard(toget[0])
         if toget:
             player.output("Gained a %s from the Mint" % toget[0].name)
             player.gainCard(toget[0].name)
@@ -47,8 +48,8 @@ class Test_Mint(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mint', 'Moat'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Mint'].remove()
 
     def test_play(self):
@@ -61,14 +62,15 @@ class Test_Mint(unittest.TestCase):
         self.assertIsNotNone(self.plr.inHand('Gold'))
 
     def test_buy(self):
+        tsize = self.g.trashSize()
         self.plr.coin = 5
         self.plr.setHand('Gold', 'Estate')
         self.plr.setPlayed('Copper', 'Silver', 'Estate', 'Moat')
         self.plr.buyCard(self.g['Mint'])
-        self.assertEqual(self.g.trashSize(), 2)
-        self.assertIsNotNone(self.g.inTrash('Copper'))
-        self.assertIsNotNone(self.g.inTrash('Silver'))
-        self.assertIsNone(self.g.inTrash('Gold'))
+        self.assertEqual(self.g.trashSize(), tsize + 2)
+        self.assertIsNotNone(self.g.in_trash('Copper'))
+        self.assertIsNotNone(self.g.in_trash('Silver'))
+        self.assertIsNone(self.g.in_trash('Gold'))
 
 
 ###############################################################################

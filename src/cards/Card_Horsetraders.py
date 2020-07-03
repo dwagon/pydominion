@@ -33,8 +33,8 @@ class Test_Horsetraders(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horse Traders'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Horse Traders'].remove()
 
     def test_play(self):
@@ -45,6 +45,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.discardSize(), 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

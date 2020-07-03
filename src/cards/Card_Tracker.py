@@ -40,8 +40,8 @@ class Test_Tracker(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tracker'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True
         self.card = self.g['Tracker'].remove()
 
@@ -51,7 +51,7 @@ class Test_Tracker(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 1)
-        except AssertionError:
+        except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
 

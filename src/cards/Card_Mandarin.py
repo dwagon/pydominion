@@ -22,7 +22,7 @@ class Card_Mandarin(Card):
             return "+3 Coins. Put a card from your hand on top of your deck."
 
     def special(self, game, player):
-        card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your on top of your deck")
+        card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your hand on top of your deck")
         player.addCard(card[0], 'topdeck')
         player.hand.remove(card[0])
 
@@ -40,8 +40,8 @@ class Test_Mandarin(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mandarin'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Mandarin'].remove()
 
     def test_play(self):

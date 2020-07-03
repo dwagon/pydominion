@@ -8,10 +8,10 @@ class CardPile(object):
         self.cardclass = klass
         self.card = klass()
         self.embargo_level = 0
-        if callable(self.card.numcards):
-            self.numcards = self.card.numcards()
+        if hasattr(self.card, 'calc_numcards'):
+            self.pilesize = self.card.calc_numcards(game)
         else:
-            self.numcards = self.card.numcards
+            self.pilesize = self.card.numcards
 
     ###########################################################################
     def embargo(self):
@@ -27,22 +27,21 @@ class CardPile(object):
 
     ###########################################################################
     def isEmpty(self):
-        return self.numcards == 0
+        return self.pilesize == 0
 
     ###########################################################################
     def remove(self):
-        if self.numcards:
-            self.numcards -= 1
+        if self.pilesize:
+            self.pilesize -= 1
             return self.cardclass()
-        else:
-            return None
+        return None
 
     ###########################################################################
     def add(self):
-        self.numcards += 1
+        self.pilesize += 1
 
     ###########################################################################
     def __repr__(self):
-        return "CardPile %s: %d" % (self.name, self.numcards)
+        return "CardPile %s: %d" % (self.name, self.pilesize)
 
 # EOF

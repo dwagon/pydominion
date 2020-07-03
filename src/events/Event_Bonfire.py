@@ -23,8 +23,8 @@ class Test_Bonfire(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Bonfire'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g.events['Bonfire']
         self.copper = self.g['Copper'].remove()
         self.gold = self.g['Gold'].remove()
@@ -32,6 +32,7 @@ class Test_Bonfire(unittest.TestCase):
 
     def test_bonfire(self):
         """ Use Bonfire """
+        tsize = self.g.trashSize()
         self.plr.addCoin(3)
         self.plr.setHand('Estate')
         self.plr.addCard(self.copper, 'hand')
@@ -40,7 +41,7 @@ class Test_Bonfire(unittest.TestCase):
         self.plr.playCard(self.gold)
         self.plr.test_input = ['Copper', 'Gold', 'Finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.g.trashSize(), 2)
+        self.assertEqual(self.g.trashSize(), tsize + 2)
 
 
 ###############################################################################

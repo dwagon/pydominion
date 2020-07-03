@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -19,7 +20,7 @@ class Card_Fool(Card):
         if player.has_state('Lost in the Woods'):
             return
         player.assign_state('Lost in the Woods')
-        for i in range(3):
+        for _ in range(3):
             if not hasattr(player, '_fool_dont_boon'):
                 player.receive_boon()
             else:
@@ -29,10 +30,9 @@ class Card_Fool(Card):
 ###############################################################################
 class Test_Fool(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fool'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Fool'].remove()
 
     def test_play_with(self):

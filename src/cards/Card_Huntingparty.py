@@ -20,8 +20,11 @@ class Card_Huntingparty(Card):
 
     def special(self, game, player):
         discards = []
+        for card in player.hand:
+            player.revealCard(card)
         while True:
             card = player.nextCard()
+            player.revealCard(card)
             if not card:
                 player.output("No more cards")
                 break
@@ -42,8 +45,8 @@ class Test_Huntingparty(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hunting Party'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Hunting Party'].remove()
         self.plr.setHand('Silver', 'Gold')
 

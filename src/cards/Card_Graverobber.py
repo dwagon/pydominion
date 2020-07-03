@@ -44,8 +44,8 @@ class Test_Graverobber(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Graverobber', 'Militia'], badcards=["Fool's Gold"])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
         self.card = self.g['Graverobber'].remove()
         self.plr.addCard(self.card, 'hand')
 
@@ -53,7 +53,7 @@ class Test_Graverobber(unittest.TestCase):
         """ Play a grave robber - trash a militia and gain a gold """
         militia = self.g['Militia'].remove()
         self.plr.addCard(militia, 'hand')
-        self.plr.test_input = ['1', 'militia', 'gold']
+        self.plr.test_input = ['1', 'militia', 'get gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
         self.assertIsNone(self.plr.inHand('Militia'))
@@ -65,7 +65,7 @@ class Test_Graverobber(unittest.TestCase):
 
     def test_loot(self):
         """ Play a grave robber - looting the trash """
-        self.g.setTrash('Militia')
+        self.g.set_trash('Militia')
         self.plr.test_input = ['0', 'militia']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 0)
@@ -73,10 +73,11 @@ class Test_Graverobber(unittest.TestCase):
 
     def test_loot_empty(self):
         """ Play a grave robber - looting the trash that doesn't have anything"""
-        self.g.setTrash('Copper')
+        self.g.set_trash('Copper')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), 1)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

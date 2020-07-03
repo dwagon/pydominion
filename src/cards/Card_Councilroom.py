@@ -17,7 +17,7 @@ class Card_Councilroom(Card):
 
     def special(self, game, player):
         """ Each other player draws a card """
-        for pl in game.playerList():
+        for pl in game.player_list():
             if pl != player:
                 pl.output("Picking up card due to %s playing a Council Room" % player.name)
                 pl.pickupCard()
@@ -28,8 +28,8 @@ class Test_Councilroom(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Council Room'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.ccard = self.g['Council Room'].remove()
         self.plr.addCard(self.ccard, 'hand')
 
@@ -39,6 +39,7 @@ class Test_Councilroom(unittest.TestCase):
         self.assertEqual(self.other.handSize(), 6)
         self.assertEqual(self.plr.handSize(), 9)
         self.assertEqual(self.plr.getBuys(), 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

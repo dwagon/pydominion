@@ -21,6 +21,7 @@ class Card_Vagrant(Card):
         """" Reveal the top card of your deck. If it's a Curse,
             Ruins, Shelter or Victory card, put it into your hand """
         c = player.nextCard()
+        player.revealCard(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == 'Ruins':
             player.addCard(c, 'hand')
             player.output("Adding %s to hand" % c.name)
@@ -34,8 +35,8 @@ class Test_Vagrant(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vagrant'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Vagrant'].remove()
         self.plr.addCard(self.card, 'hand')
 

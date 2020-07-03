@@ -10,7 +10,7 @@ class Card_Candlestickmaker(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'guilds'
-        self.desc = "+1 action, +1 buy, +1 special coin"
+        self.desc = "+1 action, +1 buy, +1 coffer"
         self.name = 'Candlestick Maker'
         self.actions = 1
         self.buys = 1
@@ -18,7 +18,7 @@ class Card_Candlestickmaker(Card):
 
     def special(self, game, player):
         """ Take a Coin Token """
-        player.gainSpecialCoins(1)
+        player.gainCoffer(1)
 
 
 ###############################################################################
@@ -26,16 +26,16 @@ class Test_Candlestickmaker(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Candlestick Maker'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Candlestick Maker'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
         """ Play a candlestick maker """
-        self.plr.specialcoins = 0
+        self.plr.coffer = 0
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getSpecialCoins(), 1)
+        self.assertEqual(self.plr.getCoffer(), 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 

@@ -30,7 +30,7 @@ class Card_Mine(Card):
             val = o['card'].cost
             # Make an assumption and pick the best treasure card
             # TODO - let user pick
-            for tc in game.baseCards:
+            for tc in game.base_cards:
                 if game[tc].cost == val + 3:
                     c = player.gainCard(tc, 'hand')
                     player.output("Converted to %s" % c.name)
@@ -45,8 +45,8 @@ class Test_Mine(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mine'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Mine'].remove()
 
     def test_convcopper(self):

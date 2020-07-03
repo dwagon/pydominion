@@ -18,6 +18,7 @@ class Card_RoyalBlacksmith(Card):
     def special(self, game, player):
         count = 0
         for card in player.hand:
+            player.revealCard(card)
             if card.name == 'Copper':
                 player.discardCard(card)
                 count += 1
@@ -29,8 +30,8 @@ class Test_RoyalBlacksmith(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Royal Blacksmith'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Royal Blacksmith'].remove()
 
     def test_play(self):

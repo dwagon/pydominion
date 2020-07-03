@@ -13,13 +13,15 @@ class Card_Curse(Card):
         self.desc = "-1 VP"
         self.basecard = True
         self.playable = False
-        self.purchasable = False
+        self.purchasable = True
         self.name = 'Curse'
         self.cost = 0
         self.victory = -1
 
-    def numcards(self, game):
-        return min(10, 10 * (game.numplayers - 1))
+    def calc_numcards(self, game):
+        if game.numplayers == 1:
+            return 10
+        return 10 * (game.numplayers - 1)
 
 
 ###############################################################################
@@ -27,8 +29,8 @@ class Test_Curse(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Witch'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Curse'].remove()
 
     def test_play(self):

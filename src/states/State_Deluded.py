@@ -9,10 +9,9 @@ class State_Deluded(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocture'
+        self.base = 'nocturne'
         self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
-        self.purchasable = False
 
     def hook_preBuy(self, game, player):
         player.remove_state(self)
@@ -29,12 +28,12 @@ class Test_Deluded(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.state = self.g.states['Deluded']
 
     def test_deluded(self):
-        self.plr.assign_state(self.state)
+        self.plr.assign_state('Deluded')
         self.plr.test_input = ['Estate']
         self.assertGreater(self.plr.cardCost(self.g['Bard']), 99)
         self.plr.test_input = ['End Phase']

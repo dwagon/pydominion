@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -30,18 +31,18 @@ class Card_Apprentice(Card):
 ###############################################################################
 class Test_Apprentice(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Apprentice', 'Familiar'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.apprentice = self.g['Apprentice'].remove()
 
     def test_trashNone(self):
+        tsize = self.g.trashSize()
         self.plr.addCard(self.apprentice, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trashCard(self):
         self.plr.setHand('Silver')
@@ -56,6 +57,7 @@ class Test_Apprentice(unittest.TestCase):
         self.plr.test_input = ['Familiar']
         self.plr.playCard(self.apprentice)
         self.assertEqual(self.plr.handSize(), self.g.trashpile[-1].cost + 2)
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover

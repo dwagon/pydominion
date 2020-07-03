@@ -29,29 +29,31 @@ class Test_Upgrade(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Upgrade'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Upgrade'].remove()
 
     def test_play(self):
         """ Play the Upgrade """
+        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertTrue(self.g.trashpile.isEmpty())
+        self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
         """ Trash an upgrade """
+        tsize = self.g.trashSize()
         self.plr.setHand('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Duchy', 'Gold']
+        self.plr.test_input = ['Duchy', 'Get Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.g.trashSize(), 1)
-        self.assertIsNotNone(self.g.inTrash('Duchy'))
+        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
 

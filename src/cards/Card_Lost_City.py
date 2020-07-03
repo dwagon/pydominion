@@ -26,7 +26,7 @@ class Card_Lost_City(Card):
 
     def hook_gainThisCard(self, game, player):
         """ When you gain this, each other player draws a card """
-        for pl in game.playerList():
+        for pl in game.player_list():
             if pl != player:
                 c = pl.pickupCard()
                 pl.output("Picking up a %s due to %s playing a Lost City" % (c.name, player.name))
@@ -38,8 +38,8 @@ class Test_Lost_City(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Lost City'])
-        self.g.startGame()
-        self.plr, self.other = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.other = self.g.player_list()
         self.card = self.g['Lost City'].remove()
 
     def test_play(self):

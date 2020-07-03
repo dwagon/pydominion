@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 class Card(object):
     def __init__(self):
         self.image = None
@@ -14,7 +15,10 @@ class Card(object):
         self.callable = True
         self.defense = False
         self.needsprize = False
+        self.needsartifacts = False
+        self.needsprojects = False
         self.overpay = False
+        self.insupply = True
         self.traveller = False
         self.when = 'any'
         self.actions = 0
@@ -29,7 +33,6 @@ class Card(object):
         self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
-        self.unique_state = False
 
     ##########################################################################
     def get_cardtype_repr(self):
@@ -54,8 +57,7 @@ class Card(object):
     def description(self, player):
         if callable(self.desc):
             return self.desc(player)
-        else:
-            return self.desc
+        return self.desc
 
     ##########################################################################
     def addVP(self, num=1):
@@ -76,6 +78,10 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
+    def night(self, game, player):
+        pass    # pragma: no cover
+
+    ##########################################################################
     def duration(self, game, player):
         pass    # pragma: no cover
 
@@ -86,6 +92,12 @@ class Card(object):
     ##########################################################################
     def hasDefense(self):
         return self.defense
+
+    ##########################################################################
+    def isGathering(self):
+        if 'gathering' in self.cardtype:
+            return True
+        return False
 
     ##########################################################################
     def isDuration(self):
@@ -112,6 +124,12 @@ class Card(object):
     ##########################################################################
     def isFate(self):
         if 'fate' in self.cardtype:
+            return True
+        return False
+
+    ##########################################################################
+    def isDoom(self):
+        if 'doom' in self.cardtype:
             return True
         return False
 
@@ -186,11 +204,11 @@ class Card(object):
         return 0    # pragma: nocover
 
     ##########################################################################
-    def hook_postAction(self, game, player):
+    def hook_cleanup(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_cleanup(self, game, player):
+    def hook_allPlayers_preAction(self, game, player, owner, card):
         pass    # pragma: no cover
 
     ##########################################################################
@@ -272,7 +290,15 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
+    def hook_endBuyPhase(self, game, player):
+        pass    # pragma: no cover
+
+    ##########################################################################
     def hook_startTurn(self, game, player):
+        pass    # pragma: no cover
+
+    ##########################################################################
+    def hook_revealThisCard(self, game, player):
         pass    # pragma: no cover
 
 # EOF

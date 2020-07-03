@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Landmark import Landmark
 
 
@@ -13,18 +14,17 @@ class Landmark_Wall(Landmark):
         self.name = "Wall"
 
     def hook_end_of_game(self, game, player):
-        numcards = len(player.allCards())
-        score = -(numcards - 15)
+        ncards = len(player.allCards())
+        score = -(ncards - 15)
         player.addScore('Wall', score)
 
 
 ###############################################################################
 class Test_Wall(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Wall'])
-        self.g.startGame()
-        self.plr = self.g.playerList()[0]
+        self.g.start_game()
+        self.plr = self.g.player_list()[0]
 
     def test_gain(self):
         """ Use Wall """

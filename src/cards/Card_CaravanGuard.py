@@ -9,7 +9,7 @@ class Card_CaravanGuard(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration', 'reaction']
-        self.base = 'adventures'
+        self.base = 'adventure'
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
         When another player plays an Attack card, you may play this from your hand. (+1 Action has no effect if it's not your turn.)"""
         self.name = 'Caravan Guard'
@@ -35,8 +35,8 @@ class Test_CaravanGuard(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Caravan Guard', 'Militia', 'Moat'])
-        self.g.startGame()
-        self.plr, self.attacker = self.g.playerList()
+        self.g.start_game()
+        self.plr, self.attacker = self.g.player_list()
         self.card = self.g['Caravan Guard'].remove()
         self.militia = self.g['Militia'].remove()
         self.plr.addCard(self.card, 'hand')

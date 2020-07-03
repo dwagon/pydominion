@@ -10,11 +10,16 @@ class Card_NomadCamp(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'hinterlands'
-        self.desc = "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
         self.name = 'Nomad Camp'
         self.buys = 1
         self.cards = 2
         self.cost = 4
+
+    def desc(self, player):
+        if player.phase == "action":
+            return "+1 Buy +2 Coins"
+        else:
+            return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
     def hook_gainThisCard(self, game, player):
         return {'destination': 'topdeck'}
@@ -25,8 +30,8 @@ class Test_NomadCamp(unittest.TestCase):
     def setUp(self):
         import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nomad Camp'])
-        self.g.startGame()
-        self.plr = self.g.playerList(0)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
         self.card = self.g['Nomad Camp'].remove()
 
     def test_play(self):
