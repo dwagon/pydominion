@@ -30,6 +30,7 @@ class Player(object):
         self.hadcards = []
         self.messages = []
         self.hand = PlayArea([])
+        self.exilepile = PlayArea([])
         self.durationpile = PlayArea([])
         self.deck = PlayArea([])
         self.played = PlayArea([])
@@ -65,7 +66,9 @@ class Player(object):
         self.stacklist = (
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
-            ('Played', self.played), ('Duration', self.durationpile))
+            ('Played', self.played), ('Duration', self.durationpile),
+            ('Exile', self.exilepile)
+        )
 
     ###########################################################################
     def initial_Deck(self, heirlooms=None):
@@ -256,6 +259,22 @@ class Player(object):
         return None
 
     ###########################################################################
+    def unexile(self, card):
+        """ Remove card from exile pile into discard pile """
+        self.exilepile.remove(card)
+        self.discardpile.add(card)
+
+    ###########################################################################
+    def in_exile(self, cardname):
+        """ Return named card if cardname is in the exile pile """
+        assert isinstance(cardname, str)
+
+        for card in self.exilepile:
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
     def inDiscard(self, cardname):
         """ Return named card if cardname is in the discard pile """
         assert isinstance(cardname, str)
@@ -304,6 +323,13 @@ class Player(object):
             self.played.remove(card)
         elif card in self.hand:
             self.hand.remove(card)
+
+    ###########################################################################
+    def set_exile(self, *cards):
+        """ This is mostly used for testing """
+        self.exilepile.empty()
+        for c in cards:
+            self.exilepile.add(self.game[c].remove())
 
     ###########################################################################
     def setReserve(self, *cards):
@@ -637,21 +663,21 @@ class Player(object):
     ###########################################################################
     def getAllPurchasable(self):
         """ Return all potentially purchasable cards """
-        allcards = PlayArea([])
+        all_cards = PlayArea([])
         for c in self.game.cardTypes():
             if not c.purchasable:
                 continue
-            allcards.add(c)
-        allcards.sort(key=self.cardCost)
-        allcards.sort(key=lambda c: c.basecard)
-        return allcards
+            all_cards.add(c)
+        all_cards.sort(key=self.cardCost)
+        all_cards.sort(key=lambda c: c.basecard)
+        return all_cards
 
     ###########################################################################
     def buyable_selection(self, index):
         options = []
-        allcards = self.getAllPurchasable()
+        all_cards = self.getAllPurchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
-        for card in allcards:
+        for card in all_cards:
             if not self.hook_allowedToBuy(card):
                 if card in buyable:
                     buyable.remove(card)
@@ -866,6 +892,8 @@ class Player(object):
             self.output("| Hand: <EMPTY>")
         if self.artifacts:
             self.output("| Artifacts: %s" % ", ".join([c.name for c in self.artifacts]))
+        if self.exilepile:
+            self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
         if self.played:
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
@@ -889,6 +917,7 @@ class Player(object):
         x += self.played
         x += self.durationpile
         x += self.reserve
+        x += self.exilepile
         return x
 
     ###########################################################################
@@ -969,6 +998,11 @@ class Player(object):
         self.villager -= 1
         self.actions += 1
         self.output("Spent a villager")
+
+    ###########################################################################
+    def exile_card(self, card):
+        """ Send a card to the exile pile """
+        self.exilepile.add(card)
 
     ###########################################################################
     def endTurn(self):
@@ -1135,6 +1169,11 @@ class Player(object):
             rc = newcard.hook_gainThisCard(game=self.game, player=self)
             if rc:
                 options.update(rc)
+
+        # check for un-exiling
+        if self.in_exile(newcard.name):
+            self.check_unexile(newcard.name)
+
         # Replace is to gain a different card
         if 'replace' in options:
             self.game[newcard.name].add()
@@ -1151,6 +1190,22 @@ class Player(object):
         if options.get('shuffle', False):
             self.deck.shuffle()
         return newcard
+
+    ###########################################################################
+    def check_unexile(self, cardname):
+        """ Give players option to un-exile card """
+        num = sum([1 for _ in self.exilepile if _.name == cardname])
+        choices = [
+            ("Un-exile {} x {}".format(num, cardname), True),
+            ("Don't un-exile {}".format(cardname), False)
+        ]
+        unex = self.plrChooseOptions(
+            "Un-exile {}".format(cardname), *choices
+        )
+        if unex:
+            for card in self.exilepile[:]:
+                if card.name == cardname:
+                    self.unexile(card)
 
     ###########################################################################
     def overpay(self, card):

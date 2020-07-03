@@ -908,6 +908,25 @@ class Test_plrGainCard(unittest.TestCase):
 
 
 ###############################################################################
+class Test_exile(unittest.TestCase):
+    """ Test exile pile """
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_in_exile(self):
+        self.plr.set_exile('Silver')
+        self.assertIsNotNone(self.plr.in_exile('Silver'))
+
+    def test_exile_card(self):
+        au_card = self.g['Gold'].remove()
+        self.plr.set_exile()
+        self.plr.exile_card(au_card)
+        self.assertIsNotNone(self.plr.in_exile('Gold'))
+
+
+###############################################################################
 class Test_plrDiscardDownTo(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
