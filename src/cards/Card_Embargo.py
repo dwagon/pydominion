@@ -26,7 +26,7 @@ class Card_Embargo(Card):
         if not trash:
             return
         player.trashCard(self)
-        piles = game.cardpiles.values()
+        piles = list(game.cardpiles.values())
         piles.sort()
         card = player.cardSel(
             cardsrc=piles,
