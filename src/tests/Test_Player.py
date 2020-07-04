@@ -332,7 +332,7 @@ class Test_attackVictims(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inDeck(unittest.TestCase):
+class Test_in_deck(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -341,13 +341,13 @@ class Test_inDeck(unittest.TestCase):
     def test_indeck(self):
         """ Test card is in deck """
         self.plr.setDeck('Copper')
-        self.assertTrue(self.plr.inDeck('Copper'))
-        self.assertEqual(self.plr.inDeck('Copper').name, 'Copper')
+        self.assertTrue(self.plr.in_deck('Copper'))
+        self.assertEqual(self.plr.in_deck('Copper').name, 'Copper')
 
     def test_notindeck(self):
         """ Test card that isn't in deck """
         self.plr.setDeck('Copper')
-        self.assertFalse(self.plr.inDeck('Estate'))
+        self.assertFalse(self.plr.in_deck('Estate'))
 
 
 ###############################################################################

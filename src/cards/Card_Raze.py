@@ -57,7 +57,7 @@ class Test_Raze(unittest.TestCase):
         self.assertEqual(self.plr.discardSize(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNotNone(self.g.in_trash('Raze'))
 
     def test_copper(self):

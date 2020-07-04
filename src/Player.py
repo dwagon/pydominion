@@ -295,7 +295,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inDeck(self, cardname):
+    def in_deck(self, cardname):
         """ Return named card if cardname is in the deck pile """
         assert isinstance(cardname, str)
 

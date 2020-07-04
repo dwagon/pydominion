@@ -44,8 +44,8 @@ class Test_Cartographer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
 

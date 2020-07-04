@@ -56,10 +56,10 @@ class Test_NightWatchman(unittest.TestCase):
             self.assertIsNone(self.plr.inDiscard('Gold'))
             self.assertIsNone(self.plr.inDiscard('Silver'))
 
-            self.assertIsNone(self.plr.inDeck('Duchy'))
-            self.assertIsNone(self.plr.inDeck('Province'))
-            self.assertIsNotNone(self.plr.inDeck('Gold'))
-            self.assertIsNotNone(self.plr.inDeck('Silver'))
+            self.assertIsNone(self.plr.in_deck('Duchy'))
+            self.assertIsNone(self.plr.in_deck('Province'))
+            self.assertIsNotNone(self.plr.in_deck('Gold'))
+            self.assertIsNotNone(self.plr.in_deck('Silver'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

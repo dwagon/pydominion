@@ -56,7 +56,7 @@ class Test_HauntedCastle(unittest.TestCase):
         self.vic.test_input = ['Silver', 'Gold', 'finish']
         self.plr.gainCard(newcard=self.card)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.vic.inDeck('Silver'))
+        self.assertIsNotNone(self.vic.in_deck('Silver'))
         self.assertIsNone(self.vic.inHand('Silver'))
 
 

@@ -81,9 +81,9 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.inHand('Province'))
         self.assertIsNotNone(self.plr.inHand('Duchy'))
-        self.assertIsNone(self.plr.inDeck('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNone(self.plr.in_deck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNone(self.plr.inHand('Silver'))
 
     def test_underattack_pass(self):
@@ -94,8 +94,8 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
         self.plr.test_input = ['nothing']
         self.att.playCard(mil)
-        self.assertIsNotNone(self.plr.inDeck('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Duchy'))
+        self.assertIsNotNone(self.plr.in_deck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inHand('Silver'))
 

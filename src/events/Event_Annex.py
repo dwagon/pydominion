@@ -53,7 +53,7 @@ class Test_Annex(unittest.TestCase):
         self.assertEqual(self.plr.debt, 8)
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertIsNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 
 ###############################################################################

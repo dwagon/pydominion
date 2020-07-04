@@ -56,7 +56,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDeck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Province'))
         self.assertIsNone(self.plr.inDiscard('Province'))
 
     def test_disacrd(self):
@@ -66,7 +66,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNone(self.plr.inDeck('Province'))
+        self.assertIsNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))
 
     def test_buy_duchess(self):

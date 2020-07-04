@@ -120,7 +120,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         """ Make the Band of Misfits be a Bureaucrat """
         self.plr.test_input = ['Bureaucrat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
 
     def test_play_feast(self):
         """ Make the Band of Misfits be a Feast """
