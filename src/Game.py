@@ -591,6 +591,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             print("  %s's deck: %s" % (plr.name, ", ".join([_.name for _ in plr.deck])))
             print("  %s's discard: %s" % (plr.name, ", ".join([_.name for _ in plr.discardpile])))
             print("  %s's duration: %s" % (plr.name, ", ".join([_.name for _ in plr.durationpile])))
+            print("  %s's exile: %s" % (plr.name, ", ".join([_.name for _ in plr.exilepile])))
             print("  %s's reserve: %s" % (plr.name, ", ".join([_.name for _ in plr.reserve])))
             print("  %s's played: %s" % (plr.name, ", ".join([_.name for _ in plr.played])))
             print("  %s's messages: %s" % (plr.name, plr.messages))
