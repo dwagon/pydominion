@@ -218,7 +218,7 @@ class Player(object):
         assert isinstance(card, Card)
         self.output("Calling %s from Reserve" % card.name)
         self.currcards.append(card)
-        card.hook_callReserve(game=self.game, player=self)
+        card.hook_call_reserve(game=self.game, player=self)
         self.currcards.pop()
         self.reserve.remove(card)
         self.addCard(card, 'played')
@@ -627,23 +627,6 @@ class Player(object):
         return options, index
 
     ###########################################################################
-    def way_selection(self, index):
-        options = []
-        for op in self.game.ways.values():
-            index += 1
-            if op.cost <= self.coin and self.buys:
-                sel = chr(ord('a') + index)
-                action = 'ways'
-            else:
-                sel = '-'
-                action = None
-            details = "Way; %s" % self.coststr(op)
-            o = Option(selector=sel, verb='Use', desc=op.description(self), name=op.name, details=details, card=op, action=action)
-            options.append(o)
-
-        return options, index
-
-    ###########################################################################
     def event_selection(self, index):
         options = []
         for op in self.game.events.values():
@@ -724,8 +707,6 @@ class Player(object):
             op, index = self.buyable_selection(index)
             options.extend(op)
             op, index = self.event_selection(index)
-            options.extend(op)
-            op, index = self.way_selection(index)
             options.extend(op)
             op, index = self.project_selection(index)
             if op:
@@ -839,8 +820,6 @@ class Player(object):
             self.buyCard(opt['card'])
         elif opt['action'] == 'event':
             self.performEvent(opt['card'])
-        elif opt['action'] == 'ways':
-            self.performWay(opt['card'])
         elif opt['action'] == 'project':
             self.buyProject(opt['card'])
         elif opt['action'] == 'reserve':
@@ -1103,13 +1082,33 @@ class Player(object):
                 self.addCard(card, 'played')
             self.hand.remove(card)
 
+        way = None
         if not options['skip_card']:
-            self.card_benefits(card)
+            if self.game.ways and card.isAction():
+                way = self.select_ways()
+            if way:
+                self.perform_way(way)
+            else:
+                self.card_benefits(card)
         self.currcards.pop()
         if postActionHook and card.isAction():
             for cd in self.played + self.durationpile + self.projects:
                 if hasattr(cd, 'hook_postAction'):
                     cd.hook_postAction(game=self.game, player=self, card=card)
+
+    ###########################################################################
+    def select_ways(self):
+        """ Select a way to perform """
+        options = [("Do not use a way", None)]
+        for way in self.game.ways.values():
+            options.append(("{}: {}".format(way.name, way.description(self)), way))
+        ans = self.plrChooseOptions("Select a way to perform", *options)
+        return ans
+
+    ###########################################################################
+    def perform_way(self, way):
+        """ Perform a way """
+        self.card_benefits(way)
 
     ###########################################################################
     def card_benefits(self, card):
@@ -1371,20 +1370,6 @@ class Player(object):
         self.debt += project.debtcost
         self.buys += project.buys
         self.assign_project(project.name)
-        return True
-
-    ###########################################################################
-    def performWay(self, way):
-        assert issubclass(way.__class__, WayPile)
-        if not self.buys:
-            self.output("Need a buy to perform a way")
-            return False
-        self.buys -= 1
-        self.buys += way.buys
-        self.output("Using way %s" % way.name)
-        self.currcards.append(way)
-        way.special(game=self.game, player=self)
-        self.currcards.pop()
         return True
 
     ###########################################################################
