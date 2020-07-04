@@ -66,17 +66,17 @@ class Test_Reserve(unittest.TestCase):
         self.assertEqual(self.plr.reserveSize(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Silver')
 
-    def test_callReserve(self):
+    def test_call_reserve(self):
         self.plr.setReserve('Silver')
         self.assertEqual(self.plr.reserveSize(), 1)
-        c = self.plr.callReserve('Silver')
+        c = self.plr.call_reserve('Silver')
         self.assertEqual(self.plr.reserveSize(), 0)
         self.assertEqual(c.name, 'Silver')
 
-    def test_bad_callReserve(self):
+    def test_bad_call_reserve(self):
         """ Call a reserve that isn't there! """
         self.plr.setReserve('Copper')
-        c = self.plr.callReserve('Silver')
+        c = self.plr.call_reserve('Silver')
         self.assertIsNone(c)
 
     def test_addcard_reserve(self):

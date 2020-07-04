@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+from Card import Card
+import Game
 
 
 ###############################################################################
@@ -34,7 +35,6 @@ class Card_Feast(Card):
         if o['card']:
             player.gainCard(o['card'])
             player.output("Took %s" % o['card'].name)
-        return
 
     def trashCard(self, player):
         ans = player.plrChooseOptions(
@@ -49,7 +49,6 @@ class Card_Feast(Card):
 ###############################################################################
 class Test_Feast(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Feast'], badcards=['Den of Sin', 'Ghost Town', 'Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

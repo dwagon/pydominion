@@ -84,7 +84,7 @@ hook_trashCard
 --------------
 Called for every card in your hand just before a card is trashed
 
-hook_callReserve
+hook_call_reserve
 --------------
 Called when a card is pulled from the Reserve
 

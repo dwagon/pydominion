@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -16,14 +17,14 @@ class Project_Innovation(Project):
 
     def hook_gainCard(self, game, player, card):
         if player.stats['gained']:
-            return
+            return {}
         if not card.isAction():
-            return
+            return {}
         ch = player.plrChooseOptions(
-                "Play {} through Innovation?".format(card.name),
-                ("Play card", True),
-                ("Don't play", False)
-                )
+            "Play {} through Innovation?".format(card.name),
+            ("Play card", True),
+            ("Don't play", False)
+        )
         if ch:
             player.addCard(card, 'hand')
             player.playCard(card, discard=False, costAction=False)
@@ -32,12 +33,12 @@ class Project_Innovation(Project):
             if card in player.hand:
                 player.hand.remove(card)
             return {'destination': 'hand'}
+        return {}
 
 
 ###############################################################################
 class Test_Innovation(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Innovation'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

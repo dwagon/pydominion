@@ -21,7 +21,7 @@ class Card_Raider(Card):
         player.addCoin(3)
 
     def night(self, game, player):
-        inplay = {[_.name for _ in player.played]}
+        inplay = {_.name for _ in player.played}
         for pl in player.attackVictims():
             if pl.handSize() >= 5:
                 player.output("Raiding {}".format(pl.name))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,7 @@ class Card_SecretCave(Card):
 
     def special(self, game, player):
         dcs = player.plrDiscardCards(num=3, prompt="If you discard 3 cards next turn gain 3 Coin")
-        if len(dcs):
+        if dcs:
             self._discarded = True
 
     def duration(self, game, player):
@@ -32,7 +33,6 @@ class Card_SecretCave(Card):
 ###############################################################################
 class Test_SecretCave(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Secret Cave'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

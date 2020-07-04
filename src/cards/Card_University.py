@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,8 +26,11 @@ class Card_University(Card):
 ###############################################################################
 class Test_University(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['University'], badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village', 'Experiment', 'Ducat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1,
+            initcards=['University'],
+            badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village', 'Experiment', 'Ducat']
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.university = self.g['University'].remove()

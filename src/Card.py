@@ -224,7 +224,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################

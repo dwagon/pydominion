@@ -31,10 +31,10 @@ class Card_Duplicate(Card):
             )
         if o:
             self._duplicate = card
-            player.callReserve(self)
+            player.call_reserve(self)
         return {}
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         card = self._duplicate
         player.output("Gaining a %s from Duplicate" % card.name)
         player.gainCard(card.name, callhook=False)
