@@ -14,25 +14,26 @@ class Way_Camel(Way):
         self.name = "Camel"
 
     def special(self, game, player):
-        card = player.gainCard("Gold")
-        player.exile_card(card)
+        player.exile_card('Gold')
 
 
 ###############################################################################
 class Test_Camel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Camel'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, waycards=['Camel'],
+            initcards=['Moat'], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.ways['Camel']
+        self.card = self.g['Moat'].remove()
 
     def test_play(self):
         """ Perform a Camel """
-        self.plr.addCoin(10)
-        self.plr.performWay(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['Camel']
+        self.plr.playCard(self.card)
+        self.assertIsNotNone(self.plr.in_exile('Gold'))
 
 
 ###############################################################################
