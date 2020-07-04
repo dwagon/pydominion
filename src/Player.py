@@ -259,12 +259,6 @@ class Player(object):
         return None
 
     ###########################################################################
-    def unexile(self, card):
-        """ Remove card from exile pile into discard pile """
-        self.exilepile.remove(card)
-        self.discardpile.add(card)
-
-    ###########################################################################
     def in_exile(self, cardname):
         """ Return named card if cardname is in the exile pile """
         assert isinstance(cardname, str)
@@ -980,7 +974,10 @@ class Player(object):
 
     ###########################################################################
     def exile_card(self, card):
-        """ Send a card to the exile pile """
+        """ Send a card to the exile pile; if the card is a name then take it
+        from supply """
+        if isinstance(card, str):
+            card = self.game[card].remove()
         self.exilepile.add(card)
 
     ###########################################################################
@@ -1202,9 +1199,23 @@ class Player(object):
             "Un-exile {}".format(cardname), *choices
         )
         if unex:
-            for card in self.exilepile[:]:
-                if card.name == cardname:
-                    self.unexile(card)
+            self.unexile(cardname)
+
+    ###########################################################################
+    def unexile(self, cardname):
+        """ Un-exile cards
+        Return number unexiled """
+        count = 0
+        if not self.exilepile:
+            return 0
+        for card in self.exilepile[:]:
+            if card is None:
+                break
+            if card.name == cardname:
+                self.exilepile.remove(card)
+                self.discardpile.add(card)
+                count += 1
+        return count
 
     ###########################################################################
     def overpay(self, card):
