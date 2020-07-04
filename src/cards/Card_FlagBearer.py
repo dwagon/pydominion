@@ -17,7 +17,7 @@ class Card_FlagBearer(Card):
         self.cost = 4
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.assign_artifact('Flag')
 
     ###########################################################################

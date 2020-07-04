@@ -17,7 +17,7 @@ class Card_Experiment(Card):
         self.actions = 1
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainCard('Experiment', callhook=False)
         player.output("Gained a new experiment")
 

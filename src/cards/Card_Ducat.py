@@ -26,7 +26,7 @@ class Card_Ducat(Card):
         player.gainCoffer()
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         cu = player.inHand('Copper')
         if cu:
             player.plrTrashCard(cardsrc=[cu], num=1)

@@ -20,7 +20,7 @@ class Card_GrandCastle(CastleCard):
         else:
             return "5VP"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         for card in player.hand:
             player.revealCard(card)
         vics = sum([1 for _ in player.hand if _.isVictory()])

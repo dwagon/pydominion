@@ -20,7 +20,7 @@ class Card_Bordervillage(Card):
             return "+1 card, +2 action. When you gain this, gain a card costing less than this"
         return "+1 card, +2 action"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         """ When you gain this, gain a card costing less than this"""
         newcost = self.cost - 1
         player.plrGainCard(cost=newcost, prompt="Gain a card costing %d due to Border Village" % newcost)

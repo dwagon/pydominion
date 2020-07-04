@@ -21,7 +21,7 @@ class Card_CursedVillage(Card):
             player.addCard(c, 'discard')
             player.pickupCard(c)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.receive_hex()
 
 

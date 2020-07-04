@@ -24,7 +24,7 @@ class Card_Emporium(Card):
             return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         count = sum([1 for c in player.played if c.isAction()])
         if count >= 5:
             player.addScore('Emporium', 2)

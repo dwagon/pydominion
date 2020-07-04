@@ -24,7 +24,7 @@ class Card_Fortune(Card):
         if player.do_once('Fortune'):
             player.coin *= 2
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         num_gladiators = sum([1 for c in player.played if c.name == 'Gladiator'])
         if num_gladiators:
             player.output("Gaining %d Gold" % num_gladiators)

@@ -16,7 +16,7 @@ class Card_Cemetery(Card):
         self.victory = 2
         self.heirloom = 'Haunted Mirror'
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.plrTrashCard(num=4)
 
 

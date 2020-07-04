@@ -31,7 +31,7 @@ class Card_Temple(Card):
             return
         game['Temple'].addVP()
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         score = game['Temple'].drainVP()
         player.output("Gaining %d VP from Temple" % score)
         player.addScore('Temple', score)

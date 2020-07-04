@@ -18,7 +18,7 @@ class Card_Guardian(Card):
     def duration(self, game, player):
         player.addCoin(1)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
 

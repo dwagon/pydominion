@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,13 +22,12 @@ class Card_Inn(Card):
             When you gain this, look through your discard pile
             (including this), reveal any number of Action cards
             from it, and shuffle them into your deck."""
-        else:
-            return "+2 Cards, +2 Actions, Discard 2 cards"
+        return "+2 Cards, +2 Actions, Discard 2 cards"
 
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         cards = []
         for card in player.discardpile[:]:
             if card.isAction():
@@ -38,17 +38,15 @@ class Card_Inn(Card):
         for card in back:
             if card.name == 'Inn':
                 return {'destination': 'deck', 'shuffle': True}
-            else:
-                player.discardpile.remove(card)
-                player.addCard(card, 'deck')
-                player.deck.shuffle()
+            player.discardpile.remove(card)
+            player.addCard(card, 'deck')
+            player.deck.shuffle()
         return {}
 
 
 ###############################################################################
 class Test_Inn(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Inn', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

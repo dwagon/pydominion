@@ -16,7 +16,7 @@ class Card_Farmland(Card):
         self.cost = 6
         self.victory = 2
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         c = player.plrTrashCard(force=True)
         player.plrGainCard(cost=c[0].cost + 2, modifier='equal')
         return {}

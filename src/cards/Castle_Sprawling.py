@@ -16,7 +16,7 @@ class Card_SprawlingCastle(CastleCard):
         self.victory = 4
         self.name = "Sprawling Castle"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         ch = player.plrChooseOptions(
             "Gain a Duchy or 3 Estates",
             ("Gain a Duchy", 'duchy'), ("Gain 3 Estates", 'estates')

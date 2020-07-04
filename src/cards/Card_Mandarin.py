@@ -26,7 +26,7 @@ class Card_Mandarin(Card):
         player.addCard(card[0], 'topdeck')
         player.hand.remove(card[0])
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         for card in player.played[:]:
             if card.isTreasure():
                 player.output("Putting %s on to deck" % card.name)

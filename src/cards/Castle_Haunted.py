@@ -16,7 +16,7 @@ class Card_HauntedCastle(CastleCard):
         self.victory = 2
         self.name = "Haunted Castle"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainCard('Gold')
         for plr in list(game.players.values()):
             if plr == player:

@@ -32,7 +32,7 @@ class Card_CargoShip(Card):
                 return {'dontadd': True}
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         if not hasattr(player, '_cargo_ship'):
             player._cargo_ship = PlayArea([])
 
@@ -54,7 +54,7 @@ class Test_CargoShip(unittest.TestCase):
 
     def test_playCard_yes(self):
         self.card = self.g['Cargo Ship'].remove()
-        self.card.hook_gainThisCard(self.g, self.plr)
+        self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
@@ -67,7 +67,7 @@ class Test_CargoShip(unittest.TestCase):
 
     def test_playCard_no(self):
         self.card = self.g['Cargo Ship'].remove()
-        self.card.hook_gainThisCard(self.g, self.plr)
+        self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)

@@ -32,7 +32,7 @@ class Card_NightWatchman(Card):
             else:
                 player.addCard(c, 'topdeck')
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
 

@@ -23,7 +23,7 @@ class Card_Den_of_Sin(Card):
         for _ in range(2):
             player.pickupCard()
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
 

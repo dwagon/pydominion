@@ -26,7 +26,7 @@ class Card_Deathcart(Card):
             player.output("Didn't trash action - so trashing this card")
             player.trashCard(self)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         for _ in range(2):
             c = player.gainCard('Ruins')
             player.output("Gained %s" % c.name)

@@ -1162,7 +1162,7 @@ class Player(object):
             if rc:
                 options.update(rc)
         if callhook:
-            rc = newcard.hook_gainThisCard(game=self.game, player=self)
+            rc = newcard.hook_gain_this_card(game=self.game, player=self)
             if rc:
                 options.update(rc)
 

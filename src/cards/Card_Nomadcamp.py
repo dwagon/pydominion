@@ -21,7 +21,7 @@ class Card_NomadCamp(Card):
         else:
             return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'topdeck'}
 
 

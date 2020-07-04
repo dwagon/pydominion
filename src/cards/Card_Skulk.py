@@ -20,7 +20,7 @@ class Card_Skulk(Card):
         else:
             return "+1 Buy; Each other player receives the next Hex."
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainCard('Gold')
 
     def special(self, game, player):

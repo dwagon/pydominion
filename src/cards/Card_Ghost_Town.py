@@ -19,7 +19,7 @@ class Card_Ghost_Town(Card):
         else:
             return "At the start of your next turn, +1 Card and +1 Action."
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
     def duration(self, game, player):

@@ -64,7 +64,7 @@ Currently:
     destination - if set then put the card in the destination pile
     trash - if true then trash card instead of gaining card
 
-hook_gainThisCard
+hook_gain_this_card
 -------------
 This is triggered when the card is gained
 

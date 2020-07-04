@@ -16,7 +16,7 @@ class Card_SilkMerchant(Card):
         self.cost = 4
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainVillager()
         player.gainCoffer()
 

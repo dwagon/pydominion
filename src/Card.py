@@ -274,7 +274,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {}    # pragma: no cover
 
     ##########################################################################
