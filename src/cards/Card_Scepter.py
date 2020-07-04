@@ -29,7 +29,6 @@ class Card_Scepter(Card):
         if get_coin:
             player.addCoin(2)
         else:
-            player.output("acts={}".format(acts))
             card = player.cardSel(cardsrc=acts)
             player.addCard(card[0], 'hand')
             player.played.remove(card[0])
