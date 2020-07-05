@@ -871,6 +871,7 @@ class Player(object):
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
             self.output("| Played: <NONE>")
+        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # TODO
         self.output("| {} cards in discard pile".format(self.discardSize()))
         self.output('-' * 50)
 
