@@ -21,7 +21,7 @@ class Card_Noble_Brigand(Card):
     def special(self, game, player):
         self.attack(game, player)
 
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         self.attack(game, player)
 
     def attack(self, game, player):

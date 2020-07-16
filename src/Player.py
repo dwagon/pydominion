@@ -1139,7 +1139,7 @@ class Player(object):
             cost -= 2
         for c in self.hand + self.played + self.durationpile + self.states + self.projects:
             cost += c.hook_cardCost(game=self.game, player=self, card=card)
-        cost += card.hook_thisCardCost(game=self.game, player=self)
+        cost += card.hook_this_card_cost(game=self.game, player=self)
         return max(0, cost)
 
     ###########################################################################
@@ -1258,7 +1258,7 @@ class Player(object):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
         self.hook_buyCard(newcard)
-        newcard.hook_buyThisCard(game=self.game, player=self)
+        newcard.hook_buy_this_card(game=self.game, player=self)
         self.hook_allPlayers_buyCard(newcard)
 
     ###########################################################################
@@ -1438,6 +1438,12 @@ class Player(object):
             if not self.select_by_type(c, types):
                 continue
             if not c.purchasable:
+                continue
+            if c.always_buyable:
+                affordable.add(c)
+                continue
+            if c.always_buyable:
+                affordable.add(c)
                 continue
             if coin is None:
                 affordable.add(c)

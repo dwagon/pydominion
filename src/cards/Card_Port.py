@@ -22,7 +22,7 @@ class Card_Port(Card):
         else:
             return "+1 Card, +2 Actions"
 
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         """ Gain another Port"""
         c = player.gainCard('Port')
         if c:

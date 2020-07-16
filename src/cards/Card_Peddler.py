@@ -17,7 +17,7 @@ class Card_Peddler(Card):
         self.coin = 1
         self.cost = 8
 
-    def hook_thisCardCost(self, game, player):
+    def hook_this_card_cost(self, game, player):
         cost = 0
         for card in player.played:
             if card.isAction():

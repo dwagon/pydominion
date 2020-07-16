@@ -35,7 +35,7 @@ class Card_Mint(Card):
             player.output("Gained a %s from the Mint" % toget[0].name)
             player.gainCard(toget[0].name)
 
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         """ Trash all Treasures you have in play"""
         totrash = [c for c in player.played if c.isTreasure()]
         for c in totrash:
