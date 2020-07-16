@@ -7,6 +7,7 @@ class Card(object):
         self.basecard = False
         self.cost = -1
         self.debtcost = 0
+        self.always_buyable = False
         self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
@@ -220,7 +221,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################
@@ -244,7 +245,7 @@ class Card(object):
         return 0    # pragma: no cover
 
     ##########################################################################
-    def hook_thisCardCost(self, game, player):
+    def hook_this_card_cost(self, game, player):
         return 0    # pragma: no cover
 
     ##########################################################################

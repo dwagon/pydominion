@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -25,7 +26,6 @@ class Event_Ritual(Event):
 ###############################################################################
 class Test_Ritual(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Ritual'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -22,8 +22,8 @@ hook_buyCard
 This is called after a card has been purchased, and is invoked for
 every card in the players hand.
 
-hook_buyThisCard
-------------
+hook_buy_this_card
+------------------
 This is called after this card has been purchased.
 
 hook_allPlayers_buyCard
@@ -113,7 +113,7 @@ hook_cardCost
 ------------
 Modifier to the cost of buying a card. This hook applies to buying another card.
 
-hook_thisCardCost
+hook_this_card_cost
 -----------------
 Modifier to the cost of buying this card.
 

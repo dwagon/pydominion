@@ -24,7 +24,7 @@ class Card_Forum(Card):
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
 
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         player.addBuys(1)
 
 
