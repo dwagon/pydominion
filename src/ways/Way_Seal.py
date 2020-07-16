@@ -15,11 +15,12 @@ class Way_Seal(Way):
 
     def special(self, game, player):
         player.addCoin(1)
+        player.add_hook('gain_card', self.gain_card)
 
-    def hook_gainCard(self, game, player, card):
+    def gain_card(self, game, player, card):
         mod = {}
         deck = player.plrChooseOptions(
-            "Where to put %s?" % card.name,
+            "Seal: Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True))
         if deck:
@@ -39,9 +40,11 @@ class Test_Seal(unittest.TestCase):
     def test_play(self):
         """ Perform a Seal """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Seal']
+        self.plr.test_input = ['Seal', 'top of deck']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_exile('Estate'))
+        self.plr.gainCard('Gold')
+        self.g.print_state()
+        self.assertEqual(self.plr.deck[-1].name, 'Gold')
 
 
 ###############################################################################
