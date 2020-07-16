@@ -288,6 +288,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ Don't force the user to give the exact card name on the command
         line - maybe we can guess it """
         available = self.getAvailableCards(prefix)
+        if prefix == 'Way':
+            name = name.replace('Way of the ', '')
         if name in available:
             return name
         for crd in available:
