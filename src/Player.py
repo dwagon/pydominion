@@ -29,6 +29,7 @@ class Player(object):
         self.villager = 0
         self.hadcards = []
         self.messages = []
+        self.hooks = {}
         self.hand = PlayArea([])
         self.exilepile = PlayArea([])
         self.durationpile = PlayArea([])
@@ -799,6 +800,7 @@ class Player(object):
             card.hook_cleanup(self.game, self)
         self.discardHand()
         self.pickUpHand()
+        self.hooks = {}
         self.cleaned = True
 
     ###########################################################################
@@ -871,7 +873,7 @@ class Player(object):
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
             self.output("| Played: <NONE>")
-        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # TODO
+        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # Debug
         self.output("| {} cards in discard pile".format(self.discardSize()))
         self.output('-' * 50)
 
@@ -1097,10 +1099,10 @@ class Player(object):
     ###########################################################################
     def select_ways(self):
         """ Select a way to perform """
-        options = [("Do not use a way", None)]
+        options = [("Do not use a Way", None)]
         for way in self.game.ways.values():
             options.append(("{}: {}".format(way.name, way.description(self)), way))
-        ans = self.plrChooseOptions("Select a way to perform", *options)
+        ans = self.plrChooseOptions("Select a Way to perform", *options)
         return ans
 
     ###########################################################################
@@ -1274,11 +1276,18 @@ class Player(object):
                 crd.hook_allPlayers_gainCard(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
+    def add_hook(self, hook_name, hook):
+        self.hooks[hook_name] = hook
+
+    ###########################################################################
     def hook_gainCard(self, card):
         """ Hook which is fired by a card being obtained by a player """
         assert isinstance(card, Card)
         options = {}
-        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects:
+        if self.hooks.get('gain_card'):
+            o = self.hooks['gain_card'](game=self.game, player=self, card=card)
+            options.update(o)
+        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects + self.game.ways:
             self.currcards.append(c)
             o = c.hook_gainCard(game=self.game, player=self, card=card)
             self.currcards.pop()
