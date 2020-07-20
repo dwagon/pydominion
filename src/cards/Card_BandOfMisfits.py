@@ -86,10 +86,10 @@ class Card_BandOfMisfits(Card):
             return 0
         return self._action.hook_spendValue(game, player, card)
 
-    def hook_trashCard(self, game, player, card):
+    def hook_trash_card(self, game, player, card):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_trashCard(game, player, card)
+        return self._action.hook_trash_card(game, player, card)
 
     def hook_trashThisCard(self, game, player):
         if not hasattr(self, '_action'):

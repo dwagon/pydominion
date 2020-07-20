@@ -307,7 +307,7 @@ class Player(object):
         if rc:
             trashopts.update(rc)
         for cd in self.hand + self.game.landmarks + self.played:
-            rc = cd.hook_trashCard(game=self.game, player=self, card=card)
+            rc = cd.hook_trash_card(game=self.game, player=self, card=card)
             if rc:
                 trashopts.update(rc)
         if 'trash' in trashopts and not trashopts['trash']:

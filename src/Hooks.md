@@ -80,7 +80,7 @@ hook_trashThisCard
 --------------
 Called just before the card is trashed
 
-hook_trashCard
+hook_trash_card
 --------------
 Called for every card in your hand just before a card is trashed
 
