@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_Peddler(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+1 Card, +1 Action, +1 Coin. During your Buy phase, this costs 2 less per Action card you have in play, but not less than 0"
+        self.desc = """+1 Card, +1 Action, +1 Coin. During your Buy phase, this
+            costs 2 less per Action card you have in play, but not less than 0"""
         self.name = 'Peddler'
         self.cards = 1
         self.actions = 1
@@ -28,7 +30,6 @@ class Card_Peddler(Card):
 ###############################################################################
 class Test_Peddler(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peddler', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
