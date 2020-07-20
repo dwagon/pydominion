@@ -8,7 +8,6 @@ from PlayArea import PlayArea
 from Card import Card
 from Option import Option
 from CardPile import CardPile
-from WayPile import WayPile
 from EventPile import EventPile
 from ProjectPile import ProjectPile
 
@@ -854,6 +853,7 @@ class Player(object):
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
+        self.output("| Phase: %s" % self.phase)
         self.output("| Tokens: %s" % "; ".join(tknoutput))
         if self.durationpile:
             self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
@@ -1133,7 +1133,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile, WayPile))
+        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
