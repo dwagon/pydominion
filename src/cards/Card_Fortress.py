@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,13 +25,15 @@ class Card_Fortress(Card):
         if self in player.hand:
             player.addCard(self, 'hand')
             player.hand.remove(self)
+        if self in game.trashpile:
+            player.addCard(self, 'hand')
+            game.trashpile.remove(self)
         return {'trash': False}
 
 
 ###############################################################################
 class Test_Fortress(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fortress'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -45,6 +48,7 @@ class Test_Fortress(unittest.TestCase):
 
     def test_trash(self):
         self.plr.trashCard(self.card)
+        self.g.print_state()
         self.assertIsNotNone(self.plr.inHand('Fortress'))
         self.assertIsNone(self.g.in_trash('Fortress'))
 

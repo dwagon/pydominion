@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -27,7 +28,6 @@ class Card_Witch(Card):
 ###############################################################################
 class Test_Witch(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Witch', 'Moat'])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()

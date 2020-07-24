@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,7 +22,6 @@ class Card_Chapel(Card):
 ###############################################################################
 class Test_Chapel(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Chapel'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
