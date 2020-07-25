@@ -54,7 +54,7 @@ class Player(object):
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
-        self.stats = {'gained': [], 'bought': []}
+        self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
@@ -302,6 +302,7 @@ class Player(object):
     def trashCard(self, card, **kwargs):
         """ Take a card out of the game """
         assert isinstance(card, Card)
+        self.stats['trashed'].append(card)
         trashopts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
         if rc:
@@ -943,7 +944,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = {'gained': [], 'bought': []}
+        self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.displayOverview()
         self.hook_startTurn()
         for card in self.durationpile:
