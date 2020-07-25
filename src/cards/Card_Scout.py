@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,7 @@ class Card_Scout(Card):
             of your deck in any order """
         # TODO: Currently you can't order the cards you return
         cards = []
-        for i in range(4):
+        for _ in range(4):
             c = player.nextCard()
             player.revealCard(c)
             if c.isVictory():
@@ -36,7 +37,6 @@ class Card_Scout(Card):
 ###############################################################################
 class Test_Scout(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scout'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
