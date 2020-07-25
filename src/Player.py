@@ -1386,7 +1386,7 @@ class Player(object):
             self.output("Must pay off debt first")
             return False
         if self.coin < project.cost:
-            self.output("Need %d coints to buy this project" % project.cost)
+            self.output("Need %d coins to buy this project" % project.cost)
             return False
         self.buys -= 1
         self.coin -= project.cost
@@ -1404,7 +1404,7 @@ class Player(object):
         if self.debt != 0:
             self.output("Must pay off debt first")
         if self.coin < event.cost:
-            self.output("Need %d coints to perform this event" % event.cost)
+            self.output("Need %d coins to perform this event" % event.cost)
             return False
         self.buys -= 1
         self.coin -= event.cost
