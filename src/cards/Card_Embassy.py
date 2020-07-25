@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -29,7 +30,6 @@ class Card_Embassy(Card):
 ###############################################################################
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embassy'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

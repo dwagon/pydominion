@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -12,14 +13,16 @@ class Card_CargoShip(Card):
         self.cardtype = ['action', 'duration']
         self.base = 'renaissance'
         self.name = 'Cargo Ship'
-        self.desc = "+2 Coin; Once this turn, when you gain a card, you may set it aside face up (on this). At the start of your next turn, put it into your hand."
+        self.desc = """+2 Coin; Once this turn, when you gain a card, you may
+            set it aside face up (on this). At the start of your next turn,
+            put it into your hand."""
         self.cost = 3
         self.coin = 2
 
     ###########################################################################
     def hook_gainCard(self, game, player, card):
         if not player.inDuration('Cargo Ship'):
-            return
+            return None
         if not player._cargo_ship:
             choice = player.plrChooseOptions(
                 "Do you want to set {} aside to play next turn?".format(card.name),
@@ -30,6 +33,7 @@ class Card_CargoShip(Card):
                 player._cargo_ship.add(card)
                 player.secret_count += 1
                 return {'dontadd': True}
+        return None
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
@@ -47,7 +51,6 @@ class Card_CargoShip(Card):
 ###############################################################################
 class Test_CargoShip(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cargo Ship', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
