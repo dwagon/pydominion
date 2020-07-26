@@ -15,7 +15,7 @@ class Card_Royalseal(Card):
         self.cost = 5
         self.coin = 2
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ While this is in play, when you gain a card, you may
             put that card on top of your deck"""
         mod = {}

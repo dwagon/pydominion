@@ -69,10 +69,10 @@ class Card_BandOfMisfits(Card):
             return None
         return self._action.hook_cleanup(game, player)
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_gainCard(game, player, card)
+        return self._action.hook_gain_card(game, player, card)
 
     def hook_postAction(self, game, player, card):
         if not hasattr(self, '_action'):

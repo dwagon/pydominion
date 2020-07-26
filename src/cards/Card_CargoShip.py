@@ -20,7 +20,7 @@ class Card_CargoShip(Card):
         self.coin = 2
 
     ###########################################################################
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if not player.inDuration('Cargo Ship'):
             return None
         if not player._cargo_ship:

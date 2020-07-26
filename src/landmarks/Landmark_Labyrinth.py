@@ -18,7 +18,7 @@ class Landmark_Labyrinth(Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if len(player.stats['gained']) == 1:    # not including the current one
             player.addScore('Labyrinth', 2)
             player.output("Gained 2VP from Labyrinth")

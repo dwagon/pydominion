@@ -15,7 +15,7 @@ class Project_Innovation(Project):
         self.name = "Innovation"
         self.cost = 6
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if player.stats['gained']:
             return {}
         if not card.isAction():

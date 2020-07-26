@@ -1163,7 +1163,7 @@ class Player(object):
             self.output("No more %s" % cardpile)
             return None
         if callhook:
-            rc = self.hook_gainCard(newcard)
+            rc = self.hook_gain_card(newcard)
             if rc:
                 options.update(rc)
         if callhook:
@@ -1282,7 +1282,7 @@ class Player(object):
         self.hooks[hook_name] = hook
 
     ###########################################################################
-    def hook_gainCard(self, card):
+    def hook_gain_card(self, card):
         """ Hook which is fired by a card being obtained by a player """
         assert isinstance(card, Card)
         options = {}
@@ -1291,7 +1291,7 @@ class Player(object):
             options.update(o)
         for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects + self.game.ways:
             self.currcards.append(c)
-            o = c.hook_gainCard(game=self.game, player=self, card=card)
+            o = c.hook_gain_card(game=self.game, player=self, card=card)
             self.currcards.pop()
             if o:
                 options.update(o)

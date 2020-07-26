@@ -18,7 +18,7 @@ class Card_Watchtower(Card):
         """ Draw until you have 6 cards in hand. """
         player.pickUpHand(6)
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ When you gain a card, you may reveal this from your
             hand. If you do, either trash that card, or put it on top
             of your deck """
