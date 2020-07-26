@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Count(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """Choose one: Discard 2 cards; or put a card from your hand on top of your deck; or gain a Copper. Choose one: +3 Coin; or trash your hand; or gain a Duchy"""
+        self.desc = """Choose one: Discard 2 cards; or put a card from your hand
+            on top of your deck; or gain a Copper. Choose one: +3 Coin; or trash
+            your hand; or gain a Duchy"""
         self.name = 'Count'
         self.cost = 5
 
@@ -67,7 +70,6 @@ class Card_Count(Card):
 ###############################################################################
 class Test_Count(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Count'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

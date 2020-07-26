@@ -21,7 +21,7 @@ class Card_Tracker(Card):
         if not hasattr(player, '_tracker_dont_boon'):
             player.receive_boon()
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ While this is in play, when you gain a card, you may
             put that card on top of your deck"""
         mod = {}

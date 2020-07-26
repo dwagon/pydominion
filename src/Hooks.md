@@ -54,7 +54,7 @@ hook_endBuyPhase
 -----------
 Fires off at the end of the buy phase
 
-hook_gainCard
+hook_gain_card
 -------------
 This hook is triggered for every card in play when you gain
 another card.
@@ -80,7 +80,7 @@ hook_trashThisCard
 --------------
 Called just before the card is trashed
 
-hook_trashCard
+hook_trash_card
 --------------
 Called for every card in your hand just before a card is trashed
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -17,7 +18,7 @@ class Project_Piazza(Project):
     def hook_startTurn(self, game, player):
         c = player.nextCard()
         if c.isAction():
-            player.output("Piazaa playing {}".format(c.name))
+            player.output("Piazza playing {}".format(c.name))
             player.addCard(c, 'hand')
             player.playCard(c)
         else:
@@ -28,7 +29,6 @@ class Project_Piazza(Project):
 ###############################################################################
 class Test_Piazza(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Piazza'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,8 +12,8 @@ class Card_Tournament(Card):
         self.cardtype = 'action'
         self.base = 'cornucopia'
         self.desc = """+1 Action. Each player may reveal a Province from his hand.
-        If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
-        putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""
+            If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
+            putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""
         self.name = 'Tournament'
         self.needsprize = True
         self.actions = 1
@@ -21,12 +22,17 @@ class Card_Tournament(Card):
     def special(self, game, player):
         found = False
         for plr in game.player_list():
-            if plr != player and plr.inHand('Province'):
-                found = True
+            if plr != player:
+                prov = plr.inHand('Province')
+                if prov:
+                    plr.revealCard(prov)
+                    found = True
         if player.inHand('Province'):
+            player.output("Province revealed so gain a prize")
             player.discardCard(player.inHand('Province'))
             player.gainPrize()
         if not found:
+            player.output("No Province revealed")
             player.addCoin(1)
             player.pickupCard()
 
@@ -34,7 +40,6 @@ class Card_Tournament(Card):
 ###############################################################################
 class Test_Tournament(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

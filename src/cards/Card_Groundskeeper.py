@@ -16,7 +16,7 @@ class Card_Groundskeeper(Card):
         self.actions = 1
         self.cost = 5
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.isVictory():
             player.addScore('Groundskeeper', 1)
             player.output("Scored 1 from Groundskeeper")

@@ -18,7 +18,7 @@ class Card_MarketSquare(Card):
         self.buys = 1
         self.cost = 3
 
-    def hook_trashCard(self, game, player, card):
+    def hook_trash_card(self, game, player, card):
         gold = player.plrChooseOptions(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),

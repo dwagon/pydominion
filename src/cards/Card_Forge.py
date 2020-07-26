@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -32,7 +33,6 @@ class Card_Forge(Card):
 ###############################################################################
 class Test_Forge(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Feast'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

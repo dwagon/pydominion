@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -23,7 +24,6 @@ class Event_Advance(Event):
 ###############################################################################
 class Test_Advance(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Advance'], initcards=['Moat', 'Feast'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

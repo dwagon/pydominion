@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -11,7 +12,9 @@ class Card_Crypt(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
         self.base = 'nocturne'
-        self.desc = "Set aside any number of Treasures you have in play, face down (under this). While any remain, at the start of each of your turns, put one of them into your hand."
+        self.desc = """Set aside any number of Treasures you have in play, face down
+            (under this). While any remain, at the start of each of your turns,
+            put one of them into your hand."""
         self.name = 'Crypt'
         self.cost = 5
 
@@ -51,7 +54,6 @@ class Card_Crypt(Card):
 ###############################################################################
 class Test_Crypt(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Crypt'], badcards=['Duchess'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

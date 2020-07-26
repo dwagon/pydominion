@@ -8,7 +8,6 @@ from PlayArea import PlayArea
 from Card import Card
 from Option import Option
 from CardPile import CardPile
-from WayPile import WayPile
 from EventPile import EventPile
 from ProjectPile import ProjectPile
 
@@ -55,7 +54,7 @@ class Player(object):
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
-        self.stats = {'gained': [], 'bought': []}
+        self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.pickUpHand()
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
@@ -300,24 +299,25 @@ class Player(object):
         return None
 
     ###########################################################################
-    def trashCard(self, card):
+    def trashCard(self, card, **kwargs):
         """ Take a card out of the game """
         assert isinstance(card, Card)
+        self.stats['trashed'].append(card)
         trashopts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
         if rc:
             trashopts.update(rc)
-        for cd in self.hand + self.game.landmarks + self.played:
-            rc = cd.hook_trashCard(game=self.game, player=self, card=card)
-            if rc:
-                trashopts.update(rc)
-        if 'trash' in trashopts and not trashopts['trash']:
-            return
-        self.game.trashpile.add(card)
-        if card in self.played:
-            self.played.remove(card)
-        elif card in self.hand:
-            self.hand.remove(card)
+        if trashopts.get('trash', True):
+            self.game.trashpile.add(card)
+            if card in self.played:
+                self.played.remove(card)
+            elif card in self.hand:
+                self.hand.remove(card)
+        for crd in self.hand + self.game.landmarks + self.played + self.projects:
+            if crd.name not in kwargs.get('exclude_hook', []):
+                rc = crd.hook_trash_card(game=self.game, player=self, card=card)
+                if rc:
+                    trashopts.update(rc)
 
     ###########################################################################
     def set_exile(self, *cards):
@@ -854,6 +854,7 @@ class Player(object):
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
+        self.output("| Phase: %s" % self.phase)
         self.output("| Tokens: %s" % "; ".join(tknoutput))
         if self.durationpile:
             self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
@@ -874,6 +875,7 @@ class Player(object):
         else:
             self.output("| Played: <NONE>")
         self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # Debug
+        self.output("| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile]))    # Debug
         self.output("| {} cards in discard pile".format(self.discardSize()))
         self.output('-' * 50)
 
@@ -942,7 +944,7 @@ class Player(object):
         self.potions = 0
         self.cleaned = False
         self.is_start = True
-        self.stats = {'gained': [], 'bought': []}
+        self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.displayOverview()
         self.hook_startTurn()
         for card in self.durationpile:
@@ -1092,9 +1094,9 @@ class Player(object):
                 self.card_benefits(card)
         self.currcards.pop()
         if postActionHook and card.isAction():
-            for cd in self.played + self.durationpile + self.projects:
-                if hasattr(cd, 'hook_postAction'):
-                    cd.hook_postAction(game=self.game, player=self, card=card)
+            for crd in self.played + self.durationpile + self.projects:
+                if hasattr(crd, 'hook_postAction'):
+                    crd.hook_postAction(game=self.game, player=self, card=card)
 
     ###########################################################################
     def select_ways(self):
@@ -1133,7 +1135,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile, WayPile))
+        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
@@ -1161,7 +1163,7 @@ class Player(object):
             self.output("No more %s" % cardpile)
             return None
         if callhook:
-            rc = self.hook_gainCard(newcard)
+            rc = self.hook_gain_card(newcard)
             if rc:
                 options.update(rc)
         if callhook:
@@ -1280,7 +1282,7 @@ class Player(object):
         self.hooks[hook_name] = hook
 
     ###########################################################################
-    def hook_gainCard(self, card):
+    def hook_gain_card(self, card):
         """ Hook which is fired by a card being obtained by a player """
         assert isinstance(card, Card)
         options = {}
@@ -1289,7 +1291,7 @@ class Player(object):
             options.update(o)
         for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects + self.game.ways:
             self.currcards.append(c)
-            o = c.hook_gainCard(game=self.game, player=self, card=card)
+            o = c.hook_gain_card(game=self.game, player=self, card=card)
             self.currcards.pop()
             if o:
                 options.update(o)
@@ -1384,7 +1386,7 @@ class Player(object):
             self.output("Must pay off debt first")
             return False
         if self.coin < project.cost:
-            self.output("Need %d coints to buy this project" % project.cost)
+            self.output("Need %d coins to buy this project" % project.cost)
             return False
         self.buys -= 1
         self.coin -= project.cost
@@ -1402,7 +1404,7 @@ class Player(object):
         if self.debt != 0:
             self.output("Must pay off debt first")
         if self.coin < event.cost:
-            self.output("Need %d coints to perform this event" % event.cost)
+            self.output("Need %d coins to perform this event" % event.cost)
             return False
         self.buys -= 1
         self.coin -= event.cost
@@ -1529,10 +1531,8 @@ class Player(object):
         return cststr.strip()
 
     ###########################################################################
-    def plrTrashCard(self, num=1, anynum=False, printcost=False, force=False, exclude=None, cardsrc='hand', **kwargs):
+    def plrTrashCard(self, num=1, anynum=False, cardsrc='hand', **kwargs):
         """ Ask player to trash num cards """
-        if exclude is None:
-            exclude = []
         if 'prompt' not in kwargs:
             if anynum:
                 kwargs['prompt'] = "Trash any cards"
@@ -1541,10 +1541,11 @@ class Player(object):
         if len(cardsrc) == 0:
             return None
         trash = self.cardSel(
-            num=num, cardsrc=cardsrc, anynum=anynum, printcost=printcost,
-            force=force, exclude=exclude, verbs=('Trash', 'Untrash'), **kwargs)
-        for c in trash:
-            self.trashCard(c)
+            num=num, cardsrc=cardsrc, anynum=anynum,
+            verbs=('Trash', 'Untrash'), **kwargs
+        )
+        for crd in trash:
+            self.trashCard(crd, **kwargs)
         return trash
 
     ###########################################################################

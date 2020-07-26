@@ -16,7 +16,7 @@ class Landmark_Battlefield(Landmark):
     def desc(self, player):
         return "When you gain a Victory card, take 2VP from here. (%d left)" % self._vp
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.isVictory() and self._vp >= 0:
             self._vp -= 2
             player.output("Gained 2VP from Battlefield")

@@ -143,6 +143,9 @@ class TextPlayer(Player):
             * printcost
                 True - Print out the cost of the cards
                 False - Don't print out the cost [Default]
+            * printtypes
+                True - Print out the types of the cards
+                False - Don't print out the types [Default]
             * verbs
                 ('Select', 'Unselect')
             * prompt
@@ -187,8 +190,10 @@ class TextPlayer(Player):
                 o = Option(selector=sel, verb=verb, card=c, name=c.name)
                 if showdesc:
                     o['desc'] = c.description(self)
-                if 'printcost' in kwargs and kwargs['printcost']:
+                if kwargs.get('printcost'):
                     o['details'] = str(self.cardCost(c))
+                if kwargs.get('printtypes'):
+                    o['details'] = c.get_cardtype_repr()
                 options.append(o)
             ui = self.userInput(options, "Select which card?")
             if not ui['card']:

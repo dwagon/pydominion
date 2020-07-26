@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,11 +16,11 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         self.name = 'Changeling'
         self.cost = 3
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.cost < 3:
-            return
+            return None
         if game['Changeling'].isEmpty():
-            return
+            return None
         swap = player.plrChooseOptions(
             "Swap {} for a Changeling?".format(card.name),
             ("Swap {}".format(card.name), True),
@@ -27,6 +28,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
             )
         if swap:
             return {'replace': 'Changeling'}
+        return None
 
     def night(self, game, player):
         options = [{'selector': '0', 'print': "Keep Changeling", 'card': None}]
@@ -45,7 +47,6 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
 ###############################################################################
 class Test_Changeling(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Changeling'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

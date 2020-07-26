@@ -20,7 +20,7 @@ class Landmark_Aqueduct(Landmark):
             When you gain a Victory card, take the VP from this.
             (Here: %d VP, Gold: %d VP, Silver: %d VP)""" % (self._vp, self._goldvp, self._silvervp)
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.name == 'Gold':
             if self._goldvp:
                 self._goldvp -= 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,8 +18,7 @@ class Card_Skulk(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
-        else:
-            return "+1 Buy; Each other player receives the next Hex."
+        return "+1 Buy; Each other player receives the next Hex."
 
     def hook_gain_this_card(self, game, player):
         player.gainCard('Gold')
@@ -32,7 +32,6 @@ class Card_Skulk(Card):
 ###############################################################################
 class Test_Skulk(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Skulk'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

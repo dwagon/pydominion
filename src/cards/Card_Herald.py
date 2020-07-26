@@ -14,7 +14,7 @@ class Card_Herald(Card):
         self.name = 'Herald'
         self.overpay = True
         self.cards = 1
-        self.action = 1
+        self.actions = 1
         self.cost = 4
 
     def desc(self, player):
@@ -56,7 +56,7 @@ class Test_Herald(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.getActions(), 1 + 1)
         self.assertIsNotNone(self.plr.inPlayed('Moat'))
 
     def test_buy(self):

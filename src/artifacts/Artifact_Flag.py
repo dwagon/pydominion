@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Artifact import Artifact
 
 
@@ -20,7 +21,6 @@ class Artifact_Flag(Artifact):
 ###############################################################################
 class Test_Flag(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Flag'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
