@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,16 +25,15 @@ class Card_HauntedWoods(Card):
         if player.hasDefense(owner):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
-        for card in player.hand[:]:
-            player.addCard(card, 'topdeck')
-            player.hand.remove(card)
-            player.output("Moving %s to deck" % card.name)
+        for crd in player.hand[:]:
+            player.addCard(crd, 'topdeck')
+            player.hand.remove(crd)
+            player.output("Moving %s to deck" % crd.name)
 
 
 ###############################################################################
 class Test_HauntedWoods(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Haunted Woods'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -45,6 +45,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.vic.setHand('Silver', 'Duchy', 'Province')
         self.plr.playCard(self.card)
         self.plr.end_turn()
+        self.vic.setCoin(6)
         self.vic.buyCard(self.g['Gold'])
         self.assertIsNotNone(self.vic.in_deck('Silver'))
         self.assertIsNotNone(self.vic.in_deck('Duchy'))

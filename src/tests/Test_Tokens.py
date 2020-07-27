@@ -54,6 +54,7 @@ class TestToken(unittest.TestCase):
         self.plr.setHand('Gold', 'Province', 'Duchy')
         self.plr.place_token('Trashing', 'Moat')
         self.plr.test_input = ['trash province']
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
@@ -103,11 +104,11 @@ class TestToken(unittest.TestCase):
 
     def test_coin_token(self):
         """ Does the -Coin token work """
-        pass    # TODO
+        # TODO
 
     def test_estate_token(self):
         """ Does the Estate token work """
-        pass    # TODO
+        # TODO
 
 
 ###############################################################################

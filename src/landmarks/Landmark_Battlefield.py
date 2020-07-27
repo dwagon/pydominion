@@ -35,6 +35,7 @@ class Test_Battlefield(unittest.TestCase):
 
     def test_gain(self):
         """ Use Battlefield """
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Duchy'])
         self.assertEqual(self.plr.getScoreDetails()['Battlefield'], 2)
 

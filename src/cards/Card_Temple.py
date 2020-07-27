@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,17 +16,16 @@ class Card_Temple(Card):
 
     def desc(self, player):
         if player.phase == 'buy':
-            return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
-            Add 1 VP to the Temple Supply pile. When you gain this, take the VP from the
-            Temple Supply pile ({} VP).""".format(player.game['Temple'].getVP())
-        else:
-            return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
+            return """+1 VP. Trash from 1 to 3 differently named cards from your
+                hand.  Add 1 VP to the Temple Supply pile. When you gain this,
+                take the VP from the Temple Supply pile ({} VP).""".format(player.game['Temple'].getVP())
+        return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
             Add 1 VP to the Temple Supply pile ({} VP).""".format(player.game['Temple'].getVP())
 
     def special(self, game, player):
         player.addScore('Temple', 1)
-        cardnames = set([c.name for c in player.hand])
-        cards = [player.inHand(c) for c in cardnames]
+        cardnames = {_.name for _ in player.hand}
+        cards = [player.inHand(_) for _ in cardnames]
         trash = player.plrTrashCard(cardsrc=cards, prompt="Trash up to 3 different cards", num=3)
         if not trash:
             return
@@ -40,7 +40,6 @@ class Card_Temple(Card):
 ###############################################################################
 class Test_Temple(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Temple'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -58,6 +57,7 @@ class Test_Temple(unittest.TestCase):
     def test_gain(self):
         """ Gain a Temple """
         self.g['Temple'].addVP(5)
+        self.plr.setCoin(4)
         self.plr.buyCard(self.g['Temple'])
         self.assertEqual(self.plr.getScoreDetails()['Temple'], 5)
 

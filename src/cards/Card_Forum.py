@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -18,8 +19,7 @@ class Card_Forum(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
-        else:
-            return "+3 Cards, +1 Action, Discard 2 cards."
+        return "+3 Cards, +1 Action, Discard 2 cards."
 
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
@@ -31,7 +31,6 @@ class Card_Forum(Card):
 ###############################################################################
 class Test_Forum(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forum'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -47,6 +46,7 @@ class Test_Forum(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 3 - 2)
 
     def test_buy(self):
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Forum'])
         self.assertEqual(self.plr.getBuys(), 1)
 

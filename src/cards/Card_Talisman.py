@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,7 +27,6 @@ class Card_Talisman(Card):
 ###############################################################################
 class Test_Talisman(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Talisman'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -46,6 +46,7 @@ class Test_Talisman(unittest.TestCase):
 
     def test_tooexpensive(self):
         self.plr.playCard(self.card)
+        self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:
@@ -53,6 +54,7 @@ class Test_Talisman(unittest.TestCase):
 
     def test_victory(self):
         self.plr.playCard(self.card)
+        self.plr.setCoin(6)
         self.plr.buyCard(self.g['Duchy'])
         self.assertEqual(self.plr.discardSize(), 1)
         for c in self.plr.discardpile:

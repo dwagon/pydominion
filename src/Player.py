@@ -1246,6 +1246,9 @@ class Player(object):
         cost = self.cardCost(card)
         if card.isDebt():
             self.debt += card.debtcost
+        if self.coin < cost:
+            self.output("You can't afford this")
+            return
         self.coin -= cost
         if card.overpay and self.coin:
             self.overpay(card)

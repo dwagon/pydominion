@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,8 +21,7 @@ class Card_Messenger(Card):
             return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
                 When this is your first buy in a turn, gain a card costing up to 4,
                 and each other player gains a copy of it."""
-        else:
-            return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
+        return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
     def special(self, game, player):
         o = player.plrChooseOptions(
@@ -46,7 +46,6 @@ class Card_Messenger(Card):
 ###############################################################################
 class Test_Messenger(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Messenger'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
@@ -73,6 +72,7 @@ class Test_Messenger(unittest.TestCase):
     def test_buy(self):
         """ Buy a messenger """
         self.plr.test_input = ['get silver']
+        self.plr.setCoin(4)
         self.plr.buyCard(self.g['Messenger'])
         for plr in self.g.player_list():
             self.assertIsNotNone(plr.inDiscard('Silver'))

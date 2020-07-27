@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,7 +25,6 @@ class Card_MerchantGuild(Card):
 ###############################################################################
 class Test_MerchantGuild(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Merchant Guild'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -41,6 +41,7 @@ class Test_MerchantGuild(unittest.TestCase):
         """ Play the card """
         self.plr.coffer = 0
         self.plr.playCard(self.card)
+        self.plr.setCoin(3)
         self.plr.buyCard(self.g['Estate'])
         self.assertEqual(self.plr.getCoffer(), 1)
 
