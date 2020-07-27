@@ -24,7 +24,7 @@ class Card_Animal_Fair(Card):
         empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
         player.addBuys(empties)
 
-    def hook_buy_this_card(self, game, player):
+    def todo_hook_buy_this_card(self, game, player):
         actions = [_ for _ in player.hand if _.isAction()]
         if not actions:
             return 0
@@ -37,7 +37,7 @@ class Card_Animal_Fair(Card):
 ###############################################################################
 class Test_Animal_Fair(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Animal Fair'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Animal Fair', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Animal Fair'].remove()
@@ -45,9 +45,12 @@ class Test_Animal_Fair(unittest.TestCase):
 
     def test_playcard(self):
         """ Play a supplies """
+        c = self.g['Moat'].remove()
+        while c:
+            c = self.g['Moat'].remove()
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.deck[-1].name, 'Horse')
+        self.assertEqual(self.plr.getCoin(), 4)
+        self.assertEqual(self.plr.getBuys(), 1 + 1)
 
 
 ###############################################################################
