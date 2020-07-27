@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,13 +18,13 @@ class Card_Duplicate(Card):
 
     def hook_gain_card(self, game, player, card):
         if not player.inReserve('Duplicate'):
-            return
+            return {}
         if card.cost > 6:
-            return
+            return {}
         if not card.purchasable:
-            return
+            return {}
         if card.potcost:
-            return
+            return {}
         o = player.plrChooseOptions(
             'Call Duplicate on %s' % card.name,
             ('Save for later', False),
@@ -43,7 +44,6 @@ class Card_Duplicate(Card):
 ###############################################################################
 class Test_Duplicate(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duplicate'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

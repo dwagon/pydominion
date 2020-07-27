@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -23,7 +24,6 @@ class Project_Academy(Project):
 ###############################################################################
 class Test_Academy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Academy'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
