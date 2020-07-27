@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -22,7 +23,6 @@ class Card_Workshop(Card):
 ###############################################################################
 class Test_Workshop(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Feast'], badcards=['Blessed Village', 'Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -30,13 +30,13 @@ class Test_Workshop(unittest.TestCase):
         self.plr.addCard(self.wcard, 'hand')
 
     def test_gainzero(self):
-        self.plr.test_input = ['0']
+        self.plr.test_input = ['Finish']
         self.plr.playCard(self.wcard)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discardSize(), 0)
 
     def test_gainone(self):
-        self.plr.test_input = ['1']
+        self.plr.test_input = ['Get Feast']
         self.plr.playCard(self.wcard)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discardSize(), 1)
