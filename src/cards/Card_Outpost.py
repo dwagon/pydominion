@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -30,7 +31,6 @@ class Card_Outpost(Card):
 ###############################################################################
 class Test_Outpost(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Outpost'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -17,8 +18,7 @@ class Card_GrandCastle(CastleCard):
     def desc(self, player):
         if player.phase == "buy":
             return """5VP. When you gain this, reveal your hand. 1VP per Victory card in your hand and/or in play."""
-        else:
-            return "5VP"
+        return "5VP"
 
     def hook_gain_this_card(self, game, player):
         for card in player.hand:
@@ -35,7 +35,6 @@ class Card_GrandCastle(CastleCard):
 ###############################################################################
 class Test_GrandCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
