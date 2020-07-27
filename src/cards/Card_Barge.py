@@ -58,7 +58,7 @@ class Test_Barge(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.handSize(), 5)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5 + 3)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
 

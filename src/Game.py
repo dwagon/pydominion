@@ -674,7 +674,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
         self.current_player = self.playerToLeft(self.current_player)
-        self.current_player.startTurn()
+        self.current_player.start_turn()
         self.current_player.turn()
         self.current_player.end_turn()
         if self.isGameOver():

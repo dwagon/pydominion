@@ -935,7 +935,7 @@ class Player(object):
             c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def startTurn(self):
+    def start_turn(self):
         self.phase = 'start'
         self.played.empty()
         self.buys = 1
@@ -946,7 +946,7 @@ class Player(object):
         self.is_start = True
         self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.displayOverview()
-        self.hook_startTurn()
+        self.hook_start_turn()
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
             self.currcards.append(card)
@@ -957,9 +957,9 @@ class Player(object):
                 self.durationpile.remove(card)
 
     ###########################################################################
-    def hook_startTurn(self):
+    def hook_start_turn(self):
         for c in self.hand + self.states + self.projects + self.artifacts:
-            c.hook_startTurn(self.game, self)
+            c.hook_start_turn(self.game, self)
 
     ###########################################################################
     def spendCoffer(self):

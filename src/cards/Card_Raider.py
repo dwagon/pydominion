@@ -62,7 +62,7 @@ class Test_Raider(unittest.TestCase):
             self.g.print_state()
             raise
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         try:
             self.assertEqual(self.plr.getCoin(), 3)
         except AssertionError:      # pragma: no cover

@@ -39,7 +39,7 @@ class Test_Guardian(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 
 

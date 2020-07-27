@@ -14,7 +14,7 @@ class Project_Fair(Project):
         self.name = "Fair"
         self.cost = 4
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         player.addBuys(1)
 
 
@@ -28,7 +28,7 @@ class Test_Fair(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project('Fair')
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getBuys(), 2)
 
 

@@ -57,7 +57,7 @@ class Test_Haven(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.durationSize(), 2)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.playedSize(), 1)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertEqual(self.plr.handSize(), 6)

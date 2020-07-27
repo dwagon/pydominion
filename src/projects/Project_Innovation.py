@@ -46,7 +46,7 @@ class Test_Innovation(unittest.TestCase):
     def test_play(self):
         self.plr.assign_project('Innovation')
         self.plr.test_input = ['Play card']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.plr.gainCard('Moat')
         self.assertEqual(self.plr.handSize(), 5 + 1 + 2)
         self.assertIsNotNone(self.plr.inHand('Moat'))
@@ -55,7 +55,7 @@ class Test_Innovation(unittest.TestCase):
     def test_dontplay(self):
         self.plr.assign_project('Innovation')
         self.plr.test_input = ["Don't play"]
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.plr.gainCard('Moat')
         self.assertEqual(self.plr.handSize(), 5)
         self.assertIsNone(self.plr.inHand('Moat'))

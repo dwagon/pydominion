@@ -14,7 +14,7 @@ class Project_CropRotation(Project):
         self.name = "Crop Rotation"
         self.cost = 6
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         vics = [_ for _ in player.hand if _.isVictory()]
         if not vics:
             return
@@ -35,7 +35,7 @@ class Test_CropRotation(unittest.TestCase):
         self.plr.assign_project('Crop Rotation')
         self.plr.setHand('Copper', 'Silver', 'Estate')
         self.plr.test_input = ['Discard Estate']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 3 + 2 - 1)
         self.assertIsNotNone(self.plr.inDiscard('Estate'))
 

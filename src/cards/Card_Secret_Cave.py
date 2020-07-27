@@ -49,7 +49,7 @@ class Test_SecretCave(unittest.TestCase):
             self.assertEqual(self.plr.discardSize(), 3)
             self.assertEqual(self.plr.handSize(), 5 + 1 - 3)
             self.plr.end_turn()
-            self.plr.startTurn()
+            self.plr.start_turn()
             self.assertEqual(self.plr.getCoin(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

@@ -50,7 +50,7 @@ class Test_Bridgetroll(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertTrue(self.victim.coin_token)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_costreduction(self):

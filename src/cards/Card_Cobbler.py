@@ -33,7 +33,7 @@ class Test_Cobbler(unittest.TestCase):
             self.plr.playCard(self.card)
             self.plr.end_turn()
             self.plr.test_input = ['1']
-            self.plr.startTurn()
+            self.plr.start_turn()
             self.assertLessEqual(self.plr.discardpile[0].cost, 4)
         except (AssertionError, IOError, OSError):  # pragma: no cover
             self.g.print_state()

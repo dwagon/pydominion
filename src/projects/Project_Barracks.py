@@ -14,7 +14,7 @@ class Project_Barracks(Project):
         self.name = "Barracks"
         self.cost = 6
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         player.addActions(1)
 
 
@@ -28,7 +28,7 @@ class Test_Barracks(unittest.TestCase):
 
     def test_flag(self):
         self.plr.assign_project('Barracks')
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getActions(), 2)
 
 

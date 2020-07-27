@@ -39,7 +39,7 @@ class Test_Lighthouse(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 
 

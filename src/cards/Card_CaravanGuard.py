@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -33,7 +34,6 @@ class Card_CaravanGuard(Card):
 ###############################################################################
 class Test_CaravanGuard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Caravan Guard', 'Militia', 'Moat'])
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
@@ -47,7 +47,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_attack(self):

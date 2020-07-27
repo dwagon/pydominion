@@ -60,7 +60,7 @@ class Test_Gear(unittest.TestCase):
             self.assertIsNotNone(self.plr.inHand('Duchy'))
             self.assertEqual(self.plr.durationSize(), 1)
             self.plr.end_turn()
-            self.plr.startTurn()
+            self.plr.start_turn()
             self.assertEqual(self.plr.durationSize(), 0)
             self.assertEqual(self.plr.playedSize(), 1)
             self.assertEqual(self.plr.played[-1].name, 'Gear')

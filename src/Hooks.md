@@ -105,7 +105,7 @@ hook_end_turn
 ------------
 Called at the end of the players buy phase
 
-hook_startTurn
+hook_start_turn
 --------------
 Called at the start of a players turn
 

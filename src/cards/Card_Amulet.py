@@ -54,7 +54,7 @@ class Test_Amulet(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertIsNone(self.plr.inDiscard('Silver'))
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertIsNone(self.plr.inDiscard('Silver'))
 
@@ -65,7 +65,7 @@ class Test_Amulet(unittest.TestCase):
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 
@@ -78,7 +78,7 @@ class Test_Amulet(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNone(self.plr.inDiscard('Silver'))
         self.assertEqual(self.g.trashSize(), tsize + 2)

@@ -292,7 +292,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################

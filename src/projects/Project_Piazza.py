@@ -15,7 +15,7 @@ class Project_Piazza(Project):
         self.name = "Piazza"
         self.cost = 5
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         c = player.nextCard()
         if c.isAction():
             player.output("Piazza playing {}".format(c.name))
@@ -36,14 +36,14 @@ class Test_Piazza(unittest.TestCase):
     def test_play(self):
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Moat')
         self.plr.assign_project('Piazza')
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inPlayed('Moat'))
         self.assertEqual(self.plr.handSize(), 5 + 2)
 
     def test_noaction(self):
         self.plr.setDeck('Province', 'Silver')
         self.plr.assign_project('Piazza')
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
 

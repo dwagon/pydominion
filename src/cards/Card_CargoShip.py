@@ -65,7 +65,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.plr._cargo_ship[0].name, 'Moat')
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertTrue(self.plr.inHand('Moat'))
 
     def test_playCard_no(self):
@@ -78,7 +78,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNone(self.plr.inHand('Moat'))
 
 

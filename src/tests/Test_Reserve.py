@@ -12,12 +12,12 @@ class Test_getWhens(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_start(self):
-        self.plr.startTurn()
+        self.plr.start_turn()
         whens = self.plr.getWhens()
         self.assertEqual(whens, ['any', 'start'])
 
     def test_not_start(self):
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.plr.perform_action({'action': 'spendall'})
         whens = self.plr.getWhens()
         self.assertNotIn('start', whens)

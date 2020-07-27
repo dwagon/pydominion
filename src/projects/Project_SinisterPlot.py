@@ -16,7 +16,7 @@ class Project_SinisterPlot(Project):
         self.cost = 4
         self._token = defaultdict(int)
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         ch = player.plrChooseOptions(
                 "Sinister Plot Action? ",
                 ("Add a token here?", True),
@@ -40,14 +40,14 @@ class Test_SinisterPlot(unittest.TestCase):
     def test_add(self):
         self.plr.assign_project('Sinister Plot')
         self.plr.test_input = ['Add a token']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 1)
 
     def test_use(self):
         self.plr.assign_project('Sinister Plot')
         self.plr.projects[0]._token[self.plr.name] = 2
         self.plr.test_input = ['Remove']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 0)
         self.assertEqual(self.plr.handSize(), 5 + 2)
 

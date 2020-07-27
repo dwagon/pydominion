@@ -68,7 +68,7 @@ class Test_Research(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.g.in_trash('Moat'))
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Silver'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
 

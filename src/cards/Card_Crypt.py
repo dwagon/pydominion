@@ -67,12 +67,12 @@ class Test_Crypt(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Gold']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertEqual(len(self.plr._crypt_reserve), 1)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Silver']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Silver'))
         self.assertFalse(self.card.permanent)
 

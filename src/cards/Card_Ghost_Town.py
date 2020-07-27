@@ -41,7 +41,7 @@ class Test_Ghost_Town(unittest.TestCase):
         self.plr.addCard(self.gtown, 'hand')
         self.plr.playCard(self.gtown)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5 + 1)
         self.assertEqual(self.plr.getActions(), 2)
 

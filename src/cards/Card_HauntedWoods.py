@@ -51,7 +51,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.assertIsNotNone(self.vic.in_deck('Duchy'))
         self.assertIsNotNone(self.vic.in_deck('Province'))
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 8)
 
 

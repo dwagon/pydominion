@@ -37,7 +37,7 @@ class Test_Merchantship(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.durationSize(), 1)
         self.plr.end_turn()
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.playedSize(), 1)
