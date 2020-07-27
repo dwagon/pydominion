@@ -37,14 +37,11 @@ class Card(object):
 
     ##########################################################################
     def get_cardtype_repr(self):
-        ans = []
         if isinstance(self.cardtype, str):
             ct = [self.cardtype]
         else:
             ct = self.cardtype[:]
-        for c in ct:
-            ans.append(c.title())
-        return ", ".join(ans)
+        return ", ".join([_.title() for _ in ct])
 
     ##########################################################################
     def __repr__(self):
