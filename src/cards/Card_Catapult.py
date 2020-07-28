@@ -13,8 +13,8 @@ class Card_Catapult(Card):
         self.required_cards = ['Curse']
         self.base = 'empires'
         self.desc = """+1 Coin; Trash a card from your hand.
-        If it costs 3 or more, each other player gains a Curse.
-        If it's a Treasure, each other player discards down to 3 cards in hand."""
+            If it costs 3 or more, each other player gains a Curse.
+            If it's a Treasure, each other player discards down to 3 cards in hand."""
         self.name = 'Catapult'
         self.cost = 3
         self.coin = 1

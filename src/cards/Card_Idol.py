@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Idol(Card):
         Card.__init__(self)
         self.cardtype = ['treasure', 'attack', 'fate']
         self.base = 'nocturne'
-        self.desc = "2 Coin; When you play this, if you then have an odd number of Idols in play, receive a Boon; if an even number, each other player gains a Curse."
+        self.desc = """2 Coin; When you play this, if you then have an odd number
+            of Idols in play, receive a Boon; if an even number, each other player
+            gains a Curse."""
         self.name = 'Idol'
         self.coin = 2
         self.cost = 5
@@ -29,7 +32,6 @@ class Card_Idol(Card):
 ###############################################################################
 class Test_Idol(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Idol'], badcards=['Druid'])
         self.g.start_game()
         for b in self.g.boons:

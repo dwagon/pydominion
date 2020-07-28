@@ -11,9 +11,8 @@ class Card_Bureaucrat(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'dominion'
         self.desc = """ Gain a Silver; put it on top of your deck. Each
-        other player reveals a victory card from his hand and puts
-        it on his deck (or reveals a hand with no victory cards)
-        """
+            other player reveals a victory card from his hand and puts
+            it on his deck (or reveals a hand with no victory cards)"""
         self.name = 'Bureaucrat'
         self.cost = 4
 

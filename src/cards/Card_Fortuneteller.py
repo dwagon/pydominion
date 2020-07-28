@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -27,15 +28,13 @@ class Card_Fortuneteller(Card):
                     plr.addCard(card, 'topdeck')
                     plr.output("%s's Fortune Teller put %s on top of your deck" % (player.name, card.name))
                     break
-                else:
-                    plr.output("%s's Fortune Teller discarded your %s" % (player.name, card.name))
-                    plr.discardCard(card)
+                plr.output("%s's Fortune Teller discarded your %s" % (player.name, card.name))
+                plr.discardCard(card)
 
 
 ###############################################################################
 class Test_Fortuneteller(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Fortune Teller'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

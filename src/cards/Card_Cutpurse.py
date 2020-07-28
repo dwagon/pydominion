@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -33,7 +34,6 @@ class Card_Cutpurse(Card):
 ###############################################################################
 class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cutpurse'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

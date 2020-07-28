@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,9 +18,10 @@ class Card_IGG(Card):
 
     def desc(self, player):
         if player.phase == "buy":
-            return """+1 Coin. When you play this, you may gain a Copper, putting it into your hand. When you gain this, each other player gains a Curse."""
-        else:
-            return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
+            return """+1 Coin. When you play this, you may gain a Copper, putting
+                it into your hand. When you gain this, each other player gains
+                a Curse."""
+        return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
 
     def special(self, game, player):
         ans = player.plrChooseOptions(
@@ -39,7 +41,6 @@ class Card_IGG(Card):
 ###############################################################################
 class Test_IGG(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ill-Gotten Gains'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

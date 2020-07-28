@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Cultist(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'looter']
         self.base = 'darkages'
-        self.desc = """+2 Cards; Each other player gains a Ruins. You may play a Cultist from your hand.  When you trash this, +3 Cards."""
+        self.desc = """+2 Cards; Each other player gains a Ruins. You may play
+            a Cultist from your hand.  When you trash this, +3 Cards."""
         self.name = 'Cultist'
         self.cost = 5
         self.cards = 2
@@ -34,7 +37,6 @@ class Card_Cultist(Card):
 ###############################################################################
 class Test_Cultist(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cultist', 'Moat'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

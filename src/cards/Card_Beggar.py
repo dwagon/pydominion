@@ -12,8 +12,8 @@ class Card_Beggar(Card):
         self.cardtype = ['action', 'reaction']
         self.base = 'darkages'
         self.desc = """Gain 3 Coppers, putting them into your hand.
-        When another player plays an Attack card, you may discard this.
-        If you do, gain two Silvers, putting one on top of your deck."""
+            When another player plays an Attack card, you may discard this.
+            If you do, gain two Silvers, putting one on top of your deck."""
         self.name = 'Beggar'
         self.cost = 2
 
