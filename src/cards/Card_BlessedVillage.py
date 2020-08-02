@@ -21,7 +21,7 @@ class Card_BlessedVillage(Card):
             return "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
         return "+1 Card; +2 Actions"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.receive_boon()
 
 

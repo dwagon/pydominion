@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,7 +12,8 @@ class Card_Jester(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'cornucopia'
         self.desc = """+2 Coin. Each other player discards the top card of his deck.
-        If it's a Victory card he gains a Curse. Otherwise either he gains a copy of the discarded card or you do, your choice."""
+            If it's a Victory card he gains a Curse. Otherwise either he gains a
+            copy of the discarded card or you do, your choice."""
         self.name = 'Jester'
         self.required_cards = ['Curse']
         self.coin = 2
@@ -41,7 +43,6 @@ class Card_Jester(Card):
 ###############################################################################
 class Test_Jester(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Jester'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

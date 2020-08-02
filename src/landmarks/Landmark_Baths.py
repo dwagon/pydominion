@@ -15,7 +15,7 @@ class Landmark_Baths(Landmark):
     def desc(self, player):
         return "When you end your turn without having gained a card, take 2VP from here. (%d left)" % self._vp
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         if not player.stats['gained']:
             player.output("Gaining 2 from Baths as no cards gained")
             player.addScore('Baths', 2)
@@ -35,7 +35,7 @@ class Test_Baths(unittest.TestCase):
     def test_use(self):
         """ Use Baths """
         self.plr.coin = 4
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertEqual(self.plr.getScoreDetails()['Baths'], 2)
 
 

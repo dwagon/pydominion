@@ -45,7 +45,7 @@ class Card_Saboteur(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):      # pragma: no coverage
+def botresponse(player, kind, args=None, kwargs=None):      # pragma: no coverage
     toget = []
     for card in kwargs['cardsrc']:
         if card.name in ('Copper', 'Silver', 'Gold'):
@@ -58,7 +58,11 @@ def botresponse(player, kind, args=[], kwargs={}):      # pragma: no coverage
 ###############################################################################
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Saboteur'], badcards=['Blessed Village', 'Cemetery', 'Necromancer'])
+        self.g = Game.Game(
+            quiet=True, numplayers=2,
+            initcards=['Saboteur'],
+            badcards=['Blessed Village', 'Cemetery', 'Necromancer', 'Animal Fair']
+        )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g['Saboteur'].remove()
@@ -68,7 +72,7 @@ class Test_Saboteur(unittest.TestCase):
         """ Play a saboteur """
         tsize = self.g.trashSize()
         try:
-            self.victim.test_input = ['1']
+            self.victim.test_input = ['Get Estate']
             self.victim.setDeck('Gold', 'Copper', 'Estate')
             self.plr.playCard(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)

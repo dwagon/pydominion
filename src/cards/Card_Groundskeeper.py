@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -16,7 +17,7 @@ class Card_Groundskeeper(Card):
         self.actions = 1
         self.cost = 5
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.isVictory():
             player.addScore('Groundskeeper', 1)
             player.output("Scored 1 from Groundskeeper")
@@ -26,7 +27,6 @@ class Card_Groundskeeper(Card):
 ###############################################################################
 class Test_Groundskeeper(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Groundskeeper'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,6 +38,7 @@ class Test_Groundskeeper(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Duchy'])
         self.assertEqual(self.plr.score['Groundskeeper'], 1)
 

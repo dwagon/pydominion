@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -21,7 +22,7 @@ class Card_Tracker(Card):
         if not hasattr(player, '_tracker_dont_boon'):
             player.receive_boon()
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ While this is in play, when you gain a card, you may
             put that card on top of your deck"""
         mod = {}
@@ -38,7 +39,6 @@ class Card_Tracker(Card):
 ###############################################################################
 class Test_Tracker(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tracker'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

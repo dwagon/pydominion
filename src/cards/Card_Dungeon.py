@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -30,7 +31,6 @@ class Card_Dungeon(Card):
 ###############################################################################
 class Test_Dungeon(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Dungeon'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -47,9 +47,9 @@ class Test_Dungeon(unittest.TestCase):
         self.assertIsNone(self.plr.inHand('duchy'))
         self.assertEqual(self.plr.durationSize(), 1)
         self.assertEqual(self.plr.discardSize(), 2)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['1', '2', 'finish']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.playedSize(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Dungeon')

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -30,14 +31,13 @@ class Card_OldWitch(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return kwargs['cardsrc']
 
 
 ###############################################################################
 class Test_OldWitch(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Old Witch'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

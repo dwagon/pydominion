@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Patrol(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'intrigue'
-        self.desc = "+3 Cards; Reveal the top 4 cards of your deck. Put the Victory cards and Curses into your hand. Put the rest back in any order."
+        self.desc = """+3 Cards; Reveal the top 4 cards of your deck.
+            Put the Victory cards and Curses into your hand.
+            Put the rest back in any order."""
         self.name = 'Patrol'
         self.cards = 3
         self.cost = 5
@@ -35,7 +38,6 @@ class Card_Patrol(Card):
 ###############################################################################
 class Test_Patrol(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Patrol'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

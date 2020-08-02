@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -21,7 +22,6 @@ class Event_Bonfire(Event):
 ###############################################################################
 class Test_Bonfire(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Bonfire'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from State import State
 
 
@@ -14,7 +15,7 @@ class State_Lost_in_woods(State):
         self.name = "Lost in the Woods"
         self.unique_state = True
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         dc = player.plrDiscardCards(prompt="Lost in the Woods: Discard a card to receive a boon")
         if dc:
             # Hack to make testing possible
@@ -27,7 +28,6 @@ class State_Lost_in_woods(State):
 ###############################################################################
 class Test_Lost_in_woods(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,7 +38,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.plr.assign_state('Lost in the Woods')
         self.plr.test_input = ['Estate']
         self.plr._liw_dont_boon = False
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertTrue(self.plr._liw_dont_boon)
         self.assertIsNotNone(self.plr.inDiscard('Estate'))
 
@@ -47,7 +47,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.plr.assign_state('Lost in the Woods')
         self.plr.test_input = ['Finish']
         self.plr._liw_dont_boon = False
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertFalse(self.plr._liw_dont_boon)
 
 

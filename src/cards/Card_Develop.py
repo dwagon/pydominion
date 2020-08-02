@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -33,7 +34,6 @@ class Card_Develop(Card):
 ###############################################################################
 class Test_Develop(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Develop', 'Smithy'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -45,8 +45,8 @@ class Test_Develop(unittest.TestCase):
         self.plr.test_input = ['trash duchy', 'get gold', 'smithy']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Smithy'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Smithy'))
 
 
 ###############################################################################

@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Courtyard(Card):
     def __init__(self):
         Card.__init__(self)
@@ -14,7 +16,7 @@ class Card_Courtyard(Card):
         self.cards = 3
         self.cost = 2
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Put a card from your hand on top of your deck """
         cards = player.cardSel(prompt='Put which card on top of deck?', num=1, verbs=('Put', 'Unput'))
         if not cards:
@@ -28,7 +30,6 @@ class Card_Courtyard(Card):
 ###############################################################################
 class Test_Courtyard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Courtyard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

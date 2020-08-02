@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -11,7 +12,9 @@ class Card_Crypt(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
         self.base = 'nocturne'
-        self.desc = "Set aside any number of Treasures you have in play, face down (under this). While any remain, at the start of each of your turns, put one of them into your hand."
+        self.desc = """Set aside any number of Treasures you have in play, face down
+            (under this). While any remain, at the start of each of your turns,
+            put one of them into your hand."""
         self.name = 'Crypt'
         self.cost = 5
 
@@ -51,7 +54,6 @@ class Card_Crypt(Card):
 ###############################################################################
 class Test_Crypt(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Crypt'], badcards=['Duchess'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -63,14 +65,14 @@ class Test_Crypt(unittest.TestCase):
         self.plr.setPlayed('Silver', 'Gold', 'Estate')
         self.plr.test_input = ['Set Gold', 'Set Silver', 'Finish']
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['Bring back Gold']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertEqual(len(self.plr._crypt_reserve), 1)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['Bring back Silver']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Silver'))
         self.assertFalse(self.card.permanent)
 

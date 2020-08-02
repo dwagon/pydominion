@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,7 @@ class Card_SecretCave(Card):
 
     def special(self, game, player):
         dcs = player.plrDiscardCards(num=3, prompt="If you discard 3 cards next turn gain 3 Coin")
-        if len(dcs):
+        if dcs:
             self._discarded = True
 
     def duration(self, game, player):
@@ -32,7 +33,6 @@ class Card_SecretCave(Card):
 ###############################################################################
 class Test_SecretCave(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Secret Cave'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -48,8 +48,8 @@ class Test_SecretCave(unittest.TestCase):
             self.assertEqual(self.plr.getActions(), 1)
             self.assertEqual(self.plr.discardSize(), 3)
             self.assertEqual(self.plr.handSize(), 5 + 1 - 3)
-            self.plr.endTurn()
-            self.plr.startTurn()
+            self.plr.end_turn()
+            self.plr.start_turn()
             self.assertEqual(self.plr.getCoin(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

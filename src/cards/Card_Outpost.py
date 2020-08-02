@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -19,7 +20,7 @@ class Card_Outpost(Card):
     def hook_cleanup(self, game, player):
         player.newhandsize = 3
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         if player.newhandsize == 3:
             player.output("Having a second turn due to Output")
             game.current_player = game.playerToRight(player)
@@ -30,7 +31,6 @@ class Card_Outpost(Card):
 ###############################################################################
 class Test_Outpost(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Outpost'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,7 +40,7 @@ class Test_Outpost(unittest.TestCase):
     def test_play(self):
         """ Play Outpost """
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.g.print_state()
         # TODO - Not sure how to test this
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -19,10 +20,9 @@ class Card_Port(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+1 Card, +2 Actions; When you buy this, gain another Port"
-        else:
-            return "+1 Card, +2 Actions"
+        return "+1 Card, +2 Actions"
 
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         """ Gain another Port"""
         c = player.gainCard('Port')
         if c:
@@ -34,7 +34,6 @@ class Card_Port(Card):
 ###############################################################################
 class Test_Port(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Port'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -51,6 +50,7 @@ class Test_Port(unittest.TestCase):
     def test_buy(self):
         """ Buy a port """
         self.plr.setDiscard()
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Port'])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Port')

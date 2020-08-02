@@ -24,7 +24,7 @@ class Card_Lost_City(Card):
     def special(self, game, player):
         pass
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         """ When you gain this, each other player draws a card """
         for pl in game.player_list():
             if pl != player:

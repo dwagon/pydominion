@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -40,7 +41,6 @@ class Card_Haven(Card):
 ###############################################################################
 class Test_Haven(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Haven'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -56,8 +56,8 @@ class Test_Haven(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.durationSize(), 2)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.playedSize(), 1)
         self.assertTrue(self.plr.inHand('Gold'))
         self.assertEqual(self.plr.handSize(), 6)

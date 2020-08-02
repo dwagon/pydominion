@@ -47,7 +47,7 @@ class Test_Replace(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Estate', 'Get Moat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDeck('Moat'))
+        self.assertIsNotNone(self.plr.in_deck('Moat'))
         self.assertIsNone(self.plr.inDiscard('Moat'))
 
     def test_gain_victory(self):

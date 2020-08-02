@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -37,7 +38,6 @@ class Card_Tactician(Card):
 ###############################################################################
 class Test_Tactician(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tactician'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -49,8 +49,8 @@ class Test_Tactician(unittest.TestCase):
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 0)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 10)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
@@ -60,8 +60,8 @@ class Test_Tactician(unittest.TestCase):
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)

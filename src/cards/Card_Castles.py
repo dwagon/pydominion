@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import unittest
+import Game
 from Card import Card
 from CardPile import CardPile
-import unittest
 
 
 ###############################################################################
@@ -36,8 +37,7 @@ class CastleCardPile(CardPile):
         if self.castles:
             self.pilesize -= 1
             return self.castles.pop()
-        else:
-            return None
+        return None
 
     def __repr__(self):
         return "CastleCardPile %s: %d" % (self.name, self.pilesize)
@@ -51,7 +51,6 @@ class CastleCard(Card):
 ###############################################################################
 class Test_Castle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

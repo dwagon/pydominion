@@ -22,7 +22,7 @@ class Card_Villa(Card):
         else:
             return "+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into your hand, +1 Action, and if it's your Buy phase return to your Action phase."
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         if player.phase == 'buy':
             player.phase = 'action'
         player.addActions(1)

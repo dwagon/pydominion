@@ -17,7 +17,7 @@ class Card_Destrier(Card):
         self.actions = 1
         self.cost = 6
 
-    def hook_thisCardCost(self, game, player):
+    def hook_this_card_cost(self, game, player):
         num_gained = len(player.stats['gained'])
         return -num_gained
 

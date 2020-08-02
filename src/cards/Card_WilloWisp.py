@@ -56,7 +56,7 @@ class Test_WilloWisp(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
         self.assertIsNotNone(self.plr.inHand('Estate'))
 
 

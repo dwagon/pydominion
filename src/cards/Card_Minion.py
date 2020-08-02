@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Minion(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'intrigue'
-        self.desc = "+1 Action; Choose one: +2 Coin; or discard your hand, +4 Cards, and each other player with at least 5 cards in hand discards his hand and draws 4 cards."
+        self.desc = """+1 Action; Choose one: +2 Coin; or discard your hand,
+            +4 Cards, and each other player with at least 5 cards in hand discards
+            his hand and draws 4 cards."""
         self.name = 'Minion'
         self.cost = 5
         self.actions = 1
@@ -44,7 +47,6 @@ class Card_Minion(Card):
 ###############################################################################
 class Test_Minion(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Minion', 'Moat'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

@@ -63,7 +63,7 @@ class Card_PirateShip(Card):
             player.output("Player %s has no treasures to trash" % victim.name)
         return trashed
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         if not hasattr(player, '_pirate_ship'):
             player._pirate_ship = 0
         return {}

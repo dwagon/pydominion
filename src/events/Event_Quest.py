@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -32,7 +33,6 @@ class Event_Quest(Event):
 ###############################################################################
 class Test_Quest(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Quest'], initcards=['Witch'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

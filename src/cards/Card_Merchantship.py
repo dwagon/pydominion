@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,7 +25,6 @@ class Card_Merchantship(Card):
 ###############################################################################
 class Test_Merchantship(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Merchant Ship'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -36,8 +36,8 @@ class Test_Merchantship(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.durationSize(), 1)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.playedSize(), 1)

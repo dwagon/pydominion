@@ -15,7 +15,7 @@ class Card_CrumblingCastle(CastleCard):
         self.victory = 1
         self.name = "Crumbling Castle"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.addScore('Crumbling Castle', 1)
         player.gainCard('Silver')
 

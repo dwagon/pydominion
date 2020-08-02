@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Boon import Boon
 
 
@@ -16,7 +17,7 @@ class Boon_Suns_Gift(Boon):
 
     def special(self, game, player):
         cards = []
-        for i in range(4):
+        for _ in range(4):
             c = player.nextCard()
             if c:
                 cards.append(c)
@@ -29,7 +30,6 @@ class Boon_Suns_Gift(Boon):
 ###############################################################################
 class Test_Suns_Gift(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -46,8 +46,8 @@ class Test_Suns_Gift(unittest.TestCase):
         self.plr.test_input = ['Province', 'Duchy', 'finish']
         self.plr.playCard(self.card)
         try:
-            self.assertIsNotNone(self.plr.inDeck('Silver'))
-            self.assertIsNotNone(self.plr.inDeck('Gold'))
+            self.assertIsNotNone(self.plr.in_deck('Silver'))
+            self.assertIsNotNone(self.plr.in_deck('Gold'))
             self.assertIsNotNone(self.plr.inDiscard('Province'))
             self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         except AssertionError:  # pragma: no cover

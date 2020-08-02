@@ -22,8 +22,7 @@ class Card_Doctor(Card):
                 When you buy this, you may overpay for it. For each 1 you overpaid,
                 look at the top card of your deck; trash it, discard it,
                 or put it back."""
-        else:
-            return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
+        return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
 
     def special(self, game, player):
         options = []
@@ -34,7 +33,7 @@ class Card_Doctor(Card):
             index += 1
         o = player.userInput(options, "Pick which card to trash if it is in the top 3 of your deck")
         cards = []
-        for i in range(3):
+        for _ in range(3):
             cards.append(player.nextCard())
         for card in cards:
             player.revealCard(card)
@@ -80,8 +79,8 @@ class Test_Doctor(unittest.TestCase):
         self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
-        self.assertIsNotNone(self.plr.inDeck('Duchy'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck('Duchy'))
 
     def test_buy(self):
         """ Buy a Doctor """

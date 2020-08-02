@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,15 +19,14 @@ class Card_Mandarin(Card):
         if player.phase == "buy":
             return """+3 Coins. Put a card from your hand on top of your deck.
             When you gain this, put all Treasures you have in play on top of your deck in any order."""
-        else:
-            return "+3 Coins. Put a card from your hand on top of your deck."
+        return "+3 Coins. Put a card from your hand on top of your deck."
 
     def special(self, game, player):
         card = player.cardSel(force=True, cardsrc='hand', prompt="Put a card from your hand on top of your deck")
         player.addCard(card[0], 'topdeck')
         player.hand.remove(card[0])
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         for card in player.played[:]:
             if card.isTreasure():
                 player.output("Putting %s on to deck" % card.name)
@@ -38,7 +38,6 @@ class Card_Mandarin(Card):
 ###############################################################################
 class Test_Mandarin(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mandarin'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

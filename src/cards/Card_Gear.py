@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 from PlayArea import PlayArea
 
@@ -43,7 +44,6 @@ class Card_Gear(Card):
 ###############################################################################
 class Test_Gear(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gear'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -59,8 +59,8 @@ class Test_Gear(unittest.TestCase):
             self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
             self.assertIsNotNone(self.plr.inHand('Duchy'))
             self.assertEqual(self.plr.durationSize(), 1)
-            self.plr.endTurn()
-            self.plr.startTurn()
+            self.plr.end_turn()
+            self.plr.start_turn()
             self.assertEqual(self.plr.durationSize(), 0)
             self.assertEqual(self.plr.playedSize(), 1)
             self.assertEqual(self.plr.played[-1].name, 'Gear')

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -25,12 +26,12 @@ class Card_Enchantress(Card):
             player.addActions(1)
             player.pickupCard()
             return {'skip_card': True}
+        return None
 
 
 ###############################################################################
 class Test_Enchantress(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

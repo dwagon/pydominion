@@ -43,7 +43,7 @@ class Test_Harvest(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        self.assertIsNone(self.plr.inDeck('Duchy'))
+        self.assertIsNone(self.plr.in_deck('Duchy'))
 
 
 ###############################################################################

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,7 +15,7 @@ class Project_CityGate(Project):
         self.name = "City Gate"
         self.cost = 3
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         player.pickupCard()
         card = player.cardSel(force=True, cardsrc='hand', prompt='Put a card from your hand onto your deck')
         player.addCard(card[0], 'topdeck')
@@ -24,7 +25,6 @@ class Project_CityGate(Project):
 ###############################################################################
 class Test_CityGate(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['City Gate'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -34,7 +34,7 @@ class Test_CityGate(unittest.TestCase):
         self.plr.setDeck('Gold')
         self.plr.setHand('Copper', 'Estate', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['Select Province']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.deck[-1].name, 'Province')
 

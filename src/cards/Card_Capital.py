@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -25,7 +26,6 @@ class Card_Capital(Card):
 ###############################################################################
 class Test_Capital(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Capital'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

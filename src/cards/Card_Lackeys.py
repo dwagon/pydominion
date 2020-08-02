@@ -22,7 +22,7 @@ class Card_Lackeys(Card):
             return "+2 Cards"
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainVillager(2)
 
 

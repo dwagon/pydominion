@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_Farmland(Card):
         self.cost = 6
         self.victory = 2
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         c = player.plrTrashCard(force=True)
         player.plrGainCard(cost=c[0].cost + 2, modifier='equal')
         return {}
@@ -25,8 +26,12 @@ class Card_Farmland(Card):
 ###############################################################################
 class Test_Farmland(unittest.TestCase):
     def setUp(self):
-        import Game
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farmland', 'Militia'], badcards=['Death Cart', 'Cemetery', 'Blessed Village'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            initcards=['Farmland', 'Militia'],
+            badcards=['Death Cart', 'Cemetery', 'Blessed Village']
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Farmland'].remove()

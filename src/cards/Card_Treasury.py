@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,9 +11,9 @@ class Card_Treasury(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'seaside'
-        self.desc = """+1 Card +1 Action +1 Coin
-        When you discard this from play, if you didn't buy a Victory card this
-        turn, you may put this on top of your deck."""
+        self.desc = """+1 Card +1 Action +1 Coin; When you discard this from play,
+            if you didn't buy a Victory card this turn, you may put this on top
+            of your deck."""
         self.name = 'Treasury'
         self.cost = 5
         self.cards = 1
@@ -37,7 +38,6 @@ class Card_Treasury(Card):
 ###############################################################################
 class Test_Treasury(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasury'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -53,6 +53,7 @@ class Test_Treasury(unittest.TestCase):
 
     def test_buy_topdeck(self):
         self.plr.test_input = ['put on top']
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Duchy'])
         self.plr.discardCard(self.card)
         self.assertEqual(self.plr.deck[-1].name, 'Treasury')

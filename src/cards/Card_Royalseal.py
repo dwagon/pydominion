@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,7 +16,7 @@ class Card_Royalseal(Card):
         self.cost = 5
         self.coin = 2
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ While this is in play, when you gain a card, you may
             put that card on top of your deck"""
         mod = {}
@@ -32,7 +33,6 @@ class Card_Royalseal(Card):
 ###############################################################################
 class Test_Royalseal(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Royal Seal'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

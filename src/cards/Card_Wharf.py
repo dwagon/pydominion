@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,6 @@ class Card_Wharf(Card):
 ###############################################################################
 class Test_Wharf(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wharf'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,8 +38,8 @@ class Test_Wharf(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 7)
         self.assertEqual(self.plr.durationSize(), 1)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.playedSize(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Wharf')

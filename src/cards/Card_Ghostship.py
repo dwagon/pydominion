@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,8 +12,8 @@ class Card_Ghostship(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'seaside'
         self.desc = """+2 Cards. Each other player with 4 or more cards in
-        hand puts cards from his hand on top of his deck until
-        he has 3 cards in his hand."""
+            hand puts cards from his hand on top of his deck until
+            he has 3 cards in his hand."""
         self.name = 'Ghost Ship'
         self.cards = 2
         self.cost = 5
@@ -33,7 +34,7 @@ class Card_Ghostship(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Not the best strategy
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
@@ -42,7 +43,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Ghostship(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ghost Ship'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 from PlayArea import PlayArea
 
@@ -27,7 +28,7 @@ class Event_Save(Event):
         player.hand.remove(card[0])
         player.secret_count += 1
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         card = player._save_reserve[0]
         player.addCard(card, 'hand')
         player.secret_count -= 1
@@ -37,7 +38,6 @@ class Event_Save(Event):
 ###############################################################################
 class Test_Save(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Save'], initcards=['Feast'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -50,7 +50,7 @@ class Test_Save(unittest.TestCase):
         self.plr.test_input = ['Gold']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr._save_reserve[0].name, 'Gold')
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.assertIsNotNone(self.plr.inHand('Gold'))
 
 

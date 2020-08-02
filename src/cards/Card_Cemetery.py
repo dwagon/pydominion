@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,14 +17,13 @@ class Card_Cemetery(Card):
         self.victory = 2
         self.heirloom = 'Haunted Mirror'
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.plrTrashCard(num=4)
 
 
 ###############################################################################
 class Test_Cemetery(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

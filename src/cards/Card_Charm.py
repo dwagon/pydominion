@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -10,7 +11,9 @@ class Card_Charm(Card):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'empires'
-        self.desc = "When you play this, choose one: +1 Buy and +2 Coin; or the next time you buy a card this turn, you may also gain a differently named card with the same cost."
+        self.desc = """When you play this, choose one: +1 Buy and +2 Coin; or
+            the next time you buy a card this turn, you may also gain a differently
+            named card with the same cost."""
         self.name = 'Charm'
         self.cost = 5
         self.buytrigger = False
@@ -38,7 +41,6 @@ class Card_Charm(Card):
 ###############################################################################
 class Test_Charm(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Charm'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -57,6 +59,7 @@ class Test_Charm(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.test_input = ['Get Duchy']
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Charm'])
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_Coinoftherealm(Card):
         self.cost = 2
         self.when = 'postaction'
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         """ Directly after resolving an action you may call this for +2 Actions """
         player.addActions(2)
 
@@ -24,7 +25,6 @@ class Card_Coinoftherealm(Card):
 ###############################################################################
 class Test_Coinoftherealm(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Coin of the Realm'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -45,7 +45,7 @@ class Test_Coinoftherealm(unittest.TestCase):
         self.plr.actions = 0
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        c = self.plr.callReserve('Coin of the Realm')
+        c = self.plr.call_reserve('Coin of the Realm')
         self.assertEqual(c.name, 'Coin of the Realm')
         self.assertEqual(self.plr.getActions(), 2)
 

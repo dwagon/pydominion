@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,7 +19,7 @@ class Card_Watchtower(Card):
         """ Draw until you have 6 cards in hand. """
         player.pickUpHand(6)
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         """ When you gain a card, you may reveal this from your
             hand. If you do, either trash that card, or put it on top
             of your deck """
@@ -39,7 +40,6 @@ class Card_Watchtower(Card):
 ###############################################################################
 class Test_Watchtower(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Watchtower'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Raider(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration', 'attack']
         self.base = 'nocturne'
-        self.desc = "Each other player with 5 or more cards in hand discards a copy of a card you have in play (or reveals they can't). At the start of your next turn, +3 Coins"
+        self.desc = """Each other player with 5 or more cards in hand discards
+            a copy of a card you have in play (or reveals they can't). At the
+            start of your next turn, +3 Coins"""
         self.name = 'Raider'
         self.cost = 6
 
@@ -18,7 +21,7 @@ class Card_Raider(Card):
         player.addCoin(3)
 
     def night(self, game, player):
-        inplay = set([_.name for _ in player.played])
+        inplay = {_.name for _ in player.played}
         for pl in player.attackVictims():
             if pl.handSize() >= 5:
                 player.output("Raiding {}".format(pl.name))
@@ -38,7 +41,6 @@ class Card_Raider(Card):
 ###############################################################################
 class Test_Raider(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Raider'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -59,8 +61,8 @@ class Test_Raider(unittest.TestCase):
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         try:
             self.assertEqual(self.plr.getCoin(), 3)
         except AssertionError:      # pragma: no cover

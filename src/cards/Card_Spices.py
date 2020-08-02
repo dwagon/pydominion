@@ -23,7 +23,7 @@ class Card_Spices(Card):
             return "+2 Coin; +1 Buy"
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         player.gainCoffer(2)
 
 

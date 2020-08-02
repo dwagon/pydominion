@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,7 +19,7 @@ class Card_Transmogrify(Card):
         self.when = 'start'
         self.cost = 4
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         tc = player.plrTrashCard(printcost=True, prompt="Trash a card from you hand. Gain a card costing up to 1 more")
         if tc:
             cost = player.cardCost(tc[0])
@@ -28,7 +29,6 @@ class Card_Transmogrify(Card):
 ###############################################################################
 class Test_Transmogrify(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Transmogrify'], badcards=['Duchess', "Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -44,7 +44,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.setHand('Duchy', 'Estate')
         self.plr.setReserve('Transmogrify')
         self.plr.test_input = ['trash duchy', 'get gold']
-        self.plr.callReserve('Transmogrify')
+        self.plr.call_reserve('Transmogrify')
         self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
 

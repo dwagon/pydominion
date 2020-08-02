@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,7 @@ class Card_Embargo(Card):
         if not trash:
             return
         player.trashCard(self)
-        piles = [cp for cp in game.cardpiles.values()]
+        piles = list(game.cardpiles.values())
         piles.sort()
         card = player.cardSel(
             cardsrc=piles,
@@ -37,7 +38,6 @@ class Card_Embargo(Card):
 ###############################################################################
 class Test_Embargo(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embargo'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

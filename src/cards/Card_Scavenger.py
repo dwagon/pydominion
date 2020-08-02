@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Scavenger(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """+2 Coin. You may put your deck into your discard pile. Look through your discard pile and put one card from it on top of your deck."""
+        self.desc = """+2 Coin. You may put your deck into your discard pile.
+            Look through your discard pile and put one card from it on top of
+            your deck."""
         self.name = 'Scavenger'
         self.coin = 2
         self.cost = 4
@@ -39,7 +42,6 @@ class Card_Scavenger(Card):
 ###############################################################################
 class Test_Scavenger(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scavenger', 'Moat', 'Witch'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_Guide(Card):
         self.actions = 1
         self.cost = 3
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         player.output("Discarding current hand and picking up 5 new cards")
         while player.hand:
             player.discardCard(player.hand.topcard())
@@ -27,7 +28,6 @@ class Card_Guide(Card):
 ###############################################################################
 class Test_Guide(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Guide'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,7 +44,7 @@ class Test_Guide(unittest.TestCase):
         self.plr.setHand('Estate', 'Estate')
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.setReserve('Guide')
-        self.plr.callReserve('Guide')
+        self.plr.call_reserve('Guide')
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertIsNone(self.plr.inHand('Estate'))

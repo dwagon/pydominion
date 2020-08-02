@@ -49,7 +49,7 @@ class Test_Wanderingminstrel(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertIsNotNone(self.plr.inDeck('Moat'))
+        self.assertIsNotNone(self.plr.in_deck('Moat'))
         self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
 

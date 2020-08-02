@@ -22,8 +22,8 @@ hook_buyCard
 This is called after a card has been purchased, and is invoked for
 every card in the players hand.
 
-hook_buyThisCard
-------------
+hook_buy_this_card
+------------------
 This is called after this card has been purchased.
 
 hook_allPlayers_buyCard
@@ -42,7 +42,7 @@ is invoked for every card that has been played this turn.
 
 Return the delta. So 0 for no change.
 
-hook_allPlayers_gainCard
+hook_allplayers_gain_card
 ---------------
 If any player gains a card call this for any card in everyone's hand
 
@@ -54,7 +54,7 @@ hook_endBuyPhase
 -----------
 Fires off at the end of the buy phase
 
-hook_gainCard
+hook_gain_card
 -------------
 This hook is triggered for every card in play when you gain
 another card.
@@ -64,7 +64,7 @@ Currently:
     destination - if set then put the card in the destination pile
     trash - if true then trash card instead of gaining card
 
-hook_gainThisCard
+hook_gain_this_card
 -------------
 This is triggered when the card is gained
 
@@ -80,11 +80,11 @@ hook_trashThisCard
 --------------
 Called just before the card is trashed
 
-hook_trashCard
+hook_trash_card
 --------------
 Called for every card in your hand just before a card is trashed
 
-hook_callReserve
+hook_call_reserve
 --------------
 Called when a card is pulled from the Reserve
 
@@ -101,11 +101,11 @@ hook_postAction
 ---------------
 Called for every card in played + duration pile after an action has happened
 
-hook_endTurn
+hook_end_turn
 ------------
 Called at the end of the players buy phase
 
-hook_startTurn
+hook_start_turn
 --------------
 Called at the start of a players turn
 
@@ -113,7 +113,7 @@ hook_cardCost
 ------------
 Modifier to the cost of buying a card. This hook applies to buying another card.
 
-hook_thisCardCost
+hook_this_card_cost
 -----------------
 Modifier to the cost of buying this card.
 

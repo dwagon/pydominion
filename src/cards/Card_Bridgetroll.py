@@ -12,8 +12,8 @@ class Card_Bridgetroll(Card):
         self.cardtype = ['action', 'attack', 'duration']
         self.base = 'adventure'
         self.desc = """Each other player takes his -1 Coin token.
-        Now and at the start of your next turn: +1 Buy.
-        While this is in play cards cost 1 less"""
+            Now and at the start of your next turn: +1 Buy.
+            While this is in play cards cost 1 less"""
         self.name = 'Bridge Troll'
         self.buys = 1
         self.cost = 5
@@ -49,8 +49,8 @@ class Test_Bridgetroll(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertTrue(self.victim.coin_token)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_costreduction(self):

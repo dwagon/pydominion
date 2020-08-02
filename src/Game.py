@@ -23,6 +23,7 @@ from ProjectPile import ProjectPile
 from RuinCardPile import RuinCardPile
 from StatePile import StatePile
 from TextPlayer import TextPlayer
+from WayPile import WayPile
 
 
 ###############################################################################
@@ -39,6 +40,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.artifacts = {}
         self.projects = {}
         self.events = {}
+        self.ways = {}
         self.landmarks = {}
         self.boons = []
         self.discarded_boons = []
@@ -74,8 +76,11 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.bot = args['bot'] if 'bot' in args else False
 
         self.eventcards = args['eventcards'] if 'eventcards' in args else []
+        self.waycards = args['waycards'] if 'waycards' in args else []
         self.eventpath = 'events'
         self.numevents = args['numevents'] if 'numevents' in args else 0
+        self.waypath = 'ways'
+        self.numways = args['numways'] if 'numways' in args else 0
 
         self.landmarkcards = args['landmarkcards'] if 'landmarkcards' in args else []
         self.landmarkpath = args['landmarkpath'] if 'landmarkpath' in args else 'landmarks'
@@ -93,6 +98,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         names = playerNames[:]
         self.loadDecks(self.initcards, self.numstacks)
         self.loadEvents()
+        self.loadWays()
         self.loadLandmarks()
         self.loadArtifacts()
         self.loadProjects()
@@ -186,6 +192,11 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.loaded_travellers = True
 
     ###########################################################################
+    def loadWays(self):
+        """ TODO """
+        self.loadNonKingdomCards('Way', self.waycards, self.numways, WayPile, self.ways)
+
+    ###########################################################################
     def loadEvents(self):
         """ TODO """
         self.loadNonKingdomCards('Event', self.eventcards, self.numevents, EventPile, self.events)
@@ -277,6 +288,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ Don't force the user to give the exact card name on the command
         line - maybe we can guess it """
         available = self.getAvailableCards(prefix)
+        if prefix == 'Way':
+            name = name.replace('Way of the ', '')
         if name in available:
             return name
         for crd in available:
@@ -306,6 +319,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
             eventname = self.guess_cardname(crd, 'Event')
             if eventname:
                 self.eventcards.append(eventname)
+                continue
+            wayname = self.guess_cardname(crd, 'Way')
+            if wayname:
+                self.waycards.append(wayname)
                 continue
             landmarkname = self.guess_cardname(crd, 'Landmark')
             if landmarkname:
@@ -431,6 +448,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
+        mapping['Way'] = self.getSetCardClasses('Way', self.waypath, 'ways', 'Way_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
         mapping['Boon'] = self.getSetCardClasses('Boon', self.boonpath, 'boons', 'Boon_')
         mapping['Hex'] = self.getSetCardClasses('Hex', self.hexpath, 'hexes', 'Hex_')
@@ -575,6 +593,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             print("  %s's deck: %s" % (plr.name, ", ".join([_.name for _ in plr.deck])))
             print("  %s's discard: %s" % (plr.name, ", ".join([_.name for _ in plr.discardpile])))
             print("  %s's duration: %s" % (plr.name, ", ".join([_.name for _ in plr.durationpile])))
+            print("  %s's exile: %s" % (plr.name, ", ".join([_.name for _ in plr.exilepile])))
             print("  %s's reserve: %s" % (plr.name, ", ".join([_.name for _ in plr.reserve])))
             print("  %s's played: %s" % (plr.name, ", ".join([_.name for _ in plr.played])))
             print("  %s's messages: %s" % (plr.name, plr.messages))
@@ -626,7 +645,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
                 stacklist = (
                     ('Discard', plr.discardpile), ('Hand', plr.hand),
                     ('Reserve', plr.reserve), ('Deck', plr.deck),
-                    ('Played', plr.played), ('Duration', plr.durationpile))
+                    ('Played', plr.played), ('Duration', plr.durationpile),
+                    ('Exile', plr.exilepile))
                 for stackname, stack in stacklist:
                     count = 0
                     for card in stack:
@@ -655,9 +675,9 @@ class Game(object):     # pylint: disable=too-many-public-methods
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
         self.current_player = self.playerToLeft(self.current_player)
-        self.current_player.startTurn()
+        self.current_player.start_turn()
         self.current_player.turn()
-        self.current_player.endTurn()
+        self.current_player.end_turn()
         if self.isGameOver():
             self.gameover = True
             for plr in self.player_list():
@@ -683,6 +703,11 @@ def parse_cli_args(args=None):
     parser.add_argument('--events', action='append', dest='eventcards',
                         default=[],
                         help='Include event')
+    parser.add_argument('--numways', type=int, default=0,
+                        help='Number of ways to use')
+    parser.add_argument('--ways', action='append', dest='waycards',
+                        default=[],
+                        help='Include way')
 
     parser.add_argument('--numlandmarks', type=int, default=0,
                         help='Number of landmarks to use')

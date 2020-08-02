@@ -196,7 +196,10 @@ class Test_cardsAffordable(unittest.TestCase):
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
-        ans = self.plr.cardsAffordable('less', coin=None, potions=0, types={'victory': True, 'action': True, 'treasure': True, 'night': True})
+        ans = self.plr.cardsAffordable(
+            'less', coin=None, potions=0,
+            types={'victory': True, 'action': True, 'treasure': True, 'night': True}
+        )
         self.assertIn('Province', [cp.name for cp in ans])
 
 
@@ -329,7 +332,7 @@ class Test_attackVictims(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inDeck(unittest.TestCase):
+class Test_in_deck(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -338,13 +341,13 @@ class Test_inDeck(unittest.TestCase):
     def test_indeck(self):
         """ Test card is in deck """
         self.plr.setDeck('Copper')
-        self.assertTrue(self.plr.inDeck('Copper'))
-        self.assertEqual(self.plr.inDeck('Copper').name, 'Copper')
+        self.assertTrue(self.plr.in_deck('Copper'))
+        self.assertEqual(self.plr.in_deck('Copper').name, 'Copper')
 
     def test_notindeck(self):
         """ Test card that isn't in deck """
         self.plr.setDeck('Copper')
-        self.assertFalse(self.plr.inDeck('Estate'))
+        self.assertFalse(self.plr.in_deck('Estate'))
 
 
 ###############################################################################
@@ -533,7 +536,7 @@ class Test_misc(unittest.TestCase):
 
     def test_cleanup_phase(self):
         self.plr.setHand('Copper')
-        self.plr.cleanupPhase()
+        self.plr.cleanup_phase()
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.playedSize(), 0)
 
@@ -593,7 +596,7 @@ class Test_displayOverview(unittest.TestCase):
 
 
 ###############################################################################
-class Test_buyableSelection(unittest.TestCase):
+class Test_buyable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'], badcards=['Coppersmith'])
         self.g.start_game()
@@ -602,7 +605,7 @@ class Test_buyableSelection(unittest.TestCase):
 
     def test_buy_moat(self):
         self.plr.addCoin(3)
-        opts, ind = self.plr.buyableSelection(1)
+        opts, ind = self.plr.buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i['name'] == 'Moat':
@@ -615,7 +618,7 @@ class Test_buyableSelection(unittest.TestCase):
 
     def test_buy_copper(self):
         self.plr.coin = 0
-        opts, ind = self.plr.buyableSelection(1)
+        opts, ind = self.plr.buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i['name'].startswith('Copper'):
@@ -633,7 +636,7 @@ class Test_buyableSelection(unittest.TestCase):
     def test_buy_token(self):
         self.plr.addCoin(2)
         self.plr.place_token('+1 Card', 'Moat')
-        opts, ind = self.plr.buyableSelection(1)
+        opts, ind = self.plr.buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i['name'] == 'Moat':
@@ -644,7 +647,7 @@ class Test_buyableSelection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_playableSelection(unittest.TestCase):
+class Test_playable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
         self.g.start_game()
@@ -653,7 +656,7 @@ class Test_playableSelection(unittest.TestCase):
 
     def test_play(self):
         self.plr.addCard(self.moat, 'hand')
-        opts, ind = self.plr.playableSelection(1)
+        opts, ind = self.plr.playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
@@ -665,7 +668,7 @@ class Test_playableSelection(unittest.TestCase):
     def test_token(self):
         self.plr.place_token('+1 Card', 'Moat')
         self.plr.addCard(self.moat, 'hand')
-        opts, ind = self.plr.playableSelection(1)
+        opts, ind = self.plr.playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['card'], self.moat)
@@ -674,7 +677,7 @@ class Test_playableSelection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_choiceSelection(unittest.TestCase):
+class Test_choice_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'])
         self.g.start_game()
@@ -685,7 +688,7 @@ class Test_choiceSelection(unittest.TestCase):
     def test_action_phase(self):
         self.plr.setHand('Moat')
         self.plr.phase = 'action'
-        opts, prompt = self.plr.choiceSelection()
+        opts, _ = self.plr.choice_selection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -702,8 +705,8 @@ class Test_choiceSelection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.setHand('Copper')
         self.plr.phase = 'buy'
-        self.plr.coffer = 0   # Stop card choice breaking test
-        opts, prompt = self.plr.choiceSelection()
+        self.plr.coffer = 0   # Stop card choice_selection breaking test
+        opts, _ = self.plr.choice_selection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
         self.assertEqual(opts[0]['action'], 'quit')
@@ -721,7 +724,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.coffer = 1
         self.plr.phase = 'buy'
         self.plr.debt = 2
-        opts, prompt = self.plr.choiceSelection()
+        _, prompt = self.plr.choice_selection()
         self.assertIn('Actions=3', prompt)
         self.assertIn('Coins=5', prompt)
         self.assertIn('Buys=7', prompt)
@@ -736,7 +739,7 @@ class Test_choiceSelection(unittest.TestCase):
         self.plr.coin = 0
         self.plr.coffer = 0
         self.plr.phase = 'buy'
-        opts, prompt = self.plr.choiceSelection()
+        _, prompt = self.plr.choice_selection()
         self.assertIn('Actions=0', prompt)
         self.assertIn('Buys=0', prompt)
         self.assertNotIn('Coins', prompt)
@@ -745,7 +748,7 @@ class Test_choiceSelection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_nightSelection(unittest.TestCase):
+class Test_night_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Monastery', 'Moat'])
         self.g.start_game()
@@ -754,7 +757,7 @@ class Test_nightSelection(unittest.TestCase):
 
     def test_play(self):
         self.plr.setHand('Copper', 'Moat', 'Monastery')
-        opts, idx = self.plr.nightSelection(1)
+        opts, idx = self.plr.night_selection(1)
         self.assertEqual(idx, 2)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['verb'], 'Play')
@@ -763,12 +766,12 @@ class Test_nightSelection(unittest.TestCase):
 
     def test_no_night(self):
         self.plr.setHand('Copper', 'Moat')
-        opts = self.plr.nightSelection(0)
+        opts = self.plr.night_selection(0)
         self.assertEqual(opts, ([], 0))
 
 
 ###############################################################################
-class Test_spendableSelection(unittest.TestCase):
+class Test_spendable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat', 'Alchemist'], badcards=['Baker'])
         self.g.start_game()
@@ -782,7 +785,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.addCard(self.moat, 'hand')
         self.plr.gainCoffer(1)
         self.plr.gainVillager(1)
-        opts = self.plr.spendableSelection()
+        opts = self.plr.spendable_selection()
         self.assertEqual(opts[0]['selector'], '1')
         self.assertEqual(opts[0]['action'], 'spendall')
         self.assertIn('Spend all treasures', opts[0]['verb'])
@@ -810,7 +813,7 @@ class Test_spendableSelection(unittest.TestCase):
         self.plr.coin = 1
         self.plr.coffer = 0
         try:
-            opts = self.plr.spendableSelection()
+            opts = self.plr.spendable_selection()
             self.assertEqual(opts[1]['selector'], '3')
             self.assertEqual(opts[1]['action'], 'payback')
             self.assertEqual(opts[1]['verb'], 'Payback Debt')
@@ -902,6 +905,25 @@ class Test_plrGainCard(unittest.TestCase):
         c = self.plr.plrGainCard(4, modifier='less')
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertEqual(c.name, 'Silver')
+
+
+###############################################################################
+class Test_exile(unittest.TestCase):
+    """ Test exile pile """
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_in_exile(self):
+        self.plr.set_exile('Silver')
+        self.assertIsNotNone(self.plr.in_exile('Silver'))
+
+    def test_exile_card(self):
+        au_card = self.g['Gold'].remove()
+        self.plr.set_exile()
+        self.plr.exile_card(au_card)
+        self.assertIsNotNone(self.plr.in_exile('Gold'))
 
 
 ###############################################################################

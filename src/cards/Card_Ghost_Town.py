@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,11 +16,11 @@ class Card_Ghost_Town(Card):
 
     def desc(self, player):
         if player.phase == 'buy':
-            return "At the start of your next turn, +1 Card and +1 Action. This is gained to your hand (instead of your discard pile)."
-        else:
-            return "At the start of your next turn, +1 Card and +1 Action."
+            return """At the start of your next turn, +1 Card and +1 Action. This
+                is gained to your hand (instead of your discard pile)."""
+        return "At the start of your next turn, +1 Card and +1 Action."
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
     def duration(self, game, player):
@@ -30,7 +31,6 @@ class Card_Ghost_Town(Card):
 ###############################################################################
 class Test_Ghost_Town(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Ghost Town'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -40,8 +40,8 @@ class Test_Ghost_Town(unittest.TestCase):
         """ Play Ghost Town """
         self.plr.addCard(self.gtown, 'hand')
         self.plr.playCard(self.gtown)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5 + 1)
         self.assertEqual(self.plr.getActions(), 2)
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,6 @@ class Card_Hireling(Card):
 ###############################################################################
 class Test_Hireling(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hireling'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -35,8 +35,8 @@ class Test_Hireling(unittest.TestCase):
     def test_play_hireling(self):
         """ Play a hireling """
         self.plr.playCard(self.card)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 6)
         self.assertIsNone(self.plr.inDiscard('Hireling'))
 

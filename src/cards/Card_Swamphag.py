@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -31,7 +32,6 @@ class Card_Swamphag(Card):
 ###############################################################################
 class Test_Swamphag(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Swamp Hag'])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
@@ -40,11 +40,11 @@ class Test_Swamphag(unittest.TestCase):
 
     def test_play(self):
         self.attacker.playCard(self.seahag)
-        self.attacker.endTurn()
+        self.attacker.end_turn()
         self.victim.buyCard(self.g['Copper'])
         self.assertEqual(self.attacker.durationpile[0].name, 'Swamp Hag')
         self.assertIsNotNone(self.victim.inDiscard('Curse'))
-        self.attacker.startTurn()
+        self.attacker.start_turn()
         self.assertIsNotNone(self.attacker.inPlayed('Swamp Hag'))
         self.assertEqual(self.attacker.getCoin(), 3)
 

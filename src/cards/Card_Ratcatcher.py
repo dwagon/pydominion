@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,7 +18,7 @@ class Card_Ratcatcher(Card):
         self.cost = 2
         self.when = 'start'
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         """ At the start of your turn, you may call this, to trash a
             card from your hand """
         player.plrTrashCard()
@@ -26,7 +27,6 @@ class Card_Ratcatcher(Card):
 ###############################################################################
 class Test_Ratcatcher(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ratcatcher'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -50,7 +50,7 @@ class Test_Ratcatcher(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Gold']
         self.plr.playCard(self.card)
-        c = self.plr.callReserve('Ratcatcher')
+        c = self.plr.call_reserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,7 +15,7 @@ class Project_RoadNetwork(Project):
         self.name = "Road Network"
         self.cost = 5
 
-    def hook_allPlayers_gainCard(self, game, player, owner, card):
+    def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
             owner.pickupCards(1)
             owner.output("Road Network gives card due to {} picking up {}".format(player.name, card.name))
@@ -23,7 +24,6 @@ class Project_RoadNetwork(Project):
 ###############################################################################
 class Test_RoadNetwork(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initprojects=['Road Network'], badcards=["Duchess"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

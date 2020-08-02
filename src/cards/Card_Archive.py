@@ -59,18 +59,18 @@ class Test_Archive(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['Bring back Gold']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertEqual(len(self.plr._archive_reserve), 2)
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['Bring back Silver']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inHand('Silver'))
-        self.plr.endTurn()
+        self.plr.end_turn()
         self.plr.test_input = ['Bring back Province']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertFalse(self.card.permanent)
 
 

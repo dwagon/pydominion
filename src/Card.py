@@ -7,6 +7,7 @@ class Card(object):
         self.basecard = False
         self.cost = -1
         self.debtcost = 0
+        self.always_buyable = False
         self.potcost = False
         self.cardtype = 'unknown'
         self.purchasable = True
@@ -36,14 +37,11 @@ class Card(object):
 
     ##########################################################################
     def get_cardtype_repr(self):
-        ans = []
         if isinstance(self.cardtype, str):
             ct = [self.cardtype]
         else:
             ct = self.cardtype[:]
-        for c in ct:
-            ans.append(c.title())
-        return ", ".join(ans)
+        return ", ".join([_.title() for _ in ct])
 
     ##########################################################################
     def __repr__(self):
@@ -220,11 +218,11 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_buyThisCard(self, game, player):
+    def hook_buy_this_card(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################
@@ -232,11 +230,11 @@ class Card(object):
         return True     # pragma: no cover
 
     ##########################################################################
-    def hook_allPlayers_gainCard(self, game, player, owner, card):
+    def hook_allplayers_gain_card(self, game, player, owner, card):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         return {}   # pragma: no cover
 
     ##########################################################################
@@ -244,7 +242,7 @@ class Card(object):
         return 0    # pragma: no cover
 
     ##########################################################################
-    def hook_thisCardCost(self, game, player):
+    def hook_this_card_cost(self, game, player):
         return 0    # pragma: no cover
 
     ##########################################################################
@@ -270,15 +268,15 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_trashCard(self, game, player, card):
+    def hook_trash_card(self, game, player, card):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {}    # pragma: no cover
 
     ##########################################################################
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################
@@ -294,7 +292,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         pass    # pragma: no cover
 
     ##########################################################################

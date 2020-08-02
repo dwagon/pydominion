@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,11 +19,6 @@ class Card_Champion(Card):
         self.numcards = 5
         self.cost = 6
 
-    def special(self, game, player):
-        """ For the rest of the game, when another player plays an Attack,
-            it doesn't affect you, and when you play an Action, +1 Action. """
-        pass
-
     def hook_postAction(self, game, player, card):
         player.addActions(1)
 
@@ -30,7 +26,6 @@ class Card_Champion(Card):
 ###############################################################################
 class Test_Champion(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

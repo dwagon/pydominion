@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Expand(Card):
     def __init__(self):
         Card.__init__(self)
@@ -16,7 +18,10 @@ class Card_Expand(Card):
     def special(self, game, player):
         """ Trash a card from your hand. Gain a card costing up to
             3 more than the trashed card """
-        tc = player.plrTrashCard(printcost=True, prompt="Trash a card from your hand. Gain another costing up to 3 more than the one you trashed")
+        tc = player.plrTrashCard(
+            printcost=True,
+            prompt="Trash a card from your hand. Gain another costing up to 3 more than the one you trashed"
+            )
         if tc:
             cost = tc[0].cost
             player.plrGainCard(cost + 3)
@@ -25,7 +30,6 @@ class Card_Expand(Card):
 ###############################################################################
 class Test_Expand(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Expand'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

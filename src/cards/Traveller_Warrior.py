@@ -75,7 +75,7 @@ class Test_Warrior(unittest.TestCase):
         """ End the turn with a played warrior """
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
-        self.plr.endTurn()
+        self.plr.end_turn()
 
 
 ###############################################################################

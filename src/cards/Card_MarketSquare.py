@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,7 +19,7 @@ class Card_MarketSquare(Card):
         self.buys = 1
         self.cost = 3
 
-    def hook_trashCard(self, game, player, card):
+    def hook_trash_card(self, game, player, card):
         gold = player.plrChooseOptions(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),
@@ -31,7 +32,6 @@ class Card_MarketSquare(Card):
 ###############################################################################
 class Test_MarketSquare(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Market Square'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

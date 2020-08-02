@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,21 +15,20 @@ class Project_Barracks(Project):
         self.name = "Barracks"
         self.cost = 6
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         player.addActions(1)
 
 
 ###############################################################################
 class Test_Barracks(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Barracks'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_flag(self):
         self.plr.assign_project('Barracks')
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getActions(), 2)
 
 

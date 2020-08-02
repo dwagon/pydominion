@@ -12,12 +12,12 @@ class Test_getWhens(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_start(self):
-        self.plr.startTurn()
+        self.plr.start_turn()
         whens = self.plr.getWhens()
         self.assertEqual(whens, ['any', 'start'])
 
     def test_not_start(self):
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.plr.perform_action({'action': 'spendall'})
         whens = self.plr.getWhens()
         self.assertNotIn('start', whens)
@@ -66,17 +66,17 @@ class Test_Reserve(unittest.TestCase):
         self.assertEqual(self.plr.reserveSize(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Silver')
 
-    def test_callReserve(self):
+    def test_call_reserve(self):
         self.plr.setReserve('Silver')
         self.assertEqual(self.plr.reserveSize(), 1)
-        c = self.plr.callReserve('Silver')
+        c = self.plr.call_reserve('Silver')
         self.assertEqual(self.plr.reserveSize(), 0)
         self.assertEqual(c.name, 'Silver')
 
-    def test_bad_callReserve(self):
+    def test_bad_call_reserve(self):
         """ Call a reserve that isn't there! """
         self.plr.setReserve('Copper')
-        c = self.plr.callReserve('Silver')
+        c = self.plr.call_reserve('Silver')
         self.assertIsNone(c)
 
     def test_addcard_reserve(self):
@@ -102,7 +102,7 @@ class Test_reserveSelection(unittest.TestCase):
     def test_callable(self):
         gold = self.g['Gold'].remove()
         self.plr.addCard(gold, 'reserve')
-        output, index = self.plr.reserveSelection(1)
+        output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 1)
         self.assertEqual(output[0]['action'], 'reserve')
         self.assertEqual(output[0]['card'], gold)
@@ -113,7 +113,7 @@ class Test_reserveSelection(unittest.TestCase):
         """ Copper is not callable (Due to miser) """
         copper = self.g['Copper'].remove()
         self.plr.addCard(copper, 'reserve')
-        output, index = self.plr.reserveSelection(1)
+        output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 0)
         self.assertEqual(index, 1)
 

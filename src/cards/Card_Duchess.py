@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -34,7 +35,7 @@ class Card_Duchess(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     if 'Estate' in args[0] or 'Duchy' in args[0] or 'Province' in args[0]:
         return False
     return True
@@ -43,7 +44,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Duchess(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -56,7 +56,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDeck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Province'))
         self.assertIsNone(self.plr.inDiscard('Province'))
 
     def test_disacrd(self):
@@ -66,7 +66,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNone(self.plr.inDeck('Province'))
+        self.assertIsNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.inDiscard('Province'))
 
     def test_buy_duchess(self):

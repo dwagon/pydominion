@@ -23,7 +23,7 @@ class Card_Den_of_Sin(Card):
         for _ in range(2):
             player.pickupCard()
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
 
@@ -42,8 +42,8 @@ class Test_Den_of_Sin(unittest.TestCase):
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5 + 2)
 
 

@@ -111,7 +111,7 @@ class Test_Rogue(unittest.TestCase):
     def test_good_trash(self):
         """ Rogue to get something juicy from the trash """
         tsize = self.g.trashSize()
-        for i in range(2):
+        for _ in range(2):
             gold = self.g['Gold'].remove()
             self.plr.trashCard(gold)
         self.plr.test_input = ['1']

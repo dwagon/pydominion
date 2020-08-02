@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,7 +12,8 @@ class Card_CaravanGuard(Card):
         self.cardtype = ['action', 'duration', 'reaction']
         self.base = 'adventure'
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
-        When another player plays an Attack card, you may play this from your hand. (+1 Action has no effect if it's not your turn.)"""
+            When another player plays an Attack card, you may play this from
+            your hand. (+1 Action has no effect if it's not your turn.)"""
         self.name = 'Caravan Guard'
         self.cost = 3
 
@@ -33,7 +35,6 @@ class Card_CaravanGuard(Card):
 ###############################################################################
 class Test_CaravanGuard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Caravan Guard', 'Militia', 'Moat'])
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
@@ -46,8 +47,8 @@ class Test_CaravanGuard(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 1)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_attack(self):

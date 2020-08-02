@@ -29,7 +29,7 @@ class Card_BandOfMisfits(Card):
         player.pickupCards(self._action.cards)
         self._action.special(game, player)
 
-    def hook_endTurn(self, game, player):
+    def hook_end_turn(self, game, player):
         if not hasattr(self, '_action'):
             return
         del self._action
@@ -44,20 +44,20 @@ class Card_BandOfMisfits(Card):
             return None
         return self._action.hook_allPlayers_buyCard(game, player, owner, card)
 
-    def hook_allPlayers_gainCard(self, game, player, owner, card):
+    def hook_allplayers_gain_card(self, game, player, owner, card):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_allPlayers_gainCard(game, player, owner, card)
+        return self._action.hook_allplayers_gain_card(game, player, owner, card)
 
     def hook_buyCard(self, game, player, card):
         if not hasattr(self, '_action'):
             return None
         return self._action.hook_buyCard(game, player, card)
 
-    def hook_callReserve(self, game, player):
+    def hook_call_reserve(self, game, player):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_callReserve(game, player)
+        return self._action.hook_call_reserve(game, player)
 
     def hook_cardCost(self, game, player, card):
         if not hasattr(self, '_action'):
@@ -69,10 +69,10 @@ class Card_BandOfMisfits(Card):
             return None
         return self._action.hook_cleanup(game, player)
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_gainCard(game, player, card)
+        return self._action.hook_gain_card(game, player, card)
 
     def hook_postAction(self, game, player, card):
         if not hasattr(self, '_action'):
@@ -86,10 +86,10 @@ class Card_BandOfMisfits(Card):
             return 0
         return self._action.hook_spendValue(game, player, card)
 
-    def hook_trashCard(self, game, player, card):
+    def hook_trash_card(self, game, player, card):
         if not hasattr(self, '_action'):
             return None
-        return self._action.hook_trashCard(game, player, card)
+        return self._action.hook_trash_card(game, player, card)
 
     def hook_trashThisCard(self, game, player):
         if not hasattr(self, '_action'):
@@ -120,7 +120,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         """ Make the Band of Misfits be a Bureaucrat """
         self.plr.test_input = ['Bureaucrat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
 
     def test_play_feast(self):
         """ Make the Band of Misfits be a Feast """

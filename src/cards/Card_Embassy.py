@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,7 +18,7 @@ class Card_Embassy(Card):
     def special(self, game, player):
         player.plrDiscardCards(3, force=True)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         """ When you gain this, each other player gains a Silver """
         for plr in game.player_list():
             if plr != player:
@@ -29,7 +30,6 @@ class Card_Embassy(Card):
 ###############################################################################
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Embassy'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

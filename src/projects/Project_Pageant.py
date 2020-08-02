@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -21,8 +22,8 @@ class Project_Pageant(Project):
         for num in range(player.coin+1):
             options.append(("Buy {} Coffers for {} Coin".format(num, num), num))
         pick = player.plrChooseOptions(
-                "Exchange coin for coffers",
-                *options)
+            "Exchange coin for coffers",
+            *options)
         player.gainCoffer(pick)
         player.coin -= pick
 
@@ -30,7 +31,6 @@ class Project_Pageant(Project):
 ###############################################################################
 class Test_Pageant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Pageant'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,7 +40,7 @@ class Test_Pageant(unittest.TestCase):
         self.plr.assign_project('Pageant')
         self.plr.setCoin(5)
         self.plr.test_input = ['End Phase', '4']
-        self.plr.buyPhase()
+        self.plr.buy_phase()
         self.assertEqual(self.plr.getCoffer(), numc + 4)
         self.assertEqual(self.plr.getCoin(), 1)
 

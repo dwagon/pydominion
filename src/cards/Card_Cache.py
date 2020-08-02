@@ -19,7 +19,7 @@ class Card_Cache(Card):
             return "+3 coin. Gain two coppers when you gain this"
         return "+3 coin"
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         """ When you gain this, gain two Coppers"""
         player.output("Gained 2 copper from cache")
         for _ in range(2):

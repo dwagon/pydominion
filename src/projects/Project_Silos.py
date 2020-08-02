@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,7 +15,7 @@ class Project_Silos(Project):
         self.name = "Silos"
         self.cost = 4
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         cus = [_ for _ in player.hand if _.name == 'Copper']
         if cus:
             choices = []
@@ -30,7 +31,6 @@ class Project_Silos(Project):
 ###############################################################################
 class Test_Silos(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Silos'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,7 +40,7 @@ class Test_Silos(unittest.TestCase):
         self.plr.setDeck('Estate', 'Estate', 'Estate')
         self.plr.setHand('Copper', 'Estate', 'Copper', 'Province')
         self.plr.test_input = ['2']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.plr.inDiscard('Copper'))
         self.assertIsNone(self.plr.inHand('Copper'))
         self.assertEqual(self.plr.handSize(), 4)

@@ -63,7 +63,7 @@ class Test_Treasuremap(unittest.TestCase):
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash('Treasure Map'))
         self.assertEqual(self.plr.deckSize(), 4)
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 
 ###############################################################################

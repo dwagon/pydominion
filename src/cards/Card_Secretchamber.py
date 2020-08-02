@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,12 +18,12 @@ class Card_Secretchamber(Card):
         self.name = 'Secret Chamber'
         self.cost = 2
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Discard any number of cards, +1 coin per card discarded"""
         todiscard = player.plrDiscardCards(anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?")
         player.addCoin(len(todiscard))
 
-    def hook_underAttack(self, player, game, attacker):
+    def hook_underAttack(self, game, player, attacker):
         player.output("Under attack from %s" % attacker.name)
         if not self.doRevealCard(player):
             return
@@ -48,7 +49,6 @@ class Card_Secretchamber(Card):
 ###############################################################################
 class Test_Secretchamber(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Secret Chamber', 'Militia'])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
@@ -81,9 +81,9 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.inHand('Province'))
         self.assertIsNotNone(self.plr.inHand('Duchy'))
-        self.assertIsNone(self.plr.inDeck('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Gold'))
-        self.assertIsNotNone(self.plr.inDeck('Silver'))
+        self.assertIsNone(self.plr.in_deck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Gold'))
+        self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNone(self.plr.inHand('Silver'))
 
     def test_underattack_pass(self):
@@ -94,8 +94,8 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
         self.plr.test_input = ['nothing']
         self.att.playCard(mil)
-        self.assertIsNotNone(self.plr.inDeck('Province'))
-        self.assertIsNotNone(self.plr.inDeck('Duchy'))
+        self.assertIsNotNone(self.plr.in_deck('Province'))
+        self.assertIsNotNone(self.plr.in_deck('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inHand('Silver'))
 

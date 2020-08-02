@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -24,7 +25,6 @@ class Project_Exploration(Project):
 ###############################################################################
 class Test_Exploration(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Exploration'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -33,7 +33,7 @@ class Test_Exploration(unittest.TestCase):
         numc = self.plr.getCoffer()
         self.plr.assign_project('Exploration')
         self.plr.test_input = ['End Phase']
-        self.plr.buyPhase()
+        self.plr.buy_phase()
         self.assertEqual(self.plr.getCoffer(), numc + 1)
         self.assertEqual(self.plr.getVillager(), 1)
 

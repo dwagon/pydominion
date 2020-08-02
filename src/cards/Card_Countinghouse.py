@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Countinghouse(Card):
     def __init__(self):
         Card.__init__(self)
@@ -27,7 +29,6 @@ class Card_Countinghouse(Card):
 ###############################################################################
 class Test_Countinghouse(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Counting House'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

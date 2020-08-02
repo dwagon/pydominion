@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -16,7 +17,7 @@ class Event_ScoutingParty(Event):
 
     def special(self, game, player):
         cards = []
-        for i in range(5):
+        for _ in range(5):
             cards.append(player.nextCard())
         discards = player.cardSel(
             num=3, cardsrc=cards, force=True,
@@ -33,7 +34,6 @@ class Event_ScoutingParty(Event):
 ###############################################################################
 class Test_ScoutingParty(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Scouting Party'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

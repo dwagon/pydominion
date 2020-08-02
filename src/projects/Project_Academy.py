@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,7 +15,7 @@ class Project_Academy(Project):
         self.name = "Academy"
         self.cost = 5
 
-    def hook_gainCard(self, game, player, card):
+    def hook_gain_card(self, game, player, card):
         if card.isAction():
             player.output("Gained a villager from Academy")
             player.gainVillager()
@@ -23,7 +24,6 @@ class Project_Academy(Project):
 ###############################################################################
 class Test_Academy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Academy'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

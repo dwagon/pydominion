@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -23,7 +24,6 @@ class Card_Haggler(Card):
 ###############################################################################
 class Test_Haggler(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Haggler'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,6 +38,7 @@ class Test_Haggler(unittest.TestCase):
         """ Buy a Gold and haggle a silver """
         self.plr.setPlayed('Haggler')
         self.plr.test_input = ['Get Silver']
+        self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
         self.assertIsNotNone(self.plr.inDiscard('Silver'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))

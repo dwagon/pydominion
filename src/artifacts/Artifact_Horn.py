@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Artifact import Artifact
 
 
@@ -17,7 +18,6 @@ class Artifact_Horn(Artifact):
 ###############################################################################
 class Test_Horn(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Horn'], initcards=['Border Guard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -28,7 +28,7 @@ class Test_Horn(unittest.TestCase):
         self.plr.assign_artifact('Horn')
         self.plr.test_input = ['Put into hand']
         self.plr.discardCard(self.card)
-        self.assertIsNotNone(self.plr.inDeck('Border Guard'))
+        self.assertIsNotNone(self.plr.in_deck('Border Guard'))
         self.assertIsNone(self.plr.inDiscard('Border Guard'))
 
 

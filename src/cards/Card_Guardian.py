@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Guardian(Card):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
         self.base = 'nocturne'
-        self.desc = "Until your next turn, when another player plays an Attack card, it doesn't affect you. At the start of your next turn, +1 Coin."
+        self.desc = """Until your next turn, when another player plays an
+            Attack card, it doesn't affect you. At the start of your next turn,
+            +1 Coin."""
         self.name = 'Guardian'
         self.defense = True
         self.cost = 2
@@ -18,14 +21,13 @@ class Card_Guardian(Card):
     def duration(self, game, player):
         player.addCoin(1)
 
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         return {'destination': 'hand'}
 
 
 ###############################################################################
 class Test_Guardian(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Guardian'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,8 +40,8 @@ class Test_Guardian(unittest.TestCase):
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.plr.endTurn()
-        self.plr.startTurn()
+        self.plr.end_turn()
+        self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -12,14 +13,14 @@ class Card_Catapult(Card):
         self.required_cards = ['Curse']
         self.base = 'empires'
         self.desc = """+1 Coin; Trash a card from your hand.
-        If it costs 3 or more, each other player gains a Curse.
-        If it's a Treasure, each other player discards down to 3 cards in hand."""
+            If it costs 3 or more, each other player gains a Curse.
+            If it's a Treasure, each other player discards down to 3 cards in hand."""
         self.name = 'Catapult'
         self.cost = 3
         self.coin = 1
 
     def special(self, game, player):
-        cards = player.plrTrashCard()
+        cards = player.plrTrashCard(force=True)
         if not cards:
             return
         card = cards[0]
@@ -33,7 +34,7 @@ class Card_Catapult(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 
@@ -41,7 +42,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Catapult(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Catapult'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

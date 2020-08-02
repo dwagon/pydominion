@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,15 +19,14 @@ class Card_Ducat(Card):
     def desc(self, player):
         if player.phase == 'buy':
             return "+1 Coffers; +1 Buy; When you gain this, you may trash a Copper from your hand."
-        else:
-            return "+1 Coffers; +1 Buy"
+        return "+1 Coffers; +1 Buy"
 
     ###########################################################################
     def special(self, game, player):
         player.gainCoffer()
 
     ###########################################################################
-    def hook_gainThisCard(self, game, player):
+    def hook_gain_this_card(self, game, player):
         cu = player.inHand('Copper')
         if cu:
             player.plrTrashCard(cardsrc=[cu], num=1)
@@ -37,7 +37,6 @@ class Card_Ducat(Card):
 ###############################################################################
 class Test_Ducat(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ducat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

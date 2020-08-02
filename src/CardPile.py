@@ -14,6 +14,10 @@ class CardPile(object):
             self.pilesize = self.card.numcards
 
     ###########################################################################
+    def __bool__(self):
+        return not self.isEmpty()
+
+    ###########################################################################
     def embargo(self):
         self.embargo_level += 1
 

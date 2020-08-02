@@ -41,6 +41,7 @@ class Test_Colonnade(unittest.TestCase):
     def test_play(self):
         """ Test Colonnade"""
         self.plr.setPlayed('Moat')
+        self.plr.setCoin(5)
         self.plr.buyCard(self.g['Moat'])
         self.assertEqual(self.plr.getScoreDetails()['Colonnade'], 2)
 

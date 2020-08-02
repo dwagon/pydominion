@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -14,14 +15,13 @@ class Project_Cathedral(Project):
         self.name = "Cathedral"
         self.cost = 3
 
-    def hook_startTurn(self, game, player):
+    def hook_start_turn(self, game, player):
         player.plrTrashCard(num=1, force=True, prompt="Cathedral forces you to trash a card")
 
 
 ###############################################################################
 class Test_Cathedral(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Cathedral'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -30,7 +30,7 @@ class Test_Cathedral(unittest.TestCase):
         self.plr.assign_project('Cathedral')
         self.plr.setHand('Copper', 'Estate', 'Province')
         self.plr.test_input = ['Copper']
-        self.plr.startTurn()
+        self.plr.start_turn()
         self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertIsNone(self.plr.inHand('Copper'))
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+from Card import Card
+import Game
 
 
 ###############################################################################
@@ -34,7 +35,6 @@ class Card_Sacrifice(Card):
 ###############################################################################
 class Test_Sacrifice(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Sacrifice', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
