@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -35,7 +36,7 @@ class Card_Mercenary(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 
@@ -43,7 +44,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Mercenary(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Urchin', 'Moat'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

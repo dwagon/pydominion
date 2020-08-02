@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -15,14 +16,14 @@ class Project_StarChart(Project):
         self.cost = 3
 
     def hook_preShuffle(self, game, player):
-        names = set([_.name for _ in player.discardpile])
+        names = {_.name for _ in player.discardpile}
         choices = []
         for name in names:
             choices.append(("Put {} on top".format(name), name))
         opt = player.plrChooseOptions(
-                "Pick a card to put on top of your deck",
-                *choices
-                )
+            "Pick a card to put on top of your deck",
+            *choices
+            )
         card = player.inDiscard(opt)
         player.addCard(card, 'topdeck')
         player.discardpile.remove(card)
@@ -31,7 +32,6 @@ class Project_StarChart(Project):
 ###############################################################################
 class Test_StarChart(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Star Chart'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -43,7 +43,6 @@ class Test_StarChart(unittest.TestCase):
         self.plr.test_input = ['Put Gold']
         c = self.plr.nextCard()
         self.assertEqual(c.name, 'Gold')
-        self.g.print_state()
 
 
 ###############################################################################

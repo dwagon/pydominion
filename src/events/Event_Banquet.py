@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -14,7 +15,7 @@ class Event_Banquet(Event):
         self.cost = 3
 
     def special(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             player.gainCard('Copper')
         player.plrGainCard(5, types={'action': True, 'treasure': True, 'victory': False})
 
@@ -22,7 +23,6 @@ class Event_Banquet(Event):
 ###############################################################################
 class Test_Banquet(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Banquet'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

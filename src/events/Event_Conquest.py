@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -14,7 +15,7 @@ class Event_Conquest(Event):
         self.cost = 6
 
     def special(self, game, player):
-        for i in range(2):
+        for _ in range(2):
             player.gainCard('Silver')
         sc = 0
         for card in player.stats['gained']:
@@ -27,7 +28,6 @@ class Event_Conquest(Event):
 ###############################################################################
 class Test_Conquest(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Conquest'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

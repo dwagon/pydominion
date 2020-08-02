@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -15,14 +16,13 @@ class Event_Windfall(Event):
 
     def special(self, game, player):
         if player.deck.isEmpty() and player.discardpile.isEmpty():
-            for i in range(3):
+            for _ in range(3):
                 player.gainCard('Gold')
 
 
 ###############################################################################
 class Test_Windfall(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Windfall'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Artifact import Artifact
 
 
@@ -17,7 +18,6 @@ class Artifact_Horn(Artifact):
 ###############################################################################
 class Test_Horn(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Horn'], initcards=['Border Guard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

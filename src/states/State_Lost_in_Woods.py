@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from State import State
 
 
@@ -27,7 +28,6 @@ class State_Lost_in_woods(State):
 ###############################################################################
 class Test_Lost_in_woods(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

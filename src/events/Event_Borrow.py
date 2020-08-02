@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -29,7 +30,6 @@ class Event_Borrow(Event):
 ###############################################################################
 class Test_Borrow(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Borrow'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

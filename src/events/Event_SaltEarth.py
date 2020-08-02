@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -26,7 +27,6 @@ class Event_SaltEarth(Event):
 ###############################################################################
 class Test_SaltEarth(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Salt the Earth'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

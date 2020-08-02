@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -34,7 +35,7 @@ class Card_Duchess(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     if 'Estate' in args[0] or 'Duchy' in args[0] or 'Province' in args[0]:
         return False
     return True
@@ -43,7 +44,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Duchess(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

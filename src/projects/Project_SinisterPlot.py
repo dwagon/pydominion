@@ -2,6 +2,7 @@
 
 import unittest
 from collections import defaultdict
+import Game
 from Project import Project
 
 
@@ -18,10 +19,10 @@ class Project_SinisterPlot(Project):
 
     def hook_start_turn(self, game, player):
         ch = player.plrChooseOptions(
-                "Sinister Plot Action? ",
-                ("Add a token here?", True),
-                ("Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]), False)
-                )
+            "Sinister Plot Action? ",
+            ("Add a token here?", True),
+            ("Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]), False)
+            )
         if ch:
             self._token[player.name] += 1
         else:
@@ -32,7 +33,6 @@ class Project_SinisterPlot(Project):
 ###############################################################################
 class Test_SinisterPlot(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Sinister Plot'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

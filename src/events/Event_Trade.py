@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -16,14 +17,13 @@ class Event_Trade(Event):
     def special(self, game, player):
         """ Trash up to 2 cards from your hand. Gain a Silver per card you trashed """
         trash = player.plrTrashCard(num=2)
-        for i in trash:
+        for _ in trash:
             player.gainCard('Silver')
 
 
 ###############################################################################
 class Test_Trade(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Trade'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
