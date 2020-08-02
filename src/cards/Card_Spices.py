@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -19,8 +20,7 @@ class Card_Spices(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
-        else:
-            return "+2 Coin; +1 Buy"
+        return "+2 Coin; +1 Buy"
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
@@ -30,7 +30,6 @@ class Card_Spices(Card):
 ###############################################################################
 class Test_Spices(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Spices'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

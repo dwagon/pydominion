@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_Tormentor(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'doom']
         self.base = 'nocturne'
-        self.desc = "+2 Coin; If you have no other cards in play, gain an Imp from its pile. Otherwise, each other player receives the next Hex."
+        self.desc = """+2 Coin; If you have no other cards in play, gain an Imp
+            from its pile. Otherwise, each other player receives the next Hex."""
         self.name = "Tormentor"
         self.required_cards = [('Card', 'Imp')]
         self.coin = 2
@@ -30,7 +32,6 @@ class Card_Tormentor(Card):
 ###############################################################################
 class Test_Tormentor(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tormentor"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
