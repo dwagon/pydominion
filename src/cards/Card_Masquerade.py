@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -15,7 +16,7 @@ class Card_Masquerade(Card):
         self.cards = 2
         self.cost = 3
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Each player passes a card from his hand to the left at
             once. Then you may trash a card from your hand"""
         xfer = {}
@@ -40,7 +41,7 @@ class Card_Masquerade(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     c = player.pick_to_discard(1, keepvic=True)
     return c
 
@@ -48,7 +49,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Masquerade(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Masquerade'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

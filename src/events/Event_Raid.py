@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -30,7 +31,6 @@ class Event_Raid(Event):
 ###############################################################################
 class Test_Raid(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, eventcards=['Raid'], initcards=['Feast'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_Crossroads(Card):
         Card.__init__(self)
         self.cardtype = ['action']
         self.base = 'hinterlands'
-        self.desc = "Reveal your hand. +1 Card per Victory card revealed. If this is the first time you played a Crossroads this turn, +3 Actions."
+        self.desc = """Reveal your hand. +1 Card per Victory card revealed.
+            If this is the first time you played a Crossroads this turn, +3 Actions."""
         self.name = 'Crossroads'
         self.cost = 2
 
@@ -37,7 +39,6 @@ class Card_Crossroads(Card):
 ###############################################################################
 class Test_Crossroads(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Crossroads'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

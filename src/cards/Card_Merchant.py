@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -22,14 +23,12 @@ class Card_Merchant(Card):
         ag_count = player.played.count('Silver')
         if ag_count == 1:
             return 1
-        else:
-            return 0
+        return 0
 
 
 ###############################################################################
 class Test_Merchant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Merchant'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

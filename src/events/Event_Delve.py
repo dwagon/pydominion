@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -22,7 +23,6 @@ class Event_Delve(Event):
 ###############################################################################
 class Test_Delve(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Delve'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

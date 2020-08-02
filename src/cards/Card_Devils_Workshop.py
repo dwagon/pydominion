@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Devils_Workshop(Card):
         Card.__init__(self)
         self.cardtype = 'night'
         self.base = 'nocturne'
-        self.desc = "If the number of cards you've gained this turn is: 2+, gain an Imp from its pile; 1, gain a card costing up to 4; 0, gain a Gold."
+        self.desc = """If the number of cards you've gained this turn is: 2+,
+            gain an Imp from its pile; 1, gain a card costing up to 4;
+            0, gain a Gold."""
         self.name = "Devil's Workshop"
         self.cost = 4
         self.required_cards = [('Card', 'Imp')]
@@ -31,7 +34,6 @@ class Card_Devils_Workshop(Card):
 ###############################################################################
 class Test_Devils_Workshop(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Devil's Workshop", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -18,8 +19,7 @@ class Card_FarmersMarket(Card):
         vps = player.game["Farmers' Market"].getVP()
         if vps >= 4:
             return "+1 Buy; Take {} VPs and trash this.".format(vps)
-        else:
-            return "+1 Buy; Add 1VP to the pile and then +{} Coin.".format(vps)
+        return "+1 Buy; Add 1VP to the pile and then +{} Coin.".format(vps)
 
     def special(self, game, player):
         vps = game["Farmers' Market"].getVP()
@@ -38,7 +38,6 @@ class Card_FarmersMarket(Card):
 ###############################################################################
 class Test_FarmersMarket(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Farmers' Market"])
         self.g.start_game()
         self.plr = self.g.player_list(0)

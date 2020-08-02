@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,8 +18,7 @@ class Card_Mint(Card):
         if player.phase == "buy":
             return """You may reveal a Treasure card from your hand. Gain a copy of it.
             When you buy this, trash all Treasures you have in play."""
-        else:
-            return "You may reveal a Treasure card from your hand. Gain a copy of it."
+        return "You may reveal a Treasure card from your hand. Gain a copy of it."
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
@@ -46,7 +46,6 @@ class Card_Mint(Card):
 ###############################################################################
 class Test_Mint(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mint', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

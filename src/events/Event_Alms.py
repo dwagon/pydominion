@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -15,8 +16,7 @@ class Event_Alms(Event):
     def desc(self, player):
         if self.treasures(player):
             return "You have treasures in play so you can't gain a card costing up to 4"
-        else:
-            return "You have no treasures in play, gain a card costing up to 4"
+        return "You have no treasures in play, gain a card costing up to 4"
 
     def treasures(self, player):
         t = 0
@@ -38,7 +38,6 @@ class Event_Alms(Event):
 ###############################################################################
 class Test_Alms(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], initcards=['Feast'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

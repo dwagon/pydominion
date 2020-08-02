@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -16,7 +17,7 @@ class Card_Conspirator(Card):
         self.coin = 2
         self.cost = 4
 
-    def special(self, player, game):
+    def special(self, game, player):
         if self.numActionsPlayed(player) >= 3:
             player.pickupCard()
             player.addActions(1)
@@ -28,7 +29,6 @@ class Card_Conspirator(Card):
 ###############################################################################
 class Test_Conspirator(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Conspirator', 'Witch'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

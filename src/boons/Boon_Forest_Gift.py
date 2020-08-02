@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Boon import Boon
 
 
@@ -21,7 +22,6 @@ class Boon_Forest_Gift(Boon):
 ###############################################################################
 class Test_Forest_Gift(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

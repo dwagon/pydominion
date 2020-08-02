@@ -22,8 +22,7 @@ class Card_Doctor(Card):
                 When you buy this, you may overpay for it. For each 1 you overpaid,
                 look at the top card of your deck; trash it, discard it,
                 or put it back."""
-        else:
-            return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
+        return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
 
     def special(self, game, player):
         options = []

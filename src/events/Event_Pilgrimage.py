@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Event import Event
 
 
@@ -21,7 +22,7 @@ class Event_Pilgrimage(Event):
         if not player.flip_journey_token():
             player.output("Flipped Journey token to face down")
             return
-        cardnames = set([c.name for c in player.played if c.purchasable])
+        cardnames = {c.name for c in player.played if c.purchasable}
         selected = []
         while True:
             options = [{'selector': '0', 'print': 'Finish', 'opt': None}]
@@ -45,7 +46,6 @@ class Event_Pilgrimage(Event):
 ###############################################################################
 class Test_Pilgrimage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Pilgrimage'], initcards=['Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Councilroom(Card):
     def __init__(self):
         Card.__init__(self)
@@ -26,7 +28,6 @@ class Card_Councilroom(Card):
 ###############################################################################
 class Test_Councilroom(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Council Room'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,7 +18,11 @@ class Card_MountainVillage(Card):
 
     def special(self, game, player):
         if player.discardSize():
-            card = player.cardSel(cardsrc='discard', force=True, prompt="Look through your discard pile and put a card from it into your hand")
+            card = player.cardSel(
+                cardsrc='discard',
+                force=True,
+                prompt="Look through your discard pile and put a card from it into your hand"
+            )
             player.discardpile.remove(card[0])
             player.addCard(card[0], 'hand')
         else:
@@ -28,7 +33,6 @@ class Card_MountainVillage(Card):
 ###############################################################################
 class Test_MountainVillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Mountain Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

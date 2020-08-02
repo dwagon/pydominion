@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Project import Project
 
 
@@ -26,7 +27,6 @@ class Project_CropRotation(Project):
 ###############################################################################
 class Test_CropRotation(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Crop Rotation'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
