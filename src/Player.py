@@ -1571,8 +1571,9 @@ class Player(object):
             if cost:
                 prompt += "costing exactly %d" % cost
             buyable = self.cardsWorth(cost, types=types)
-        buyable = [c for c in buyable if c.purchasable]
-        buyable = [c for c in buyable if not c.debtcost]
+        buyable = [_ for _ in buyable if _.purchasable]
+        buyable = [_ for _ in buyable if not _.debtcost]
+        buyable = [_ for _ in buyable if _.name not in kwargs.get('exclude', [])]
         if 'prompt' not in kwargs:
             kwargs['prompt'] = prompt
         cards = self.cardSel(

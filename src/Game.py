@@ -645,7 +645,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
                 stacklist = (
                     ('Discard', plr.discardpile), ('Hand', plr.hand),
                     ('Reserve', plr.reserve), ('Deck', plr.deck),
-                    ('Played', plr.played), ('Duration', plr.durationpile))
+                    ('Played', plr.played), ('Duration', plr.durationpile),
+                    ('Exile', plr.exilepile))
                 for stackname, stack in stacklist:
                     count = 0
                     for card in stack:
