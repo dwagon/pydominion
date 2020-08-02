@@ -1182,7 +1182,8 @@ class Player(object):
         self.stats['gained'].append(newcard)
         if options.get('destination'):
             destination = options['destination']
-        self.hook_allPlayers_gainCard(newcard)
+        if callhook:
+            self.hook_allplayers_gain_card(newcard)
         if options.get('trash', False):
             self.trashCard(newcard)
             return newcard
@@ -1275,10 +1276,10 @@ class Player(object):
             crd.hook_allPlayers_buyCard(game=self.game, player=self, owner=self, card=card)
 
     ###########################################################################
-    def hook_allPlayers_gainCard(self, card):
+    def hook_allplayers_gain_card(self, card):
         for player in self.game.player_list():
             for crd in player.hand + player.projects:
-                crd.hook_allPlayers_gainCard(game=self.game, player=self, owner=player, card=card)
+                crd.hook_allplayers_gain_card(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def add_hook(self, hook_name, hook):

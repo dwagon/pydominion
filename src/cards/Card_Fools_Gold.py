@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,7 +25,7 @@ class Card_Fools_Gold(Card):
             player.output("Gained 1 Coin")
             player.addCoin(1)
 
-    def hook_allPlayers_gainCard(self, game, player, owner, card):
+    def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.name != 'Province':
             return
         if owner == player:
@@ -41,7 +42,6 @@ class Card_Fools_Gold(Card):
 ###############################################################################
 class Test_Fools_Gold(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

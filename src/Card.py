@@ -230,7 +230,7 @@ class Card(object):
         return True     # pragma: no cover
 
     ##########################################################################
-    def hook_allPlayers_gainCard(self, game, player, owner, card):
+    def hook_allplayers_gain_card(self, game, player, owner, card):
         pass    # pragma: no cover
 
     ##########################################################################
