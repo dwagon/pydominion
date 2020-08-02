@@ -29,6 +29,7 @@ class Event_Delay(Event):
         )
         player.durationpile.add(delay[0])
         player.hand.remove(delay[0])
+        # TODO Need to work out how to give the card a duration function
 
 
 ###############################################################################
