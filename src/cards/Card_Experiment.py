@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,7 +12,8 @@ class Card_Experiment(Card):
         self.cardtype = 'action'
         self.base = 'renaissance'
         self.name = 'Experiment'
-        self.desc = "+2 Cards; +1 Action; Return this to the Supply. When you gain this, gain another Experiment (that doesn't come with another)."
+        self.desc = """+2 Cards; +1 Action; Return this to the Supply. When you
+            gain this, gain another Experiment (that doesn't come with another)."""
         self.cost = 3
         self.cards = 2
         self.actions = 1
@@ -31,7 +33,6 @@ class Card_Experiment(Card):
 ###############################################################################
 class Test_Experiment(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Experiment'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

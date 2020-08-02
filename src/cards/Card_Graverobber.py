@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -28,7 +29,7 @@ class Card_Graverobber(Card):
             card = player.plrTrashCard(cardsrc=actions)
             player.plrGainCard(cost=card[0].cost+3)
         else:
-            trash_cards = [c for c in game.trashpile if (3 <= c.cost <= 6)]
+            trash_cards = [c for c in game.trashpile if 3 <= c.cost <= 6]
             if not trash_cards:
                 player.output("No suitable cards in trash")
                 return
@@ -42,7 +43,6 @@ class Card_Graverobber(Card):
 ###############################################################################
 class Test_Graverobber(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Graverobber', 'Militia'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

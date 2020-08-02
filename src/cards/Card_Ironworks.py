@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -14,7 +15,7 @@ class Card_Ironworks(Card):
         self.name = 'Iron Works'
         self.cost = 4
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Gain a card costing up to 4. If it is an action card:
             +1 action; treasure card +1 coin; victory card, +1 card"""
         c = player.plrGainCard(4, force=True)
@@ -29,7 +30,6 @@ class Card_Ironworks(Card):
 ###############################################################################
 class Test_Ironworks(unittest.TestCase):
     def setUp(self):
-        import Game
         # Make most of the cards too expensive to ensure we can select what we want
         initcards = ['Iron Works', 'Great Hall', 'Apprentice', 'Bandit Camp',
                      'City', 'Count', 'Duke', 'Library', 'Market', 'Rebuild']

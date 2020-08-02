@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -39,7 +40,6 @@ class Card_Gladiator(Card):
 ###############################################################################
 class Test_Gladiator(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Gladiator', 'Moat'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

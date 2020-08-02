@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,7 +19,7 @@ class Card_Ironmonger(Card):
         self.actions = 1
         self.cards = 1
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Reveal the top card of your deck; you may discard it.
             Either way, if it is an... Action card, +1 Action; Treasure
             Card, +1 coin; Victory Card, +1 card """
@@ -47,7 +48,6 @@ class Card_Ironmonger(Card):
 ###############################################################################
 class Test_Ironmonger(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Iron Monger'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

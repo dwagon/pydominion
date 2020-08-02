@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,13 +26,11 @@ class Card_Horsetraders(Card):
         """ When another player plays an Attack card, you may set
         this aside from your hand.  If you do, then at the start
         of your next turn, +1 Card and return this to your hand. """
-        pass
 
 
 ###############################################################################
 class Test_Horsetraders(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horse Traders'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
