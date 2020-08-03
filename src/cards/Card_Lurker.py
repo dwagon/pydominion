@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,10 +18,10 @@ class Card_Lurker(Card):
 
     def special(self, game, player):
         ch = player.plrChooseOptions(
-                "Choose one? ",
-                ("Trash an Action from the Supply", 'to'),
-                ("Gain an Action card from the Trash", 'from')
-                )
+            "Choose one? ",
+            ("Trash an Action from the Supply", 'to'),
+            ("Gain an Action card from the Trash", 'from')
+        )
         if ch == 'to':
             acts = [_ for _ in game.cardpiles.values() if _.isAction() and not _.isEmpty()]
             if not acts:
@@ -43,7 +44,6 @@ class Card_Lurker(Card):
 ###############################################################################
 class Test_Lurker(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lurker', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

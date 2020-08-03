@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -24,7 +25,6 @@ class Card_Quarry(Card):
 ###############################################################################
 class Test_Quarry(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Quarry', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

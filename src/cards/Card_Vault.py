@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Vault(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'prosperity'
-        self.desc = "+2 Cards; Discard any number of cards. +1 Coin per card discarded. Each other player may discard 2 cards. If he does, he draws a card."
+        self.desc = """+2 Cards; Discard any number of cards. +1 Coin per card
+            discarded. Each other player may discard 2 cards. If he does, he
+            draws a card."""
         self.name = 'Vault'
         self.cards = 2
         self.cost = 5
@@ -28,14 +31,13 @@ class Card_Vault(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(2)
 
 
 ###############################################################################
 class Test_Vault(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vault'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

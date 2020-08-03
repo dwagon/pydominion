@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Winemerchant(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'reserve']
         self.base = 'adventure'
-        self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the end of your Buy phase, if you have at least 2 Coin unspent, you may discard this from your Tavern mat."""
+        self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the
+            end of your Buy phase, if you have at least 2 Coin unspent, you
+            may discard this from your Tavern mat."""
         self.name = 'Wine Merchant'
         self.buys = 1
         self.coin = 4
@@ -27,7 +30,6 @@ class Card_Winemerchant(Card):
 ###############################################################################
 class Test_Winemerchant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wine Merchant'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

@@ -2,14 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Sir_Martin(KnightCard):
     def __init__(self):
-        Card.__init__(self)
+        KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.name = "Sir Martin"

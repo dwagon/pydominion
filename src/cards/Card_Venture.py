@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,16 +25,14 @@ class Card_Venture(Card):
                 player.output("Picked up %s from Venture" % c.name)
                 player.playCard(c)
                 break
-            else:
-                player.output("Picked up and discarded %s" % c.name)
-                player.addCoin(c.coin)    # Compensate for not keeping card
-                player.discardCard(c)
+            player.output("Picked up and discarded %s" % c.name)
+            player.addCoin(c.coin)    # Compensate for not keeping card
+            player.discardCard(c)
 
 
 ###############################################################################
 class Test_Venture(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Venture'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

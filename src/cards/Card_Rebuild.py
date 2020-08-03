@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -43,9 +44,8 @@ class Card_Rebuild(Card):
                 player.trashCard(card)
                 player.plrGainCard(card.cost + 3, modifier='less', types={'victory': True})
                 break
-            else:
-                player.output("Drew and discarded %s" % card.name)
-                discards.append(card)
+            player.output("Drew and discarded %s" % card.name)
+            discards.append(card)
         for c in discards:
             player.discardCard(c)
 
@@ -53,7 +53,6 @@ class Card_Rebuild(Card):
 ###############################################################################
 class Test_Rebuild(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

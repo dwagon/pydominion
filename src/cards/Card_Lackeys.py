@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,8 +19,7 @@ class Card_Lackeys(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+2 Cards; When you gain this, +2 Villagers."
-        else:
-            return "+2 Cards"
+        return "+2 Cards"
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
@@ -29,7 +29,6 @@ class Card_Lackeys(Card):
 ###############################################################################
 class Test_Lackeys(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lackeys'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

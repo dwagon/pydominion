@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,9 +12,9 @@ class Card_Jack_of_all_Trades(Card):
         self.cardtype = 'action'
         self.base = 'hinterlands'
         self.desc = """Gain a Silver.
-        Look at the top card of your deck; discard it or put it back.
-        Draw until you have 5 cards in your hand.
-        You may trash a card from your hand that is not a Treasure."""
+            Look at the top card of your deck; discard it or put it back.
+            Draw until you have 5 cards in your hand.
+            You may trash a card from your hand that is not a Treasure."""
         self.name = 'Jack of all Trades'
         self.cost = 4
 
@@ -30,7 +31,7 @@ class Card_Jack_of_all_Trades(Card):
         else:
             player.discardCard(card)
 
-        while (player.handSize() < 5):
+        while player.handSize() < 5:
             player.pickupCard()
 
         cards = [c for c in player.hand if not c.isTreasure()]
@@ -41,7 +42,6 @@ class Card_Jack_of_all_Trades(Card):
 ###############################################################################
 class Test_Jack_of_all_Trades(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Jack of all Trades'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

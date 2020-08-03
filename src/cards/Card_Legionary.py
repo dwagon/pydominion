@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -11,7 +12,7 @@ class Card_Legionary(Card):
         self.cardtype = ['action', 'attack']
         self.base = 'empires'
         self.desc = """+3 Coin. You may reveal a Gold from your hand.
-        If you do, each other player discards down to 2 cards in hand, then draws a card."""
+            If you do, each other player discards down to 2 cards in hand, then draws a card."""
         self.name = 'Legionary'
         self.cost = 5
         self.coin = 3
@@ -27,7 +28,7 @@ class Card_Legionary(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 2
     return player.pick_to_discard(numtodiscard)
 
@@ -35,7 +36,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Legionary(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Legionary'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

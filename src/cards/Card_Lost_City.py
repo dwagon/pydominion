@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,8 +19,7 @@ class Card_Lost_City(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+2 Cards, +2 Actions; When you gain this every else gains a card"
-        else:
-            return "+2 Cards, +2 Actions"
+        return "+2 Cards, +2 Actions"
 
     def special(self, game, player):
         pass
@@ -36,7 +36,6 @@ class Card_Lost_City(Card):
 ###############################################################################
 class Test_Lost_City(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Lost City'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()

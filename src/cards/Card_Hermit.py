@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,9 +11,10 @@ class Card_Hermit(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """Look through your discard pile. You may trash a card from your discard pile or hand that is not a Treasure.
-        Gain a card costing up to 3.
-        When you discard this from play, if you did not buy any cards this turn, trash this and gain a Madman from the Madman pile."""
+        self.desc = """Look through your discard pile. You may trash a card from
+            your discard pile or hand that is not a Treasure.  Gain a card
+            costing up to 3.  When you discard this from play, if you did not
+            buy any cards this turn, trash this and gain a Madman from the Madman pile."""
         self.name = 'Hermit'
         self.required_cards = [('Card', 'Madman')]
         self.cost = 3
@@ -54,7 +56,6 @@ class Card_Hermit(Card):
 ###############################################################################
 class Test_Hermit(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hermit'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

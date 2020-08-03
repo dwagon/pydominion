@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+# pylint: disable=no-member
 
 import unittest
 import random
+import Game
 from Card import Card
 
 
@@ -11,7 +13,8 @@ class Card_YoungWitch(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
         self.base = 'cornucopia'
-        self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal a Bane card from his hand. If he doesn't, he gains a Curse."""
+        self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal
+            a Bane card from his hand. If he doesn't, he gains a Curse."""
         self.required_cards = ['Curse']
         self.name = 'Young Witch'
         self.cards = 2
@@ -48,7 +51,6 @@ class Card_YoungWitch(Card):
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()

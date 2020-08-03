@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -38,17 +39,17 @@ class Card_Torturer(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     if kind == 'cards':
         return player.pick_to_discard(2)
     if kind == 'choices':
         return True     # Discard
+    return False
 
 
 ###############################################################################
 class Test_Torturer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Torturer', 'Moat'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

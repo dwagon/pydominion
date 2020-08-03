@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,6 @@ class Card_Treasure_Trove(Card):
 ###############################################################################
 class Test_Treasure_Trove(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasure Trove'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

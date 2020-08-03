@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Festival(Card):
     def __init__(self):
         Card.__init__(self)
@@ -20,7 +22,6 @@ class Card_Festival(Card):
 ###############################################################################
 class Test_Festival(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Festival'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

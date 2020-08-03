@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -17,14 +18,13 @@ class Card_Fairgrounds(Card):
 
     def special_score(self, game, player):
         """ Worth 2VP for every 5 differently named cards in your deck (round down)"""
-        numtypes = set([c.name for c in player.allCards()])
+        numtypes = {c.name for c in player.allCards()}
         return 2 * int(len(numtypes) / 5)
 
 
 ###############################################################################
 class Test_Fairgrounds(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fairgrounds'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
