@@ -14,6 +14,10 @@ class CardPile(object):
             self.pilesize = self.card.numcards
 
     ###########################################################################
+    def stack_size(self):
+        return self.pilesize
+
+    ###########################################################################
     def __bool__(self):
         return not self.isEmpty()
 
