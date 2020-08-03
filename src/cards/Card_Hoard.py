@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -25,7 +26,6 @@ class Card_Hoard(Card):
 ###############################################################################
 class Test_Hoard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hoard'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

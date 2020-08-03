@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,7 +27,6 @@ class Card_Poacher(Card):
 ###############################################################################
 class Test_Poacher(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Poacher', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]

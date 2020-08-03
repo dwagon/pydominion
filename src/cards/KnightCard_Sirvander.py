@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Sirvander(KnightCard):
     def __init__(self):
-        Card.__init__(self)
+        KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.desc = """Each other player reveals the top 2 cards of his deck,
@@ -28,7 +28,6 @@ class Card_Sirvander(KnightCard):
 ###############################################################################
 class Test_Sir_Vander(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

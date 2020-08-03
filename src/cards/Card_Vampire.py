@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -26,7 +27,6 @@ class Card_Vampire(Card):
 ###############################################################################
 class Test_Vampire(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vampire'], badcards=['Duchess'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

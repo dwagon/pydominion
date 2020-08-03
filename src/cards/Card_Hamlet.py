@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -28,7 +29,6 @@ class Card_Hamlet(Card):
 ###############################################################################
 class Test_Hamlet(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hamlet'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

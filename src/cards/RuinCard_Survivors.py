@@ -14,11 +14,10 @@ class Card_Survivors(Card):
         self.desc = "Look at top 2 cards of deck. Discard or retain on deck"
         self.name = "Survivors"
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Look at the top 2 cards of your deck. Discard them or
             put them back in any order """
         # TODO
         pass
-
 
 # EOF

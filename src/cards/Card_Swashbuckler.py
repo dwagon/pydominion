@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Swashbuckler(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'renaissance'
-        self.desc = """+3 Cards. If your discard pile has any cards in it: +1 Coffers, then if you have at least 4 Coffers tokens, take the Treasure Chest."""
+        self.desc = """+3 Cards. If your discard pile has any cards in it:
+            +1 Coffers, then if you have at least 4 Coffers tokens, take the
+            Treasure Chest."""
         self.name = 'Swashbuckler'
         self.needsartifacts = True
         self.cards = 3
@@ -30,7 +33,6 @@ class Card_Swashbuckler(Card):
 ###############################################################################
 class Test_Swashbuckler(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Swashbuckler'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

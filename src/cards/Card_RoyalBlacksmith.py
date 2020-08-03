@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -28,7 +29,6 @@ class Card_RoyalBlacksmith(Card):
 ###############################################################################
 class Test_RoyalBlacksmith(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Royal Blacksmith'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

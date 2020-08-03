@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,8 @@ class Card_FaithfulHound(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
         self.base = 'nocturne'
-        self.desc = "+2 Cards; When you discard this other than during Clean-up, you may set it aside, and put it into your hand at end of turn."
+        self.desc = """+2 Cards; When you discard this other than during Clean-up,
+            you may set it aside, and put it into your hand at end of turn."""
         self.name = 'Faithful Hound'
         self.cards = 2
         self.cost = 2
@@ -23,7 +25,6 @@ class Card_FaithfulHound(Card):
 ###############################################################################
 class Test_FaithfulHound(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Faithful Hound'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

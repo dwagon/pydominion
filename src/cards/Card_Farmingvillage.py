@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -9,7 +10,9 @@ class Card_Farmingvillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.desc = """+2 actions. Reveal cards from the top of your deck until you reveal an Action or Treasure card. Put that card into your hand and discard the other cards."""
+        self.desc = """+2 actions. Reveal cards from the top of your deck until
+            you reveal an Action or Treasure card. Put that card into your hand
+            and discard the other cards."""
         self.name = 'Farming Village'
         self.actions = 2
         self.cost = 4
@@ -25,15 +28,13 @@ class Card_Farmingvillage(Card):
                 player.output("Added %s to hand" % c.name)
                 player.addCard(c, 'hand')
                 break
-            else:
-                player.output("Picked up and discarded %s" % c.name)
-                player.discardCard(c)
+            player.output("Picked up and discarded %s" % c.name)
+            player.discardCard(c)
 
 
 ###############################################################################
 class Test_Farmingvillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farming Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

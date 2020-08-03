@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
+###############################################################################
 class Card_Loan(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
         self.base = 'prosperity'
-        self.desc = "+1 Coin; When you play this, reveal cards from your deck until you reveal a Treasure. Discard it or trash it. Discard the other cards."
+        self.desc = """+1 Coin; When you play this, reveal cards from your
+            deck until you reveal a Treasure. Discard it or trash it. Discard
+            the other cards."""
         self.name = 'Loan'
         self.cost = 3
         self.coin = 1
@@ -23,9 +27,8 @@ class Card_Loan(Card):
             player.revealCard(c)
             if c.isTreasure():
                 break
-            else:
-                player.output("Revealed and discarded %s" % c.name)
-                player.discardCard(c)
+            player.output("Revealed and discarded %s" % c.name)
+            player.discardCard(c)
         discard = player.plrChooseOptions(
             "What to do?",
             ("Discard %s" % c.name, True), ("Trash %s" % c.name, False))
@@ -38,7 +41,6 @@ class Card_Loan(Card):
 ###############################################################################
 class Test_Loan(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Loan'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

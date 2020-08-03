@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -18,8 +19,7 @@ class Card_NomadCamp(Card):
     def desc(self, player):
         if player.phase == "action":
             return "+1 Buy +2 Coins"
-        else:
-            return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
+        return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
     def hook_gain_this_card(self, game, player):
         return {'destination': 'topdeck'}
@@ -28,7 +28,6 @@ class Card_NomadCamp(Card):
 ###############################################################################
 class Test_NomadCamp(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nomad Camp'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

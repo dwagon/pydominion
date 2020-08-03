@@ -153,7 +153,8 @@ disable=print-statement,
         too-many-lines,
         too-many-arguments,
         too-many-branches,
-        attribute-defined-outside-init
+        attribute-defined-outside-init,
+        fixme
 
 
 # Enable the message, report, category or checker with the given id(s). You can

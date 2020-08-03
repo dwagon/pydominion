@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -10,7 +11,9 @@ class Card_Storeroom(Card):
         Card.__init__(self)
         self.cardtype = 'action'
         self.base = 'darkages'
-        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card discarded. Discard any number of cards. +1 Coin per card discarded the second time """
+        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card
+            discarded. Discard any number of cards. +1 Coin per card discarded
+            the second time """
         self.name = 'Store Room'
         self.buys = 1
         self.cost = 3
@@ -31,7 +34,6 @@ class Card_Storeroom(Card):
 ###############################################################################
 class Test_Storeroom(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Store Room'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

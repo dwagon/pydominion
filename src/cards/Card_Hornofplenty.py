@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -20,7 +21,10 @@ class Card_Hornofplenty(Card):
         for c in player.played:
             cards.add(c.name)
 
-        card = player.plrGainCard(len(cards), prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed" % len(cards))
+        card = player.plrGainCard(
+            len(cards),
+            prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed" % len(cards)
+        )
         if card and card.isVictory():
             player.trashCard(self)
 
@@ -28,7 +32,6 @@ class Card_Hornofplenty(Card):
 ###############################################################################
 class Test_Hornofplenty(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horn of Plenty', 'Moat'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

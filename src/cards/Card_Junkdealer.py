@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -24,7 +25,6 @@ class Card_Junkdealer(Card):
 ###############################################################################
 class Test_Junkdealer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Junk Dealer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
