@@ -1089,7 +1089,7 @@ class Player(object):
             if self.game.ways and card.isAction():
                 way = self.select_ways()
             if way:
-                self.perform_way(way)
+                self.perform_way(way, card)
             else:
                 self.card_benefits(card)
         self.currcards.pop()
@@ -1108,9 +1108,10 @@ class Player(object):
         return ans
 
     ###########################################################################
-    def perform_way(self, way):
+    def perform_way(self, way, card):
         """ Perform a way """
         self.card_benefits(way)
+        way.special_way(game=self.game, player=self, card=card)
 
     ###########################################################################
     def card_benefits(self, card):
