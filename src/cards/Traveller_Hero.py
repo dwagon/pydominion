@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -29,7 +30,6 @@ class Card_Hero(Card):
 ###############################################################################
 class Test_Hero(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list(0)

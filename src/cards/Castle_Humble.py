@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -26,7 +27,6 @@ class Card_HumbleCastle(CastleCard):
 ###############################################################################
 class Test_HumbleCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

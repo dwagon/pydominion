@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Sirmichael(KnightCard):
     def __init__(self):
-        Card.__init__(self)
+        KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.name = "Sir Michael"
@@ -26,7 +26,6 @@ class Card_Sirmichael(KnightCard):
 ###############################################################################
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka', 'Fool'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

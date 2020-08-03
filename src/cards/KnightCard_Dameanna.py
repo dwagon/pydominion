@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
 from cards.Card_Knight import KnightCard
 import Game
 
@@ -9,7 +8,7 @@ import Game
 ###############################################################################
 class Card_Dame_Anna(KnightCard):
     def __init__(self):
-        Card.__init__(self)
+        KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
         self.base = 'darkages'
         self.name = "Dame Anna"
