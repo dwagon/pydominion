@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Card import Card
 
 
@@ -38,7 +39,7 @@ class Card_Villain(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # oragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover
     # Discard a victory card first, then whichever
     for card in kwargs['cardsrc']:
         if card.isVictory():
@@ -49,7 +50,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # oragma: no cover
 ###############################################################################
 class Test_Villain(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Villain'], numhexes=0, numboons=0)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -10,7 +11,8 @@ class Card_WildHunt(Card):
         Card.__init__(self)
         self.cardtype = ['action', 'gathering']
         self.base = 'empires'
-        self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt Supply pile; or gain an Estate, and if you do, take the VP from the pile."""
+        self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt
+            Supply pile; or gain an Estate, and if you do, take the VP from the pile."""
         self.name = 'Wild Hunt'
         self.cost = 5
 
@@ -32,7 +34,6 @@ class Card_WildHunt(Card):
 ###############################################################################
 class Test_WildHunt(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wild Hunt'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

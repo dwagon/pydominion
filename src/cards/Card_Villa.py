@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+from Card import Card
 
 
 ###############################################################################
@@ -19,8 +20,9 @@ class Card_Villa(Card):
     def desc(self, player):
         if player.phase == 'action':
             return "+2 Actions; +1 Buy; +1 Coin"
-        else:
-            return "+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into your hand, +1 Action, and if it's your Buy phase return to your Action phase."
+        return """+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into
+            your hand, +1 Action, and if it's your Buy phase return to your
+            Action phase."""
 
     def hook_gain_this_card(self, game, player):
         if player.phase == 'buy':
@@ -32,7 +34,6 @@ class Card_Villa(Card):
 ###############################################################################
 class Test_Villa(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Villa'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
