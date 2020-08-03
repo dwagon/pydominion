@@ -311,6 +311,12 @@ class Game(object):     # pylint: disable=too-many-public-methods
         unfilled = numstacks
         foundall = True
         for crd in initcards:
+            # If basecards are specified by initcards
+            cardname = self.guess_cardname(crd, prefix='BaseCard')
+            if cardname:
+                cpile = CardPile(cardname, self.cardmapping['BaseCard'][cardname], self)
+                self.cardpiles[cpile.name] = cpile
+                continue
             cardname = self.guess_cardname(crd)
             if cardname:
                 self.useCardPile(available, cardname, force=True)
@@ -445,7 +451,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
+        for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Way'] = self.getSetCardClasses('Way', self.waypath, 'ways', 'Way_')
