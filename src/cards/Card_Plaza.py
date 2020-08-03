@@ -19,9 +19,10 @@ class Card_Plaza(Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        disc = player.plrDiscardCards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer")
-        if disc:
-            player.gainCoffer(1)
+        if treasures:
+            disc = player.plrDiscardCards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer")
+            if disc:
+                player.gainCoffer(1)
 
 
 ###############################################################################
