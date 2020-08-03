@@ -21,6 +21,12 @@ class Test_args(unittest.TestCase):
         g.start_game()
         self.assertIn('Moat', g.cardpiles)
 
+    def test_basecard(self):
+        """ Make sure that if you specify a basecard in initcards it works """
+        g = Game.Game(quiet=True, initcards=['Platinum'])
+        g.start_game()
+        self.assertIn('Platinum', g.cardpiles)
+
     def test_prosperity(self):
         """ TODO """
         g = Game.Game(quiet=True, prosperity=True)
@@ -47,6 +53,7 @@ class Test_guess_cardname(unittest.TestCase):
         self.assertEqual(self.g.guess_cardname('moat'), 'Moat')
         self.assertEqual(self.g.guess_cardname('grandmarket'), 'Grand Market')
         self.assertEqual(self.g.guess_cardname('philosophersstone'), "Philosopher's Stone")
+        self.assertEqual(self.g.guess_cardname('colony', prefix="BaseCard"), "Colony")
         self.assertIsNone(self.g.guess_cardname('nosuchcard'))
 
 
