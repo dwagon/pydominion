@@ -57,7 +57,7 @@ class Test_Rabble(unittest.TestCase):
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.handSize(), 6)  # 5 + moat
         self.assertEqual(self.attacker.handSize(), 5 + 3)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_nodefense(self):
         self.victim.setDeck('Copper', 'Estate', 'Rabble')

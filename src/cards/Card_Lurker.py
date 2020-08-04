@@ -23,7 +23,7 @@ class Card_Lurker(Card):
             ("Gain an Action card from the Trash", 'from')
         )
         if ch == 'to':
-            acts = [_ for _ in game.cardpiles.values() if _.isAction() and not _.isEmpty()]
+            acts = [_ for _ in game.cardpiles.values() if _.isAction() and not _.is_empty()]
             if not acts:
                 player.output("No suitable cards found")
                 return

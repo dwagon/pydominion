@@ -49,7 +49,7 @@ class Test_Cutpurse(unittest.TestCase):
     def test_play_none(self):
         self.victim.setHand('Estate', 'Estate', 'Estate')
         self.plr.playCard(self.card)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertTrue(self.victim.discardpile.is_empty())
         self.assertEqual(self.victim.handSize(), 3)
 
 

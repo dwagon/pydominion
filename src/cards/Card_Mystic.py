@@ -65,7 +65,7 @@ class Test_Mystic(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(self.plr.inHand('Province'))
-        self.assertTrue(self.plr.deck.isEmpty())
+        self.assertTrue(self.plr.deck.is_empty())
 
     def test_bad(self):
         """ When the guess is bad the card should stay on the deck """

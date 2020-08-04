@@ -41,7 +41,7 @@ class Card_Archive(Card):
         player.addCard(o['card'], 'hand')
         player._archive_reserve.remove(o['card'])
         player.secret_count -= 1
-        if player._archive_reserve.isEmpty():
+        if player._archive_reserve.is_empty():
             self.permanent = False
 
 

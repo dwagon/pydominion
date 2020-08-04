@@ -1369,7 +1369,7 @@ class Player(object):
     ###########################################################################
     def gainPrize(self):
         prizes = [self.game[c] for c in self.game.getPrizes()]
-        available = [cp for cp in prizes if not cp.isEmpty()]
+        available = [cp for cp in prizes if not cp.is_empty()]
         if available:
             self.output("Gain a prize")
             card = self.cardSel(cardsrc=available)

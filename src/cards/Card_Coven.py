@@ -23,7 +23,7 @@ class Card_Coven(Card):
     def special(self, game, player):
         for plr in player.attackVictims():
             plr.exile_card('Curse')
-            if game['Curse'].isEmpty():
+            if game['Curse'].is_empty():
                 num = plr.unexile('Curse')
                 plr.output("Unexiled {} Curses from {}'s Coven".format(num, player.name))
             else:

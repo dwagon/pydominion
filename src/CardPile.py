@@ -19,7 +19,7 @@ class CardPile(object):
 
     ###########################################################################
     def __bool__(self):
-        return not self.isEmpty()
+        return not self.is_empty()
 
     ###########################################################################
     def embargo(self):
@@ -34,7 +34,7 @@ class CardPile(object):
         return getattr(self.card, name)
 
     ###########################################################################
-    def isEmpty(self):
+    def is_empty(self):
         return self.pilesize == 0
 
     ###########################################################################

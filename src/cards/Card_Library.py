@@ -64,7 +64,7 @@ class Test_Library(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Moat', 'Gold')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.deck[-1].name, 'Duchy')
         self.assertEqual(self.plr.handSize(), 7)
         self.assertTrue(self.plr.inHand('Moat'))

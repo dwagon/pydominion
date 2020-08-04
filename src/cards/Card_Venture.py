@@ -49,7 +49,7 @@ class Test_Venture(unittest.TestCase):
                 break
         else:   # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertTrue(self.plr.deck.isEmpty())
+        self.assertTrue(self.plr.deck.is_empty())
 
     def test_discard(self):
         """ Make sure we discard non-treasures """
