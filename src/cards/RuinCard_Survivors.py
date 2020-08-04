@@ -18,6 +18,5 @@ class Card_Survivors(Card):
         """ Look at the top 2 cards of your deck. Discard them or
             put them back in any order """
         # TODO
-        pass
 
 # EOF
