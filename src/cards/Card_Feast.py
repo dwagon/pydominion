@@ -73,7 +73,7 @@ class Test_Feast(unittest.TestCase):
             self.plr.playCard(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash('Feast'))
-            self.assertTrue(self.plr.played.isEmpty())
+            self.assertTrue(self.plr.played.is_empty())
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
@@ -85,7 +85,7 @@ class Test_Feast(unittest.TestCase):
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash('Feast'))
-            self.assertTrue(self.plr.played.isEmpty())
+            self.assertTrue(self.plr.played.is_empty())
             self.assertEqual(self.plr.discardSize(), 1)
             self.assertIsNotNone(self.plr.inDiscard('Duchy'))
         except AssertionError:      # pragma: no cover

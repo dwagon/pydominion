@@ -46,7 +46,7 @@ class PlayArea(object):
             cname = card
         return [_.name for _ in self.cards].count(cname)
 
-    def isEmpty(self):
+    def is_empty(self):
         return self.cards == []
 
     def __eq__(self, a):

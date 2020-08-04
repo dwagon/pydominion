@@ -17,7 +17,7 @@ class Card_Exorcist(Card):
         self.required_cards = [('Card', 'Ghost'), ('Card', 'Imp'), ('Card', "Will-o'-Wisp")]
 
     def night(self, game, player):
-        if player.hand.isEmpty():
+        if player.hand.is_empty():
             player.output("No cards to trash")
             return
         trashed = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")

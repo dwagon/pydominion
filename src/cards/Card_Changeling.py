@@ -19,7 +19,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
     def hook_gain_card(self, game, player, card):
         if card.cost < 3:
             return None
-        if game['Changeling'].isEmpty():
+        if game['Changeling'].is_empty():
             return None
         swap = player.plrChooseOptions(
             "Swap {} for a Changeling?".format(card.name),

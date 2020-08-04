@@ -55,7 +55,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_defense(self):
         """ Make sure moats work against mercenaries """
@@ -69,7 +69,7 @@ class Test_Mercenary(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         # 5 for hand + moat
         self.assertEqual(self.victim.handSize(), 6)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_attack(self):
         """ Attack with a mercenary """

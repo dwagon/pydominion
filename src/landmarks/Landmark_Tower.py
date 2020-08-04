@@ -15,7 +15,7 @@ class Landmark_Tower(Landmark):
 
     def hook_end_of_game(self, game, player):
         player.addScore('Tower', 0)
-        empties = [st for st in game.cardpiles if game[st].isEmpty() and not game[st].isVictory()]
+        empties = [st for st in game.cardpiles if game[st].is_empty() and not game[st].isVictory()]
         for emp in empties:
             for card in player.allCards():
                 if card.name == emp:

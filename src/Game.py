@@ -516,12 +516,12 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         numEmpty = 0
         for cpil in self.cardpiles:
-            if self[cpil].isEmpty():
+            if self[cpil].is_empty():
                 numEmpty += 1
         if numEmpty >= 3:
             return True
 
-        if self['Province'].isEmpty():
+        if self['Province'].is_empty():
             return True
         return False
 

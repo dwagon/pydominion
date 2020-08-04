@@ -55,7 +55,7 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, 'Silver')
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.getBuys(), 1)
@@ -67,7 +67,7 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, 'Copper')
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.handSize(), 1)
 
 

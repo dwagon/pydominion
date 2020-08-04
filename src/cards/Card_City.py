@@ -20,7 +20,7 @@ class Card_City(Card):
 
     ###########################################################################
     def special(self, game, player):
-        empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
+        empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
         if empties >= 1:
             player.pickupCard()
         if empties >= 2:

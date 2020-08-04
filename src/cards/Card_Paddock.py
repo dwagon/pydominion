@@ -21,7 +21,7 @@ class Card_Paddock(Card):
     def special(self, game, player):
         player.gainCard('Horse')
         player.gainCard('Horse')
-        empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
+        empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
         player.addActions(empties)
 
 

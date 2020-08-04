@@ -152,7 +152,7 @@ class Test_nextCard(unittest.TestCase):
         self.plr.discardpile.empty()
         c = self.plr.nextCard()
         self.assertEqual(c.name, 'Province')
-        self.assertTrue(self.plr.deck.isEmpty())
+        self.assertTrue(self.plr.deck.is_empty())
 
 
 ###############################################################################
@@ -297,7 +297,7 @@ class Test_plrDiscardCard(unittest.TestCase):
         x = self.plr.plrDiscardCards(0)
         self.assertEqual(x, [])
         self.assertEqual(len(self.plr.hand), 4)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
 
     def test_discardOne(self):
         self.plr.setHand('Copper', 'Estate', 'Province', 'Gold')
@@ -393,7 +393,7 @@ class Test_gainCard(unittest.TestCase):
     def test_destination(self):
         self.plr.hand.empty()
         self.plr.gainCard('Copper', 'hand')
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand[0].name, 'Copper')
 
 

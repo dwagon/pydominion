@@ -47,7 +47,7 @@ class Card_Crypt(Card):
         player.addCard(o['card'], 'hand')
         player._crypt_reserve.remove(o['card'])
         player.secret_count -= 1
-        if player._crypt_reserve.isEmpty():
+        if player._crypt_reserve.is_empty():
             self.permanent = False
 
 

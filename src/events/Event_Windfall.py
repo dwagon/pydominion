@@ -15,7 +15,7 @@ class Event_Windfall(Event):
         self.cost = 5
 
     def special(self, game, player):
-        if player.deck.isEmpty() and player.discardpile.isEmpty():
+        if player.deck.is_empty() and player.discardpile.is_empty():
             for _ in range(3):
                 player.gainCard('Gold')
 
