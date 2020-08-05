@@ -51,7 +51,7 @@ class Test_Dungeon(unittest.TestCase):
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played_size(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Dungeon')
         self.assertEqual(self.plr.discardSize(), 2)
         self.assertEqual(self.plr.handSize(), 5)   # 5 dealt + 2 from dungeon -2 discard

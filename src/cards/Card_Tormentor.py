@@ -19,7 +19,7 @@ class Card_Tormentor(Card):
         self.cost = 5
 
     def special(self, game, player):
-        if player.playedSize() == 1:    # Include this card
+        if player.played_size() == 1:    # Include this card
             player.gainCard('Imp')
             player.output("Gained an Imp")
         else:

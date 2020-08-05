@@ -470,7 +470,7 @@ class Player(object):
         return len(self.hand)
 
     ###########################################################################
-    def playedSize(self):
+    def played_size(self):
         return len(self.played)
 
     ###########################################################################
