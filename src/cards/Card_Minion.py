@@ -69,9 +69,9 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
+        self.assertEqual(self.plr.discard_size(), 5 + 1)
         self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 5)
+        self.assertEqual(self.victim.discard_size(), 5)
 
     def test_play_victim_smallhand(self):
         """ Play a minion and discard hand - the other player has a small hand"""
@@ -82,9 +82,9 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
+        self.assertEqual(self.plr.discard_size(), 5 + 1)
         self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.discard_size(), 0)
 
     def test_play_defended(self):
         """ Play a minion and discard hand - the other player is defended """
@@ -95,9 +95,9 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
+        self.assertEqual(self.plr.discard_size(), 5 + 1)
         self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.discard_size(), 0)
 
 
 ###############################################################################

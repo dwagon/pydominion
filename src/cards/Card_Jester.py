@@ -63,8 +63,8 @@ class Test_Jester(unittest.TestCase):
         self.plr.test_input = ['gets']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.victim.discardSize(), 2)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.victim.discard_size(), 2)
+        self.assertEqual(self.plr.discard_size(), 0)
         for c in self.victim.discardpile:
             self.assertEqual(c.name, 'Gold')
         self.assertIsNone(self.victim.inDiscard('Curse'))
@@ -77,8 +77,8 @@ class Test_Jester(unittest.TestCase):
         self.plr.test_input = ['you']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.victim.discardSize(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.victim.discard_size(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertIsNone(self.victim.inDiscard('Curse'))
         self.assertIsNotNone(self.victim.inDiscard('Gold'))
         self.assertIsNotNone(self.plr.inDiscard('Gold'))

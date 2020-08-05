@@ -37,7 +37,7 @@ class Test_Treasure_Trove(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
         self.assertEqual(self.plr.discardpile[1].name, 'Gold')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
 
 
 ###############################################################################

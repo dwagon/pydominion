@@ -67,7 +67,7 @@ class Test_Messenger(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deckSize(), 0)
-        self.assertEqual(self.plr.discardSize(), decksize)
+        self.assertEqual(self.plr.discard_size(), decksize)
 
     def test_buy(self):
         """ Buy a messenger """

@@ -63,7 +63,7 @@ class Test_Trustysteed(unittest.TestCase):
         self.plr.test_input = ['action', 'silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.discardSize(), 4)
+        self.assertEqual(self.plr.discard_size(), 4)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 

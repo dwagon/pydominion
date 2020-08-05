@@ -482,7 +482,7 @@ class Player(object):
         return len(self.deck)
 
     ###########################################################################
-    def discardSize(self):
+    def discard_size(self):
         return len(self.discardpile)
 
     ###########################################################################
@@ -876,7 +876,7 @@ class Player(object):
             self.output("| Played: <NONE>")
         self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # Debug
         self.output("| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile]))    # Debug
-        self.output("| {} cards in discard pile".format(self.discardSize()))
+        self.output("| {} cards in discard pile".format(self.discard_size()))
         self.output('-' * 50)
 
     ###########################################################################

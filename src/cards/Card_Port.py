@@ -54,7 +54,7 @@ class Test_Port(unittest.TestCase):
         self.plr.buyCard(self.g['Port'])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Port')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
 
 
 ###############################################################################

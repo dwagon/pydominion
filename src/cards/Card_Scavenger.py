@@ -27,7 +27,7 @@ class Card_Scavenger(Card):
             for card in player.deck[:]:
                 player.addCard(card, 'discard')
                 player.deck.remove(card)
-        if player.discardSize():
+        if player.discard_size():
             cards = []
             cardnames = set()
             for c in player.discardpile:

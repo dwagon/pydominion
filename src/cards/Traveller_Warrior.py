@@ -58,7 +58,7 @@ class Test_Warrior(unittest.TestCase):
         """ Play a warrior nothing to trash """
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.victim.discardSize(), 1)
+            self.assertEqual(self.victim.discard_size(), 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

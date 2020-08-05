@@ -40,7 +40,7 @@ class Test_Witch(unittest.TestCase):
         self.attacker.playCard(self.wcard)
         self.assertEqual(self.victim.handSize(), 6)
         self.assertEqual(self.attacker.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.discard_size(), 0)
 
     def test_nodefense(self):
         self.attacker.playCard(self.wcard)

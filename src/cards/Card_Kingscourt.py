@@ -70,7 +70,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.setHand('Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
         self.assertEqual(self.plr.played_size(), 1)
 
     def test_picked_nothing(self):
@@ -79,7 +79,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
         self.assertEqual(self.plr.played_size(), 1)
 
 

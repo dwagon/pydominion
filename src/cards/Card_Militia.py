@@ -50,7 +50,7 @@ class Test_Militia(unittest.TestCase):
         self.defender.test_input = ['1', '2', '0']
         self.attacker.playCard(self.mcard)
         self.assertEqual(self.defender.handSize(), 3)   # Normal  - 2
-        self.assertEqual(self.defender.discardSize(), 2)
+        self.assertEqual(self.defender.discard_size(), 2)
         self.assertEqual(self.attacker.getCoin(), 2)
 
 

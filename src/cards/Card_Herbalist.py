@@ -64,7 +64,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
         self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
         self.assertEqual(self.plr.deckSize(), 6)
 
 

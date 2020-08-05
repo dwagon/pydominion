@@ -54,7 +54,7 @@ class Test_Feodum(unittest.TestCase):
         card = self.g['Feodum'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.trashCard(card)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discard_size(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 

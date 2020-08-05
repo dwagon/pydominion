@@ -17,7 +17,7 @@ class Card_MountainVillage(Card):
         self.actions = 2
 
     def special(self, game, player):
-        if player.discardSize():
+        if player.discard_size():
             card = player.cardSel(
                 cardsrc='discard',
                 force=True,

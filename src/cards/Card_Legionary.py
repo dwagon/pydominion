@@ -49,7 +49,7 @@ class Test_Legionary(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.victim.handSize(), 3)
-        self.assertEqual(self.victim.discardSize(), 3)
+        self.assertEqual(self.victim.discard_size(), 3)
 
 
 ###############################################################################

@@ -59,7 +59,7 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.test_input = ['nothing']
         self.plr.gainCard('Copper')
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertEqual(self.plr.handSize(), 2)
 
     def test_react_trash(self):

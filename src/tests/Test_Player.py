@@ -16,7 +16,7 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(len(self.plr.deck), 5)
         self.assertEqual(len(self.plr.hand), 5)
         self.assertEqual(self.plr.played_size(), 0)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
     def test_initialDeck(self):
         """ Ensure initial player decks are correct """
@@ -65,7 +65,7 @@ class Test_discardHand(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(self.plr.handSize(), 0)
         self.assertEqual(self.plr.played_size(), 0)
-        self.assertEqual(self.plr.discardSize(), 4)
+        self.assertEqual(self.plr.discard_size(), 4)
 
 
 ###############################################################################
@@ -480,7 +480,7 @@ class Test_misc(unittest.TestCase):
 
     def test_setDiscard(self):
         self.plr.setDiscard('Silver', 'Copper')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
 
     def test_setHand(self):
         self.plr.setHand('Silver', 'Copper')
@@ -936,13 +936,13 @@ class Test_plrDiscardDownTo(unittest.TestCase):
     def test_discard_nothing(self):
         self.plr.setHand('Estate', 'Duchy', 'Province')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
     def test_discard_one(self):
         self.plr.test_input = ['gold', 'finish']
         self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertIsNotNone(self.plr.inDiscard('Gold'))
 
 
