@@ -49,7 +49,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertEqual(self.plr.handSize(), 5)
 
 

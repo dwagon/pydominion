@@ -42,7 +42,7 @@ class Test_Displace(unittest.TestCase):
         self.plr.test_input = ['Exile Copper', 'Get Estate']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_exile('Copper'))
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################

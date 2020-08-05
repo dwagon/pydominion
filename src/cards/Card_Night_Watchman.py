@@ -51,10 +51,10 @@ class Test_NightWatchman(unittest.TestCase):
         self.plr.test_input = ['Return Silver', 'Discard Duchy', 'Return Gold', 'Discard Province', 'Return Gold']
         self.plr.playCard(self.card)
         try:
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-            self.assertIsNotNone(self.plr.inDiscard('Province'))
-            self.assertIsNone(self.plr.inDiscard('Gold'))
-            self.assertIsNone(self.plr.inDiscard('Silver'))
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
+            self.assertIsNotNone(self.plr.in_discard('Province'))
+            self.assertIsNone(self.plr.in_discard('Gold'))
+            self.assertIsNone(self.plr.in_discard('Silver'))
 
             self.assertIsNone(self.plr.in_deck('Duchy'))
             self.assertIsNone(self.plr.in_deck('Province'))

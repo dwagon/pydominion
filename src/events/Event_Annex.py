@@ -51,8 +51,8 @@ class Test_Annex(unittest.TestCase):
         self.plr.test_input = ['Silver', 'Copper', 'Province', 'Moat', 'Estate', 'Finish']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.debt, 8)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 

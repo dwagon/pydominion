@@ -81,7 +81,7 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.vic.discard_size(), 3)
-        self.assertIsNotNone(self.vic.inDiscard('Copper'))
+        self.assertIsNotNone(self.vic.in_discard('Copper'))
 
     def test_gold(self):
         """ Play an Noble Brigand with a gold """
@@ -90,8 +90,8 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.vic.discard_size(), 1)
-        self.assertIsNotNone(self.vic.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.vic.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

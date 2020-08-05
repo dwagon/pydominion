@@ -54,8 +54,8 @@ class Test_Raider(unittest.TestCase):
         self.vic.setHand('Silver', 'Gold', 'Estate', 'Copper', 'Copper')
         self.plr.playCard(self.card)
         try:
-            self.assertIsNotNone(self.vic.inDiscard('Gold'))
-            self.assertIsNotNone(self.vic.inDiscard('Silver'))
+            self.assertIsNotNone(self.vic.in_discard('Gold'))
+            self.assertIsNotNone(self.vic.in_discard('Silver'))
             self.assertIsNone(self.vic.inHand('Gold'))
             self.assertIsNone(self.vic.inHand('Silver'))
         except AssertionError:      # pragma: no cover

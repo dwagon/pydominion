@@ -89,7 +89,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.setDeck('Silver', 'Province', 'Duchy')
         self.plr.buyCard(self.g['Doctor'])
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
 

@@ -51,7 +51,7 @@ class Test_Hideout(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2+1)
         self.assertEqual(self.plr.handSize(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
 
 
 ###############################################################################

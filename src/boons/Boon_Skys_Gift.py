@@ -42,7 +42,7 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.test_input = ['Copper', 'Estate', 'Duchy', 'Finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
     def test_skys_no_gift(self):
         """ Discard less than three cards to gain nothing """
@@ -51,7 +51,7 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.test_input = ['Copper', 'Estate', 'Finish']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 2)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

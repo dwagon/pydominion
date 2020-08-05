@@ -75,7 +75,7 @@ class Test_Messenger(unittest.TestCase):
         self.plr.setCoin(4)
         self.plr.buyCard(self.g['Messenger'])
         for plr in self.g.player_list():
-            self.assertIsNotNone(plr.inDiscard('Silver'))
+            self.assertIsNotNone(plr.in_discard('Silver'))
 
 
 ###############################################################################

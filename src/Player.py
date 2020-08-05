@@ -269,7 +269,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inDiscard(self, cardname):
+    def in_discard(self, cardname):
         """ Return named card if cardname is in the discard pile """
         assert isinstance(cardname, str)
 

@@ -48,7 +48,7 @@ class Test_Guide(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5)
         self.assertEqual(self.plr.discard_size(), 2)
         self.assertIsNone(self.plr.inHand('Estate'))
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################

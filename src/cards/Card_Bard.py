@@ -38,7 +38,7 @@ class Test_Bard(unittest.TestCase):
         self.plr.playCard(self.bard)
         self.assertGreaterEqual(self.plr.getCoin(), 2)
         # Check boon happened
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

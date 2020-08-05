@@ -56,7 +56,7 @@ class Test_Harbinger(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 

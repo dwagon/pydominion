@@ -52,15 +52,15 @@ class Test_Stonemason(unittest.TestCase):
         self.plr.test_input = ['trash province', 'get gold', 'get silver']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_buy(self):
         self.plr.coin = 5
         self.plr.test_input = ['3', 'Moat', 'Stonemason']
         self.plr.buyCard(self.g['Stonemason'])
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Stonemason'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Stonemason'))
 
 
 ###############################################################################

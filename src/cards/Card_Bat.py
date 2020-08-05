@@ -37,8 +37,8 @@ class Test_Bat(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Silver', 'Trash Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Bat'))
-        self.assertIsNotNone(self.plr.inDiscard('Vampire'))
+        self.assertIsNone(self.plr.in_discard('Bat'))
+        self.assertIsNotNone(self.plr.in_discard('Vampire'))
 
 
 ###############################################################################

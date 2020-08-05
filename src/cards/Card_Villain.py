@@ -62,7 +62,7 @@ class Test_Villain(unittest.TestCase):
         self.vic.test_input = ['Province']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), sc + 2)
-        self.assertIsNotNone(self.vic.inDiscard('Province'))
+        self.assertIsNotNone(self.vic.in_discard('Province'))
 
 
 ###############################################################################

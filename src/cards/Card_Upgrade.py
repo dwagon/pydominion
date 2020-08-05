@@ -55,7 +55,7 @@ class Test_Upgrade(unittest.TestCase):
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.discard_size(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

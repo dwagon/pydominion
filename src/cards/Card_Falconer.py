@@ -40,14 +40,14 @@ class Test_Falconer(unittest.TestCase):
         """ Play a card """
         self.plr.test_input = ['Get Silver']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_gaincard(self):
         """ Gain a card """
         self.plr.test_input = ['Get Silver']
         self.plr.gainCard('Moat')
         self.g.print_state()
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

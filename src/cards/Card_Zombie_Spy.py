@@ -59,7 +59,7 @@ class Test_Zombie_Spy(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 1)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertIsNone(self.plr.in_deck('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
 
 
 ###############################################################################

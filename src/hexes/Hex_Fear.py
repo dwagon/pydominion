@@ -48,7 +48,7 @@ class Test_Fear(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.gainCard('Cursed Village')
         self.assertEqual(self.plr.discard_size(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
 
 
 ###############################################################################

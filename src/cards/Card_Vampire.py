@@ -42,9 +42,9 @@ class Test_Vampire(unittest.TestCase):
         self.plr.phase = 'night'
         self.plr.playCard(self.card)
         self.assertTrue(self.vic.has_state('Deluded'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNone(self.plr.inDiscard('Vampire'))
-        self.assertIsNotNone(self.plr.inDiscard('Bat'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
+        self.assertIsNone(self.plr.in_discard('Vampire'))
+        self.assertIsNotNone(self.plr.in_discard('Bat'))
 
 
 ###############################################################################

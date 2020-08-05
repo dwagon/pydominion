@@ -56,7 +56,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
 
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))  # Gain a Silver
+        self.assertIsNotNone(self.plr.in_discard('Silver'))  # Gain a Silver
 
         self.assertIsNotNone(self.plr.inHand('Gold'))  # Keep on deck, then picked up
 

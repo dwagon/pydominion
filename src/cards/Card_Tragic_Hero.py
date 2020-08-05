@@ -44,7 +44,7 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.plr.test_input = ['Get Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 3)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

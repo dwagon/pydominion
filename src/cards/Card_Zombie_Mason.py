@@ -41,7 +41,7 @@ class Test_Zombie_Mason(unittest.TestCase):
         self.plr.test_input = ['Guide']
         self.plr.playCard(self.card, discard=False, costAction=False)
         self.assertIsNotNone(self.g.in_trash('Estate'))
-        self.assertIsNotNone(self.plr.inDiscard('Guide'))
+        self.assertIsNotNone(self.plr.in_discard('Guide'))
 
 
 ###############################################################################

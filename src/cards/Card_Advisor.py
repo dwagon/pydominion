@@ -70,7 +70,7 @@ class Test_Advisor(unittest.TestCase):
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 3 - 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNone(self.plr.inHand('Gold'))
 
 

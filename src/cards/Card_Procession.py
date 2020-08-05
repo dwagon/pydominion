@@ -51,7 +51,7 @@ class Test_Procession(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Moat'))
         self.assertEqual(self.plr.handSize(), 4)
-        self.assertIsNotNone(self.plr.inDiscard('Witch'))
+        self.assertIsNotNone(self.plr.in_discard('Witch'))
 
 
 ###############################################################################

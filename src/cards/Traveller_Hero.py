@@ -42,7 +42,7 @@ class Test_Hero(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 2)
-            self.assertIsNotNone(self.plr.inDiscard('Gold'))
+            self.assertIsNotNone(self.plr.in_discard('Gold'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

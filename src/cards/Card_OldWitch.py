@@ -48,7 +48,7 @@ class Test_OldWitch(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 3)
-        self.assertIsNotNone(self.vic.inDiscard('Curse'))
+        self.assertIsNotNone(self.vic.in_discard('Curse'))
 
     def test_has_curse(self):
         self.vic.setHand('Curse')

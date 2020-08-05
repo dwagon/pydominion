@@ -38,7 +38,7 @@ class Test_Horse(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 5 + 2)
         self.assertEqual(self.g['Moat'].pilesize, 10)
         self.assertIsNone(self.plr.inHand('Moat'))
-        self.assertIsNone(self.plr.inDiscard('Moat'))
+        self.assertIsNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

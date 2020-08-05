@@ -46,8 +46,8 @@ class Test_Fortuneteller(unittest.TestCase):
         self.vic.setDeck('Duchy', 'Silver', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.vic.inDiscard('Silver'))
-        self.assertIsNotNone(self.vic.inDiscard('Copper'))
+        self.assertIsNotNone(self.vic.in_discard('Silver'))
+        self.assertIsNotNone(self.vic.in_discard('Copper'))
         self.assertEqual(self.vic.deck[-1].name, 'Duchy')
 
 

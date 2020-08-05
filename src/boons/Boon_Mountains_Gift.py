@@ -35,7 +35,7 @@ class Test_Mountains_Gift(unittest.TestCase):
     def test_mountains_gift(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

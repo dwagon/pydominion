@@ -25,7 +25,7 @@ class Card_Alchemist(Card):
         # We have to check the discardpile as well
         if source != 'played':
             return
-        if not player.inPlayed('Potion') and not player.inDiscard('Potion'):
+        if not player.inPlayed('Potion') and not player.in_discard('Potion'):
             return
         ans = player.plrChooseOptions(
             'What to do with the alchemist?',
@@ -35,7 +35,7 @@ class Card_Alchemist(Card):
             if alc:
                 player.played.remove(alc)
             else:
-                alc = player.inDiscard('Alchemist')
+                alc = player.in_discard('Alchemist')
                 if alc:
                     player.discardpile.remove(alc)
             player.addCard(self, 'topdeck')
@@ -68,7 +68,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
         self.assertEqual(self.plr.discard_size(), 9)  # 5 for hand, +2 cards, alch, pot
-        self.assertIsNotNone(self.plr.inDiscard('Alchemist'))
+        self.assertIsNotNone(self.plr.in_discard('Alchemist'))
 
     def test_keep(self):
         """ Keep an Alchemist for next turn """
@@ -76,7 +76,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ['top of deck']
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
-        self.assertIsNone(self.plr.inDiscard('Alchemist'))
+        self.assertIsNone(self.plr.in_discard('Alchemist'))
         self.assertEqual(self.plr.deck[-1].name, 'Alchemist')
 
 

@@ -42,7 +42,7 @@ class Test_Wayfarer(unittest.TestCase):
         """ Play a wayfairer """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 3)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_buy(self):
         """ Buy a wayfairer """

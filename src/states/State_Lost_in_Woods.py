@@ -40,7 +40,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.plr._liw_dont_boon = False
         self.plr.start_turn()
         self.assertTrue(self.plr._liw_dont_boon)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
     def test_found_in_woods(self):
         self.plr.setHand('Copper', 'Estate', 'Gold')

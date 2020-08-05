@@ -74,7 +74,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.test_input = ['Province', 'Gold']
         self.plr.playCard(self.lookout)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Copper')
         self.assertEqual(self.plr.deck[1].name, 'Estate')
 

@@ -40,7 +40,7 @@ class Test_Smugglers(unittest.TestCase):
         self.plr.test_input = ['gold']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

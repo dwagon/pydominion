@@ -57,7 +57,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_deck('Province'))
-        self.assertIsNone(self.plr.inDiscard('Province'))
+        self.assertIsNone(self.plr.in_discard('Province'))
 
     def test_disacrd(self):
         """ Play duchess - discard """
@@ -67,19 +67,19 @@ class Test_Duchess(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNone(self.plr.in_deck('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
 
     def test_buy_duchess(self):
         self.plr.test_input = ['Duchess']
         self.plr.gainCard('Duchy')
-        self.assertIsNotNone(self.plr.inDiscard('Duchess'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Duchess'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
     def test_buy_duchy(self):
         self.plr.test_input = ['No']
         self.plr.gainCard('Duchy')
-        self.assertIsNone(self.plr.inDiscard('Duchess'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNone(self.plr.in_discard('Duchess'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

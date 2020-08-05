@@ -58,8 +58,8 @@ class Test_Huntingparty(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.plr.inHand('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         # Original Hand of 2 + 1 card and 1 non-dupl picked up
         self.assertEqual(self.plr.handSize(), 4)
 

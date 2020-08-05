@@ -70,7 +70,7 @@ class Test_ScryingPool(unittest.TestCase):
         self.plr.test_input = ['discard', 'putback']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.vic.inDiscard('Duchy'))
+        self.assertIsNotNone(self.vic.in_discard('Duchy'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.inHand('Moat'))
 

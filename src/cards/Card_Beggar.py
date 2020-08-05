@@ -52,7 +52,7 @@ class Test_Beggar(unittest.TestCase):
         self.attacker.addCard(militia, 'hand')
         self.attacker.playCard(militia)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

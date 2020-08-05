@@ -48,7 +48,7 @@ class Test_Treasurehunter(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discard_size(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
 

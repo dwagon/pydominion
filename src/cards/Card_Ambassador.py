@@ -59,7 +59,7 @@ class Test_Ambassador(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.vic.inDiscard('Duchy'))
+        self.assertIsNotNone(self.vic.in_discard('Duchy'))
         self.assertIsNone(self.plr.inHand('Duchy'))
 
     def test_discard_two(self):
@@ -68,7 +68,7 @@ class Test_Ambassador(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.vic.inDiscard('Duchy'))
+        self.assertIsNotNone(self.vic.in_discard('Duchy'))
         self.assertIsNone(self.plr.inHand('Duchy'))
 
 

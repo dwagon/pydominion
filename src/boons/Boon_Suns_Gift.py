@@ -48,8 +48,8 @@ class Test_Suns_Gift(unittest.TestCase):
         try:
             self.assertIsNotNone(self.plr.in_deck('Silver'))
             self.assertIsNotNone(self.plr.in_deck('Gold'))
-            self.assertIsNotNone(self.plr.inDiscard('Province'))
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertIsNotNone(self.plr.in_discard('Province'))
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
