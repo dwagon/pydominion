@@ -598,6 +598,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             print("  %s's hand: %s" % (plr.name, ", ".join([_.name for _ in plr.hand])))
             print("  %s's deck: %s" % (plr.name, ", ".join([_.name for _ in plr.deck])))
             print("  %s's discard: %s" % (plr.name, ", ".join([_.name for _ in plr.discardpile])))
+            print("  %s's defer: %s" % (plr.name, ", ".join([_.name for _ in plr.deferpile])))
             print("  %s's duration: %s" % (plr.name, ", ".join([_.name for _ in plr.durationpile])))
             print("  %s's exile: %s" % (plr.name, ", ".join([_.name for _ in plr.exilepile])))
             print("  %s's reserve: %s" % (plr.name, ", ".join([_.name for _ in plr.reserve])))
@@ -648,12 +649,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             if total:
                 sys.stderr.write("pile=%d " % total)
             for plr in self.player_list():
-                stacklist = (
-                    ('Discard', plr.discardpile), ('Hand', plr.hand),
-                    ('Reserve', plr.reserve), ('Deck', plr.deck),
-                    ('Played', plr.played), ('Duration', plr.durationpile),
-                    ('Exile', plr.exilepile))
-                for stackname, stack in stacklist:
+                for stackname, stack in plr.stacklist:
                     count = 0
                     for card in stack:
                         if card.name == pile.name:
