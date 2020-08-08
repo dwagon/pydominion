@@ -25,6 +25,22 @@ from StatePile import StatePile
 from TextPlayer import TextPlayer
 from WayPile import WayPile
 
+ADVENTURE = 'adventure'
+ALCHEMY = 'alchemy'
+CORNUCOPIA = 'cornucopia'
+DARKAGES = 'darkages'
+DOMINION = 'dominion'
+EMPIRES = 'empires'
+GUILDS = 'guilds'
+HINTERLANDS = 'hinterlands'
+INTRIGUE = 'intrigue'
+MENAGERIE = 'menagerie'
+NOCTURNE = 'nocturne'
+PROMO = 'promo'
+PROSPERITY = 'prosperity'
+RENAISSANCE = 'renaissance'
+SEASIDE = 'seaside'
+
 
 ###############################################################################
 ###############################################################################
