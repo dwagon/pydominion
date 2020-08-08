@@ -23,12 +23,12 @@ class Test_Monkey(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Monkey']
 
     def test_play(self):
         """ Perform a Monkey """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Monkey']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 1)
 

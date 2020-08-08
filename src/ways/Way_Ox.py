@@ -22,12 +22,12 @@ class Test_Ox(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Ox']
 
     def test_play(self):
         """ Perform a Ox """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Ox']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getActions(), 2)
 
 

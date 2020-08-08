@@ -24,12 +24,12 @@ class Test_Squirrel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Squirrel']
 
     def test_play(self):
         """ Perform a Squirrel """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Squirrel']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.plr.end_turn()
         self.assertEqual(self.plr.handSize(), 5 + 2)
 

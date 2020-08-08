@@ -24,13 +24,13 @@ class Test_Owl(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Owl']
 
     def test_play(self):
         """ Perform a Owl """
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Owl']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.handSize(), 6)
 
 

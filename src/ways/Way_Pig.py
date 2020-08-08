@@ -23,12 +23,12 @@ class Test_Pig(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Pig']
 
     def test_play(self):
         """ Perform a Pig """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Pig']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
 

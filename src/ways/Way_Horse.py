@@ -16,8 +16,8 @@ class Way_Horse(Way):
         self.actions = 1
 
     def special_way(self, game, player, card):
-        player.played.remove(card)
         game[card.name].add()
+        return {'discard': False}
 
 
 ###############################################################################
@@ -27,13 +27,12 @@ class Test_Horse(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Horse']
 
     def test_play(self):
         """ Perform a Horse """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Horse']
-        self.plr.playCard(self.card)
-        self.g.print_state()
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 2)
         self.assertEqual(self.g['Moat'].pilesize, 10)

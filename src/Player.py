@@ -518,6 +518,19 @@ class Player(object):
             o['notes'] = notes
             options.append(o)
             index += 1
+            for way in self.game.ways.values():
+                sel = chr(ord('a') + index)
+                o = Option(
+                    verb="Play",
+                    selector=sel,
+                    name="Way of the {}".format(way.name),
+                    desc="{}: {}".format(p.name, way.description(self)),
+                    action='way',
+                    card=p,
+                    way=way
+                )
+                options.append(o)
+                index += 1
         return options, index
 
     ###########################################################################
@@ -834,6 +847,8 @@ class Player(object):
             self.spendAllCards()
         elif opt['action'] == 'quit':
             return
+        elif opt['action'] == 'way':
+            self.perform_way(opt['way'], opt['card'])
         else:   # pragma: no cover
             sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
             sys.exit(1)
@@ -1084,14 +1099,8 @@ class Player(object):
                 self.addCard(card, 'played')
             self.hand.remove(card)
 
-        way = None
         if not options['skip_card']:
-            if self.game.ways and card.isAction():
-                way = self.select_ways()
-            if way:
-                self.perform_way(way, card)
-            else:
-                self.card_benefits(card)
+            self.card_benefits(card)
         self.currcards.pop()
         if postActionHook and card.isAction():
             for crd in self.played + self.durationpile + self.projects:
@@ -1099,19 +1108,24 @@ class Player(object):
                     crd.hook_postAction(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def select_ways(self):
-        """ Select a way to perform """
-        options = [("Do not use a Way", None)]
-        for way in self.game.ways.values():
-            options.append(("{}: {}".format(way.name, way.description(self)), way))
-        ans = self.plrChooseOptions("Select a Way to perform", *options)
-        return ans
-
-    ###########################################################################
     def perform_way(self, way, card):
         """ Perform a way """
+        opts = {'discard': True}
+        self.currcards.append(way)
+        self.actions -= 1
+        if self.actions < 0:    # pragma: no cover
+            self.actions = 0
+            self.currcards.pop()
+            self.output("Not enough actions")
+            return
+        self.hand.remove(card)
+        self.output("Playing {} through Way of the {}".format(card.name, way.name))
         self.card_benefits(way)
-        way.special_way(game=self.game, player=self, card=card)
+        newopts = way.special_way(game=self.game, player=self, card=card)
+        if isinstance(newopts, dict):
+            opts.update(newopts)
+        if opts['discard']:
+            self.addCard(card, 'played')
 
     ###########################################################################
     def card_benefits(self, card):

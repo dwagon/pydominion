@@ -36,12 +36,13 @@ class Test_Seal(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Seal']
 
     def test_play(self):
         """ Perform a Seal """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Seal', 'top of deck']
-        self.plr.playCard(self.card)
+        self.plr.test_input = ['top of deck']
+        self.plr.perform_way(self.way, self.card)
         self.plr.gainCard('Gold')
         self.g.print_state()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
