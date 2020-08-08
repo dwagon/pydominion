@@ -10,7 +10,7 @@ class Project_RoadNetwork(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When another player gains a Victory card, +1 Card."
         self.name = "Road Network"
         self.cost = 5

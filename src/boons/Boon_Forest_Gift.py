@@ -10,7 +10,7 @@ class Boon_Forest_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Buy; +1 Coin"
         self.name = "The Forest's Gift"
         self.purchasable = False

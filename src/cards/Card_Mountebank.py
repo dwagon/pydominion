@@ -10,7 +10,7 @@ class Card_Mountebank(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+2 coin. Each other player may discard a Curse. If he doesn't, he gains a Curse and a Copper."
         self.name = 'Mountebank'
         self.required_cards = ['Curse']

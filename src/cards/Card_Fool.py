@@ -10,7 +10,7 @@ class Card_Fool(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "If you aren't the player with Lost in the Woods, take it, take 3 Boons, and receive the Boons in any order."
         self.name = 'Fool'
         self.cost = 3

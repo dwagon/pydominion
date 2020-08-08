@@ -9,7 +9,7 @@ class Card_Bank(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+1 Coin per treasure in play"
         self.name = 'Bank'
         self.cost = 7

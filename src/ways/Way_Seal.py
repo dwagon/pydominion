@@ -9,7 +9,7 @@ from Way import Way
 class Way_Seal(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
         self.name = "Seal"
 

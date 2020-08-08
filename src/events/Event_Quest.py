@@ -9,7 +9,7 @@ from Event import Event
 class Event_Quest(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Discard stuff to gain a gold"
         self.name = "Quest"
         self.cost = 0

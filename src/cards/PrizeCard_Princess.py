@@ -10,7 +10,7 @@ class Card_Princess(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'prize']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.name = "Princess"
         self.purchasable = False
         self.cost = 0

@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Keep(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When scoring, 5VP per differently named Treasure you have,
         that you have more copies of than each other player, or tied for most."""
         self.name = "Keep"

@@ -9,7 +9,7 @@ from Way import Way
 class Way_Turtle(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Set this aside. If you did, play it at the start of your next turn."
         self.name = "Turtle"
         self.actions = 2

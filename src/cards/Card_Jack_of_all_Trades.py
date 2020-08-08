@@ -10,7 +10,7 @@ class Card_Jack_of_all_Trades(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = """Gain a Silver.
             Look at the top card of your deck; discard it or put it back.
             Draw until you have 5 cards in your hand.

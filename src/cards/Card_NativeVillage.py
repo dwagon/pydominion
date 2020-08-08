@@ -16,7 +16,7 @@ class Card_NativeVillage(Card):
         Choose one: Set aside the top card of your deck face down on your
         Native Village mat; or put all the cards from your mat into your hand."""
         self.name = 'Native Village'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.actions = 2
         self.cost = 2
 

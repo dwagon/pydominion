@@ -9,7 +9,7 @@ from Event import Event
 class Event_Donate(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """After this turn, put all cards from your deck and discard
             pile into your hand, trash any number, shuffle your hand into your
             deck, then draw 5 cards."""

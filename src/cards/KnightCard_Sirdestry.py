@@ -10,7 +10,7 @@ class Card_Sir_Destry(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Sir Destry"
         self.desc = """+2 Cards. Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6, and discards the rest.

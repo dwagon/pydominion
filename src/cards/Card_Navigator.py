@@ -10,7 +10,7 @@ class Card_Navigator(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """+2 coin. Look at the top 5 cards of your deck.
             Either discard all of them, or put them back on top of your deck
             in any order"""

@@ -10,7 +10,7 @@ class Card_Graverobber(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Choose one: Gain a card from the trash costing from 3 to 6,
         putting it on top of your deck; or trash an Action card from your hand and gain a card costing up to 3 more than it."""
         self.name = 'Graverobber'

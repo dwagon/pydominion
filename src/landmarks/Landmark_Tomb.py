@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Tomb(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When you trash a card, +1VP"""
         self.name = "Tomb"
 

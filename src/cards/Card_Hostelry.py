@@ -11,7 +11,7 @@ class Card_Hostelry(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.name = 'Hostelry'
         self.cards = 1
         self.actions = 2

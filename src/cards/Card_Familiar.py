@@ -10,7 +10,7 @@ class Card_Familiar(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'alchemy'
+        self.base = Game.ALCHEMY
         self.desc = "+1 card, +1 action; Each other player gains a Curse."
         self.name = 'Familiar'
         self.cards = 1

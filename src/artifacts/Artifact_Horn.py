@@ -10,7 +10,7 @@ class Artifact_Horn(Artifact):
     def __init__(self):
         Artifact.__init__(self)
         self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "Once per turn, when you discard a Border Guard from play, you may put it onto your deck."
         self.name = "Horn"
 

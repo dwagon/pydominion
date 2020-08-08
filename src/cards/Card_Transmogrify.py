@@ -10,7 +10,7 @@ class Card_Transmogrify(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """+1 Action; At the start of your turn, you may call this,
         to trash a card from your hand, gain a card costing up to 1 coin more
         than it, and put that card into your hand"""

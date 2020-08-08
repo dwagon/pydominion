@@ -10,7 +10,7 @@ class Card_Tracker(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Coin, Receive a boon; While this is in play, when you gain a card, you may put that card onto your deck"
         self.name = 'Tracker'
         self.cost = 2

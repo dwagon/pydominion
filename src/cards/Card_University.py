@@ -9,7 +9,7 @@ class Card_University(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'alchemy'
+        self.base = Game.ALCHEMY
         self.desc = "Gain an action card costing up to 5"
         self.name = 'University'
         self.cost = 2

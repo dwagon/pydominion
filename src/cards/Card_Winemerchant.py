@@ -10,7 +10,7 @@ class Card_Winemerchant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the
             end of your Buy phase, if you have at least 2 Coin unspent, you
             may discard this from your Tavern mat."""

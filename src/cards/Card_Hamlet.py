@@ -10,7 +10,7 @@ class Card_Hamlet(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = "+1 Card +1 Action. You may discard a card; if you do, +1 Action.  You may discard a card; if you do, +1 Buy."
         self.name = 'Hamlet'
         self.cards = 1

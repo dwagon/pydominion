@@ -10,7 +10,7 @@ class Card_PirateShip(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """Choose one: Each other player reveals the top 2 cards of his deck,
         trashes a revealed Treasure that you choose, discards the rest,
         and if anyone trashed a Treasure you take a Coin token;

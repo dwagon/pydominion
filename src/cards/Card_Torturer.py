@@ -10,7 +10,7 @@ class Card_Torturer(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "+3 cards; Other players discard 2 cards or gain a curse"
         self.required_cards = ['Curse']
         self.name = 'Torturer'

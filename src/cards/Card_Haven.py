@@ -10,7 +10,7 @@ class Card_Haven(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = "+1 cards, +1 action; play a card next turn"
         self.name = 'Haven'
         self.cards = 1

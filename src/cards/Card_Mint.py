@@ -10,7 +10,7 @@ class Card_Mint(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.name = 'Mint'
         self.cost = 5
 

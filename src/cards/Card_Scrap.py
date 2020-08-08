@@ -11,7 +11,7 @@ class Card_Scrap(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """Trash a card from your hand.
             Choose a different thing per coin it costs: +1 Card; +1 Action; +1 Buy;
             +1 Coin; gain a Silver; gain a Horse."""

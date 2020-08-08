@@ -10,7 +10,7 @@ class Card_Contraband(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+3 Coin +1 Buy. When you play this, the player to your left names a card. You can't buy that card this turn."
         self.name = 'Contraband'
         self.cost = 5

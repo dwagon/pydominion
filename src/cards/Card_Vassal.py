@@ -10,7 +10,7 @@ class Card_Vassal(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.name = 'Vassal'
         self.coin = 2
         self.cost = 3

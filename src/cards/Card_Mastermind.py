@@ -11,7 +11,7 @@ class Card_Mastermind(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """At the start of your next turn, you may play an Action card from your hand three times."""
         self.name = 'Mastermind'
         self.cost = 5

@@ -11,7 +11,7 @@ class Card_Animal_Fair(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """+4 Coin; +1 Buy per empty supply pile.
             Instead of paying this card's cost, you may trash an Action card
             from your hand."""

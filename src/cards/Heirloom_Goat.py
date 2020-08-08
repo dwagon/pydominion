@@ -10,7 +10,7 @@ class Card_Goat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "When you play this, you may trash a card from your hand."
         self.name = 'Goat'
         self.cost = 2

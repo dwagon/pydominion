@@ -10,7 +10,7 @@ class Card_Huntinggrounds(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+4 Cards; When you trash this, gain a Duchy or 3 Estates."""
         self.name = 'Hunting Grounds'
         self.cards = 4

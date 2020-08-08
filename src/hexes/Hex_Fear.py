@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Hex import Hex
 
 
@@ -9,7 +10,7 @@ class Hex_Fear(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "If you have at least 5 cards in hand, discard an Action or Treasure"
         self.name = "Fear"
         self.purchasable = False
@@ -29,7 +30,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Fear(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -10,7 +10,7 @@ class Card_HumbleCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['treasure', 'victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 3
         self.desc = "+1 Coin; Worth 1VP per Castle you have."
         self.coin = 1

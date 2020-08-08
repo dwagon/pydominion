@@ -9,7 +9,7 @@ from Event import Event
 class Event_Training(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Move your +1 Coin Token to an Action Supply Pile"
         self.name = "Training"
         self.cost = 6

@@ -10,7 +10,7 @@ class Card_Bishop(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
         to half its cost in coins, rounded down. Each other player may trash a
         card from his hand"""

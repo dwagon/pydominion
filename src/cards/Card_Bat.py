@@ -10,7 +10,7 @@ class Card_Bat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "Trash up to 2 cards from your hand. If you trashed at least one, exchange this for a Vampire."
         self.name = 'Bat'
         self.cost = 2

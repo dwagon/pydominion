@@ -10,7 +10,7 @@ class Card_Magpie(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """+1 Card; +1 Action; Reveal the top card of your deck.
             If it's a Treasure, put it into your hand. If it's an Action or
             Victory card, gain a Magpie."""

@@ -10,7 +10,7 @@ class Card_Messenger(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.name = 'Messenger'
         self.buys = 1
         self.coin = 2

@@ -10,7 +10,7 @@ class Card_Cellar(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+1 Action; Discard any number of cards. +1 card per card discarded."
         self.name = 'Cellar'
         self.actions = 1

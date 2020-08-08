@@ -10,7 +10,7 @@ class Card_OldWitch(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = """+3 Cards; Each other player gains a Curse and may trash a Curse from their hand."""
         self.required_cards = ['Curse']
         self.cards = 3

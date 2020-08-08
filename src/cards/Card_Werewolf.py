@@ -10,7 +10,7 @@ class Card_Werewolf(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'night', 'doom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "If it's your Night phase, each other player receives the next Hex.  Otherwise, +3 Cards."
         self.name = 'Werewolf'
         self.cost = 5

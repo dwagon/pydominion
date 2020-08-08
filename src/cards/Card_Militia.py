@@ -11,7 +11,7 @@ class Card_Militia(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+2 coin, Every other player discards down to 3"
         self.name = 'Militia'
         self.coin = 2

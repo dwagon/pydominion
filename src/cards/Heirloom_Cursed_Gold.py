@@ -10,7 +10,7 @@ class Card_CursedGold(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "3 Coin; When you play this, gain a curse"
         self.required_cards = ['Curse']
         self.name = 'Cursed Gold'

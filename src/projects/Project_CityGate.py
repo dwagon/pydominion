@@ -10,7 +10,7 @@ class Project_CityGate(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Card, then put a card from your hand onto your deck."
         self.name = "City Gate"
         self.cost = 3

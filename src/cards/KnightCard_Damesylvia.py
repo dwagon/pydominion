@@ -10,7 +10,7 @@ class Card_Dame_Sylvia(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Dame Sylvia"
         self.desc = """+2 Coin
             Each other player reveals the top 2 cards of his deck, trashes one of

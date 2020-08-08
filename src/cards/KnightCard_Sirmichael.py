@@ -10,7 +10,7 @@ class Card_Sirmichael(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Sir Michael"
         self.desc = """Each other player discards down to 3 cards in hand.
         Each other player reveals the top 2 cards of his deck, trashes one of them

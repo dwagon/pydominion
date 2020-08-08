@@ -9,7 +9,7 @@ from Event import Event
 class Event_Trade(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Trash up to 2 cards from your hand (not played); Gain a silver per trashed"
         self.name = "Trade"
         self.cost = 5

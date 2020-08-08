@@ -10,7 +10,7 @@ class Artifact_TreasureChest(Artifact):
     def __init__(self):
         Artifact.__init__(self)
         self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your Buy phase, gain a Gold."
         self.name = "Treasure Chest"
 

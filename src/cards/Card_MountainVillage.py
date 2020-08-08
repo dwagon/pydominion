@@ -10,7 +10,7 @@ class Card_MountainVillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "+2 Actions; Look through your discard pile and put a card from it into your hand; if you can't, +1 Card."
         self.name = 'Mountain Village'
         self.cost = 4

@@ -11,7 +11,7 @@ class Card_Falconer(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """Gain a card to your hand costing less than this. When any
             player gains a card with 2 or more types (Action, Attack, etc.), you
             may play this from your hand."""

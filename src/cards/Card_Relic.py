@@ -10,7 +10,7 @@ class Card_Relic(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'attack']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+2 Coin; Each other player gains a -1 Card token"
         self.name = 'Relic'
         self.coin = 2

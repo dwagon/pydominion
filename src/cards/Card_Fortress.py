@@ -10,7 +10,7 @@ class Card_Fortress(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 Card +2 Actions. When you trash this, put it into your hand."""
         self.name = 'Fortress'
         self.cards = 1

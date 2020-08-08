@@ -10,7 +10,7 @@ class Card_Mandarin(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.name = 'Mandarin'
         self.coin = 3
         self.cost = 5

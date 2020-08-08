@@ -10,7 +10,7 @@ class Project_Citadel(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "The first time you play an Action card during each of your turns, play it again afterward."
         self.name = "Citadel"
         self.cost = 8

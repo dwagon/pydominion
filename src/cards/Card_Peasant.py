@@ -10,7 +10,7 @@ class Card_Peasant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy, +1 Coin; Discard to replace with Soldier"
         self.name = 'Peasant'
         self.traveller = True

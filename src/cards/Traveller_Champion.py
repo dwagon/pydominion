@@ -10,7 +10,7 @@ class Card_Champion(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"
         self.name = 'Champion'
         self.permanent = True

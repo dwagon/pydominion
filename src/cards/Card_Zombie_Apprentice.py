@@ -10,7 +10,7 @@ class Card_Zombie_Apprentice(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'zombie']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "You may trash an Action card from your hand for +3 Cards and +1 Action."
         self.name = 'Zombie Apprentice'
         self.cost = 3

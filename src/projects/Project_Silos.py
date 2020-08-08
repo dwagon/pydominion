@@ -10,7 +10,7 @@ class Project_Silos(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, discard any number of Coppers, revealed, and draw that many cards."
         self.name = "Silos"
         self.cost = 4

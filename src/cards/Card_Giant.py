@@ -10,7 +10,7 @@ class Card_Giant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """ Turn your Journey token over (it starts face up). If it's face
             down, +1 Coin. If it's face up, +5 Coin, and each other player
             reveals the top card of his deck, trashes it if it costs

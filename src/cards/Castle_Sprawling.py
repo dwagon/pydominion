@@ -10,7 +10,7 @@ class Card_SprawlingCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 8
         self.desc = """4VP. When you gain this, gain a Duchy or 3 Estates."""
         self.victory = 4

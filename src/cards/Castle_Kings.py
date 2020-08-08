@@ -10,7 +10,7 @@ class Card_KingsCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 10
         self.desc = "Worth 2VP per Castle you have."
         self.name = "King's Castle"

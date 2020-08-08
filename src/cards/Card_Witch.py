@@ -10,7 +10,7 @@ class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+2 cards; Each other player gains a Curse card."
         self.required_cards = ['Curse']
         self.name = 'Witch'

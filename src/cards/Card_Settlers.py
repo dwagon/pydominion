@@ -10,7 +10,7 @@ class Card_Settlers(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = 'Settlers'
         self.cards = 1
         self.actions = 1

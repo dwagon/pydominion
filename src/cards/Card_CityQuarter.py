@@ -10,7 +10,7 @@ class Card_CityQuarter(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "+2 Actions. Reveal your hand. +1 Card per Action card revealed."
         self.name = 'City Quarter'
         self.debtcost = 8

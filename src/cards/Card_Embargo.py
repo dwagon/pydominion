@@ -10,7 +10,7 @@ class Card_Embargo(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """+2 Coin. Trash this card. Put an Embargo token on top of a Supply pile.
         When a player buys a card, he gains a Curse card per Embargo token on that pile."""
         self.name = 'Embargo'

@@ -10,7 +10,7 @@ class Card_Oracle(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:
         either he discards them or he puts them back on top in an order he chooses.  +2 cards """
         self.name = 'Oracle'

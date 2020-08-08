@@ -10,7 +10,7 @@ class Card_Journeyman(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.desc = """Name a card.
         Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.
         Put those cards into your hand and discard the rest."""

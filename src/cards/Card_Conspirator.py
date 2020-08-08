@@ -10,7 +10,7 @@ class Card_Conspirator(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = """+2 coin. If you've played 3 or more actions this turn (counting
             this); +1 card, +1 action """
         self.name = 'Conspirator'

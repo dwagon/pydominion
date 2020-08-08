@@ -10,7 +10,7 @@ class Card_FarmersMarket(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'gathering']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = "Farmers' Market"
         self.buys = 1
         self.cost = 3

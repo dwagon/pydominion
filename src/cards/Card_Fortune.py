@@ -10,7 +10,7 @@ class Card_Fortune(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+1 Buy
         When you play this, double your Coin if you haven't yet this turn.
         When you gain this, gain a Gold per Gladiator you have in play."""

@@ -10,7 +10,7 @@ class Card_Hermit(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Look through your discard pile. You may trash a card from
             your discard pile or hand that is not a Treasure.  Gain a card
             costing up to 3.  When you discard this from play, if you did not

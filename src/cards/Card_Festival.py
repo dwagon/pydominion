@@ -10,7 +10,7 @@ class Card_Festival(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+2 actions, +1 buys, +2 coin"
         self.name = 'Festival'
         self.actions = 2

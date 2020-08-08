@@ -10,7 +10,7 @@ class Card_Hireling(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Card forever"
         self.name = 'Hireling'
         self.cost = 6

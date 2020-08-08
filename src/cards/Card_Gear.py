@@ -11,7 +11,7 @@ class Card_Gear(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+2 Cards; Set aside up to 2 cards from your hand. Pick up next turn"
         self.name = 'Gear'
         self.cards = 2

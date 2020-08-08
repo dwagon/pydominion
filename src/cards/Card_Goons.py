@@ -10,7 +10,7 @@ class Card_Goons(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6

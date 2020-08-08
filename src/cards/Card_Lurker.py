@@ -10,7 +10,7 @@ class Card_Lurker(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "+1 Action; Choose one: Trash an Action card from the Supply, or gain an Action card from the trash."
         self.name = 'Lurker'
         self.cost = 2

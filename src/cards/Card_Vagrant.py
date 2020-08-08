@@ -10,7 +10,7 @@ class Card_Vagrant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = """+1 card, +1 action, Reveal the top card of your deck.
         If it's a Curse, Ruins, Shelter or Victory card, put it into your hand"""
         self.name = 'Vagrant'

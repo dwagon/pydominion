@@ -9,7 +9,7 @@ class Card_Bureaucrat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = """ Gain a Silver; put it on top of your deck. Each
             other player reveals a victory card from his hand and puts
             it on his deck (or reveals a hand with no victory cards)"""

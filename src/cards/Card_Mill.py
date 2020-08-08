@@ -10,7 +10,7 @@ class Card_Mill(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'victory']
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.name = 'Mill'
         self.desc = "+1 Card; +1 Action; You may discard 2 cards, for +2 Coin; 1VP"
         self.cost = 4

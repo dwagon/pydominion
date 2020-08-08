@@ -10,7 +10,7 @@ class Card_Pooka(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "You may trash a Treasure other than Cursed Gold from your hand, for +4 Cards."
         self.name = 'Pooka'
         self.cost = 5

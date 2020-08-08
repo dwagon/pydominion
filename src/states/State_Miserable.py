@@ -10,7 +10,7 @@ class State_Miserable(State):
     def __init__(self):
         State.__init__(self)
         self.cardtype = 'state'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "-2 VP"
         self.name = "Miserable"
         self.victory = -2

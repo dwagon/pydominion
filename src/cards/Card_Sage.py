@@ -10,7 +10,7 @@ class Card_Sage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 Action. Reveal cards from the top of your deck
         until you reveal one costing 3 or more.
         Put that card into your hand and discard the rest."""

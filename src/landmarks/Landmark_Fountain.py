@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Fountain(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When scoring, 15VP if you have at least 10 Coppers."
         self.name = "Fountain"
 

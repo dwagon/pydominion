@@ -11,7 +11,7 @@ class Card_Island(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'victory']
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""
         self.name = 'Island'
         self.cost = 4

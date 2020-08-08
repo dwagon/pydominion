@@ -10,7 +10,7 @@ class Card_Skulk(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'doom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.name = 'Skulk'
         self.buys = 1
         self.cost = 4

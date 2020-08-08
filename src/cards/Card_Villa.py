@@ -10,7 +10,7 @@ class Card_Villa(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = 'Villa'
         self.cost = 4
         self.actions = 2

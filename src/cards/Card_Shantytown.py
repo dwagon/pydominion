@@ -10,7 +10,7 @@ class Card_Shantytown(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "+2 actions. If no action in hand, +2 cards"
         self.name = 'Shanty Town'
         self.actions = 2

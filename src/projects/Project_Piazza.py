@@ -10,7 +10,7 @@ class Project_Piazza(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, reveal the top card of your deck. If it's an Action, play it."
         self.name = "Piazza"
         self.cost = 5

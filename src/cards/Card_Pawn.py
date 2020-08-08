@@ -10,7 +10,7 @@ class Card_Pawn(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "Choose two: +1 card, +1 action, +1 buy, +1 coin"
         self.name = 'Pawn'
         self.cost = 2

@@ -10,7 +10,7 @@ class Card_Shepherd(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = 'Shepherd'
         self.cost = 2

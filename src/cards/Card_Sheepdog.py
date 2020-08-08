@@ -11,7 +11,7 @@ class Card_Sheepdog(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+2 Cards; When you gain a card, you may play this from your hand."
         self.name = 'Sheepdog'
         self.cards = 2

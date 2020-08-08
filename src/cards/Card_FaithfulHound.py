@@ -10,7 +10,7 @@ class Card_FaithfulHound(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """+2 Cards; When you discard this other than during Clean-up,
             you may set it aside, and put it into your hand at end of turn."""
         self.name = 'Faithful Hound'

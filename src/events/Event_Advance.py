@@ -9,7 +9,7 @@ from Event import Event
 class Event_Advance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "You may trash an Action card from your hand. If you do, gain an Action card costing up to 6."
         self.name = "Advance"
         self.cost = 0

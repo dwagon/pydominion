@@ -10,7 +10,7 @@ class Card_Ducat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.buys = 1
         self.name = 'Ducat'
         self.cost = 2

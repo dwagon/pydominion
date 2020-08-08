@@ -9,7 +9,7 @@ from Event import Event
 class Event_Borrow(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Once per turn - place -1 Card token and gain 1 Coin"
         self.name = "Borrow"
         self.cost = 0

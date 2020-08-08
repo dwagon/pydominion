@@ -10,7 +10,7 @@ class Project_Sewers(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When you trash a card other than with this, you may trash a card from your hand."
         self.name = "Sewers"
         self.cost = 3

@@ -10,7 +10,7 @@ class Card_Candlestickmaker(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.desc = "+1 action, +1 buy, +1 coffer"
         self.name = 'Candlestick Maker'
         self.actions = 1

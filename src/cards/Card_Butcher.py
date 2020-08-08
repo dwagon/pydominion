@@ -10,7 +10,7 @@ class Card_Butcher(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.desc = """Take 2 coffers. You may trash a card from your hand and then pay any number of coffer.
         If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of coffers you paid"""
         self.name = 'Butcher'

@@ -9,7 +9,7 @@ from Event import Event
 class Event_Wedding(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "+1VP, Gain a Gold."
         self.name = "Wedding"
         self.cost = 4

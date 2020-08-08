@@ -10,7 +10,7 @@ class Card_RoyalBlacksmith(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+5 Cards. Reveal your hand; discard the Coppers."""
         self.name = 'Royal Blacksmith'
         self.debtcost = 8

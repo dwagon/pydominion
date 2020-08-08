@@ -10,7 +10,7 @@ class Card_Spices(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.name = 'Spices'
         self.coin = 2
         self.buys = 1

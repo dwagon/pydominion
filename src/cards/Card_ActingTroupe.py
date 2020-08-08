@@ -10,7 +10,7 @@ class Card_ActingTroupe(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.name = 'Acting Troupe'
         self.desc = "+4 Villagers. Trash this."
         self.cost = 3

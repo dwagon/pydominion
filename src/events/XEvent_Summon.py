@@ -8,7 +8,7 @@ from Event import Event
 class Event_Summon(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """Gain an Action card costing up to 4. Set it aside.
         If you do, then at the start of your next turn, play it"""
         self.name = "Summon"

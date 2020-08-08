@@ -9,7 +9,7 @@ from Event import Event
 class Event_Banquet(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Gain 2 Coppers and a non-Victory card costing up to 5"
         self.name = "Banquet"
         self.cost = 3

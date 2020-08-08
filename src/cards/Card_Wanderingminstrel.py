@@ -10,7 +10,7 @@ class Card_Wanderingminstrel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck.
             Put the Actions back on top in any order and discard the rest."""
         self.name = 'Wandering Minstrel'

@@ -11,7 +11,7 @@ class Card_CargoShip(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.name = 'Cargo Ship'
         self.desc = """+2 Coin; Once this turn, when you gain a card, you may
             set it aside face up (on this). At the start of your next turn,

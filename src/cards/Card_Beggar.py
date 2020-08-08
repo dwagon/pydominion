@@ -10,7 +10,7 @@ class Card_Beggar(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Gain 3 Coppers, putting them into your hand.
             When another player plays an Attack card, you may discard this.
             If you do, gain two Silvers, putting one on top of your deck."""

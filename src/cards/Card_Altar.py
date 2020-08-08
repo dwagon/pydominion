@@ -10,7 +10,7 @@ class Card_Altar(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Trash a card from your hand. Gain a card costing up to 5 Coin."""
         self.name = 'Altar'
         self.cost = 6

@@ -10,7 +10,7 @@ class Card_Squire(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 Coin. Choose one: +2 Actions; or +2 Buys; or gain a Silver.
         When you trash this, gain an Attack card."""
         self.name = 'Squire'

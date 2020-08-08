@@ -10,7 +10,7 @@ class Card_Changeling(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """Trash this. Gain a copy of a card you have in play.
 In games using this, when you gain a card costing 3 or more, you may exchange it for a Changeling."""
         self.name = 'Changeling'

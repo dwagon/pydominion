@@ -10,7 +10,7 @@ class Card_Procession(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """You may play an action card from your
             hand twice. Trash it. Gain an Action
             card costing exactly 1 more than it."""

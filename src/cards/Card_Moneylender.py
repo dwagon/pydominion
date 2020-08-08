@@ -10,7 +10,7 @@ class Card_Moneylender(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "Trash a copper from hand for +3 coin"
         self.name = 'Money Lender'
         self.cost = 4

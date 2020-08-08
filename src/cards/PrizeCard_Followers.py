@@ -10,7 +10,7 @@ class Card_Followers(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'prize']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.name = "Followers"
         self.purchasable = False
         self.required_cards = ['Curse']

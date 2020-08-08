@@ -10,7 +10,7 @@ class Card_Forum(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = 'Forum'
         self.cards = 3
         self.actions = 1

@@ -10,7 +10,7 @@ class Card_Feodum(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = "1VP / 3 silvers - trash for 3 silvers"
         self.name = 'Feodum'
         self.playable = False

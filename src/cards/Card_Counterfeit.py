@@ -10,7 +10,7 @@ class Card_Counterfeit(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = "+1 Coin, +1 Buy; May play a treasure twice and trash it"
         self.name = 'Counterfeit'
         self.cost = 5

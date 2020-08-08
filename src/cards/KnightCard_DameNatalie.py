@@ -10,7 +10,7 @@ class Card_Dame_Natalie(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Dame Natalie"
         self.desc = """You may gain a card costing up to 3.
         Each other player reveals the top 2 cards of his deck, trashes one of them

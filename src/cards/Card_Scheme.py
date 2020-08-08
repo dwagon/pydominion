@@ -10,7 +10,7 @@ class Card_Scheme(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = """+1 Card +1 Action; At the start of Clean-up this turn,
             you may choose an Action card you have in play. If you discard it from play
             this turn, put it on your deck."""

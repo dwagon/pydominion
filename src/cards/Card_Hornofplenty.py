@@ -10,7 +10,7 @@ class Card_Hornofplenty(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """When you play this, gain a card costing up to 1 per differently named card you have in play, counting this.
         If it's a Victory card, trash this."""
         self.name = 'Horn of Plenty'

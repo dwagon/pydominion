@@ -9,7 +9,7 @@ from Event import Event
 class Event_Alms(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.name = "Alms"
         self.cost = 0
 

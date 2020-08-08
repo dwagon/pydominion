@@ -10,7 +10,7 @@ class Card_Copper(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.basecard = True
         self.playable = False
         self.callable = False

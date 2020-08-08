@@ -10,7 +10,7 @@ class Card_Adventurer(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "Dig through deck for two treasures"
         self.name = 'Adventurer'
         self.cost = 6

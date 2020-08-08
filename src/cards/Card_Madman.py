@@ -10,7 +10,7 @@ class Card_Madman(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+2 Actions. Return this to the Madman pile. If you do, +1 Card per card in your hand."""
         self.name = 'Madman'
         self.insupply = False

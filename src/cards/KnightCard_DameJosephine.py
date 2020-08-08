@@ -10,7 +10,7 @@ class Card_Dame_Josephine(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = ['action', 'attack', 'knight', 'victory']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Dame Josephine"
         self.desc = """+2 VP. Each other player reveals the top 2 cards of his deck,
             trashes one of them costing from 3 to 6, and discards the rest.

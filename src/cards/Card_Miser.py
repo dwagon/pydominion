@@ -10,7 +10,7 @@ class Card_Miser(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Put a copper onto your mat or +1 coin per copper on mat"
         self.name = 'Miser'
         self.cost = 4

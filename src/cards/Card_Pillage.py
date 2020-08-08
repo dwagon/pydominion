@@ -10,7 +10,7 @@ class Card_Pillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Trash this. Each other player with 5 or more cards in hand
         reveals their hand and discards a card that you choose. Gain 2 Spoils
         from the Spoils pile."""

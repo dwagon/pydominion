@@ -9,7 +9,7 @@ class Card_Talisman(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+1 coin. Gain copy of non-victory cards you buy"
         self.name = 'Talisman'
         self.playable = False

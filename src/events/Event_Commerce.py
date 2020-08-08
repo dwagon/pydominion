@@ -9,7 +9,7 @@ from Event import Event
 class Event_Commerce(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Gain a Gold per differently named card you've gained this turn."
         self.name = "Commerce"
         self.cost = 5

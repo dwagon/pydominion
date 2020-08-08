@@ -10,7 +10,7 @@ class Card_Experiment(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.name = 'Experiment'
         self.desc = """+2 Cards; +1 Action; Return this to the Supply. When you
             gain this, gain another Experiment (that doesn't come with another)."""

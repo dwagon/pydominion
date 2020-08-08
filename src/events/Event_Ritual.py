@@ -9,7 +9,7 @@ from Event import Event
 class Event_Ritual(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain a Curse. If you do, trash a card from your hand. +1VP per Coin it cost."
         self.name = "Ritual"
         self.cost = 4

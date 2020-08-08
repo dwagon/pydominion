@@ -9,7 +9,7 @@ from Event import Event
 class Event_Conquest(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain 2 Silvers. +1 VP per Silver you've gained this turn."
         self.name = "Conquest"
         self.cost = 6

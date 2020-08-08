@@ -9,7 +9,7 @@ from Event import Event
 class Event_Triumph(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain an Estate. If you did, +1VP per card you've gained this turn."
         self.name = "Triumph"
         self.debtcost = 5

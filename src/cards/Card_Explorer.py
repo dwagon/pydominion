@@ -13,7 +13,7 @@ class Card_Explorer(Card):
         self.desc = """You may reveal a Province from your hand. If you do,
             gain a Gold to your hand. If you don't, gain a Silver to your hand."""
         self.name = 'Explorer'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.cost = 5
 
     def special(self, game, player):

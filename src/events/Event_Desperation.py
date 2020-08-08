@@ -9,7 +9,7 @@ from Event import Event
 class Event_Desperation(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Once per turn: You may gain a Curse. If you do, +1 Buy and +2 Coin."
         self.name = "Desperation"
         self.cost = 0

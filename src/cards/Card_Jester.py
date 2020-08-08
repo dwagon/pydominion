@@ -10,7 +10,7 @@ class Card_Jester(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """+2 Coin. Each other player discards the top card of his deck.
             If it's a Victory card he gains a Curse. Otherwise either he gains a
             copy of the discarded card or you do, your choice."""

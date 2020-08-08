@@ -10,7 +10,7 @@ class Card_Haggler(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = "+2 Coin. While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."
         self.name = 'Haggler'
         self.coin = 2

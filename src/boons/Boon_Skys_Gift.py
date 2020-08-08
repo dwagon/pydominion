@@ -10,7 +10,7 @@ class Boon_Skys_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
         self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "You may discard 3 cards to gain a Gold."
         self.name = "The Sky's Gift"
         self.purchasable = False

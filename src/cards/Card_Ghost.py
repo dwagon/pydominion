@@ -11,7 +11,7 @@ class Card_Ghost(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night', 'duration', 'spirit']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """Reveal cards from your deck until you reveal an Action.
             Discard the other cards and set aside the Action. At the start of
             your next turn, play it twice."""

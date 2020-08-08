@@ -10,7 +10,7 @@ class Card_Monument(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+2 coin, +1 VP"
         self.name = 'Monument'
         self.cost = 4

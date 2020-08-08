@@ -10,7 +10,7 @@ class Card_Tribute(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = """ The player to your left reveals then discards the top
             2 cards of his deck. For each differently named card revealed,
             if is an Action card, +2 actions; treasure card, +2 coin;

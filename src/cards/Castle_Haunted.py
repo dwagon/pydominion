@@ -10,7 +10,7 @@ class Card_HauntedCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 6
         self.desc = """2VP. When you gain this during your turn, gain a Gold,
         and each other player with 5 or more cards in hand puts 2 cards from their hand onto their deck."""

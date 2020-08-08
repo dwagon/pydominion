@@ -10,7 +10,7 @@ class Card_BlessedVillage(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.name = 'Blessed Village'
         self.actions = 2
         self.cards = 1

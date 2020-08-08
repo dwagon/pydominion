@@ -10,7 +10,7 @@ class Card_Gladiator(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+2 Coin
         Reveal a card from your hand. The player to your left may reveal a copy from their hand.
         If they do not, +1 Coin and trash a Gladiator from the Supply."""

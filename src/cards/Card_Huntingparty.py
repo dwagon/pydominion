@@ -10,7 +10,7 @@ class Card_Huntingparty(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """+1 Card +1 Action. Reveal your hand.
         Reveal cards from your deck until you reveal a card that isn't a duplicate of one in your hand.
         Put it into your hand and discard the rest."""

@@ -10,7 +10,7 @@ class Card_Exorcist(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "Trash a card from your hand. Gain a cheaper Spirit from one of the Spirit piles."
         self.name = 'Exorcist'
         self.cost = 4

@@ -10,7 +10,7 @@ import Game
 class Landmark_WolfDen(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When scoring, -3VP per card you have exactly one copy of."""
         self.name = "Wolf Den"
 

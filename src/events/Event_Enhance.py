@@ -9,7 +9,7 @@ from Event import Event
 class Event_Enhance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """You may trash a non-Victory card from your hand,
             to gain a card costing up to 2 Coin more than it."""
         self.name = "Enhance"

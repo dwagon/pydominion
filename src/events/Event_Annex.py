@@ -9,7 +9,7 @@ from Event import Event
 class Event_Annex(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Look through your discard pile. Shuffle all but up to 5 cards from it into your deck. Gain a Duchy."
         self.name = "Annex"
         self.debtcost = 8

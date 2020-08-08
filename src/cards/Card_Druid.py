@@ -12,7 +12,7 @@ class Card_Druid(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Buy; Receive one of the set-aside Boons"
         self.name = 'Druid'
         self.buys = 1

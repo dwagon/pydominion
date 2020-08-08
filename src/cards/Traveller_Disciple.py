@@ -10,7 +10,7 @@ class Card_Disciple(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = 'Disciple'
         self.purchasable = False

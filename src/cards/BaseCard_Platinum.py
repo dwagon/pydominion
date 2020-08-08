@@ -10,7 +10,7 @@ class Card_Platinum(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+5 coin"
         self.name = 'Platinum'
         self.playable = False

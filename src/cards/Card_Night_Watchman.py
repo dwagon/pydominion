@@ -10,7 +10,7 @@ class Card_NightWatchman(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "Look at the top 5 cards of your deck, discard any number, and put the rest back in any order."
         self.name = 'Night Watchman'
         self.cost = 3

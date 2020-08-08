@@ -10,7 +10,7 @@ class Card_Doctor(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.name = 'Doctor'
         self.overpay = True
         self.cost = 3

@@ -10,7 +10,7 @@ class Card_Recruiter(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""
         self.name = 'Recruiter'
         self.cards = 2

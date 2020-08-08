@@ -10,7 +10,7 @@ class Card_Port(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.name = 'Port'
         self.cards = 1
         self.actions = 2

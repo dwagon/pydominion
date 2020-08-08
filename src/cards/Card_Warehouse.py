@@ -10,7 +10,7 @@ class Card_Warehouse(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = "+3 cards, +1 action, discard 3 cards"
         self.name = 'Warehouse'
         self.cards = 3

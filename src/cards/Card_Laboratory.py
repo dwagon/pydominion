@@ -10,7 +10,7 @@ class Card_Laboratory(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+2 cards, +1 action"
         self.name = 'Laboratory'
         self.cards = 2

@@ -10,7 +10,7 @@ class Card_Zombie_Spy(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'zombie']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
         self.name = 'Zombie Spy'
         self.cost = 3

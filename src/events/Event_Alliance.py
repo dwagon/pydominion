@@ -9,7 +9,7 @@ from Event import Event
 class Event_Alliance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
         self.name = "Alliance"
         self.cost = 10

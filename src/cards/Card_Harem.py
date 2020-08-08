@@ -10,7 +10,7 @@ class Card_Harem(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'victory']
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.name = 'Harem'
         self.coin = 2
         self.victory = 2

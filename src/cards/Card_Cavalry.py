@@ -10,7 +10,7 @@ class Card_Cavalry(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.name = 'Cavalry'
         self.cost = 4
         self.required_cards = [('Card', 'Horse')]

@@ -10,7 +10,7 @@ class Card_Margrave(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+3 Card +1 Buy. Each other player draws a card, then discards down to 3 cards in hand"""
         self.name = 'Margrave'
         self.cards = 3

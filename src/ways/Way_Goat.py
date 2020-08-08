@@ -9,7 +9,7 @@ from Way import Way
 class Way_Goat(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Trash a card from your hand."
         self.name = "Goat"
 

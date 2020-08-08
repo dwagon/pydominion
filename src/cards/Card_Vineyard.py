@@ -10,7 +10,7 @@ class Card_Vineyard(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
-        self.base = 'alchemy'
+        self.base = Game.ALCHEMY
         self.desc = "num action cards / 3 VP"
         self.name = 'Vineyard'
         self.playable = False

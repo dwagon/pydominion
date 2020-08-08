@@ -10,7 +10,7 @@ class Card_Tunnel(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['victory', 'reaction']
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = """2VP. When you discard this other than during a Clean-up phase, you may reveal it. If you do, gain a Gold."""
         self.name = "Tunnel"
         self.cost = 3

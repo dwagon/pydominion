@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Colonnade(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = "Colonnade"
 
     def desc(self, player):

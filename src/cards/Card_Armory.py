@@ -10,7 +10,7 @@ class Card_Armory(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = "Gain a card costing up to 4 putting it on top of your deck"
         self.name = 'Armory'
         self.cost = 4

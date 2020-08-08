@@ -10,7 +10,7 @@ class Card_IGG(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.required_cards = ['Curse']
         self.name = 'Ill-Gotten Gains'
         self.cost = 5

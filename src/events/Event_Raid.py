@@ -9,7 +9,7 @@ from Event import Event
 class Event_Raid(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Gain a Silver per Silver that you have in play. Each other player puts his -1 Card token on his deck"
         self.name = "Raid"
         self.cost = 5

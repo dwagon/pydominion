@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Tower(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
         self.name = "Tower"
 

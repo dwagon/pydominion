@@ -10,7 +10,7 @@ class Card_Stonemason(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.name = 'Stonemason'
         self.overpay = True
         self.cost = 2

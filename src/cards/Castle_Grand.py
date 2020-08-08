@@ -10,7 +10,7 @@ class Card_GrandCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 9
         self.victory = 5
         self.name = "Grand Castle"

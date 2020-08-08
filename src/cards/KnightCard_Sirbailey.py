@@ -10,7 +10,7 @@ class Card_Sir_Bailey(KnightCard):
     def __init__(self):
         super(Card_Sir_Bailey, self).__init__()
         self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.name = "Sir Bailey"
         self.desc = """+1 Card +1 Action.
             Each other player reveals the top 2 cards of his deck, trashes one of them

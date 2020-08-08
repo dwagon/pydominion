@@ -10,7 +10,7 @@ class Card_Masterpiece(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.name = 'Masterpiece'
         self.overpay = True
         self.coin = 1

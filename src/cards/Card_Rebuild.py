@@ -10,7 +10,7 @@ class Card_Rebuild(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 action. Name a card. Reveal cards from the top
         of your deck until you reveal a Victory card that is
         not the named card.  Discard the other cards.

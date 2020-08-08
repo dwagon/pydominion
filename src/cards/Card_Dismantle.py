@@ -10,7 +10,7 @@ class Card_Dismantle(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'promo'
+        self.base = Game.PROMO
         self.desc = "Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold."
         self.name = 'Dismantle'
         self.cost = 4

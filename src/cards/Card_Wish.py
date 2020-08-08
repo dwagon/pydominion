@@ -10,7 +10,7 @@ class Card_Wish(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Action; Return this to its pile. If you did, gain a card to your hand costing up to 6."
         self.name = "Wish"
         self.purchasable = False

@@ -10,7 +10,7 @@ class Card_Count(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """Choose one: Discard 2 cards; or put a card from your hand
             on top of your deck; or gain a Copper. Choose one: +3 Coin; or trash
             your hand; or gain a Duchy"""

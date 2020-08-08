@@ -10,7 +10,7 @@ class Card_Lackeys(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.name = 'Lackeys'
         self.cards = 2
         self.cost = 2

@@ -10,7 +10,7 @@ class Card_Zombie_Mason(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'zombie']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
         self.name = 'Zombie Mason'
         self.cost = 3

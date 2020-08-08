@@ -9,7 +9,7 @@ from Event import Event
 class Event_Populate(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Gain one card from each Action Supply pile."
         self.name = "Populate"
         self.cost = 10

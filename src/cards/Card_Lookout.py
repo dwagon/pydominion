@@ -9,7 +9,7 @@ class Card_Lookout(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """+1 Action; Look at the top 3 cards of your deck.
             Trash one of them. Discard one of them. Put the other one on top of
             your deck"""

@@ -10,7 +10,7 @@ class Card_SilkMerchant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = """+2 Cards; +1 Buy; When you gain or trash this, +1 Coffers and +1 Villager."""
         self.name = 'Silk Merchant'
         self.cards = 2

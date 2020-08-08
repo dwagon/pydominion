@@ -10,7 +10,7 @@ class Card_Herald(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'guilds'
+        self.base = Game.GUILDS
         self.name = 'Herald'
         self.overpay = True
         self.cards = 1

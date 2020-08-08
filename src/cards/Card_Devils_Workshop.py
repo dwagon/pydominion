@@ -10,7 +10,7 @@ class Card_Devils_Workshop(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'night'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """If the number of cards you've gained this turn is: 2+,
             gain an Imp from its pile; 1, gain a card costing up to 4;
             0, gain a Gold."""

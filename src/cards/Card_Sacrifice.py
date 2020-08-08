@@ -10,7 +10,7 @@ class Card_Sacrifice(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...
         Action card: +2 Cards, +2 Actions;
         Treasure card: +2 Coin;

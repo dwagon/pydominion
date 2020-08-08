@@ -10,7 +10,7 @@ from Way import Way
 class Way_Mole(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+1 Action; Discard your hand. +3 Cards."
         self.actions = 1
         self.name = "Mole"

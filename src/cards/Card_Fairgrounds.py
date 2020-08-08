@@ -10,7 +10,7 @@ class Card_Fairgrounds(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = "2VP / 5 card types"
         self.name = 'Fairgrounds'
         self.playable = False

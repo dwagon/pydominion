@@ -10,7 +10,7 @@ class Project_Canal(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "During your turns, cards cost $1 less, but not less than $0."
         self.name = "Canal"
         self.cost = 7

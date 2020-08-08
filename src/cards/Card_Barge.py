@@ -11,7 +11,7 @@ class Card_Barge(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Either now or at the start of your next turn, +3 Cards and +1 Buy."
         self.name = 'Barge'
         self.cost = 5

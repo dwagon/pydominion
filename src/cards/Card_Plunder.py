@@ -10,7 +10,7 @@ class Card_Plunder(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+2 Coin, +1VP"""
         self.name = 'Plunder'
         self.coin = 2

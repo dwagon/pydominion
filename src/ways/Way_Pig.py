@@ -9,7 +9,7 @@ from Way import Way
 class Way_Pig(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+1 Card; +1 Action"
         self.name = "Pig"
         self.cards = 1

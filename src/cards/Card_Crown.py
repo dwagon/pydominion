@@ -10,7 +10,7 @@ class Card_Crown(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'treasure']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """If it's your Action phase, you may play an Action from your hand twice.
         If it's your Buy phase, you may play a Treasure from your hand twice."""
         self.name = 'Crown'

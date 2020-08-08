@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Event_Save(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy. Once per turn: Set aside a card from your hand, and put it into your hand at end of turn (after drawing)."
         self.name = "Save"
         self.cost = 1

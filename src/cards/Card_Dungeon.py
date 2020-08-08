@@ -10,7 +10,7 @@ class Card_Dungeon(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Action. Now and next turn: +2 cards then discard 2 cards"
         self.name = 'Dungeon'
         self.actions = 1

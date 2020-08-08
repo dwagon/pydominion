@@ -10,7 +10,7 @@ class Card_Den_of_Sin(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.name = 'Den of Sin'
         self.cost = 2
 

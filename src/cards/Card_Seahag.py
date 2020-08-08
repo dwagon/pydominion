@@ -9,7 +9,7 @@ class Card_Seahag(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = "Each other player discards the top card of his deck, then gains a Curse card, putting it on top of his deck"
         self.required_cards = ['Curse']
         self.name = 'Sea Hag'

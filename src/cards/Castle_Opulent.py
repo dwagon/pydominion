@@ -10,7 +10,7 @@ class Card_OpulentCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
         self.cardtype = ['action', 'victory', 'castle']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.cost = 7
         self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
         self.victory = 3

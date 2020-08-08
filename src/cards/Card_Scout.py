@@ -9,7 +9,7 @@ class Card_Scout(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "+1 action, Adjust top 4 cards of deck"
         self.name = 'Scout'
         self.actions = 1

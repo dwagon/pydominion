@@ -10,7 +10,7 @@ class Card_Monastery(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'night'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "For each card you've gained this turn, you may trash a card from your hand or a Copper you have in play."
         self.name = 'Monastery'
         self.cost = 2

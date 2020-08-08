@@ -10,7 +10,7 @@ class Card_Hero(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+2 Coin, Gain a Treasure; Discard to replace with Champion"
         self.name = 'Hero'
         self.purchasable = False

@@ -10,7 +10,7 @@ class Card_Moat(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+2 cards, defense"
         self.name = 'Moat'
         self.defense = True

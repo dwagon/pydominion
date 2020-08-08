@@ -10,7 +10,7 @@ class Card_Masquerade(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = "+2 cards. Every player passes a card on, and you trash a card"
         self.name = 'Masquerade'
         self.cards = 2

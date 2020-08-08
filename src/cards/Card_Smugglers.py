@@ -10,7 +10,7 @@ class Card_Smugglers(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.desc = """Gain a copy of a card costing up to 6 that the player to your right gained on his last turn."""
         self.name = 'Smugglers'
         self.cost = 3

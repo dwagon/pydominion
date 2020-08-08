@@ -10,7 +10,7 @@ class Card_Hideout(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = """+1 Card; +2 Actions; Trash a card from your hand. If it's a Victory card, gain a Curse."""
         self.name = 'Hideout'
         self.required_cards = ['Curse']

@@ -10,7 +10,7 @@ class Card_Oasis(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.desc = "+1 card, +1 action, +1 coin, discard 1 card"
         self.name = 'Oasis'
         self.cards = 1

@@ -10,7 +10,7 @@ class Project_Cathedral(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, trash a card from your hand."
         self.name = "Cathedral"
         self.cost = 3

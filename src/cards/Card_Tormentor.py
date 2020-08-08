@@ -10,7 +10,7 @@ class Card_Tormentor(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'doom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """+2 Coin; If you have no other cards in play, gain an Imp
             from its pile. Otherwise, each other player receives the next Hex."""
         self.name = "Tormentor"

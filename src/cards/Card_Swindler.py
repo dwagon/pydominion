@@ -10,7 +10,7 @@ class Card_Swindler(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = """+2 Coin. Each other player trashed the top card of his deck and
             gains a card with the same cost that you choose."""
         self.name = 'Swindler'

@@ -10,7 +10,7 @@ class Card_Diadem(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'prize']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.name = "Diadem"
         self.purchasable = False
         self.cost = 0

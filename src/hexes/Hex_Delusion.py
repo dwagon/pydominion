@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
 from Hex import Hex
 
 
@@ -9,7 +10,7 @@ class Hex_Delusion(Hex):
     def __init__(self):
         Hex.__init__(self)
         self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Deluded."
         self.name = "Delusion"
         self.purchasable = False
@@ -23,7 +24,6 @@ class Hex_Delusion(Hex):
 ###############################################################################
 class Test_Delusion(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

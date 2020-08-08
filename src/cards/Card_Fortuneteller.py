@@ -10,7 +10,7 @@ class Card_Fortuneteller(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """2 Coin. Each other player reveals cards from the top of his deck
         until he reveals a Victory or Curse card. He puts it on top and discards the other revealed cards."""
         self.name = 'Fortune Teller'

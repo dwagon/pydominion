@@ -10,7 +10,7 @@ class Artifact_Lantern(Artifact):
     def __init__(self):
         Artifact.__init__(self)
         self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "Your Border Guards reveal 3 cards and discard 2. (It takes all 3 being Actions to take the Horn.)"
         self.name = "Lantern"
 

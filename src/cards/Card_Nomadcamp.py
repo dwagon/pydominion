@@ -10,7 +10,7 @@ class Card_NomadCamp(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'hinterlands'
+        self.base = Game.HINTERLANDS
         self.name = 'Nomad Camp'
         self.buys = 1
         self.cards = 2

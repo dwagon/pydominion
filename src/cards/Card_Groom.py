@@ -13,7 +13,7 @@ class Card_Groom(Card):
         self.cardtype = 'action'
         self.cost = 4
         self.name = 'Groom'
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """Gain a card costing up to 4 Coin. If it's an...
             Action card, gain a Horse;
             Treasure card, gain a Silver;

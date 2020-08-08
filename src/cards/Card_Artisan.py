@@ -10,7 +10,7 @@ class Card_Artisan(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "Gain a card to your hand costing up to 5 Coin. Put a card from your hand onto your deck."
         self.name = 'Artisan'
         self.cost = 6

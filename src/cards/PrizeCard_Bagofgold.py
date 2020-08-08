@@ -10,7 +10,7 @@ class Card_Bagofgold(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'prize']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.name = "Bag of Gold"
         self.purchasable = False
         self.cost = 0

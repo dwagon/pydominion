@@ -13,7 +13,7 @@ class Card_Lighthouse(Card):
         self.desc = """+1 Action. Now and at the start of your next turn: +1 Coin.
         While this is in play, when another player plays an Attack card, it doesn't affect you."""
         self.name = 'Lighthouse'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.defense = True
         self.actions = 1
         self.cost = 2

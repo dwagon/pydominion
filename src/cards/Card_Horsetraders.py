@@ -10,7 +10,7 @@ class Card_Horsetraders(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reaction']
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """+1 Buy. +3 Coins. Discard 2 cards.
         When another player plays an Attack card, you may set this aside from your hand.
         If you do, then at the start of your next turn, +1 Card and return this to your hand."""

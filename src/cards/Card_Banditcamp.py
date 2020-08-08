@@ -10,7 +10,7 @@ class Card_Banditcamp(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = 'Bandit Camp'
         self.required_cards = ['Spoils']

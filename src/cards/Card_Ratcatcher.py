@@ -10,7 +10,7 @@ class Card_Ratcatcher(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Call to trash a card"
         self.name = 'Ratcatcher'
         self.cards = 1

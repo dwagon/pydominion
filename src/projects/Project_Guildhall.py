@@ -10,7 +10,7 @@ class Project_Guildhall(Project):
     def __init__(self):
         Project.__init__(self)
         self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When you gain a Treasure, +1 Coffers."
         self.name = "Guildhall"
         self.cost = 5

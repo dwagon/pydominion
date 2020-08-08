@@ -10,7 +10,7 @@ class Card_Golem(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'alchemy'
+        self.base = Game.ALCHEMY
         self.desc = "Dig through deck for 2 action cards and play them"
         self.name = 'Golem'
         self.cost = 4

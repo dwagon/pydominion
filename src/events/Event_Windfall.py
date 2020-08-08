@@ -9,7 +9,7 @@ from Event import Event
 class Event_Windfall(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "If your deck and discard pile are empty, gain 3 Golds"
         self.name = "Windfall"
         self.cost = 5

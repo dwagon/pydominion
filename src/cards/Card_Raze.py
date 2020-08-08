@@ -10,7 +10,7 @@ class Card_Raze(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """+1 Action; Trash this or a card from your hand. Look at a number
             of cards from the top of your deck equal to the cost in Coin of the
             trashed card. Put one into your hand and discard the rest """

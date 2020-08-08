@@ -10,7 +10,7 @@ class Card_Market(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+1 cards, +1 action, +1 coin, +1 buys"
         self.name = 'Market'
         self.cards = 1

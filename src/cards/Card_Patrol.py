@@ -10,7 +10,7 @@ class Card_Patrol(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'intrigue'
+        self.base = Game.INTRIGUE
         self.desc = """+3 Cards; Reveal the top 4 cards of your deck.
             Put the Victory cards and Curses into your hand.
             Put the rest back in any order."""

@@ -12,7 +12,7 @@ class Card_Bazaar(Card):
         self.cardtype = 'action'
         self.desc = "+1 cards, +2 action, +1 coin"
         self.name = 'Bazaar'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.cards = 1
         self.actions = 2
         self.coin = 1

@@ -10,7 +10,7 @@ class Card_Warrior(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'traveller']
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards
         the top card of his deck and trashes it if it

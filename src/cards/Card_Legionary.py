@@ -10,7 +10,7 @@ class Card_Legionary(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+3 Coin. You may reveal a Gold from your hand.
             If you do, each other player discards down to 2 cards in hand, then draws a card."""
         self.name = 'Legionary'

@@ -11,7 +11,7 @@ class Card_Crypt(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = """Set aside any number of Treasures you have in play, face down
             (under this). While any remain, at the start of each of your turns,
             put one of them into your hand."""

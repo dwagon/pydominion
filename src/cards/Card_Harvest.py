@@ -10,7 +10,7 @@ class Card_Harvest(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'cornucopia'
+        self.base = Game.CORNUCOPIA
         self.desc = """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
         self.name = 'Harvest'
         self.cost = 5

@@ -10,7 +10,7 @@ class Card_Curse(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'victory'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "-1 VP"
         self.basecard = True
         self.playable = False

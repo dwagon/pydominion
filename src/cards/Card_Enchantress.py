@@ -10,7 +10,7 @@ class Card_Enchantress(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """Until your next turn, the first time each other player plays an
             Action card on their turn, they get +1 Card and +1 Action instead of
             following its instructions. At the start of your next turn, +2 Cards"""

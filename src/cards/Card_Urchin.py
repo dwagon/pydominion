@@ -10,7 +10,7 @@ class Card_Urchin(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        self.base = Game.DARKAGES
         self.desc = """+1 Card; +1 Action; Each other player discards down to 4 cards.
             When you play another Attack card with this in play, you may trash this.
             If you do, gain a Mercenary."""

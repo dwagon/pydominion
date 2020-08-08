@@ -10,7 +10,7 @@ class Card_Grandmarket(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'prosperity'
+        self.base = Game.PROSPERITY
         self.desc = "+1 card, +1 action, +1 buy, +2 coin"
         self.name = 'Grand Market'
         self.cost = 6

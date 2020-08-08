@@ -10,7 +10,7 @@ class Card_Pouch(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+1 Coin, +1 Buy"
         self.name = 'Pouch'
         self.cost = 2

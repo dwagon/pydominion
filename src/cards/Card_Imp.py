@@ -10,7 +10,7 @@ class Card_Imp(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = ['action', 'spirit']
-        self.base = 'nocturne'
+        self.base = Game.NOCTURNE
         self.desc = "+2 Cards; You may play an Action card from your hand that you don't have a copy of in play."
         self.name = "Imp"
         self.purchasable = False

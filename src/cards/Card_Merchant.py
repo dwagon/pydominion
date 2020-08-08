@@ -10,7 +10,7 @@ class Card_Merchant(Card):
     def __init__(self):
         Card.__init__(self)
         self.cardtype = 'action'
-        self.base = 'dominion'
+        self.base = Game.DOMINION
         self.desc = "+1 Card; +1 Action; The first time you play a Silver this turn, +1 Coin."
         self.name = 'Merchant'
         self.actions = 1
