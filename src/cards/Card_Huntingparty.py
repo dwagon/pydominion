@@ -9,7 +9,7 @@ from Card import Card
 class Card_Huntingparty(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.CORNUCOPIA
         self.desc = """+1 Card +1 Action. Reveal your hand.
         Reveal cards from your deck until you reveal a card that isn't a duplicate of one in your hand.

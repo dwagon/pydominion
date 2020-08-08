@@ -9,7 +9,7 @@ from Card import Card
 class Card_Venture(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.desc = "+1 coin, get next treasure from deck"
         self.name = 'Venture'
         self.cost = 5

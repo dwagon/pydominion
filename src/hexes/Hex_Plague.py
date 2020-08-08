@@ -9,7 +9,7 @@ from Hex import Hex
 class Hex_Plague(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
+        self.cardtype = Card.HEX
         self.base = Game.NOCTURNE
         self.desc = "Gain a Curse to your hand."
         self.name = "Plague"

@@ -9,7 +9,7 @@ from Project import Project
 class Project_StarChart(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
+        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "When you shuffle, you may pick one of the cards to go on top."
         self.name = "Star Chart"

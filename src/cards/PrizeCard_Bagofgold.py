@@ -9,7 +9,7 @@ from Card import Card
 class Card_Bagofgold(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'prize']
+        self.cardtype = [Card.ACTION, Card.PRIZE]
         self.base = Game.CORNUCOPIA
         self.name = "Bag of Gold"
         self.purchasable = False

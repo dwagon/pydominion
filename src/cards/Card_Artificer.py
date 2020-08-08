@@ -9,7 +9,7 @@ from Card import Card
 class Card_Artificer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ADVENTURE
         self.desc = """+1 Card, +1 Action, +1 Coin; Discard any number of cards.
             You may gain a card costing exactly 1 per card discarded, putting it on top of your deck"""

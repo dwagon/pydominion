@@ -9,7 +9,7 @@ from Hex import Hex
 class Hex_Delusion(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
+        self.cardtype = Card.HEX
         self.base = Game.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Deluded."
         self.name = "Delusion"

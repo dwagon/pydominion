@@ -10,7 +10,7 @@ from Card import Card
 class Card_Goatherd(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """+1 Action; You may trash a card from your hand.
             +1 Card per card the player to your right trashed on their last turn."""

@@ -9,7 +9,7 @@ import Game
 class Card_Destrier(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; +1 Action; During your turns, this costs 1 less per card you've gained this turn."
         self.name = 'Destrier'

@@ -8,7 +8,7 @@ from Card import Card
 class Card_Swamphag(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = "Until your next turn, when any other player buys a card, he gains a Curse. At the start of your next turn: +3 Coin"
         self.required_cards = ['Curse']

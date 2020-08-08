@@ -9,7 +9,7 @@ from Card import Card
 class Card_Engineer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = """Gain a card costing up to 4 Coin.
         You may trash this. If you do, gain a card costing up to 4 Coin."""

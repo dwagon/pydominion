@@ -9,7 +9,7 @@ from Card import Card
 class Card_Transmute(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "Trash a card from hand to gain others"
         self.name = 'Transmute'

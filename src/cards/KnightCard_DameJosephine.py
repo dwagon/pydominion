@@ -9,7 +9,7 @@ from cards.Card_Knight import KnightCard
 class Card_Dame_Josephine(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight', 'victory']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT, Card.VICTORY]
         self.base = Game.DARKAGES
         self.name = "Dame Josephine"
         self.desc = """+2 VP. Each other player reveals the top 2 cards of his deck,

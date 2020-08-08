@@ -9,7 +9,7 @@ from Card import Card
 class Card_Harbinger(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = "+1 Card; +1 Action; Look through your discard pile. You may put a card from it onto your deck."
         self.name = 'Harbinger'

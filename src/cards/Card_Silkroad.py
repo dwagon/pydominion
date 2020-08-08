@@ -9,7 +9,7 @@ from Card import Card
 class Card_Silkroad(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.HINTERLANDS
         self.desc = "num victory cards / 4 VP"
         self.name = 'Silk Road'

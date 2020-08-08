@@ -9,7 +9,7 @@ from Card import Card
 class Card_Monument(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.PROSPERITY
         self.desc = "+2 coin, +1 VP"
         self.name = 'Monument'

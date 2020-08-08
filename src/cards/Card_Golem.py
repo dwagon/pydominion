@@ -9,7 +9,7 @@ from Card import Card
 class Card_Golem(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "Dig through deck for 2 action cards and play them"
         self.name = 'Golem'

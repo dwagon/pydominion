@@ -9,7 +9,7 @@ from Card import Card
 class Card_Swashbuckler(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+3 Cards. If your discard pile has any cards in it:
             +1 Coffers, then if you have at least 4 Coffers tokens, take the

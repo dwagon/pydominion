@@ -9,7 +9,7 @@ from Card import Card
 class Card_Devils_Workshop(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'night'
+        self.cardtype = Card.NIGHT
         self.base = Game.NOCTURNE
         self.desc = """If the number of cards you've gained this turn is: 2+,
             gain an Imp from its pile; 1, gain a card costing up to 4;
@@ -41,7 +41,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play_0(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.playCard(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard('Gold'))
@@ -50,7 +50,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_1(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.gainCard('Copper')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
@@ -61,7 +61,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_2(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.gainCard('Copper')
         self.plr.gainCard('Estate')
         self.plr.playCard(self.card)

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Harem(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'victory']
+        self.cardtype = [Card.ACTION, Card.VICTORY]
         self.base = Game.INTRIGUE
         self.name = 'Harem'
         self.coin = 2

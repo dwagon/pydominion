@@ -9,7 +9,7 @@ from Card import Card
 class Card_Champion(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"
         self.name = 'Champion'
@@ -33,7 +33,7 @@ class Test_Champion(unittest.TestCase):
 
     def test_champion(self):
         """ Play a champion """
-        self.plr.addCard(self.card, 'duration')
+        self.plr.addCard(self.card, Card.DURATION)
         self.assertEqual(self.plr.get_actions(), 1)
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')

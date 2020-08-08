@@ -9,7 +9,7 @@ from Card import Card
 class Card_MerchantGuild(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.GUILDS
         self.desc = """+1 Buy +1 Coin. While this is in play, when you buy a card, take a Coffer."""
         self.name = 'Merchant Guild'

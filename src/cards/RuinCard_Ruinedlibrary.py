@@ -8,7 +8,7 @@ from Card import Card
 class Card_Ruinedlibrary(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'ruin']
+        self.cardtype = [Card.ACTION, Card.RUIN]
         self.base = Game.DARKAGES
         self.desc = "+1 Card"
         self.purchasable = False

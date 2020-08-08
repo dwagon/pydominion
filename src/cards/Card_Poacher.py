@@ -9,7 +9,7 @@ from Card import Card
 class Card_Poacher(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "+1 Card, +1 Action, +1 Coin. Discard a card per empty supply pile."
         self.name = 'Poacher'

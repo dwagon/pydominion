@@ -10,7 +10,7 @@ from Card import Card
 class Card_Paddock(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """+2 Coin; Gain 2 Horses. +1 Action per empty Supply pile."""
         self.name = 'Paddock'

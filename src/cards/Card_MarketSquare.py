@@ -9,7 +9,7 @@ from Card import Card
 class Card_MarketSquare(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
+        self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, +1 Buy.
         When one of your cards is trashed, you may discard this from your hand. If you do, gain a Gold."""

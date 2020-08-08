@@ -9,7 +9,7 @@ from Card import Card
 class Card_Soldier(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'traveller']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""

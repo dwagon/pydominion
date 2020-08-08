@@ -9,7 +9,7 @@ from Card import Card
 class Card_Cartographer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.desc = """+1 Card; +1 Action; Look at the top 4 cards of your deck.
             Discard any number of them. Put the rest back on top in any order."""

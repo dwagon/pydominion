@@ -9,7 +9,7 @@ from Card import Card
 class Card_Plaza(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.GUILDS
         self.desc = "+1 Card, +2 Actions. You may discard a Treasure card. If you do, take a Coffer."
         self.name = 'Plaza'

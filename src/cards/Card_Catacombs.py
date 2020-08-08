@@ -9,7 +9,7 @@ from Card import Card
 class Card_Catacombs(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """Look at the top 3 cards of your deck. Choose one: Put them
             into your hand; or discard them and +3 cards. When you trash this, gain a cheaper card."""

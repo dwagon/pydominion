@@ -9,7 +9,7 @@ from Card import Card
 class Card_Spices(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.RENAISSANCE
         self.name = 'Spices'
         self.coin = 2

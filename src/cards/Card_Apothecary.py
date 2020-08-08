@@ -9,7 +9,7 @@ from Card import Card
 class Card_Apothecary(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "+1 card, +1 action, Take coppers and potions out of top 4 of deck"
         self.name = 'Apothecary'

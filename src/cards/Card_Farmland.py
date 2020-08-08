@@ -9,7 +9,7 @@ from Card import Card
 class Card_Farmland(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.HINTERLANDS
         self.desc = """2VP; When you buy this, trash a card from your hand.
             Gain a card costing exactly 2 more than the trashed card."""

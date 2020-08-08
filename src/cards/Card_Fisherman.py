@@ -10,7 +10,7 @@ from Card import Card
 class Card_Fisherman(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = "+1 Card; +1 Action; +1 Coin; During your turns, if your discard pile is empty, this costs 3 Coin less."
         self.name = 'Fisherman'

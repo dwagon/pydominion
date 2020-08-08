@@ -9,7 +9,7 @@ from Card import Card
 class Card_Pearldiver(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.SEASIDE
         self.desc = "+1 card, +1 action. Put bottom of deck to top"
         self.name = 'Pearl Diver'

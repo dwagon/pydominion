@@ -9,7 +9,7 @@ from Card import Card
 class Card_Upgrade(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = "+1 Card, +1 Action. Trash a card from your hand. Gain a card costing exactly 1 more than it."
         self.name = 'Upgrade'

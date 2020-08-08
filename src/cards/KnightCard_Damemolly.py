@@ -9,7 +9,7 @@ from cards.Card_Knight import KnightCard
 class Card_Dame_Molly(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT]
         self.base = Game.DARKAGES
         self.name = "Dame Molly"
         self.desc = """+2 Actions

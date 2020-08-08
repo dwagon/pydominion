@@ -9,7 +9,7 @@ from Card import Card
 class Card_Bridge(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = "+1 Buy +1 Coin. All cards (including cards in players hands) cost 1 less this turn, but not less than 0."
         self.name = 'Bridge'

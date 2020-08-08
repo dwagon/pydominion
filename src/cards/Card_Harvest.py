@@ -9,7 +9,7 @@ from Card import Card
 class Card_Harvest(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.CORNUCOPIA
         self.desc = """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
         self.name = 'Harvest'

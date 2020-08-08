@@ -9,7 +9,7 @@ from Card import Card
 class Card_Masterpiece(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.GUILDS
         self.name = 'Masterpiece'
         self.overpay = True

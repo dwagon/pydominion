@@ -9,7 +9,7 @@ from Card import Card
 class Card_RoyalBlacksmith(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = """+5 Cards. Reveal your hand; discard the Coppers."""
         self.name = 'Royal Blacksmith'

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Minion(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.INTRIGUE
         self.desc = """+1 Action; Choose one: +2 Coin; or discard your hand,
             +4 Cards, and each other player with at least 5 cards in hand discards

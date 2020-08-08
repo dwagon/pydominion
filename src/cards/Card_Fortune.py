@@ -9,7 +9,7 @@ import Game
 class Card_Fortune(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.EMPIRES
         self.desc = """+1 Buy
         When you play this, double your Coin if you haven't yet this turn.

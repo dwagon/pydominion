@@ -9,7 +9,7 @@ from Card import Card
 class Card_Coinoftherealm(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'reserve']
+        self.cardtype = [Card.TREASURE, Card.RESERVE]
         self.base = Game.ADVENTURE
         self.desc = "+1 Coin; Call for +2 Actions"
         self.name = 'Coin of the Realm'

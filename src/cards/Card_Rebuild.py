@@ -9,7 +9,7 @@ from Card import Card
 class Card_Rebuild(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 action. Name a card. Reveal cards from the top
         of your deck until you reveal a Victory card that is
@@ -42,7 +42,7 @@ class Card_Rebuild(Card):
             if card.isVictory() and guess.name != card.name:
                 player.output("Found and trashing a %s" % card.name)
                 player.trashCard(card)
-                player.plrGainCard(card.cost + 3, modifier='less', types={'victory': True})
+                player.plrGainCard(card.cost + 3, modifier='less', types={Card.VICTORY: True})
                 break
             player.output("Drew and discarded %s" % card.name)
             discards.append(card)

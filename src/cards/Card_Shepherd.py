@@ -9,7 +9,7 @@ from Card import Card
 class Card_Shepherd(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.NOCTURNE
         self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = 'Shepherd'
@@ -18,7 +18,7 @@ class Card_Shepherd(Card):
         self.heirloom = 'Pasture'
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(num=0, anynum=True, types={'victory': True})
+        todiscard = player.plrDiscardCards(num=0, anynum=True, types={Card.VICTORY: True})
         player.pickupCards(2*len(todiscard))
 
 

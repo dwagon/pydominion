@@ -9,7 +9,7 @@ from Card import Card
 class Card_Philosophersstone(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.ALCHEMY
         self.desc = "When you play this, count your deck and discard pile. Worth 1 Coin per 5 cards total between them (rounded down)"
         self.name = "Philosopher's Stone"

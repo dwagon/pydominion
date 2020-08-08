@@ -9,7 +9,7 @@ from cards.Card_Knight import KnightCard
 class Card_Sirvander(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT]
         self.base = Game.DARKAGES
         self.desc = """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6, and discards the rest.

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Spy(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DOMINION
         self.desc = "+1 action, +1 cards, reveal next card and optionally discard it"
         self.name = 'Spy'

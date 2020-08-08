@@ -9,7 +9,7 @@ from Card import Card
 class Card_SecretPassage(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""
         self.name = 'Secret Passage'

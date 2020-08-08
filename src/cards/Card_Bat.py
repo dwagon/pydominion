@@ -9,7 +9,7 @@ from Card import Card
 class Card_Bat(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night']
+        self.cardtype = [Card.NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Trash up to 2 cards from your hand. If you trashed at least one, exchange this for a Vampire."
         self.name = 'Bat'
@@ -32,7 +32,7 @@ class Test_Bat(unittest.TestCase):
         self.card = self.g['Bat'].remove()
 
     def test_play(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.setHand('Duchy', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Silver', 'Trash Gold', 'Finish']

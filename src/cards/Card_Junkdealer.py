@@ -9,7 +9,7 @@ from Card import Card
 class Card_Junkdealer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = "+1 card, +1 action, +1 coin, trash a card"
         self.name = 'Junk Dealer'

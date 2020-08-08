@@ -9,7 +9,7 @@ from Card import Card
 class Card_SacredGrove(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'fate']
+        self.cardtype = [Card.ACTION, Card.FATE]
         self.base = Game.NOCTURNE
         self.desc = "+1 Buy; +3 Coin; Receive a Boon. If it doesn't give +1 Coin, each other player may receive it."
         self.name = 'Sacred Grove'

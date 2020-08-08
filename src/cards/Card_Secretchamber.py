@@ -9,7 +9,7 @@ from Card import Card
 class Card_Secretchamber(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
+        self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.INTRIGUE
         self.desc = """Discard any number of cards; +1 coin per card discarded
             When another player plays an Attack card, you may reveal

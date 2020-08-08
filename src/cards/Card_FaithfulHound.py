@@ -9,7 +9,7 @@ from Card import Card
 class Card_FaithfulHound(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
+        self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.NOCTURNE
         self.desc = """+2 Cards; When you discard this other than during Clean-up,
             you may set it aside, and put it into your hand at end of turn."""

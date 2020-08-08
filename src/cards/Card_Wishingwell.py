@@ -9,7 +9,7 @@ from Card import Card
 class Card_Wishingwell(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = "+1 Card +1 Action; Name a card, then reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = 'Wishing Well'

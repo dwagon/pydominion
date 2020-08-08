@@ -9,7 +9,7 @@ from Card import Card
 class Card_Conclave(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action']
+        self.cardtype = [Card.ACTION]
         self.base = Game.NOCTURNE
         self.desc = "+2 Coin; You may play an Action card from your hand that you don't have a copy of in play. If you do, +1 Action."
         self.name = 'Conclave'

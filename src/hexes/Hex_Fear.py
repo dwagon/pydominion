@@ -9,7 +9,7 @@ from Hex import Hex
 class Hex_Fear(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
+        self.cardtype = Card.HEX
         self.base = Game.NOCTURNE
         self.desc = "If you have at least 5 cards in hand, discard an Action or Treasure"
         self.name = "Fear"

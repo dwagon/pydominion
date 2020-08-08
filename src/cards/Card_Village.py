@@ -9,7 +9,7 @@ from Card import Card
 class Card_Village(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "+1 cards, +2 actions"
         self.name = 'Village'

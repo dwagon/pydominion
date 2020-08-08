@@ -9,7 +9,7 @@ from Card import Card
 class Card_Bandit(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DOMINION
         self.desc = """Gain a Gold. Each other player reveals the top 2 cards
             of their deck, trashes a revealed Treasure other than Copper, and

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Scholar(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """Discard your hand. +7 Cards."""
         self.name = 'Scholar'

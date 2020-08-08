@@ -9,7 +9,7 @@ from Card import Card
 class Card_Develop(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.desc = """Trash a card from your hand. Gain a card costing exactly 1 more
         than it and a card costing exactly 1 less than it, in either order, putting them on top of your deck."""

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Colony(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.PROSPERITY
         self.desc = "+10 VP"
         self.basecard = True

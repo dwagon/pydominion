@@ -9,7 +9,7 @@ from Card import Card
 class Card_Capital(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.EMPIRES
         self.desc = "+6 Coin, +1 Buy. When you discard this from play, take 6 Debt"
         self.name = 'Capital'

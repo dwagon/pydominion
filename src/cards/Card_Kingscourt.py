@@ -9,7 +9,7 @@ from Card import Card
 class Card_Kingscourt(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.desc = "Play action 3 times"
         self.name = "King's Court"
         self.cost = 7

@@ -8,7 +8,7 @@ from Card import Card
 class Card_Chapel(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash up to 4 cards"
         self.name = 'Chapel'

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Scavenger(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """+2 Coin. You may put your deck into your discard pile.
             Look through your discard pile and put one card from it on top of

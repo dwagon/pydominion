@@ -9,7 +9,7 @@ from Card import Card
 class Card_CursedVillage(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'doom']
+        self.cardtype = [Card.ACTION, Card.DOOM]
         self.base = Game.NOCTURNE
         self.desc = "+2 Actions. Draw until you have 6 cards in hand. When you gain this, receive a Hex."
         self.name = 'Cursed Village'

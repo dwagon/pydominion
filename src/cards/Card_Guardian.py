@@ -9,7 +9,7 @@ from Card import Card
 class Card_Guardian(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night', 'duration']
+        self.cardtype = [Card.NIGHT, Card.DURATION]
         self.base = Game.NOCTURNE
         self.desc = """Until your next turn, when another player plays an
             Attack card, it doesn't affect you. At the start of your next turn,

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Ducat(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.RENAISSANCE
         self.buys = 1
         self.name = 'Ducat'

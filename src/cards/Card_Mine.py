@@ -9,7 +9,7 @@ from Card import Card
 class Card_Mine(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash a treasure, gain a better treasure"
         self.name = 'Mine'

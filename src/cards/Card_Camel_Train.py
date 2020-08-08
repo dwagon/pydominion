@@ -10,7 +10,7 @@ from Card import Card
 class Card_Camel_Train(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."""
         self.name = 'Camel Train'

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Ghost_Town(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night', 'duration']
+        self.cardtype = [Card.NIGHT, Card.DURATION]
         self.base = Game.NOCTURNE
         self.name = 'Ghost Town'
         self.cost = 3

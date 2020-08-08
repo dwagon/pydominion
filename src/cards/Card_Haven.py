@@ -9,7 +9,7 @@ from Card import Card
 class Card_Haven(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.SEASIDE
         self.desc = "+1 cards, +1 action; play a card next turn"
         self.name = 'Haven'
@@ -21,7 +21,7 @@ class Card_Haven(Card):
         """ Set aside a card from your hand face down. At the start of
             your next turn, put it into your hand. """
         c = player.plrPickCard(force=True, prompt='Pick card to put into hand next turn')
-        player.addCard(c, 'duration')
+        player.addCard(c, Card.DURATION)
         player.hand.remove(c)
         self.savedHavenCard = c
 

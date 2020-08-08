@@ -9,7 +9,7 @@ from Card import Card
 class Card_Banditcamp(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = 'Bandit Camp'

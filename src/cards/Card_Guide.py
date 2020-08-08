@@ -9,7 +9,7 @@ from Card import Card
 class Card_Guide(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
+        self.cardtype = [Card.ACTION, Card.RESERVE]
         self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Call to discard hand and draw 5"
         self.name = 'Guide'

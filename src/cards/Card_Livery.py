@@ -10,7 +10,7 @@ from Card import Card
 class Card_Livery(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """+3 Coins; This turn, when you gain a card costing 4 Coins or more, gain a Horse."""
         self.name = 'Livery'

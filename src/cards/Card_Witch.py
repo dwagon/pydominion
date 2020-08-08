@@ -9,7 +9,7 @@ from Card import Card
 class Card_Witch(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DOMINION
         self.desc = "+2 cards; Each other player gains a Curse card."
         self.required_cards = ['Curse']

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Pawn(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = "Choose two: +1 card, +1 action, +1 buy, +1 coin"
         self.name = 'Pawn'
@@ -20,7 +20,7 @@ class Card_Pawn(Card):
             choices must be different)"""
         selectable = [
             ('card', '+1 card'),
-            ('action', '+1 action'),
+            (Card.ACTION, '+1 action'),
             ('buy', '+1 buy'),
             ('coin', '+1 coin')
         ]
@@ -40,7 +40,7 @@ class Card_Pawn(Card):
         for choice in chosen:
             if choice == 'card':
                 player.pickupCard()
-            elif choice == 'action':
+            elif choice == Card.ACTION:
                 player.addActions(1)
             elif choice == 'buy':
                 player.addBuys(1)

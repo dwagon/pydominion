@@ -9,7 +9,7 @@ from Card import Card
 class Card_Port(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ADVENTURE
         self.name = 'Port'
         self.cards = 1

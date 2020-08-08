@@ -9,7 +9,7 @@ from Card import Card
 class Card_Royalseal(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.desc = "+2 Coin. While this is in play, whe you gain a card, you may put that card on top of your deck."
         self.playable = False
         self.name = 'Royal Seal'

@@ -18,7 +18,7 @@ class Test_getWhens(unittest.TestCase):
 
     def test_not_start(self):
         self.plr.start_turn()
-        self.plr.perform_action({'action': 'spendall'})
+        self.plr.perform_action({Card.ACTION: 'spendall'})
         whens = self.plr.getWhens()
         self.assertNotIn('start', whens)
 
@@ -37,7 +37,7 @@ class Test_getWhens(unittest.TestCase):
     def test_not_postaction(self):
         whens = self.plr.getWhens()
         self.assertNotIn('postaction', whens)
-        self.plr.perform_action({'action': 'spendall'})
+        self.plr.perform_action({Card.ACTION: 'spendall'})
         whens = self.plr.getWhens()
         self.assertNotIn('postaction', whens)
 
@@ -81,7 +81,7 @@ class Test_Reserve(unittest.TestCase):
 
     def test_addcard_reserve(self):
         gold = self.g['Gold'].remove()
-        self.plr.addCard(gold, 'reserve')
+        self.plr.addCard(gold, Card.RESERVE)
         self.assertEqual(self.plr.reserveSize(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Gold')
 
@@ -101,10 +101,10 @@ class Test_reserveSelection(unittest.TestCase):
 
     def test_callable(self):
         gold = self.g['Gold'].remove()
-        self.plr.addCard(gold, 'reserve')
+        self.plr.addCard(gold, Card.RESERVE)
         output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 1)
-        self.assertEqual(output[0]['action'], 'reserve')
+        self.assertEqual(output[0][Card.ACTION], Card.RESERVE)
         self.assertEqual(output[0]['card'], gold)
         self.assertEqual(output[0]['selector'], 'c')
         self.assertEqual(index, 2)
@@ -112,7 +112,7 @@ class Test_reserveSelection(unittest.TestCase):
     def test_not_callable(self):
         """ Copper is not callable (Due to miser) """
         copper = self.g['Copper'].remove()
-        self.plr.addCard(copper, 'reserve')
+        self.plr.addCard(copper, Card.RESERVE)
         output, index = self.plr.reserve_selection(1)
         self.assertEqual(len(output), 0)
         self.assertEqual(index, 1)

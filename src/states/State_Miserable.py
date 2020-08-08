@@ -9,7 +9,7 @@ from State import State
 class State_Miserable(State):
     def __init__(self):
         State.__init__(self)
-        self.cardtype = 'state'
+        self.cardtype = Card.STATE
         self.base = Game.NOCTURNE
         self.desc = "-2 VP"
         self.name = "Miserable"

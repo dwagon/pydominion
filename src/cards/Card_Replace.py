@@ -9,7 +9,7 @@ from Card import Card
 class Card_Replace(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.INTRIGUE
         self.desc = """Trash a card from your hand. Gain a card costing up to 2 more
             than it. If the gained card is an Action or Treasure, put it onto your deck;

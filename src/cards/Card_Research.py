@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_Research(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.RENAISSANCE
         self.name = 'Research'
         self.desc = """+1 Action; Trash a card from your hand.

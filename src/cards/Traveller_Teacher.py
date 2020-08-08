@@ -9,7 +9,7 @@ from Card import Card
 class Card_Teacher(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
+        self.cardtype = [Card.ACTION, Card.RESERVE]
         self.base = Game.ADVENTURE
         self.desc = """At the start of your turn, you may call this,
             to move your +1 Card, +1 Action, +1 Buy or +1 Coin token

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Advisor(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.GUILDS
         self.desc = "+1 action, +3 cards, plr to left discards one of them"
         self.name = 'Advisor'

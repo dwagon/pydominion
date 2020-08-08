@@ -9,7 +9,7 @@ from Card import Card
 class Card_Idol(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'attack', 'fate']
+        self.cardtype = [Card.TREASURE, Card.ATTACK, Card.FATE]
         self.base = Game.NOCTURNE
         self.desc = """2 Coin; When you play this, if you then have an odd number
             of Idols in play, receive a Boon; if an even number, each other player

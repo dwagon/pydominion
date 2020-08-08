@@ -9,7 +9,7 @@ from Card import Card
 class Card_Ambassador(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.SEASIDE
         self.desc = """Reveal a card from your hand. Return up to 2 copies of it
         from your hand to the Supply. Then each other player gains a copy of it."""

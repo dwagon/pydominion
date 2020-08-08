@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_CargoShip(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.RENAISSANCE
         self.name = 'Cargo Ship'
         self.desc = """+2 Coin; Once this turn, when you gain a card, you may

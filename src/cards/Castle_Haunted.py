@@ -9,7 +9,7 @@ from cards.Card_Castles import CastleCard
 class Card_HauntedCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['victory', 'castle']
+        self.cardtype = [Card.VICTORY, Card.CASTLE]
         self.base = Game.EMPIRES
         self.cost = 6
         self.desc = """2VP. When you gain this during your turn, gain a Gold,

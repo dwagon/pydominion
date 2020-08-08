@@ -9,7 +9,7 @@ from Card import Card
 class Card_Sage(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Action. Reveal cards from the top of your deck
         until you reveal one costing 3 or more.

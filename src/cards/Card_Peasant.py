@@ -9,7 +9,7 @@ from Card import Card
 class Card_Peasant(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
+        self.cardtype = [Card.ACTION, Card.TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = "+1 Buy, +1 Coin; Discard to replace with Soldier"
         self.name = 'Peasant'

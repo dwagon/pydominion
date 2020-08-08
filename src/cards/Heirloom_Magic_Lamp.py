@@ -9,7 +9,7 @@ from Card import Card
 class Card_MagicLamp(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
+        self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = """When you play this, if there are at least 6 cards
             that you have exactly 1 copy of in play, trash this. If you do,

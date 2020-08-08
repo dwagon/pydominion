@@ -9,7 +9,7 @@ from Boon import Boon
 class Boon_Forest_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
+        self.cardtype = Card.BOON
         self.base = Game.NOCTURNE
         self.desc = "+1 Buy; +1 Coin"
         self.name = "The Forest's Gift"

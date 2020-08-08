@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_Ghost(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night', 'duration', 'spirit']
+        self.cardtype = [Card.NIGHT, Card.DURATION, Card.SPIRIT]
         self.base = Game.NOCTURNE
         self.desc = """Reveal cards from your deck until you reveal an Action.
             Discard the other cards and set aside the Action. At the start of
@@ -57,7 +57,7 @@ class Test_Ghost(unittest.TestCase):
 
     def test_play_with_no_actions(self):
         """ Play a Ghost with no actions """
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
@@ -65,7 +65,7 @@ class Test_Ghost(unittest.TestCase):
         try:
             self.plr.setDeck('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
             self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
-            self.plr.phase = 'night'
+            self.plr.phase = Card.NIGHT
             self.plr.playCard(self.card)
             self.plr.end_turn()
             self.plr.start_turn()

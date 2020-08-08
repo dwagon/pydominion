@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_Necromancer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action']
+        self.cardtype = [Card.ACTION]
         self.base = Game.NOCTURNE
         self.desc = "Play a non-Duration Action card from the trash, leaving it there."
         self.name = 'Necromancer'

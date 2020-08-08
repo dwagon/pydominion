@@ -9,7 +9,7 @@ from Card import Card
 class Card_ActingTroupe(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.name = 'Acting Troupe'
         self.desc = "+4 Villagers. Trash this."

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Warrior(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'traveller']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards

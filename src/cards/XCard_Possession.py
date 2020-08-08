@@ -6,7 +6,7 @@ from Card import Card
 class Card_Possession(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "Be Evil"
         self.name = 'Possession'

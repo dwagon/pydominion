@@ -9,7 +9,7 @@ from Card import Card
 class Card_Followers(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'prize']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.PRIZE]
         self.base = Game.CORNUCOPIA
         self.name = "Followers"
         self.purchasable = False

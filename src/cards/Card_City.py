@@ -9,7 +9,7 @@ from Card import Card
 class Card_City(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.PROSPERITY
         self.desc = """+1 card, +2 action; If there are one or more empty Supply
             piles, +1 card. If there are two or more, +1 coin, +1 buy """

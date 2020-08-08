@@ -9,7 +9,7 @@ from Card import Card
 class Card_Gardens(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.DOMINION
         self.desc = "numcards / 10 VP"
         self.name = 'Gardens'

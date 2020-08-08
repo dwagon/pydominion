@@ -9,7 +9,7 @@ from Card import Card
 class Card_Trustysteed(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'prize']
+        self.cardtype = [Card.ACTION, Card.PRIZE]
         self.base = Game.CORNUCOPIA
         self.name = "Trusty Steed"
         self.purchasable = False
@@ -60,7 +60,7 @@ class Test_Trustysteed(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_b(self):
-        self.plr.test_input = ['action', 'silver']
+        self.plr.test_input = [Card.ACTION, 'silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.discard_size(), 4)

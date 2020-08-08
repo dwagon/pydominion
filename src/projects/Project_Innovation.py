@@ -9,7 +9,7 @@ from Project import Project
 class Project_Innovation(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
+        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "The first time you gain an Action card in each of your turns, you may set it aside. If you do, play it."
         self.name = "Innovation"

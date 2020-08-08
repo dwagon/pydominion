@@ -9,7 +9,7 @@ from Card import Card
 class Card_Raider(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night', 'duration', 'attack']
+        self.cardtype = [Card.NIGHT, Card.DURATION, Card.ATTACK]
         self.base = Game.NOCTURNE
         self.desc = """Each other player with 5 or more cards in hand discards
             a copy of a card you have in play (or reveals they can't). At the
@@ -49,7 +49,7 @@ class Test_Raider(unittest.TestCase):
 
     def test_play(self):
         """ Play a Raider """
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.setPlayed('Gold', 'Silver')
         self.vic.setHand('Silver', 'Gold', 'Estate', 'Copper', 'Copper')
         self.plr.playCard(self.card)

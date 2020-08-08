@@ -8,7 +8,7 @@ from Card import Card
 class Card_Talisman(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.PROSPERITY
         self.desc = "+1 coin. Gain copy of non-victory cards you buy"
         self.name = 'Talisman'

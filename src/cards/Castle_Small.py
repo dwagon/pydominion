@@ -9,7 +9,7 @@ from cards.Card_Castles import CastleCard
 class Card_SmallCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['action', 'victory', 'castle']
+        self.cardtype = [Card.ACTION, Card.VICTORY, Card.CASTLE]
         self.base = Game.EMPIRES
         self.cost = 5
         self.desc = "Trash this or a Castle from your hand. If you do, gain a Castle. 2VP"

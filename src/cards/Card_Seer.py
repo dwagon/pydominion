@@ -9,7 +9,7 @@ from Card import Card
 class Card_Seer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+1 Card; +1 Action; Reveal the top 3 cards of your deck.
             Put the ones costing from 2 to 4 into your hand. Put the rest back in any order."""

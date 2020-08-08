@@ -9,7 +9,7 @@ from Card import Card
 class Card_Cemetery(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.NOCTURNE
         self.desc = "+2 VP; When you gain this, trash up to 4 cards from your hand."
         self.name = 'Cemetery'

@@ -1,4 +1,36 @@
 # pylint: disable=no-member
+
+ACTION = 'action'
+ARTFIACT = 'artifact'
+ATTACK = 'attack'
+BOON = 'boon'
+CASTLE = 'castle'
+DOOM = 'doom'
+DURATION = 'duration'
+FATE = 'fate'
+GATHERING = 'gathering'
+HEIRLOOM = 'heirloom'
+HEX = 'hex'
+KNIGHT = 'knight'
+LOOTER = 'looter'
+NIGHT = 'night'
+PRIZE = 'prize'
+PROJECT = 'project'
+REACTION = 'reaction'
+RESERVE = 'reserve'
+RUIN = 'ruin'
+SHELTER = 'shelter'
+SPIRIT = 'spirit'
+STATE = 'state'
+TRAVELLER = 'traveller'
+TREASURE = 'treasure'
+VICTORY = 'victory'
+ZOMBIE = 'zombie'
+
+
+##############################################################################
+##############################################################################
+##############################################################################
 class Card(object):
     def __init__(self):
         self.image = None
@@ -93,13 +125,13 @@ class Card(object):
 
     ##########################################################################
     def isGathering(self):
-        if 'gathering' in self.cardtype:
+        if GATHERING in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isDuration(self):
-        if 'duration' in self.cardtype:
+        if DURATION in self.cardtype:
             return True
         return False
 
@@ -109,91 +141,91 @@ class Card(object):
 
     ##########################################################################
     def isTreasure(self):
-        if 'treasure' in self.cardtype:
+        if TREASURE in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isNight(self):
-        if 'night' in self.cardtype:
+        if NIGHT in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isFate(self):
-        if 'fate' in self.cardtype:
+        if FATE in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isDoom(self):
-        if 'doom' in self.cardtype:
+        if DOOM in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isLooter(self):
-        if 'looter' in self.cardtype:
+        if LOOTER in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isAction(self):
-        if 'action' in self.cardtype:
+        if ACTION in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isShelter(self):
-        if 'shelter' in self.cardtype:
+        if SHELTER in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isRuin(self):
-        if 'ruin' in self.cardtype:
+        if RUIN in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isTraveller(self):
-        if 'traveller' in self.cardtype:
+        if TRAVELLER in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isVictory(self):
-        if 'victory' in self.cardtype:
+        if VICTORY in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isReaction(self):
-        if 'reaction' in self.cardtype:
+        if REACTION in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isCastle(self):
-        if 'castle' in self.cardtype:
+        if CASTLE in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isKnight(self):
-        if 'knight' in self.cardtype:
+        if KNIGHT in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isAttack(self):
-        if 'attack' in self.cardtype:
+        if ATTACK in self.cardtype:
             return True
         return False
 
     ##########################################################################
     def isReserve(self):
-        if 'reserve' in self.cardtype:
+        if RESERVE in self.cardtype:
             return True
         return False
 

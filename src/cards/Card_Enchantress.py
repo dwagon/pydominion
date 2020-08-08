@@ -9,7 +9,7 @@ from Card import Card
 class Card_Enchantress(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
+        self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
         self.base = Game.EMPIRES
         self.desc = """Until your next turn, the first time each other player plays an
             Action card on their turn, they get +1 Card and +1 Action instead of

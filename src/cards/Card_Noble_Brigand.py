@@ -9,7 +9,7 @@ from Card import Card
 class Card_Noble_Brigand(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.HINTERLANDS
         self.desc = """+1 Coin. When you buy this or play it, each other player reveals
         the top 2 cards of his deck, trashes a revealed Silver or Gold you choose,

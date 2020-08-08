@@ -9,7 +9,7 @@ from Card import Card
 class Card_Treasury(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.SEASIDE
         self.desc = """+1 Card +1 Action +1 Coin; When you discard this from play,
             if you didn't buy a Victory card this turn, you may put this on top

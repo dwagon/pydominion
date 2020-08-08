@@ -10,7 +10,7 @@ from Card import Card
 class Card_Stockpile(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """3 Coin; +1 Buy; When you play this, Exile it."""
         self.name = 'Stockpile'

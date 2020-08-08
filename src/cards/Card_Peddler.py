@@ -9,7 +9,7 @@ from Card import Card
 class Card_Peddler(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.PROSPERITY
         self.desc = """+1 Card, +1 Action, +1 Coin. During your Buy phase, this
             costs 2 less per Action card you have in play, but not less than 0"""

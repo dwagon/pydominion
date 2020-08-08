@@ -9,7 +9,7 @@ from Card import Card
 class Card_Embassy(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.desc = "+5 Cards, Discard 3. Everyone gets a silver on purchase"
         self.name = 'Embassy'
         self.cost = 5

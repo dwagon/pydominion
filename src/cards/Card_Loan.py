@@ -9,7 +9,7 @@ from Card import Card
 class Card_Loan(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.PROSPERITY
         self.desc = """+1 Coin; When you play this, reveal cards from your
             deck until you reveal a Treasure. Discard it or trash it. Discard
@@ -58,7 +58,7 @@ class Test_Loan(unittest.TestCase):
         self.plr.playCard(self.loan)
         self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
         for c in self.plr.discardpile[:-1]:
-            self.assertNotEqual(c.cardtype, 'treasure')
+            self.assertNotEqual(c.cardtype, Card.TREASURE)
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
@@ -69,7 +69,7 @@ class Test_Loan(unittest.TestCase):
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))
         for c in self.plr.discardpile:
-            self.assertNotEqual(c.cardtype, 'treasure')
+            self.assertNotEqual(c.cardtype, Card.TREASURE)
 
 
 ###############################################################################

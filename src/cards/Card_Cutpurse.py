@@ -9,7 +9,7 @@ from Card import Card
 class Card_Cutpurse(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.desc = "+2 coin; Each other player discards a Copper card (or reveals a hand with no Copper)."
         self.name = 'Cutpurse'
         self.coin = 2

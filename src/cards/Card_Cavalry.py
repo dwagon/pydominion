@@ -9,14 +9,14 @@ import Game
 class Card_Cavalry(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.name = 'Cavalry'
         self.cost = 4
         self.required_cards = [('Card', 'Horse')]
 
     def desc(self, player):
-        if player.phase == 'action':
+        if player.phase == Card.ACTION:
             return "Gain 2 Horses."
         return """Gain 2 Horses. When you gain this, +2 Cards, +1 Buy,
             and if it's your Buy phase return to your Action phase."""
@@ -27,7 +27,7 @@ class Card_Cavalry(Card):
 
     def hook_gain_this_card(self, game, player):
         if player.phase == 'buy':
-            player.phase = 'action'
+            player.phase = Card.ACTION
         player.pickupCards(2)
         player.addBuys(1)
 
@@ -52,7 +52,7 @@ class Test_Cavalry(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
         self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertEqual(self.plr.phase, 'action')
+        self.assertEqual(self.plr.phase, Card.ACTION)
 
 
 ###############################################################################

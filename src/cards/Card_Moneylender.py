@@ -9,7 +9,7 @@ from Card import Card
 class Card_Moneylender(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash a copper from hand for +3 coin"
         self.name = 'Money Lender'

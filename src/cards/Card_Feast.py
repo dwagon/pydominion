@@ -9,7 +9,7 @@ import Game
 class Card_Feast(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash this card, Gain a card costing up to 5"
         self.name = 'Feast'

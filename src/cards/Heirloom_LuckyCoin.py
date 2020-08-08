@@ -9,7 +9,7 @@ from Card import Card
 class Card_LuckyCoin(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
+        self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "1 Coin; When you play this, gain a Silver."
         self.name = 'Lucky Coin'

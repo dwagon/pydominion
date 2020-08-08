@@ -9,7 +9,7 @@ from Card import Card
 class Card_Improve(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+2 Coin; At the start of Clean-up, you may trash an Action
         card you would discard from play this turn, to gain a card costing exactly

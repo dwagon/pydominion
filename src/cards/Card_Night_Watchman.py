@@ -9,7 +9,7 @@ from Card import Card
 class Card_NightWatchman(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night']
+        self.cardtype = [Card.NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Look at the top 5 cards of your deck, discard any number, and put the rest back in any order."
         self.name = 'Night Watchman'
@@ -45,7 +45,7 @@ class Test_NightWatchman(unittest.TestCase):
         self.card = self.g['Night Watchman'].remove()
 
     def test_play(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.NIGHT
         self.plr.setDeck('Gold', 'Province', 'Gold', 'Duchy', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Return Silver', 'Discard Duchy', 'Return Gold', 'Discard Province', 'Return Gold']

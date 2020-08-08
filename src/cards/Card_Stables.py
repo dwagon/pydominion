@@ -9,7 +9,7 @@ from Card import Card
 class Card_Stables(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.desc = """You may discard a Treasure. If you do, +3 Cards and +1 Action."""
         self.name = 'Stables'

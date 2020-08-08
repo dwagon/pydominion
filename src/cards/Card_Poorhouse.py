@@ -9,7 +9,7 @@ from Card import Card
 class Card_Poorhouse(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DARKAGES
         self.desc = """+4 Coin. Reveal your hand. -1 Coin per Treasure card in your hand, to a minimum of 0."""
         self.name = 'Poor House'

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Diadem(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'prize']
+        self.cardtype = [Card.TREASURE, Card.PRIZE]
         self.base = Game.CORNUCOPIA
         self.name = "Diadem"
         self.purchasable = False

@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_Gear(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = "+2 Cards; Set aside up to 2 cards from your hand. Pick up next turn"
         self.name = 'Gear'

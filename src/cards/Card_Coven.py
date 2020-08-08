@@ -10,7 +10,7 @@ from Card import Card
 class Card_Coven(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.MENAGERIE
         self.desc = """+1 Action; +2 Coin; Each other player Exiles a Curse
             from the Supply. If they can't, they discard their Exiled Curses."""

@@ -9,7 +9,7 @@ from Card import Card
 class Card_Groundskeeper(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = "+1 Card. +1 Action. While this is in play, when you gain a Victory card, +1VP"
         self.name = 'Groundskeeper'

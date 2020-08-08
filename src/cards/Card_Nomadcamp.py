@@ -9,7 +9,7 @@ from Card import Card
 class Card_NomadCamp(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.name = 'Nomad Camp'
         self.buys = 1

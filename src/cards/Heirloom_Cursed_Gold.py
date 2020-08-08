@@ -9,7 +9,7 @@ from Card import Card
 class Card_CursedGold(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
+        self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "3 Coin; When you play this, gain a curse"
         self.required_cards = ['Curse']

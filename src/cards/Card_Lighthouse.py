@@ -9,7 +9,7 @@ from Card import Card
 class Card_Lighthouse(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        self.cardtype = [Card.ACTION, Card.DURATION]
         self.desc = """+1 Action. Now and at the start of your next turn: +1 Coin.
         While this is in play, when another player plays an Attack card, it doesn't affect you."""
         self.name = 'Lighthouse'

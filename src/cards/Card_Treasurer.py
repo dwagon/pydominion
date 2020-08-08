@@ -9,7 +9,7 @@ from Card import Card
 class Card_Treasurer(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.name = 'Treasurer'
         self.desc = "+3 Coin; Choose one: Trash a Treasure from your hand; or gain a Treasure from the trash to your hand; or take the Key."

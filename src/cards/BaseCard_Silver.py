@@ -5,7 +5,7 @@ from Card import Card
 class Card_Silver(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.DOMINION
         self.desc = "+2 coin"
         self.playable = False

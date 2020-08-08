@@ -9,7 +9,7 @@ from Card import Card
 class Card_Charm(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.EMPIRES
         self.desc = """When you play this, choose one: +1 Buy and +2 Coin; or
             the next time you buy a card this turn, you may also gain a differently

@@ -10,7 +10,7 @@ from Card import Card
 class Card_Horse(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
         self.name = "Horse"

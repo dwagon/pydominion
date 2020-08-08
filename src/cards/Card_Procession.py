@@ -9,7 +9,7 @@ from Card import Card
 class Card_Procession(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """You may play an action card from your
             hand twice. Trash it. Gain an Action
@@ -32,7 +32,7 @@ class Card_Procession(Card):
             player.playCard(card, discard=False, costAction=False)
         player.trashCard(card)
         cost = player.cardCost(card) + 1
-        player.plrGainCard(cost, modifier='equal', types={'action': True})
+        player.plrGainCard(cost, modifier='equal', types={Card.ACTION: True})
 
 
 ###############################################################################

@@ -9,7 +9,7 @@ from Card import Card
 class Card_SpiceMerchant(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.desc = """You may trash a Treasure from your hand. If you do, choose one: +2 Cards and +1 Action; or +2 Coins and +1 Buy."""
         self.name = 'Spice Merchant'

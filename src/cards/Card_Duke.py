@@ -9,7 +9,7 @@ from Card import Card
 class Card_Duke(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'victory'
+        self.cardtype = Card.VICTORY
         self.base = Game.INTRIGUE
         self.desc = "Worth 1 VP per duchy"
         self.name = 'Duke'

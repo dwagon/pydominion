@@ -11,7 +11,7 @@ from PlayArea import PlayArea
 class Card_NativeVillage(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.desc = """+2 Actions
         Choose one: Set aside the top card of your deck face down on your
         Native Village mat; or put all the cards from your mat into your hand."""

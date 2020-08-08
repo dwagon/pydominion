@@ -9,7 +9,7 @@ from Card import Card
 class Card_Trader(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
+        self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.HINTERLANDS
         self.desc = """Trash a card from your hand. Gain a number of Silvers equal to its cost in coins.
         When you would gain a card, you may reveal this from your hand. If you do, instead, gain a Silver."""

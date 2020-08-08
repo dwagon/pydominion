@@ -8,7 +8,7 @@ from Card import Card
 class Card_Apprentice(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "+1 action, Trash a card, +1 card per coin it costs, +2 cards if it has a potion cost"
         self.name = 'Apprentice'

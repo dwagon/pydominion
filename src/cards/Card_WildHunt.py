@@ -9,7 +9,7 @@ from Card import Card
 class Card_WildHunt(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'gathering']
+        self.cardtype = [Card.ACTION, Card.GATHERING]
         self.base = Game.EMPIRES
         self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt
             Supply pile; or gain an Estate, and if you do, take the VP from the pile."""

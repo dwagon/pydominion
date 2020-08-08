@@ -5,7 +5,7 @@ from Card import Card
 class Card_Potion(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.ALCHEMY
         self.basecard = True
         self.playable = False

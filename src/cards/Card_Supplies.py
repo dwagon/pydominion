@@ -10,7 +10,7 @@ from Card import Card
 class Card_Supplies(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.MENAGERIE
         self.desc = "+1 coin; When you play this, gain a Horse onto your deck."
         self.name = 'Supplies'

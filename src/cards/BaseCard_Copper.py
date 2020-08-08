@@ -9,7 +9,7 @@ from Card import Card
 class Card_Copper(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'treasure'
+        self.cardtype = Card.TREASURE
         self.base = Game.DOMINION
         self.basecard = True
         self.playable = False

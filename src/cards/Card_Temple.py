@@ -9,7 +9,7 @@ from Card import Card
 class Card_Temple(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'gathering']
+        self.cardtype = [Card.ACTION, Card.GATHERING]
         self.base = Game.EMPIRES
         self.name = 'Temple'
         self.cost = 4

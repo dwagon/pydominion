@@ -9,7 +9,7 @@ from Project import Project
 class Project_Barracks(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
+        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Action."
         self.name = "Barracks"

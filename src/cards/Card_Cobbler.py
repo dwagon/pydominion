@@ -9,7 +9,7 @@ from Card import Card
 class Card_Cobbler(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['night', 'duration']
+        self.cardtype = [Card.NIGHT, Card.DURATION]
         self.base = Game.NOCTURNE
         self.desc = "At the start of your next turn, gain a card to your hand costing up to 4."
         self.name = 'Cobbler'

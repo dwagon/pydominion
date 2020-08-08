@@ -181,7 +181,7 @@ class Test_cardsAffordable(unittest.TestCase):
 
     def test_under(self):
         price = 4
-        ans = self.plr.cardsUnder(price, types={'action': True})
+        ans = self.plr.cardsUnder(price, types={Card.ACTION: True})
         for a in ans:
             try:
                 self.assertLessEqual(a.cost, price)
@@ -193,7 +193,7 @@ class Test_cardsAffordable(unittest.TestCase):
 
     def test_worth(self):
         price = 5
-        ans = self.plr.cardsWorth(price, types={'victory': True})
+        ans = self.plr.cardsWorth(price, types={Card.VICTORY: True})
         for a in ans:
             self.assertEqual(a.cost, price)
             self.assertTrue(a.isVictory())
@@ -201,7 +201,7 @@ class Test_cardsAffordable(unittest.TestCase):
     def test_nocost(self):
         ans = self.plr.cardsAffordable(
             'less', coin=None, potions=0,
-            types={'victory': True, 'action': True, 'treasure': True, 'night': True}
+            types={Card.VICTORY: True, Card.ACTION: True, Card.TREASURE: True, Card.NIGHT: True}
         )
         self.assertIn('Province', [cp.name for cp in ans])
 
@@ -215,21 +215,21 @@ class Test_typeSelector(unittest.TestCase):
 
     def test_selzero(self):
         x = self.plr.typeSelector({})
-        self.assertTrue(x['action'])
-        self.assertTrue(x['treasure'])
-        self.assertTrue(x['victory'])
+        self.assertTrue(x[Card.ACTION])
+        self.assertTrue(x[Card.TREASURE])
+        self.assertTrue(x[Card.VICTORY])
 
     def test_selone(self):
-        x = self.plr.typeSelector({'action': True})
-        self.assertTrue(x['action'])
-        self.assertFalse(x['treasure'])
-        self.assertFalse(x['victory'])
+        x = self.plr.typeSelector({Card.ACTION: True})
+        self.assertTrue(x[Card.ACTION])
+        self.assertFalse(x[Card.TREASURE])
+        self.assertFalse(x[Card.VICTORY])
 
     def test_seltwo(self):
-        x = self.plr.typeSelector({'action': True, 'victory': True})
-        self.assertTrue(x['action'])
-        self.assertFalse(x['treasure'])
-        self.assertTrue(x['victory'])
+        x = self.plr.typeSelector({Card.ACTION: True, Card.VICTORY: True})
+        self.assertTrue(x[Card.ACTION])
+        self.assertFalse(x[Card.TREASURE])
+        self.assertTrue(x[Card.VICTORY])
 
 
 ###############################################################################
@@ -613,7 +613,7 @@ class Test_buyable_selection(unittest.TestCase):
         for i in opts:
             if i['name'] == 'Moat':
                 self.assertEqual(i['verb'], 'Buy')
-                self.assertEqual(i['action'], 'buy')
+                self.assertEqual(i[Card.ACTION], 'buy')
                 self.assertEqual(i['card'], self.g['Moat'])
                 break
         else:   # pragma: no coverage
@@ -626,7 +626,7 @@ class Test_buyable_selection(unittest.TestCase):
         for i in opts:
             if i['name'].startswith('Copper'):
                 try:
-                    self.assertEqual(i['action'], 'buy')
+                    self.assertEqual(i[Card.ACTION], 'buy')
                     self.assertEqual(i['card'], self.g['Copper'])
                 except AssertionError:      # pragma: no cover
                     print("Buy Copper {}".format(i))
@@ -690,17 +690,17 @@ class Test_choice_selection(unittest.TestCase):
 
     def test_action_phase(self):
         self.plr.setHand('Moat')
-        self.plr.phase = 'action'
+        self.plr.phase = Card.ACTION
         opts, _ = self.plr.choice_selection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
-        self.assertEqual(opts[0]['action'], 'quit')
+        self.assertEqual(opts[0][Card.ACTION], 'quit')
         self.assertEqual(opts[0]['selector'], '0')
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['verb'], 'Play')
         self.assertEqual(opts[1]['name'], 'Moat')
-        self.assertEqual(opts[1]['action'], 'play')
+        self.assertEqual(opts[1][Card.ACTION], 'play')
         self.assertEqual(opts[1]['selector'], 'a')
 
         self.assertEqual(len(opts), 2)
@@ -712,12 +712,12 @@ class Test_choice_selection(unittest.TestCase):
         opts, _ = self.plr.choice_selection()
 
         self.assertEqual(opts[0]['verb'], 'End Phase')
-        self.assertEqual(opts[0]['action'], 'quit')
+        self.assertEqual(opts[0][Card.ACTION], 'quit')
         self.assertEqual(opts[0]['selector'], '0')
         self.assertIsNone(opts[0]['card'])
 
-        self.assertEqual(opts[1]['action'], 'spendall')
-        self.assertEqual(opts[2]['action'], 'spend')
+        self.assertEqual(opts[1][Card.ACTION], 'spendall')
+        self.assertEqual(opts[2][Card.ACTION], 'spend')
 
     def test_prompt(self):
         self.plr.actions = 3
@@ -764,7 +764,7 @@ class Test_night_selection(unittest.TestCase):
         self.assertEqual(idx, 2)
         self.assertEqual(opts[0]['selector'], 'b')
         self.assertEqual(opts[0]['verb'], 'Play')
-        self.assertEqual(opts[0]['action'], 'play')
+        self.assertEqual(opts[0][Card.ACTION], 'play')
         self.assertEqual(opts[0]['card'].name, 'Monastery')
 
     def test_no_night(self):
@@ -790,24 +790,24 @@ class Test_spendable_selection(unittest.TestCase):
         self.plr.gainVillager(1)
         opts = self.plr.spendable_selection()
         self.assertEqual(opts[0]['selector'], '1')
-        self.assertEqual(opts[0]['action'], 'spendall')
+        self.assertEqual(opts[0][Card.ACTION], 'spendall')
         self.assertIn('Spend all treasures', opts[0]['verb'])
         self.assertIsNone(opts[0]['card'])
 
         self.assertEqual(opts[1]['selector'], '2')
         self.assertEqual(opts[1]['verb'], 'Spend Coffer (1 coin)')
-        self.assertEqual(opts[1]['action'], 'coffer')
+        self.assertEqual(opts[1][Card.ACTION], 'coffer')
         self.assertIsNone(opts[1]['card'])
 
         self.assertEqual(opts[2]['selector'], '4')
         self.assertEqual(opts[2]['verb'], 'Spend')
         self.assertEqual(opts[2]['name'], 'Copper')
-        self.assertEqual(opts[2]['action'], 'spend')
+        self.assertEqual(opts[2][Card.ACTION], 'spend')
         self.assertEqual(opts[2]['card'].name, 'Copper')
 
         self.assertEqual(opts[3]['verb'], 'Spend')
         self.assertEqual(opts[3]['selector'], '5')
-        self.assertEqual(opts[3]['action'], 'spend')
+        self.assertEqual(opts[3][Card.ACTION], 'spend')
         self.assertEqual(opts[3]['card'].name, 'Potion')
 
     def test_debt(self):
@@ -818,7 +818,7 @@ class Test_spendable_selection(unittest.TestCase):
         try:
             opts = self.plr.spendable_selection()
             self.assertEqual(opts[1]['selector'], '3')
-            self.assertEqual(opts[1]['action'], 'payback')
+            self.assertEqual(opts[1][Card.ACTION], 'payback')
             self.assertEqual(opts[1]['verb'], 'Payback Debt')
             self.assertIsNone(opts[1]['card'])
         except AssertionError:      # pragma: no cover

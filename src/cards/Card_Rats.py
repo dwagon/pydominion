@@ -9,7 +9,7 @@ from Card import Card
 class Card_Rats(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, Gain a Rats.
         Trash a card from your hand other than a Rats (or reveal a hand of all Rats).

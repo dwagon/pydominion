@@ -9,7 +9,7 @@ from Card import Card
 class Card_Storyteller(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.ADVENTURE
         self.desc = "+1 Action, +1 Coin; Play up to 3 Treasures from your hand. Pay all of your Coins; +1 Card per Coin paid"
         self.name = 'Storyteller'

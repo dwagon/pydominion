@@ -9,7 +9,7 @@ from Card import Card
 class Card_Armory(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = 'action'
+        self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = "Gain a card costing up to 4 putting it on top of your deck"
         self.name = 'Armory'

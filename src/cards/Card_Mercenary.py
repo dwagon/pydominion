@@ -9,7 +9,7 @@ from Card import Card
 class Card_Mercenary(Card):
     def __init__(self):
         Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DARKAGES
         self.desc = """You may trash 2 cards from your hand.
         If you do, +2 Cards, +2 Coin, and each other player discards down to 3 cards in hand."""
