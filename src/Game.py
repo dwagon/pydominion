@@ -25,6 +25,7 @@ from StatePile import StatePile
 from TextPlayer import TextPlayer
 from WayPile import WayPile
 
+# Source of the various cards
 ADVENTURE = 'adventure'
 ALCHEMY = 'alchemy'
 CORNUCOPIA = 'cornucopia'
