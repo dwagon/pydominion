@@ -32,6 +32,7 @@ class Player(object):
         self.hand = PlayArea([])
         self.exilepile = PlayArea([])
         self.durationpile = PlayArea([])
+        self.deferpile = PlayArea([])
         self.deck = PlayArea([])
         self.played = PlayArea([])
         self.discardpile = PlayArea([])
@@ -67,7 +68,7 @@ class Player(object):
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
             ('Played', self.played), ('Duration', self.durationpile),
-            ('Exile', self.exilepile)
+            ('Exile', self.exilepile), ('Defer', self.deferpile)
         )
 
     ###########################################################################
@@ -254,6 +255,16 @@ class Player(object):
         assert isinstance(cardname, str)
 
         for card in self.durationpile:
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
+    def in_defer(self, cardname):
+        """ Return named card if cardname is in the defer pile """
+        assert isinstance(cardname, str)
+
+        for card in self.deferpile:
             if card.name == cardname:
                 return card
         return None
@@ -871,6 +882,8 @@ class Player(object):
             tknoutput.append("Journey Facedown")
         self.output("| Phase: %s" % self.phase)
         self.output("| Tokens: %s" % "; ".join(tknoutput))
+        if self.deferpile:
+            self.output("| Defer: %s" % ", ".join([c.name for c in self.deferpile]))
         if self.durationpile:
             self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.projects:
@@ -909,6 +922,7 @@ class Player(object):
         x += self.deck
         x += self.played
         x += self.durationpile
+        x += self.deferpile
         x += self.reserve
         x += self.exilepile
         return x
@@ -970,6 +984,13 @@ class Player(object):
             if not card.permanent:
                 self.addCard(card, 'played')
                 self.durationpile.remove(card)
+        for card in self.deferpile:
+            self.output("Playing deferred %s" % card.name)
+            self.currcards.append(card)
+            self.deferpile.remove(card)
+            self.hand.add(card)
+            self.playCard(card, costAction=False)
+            self.currcards.pop()
 
     ###########################################################################
     def hook_start_turn(self):
@@ -1073,15 +1094,25 @@ class Player(object):
         return options
 
     ###########################################################################
+    def defer_card(self, card):
+        """ Set a non-duration card to be played in its entirety next turn """
+        self.deferpile.add(card)
+        if self.inPlayed(card.name):
+            self.played.remove(card)
+
+    ###########################################################################
     def playCard(self, card, discard=True, costAction=True, postActionHook=True):
-        options = {'skip_card': False}
-        if card not in self.hand and discard:
+        options = {'skip_card': False, 'discard': discard}
+        if card not in self.hand and options['discard']:
             self.output("{} is no longer available".format(card.name))
             return
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction():
             options.update(self.hook_allPlayers_preAction(card))
+
+        self.playCard_Tokens(card)
+
         if card.isAction() and costAction and self.phase != 'night':
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
@@ -1089,15 +1120,15 @@ class Player(object):
             self.currcards.pop()
             self.output("Not enough actions")
             return
-        self.playCard_Tokens(card)
-        if discard:
+
+        if options['discard']:
+            self.hand.remove(card)
             if card.isDuration():
                 self.addCard(card, 'duration')
             elif card.isReserve():
                 self.addCard(card, 'reserve')
             else:
                 self.addCard(card, 'played')
-            self.hand.remove(card)
 
         if not options['skip_card']:
             self.card_benefits(card)
