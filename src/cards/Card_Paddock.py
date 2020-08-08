@@ -40,7 +40,7 @@ class Test_Paddock(unittest.TestCase):
             if not c:
                 break
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard('Horse'))
 
 

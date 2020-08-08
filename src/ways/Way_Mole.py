@@ -36,7 +36,7 @@ class Test_Mole(unittest.TestCase):
         """ Perform a Mole """
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 3)
 
 

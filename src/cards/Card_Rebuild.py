@@ -65,7 +65,7 @@ class Test_Rebuild(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Estate', 'Province', 'Gold')
         self.plr.test_input = ['Select Province', 'Get Duchy']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discard_size(), 3)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Province'))

@@ -40,14 +40,14 @@ class Test_Familiar(unittest.TestCase):
         """ Play a familiar """
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.discardpile[0].name, 'Curse')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
 
     def test_defended(self):
         self.victim.setHand('Gold', 'Moat')
         self.plr.playCard(self.card)
         self.assertTrue(self.victim.discardpile.is_empty())
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 1)
 
 

@@ -59,7 +59,7 @@ class Test_Mine(unittest.TestCase):
         self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.getBuys(), 1)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
 
     def test_convnothing(self):
         self.plr.setHand('Copper')

@@ -47,7 +47,7 @@ class Test_Emporium(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_gain_with_actions(self):
         """ Play the Emporium having played lots of actions"""

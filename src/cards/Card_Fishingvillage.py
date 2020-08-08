@@ -36,14 +36,14 @@ class Test_Fishingvillage(unittest.TestCase):
         """ Play a fishing village """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.durationSize(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.durationSize(), 0)
         self.assertEqual(self.plr.played_size(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Fishing Village')
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

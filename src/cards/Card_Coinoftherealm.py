@@ -47,7 +47,7 @@ class Test_Coinoftherealm(unittest.TestCase):
         self.plr.playCard(self.card)
         c = self.plr.call_reserve('Coin of the Realm')
         self.assertEqual(c.name, 'Coin of the Realm')
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

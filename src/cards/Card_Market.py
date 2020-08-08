@@ -33,7 +33,7 @@ class Test_Market(unittest.TestCase):
         """ Play a market """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 

@@ -44,7 +44,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.test_input = ['great']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 6)
 
@@ -53,7 +53,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.test_input = ['Silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Silver')
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.handSize(), 5)
 
@@ -62,7 +62,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.test_input = ['iron']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Iron Works')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 

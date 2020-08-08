@@ -44,12 +44,12 @@ class Test_Villa(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         self.plr.phase = 'buy'
         self.plr.gainCard('Villa')
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.phase, 'action')
         self.assertIsNotNone(self.plr.in_hand('Villa'))
 

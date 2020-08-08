@@ -42,7 +42,7 @@ class Test_CursedVillage(unittest.TestCase):
         """ Play Cursed Village """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertGreaterEqual(self.plr.getActions(), 2)
+        self.assertGreaterEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_gain(self):

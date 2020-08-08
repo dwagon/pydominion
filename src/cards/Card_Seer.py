@@ -48,7 +48,7 @@ class Test_Seer(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 3)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_deck('Copper'))
         self.assertIsNotNone(self.plr.in_hand('Province'))
         self.assertIsNotNone(self.plr.in_hand('Silver'))

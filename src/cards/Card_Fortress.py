@@ -44,7 +44,7 @@ class Test_Fortress(unittest.TestCase):
         """ Play the card """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_trash(self):
         self.plr.trashCard(self.card)

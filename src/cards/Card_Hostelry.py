@@ -53,7 +53,7 @@ class Test_Hostelry(unittest.TestCase):
         """ Play a card """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         """ Gain the card """

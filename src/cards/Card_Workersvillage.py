@@ -30,7 +30,7 @@ class Test_Workersvillage(unittest.TestCase):
     def test_play(self):
         """ Play Workers Village """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 6)
 

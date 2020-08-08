@@ -56,7 +56,7 @@ class Test_Herald(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1 + 1)
+        self.assertEqual(self.plr.get_actions(), 1 + 1)
         self.assertIsNotNone(self.plr.in_played('Moat'))
 
     def test_buy(self):

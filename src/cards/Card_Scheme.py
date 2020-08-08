@@ -44,7 +44,7 @@ class Test_Scheme(unittest.TestCase):
         self.plr.setPlayed('Moat')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.plr.test_input = ['moat']
         self.plr.cleanup_phase()
         self.assertIsNotNone(self.plr.in_hand('Moat'))

@@ -48,7 +48,7 @@ class Test_Treasury(unittest.TestCase):
         """ Play a trader - trashing an estate """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_buy_topdeck(self):

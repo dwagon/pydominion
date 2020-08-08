@@ -66,7 +66,7 @@ class Test_Tribute(unittest.TestCase):
         """ Victim has the same cards for Tribute"""
         self.victim.setDeck('Tribute', 'Tribute')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 

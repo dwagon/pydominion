@@ -53,7 +53,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_good(self):
@@ -62,7 +62,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('Province')
         self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(self.plr.in_hand('Province'))
         self.assertTrue(self.plr.deck.is_empty())
@@ -73,7 +73,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('Province')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertTrue(not self.plr.in_hand('Gold'))
         self.assertTrue(not self.plr.in_hand('Province'))

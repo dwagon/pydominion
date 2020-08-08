@@ -54,14 +54,14 @@ class Test_Haven(unittest.TestCase):
         self.plr.test_input = ['select gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.durationSize(), 2)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.played_size(), 1)
         self.assertTrue(self.plr.in_hand('Gold'))
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

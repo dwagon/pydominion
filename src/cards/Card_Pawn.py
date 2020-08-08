@@ -62,7 +62,7 @@ class Test_Pawn(unittest.TestCase):
         self.plr.test_input = ['+1 card', '+1 action']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
 
@@ -71,7 +71,7 @@ class Test_Pawn(unittest.TestCase):
         self.plr.test_input = ['+1 buy', '+1 coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 

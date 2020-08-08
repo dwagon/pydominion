@@ -55,7 +55,7 @@ class Test_Huntingparty(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand('Duchy'))
         self.assertIsNotNone(self.plr.in_hand('Province'))
         self.assertIsNotNone(self.plr.in_discard('Silver'))

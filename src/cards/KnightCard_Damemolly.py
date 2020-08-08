@@ -38,7 +38,7 @@ class Test_Dame_Molly(unittest.TestCase):
         """ Play the Dame"""
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

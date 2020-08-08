@@ -43,7 +43,7 @@ class Test_MarketSquare(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_trash_and_keep(self):
         """ Choose to keep MS after a trash """
