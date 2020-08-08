@@ -43,7 +43,7 @@ class Test_Ghost_Town(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         self.plr.gainCard('Ghost Town')

@@ -52,7 +52,7 @@ class Test_Wishingwell(unittest.TestCase):
         """ No guess still gets a card and action """
         self.plr.test_input = ['no guess']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_good(self):

@@ -33,7 +33,7 @@ class Test_Horse(unittest.TestCase):
         """ Perform a Horse """
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 5 + 2)
         self.assertEqual(self.g['Moat'].pilesize, 10)
         self.assertIsNone(self.plr.in_hand('Moat'))

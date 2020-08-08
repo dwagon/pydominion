@@ -46,7 +46,7 @@ class Test_Enchantress(unittest.TestCase):
         self.vic.addCard(self.r1, 'hand')
         self.vic.playCard(self.r1)
         self.assertEqual(self.vic.handSize(), 5 + 1)    # Hand + Ench
-        self.assertEqual(self.vic.getActions(), 1)
+        self.assertEqual(self.vic.get_actions(), 1)
         self.vic.addCard(self.m1, 'hand')
         self.vic.playCard(self.m1)
         self.g.print_state()

@@ -44,7 +44,7 @@ class Test_Vagrant(unittest.TestCase):
         """ Play the vagrant with unexciting next card"""
         self.plr.setDeck('Gold', 'Silver', 'Copper')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertEqual(self.plr.nextCard().name, 'Silver')
 
@@ -52,7 +52,7 @@ class Test_Vagrant(unittest.TestCase):
         """ Play the vagrant with an exciting next card"""
         self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.handSize(), 7)
         self.assertTrue(self.plr.in_hand('Province'))
 

@@ -490,9 +490,9 @@ class Test_misc(unittest.TestCase):
         self.plr.setDeck('Silver', 'Copper')
         self.assertEqual(self.plr.deckSize(), 2)
 
-    def test_getActions(self):
+    def test_get_actions(self):
         self.plr.actions = 3
-        numactions = self.plr.getActions()
+        numactions = self.plr.get_actions()
         self.assertEqual(numactions, 3)
 
     def test_addActions(self):
@@ -877,14 +877,14 @@ class Test_spendVillager(unittest.TestCase):
         self.plr.villager = 1
         self.plr.spendVillager()
         self.assertEqual(self.plr.getVillager(), 0)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_spendNothing(self):
         """ Spend a Villager that the player doesn't have """
         self.plr.villager = 0
         self.plr.spendVillager()
         self.assertEqual(self.plr.getVillager(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

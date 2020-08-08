@@ -37,7 +37,7 @@ class Test_Transmogrify(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.trans)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_reserve('Transmogrify'))
 
     def test_call(self):

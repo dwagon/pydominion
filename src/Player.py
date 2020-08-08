@@ -1389,7 +1389,7 @@ class Player(object):
         self.coin = num
 
     ###########################################################################
-    def getActions(self):
+    def get_actions(self):
         return self.actions
 
     ###########################################################################

@@ -42,7 +42,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNone(self.g.in_trash('Mining Village'))
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
@@ -53,7 +53,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 6)
         self.assertTrue(self.plr.played.is_empty())
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.g.in_trash('Mining Village'))
 

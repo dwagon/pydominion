@@ -40,7 +40,7 @@ class Test_City(unittest.TestCase):
     def test_nostacks(self):
         """ Play a city with no stacks empty """
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.handSize(), 6)
 
     def test_onestack(self):
@@ -50,7 +50,7 @@ class Test_City(unittest.TestCase):
             if not c:
                 break
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.handSize(), 7)
 
     def test_twostack(self):
@@ -64,7 +64,7 @@ class Test_City(unittest.TestCase):
             if not c:
                 break
         self.plr.playCard(self.city)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
         # 1 default + 1 for city
         self.assertEqual(self.plr.getBuys(), 2)

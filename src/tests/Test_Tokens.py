@@ -44,9 +44,9 @@ class TestToken(unittest.TestCase):
         self.plr.place_token('+1 Action', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.plr.playCard(moat)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_trashing_token(self):
         """ Does the Trashing token work """

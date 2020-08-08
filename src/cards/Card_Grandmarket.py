@@ -39,7 +39,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCard(self.gm, 'hand')
         self.plr.playCard(self.gm)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.handSize(), 6)
 

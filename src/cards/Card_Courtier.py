@@ -64,7 +64,7 @@ class Test_Courtier(unittest.TestCase):
     def test_play_action(self):
         self.plr.test_input = ['Copper', '+1 Action']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1 + 0)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNone(self.plr.in_discard('Gold'))
@@ -73,7 +73,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Moat', '+1 Buy', '+3 Coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertIsNone(self.plr.in_discard('Gold'))
@@ -82,7 +82,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Estate', 'Gain Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 1 + 0)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNotNone(self.plr.in_discard('Gold'))

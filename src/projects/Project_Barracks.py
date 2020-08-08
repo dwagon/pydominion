@@ -29,7 +29,7 @@ class Test_Barracks(unittest.TestCase):
     def test_flag(self):
         self.plr.assign_project('Barracks')
         self.plr.start_turn()
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

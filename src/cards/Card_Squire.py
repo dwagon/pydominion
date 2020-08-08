@@ -57,7 +57,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertIsNone(self.plr.in_discard('Silver'))
 
@@ -66,7 +66,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.test_input = ['buys']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 3)
         self.assertIsNone(self.plr.in_discard('Silver'))
 
@@ -75,7 +75,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.test_input = ['silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertIsNotNone(self.plr.in_discard('Silver'))
 
