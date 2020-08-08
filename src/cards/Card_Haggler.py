@@ -40,8 +40,8 @@ class Test_Haggler(unittest.TestCase):
         self.plr.test_input = ['Get Silver']
         self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

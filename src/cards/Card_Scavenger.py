@@ -27,7 +27,7 @@ class Card_Scavenger(Card):
             for card in player.deck[:]:
                 player.addCard(card, 'discard')
                 player.deck.remove(card)
-        if player.discardSize():
+        if player.discard_size():
             cards = []
             cardnames = set()
             for c in player.discardpile:
@@ -55,7 +55,7 @@ class Test_Scavenger(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck[-1].name, 'Moat')
-        self.assertIsNotNone(self.plr.inDiscard('Witch'))
+        self.assertIsNotNone(self.plr.in_discard('Witch'))
 
 
 ###############################################################################

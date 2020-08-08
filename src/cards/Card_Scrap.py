@@ -83,8 +83,8 @@ class Test_Scrap(unittest.TestCase):
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
 
 
 ###############################################################################

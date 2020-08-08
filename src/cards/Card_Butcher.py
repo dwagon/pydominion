@@ -63,7 +63,7 @@ class Test_Butcher(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))
         for m in self.plr.messages:
             if 'Province' in m:

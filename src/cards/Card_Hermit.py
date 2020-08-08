@@ -32,7 +32,7 @@ class Card_Hermit(Card):
             verbs=('Trash', 'Untrash')
             )
         if choice:
-            if player.inDiscard(choice[0].name):
+            if player.in_discard(choice[0].name):
                 player.discardpile.remove(choice[0])
             else:
                 player.hand.remove(choice[0])
@@ -68,8 +68,8 @@ class Test_Hermit(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_play_hand(self):
         """ Play a Hermit trashing card from hand """
@@ -79,14 +79,14 @@ class Test_Hermit(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Province'))
         self.assertIsNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_discard(self):
         """ Discard a Hermit and gain a Madman """
         self.plr.test_input = ['madman']
         self.plr.addCard(self.card, 'hand')
         self.plr.discardHand()
-        self.assertIsNotNone(self.plr.inDiscard('Madman'))
+        self.assertIsNotNone(self.plr.in_discard('Madman'))
         self.assertIsNone(self.plr.inHand('Hermit'))
 
 

@@ -52,7 +52,7 @@ class Test_Donate(unittest.TestCase):
         self.assertIsNone(self.plr.in_deck('Gold'))
         self.assertEqual(self.g.trashSize(), tsize + 3)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
 
 ###############################################################################

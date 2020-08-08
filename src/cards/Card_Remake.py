@@ -37,7 +37,7 @@ class Test_Remake(unittest.TestCase):
         self.plr.test_input = ['Trash Estate', 'Get Silver', 'Trash Copper', 'Finish Selecting']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 0)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

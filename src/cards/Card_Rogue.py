@@ -119,7 +119,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
-            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertEqual(self.plr.discard_size(), 1)
             self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
         except AssertionError:      # pragma: no cover
             self.g.print_state()
@@ -134,7 +134,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.victim.discard_size(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 
     def test_bad_player(self):
@@ -144,7 +144,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discard_size(), 2)
 
 
 ###############################################################################

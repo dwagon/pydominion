@@ -41,9 +41,9 @@ class Test_Famine(unittest.TestCase):
     def test_famine(self):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.inDiscard('Cursed Village'))
+        self.assertIsNotNone(self.plr.in_discard('Cursed Village'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

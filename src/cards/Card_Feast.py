@@ -86,8 +86,8 @@ class Test_Feast(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash('Feast'))
             self.assertTrue(self.plr.played.is_empty())
-            self.assertEqual(self.plr.discardSize(), 1)
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertEqual(self.plr.discard_size(), 1)
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

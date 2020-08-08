@@ -58,8 +58,8 @@ class Test_Pilgrimage(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.addCoin(4)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertTrue(self.plr.journey_token)
 
 

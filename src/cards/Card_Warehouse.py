@@ -40,7 +40,7 @@ class Test_Warehouse(unittest.TestCase):
         # Initial hand size - 3 discards + 3 pickups - 1 played
         self.assertEqual(self.plr.handSize(), 5 - 3 + 3 - 1)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discard_size(), 3)
 
 
 ###############################################################################

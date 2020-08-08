@@ -39,7 +39,7 @@ class Test_Ritual(unittest.TestCase):
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.getScoreDetails()['Ritual'], 6)
         self.assertIsNotNone(self.g.in_trash('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
 
 
 ###############################################################################

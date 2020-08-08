@@ -55,7 +55,7 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.addCard(militia, 'hand')
         self.plr.test_input = ['1', 'militia', 'get gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNone(self.plr.inHand('Militia'))
 
     def test_trash_empty(self):

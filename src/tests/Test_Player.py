@@ -15,8 +15,8 @@ class TestPlayer(unittest.TestCase):
         """ Make sure initial hands are correct """
         self.assertEqual(len(self.plr.deck), 5)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.playedSize(), 0)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.played_size(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
     def test_initialDeck(self):
         """ Ensure initial player decks are correct """
@@ -64,8 +64,8 @@ class Test_discardHand(unittest.TestCase):
         self.plr.setPlayed('Estate', 'Duchy')
         self.plr.discardHand()
         self.assertEqual(self.plr.handSize(), 0)
-        self.assertEqual(self.plr.playedSize(), 0)
-        self.assertEqual(self.plr.discardSize(), 4)
+        self.assertEqual(self.plr.played_size(), 0)
+        self.assertEqual(self.plr.discard_size(), 4)
 
 
 ###############################################################################
@@ -99,33 +99,33 @@ class Test_inPlayed(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inDiscard(unittest.TestCase):
+class Test_in_discard(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_emptydiscard(self):
-        """ Test inDiscard() with no discard pile """
+        """ Test in_discard() with no discard pile """
         self.plr.setDiscard()
-        self.assertIsNone(self.plr.inDiscard('Copper'))
+        self.assertIsNone(self.plr.in_discard('Copper'))
 
     def test_indiscard(self):
-        """ Test inDiscard() with it the only card in the discard pile """
+        """ Test in_discard() with it the only card in the discard pile """
         self.plr.setDiscard('Copper')
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
 
     def test_inmultidiscard(self):
-        """ Test inDiscard() with it one of many cards in the discard pile """
+        """ Test in_discard() with it one of many cards in the discard pile """
         self.plr.setDiscard('Copper', 'Gold', 'Copper')
-        c = self.plr.inDiscard('Gold')
+        c = self.plr.in_discard('Gold')
         self.assertIsNotNone(c)
         self.assertEqual(c.name, 'Gold')
 
     def test_notinmultidiscard(self):
-        """ Test inDiscard() with it not one of many cards in the discard pile """
+        """ Test in_discard() with it not one of many cards in the discard pile """
         self.plr.setDiscard('Copper', 'Gold', 'Copper')
-        self.assertIsNone(self.plr.inDiscard('Estate'))
+        self.assertIsNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################
@@ -472,15 +472,15 @@ class Test_misc(unittest.TestCase):
 
     def test_setPlayed(self):
         self.plr.setPlayed('Silver', 'Copper')
-        self.assertEqual(self.plr.playedSize(), 2)
+        self.assertEqual(self.plr.played_size(), 2)
 
     def test_setPlayed_empty(self):
         self.plr.setPlayed()
-        self.assertEqual(self.plr.playedSize(), 0)
+        self.assertEqual(self.plr.played_size(), 0)
 
     def test_setDiscard(self):
         self.plr.setDiscard('Silver', 'Copper')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
 
     def test_setHand(self):
         self.plr.setHand('Silver', 'Copper')
@@ -538,7 +538,7 @@ class Test_misc(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.cleanup_phase()
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.playedSize(), 0)
+        self.assertEqual(self.plr.played_size(), 0)
 
 
 ###############################################################################
@@ -839,7 +839,7 @@ class Test_buyCard(unittest.TestCase):
     def test_embargo(self):
         self.g['Copper'].embargo()
         self.plr.buyCard(self.g['Copper'])
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
         self.assertIn('Gained a Curse from embargo', self.plr.messages)
 
 
@@ -897,13 +897,13 @@ class Test_plrGainCard(unittest.TestCase):
     def test_gainCard_equal(self):
         self.plr.test_input = ['get silver']
         c = self.plr.plrGainCard(3, modifier='equal')
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertEqual(c.name, 'Silver')
 
     def test_gainCard_less(self):
         self.plr.test_input = ['get silver']
         c = self.plr.plrGainCard(4, modifier='less')
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertEqual(c.name, 'Silver')
 
 
@@ -936,14 +936,14 @@ class Test_plrDiscardDownTo(unittest.TestCase):
     def test_discard_nothing(self):
         self.plr.setHand('Estate', 'Duchy', 'Province')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
     def test_discard_one(self):
         self.plr.test_input = ['gold', 'finish']
         self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

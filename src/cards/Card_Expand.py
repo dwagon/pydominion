@@ -41,7 +41,7 @@ class Test_Expand(unittest.TestCase):
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.expand)
         self.assertTrue(self.plr.hand.is_empty())
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
 
 

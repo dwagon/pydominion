@@ -17,7 +17,7 @@ class Card_MountainVillage(Card):
         self.actions = 2
 
     def special(self, game, player):
-        if player.discardSize():
+        if player.discard_size():
             card = player.cardSel(
                 cardsrc='discard',
                 force=True,
@@ -53,7 +53,7 @@ class Test_MountainVillage(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 2)
         self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

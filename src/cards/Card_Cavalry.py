@@ -44,7 +44,7 @@ class Test_Cavalry(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
 
     def test_gain(self):
         self.plr.phase = 'buy'

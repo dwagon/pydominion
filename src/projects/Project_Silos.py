@@ -41,7 +41,7 @@ class Test_Silos(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Copper', 'Province')
         self.plr.test_input = ['2']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
         self.assertIsNone(self.plr.inHand('Copper'))
         self.assertEqual(self.plr.handSize(), 4)
 

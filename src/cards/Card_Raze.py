@@ -54,8 +54,8 @@ class Test_Raze(unittest.TestCase):
         self.plr.test_input = ['Raze', 'Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Province'))
         self.assertIsNotNone(self.plr.inHand('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNotNone(self.g.in_trash('Raze'))

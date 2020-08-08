@@ -40,7 +40,7 @@ class Test_Tunnel(unittest.TestCase):
         """ Play the Tunnel """
         self.plr.test_input = ['gold']
         self.plr.discardCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
     def test_score(self):
         """ Score from a Tunnel """

@@ -60,7 +60,7 @@ class Test_Pillage(unittest.TestCase):
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
         self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.victim.discard_size(), 1)
         self.assertEqual(self.victim.discardpile[0].name, 'Copper')
 
     def test_short_hand(self):
@@ -73,7 +73,7 @@ class Test_Pillage(unittest.TestCase):
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
         self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.discard_size(), 0)
 
 
 ###############################################################################

@@ -41,7 +41,7 @@ class Test_Remodel(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
         self.assertEqual(self.plr.handSize(), 5)
 
     def test_trash_gainnothing(self):
@@ -50,7 +50,7 @@ class Test_Remodel(unittest.TestCase):
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
         self.assertEqual(self.plr.handSize(), 4)
 
     def test_trash_gainsomething(self):
@@ -59,7 +59,7 @@ class Test_Remodel(unittest.TestCase):
         self.plr.test_input = ['1', '1']
         self.plr.playCard(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertEqual(self.plr.handSize(), 4)
 
 

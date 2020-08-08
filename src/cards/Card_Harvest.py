@@ -41,8 +41,8 @@ class Test_Harvest(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Duchy', 'Silver', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
         self.assertIsNone(self.plr.in_deck('Duchy'))
 
 

@@ -126,7 +126,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         """ Make the Band of Misfits be a Feast """
         self.plr.test_input = ['Feast', 'trash', 'moat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

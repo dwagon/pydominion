@@ -35,9 +35,9 @@ class Test_Alliance(unittest.TestCase):
         """ Perform a Alliance """
         self.plr.addCoin(10)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
 
 
 ###############################################################################

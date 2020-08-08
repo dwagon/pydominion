@@ -18,7 +18,7 @@ class Card_Settlers(Card):
         self.desc = """+1 Card +1 Action. Look through your discard pile. You may reveal a Copper from it and put it into your hand."""
 
     def special(self, game, player):
-        cu = player.inDiscard('Copper')
+        cu = player.in_discard('Copper')
         if cu:
             player.addCard(cu, 'hand')
             player.discardpile.remove(cu)
@@ -43,7 +43,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.inHand('Copper'))
-        self.assertIsNone(self.plr.inDiscard('Copper'))
+        self.assertIsNone(self.plr.in_discard('Copper'))
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 2 + 1 + 1)
 

@@ -61,7 +61,7 @@ class Test_Charm(unittest.TestCase):
         self.plr.test_input = ['Get Duchy']
         self.plr.setCoin(5)
         self.plr.buyCard(self.g['Charm'])
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

@@ -16,7 +16,7 @@ class Boon_Moons_Gift(Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        if not player.discardSize():
+        if not player.discard_size():
             return
         cards = []
         cardnames = set()
@@ -48,7 +48,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

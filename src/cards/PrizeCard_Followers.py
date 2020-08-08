@@ -41,8 +41,8 @@ class Test_Followers(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 + 2)
         self.assertEqual(self.victim.handSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
 
 
 ###############################################################################

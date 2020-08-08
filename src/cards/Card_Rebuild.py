@@ -66,10 +66,10 @@ class Test_Rebuild(unittest.TestCase):
         self.plr.test_input = ['Select Province', 'Get Duchy']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertEqual(self.plr.discard_size(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Estate'))
 

@@ -47,7 +47,7 @@ class Test_ScoutingParty(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.deck[0].name, 'Gold')
         self.assertEqual(self.plr.deck[1].name, 'Silver')
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discard_size(), 3)
 
 
 ###############################################################################

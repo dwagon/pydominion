@@ -53,7 +53,7 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.test_input = ['1', '0', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1 + 1)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_discardtwice(self):
@@ -61,7 +61,7 @@ class Test_Storeroom(unittest.TestCase):
         self.plr.test_input = ['1', '0', '1', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5 - 1)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 

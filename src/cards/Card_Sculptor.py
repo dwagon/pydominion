@@ -37,7 +37,7 @@ class Test_Sculptor(unittest.TestCase):
         self.plr.setDeck('Moat')
         self.plr.test_input = ['Get Moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
         self.assertIsNotNone(self.plr.inHand('Moat'))
         self.assertLessEqual(self.plr.getVillager(), 1)
 

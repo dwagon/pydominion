@@ -60,7 +60,7 @@ class Test_Tribute(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discard_size(), 2)
 
     def test_same(self):
         """ Victim has the same cards for Tribute"""

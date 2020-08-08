@@ -57,7 +57,7 @@ class Test_Pixie(unittest.TestCase):
         self.plr.test_input = ['Trash']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.discardSize(), 2)
+            self.assertEqual(self.plr.discard_size(), 2)
             for c in self.plr.discardpile:
                 self.assertEqual(c.name, 'Silver')
         except AssertionError:      # pragma: no cover

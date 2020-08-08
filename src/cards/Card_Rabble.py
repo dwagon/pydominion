@@ -63,7 +63,7 @@ class Test_Rabble(unittest.TestCase):
         self.victim.setDeck('Copper', 'Estate', 'Rabble')
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.deck[-1].name, 'Estate')
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discard_size(), 2)
         self.assertEqual(self.attacker.handSize(), 5 + 3)
 
 

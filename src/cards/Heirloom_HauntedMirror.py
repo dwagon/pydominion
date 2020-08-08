@@ -44,13 +44,13 @@ class Test_Haunted_Mirror(unittest.TestCase):
     def test_trash_nothing(self):
         self.plr.setHand('Copper')
         self.plr.trashCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Ghost'))
+        self.assertIsNone(self.plr.in_discard('Ghost'))
 
     def test_trash(self):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Moat']
         self.plr.trashCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Ghost'))
+        self.assertIsNotNone(self.plr.in_discard('Ghost'))
 
 
 ###############################################################################

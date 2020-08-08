@@ -33,13 +33,13 @@ class Test_Workshop(unittest.TestCase):
         self.plr.test_input = ['Finish']
         self.plr.playCard(self.wcard)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discard_size(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ['Get Feast']
         self.plr.playCard(self.wcard)
         self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discard_size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 4)
 
 

@@ -50,7 +50,7 @@ class Test_Trader(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['estate', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discard_size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Silver')
         self.assertEqual(self.g.trashSize(), tsize + 1)
@@ -61,8 +61,8 @@ class Test_Trader(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

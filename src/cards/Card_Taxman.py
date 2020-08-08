@@ -54,8 +54,8 @@ class Test_Taxman(unittest.TestCase):
         self.plr.test_input = ['Trash Silver', 'Get Gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.victim.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.victim.in_discard('Silver'))
 
 
 ###############################################################################

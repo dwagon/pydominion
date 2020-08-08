@@ -71,7 +71,7 @@ class Test_Bandit(unittest.TestCase):
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.card)
         self.assertEqual(self.vic.deckSize(), 1)
-        self.assertEqual(self.vic.discardSize(), 2)
+        self.assertEqual(self.vic.discard_size(), 2)
 
     def test_trash_treasure(self):
         self.vic.setHand('Copper', 'Copper')

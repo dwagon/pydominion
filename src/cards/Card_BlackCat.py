@@ -42,7 +42,7 @@ class Test_Black_Cat(unittest.TestCase):
         """ Play a card """
         self.oth.gainCard('Estate')
         self.g.print_state()
-        self.assertIsNotNone(self.oth.inDiscard('Curse'))
+        self.assertIsNotNone(self.oth.in_discard('Curse'))
 
 
 ###############################################################################

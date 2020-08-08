@@ -50,7 +50,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.gainCard('Moat')
         self.assertEqual(self.plr.handSize(), 5 + 1 + 2)
         self.assertIsNotNone(self.plr.inHand('Moat'))
-        self.assertIsNone(self.plr.inDiscard('Moat'))
+        self.assertIsNone(self.plr.in_discard('Moat'))
 
     def test_dontplay(self):
         self.plr.assign_project('Innovation')
@@ -59,7 +59,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.gainCard('Moat')
         self.assertEqual(self.plr.handSize(), 5)
         self.assertIsNone(self.plr.inHand('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

@@ -46,7 +46,7 @@ class Test_Farmland(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.handSize(), 1)
             # 1 for farmland, 1 for gained card
-            self.assertEqual(self.plr.discardSize(), 2)
+            self.assertEqual(self.plr.discard_size(), 2)
         except (AssertionError, IOError):       # pragma: no cover
             self.g.print_state()
             raise

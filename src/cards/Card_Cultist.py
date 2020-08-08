@@ -47,7 +47,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.victim.discard_size(), 1)
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
     def test_defense(self):
@@ -73,7 +73,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played_size(), 1)
 
     def test_anothercultist_yes(self):
         """ Another cultist can be played for free """
@@ -81,11 +81,11 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 2)
+        self.assertEqual(self.plr.played_size(), 2)
         self.assertEqual(self.plr.getActions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discard_size(), 2)
         for c in self.victim.discardpile:
             self.assertTrue(c.isRuin())
 
