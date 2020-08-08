@@ -38,8 +38,9 @@ class Test_Expand(unittest.TestCase):
     def test_play(self):
         self.plr.setHand('Copper')
         self.plr.addCard(self.expand, 'hand')
-        self.plr.test_input = ['1', '1']
+        self.plr.test_input = ['Trash Copper', 'Get Estate']
         self.plr.playCard(self.expand)
+        self.g.print_state()
         self.assertTrue(self.plr.hand.is_empty())
         self.assertEqual(self.plr.discard_size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
