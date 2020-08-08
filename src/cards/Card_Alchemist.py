@@ -25,13 +25,13 @@ class Card_Alchemist(Card):
         # We have to check the discardpile as well
         if source != 'played':
             return
-        if not player.inPlayed('Potion') and not player.in_discard('Potion'):
+        if not player.in_played('Potion') and not player.in_discard('Potion'):
             return
         ans = player.plrChooseOptions(
             'What to do with the alchemist?',
             ('Discard alchemist', False), ('Put on top of deck', True))
         if ans:
-            alc = player.inPlayed('Alchemist')
+            alc = player.in_played('Alchemist')
             if alc:
                 player.played.remove(alc)
             else:

@@ -39,7 +39,7 @@ class Test_Horse(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inPlayed('Horse'))
+        self.assertIsNone(self.plr.in_played('Horse'))
         self.assertEqual(self.plr.handSize(), 5 + 2)
         self.assertEqual(self.plr.getActions(), 1)
 

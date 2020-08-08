@@ -38,7 +38,7 @@ class Test_Transmogrify(unittest.TestCase):
     def test_play(self):
         self.plr.playCard(self.trans)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inReserve('Transmogrify'))
+        self.assertIsNotNone(self.plr.in_reserve('Transmogrify'))
 
     def test_call(self):
         self.plr.setHand('Duchy', 'Estate')
@@ -46,7 +46,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.test_input = ['trash duchy', 'get gold']
         self.plr.call_reserve('Transmogrify')
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

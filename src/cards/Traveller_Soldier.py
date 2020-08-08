@@ -74,7 +74,7 @@ class Test_Soldier(unittest.TestCase):
         self.vic.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard('Gold'))
-        self.assertIsNone(self.vic.inHand('Gold'))
+        self.assertIsNone(self.vic.in_hand('Gold'))
         self.assertEqual(self.vic.handSize(), 4)
 
 

@@ -56,7 +56,7 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.test_input = ['1', 'militia', 'get gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
-        self.assertIsNone(self.plr.inHand('Militia'))
+        self.assertIsNone(self.plr.in_hand('Militia'))
 
     def test_trash_empty(self):
         """ Play a grave robber - nothing to trash """

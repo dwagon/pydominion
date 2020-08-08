@@ -51,7 +51,7 @@ class Test_Sage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
     def test_exhaust_deck(self):
         """ No good card to pick out of the pile """

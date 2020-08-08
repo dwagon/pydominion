@@ -26,7 +26,7 @@ class Card_Imp(Card):
             player.output("No action cards")
             return
         # Select ones that haven't been played
-        sac = [_ for _ in ac if not player.inPlayed(_.name)]
+        sac = [_ for _ in ac if not player.in_played(_.name)]
         if not sac:
             player.output("No unplayed action cards")
             return

@@ -67,7 +67,7 @@ class Test_NativeVillage(unittest.TestCase):
         self.plr.test_input = ['Put all']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.secret_count, 0)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

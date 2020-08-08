@@ -42,7 +42,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
         self.assertIsNone(self.plr.in_discard('Copper'))
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 2 + 1 + 1)
@@ -54,7 +54,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
         self.assertEqual(self.plr.handSize(), 2 + 1)
 
 

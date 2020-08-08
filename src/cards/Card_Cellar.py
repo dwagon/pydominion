@@ -43,7 +43,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEqual(self.plr.deck[-1].name, 'Province')
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(self.plr.handSize(), 3)
 
 

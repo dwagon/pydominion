@@ -40,7 +40,7 @@ class Card_YoungWitch(Card):
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
         for pl in player.attackVictims():
-            if pl.inHand(game._bane):
+            if pl.in_hand(game._bane):
                 player.output("%s has the bane: %s" % (pl.name, game._bane))
                 continue
             player.output("%s got cursed" % pl.name)

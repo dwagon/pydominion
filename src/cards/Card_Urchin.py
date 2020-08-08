@@ -71,7 +71,7 @@ class Test_Urchin(unittest.TestCase):
         self.plr.test_input = ['end phase', 'end phase', 'mercenary']
         self.plr.turn()
         self.assertIsNotNone(self.plr.in_discard('Mercenary'))
-        self.assertIsNone(self.plr.inHand('Urchin'))
+        self.assertIsNone(self.plr.in_hand('Urchin'))
 
 
 ###############################################################################

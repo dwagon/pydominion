@@ -17,7 +17,7 @@ class Card_Moneylender(Card):
 
     def special(self, game, player):
         """ Trash a copper card from your hand. If you do +3 coin """
-        copper = player.inHand('Copper')
+        copper = player.in_hand('Copper')
         if not copper:
             player.output("No coppers in hand")
             return

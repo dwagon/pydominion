@@ -25,7 +25,7 @@ class Card_Temple(Card):
     def special(self, game, player):
         player.addScore('Temple', 1)
         cardnames = {_.name for _ in player.hand}
-        cards = [player.inHand(_) for _ in cardnames]
+        cards = [player.in_hand(_) for _ in cardnames]
         trash = player.plrTrashCard(cardsrc=cards, prompt="Trash up to 3 different cards", num=3)
         if not trash:
             return

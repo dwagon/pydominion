@@ -40,7 +40,7 @@ class Test_Tradingpost(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Silver'))
+        self.assertTrue(self.plr.in_hand('Silver'))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_trash_little(self):
@@ -48,7 +48,7 @@ class Test_Tradingpost(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ['1', '0']
         self.plr.playCard(self.card)
-        self.assertFalse(self.plr.inHand('Silver'))
+        self.assertFalse(self.plr.in_hand('Silver'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

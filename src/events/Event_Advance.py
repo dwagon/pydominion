@@ -34,7 +34,7 @@ class Test_Advance(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['moat', 'feast']
         self.plr.performEvent(self.card)
-        self.assertIsNone(self.plr.inHand('Moat'))
+        self.assertIsNone(self.plr.in_hand('Moat'))
         self.assertIsNotNone(self.plr.in_discard('Feast'))
 
 

@@ -50,15 +50,15 @@ class Test_Reserve(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_inreserve(self):
-        """ Test inReserve() """
+        """ Test in_reserve() """
         self.plr.setReserve('Copper')
-        self.assertTrue(self.plr.inReserve('Copper'))
-        self.assertEqual(self.plr.inReserve('Copper').name, 'Copper')
+        self.assertTrue(self.plr.in_reserve('Copper'))
+        self.assertEqual(self.plr.in_reserve('Copper').name, 'Copper')
 
     def test_not_inreserve(self):
-        """ Test inReserve() """
+        """ Test in_reserve() """
         self.plr.setReserve('Copper')
-        self.assertFalse(self.plr.inReserve('Estate'))
+        self.assertFalse(self.plr.in_reserve('Estate'))
 
     def test_setReserve(self):
         """ set reserved """

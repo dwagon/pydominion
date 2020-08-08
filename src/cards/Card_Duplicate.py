@@ -17,7 +17,7 @@ class Card_Duplicate(Card):
         self.when = ['special']
 
     def hook_gain_card(self, game, player, card):
-        if not player.inReserve('Duplicate'):
+        if not player.in_reserve('Duplicate'):
             return {}
         if card.cost > 6:
             return {}

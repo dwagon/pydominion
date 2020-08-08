@@ -23,7 +23,7 @@ class Project_Silos(Project):
                 choices.append(("Silo: Discard {} Coppers".format(num), num))
             ans = player.plrChooseOptions("Discard how many coppers? ", *choices)
             for _ in range(ans):
-                cu = player.inHand('Copper')
+                cu = player.in_hand('Copper')
                 player.discardCard(cu)
                 player.pickupCards(1)
 
@@ -42,7 +42,7 @@ class Test_Silos(unittest.TestCase):
         self.plr.test_input = ['2']
         self.plr.start_turn()
         self.assertIsNotNone(self.plr.in_discard('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
         self.assertEqual(self.plr.handSize(), 4)
 
 

@@ -23,7 +23,7 @@ class Card_Cultist(Card):
         for plr in player.attackVictims():
             plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gainCard('Ruins')
-        cultist = player.inHand('Cultist')
+        cultist = player.in_hand('Cultist')
         if cultist:
             ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play another cultist", True))
             if ans:

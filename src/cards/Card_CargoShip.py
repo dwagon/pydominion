@@ -21,7 +21,7 @@ class Card_CargoShip(Card):
 
     ###########################################################################
     def hook_gain_card(self, game, player, card):
-        if not player.inDuration('Cargo Ship'):
+        if not player.in_duration('Cargo Ship'):
             return None
         if not player._cargo_ship:
             choice = player.plrChooseOptions(
@@ -66,7 +66,7 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(self.plr._cargo_ship[0].name, 'Moat')
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertTrue(self.plr.inHand('Moat'))
+        self.assertTrue(self.plr.in_hand('Moat'))
 
     def test_playCard_no(self):
         self.card = self.g['Cargo Ship'].remove()
@@ -79,7 +79,7 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIsNone(self.plr.inHand('Moat'))
+        self.assertIsNone(self.plr.in_hand('Moat'))
 
 
 ###############################################################################

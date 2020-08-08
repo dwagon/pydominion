@@ -69,33 +69,33 @@ class Test_discardHand(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inPlayed(unittest.TestCase):
+class Test_in_played(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_emptydiscard(self):
-        """ Test inPlayed() with no played pile """
+        """ Test in_played() with no played pile """
         self.plr.setPlayed()
-        self.assertIsNone(self.plr.inPlayed('Copper'))
+        self.assertIsNone(self.plr.in_played('Copper'))
 
     def test_indiscard(self):
-        """ Test inPlayed() with it the only card in the played pile """
+        """ Test in_played() with it the only card in the played pile """
         self.plr.setPlayed('Copper')
-        self.assertIsNotNone(self.plr.inPlayed('Copper'))
+        self.assertIsNotNone(self.plr.in_played('Copper'))
 
     def test_inmultidiscard(self):
-        """ Test inPlayed() with it one of many cards in the played pile """
+        """ Test in_played() with it one of many cards in the played pile """
         self.plr.setPlayed('Copper', 'Gold', 'Copper')
-        c = self.plr.inPlayed('Gold')
+        c = self.plr.in_played('Gold')
         self.assertIsNotNone(c)
         self.assertEqual(c.name, 'Gold')
 
     def test_notinmultidiscard(self):
-        """ Test inPlayed() with it not one of many cards in the played pile """
+        """ Test in_played() with it not one of many cards in the played pile """
         self.plr.setPlayed('Copper', 'Gold', 'Copper')
-        self.assertIsNone(self.plr.inPlayed('Estate'))
+        self.assertIsNone(self.plr.in_played('Estate'))
 
 
 ###############################################################################
@@ -250,7 +250,7 @@ class Test_plrTrashCard(unittest.TestCase):
         self.assertEqual(len(x), 2)
         self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
 
     def test_Trash(self):
         tsize = self.g.trashSize()
@@ -351,7 +351,7 @@ class Test_in_deck(unittest.TestCase):
 
 
 ###############################################################################
-class Test_inHand(unittest.TestCase):
+class Test_in_hand(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -360,13 +360,13 @@ class Test_inHand(unittest.TestCase):
     def test_inhand(self):
         """ Test card is in hand """
         self.plr.setHand('Copper')
-        self.assertTrue(self.plr.inHand('Copper'))
-        self.assertEqual(self.plr.inHand('Copper').name, 'Copper')
+        self.assertTrue(self.plr.in_hand('Copper'))
+        self.assertEqual(self.plr.in_hand('Copper').name, 'Copper')
 
     def test_notinhand(self):
         """ Test card that isn't in hand """
         self.plr.setHand('Copper')
-        self.assertFalse(self.plr.inHand('Estate'))
+        self.assertFalse(self.plr.in_hand('Estate'))
 
 
 ###############################################################################
@@ -518,10 +518,10 @@ class Test_misc(unittest.TestCase):
         self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
         self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
 
-    def test_inHand(self):
+    def test_in_hand(self):
         self.plr.setHand('Silver')
-        self.assertFalse(self.plr.inHand('Gold'))
-        self.assertTrue(self.plr.inHand('Silver'))
+        self.assertFalse(self.plr.in_hand('Gold'))
+        self.assertTrue(self.plr.in_hand('Silver'))
 
     def test_getPotions(self):
         self.plr.potions = 3

@@ -18,7 +18,7 @@ class Card_Legionary(Card):
         self.coin = 3
 
     def special(self, game, player):
-        au = player.inHand('Gold')
+        au = player.in_hand('Gold')
         if au:
             player.revealCard(au)
             for plr in player.attackVictims():

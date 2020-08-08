@@ -38,14 +38,14 @@ class Test_Sculptor(unittest.TestCase):
         self.plr.test_input = ['Get Moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discard_size(), 0)
-        self.assertIsNotNone(self.plr.inHand('Moat'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
         self.assertLessEqual(self.plr.getVillager(), 1)
 
     def test_gaintreasure(self):
         self.plr.setDeck('Silver')
         self.plr.test_input = ['Get Silver']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.assertLessEqual(self.plr.getVillager(), 1)
 
 

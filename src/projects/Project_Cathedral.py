@@ -32,7 +32,7 @@ class Test_Cathedral(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.start_turn()
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
 
 
 ###############################################################################

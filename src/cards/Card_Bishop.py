@@ -50,10 +50,10 @@ class Card_Bishop(Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Trash an estate, then a copper else nothing
-    es = player.inHand('estate')
+    es = player.in_hand('estate')
     if es:
         return [es]
-    cu = player.inHand('copper')
+    cu = player.in_hand('copper')
     if cu:
         return [cu]
     return []

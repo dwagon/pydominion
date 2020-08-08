@@ -37,7 +37,7 @@ class Test_Den_of_Sin(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Den of Sin')
-        self.assertIsNotNone(self.plr.inHand('Den of Sin'))
+        self.assertIsNotNone(self.plr.in_hand('Den of Sin'))
 
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')

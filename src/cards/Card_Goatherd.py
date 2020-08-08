@@ -43,8 +43,8 @@ class Test_Goatherd(unittest.TestCase):
         self.plr.test_input = ['Trash Province']
         self.plr.playCard(self.card)
         self.g.print_state()
-        self.assertIsNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
+        self.assertIsNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
 
 
 ###############################################################################

@@ -61,7 +61,7 @@ class Test_Torturer(unittest.TestCase):
         self.victim.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 8)
-        self.assertTrue(self.victim.inHand('Curse'))
+        self.assertTrue(self.victim.in_hand('Curse'))
 
     def test_opt_discard(self):
         """ Play the torturer - victim opts for discarding"""
@@ -69,7 +69,7 @@ class Test_Torturer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 8)
         self.assertEqual(self.victim.handSize(), 3)
-        self.assertFalse(self.victim.inHand('Curse'))
+        self.assertFalse(self.victim.in_hand('Curse'))
 
     def test_defended(self):
         """ Defending against a torturer """
@@ -77,7 +77,7 @@ class Test_Torturer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 8)
         self.assertEqual(self.victim.handSize(), 1)
-        self.assertFalse(self.victim.inHand('Curse'))
+        self.assertFalse(self.victim.in_hand('Curse'))
 
 
 ###############################################################################

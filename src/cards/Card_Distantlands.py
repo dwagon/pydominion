@@ -42,7 +42,7 @@ class Test_Distantlands(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.reserveSize(), 1)
-        self.assertIsNotNone(self.plr.inReserve('Distant Lands'))
+        self.assertIsNotNone(self.plr.in_reserve('Distant Lands'))
 
     def test_notonmat(self):
         self.plr.setHand('Distant Lands')

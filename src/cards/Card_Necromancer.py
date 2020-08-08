@@ -45,7 +45,7 @@ class Test_Necromancer(unittest.TestCase):
         self.plr.setDeck('Gold', 'Silver')
         self.plr.test_input = ['Zombie Spy', 'Keep']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Silver'))     # From Zombie Spy
+        self.assertIsNotNone(self.plr.in_hand('Silver'))     # From Zombie Spy
 
 
 ###############################################################################

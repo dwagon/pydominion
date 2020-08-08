@@ -71,8 +71,8 @@ class Test_ScryingPool(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
         self.assertIsNotNone(self.vic.in_discard('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Moat'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
 
 
 ###############################################################################

@@ -60,7 +60,7 @@ class Test_Treasurer(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertIsNone(self.g.in_trash('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
     def test_play_key(self):
         self.plr.test_input = ['Take the key']

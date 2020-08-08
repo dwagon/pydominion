@@ -42,7 +42,7 @@ class Test_RoyalBlacksmith(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 3 - 2 + 5)
         self.assertIsNotNone(self.plr.in_discard('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
 
 
 ###############################################################################

@@ -213,7 +213,7 @@ class Player(object):
     ###########################################################################
     def call_reserve(self, card):
         if isinstance(card, str):
-            card = self.inReserve(card)
+            card = self.in_reserve(card)
             if not card:
                 return None
         assert isinstance(card, Card)
@@ -226,7 +226,7 @@ class Player(object):
         return card
 
     ###########################################################################
-    def inReserve(self, cardname):
+    def in_reserve(self, cardname):
         """ Return named card if cardname is in reserve """
         assert isinstance(cardname, str)
         for card in self.reserve:
@@ -235,7 +235,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inHand(self, cardname):
+    def in_hand(self, cardname):
         """ Return named card if cardname is in hand """
         assert isinstance(cardname, str)
 
@@ -250,7 +250,7 @@ class Player(object):
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def inDuration(self, cardname):
+    def in_duration(self, cardname):
         """ Return named card if cardname is in the duration pile """
         assert isinstance(cardname, str)
 
@@ -290,7 +290,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inPlayed(self, cardname):
+    def in_played(self, cardname):
         """ Return named card if cardname is in the played pile """
         assert isinstance(cardname, str)
 
@@ -1097,7 +1097,7 @@ class Player(object):
     def defer_card(self, card):
         """ Set a non-duration card to be played in its entirety next turn """
         self.deferpile.add(card)
-        if self.inPlayed(card.name):
+        if self.in_played(card.name):
             self.played.remove(card)
 
     ###########################################################################

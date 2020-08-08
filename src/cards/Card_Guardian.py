@@ -35,7 +35,7 @@ class Test_Guardian(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Guardian')
-        self.assertIsNotNone(self.plr.inHand('Guardian'))
+        self.assertIsNotNone(self.plr.in_hand('Guardian'))
 
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')

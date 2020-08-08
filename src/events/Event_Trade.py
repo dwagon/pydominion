@@ -38,8 +38,8 @@ class Test_Trade(unittest.TestCase):
         self.assertEqual(self.plr.discard_size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
-        self.assertIsNone(self.plr.inHand('Copper'))
-        self.assertIsNone(self.plr.inHand('Estate'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Estate'))
 
 
 ###############################################################################

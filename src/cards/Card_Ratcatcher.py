@@ -40,7 +40,7 @@ class Test_Ratcatcher(unittest.TestCase):
         self.assertEqual(self.plr.getActions(), 1)
         self.assertEqual(self.plr.handSize(), 1)
         self.assertEqual(self.plr.reserveSize(), 1)
-        c = self.plr.inReserve('Ratcatcher')
+        c = self.plr.in_reserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
 
     def test_call(self):

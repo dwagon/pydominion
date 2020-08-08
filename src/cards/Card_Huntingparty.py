@@ -29,7 +29,7 @@ class Card_Huntingparty(Card):
             if not card:
                 player.output("No more cards")
                 break
-            if player.inHand(card.name):
+            if player.in_hand(card.name):
                 player.output("Discarding %s" % card.name)
                 discards.append(card)
                 continue
@@ -56,8 +56,8 @@ class Test_Huntingparty(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
         self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         # Original Hand of 2 + 1 card and 1 non-dupl picked up

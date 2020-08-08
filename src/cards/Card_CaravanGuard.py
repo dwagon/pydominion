@@ -29,7 +29,7 @@ class Card_CaravanGuard(Card):
         player.addActions(1)
         player.pickupCards(1)
         player.addCard(self, 'duration')
-        player.hand.remove(player.inHand('Caravan Guard'))
+        player.hand.remove(player.in_hand('Caravan Guard'))
 
 
 ###############################################################################

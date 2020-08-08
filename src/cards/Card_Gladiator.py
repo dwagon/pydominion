@@ -26,7 +26,7 @@ class Card_Gladiator(Card):
             prompt="Select a card from your hand that the player to your left doesn't have")
         player.revealCard(mycard[0])
         lefty = game.playerToLeft(player)
-        leftycard = lefty.inHand(mycard[0].name)
+        leftycard = lefty.in_hand(mycard[0].name)
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.addCoin(1)

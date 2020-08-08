@@ -27,7 +27,7 @@ class Card_Ducat(Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        cu = player.inHand('Copper')
+        cu = player.in_hand('Copper')
         if cu:
             player.plrTrashCard(cardsrc=[cu], num=1)
         else:

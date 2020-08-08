@@ -71,7 +71,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.plr.test_input = ['Select Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_play_actions(self):
@@ -79,7 +79,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Select Moat', 'Take Horn']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Moat'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
         self.assertIsNotNone(self.plr.in_discard('Guide'))
         self.assertTrue(self.plr.has_artifact('Horn'))
 

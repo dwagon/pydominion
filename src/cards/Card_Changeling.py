@@ -57,7 +57,7 @@ class Test_Changeling(unittest.TestCase):
         self.plr.phase = 'night'
         self.plr.test_input = ['Keep Changeling']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inPlayed('Changeling'))
+        self.assertIsNotNone(self.plr.in_played('Changeling'))
 
     def test_play_swap(self):
         self.plr.phase = 'night'

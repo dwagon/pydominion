@@ -60,8 +60,8 @@ class Test_Oracle(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard('Duchy'))
         self.assertIsNotNone(self.vic.in_discard('Province'))
-        self.assertIsNotNone(self.plr.inHand('Silver'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(self.plr.handSize(), 7)
 
 

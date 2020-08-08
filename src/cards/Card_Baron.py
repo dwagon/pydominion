@@ -18,7 +18,7 @@ class Card_Baron(Card):
     def special(self, game, player):
         """ You may discard an Estate card. If you do +4 Coin. Otherwise,
             gain an estate card """
-        hasEstate = player.inHand('Estate')
+        hasEstate = player.in_hand('Estate')
         if hasEstate:
             ans = player.plrChooseOptions(
                 "Discard Estate?",
@@ -63,7 +63,7 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 4)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
         self.assertEqual(self.plr.discard_size(), 1)
-        self.assertEqual(self.plr.inHand('Estate'), None)
+        self.assertEqual(self.plr.in_hand('Estate'), None)
 
     def test_keepestate(self):
         self.plr.setHand('Estate', 'Gold', 'Copper')
@@ -73,7 +73,7 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.discardpile[0].name, 'Estate')
         self.assertEqual(self.plr.discard_size(), 1)
-        self.assertNotEqual(self.plr.inHand('Estate'), None)
+        self.assertNotEqual(self.plr.in_hand('Estate'), None)
 
 
 ###############################################################################

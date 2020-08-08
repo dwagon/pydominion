@@ -79,12 +79,12 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
         self.plr.test_input = ['Reveal', 'Silver', 'Gold', 'Finish']
         self.att.playCard(mil)
-        self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
         self.assertIsNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Silver'))
-        self.assertIsNone(self.plr.inHand('Silver'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
 
     def test_underattack_pass(self):
         """ Secret chamber is under attack - use it """
@@ -96,8 +96,8 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.in_deck('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
 
 
 ###############################################################################

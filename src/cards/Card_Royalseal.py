@@ -51,7 +51,7 @@ class Test_Royalseal(unittest.TestCase):
         self.plr.gainCard('Gold')
         self.assertEqual(self.plr.discard_size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
-        self.assertFalse(self.plr.inHand('Gold'))
+        self.assertFalse(self.plr.in_hand('Gold'))
 
     def test_deck(self):
         """ Have a Royal Seal  - the gained card on the deck"""
@@ -59,7 +59,7 @@ class Test_Royalseal(unittest.TestCase):
         self.plr.test_input = ['deck']
         self.plr.gainCard('Gold')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

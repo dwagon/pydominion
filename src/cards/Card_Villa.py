@@ -51,7 +51,7 @@ class Test_Villa(unittest.TestCase):
         self.plr.gainCard('Villa')
         self.assertEqual(self.plr.getActions(), 2)
         self.assertEqual(self.plr.phase, 'action')
-        self.assertIsNotNone(self.plr.inHand('Villa'))
+        self.assertIsNotNone(self.plr.in_hand('Villa'))
 
 
 ###############################################################################
