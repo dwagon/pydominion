@@ -172,7 +172,7 @@ class Test_playonce(unittest.TestCase):
 ###############################################################################
 class Test_cardsAffordable(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.Game(quiet=True, numplayers=1, badcards=['Werewolf', 'Cursed Village', 'Leprechaun', 'Skulk', 'Termentor', 'Vampire'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
