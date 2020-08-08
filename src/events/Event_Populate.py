@@ -26,7 +26,8 @@ class Test_Populate(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, eventcards=['Populate'],
-            initcards=['Moat'], badcards=['Hostelry', 'Border Village', 'Inn']
+            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop', 'Gardens', 'Mine', 'Library', 'Thief'],
+            badcards=['Hostelry', 'Border Village', 'Inn']
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
