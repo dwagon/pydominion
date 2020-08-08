@@ -26,12 +26,12 @@ class Test_Turtle(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Turtle']
 
     def test_play(self):
         """ Perform a Turtle """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Turtle']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getActions(), 2)
 
 
