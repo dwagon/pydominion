@@ -28,7 +28,8 @@ class Test_Stampede(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, eventcards=['Stampede'],
-            initcards=['Moat'], badcards=['Hostelry', 'Border Village', 'Inn']
+            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop'],
+            badcards=['Hostelry', 'Border Village', 'Inn', 'Cursed Village']
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
