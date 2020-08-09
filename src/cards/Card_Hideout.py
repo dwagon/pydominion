@@ -20,7 +20,7 @@ class Card_Hideout(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        card = player.plrTrashCard(num=1)
+        card = player.plrTrashCard(num=1, force=True)
         if card[0].isVictory():
             player.gainCard('Curse')
 
