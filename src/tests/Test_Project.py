@@ -8,11 +8,11 @@ import Game
 class Test_assignProject(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-                quiet=True, numplayers=2, initcards=['StateTester'],
-                statepath='tests/states', cardpath='tests/cards', numstacks=1,
-                boonpath='tests/boons', projectpath='tests/projects',
-                initprojects=['ProjectA', 'ProjectB', 'ProjectC']
-                )
+            quiet=True, numplayers=2, initcards=['StateTester'],
+            statepath='tests/states', cardpath='tests/cards', numstacks=1,
+            boonpath='tests/boons', projectpath='tests/projects',
+            initprojects=['ProjectA', 'ProjectB', 'ProjectC']
+        )
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
 
@@ -50,11 +50,11 @@ class Test_assignProject(unittest.TestCase):
 class Test_buyProject(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-                quiet=True, numplayers=1, initcards=['StateTester'],
-                statepath='tests/states', cardpath='tests/cards', numstacks=1,
-                boonpath='tests/boons', projectpath='tests/projects',
-                initprojects=['ProjectA']
-                )
+            quiet=True, numplayers=1, initcards=['StateTester'],
+            statepath='tests/states', cardpath='tests/cards', numstacks=1,
+            boonpath='tests/boons', projectpath='tests/projects',
+            initprojects=['ProjectA']
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

@@ -55,12 +55,12 @@ class Test_event_selection(unittest.TestCase):
         num_affordable = 0
         num_notaff = 0
         for i in output:
-            if i[Card.ACTION] == 'event':
+            if i['action'] == 'event':
                 num_affordable += 1
-            elif i[Card.ACTION] is None:
+            elif i['action'] is None:
                 num_notaff += 1
             else:   # pragma: no coverage
-                self.fail("Unexpected action %s in %s" % (i[Card.ACTION], i))
+                self.fail("Unexpected action %s in %s" % (i['action'], i))
         self.assertEqual(num_affordable, 2)
         self.assertEqual(num_notaff, 1)
 

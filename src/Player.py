@@ -4,8 +4,8 @@ import operator
 import sys
 from collections import defaultdict
 
+import Card
 from PlayArea import PlayArea
-from Card import Card
 from Option import Option
 from CardPile import CardPile
 from EventPile import EventPile
@@ -118,7 +118,7 @@ class Player(object):
     def replace_traveller(self, src, dst, **kwargs):
         """ For traveller cards replace the src card with a copy of the
         dst card """
-        assert isinstance(src, Card)
+        assert isinstance(src, Card.Card)
         assert isinstance(dst, str)
         dstcp = self.find_cardpile(dst)
 
@@ -216,7 +216,7 @@ class Player(object):
             card = self.in_reserve(card)
             if not card:
                 return None
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.output("Calling %s from Reserve" % card.name)
         self.currcards.append(card)
         card.hook_call_reserve(game=self.game, player=self)
@@ -312,7 +312,7 @@ class Player(object):
     ###########################################################################
     def trashCard(self, card, **kwargs):
         """ Take a card out of the game """
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.stats['trashed'].append(card)
         trashopts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
@@ -404,7 +404,7 @@ class Player(object):
             if not card:
                 self.output("No more cards to pickup")
                 return None
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.addCard(card, 'hand')
         if verbose:
             self.output("%s %s" % (verb, card.name))
@@ -446,7 +446,7 @@ class Player(object):
     def addCard(self, card, pile='discard'):
         if not card:   # pragma: no cover
             return
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         assert pile in ('discard', 'hand', 'topdeck', 'deck', 'played', 'duration', 'reserve')
         if pile == 'discard':
             self.discardpile.add(card)
@@ -465,7 +465,7 @@ class Player(object):
 
     ###########################################################################
     def discardCard(self, card, source=None, hook=True):
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
@@ -1181,7 +1181,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
+        assert isinstance(card, (Card.Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
@@ -1334,7 +1334,7 @@ class Player(object):
     ###########################################################################
     def hook_gain_card(self, card):
         """ Hook which is fired by a card being obtained by a player """
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         options = {}
         if self.hooks.get('gain_card'):
             o = self.hooks['gain_card'](game=self.game, player=self, card=card)
@@ -1469,13 +1469,13 @@ class Player(object):
 
     ###########################################################################
     def select_by_type(self, card, types):
-        if card.isAction() and not types['action']:
+        if card.isAction() and not types[Card.ACTION]:
             return False
-        if card.isVictory() and not types['victory']:
+        if card.isVictory() and not types[Card.VICTORY]:
             return False
-        if card.isTreasure() and not types['treasure']:
+        if card.isTreasure() and not types[Card.TREASURE]:
             return False
-        if card.isNight() and not types['night']:
+        if card.isNight() and not types[Card.NIGHT]:
             return False
         return True
 
@@ -1548,10 +1548,10 @@ class Player(object):
     def typeSelector(self, types=None):
         if types is None:
             types = {}
-        assert set(types.keys()) <= set(['action', 'victory', 'treasure', 'night'])
+        assert set(types.keys()) <= set([Card.ACTION, Card.VICTORY, Card.TREASURE, Card.NIGHT])
         if not types:
-            return {'action': True, 'victory': True, 'treasure': True, 'night': True}
-        _types = {'action': False, 'victory': False, 'treasure': False, 'night': False}
+            return {Card.ACTION: True, Card.VICTORY: True, Card.TREASURE: True, Card.NIGHT: True}
+        _types = {Card.ACTION: False, Card.VICTORY: False, Card.TREASURE: False, Card.NIGHT: False}
         _types.update(types)
         return _types
 

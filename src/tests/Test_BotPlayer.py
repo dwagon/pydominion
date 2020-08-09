@@ -13,14 +13,14 @@ class Test_getOptions(unittest.TestCase):
 
     def test_getOptions(self):
         options = [
-            {Card.ACTION: 'quit', 'verb': 'End Phase', 'selector': '0', 'card': None},
-            {Card.ACTION: 'buy', 'desc': '+1 coin', 'selector': '-', 'card': self.g['Copper'], 'name': 'Copper', 'details': '0 Coins; Treasure; 60 left', 'verb': ''},
-            {Card.ACTION: 'buy', 'desc': '1 VP', 'selector': '-', 'card': self.g['Estate'], 'name': 'Estate', 'details': '2 Coins; Victory; 12 left', 'verb': ''},
-            {Card.ACTION: 'buy', 'desc': '+2 coin', 'selector': '-', 'card': self.g['Silver'], 'name': 'Silver', 'details': '3 Coins; Treasure; 39 left', 'verb': ''},
-            {Card.ACTION: None, 'desc': '3 VP', 'selector': '-', 'card': self.g['Duchy'], 'name': 'Duchy', 'details': '5 Coins; Victory; 12 left', 'verb': ''},
-            {Card.ACTION: 'buy', 'desc': '+3 coin', 'selector': '-', 'card': self.g['Gold'], 'name': 'Gold', 'details': '6 Coins; Treasure; 30 left', 'verb': ''},
-            {Card.ACTION: 'buy', 'desc': '6 VP', 'selector': '-', 'card': self.g['Province'], 'name': 'Province', 'details': '8 Coins; Victory; 12 left', 'verb': ''},
-            {Card.ACTION: 'quit', 'card': None, 'verb': 'End Phase', 'selector': '0'}
+            {'action': 'quit', 'verb': 'End Phase', 'selector': '0', 'card': None},
+            {'action': 'buy', 'desc': '+1 coin', 'selector': '-', 'card': self.g['Copper'], 'name': 'Copper', 'details': '0 Coins; Treasure; 60 left', 'verb': ''},
+            {'action': 'buy', 'desc': '1 VP', 'selector': '-', 'card': self.g['Estate'], 'name': 'Estate', 'details': '2 Coins; Victory; 12 left', 'verb': ''},
+            {'action': 'buy', 'desc': '+2 coin', 'selector': '-', 'card': self.g['Silver'], 'name': 'Silver', 'details': '3 Coins; Treasure; 39 left', 'verb': ''},
+            {'action': None, 'desc': '3 VP', 'selector': '-', 'card': self.g['Duchy'], 'name': 'Duchy', 'details': '5 Coins; Victory; 12 left', 'verb': ''},
+            {'action': 'buy', 'desc': '+3 coin', 'selector': '-', 'card': self.g['Gold'], 'name': 'Gold', 'details': '6 Coins; Treasure; 30 left', 'verb': ''},
+            {'action': 'buy', 'desc': '6 VP', 'selector': '-', 'card': self.g['Province'], 'name': 'Province', 'details': '8 Coins; Victory; 12 left', 'verb': ''},
+            {'action': 'quit', 'card': None, 'verb': 'End Phase', 'selector': '0'}
             ]
         ans = self.plr.getOptions(options)
         self.assertEqual(ans['silver']['name'], 'Silver')
