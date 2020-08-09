@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Moat(Card):
+class Card_Moat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.DOMINION
         self.desc = "+2 cards, defense"

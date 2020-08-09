@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Raider(Card):
+class Card_Raider(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT, Card.DURATION, Card.ATTACK]
         self.base = Game.NOCTURNE
         self.desc = """Each other player with 5 or more cards in hand discards

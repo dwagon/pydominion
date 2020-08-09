@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Ghost_Town(Card):
+class Card_Ghost_Town(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT, Card.DURATION]
         self.base = Game.NOCTURNE
         self.name = 'Ghost Town'

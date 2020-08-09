@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Livery(Card):
+class Card_Livery(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """+3 Coins; This turn, when you gain a card costing 4 Coins or more, gain a Horse."""

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Fairgrounds(Card):
+class Card_Fairgrounds(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.VICTORY
         self.base = Game.CORNUCOPIA
         self.desc = "2VP / 5 card types"

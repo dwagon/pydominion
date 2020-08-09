@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Squire(Card):
+class Card_Squire(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Coin. Choose one: +2 Actions; or +2 Buys; or gain a Silver.

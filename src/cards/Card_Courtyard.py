@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Courtyard(Card):
+class Card_Courtyard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = "+3 cards. Put a card from your hand on top of your deck."

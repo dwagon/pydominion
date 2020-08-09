@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Guide(Card):
+class Card_Guide(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.RESERVE]
         self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Call to discard hand and draw 5"

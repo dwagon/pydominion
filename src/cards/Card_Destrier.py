@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Destrier(Card):
+class Card_Destrier(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; +1 Action; During your turns, this costs 1 less per card you've gained this turn."

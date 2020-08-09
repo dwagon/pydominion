@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pillage(Card):
+class Card_Pillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DARKAGES
         self.desc = """Trash this. Each other player with 5 or more cards in hand

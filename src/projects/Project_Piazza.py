@@ -9,7 +9,6 @@ from Project import Project
 class Project_Piazza(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, reveal the top card of your deck. If it's an Action, play it."
         self.name = "Piazza"

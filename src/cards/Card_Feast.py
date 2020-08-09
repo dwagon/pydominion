@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Feast(Card):
+class Card_Feast(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash this card, Gain a card costing up to 5"

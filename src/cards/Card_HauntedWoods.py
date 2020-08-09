@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_HauntedWoods(Card):
+class Card_HauntedWoods(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = """Until you next turn, when any other player buys a card,

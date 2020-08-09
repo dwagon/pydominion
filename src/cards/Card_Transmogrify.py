@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Transmogrify(Card):
+class Card_Transmogrify(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.RESERVE]
         self.base = Game.ADVENTURE
         self.desc = """+1 Action; At the start of your turn, you may call this,

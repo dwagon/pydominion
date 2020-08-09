@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Monastery(Card):
+class Card_Monastery(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.NIGHT
         self.base = Game.NOCTURNE
         self.desc = "For each card you've gained this turn, you may trash a card from your hand or a Copper you have in play."

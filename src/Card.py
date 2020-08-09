@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 
 ACTION = 'action'
-ARTFIACT = 'artifact'
+ARTIFACT = 'artifact'
 ATTACK = 'attack'
 BOON = 'boon'
 CASTLE = 'castle'

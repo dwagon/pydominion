@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Legionary(Card):
+class Card_Legionary(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.EMPIRES
         self.desc = """+3 Coin. You may reveal a Gold from your hand.

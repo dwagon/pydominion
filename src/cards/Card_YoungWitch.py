@@ -4,13 +4,13 @@
 import unittest
 import random
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_YoungWitch(Card):
+class Card_YoungWitch(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.CORNUCOPIA
         self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal

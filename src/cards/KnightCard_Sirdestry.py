@@ -2,6 +2,7 @@
 
 import unittest
 import Game
+import Card
 from cards.Card_Knight import KnightCard
 
 

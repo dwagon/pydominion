@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Trader(Card):
+class Card_Trader(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.HINTERLANDS
         self.desc = """Trash a card from your hand. Gain a number of Silvers equal to its cost in coins.

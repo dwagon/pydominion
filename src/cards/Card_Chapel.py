@@ -2,12 +2,12 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Chapel(Card):
+class Card_Chapel(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Trash up to 4 cards"

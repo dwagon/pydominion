@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Coven(Card):
+class Card_Coven(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.MENAGERIE
         self.desc = """+1 Action; +2 Coin; Each other player Exiles a Curse

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_MagicLamp(Card):
+class Card_MagicLamp(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = """When you play this, if there are at least 6 cards

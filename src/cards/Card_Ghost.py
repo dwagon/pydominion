@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Ghost(Card):
+class Card_Ghost(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT, Card.DURATION, Card.SPIRIT]
         self.base = Game.NOCTURNE
         self.desc = """Reveal cards from your deck until you reveal an Action.

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Soldier(Card):
+class Card_Soldier(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = """+2 Coins; +1 Coin per other Attack you have in play.

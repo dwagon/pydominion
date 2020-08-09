@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pooka(Card):
+class Card_Pooka(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.NOCTURNE
         self.desc = "You may trash a Treasure other than Cursed Gold from your hand, for +4 Cards."

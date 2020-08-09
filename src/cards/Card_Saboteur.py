@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Saboteur(Card):
+class Card_Saboteur(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.INTRIGUE
         self.desc = """Each other player reveals cards from the top of his deck

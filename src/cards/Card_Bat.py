@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bat(Card):
+class Card_Bat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Trash up to 2 cards from your hand. If you trashed at least one, exchange this for a Vampire."

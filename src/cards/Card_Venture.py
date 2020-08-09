@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Venture(Card):
+class Card_Venture(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.desc = "+1 coin, get next treasure from deck"
         self.name = 'Venture'

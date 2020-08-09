@@ -9,7 +9,6 @@ from Project import Project
 class Project_RoadNetwork(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "When another player gains a Victory card, +1 Card."
         self.name = "Road Network"

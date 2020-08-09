@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Camel_Train(Card):
+class Card_Camel_Train(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."""

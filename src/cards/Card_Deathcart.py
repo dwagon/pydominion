@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Deathcart(Card):
+class Card_Deathcart(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.LOOTER]
         self.base = Game.DARKAGES
         self.desc = """You may trash an Action card from your hand. If you don't, trash this.

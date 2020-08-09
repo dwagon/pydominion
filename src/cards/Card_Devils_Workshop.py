@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Devils_Workshop(Card):
+class Card_Devils_Workshop(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.NIGHT
         self.base = Game.NOCTURNE
         self.desc = """If the number of cards you've gained this turn is: 2+,

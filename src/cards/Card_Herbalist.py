@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Herbalist(Card):
+class Card_Herbalist(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.ALCHEMY
         self.desc = "+1 buy, +1 coin. When you discard this from play, you may put one of your Treasures from play on top of your deck"

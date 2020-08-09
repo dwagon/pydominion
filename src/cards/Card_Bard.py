@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bard(Card):
+class Card_Bard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.FATE]
         self.base = Game.NOCTURNE
         self.desc = "+2 Coin; Receive a boon"

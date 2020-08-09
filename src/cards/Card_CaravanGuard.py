@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_CaravanGuard(Card):
+class Card_CaravanGuard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION, Card.REACTION]
         self.base = Game.ADVENTURE
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.

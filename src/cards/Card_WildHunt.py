@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_WildHunt(Card):
+class Card_WildHunt(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.GATHERING]
         self.base = Game.EMPIRES
         self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt

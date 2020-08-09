@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Hoard(Card):
+class Card_Hoard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.desc = "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
         self.name = 'Hoard'

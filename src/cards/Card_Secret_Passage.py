@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_SecretPassage(Card):
+class Card_SecretPassage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.INTRIGUE
         self.desc = """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""

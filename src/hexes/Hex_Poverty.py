@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Hex import Hex
 
@@ -20,7 +21,7 @@ class Hex_Poverty(Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 

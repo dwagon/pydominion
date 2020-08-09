@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from CardPile import CardPile
 
 
 ###############################################################################
-class Card_Castles(Card):
+class Card_Castles(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.name = 'Castles'
 
     def setup(self, game):
@@ -44,7 +44,7 @@ class CastleCardPile(CardPile):
 
 
 ###############################################################################
-class CastleCard(Card):
+class CastleCard(Card.Card):
     pass
 
 

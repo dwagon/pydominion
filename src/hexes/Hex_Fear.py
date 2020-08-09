@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Hex import Hex
 
@@ -23,7 +24,7 @@ class Hex_Fear(Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(1, keepvic=True)
 
 

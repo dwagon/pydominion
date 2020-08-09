@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Traderoute(Card):
+class Card_Traderoute(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.PROSPERITY
         self.desc = "+1 Buy; Trash a card from your hand. +1 Coin per Coin token on the Trade Route mat."

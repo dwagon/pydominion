@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Crypt(Card):
+class Card_Crypt(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT, Card.DURATION]
         self.base = Game.NOCTURNE
         self.desc = """Set aside any number of Treasures you have in play, face down

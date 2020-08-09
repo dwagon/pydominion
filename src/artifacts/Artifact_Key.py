@@ -9,7 +9,6 @@ from Artifact import Artifact
 class Artifact_Key(Artifact):
     def __init__(self):
         Artifact.__init__(self)
-        self.cardtype = Card.ARTIFACT
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Coin."
         self.name = "Key"

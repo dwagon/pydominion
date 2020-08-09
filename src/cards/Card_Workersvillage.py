@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Workersvillage(Card):
+class Card_Workersvillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.desc = "+1 card, +2 actions, +1 buy"
         self.name = "Worker's Village"

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Idol(Card):
+class Card_Idol(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.TREASURE, Card.ATTACK, Card.FATE]
         self.base = Game.NOCTURNE
         self.desc = """2 Coin; When you play this, if you then have an odd number

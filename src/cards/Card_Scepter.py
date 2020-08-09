@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scepter(Card):
+class Card_Scepter(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.base = Game.RENAISSANCE
         self.desc = "When you play this, choose one: 2 coin; or replay an Action card you played this turn that's still in play."

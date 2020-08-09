@@ -9,7 +9,6 @@ from Project import Project
 class Project_Canal(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "During your turns, cards cost $1 less, but not less than $0."
         self.name = "Canal"

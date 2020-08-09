@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Inventor(Card):
+class Card_Inventor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = "Gain a card costing up to 4, then cards cost 1 less this turn (but not less than 0)."

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Recruiter(Card):
+class Card_Recruiter(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""

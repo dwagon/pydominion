@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Sacrifice(Card):
+class Card_Sacrifice(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...

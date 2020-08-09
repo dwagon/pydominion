@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Explorer(Card):
+class Card_Explorer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.desc = """You may reveal a Province from your hand. If you do,
             gain a Gold to your hand. If you don't, gain a Silver to your hand."""

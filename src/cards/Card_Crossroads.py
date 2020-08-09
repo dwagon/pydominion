@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Crossroads(Card):
+class Card_Crossroads(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION]
         self.base = Game.HINTERLANDS
         self.desc = """Reveal your hand. +1 Card per Victory card revealed.

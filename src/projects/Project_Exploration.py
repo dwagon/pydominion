@@ -9,7 +9,6 @@ from Project import Project
 class Project_Exploration(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "At the end of your Buy phase, if you didn't buy any cards, +1 Coffers and +1 Villager."
         self.name = "Exploration"

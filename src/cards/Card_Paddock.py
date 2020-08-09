@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Paddock(Card):
+class Card_Paddock(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.MENAGERIE
         self.desc = """+2 Coin; Gain 2 Horses. +1 Action per empty Supply pile."""

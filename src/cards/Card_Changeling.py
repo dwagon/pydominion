@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Changeling(Card):
+class Card_Changeling(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.NIGHT]
         self.base = Game.NOCTURNE
         self.desc = """Trash this. Gain a copy of a card you have in play.

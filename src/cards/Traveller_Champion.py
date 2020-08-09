@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Champion(Card):
+class Card_Champion(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"

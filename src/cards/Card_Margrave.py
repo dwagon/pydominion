@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Margrave(Card):
+class Card_Margrave(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DARKAGES
         self.desc = """+3 Card +1 Buy. Each other player draws a card, then discards down to 3 cards in hand"""

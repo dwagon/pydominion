@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Storyteller(Card):
+class Card_Storyteller(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.ADVENTURE
         self.desc = "+1 Action, +1 Coin; Play up to 3 Treasures from your hand. Pay all of your Coins; +1 Card per Coin paid"

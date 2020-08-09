@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Duke(Card):
+class Card_Duke(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.VICTORY
         self.base = Game.INTRIGUE
         self.desc = "Worth 1 VP per duchy"

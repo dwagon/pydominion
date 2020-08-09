@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Crown(Card):
+class Card_Crown(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.TREASURE]
         self.base = Game.EMPIRES
         self.desc = """If it's your Action phase, you may play an Action from your hand twice.

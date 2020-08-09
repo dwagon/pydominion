@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Necromancer(Card):
+class Card_Necromancer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION]
         self.base = Game.NOCTURNE
         self.desc = "Play a non-Duration Action card from the trash, leaving it there."

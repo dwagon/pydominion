@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bridgetroll(Card):
+class Card_Bridgetroll(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = """Each other player takes his -1 Coin token.

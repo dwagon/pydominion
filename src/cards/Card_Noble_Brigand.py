@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Noble_Brigand(Card):
+class Card_Noble_Brigand(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.HINTERLANDS
         self.desc = """+1 Coin. When you buy this or play it, each other player reveals

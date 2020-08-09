@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Island(Card):
+class Card_Island(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.VICTORY]
         self.base = Game.SEASIDE
         self.desc = """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Forge(Card):
+class Card_Forge(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.PROSPERITY
         self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"

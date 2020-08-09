@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Hamlet(Card):
+class Card_Hamlet(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.CORNUCOPIA
         self.desc = "+1 Card +1 Action. You may discard a card; if you do, +1 Action.  You may discard a card; if you do, +1 Buy."

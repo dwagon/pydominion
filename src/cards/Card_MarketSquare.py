@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_MarketSquare(Card):
+class Card_MarketSquare(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, +1 Buy.

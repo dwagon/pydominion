@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Greathall(Card):
+class Card_Greathall(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.VICTORY]
         self.base = Game.INTRIGUE
         self.desc = "+1 card, +1 action, 1VP"

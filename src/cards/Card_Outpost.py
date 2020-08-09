@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Outpost(Card):
+class Card_Outpost(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.SEASIDE
         self.desc = """You only draw 3 cards (instead of 5) in this turn's Clean-up phase.

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Embargo(Card):
+class Card_Embargo(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.SEASIDE
         self.desc = """+2 Coin. Trash this card. Put an Embargo token on top of a Supply pile.

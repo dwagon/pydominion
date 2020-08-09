@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Dismantle(Card):
+class Card_Dismantle(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.PROMO
         self.desc = "Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold."

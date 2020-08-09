@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pixie(Card):
+class Card_Pixie(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.FATE]
         self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Discard the top Boon. You may trash this to receive that Boon twice."

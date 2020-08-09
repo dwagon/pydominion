@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Embassy(Card):
+class Card_Embassy(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.desc = "+5 Cards, Discard 3. Everyone gets a silver on purchase"
         self.name = 'Embassy'

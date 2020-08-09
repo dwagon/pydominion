@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bagofgold(Card):
+class Card_Bagofgold(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.PRIZE]
         self.base = Game.CORNUCOPIA
         self.name = "Bag of Gold"

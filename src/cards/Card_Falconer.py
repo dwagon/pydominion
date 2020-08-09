@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Falconer(Card):
+class Card_Falconer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.MENAGERIE
         self.desc = """Gain a card to your hand costing less than this. When any

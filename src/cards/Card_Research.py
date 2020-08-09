@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Research(Card):
+class Card_Research(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.RENAISSANCE
         self.name = 'Research'

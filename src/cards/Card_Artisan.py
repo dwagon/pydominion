@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Artisan(Card):
+class Card_Artisan(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.DOMINION
         self.desc = "Gain a card to your hand costing up to 5 Coin. Put a card from your hand onto your deck."

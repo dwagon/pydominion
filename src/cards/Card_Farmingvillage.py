@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Farmingvillage(Card):
+class Card_Farmingvillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.desc = """+2 actions. Reveal cards from the top of your deck until
             you reveal an Action or Treasure card. Put that card into your hand

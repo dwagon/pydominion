@@ -2,12 +2,12 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Marauder(Card):
+class Card_Marauder(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.LOOTER]
         self.base = Game.DARKAGES
         self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."

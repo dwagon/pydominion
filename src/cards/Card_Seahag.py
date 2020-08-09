@@ -2,12 +2,12 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Seahag(Card):
+class Card_Seahag(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.SEASIDE
         self.desc = "Each other player discards the top card of his deck, then gains a Curse card, putting it on top of his deck"

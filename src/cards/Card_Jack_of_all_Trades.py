@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Jack_of_all_Trades(Card):
+class Card_Jack_of_all_Trades(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.HINTERLANDS
         self.desc = """Gain a Silver.

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from cards.Card_Knight import KnightCard
 

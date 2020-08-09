@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Dungeon(Card):
+class Card_Dungeon(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.ADVENTURE
         self.desc = "+1 Action. Now and next turn: +2 cards then discard 2 cards"

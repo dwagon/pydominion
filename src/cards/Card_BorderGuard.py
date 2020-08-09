@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_BorderGuard(Card):
+class Card_BorderGuard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+1 Action; Reveal the top 2 cards of your deck.

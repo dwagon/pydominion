@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Relic(Card):
+class Card_Relic(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.TREASURE, Card.ATTACK]
         self.base = Game.ADVENTURE
         self.desc = "+2 Coin; Each other player gains a -1 Card token"

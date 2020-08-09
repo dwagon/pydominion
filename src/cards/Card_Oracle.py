@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Oracle(Card):
+class Card_Oracle(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.HINTERLANDS
         self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:

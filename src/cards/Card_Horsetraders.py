@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Horsetraders(Card):
+class Card_Horsetraders(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.CORNUCOPIA
         self.desc = """+1 Buy. +3 Coins. Discard 2 cards.

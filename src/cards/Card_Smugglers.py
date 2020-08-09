@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Smugglers(Card):
+class Card_Smugglers(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.SEASIDE
         self.desc = """Gain a copy of a card costing up to 6 that the player to your right gained on his last turn."""

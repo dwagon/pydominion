@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Harbinger(Card):
+class Card_Harbinger(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = "+1 Card; +1 Action; Look through your discard pile. You may put a card from it onto your deck."

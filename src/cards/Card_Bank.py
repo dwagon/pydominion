@@ -2,12 +2,12 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Bank(Card):
+class Card_Bank(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.base = Game.PROSPERITY
         self.desc = "+1 Coin per treasure in play"

@@ -2,12 +2,12 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Bureaucrat(Card):
+class Card_Bureaucrat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK]
         self.base = Game.DOMINION
         self.desc = """ Gain a Silver; put it on top of your deck. Each

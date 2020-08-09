@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_FaithfulHound(Card):
+class Card_FaithfulHound(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.REACTION]
         self.base = Game.NOCTURNE
         self.desc = """+2 Cards; When you discard this other than during Clean-up,

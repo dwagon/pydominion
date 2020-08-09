@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_FarmersMarket(Card):
+class Card_FarmersMarket(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.GATHERING]
         self.base = Game.EMPIRES
         self.name = "Farmers' Market"

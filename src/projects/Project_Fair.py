@@ -9,7 +9,6 @@ from Project import Project
 class Project_Fair(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Buy."
         self.name = "Fair"

@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Vineyard(Card):
+class Card_Vineyard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.VICTORY
         self.base = Game.ALCHEMY
         self.desc = "num action cards / 3 VP"

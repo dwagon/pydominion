@@ -3,13 +3,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Supplies(Card):
+class Card_Supplies(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.base = Game.MENAGERIE
         self.desc = "+1 coin; When you play this, gain a Horse onto your deck."

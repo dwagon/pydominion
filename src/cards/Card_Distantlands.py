@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Distantlands(Card):
+class Card_Distantlands(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.RESERVE, Card.VICTORY]
         self.base = Game.ADVENTURE
         self.desc = "Worth 4 VP if on your tavern mat at the end of the game, else 0"

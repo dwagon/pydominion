@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Feodum(Card):
+class Card_Feodum(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.VICTORY
         self.base = Game.DARKAGES
         self.desc = "1VP / 3 silvers - trash for 3 silvers"

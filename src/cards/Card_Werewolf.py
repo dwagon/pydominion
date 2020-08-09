@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Werewolf(Card):
+class Card_Werewolf(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.NIGHT, Card.DOOM]
         self.base = Game.NOCTURNE
         self.desc = "If it's your Night phase, each other player receives the next Hex.  Otherwise, +3 Cards."

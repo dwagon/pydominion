@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_CityQuarter(Card):
+class Card_CityQuarter(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.ACTION
         self.base = Game.EMPIRES
         self.desc = "+2 Actions. Reveal your hand. +1 Card per Action card revealed."

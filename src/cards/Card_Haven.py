@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Haven(Card):
+class Card_Haven(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.DURATION]
         self.base = Game.SEASIDE
         self.desc = "+1 cards, +1 action; play a card next turn"

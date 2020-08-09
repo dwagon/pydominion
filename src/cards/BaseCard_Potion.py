@@ -1,10 +1,10 @@
 import Game
-from Card import Card
+import Card
 
 
-class Card_Potion(Card):
+class Card_Potion(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.TREASURE
         self.base = Game.ALCHEMY
         self.basecard = True

@@ -1,10 +1,10 @@
 import Game
-from Card import Card
+import Card
 
 
-class Card_Estate(Card):
+class Card_Estate(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = Card.VICTORY
         self.base = Game.DOMINION
         self.desc = "1 VP"

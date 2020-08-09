@@ -2,13 +2,13 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Enchantress(Card):
+class Card_Enchantress(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
         self.base = Game.EMPIRES
         self.desc = """Until your next turn, the first time each other player plays an

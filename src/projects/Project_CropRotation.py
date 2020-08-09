@@ -9,7 +9,6 @@ from Project import Project
 class Project_CropRotation(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = Card.PROJECT
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, you may discard a Victory card for +2 Cards."
         self.name = "Crop Rotation"
