@@ -1208,6 +1208,7 @@ class Player(object):
         if not newcard:
             self.output("No more %s" % cardpile)
             return None
+        self.output("Gained a {}".format(newcard.name))
         if callhook:
             rc = self.hook_gain_card(newcard)
             if rc:
