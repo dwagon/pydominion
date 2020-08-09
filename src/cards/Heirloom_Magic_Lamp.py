@@ -11,7 +11,7 @@ class Card_MagicLamp(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
-        self.desc = """When you play this, if there are at least 6 cards
+        self.desc = """+1 Coin; When you play this, if there are at least 6 cards
             that you have exactly 1 copy of in play, trash this. If you do,
             gain 3 Wishes from their pile."""
         self.name = 'Magic Lamp'
