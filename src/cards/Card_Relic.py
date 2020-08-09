@@ -9,7 +9,7 @@ import Card
 class Card_Relic(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TREASURE, Card.ATTACK]
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_ATTACK]
         self.base = Game.ADVENTURE
         self.desc = "+2 Coin; Each other player gains a -1 Card token"
         self.name = 'Relic'

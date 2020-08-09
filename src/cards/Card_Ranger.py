@@ -9,7 +9,7 @@ import Card
 class Card_Ranger(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ADVENTURE
         self.desc = "+1 Buy. Turn your journey over. If its face up +5 Cards"
         self.name = 'Ranger'

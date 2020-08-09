@@ -9,7 +9,7 @@ import Game
 class Card_Sacrifice(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...
         Action card: +2 Cards, +2 Actions;

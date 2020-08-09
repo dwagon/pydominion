@@ -10,7 +10,7 @@ from Hex import Hex
 class Hex_Poverty(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = Card.HEX
+        self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "Discard down to 3 cards in hand"
         self.name = "Poverty"

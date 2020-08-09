@@ -9,7 +9,7 @@ import Card
 class Card_Haunted_Mirror(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "+1 Coin; When you trash this, you may discard an Action card, to gain a Ghost from its pile."
         self.name = 'Haunted Mirror'

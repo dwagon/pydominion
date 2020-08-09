@@ -9,7 +9,7 @@ import Card
 class Card_Count(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """Choose one: Discard 2 cards; or put a card from your hand
             on top of your deck; or gain a Copper. Choose one: +3 Coin; or trash

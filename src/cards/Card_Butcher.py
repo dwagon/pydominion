@@ -9,7 +9,7 @@ import Card
 class Card_Butcher(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.GUILDS
         self.desc = """Take 2 coffers. You may trash a card from your hand and then pay any number of coffer.
         If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of coffers you paid"""

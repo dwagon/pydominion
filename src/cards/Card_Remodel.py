@@ -9,7 +9,7 @@ import Card
 class Card_Remodel(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "Trash a card and gain one costing 2 more"
         self.name = 'Remodel'

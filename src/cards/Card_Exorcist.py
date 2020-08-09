@@ -9,7 +9,7 @@ import Card
 class Card_Exorcist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.NIGHT]
+        self.cardtype = [Card.TYPE_NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Trash a card from your hand. Gain a cheaper Spirit from one of the Spirit piles."
         self.name = 'Exorcist'
@@ -48,7 +48,7 @@ class Test_Exorcist(unittest.TestCase):
         self.card = self.g['Exorcist'].remove()
 
     def test_play(self):
-        self.plr.phase = Card.NIGHT
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setHand('Silver', 'Gold', 'Province')
         self.plr.test_input = ['Silver', 'Imp']
         self.plr.addCard(self.card, 'hand')

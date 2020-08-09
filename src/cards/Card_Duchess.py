@@ -9,7 +9,7 @@ import Card
 class Card_Duchess(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck, and discards it or puts it back."""
         self.name = 'Duchess'

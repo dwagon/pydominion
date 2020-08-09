@@ -9,7 +9,7 @@ import Card
 class Card_Disciple(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.TRAVELLER]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = 'Disciple'

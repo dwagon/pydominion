@@ -9,7 +9,7 @@ import Card
 class Card_Doctor(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.GUILDS
         self.name = 'Doctor'
         self.overpay = True
@@ -49,17 +49,17 @@ class Card_Doctor(Card.Card):
             player.output("Doctoring %d/%d" % (i + 1, amount))
             card = player.nextCard()
             options = []
-            options.append({'selector': '0', 'print': "Put %s back on top" % card.name, Card.ACTION: 'put back'})
-            options.append({'selector': '1', 'print': "Trash %s" % card.name, Card.ACTION: 'trash'})
-            options.append({'selector': '2', 'print': "Discard %s" % card.name, Card.ACTION: 'discard'})
+            options.append({'selector': '0', 'print': "Put %s back on top" % card.name, Card.TYPE_ACTION: 'put back'})
+            options.append({'selector': '1', 'print': "Trash %s" % card.name, Card.TYPE_ACTION: 'trash'})
+            options.append({'selector': '2', 'print': "Discard %s" % card.name, Card.TYPE_ACTION: 'discard'})
             o = player.userInput(options, "What to do with the top card %s?" % card.name)
-            if o[Card.ACTION] == 'trash':
+            if o[Card.TYPE_ACTION] == 'trash':
                 player.trashCard(card)
                 player.output("Trashing %s" % card.name)
-            elif o[Card.ACTION] == 'discard':
+            elif o[Card.TYPE_ACTION] == 'discard':
                 player.addCard(card, 'discard')
                 player.output("Discarding %s" % card.name)
-            elif o[Card.ACTION] == 'put back':
+            elif o[Card.TYPE_ACTION] == 'put back':
                 player.addCard(card, 'topdeck')
                 player.output("Putting %s back" % card.name)
 

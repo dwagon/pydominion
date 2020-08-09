@@ -9,7 +9,7 @@ import Card
 class Card_IGG(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.HINTERLANDS
         self.required_cards = ['Curse']
         self.name = 'Ill-Gotten Gains'

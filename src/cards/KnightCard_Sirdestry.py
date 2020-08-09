@@ -10,7 +10,7 @@ from cards.Card_Knight import KnightCard
 class Card_Sir_Destry(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
         self.base = Game.DARKAGES
         self.name = "Sir Destry"
         self.desc = """+2 Cards. Each other player reveals the top 2 cards of his deck,

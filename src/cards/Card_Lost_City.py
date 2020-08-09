@@ -9,7 +9,7 @@ import Card
 class Card_Lost_City(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ADVENTURE
         self.name = 'Lost City'
         self.cards = 2

@@ -9,7 +9,7 @@ import Card
 class Card_Tribute(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = """ The player to your left reveals then discards the top
             2 cards of his deck. For each differently named card revealed,

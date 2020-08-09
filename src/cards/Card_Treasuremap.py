@@ -9,7 +9,7 @@ import Card
 class Card_Treasuremap(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.SEASIDE
         self.desc = """Trash this and another copy of Treasure Map from your hand.
             If you do trash two Treasure Maps, gain 4 Gold cards, putting them

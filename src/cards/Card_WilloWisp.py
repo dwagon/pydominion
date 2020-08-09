@@ -9,7 +9,7 @@ import Card
 class Card_WilloWisp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.SPIRIT]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SPIRIT]
         self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Reveal the top card of your deck. If it costs 2 or less, put it into your hand."
         self.name = "Will-o'-Wisp"

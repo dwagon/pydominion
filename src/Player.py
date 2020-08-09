@@ -1469,13 +1469,13 @@ class Player(object):
 
     ###########################################################################
     def select_by_type(self, card, types):
-        if card.isAction() and not types[Card.ACTION]:
+        if card.isAction() and not types[Card.TYPE_ACTION]:
             return False
-        if card.isVictory() and not types[Card.VICTORY]:
+        if card.isVictory() and not types[Card.TYPE_VICTORY]:
             return False
-        if card.isTreasure() and not types[Card.TREASURE]:
+        if card.isTreasure() and not types[Card.TYPE_TREASURE]:
             return False
-        if card.isNight() and not types[Card.NIGHT]:
+        if card.isNight() and not types[Card.TYPE_NIGHT]:
             return False
         return True
 
@@ -1548,10 +1548,10 @@ class Player(object):
     def typeSelector(self, types=None):
         if types is None:
             types = {}
-        assert set(types.keys()) <= set([Card.ACTION, Card.VICTORY, Card.TREASURE, Card.NIGHT])
+        assert set(types.keys()) <= set([Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_TREASURE, Card.TYPE_NIGHT])
         if not types:
-            return {Card.ACTION: True, Card.VICTORY: True, Card.TREASURE: True, Card.NIGHT: True}
-        _types = {Card.ACTION: False, Card.VICTORY: False, Card.TREASURE: False, Card.NIGHT: False}
+            return {Card.TYPE_ACTION: True, Card.TYPE_VICTORY: True, Card.TYPE_TREASURE: True, Card.TYPE_NIGHT: True}
+        _types = {Card.TYPE_ACTION: False, Card.TYPE_VICTORY: False, Card.TYPE_TREASURE: False, Card.TYPE_NIGHT: False}
         _types.update(types)
         return _types
 

@@ -9,7 +9,7 @@ import Card
 class Card_Squire(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Coin. Choose one: +2 Actions; or +2 Buys; or gain a Silver.
         When you trash this, gain an Attack card."""
@@ -53,7 +53,7 @@ class Test_Squire(unittest.TestCase):
 
     def test_play_actions(self):
         """ Play a Squire - gain actions"""
-        self.plr.test_input = [Card.ACTION]
+        self.plr.test_input = [Card.TYPE_ACTION]
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)

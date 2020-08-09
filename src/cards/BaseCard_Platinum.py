@@ -9,7 +9,7 @@ import Card
 class Card_Platinum(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.PROSPERITY
         self.desc = "+5 coin"
         self.name = 'Platinum'

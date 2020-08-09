@@ -9,7 +9,7 @@ import Card
 class Card_Raze(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ADVENTURE
         self.desc = """+1 Action; Trash this or a card from your hand. Look at a number
             of cards from the top of your deck equal to the cost in Coin of the

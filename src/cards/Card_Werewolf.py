@@ -9,7 +9,7 @@ import Card
 class Card_Werewolf(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK, Card.NIGHT, Card.DOOM]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_NIGHT, Card.TYPE_DOOM]
         self.base = Game.NOCTURNE
         self.desc = "If it's your Night phase, each other player receives the next Hex.  Otherwise, +3 Cards."
         self.name = 'Werewolf'
@@ -45,7 +45,7 @@ class Test_Werewolf(unittest.TestCase):
         self.assertFalse(self.vic.has_state('Deluded'))
 
     def test_play_night(self):
-        self.plr.phase = Card.NIGHT
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.handSize(), 5)
         self.assertTrue(self.vic.has_state('Deluded'))

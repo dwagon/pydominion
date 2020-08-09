@@ -9,7 +9,7 @@ import Card
 class Card_Mystic(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = "+2 coin, +1 action; Name a card. Reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = 'Mystic'

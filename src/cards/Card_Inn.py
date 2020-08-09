@@ -9,7 +9,7 @@ import Card
 class Card_Inn(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.name = 'Inn'
         self.cards = 2

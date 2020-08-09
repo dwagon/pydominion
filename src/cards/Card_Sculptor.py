@@ -9,7 +9,7 @@ import Card
 class Card_Sculptor(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """Gain a card to your hand costing up to 4. If it's a Treasure, +1 Villager."""
         self.name = 'Sculptor'

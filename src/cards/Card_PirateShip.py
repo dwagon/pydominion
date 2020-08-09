@@ -9,7 +9,7 @@ import Card
 class Card_PirateShip(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.SEASIDE
         self.desc = """Choose one: Each other player reveals the top 2 cards of his deck,
         trashes a revealed Treasure that you choose, discards the rest,
@@ -23,10 +23,10 @@ class Card_PirateShip(Card.Card):
             "Pick one",
             ("Each other player reveals the top 2 cards of his deck, trashes a " +
              "revealed Treasure that you choose, discards the rest, and if anyone " +
-             "trashed a Treasure you take a Coin token", Card.ATTACK),
+             "trashed a Treasure you take a Coin token", Card.TYPE_ATTACK),
             ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend')
         )
-        if choice == Card.ATTACK:
+        if choice == Card.TYPE_ATTACK:
             trashed = False
             for victim in player.attackVictims():
                 if self.attack_player(player, victim):

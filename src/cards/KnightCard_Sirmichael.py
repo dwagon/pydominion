@@ -10,7 +10,7 @@ from cards.Card_Knight import KnightCard
 class Card_Sirmichael(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
         self.base = Game.DARKAGES
         self.name = "Sir Michael"
         self.desc = """Each other player discards down to 3 cards in hand.

@@ -9,7 +9,7 @@ import Card
 class Card_Courtyard(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "+3 cards. Put a card from your hand on top of your deck."
         self.name = 'Courtyard'

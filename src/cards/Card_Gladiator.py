@@ -9,7 +9,7 @@ import Card
 class Card_Gladiator(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.EMPIRES
         self.desc = """+2 Coin
         Reveal a card from your hand. The player to your left may reveal a copy from their hand.

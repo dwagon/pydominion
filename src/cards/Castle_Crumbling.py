@@ -10,7 +10,7 @@ from cards.Card_Castles import CastleCard
 class Card_CrumblingCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.VICTORY, Card.CASTLE]
+        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
         self.base = Game.EMPIRES
         self.cost = 4
         self.desc = "1VP. When you gain or trash this, +1VP and gain a Silver."

@@ -10,7 +10,7 @@ from Hex import Hex
 class Hex_Envy(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = Card.HEX
+        self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Envious."
         self.name = "Envy"

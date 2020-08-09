@@ -9,7 +9,7 @@ import Card
 class Card_Courtier(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = """Reveal a card from your hand. For each type it has
         (Action, Attack, etc.), choose one: +1 Action; or +1 Buy; or +3 Coin;
@@ -41,7 +41,7 @@ class Card_Courtier(Card.Card):
                 *choices
             )
             chosen.append(opt)
-            if opt == Card.ACTION:
+            if opt == Card.TYPE_ACTION:
                 player.addActions(1)
             if opt == 'buy':
                 player.addBuys(1)

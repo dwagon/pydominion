@@ -9,7 +9,7 @@ import Card
 class Card_Haggler(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = "+2 Coin. While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."
         self.name = 'Haggler'
@@ -18,7 +18,7 @@ class Card_Haggler(Card.Card):
 
     def hook_buyCard(self, game, player, card):
         cost = card.cost - 1
-        player.plrGainCard(cost=cost, types={Card.ACTION: True, Card.TREASURE: True}, prompt="Gain a non-Victory card costing under %s" % cost)
+        player.plrGainCard(cost=cost, types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True}, prompt="Gain a non-Victory card costing under %s" % cost)
 
 
 ###############################################################################

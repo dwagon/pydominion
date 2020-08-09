@@ -9,7 +9,7 @@ import Card
 class Card_Bordervillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.name = 'Border Village'
         self.cost = 6
         self.cards = 1

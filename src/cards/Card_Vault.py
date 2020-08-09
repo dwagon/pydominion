@@ -9,7 +9,7 @@ import Card
 class Card_Vault(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = """+2 Cards; Discard any number of cards. +1 Coin per card
             discarded. Each other player may discard 2 cards. If he does, he

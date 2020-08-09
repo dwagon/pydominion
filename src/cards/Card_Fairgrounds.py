@@ -9,7 +9,7 @@ import Card
 class Card_Fairgrounds(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.VICTORY
+        self.cardtype = Card.TYPE_VICTORY
         self.base = Game.CORNUCOPIA
         self.desc = "2VP / 5 card types"
         self.name = 'Fairgrounds'

@@ -9,7 +9,7 @@ import Game
 class Card_Remake(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.CORNUCOPIA
         self.desc = "Do this twice: Trash a card from your hand, then gain a card costing exactly 1 more than the trashed card."
         self.name = 'Remake'

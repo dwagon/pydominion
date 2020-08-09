@@ -9,7 +9,7 @@ import Card
 class Card_Treasure_Trove(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.ADVENTURE
         self.desc = "+2 Coin. When you play this, gain a Gold and a Copper"
         self.name = 'Treasure Trove'

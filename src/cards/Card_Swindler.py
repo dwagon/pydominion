@@ -9,7 +9,7 @@ import Card
 class Card_Swindler(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.INTRIGUE
         self.desc = """+2 Coin. Each other player trashed the top card of his deck and
             gains a card with the same cost that you choose."""

@@ -9,7 +9,7 @@ import Card
 class Card_Zombie_Mason(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ZOMBIE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ZOMBIE]
         self.base = Game.NOCTURNE
         self.desc = "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
         self.name = 'Zombie Mason'

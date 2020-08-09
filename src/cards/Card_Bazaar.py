@@ -9,7 +9,7 @@ import Card
 class Card_Bazaar(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.desc = "+1 cards, +2 action, +1 coin"
         self.name = 'Bazaar'
         self.base = Game.SEASIDE

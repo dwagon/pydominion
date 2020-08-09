@@ -9,7 +9,7 @@ import Card
 class Card_CaravanGuard(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION, Card.TYPE_REACTION]
         self.base = Game.ADVENTURE
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
             When another player plays an Attack card, you may play this from
@@ -28,7 +28,7 @@ class Card_CaravanGuard(Card.Card):
         player.output("Under attack from %s" % attacker.name)
         player.addActions(1)
         player.pickupCards(1)
-        player.addCard(self, Card.DURATION)
+        player.addCard(self, Card.TYPE_DURATION)
         player.hand.remove(player.in_hand('Caravan Guard'))
 
 

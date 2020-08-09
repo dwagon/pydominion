@@ -10,7 +10,7 @@ import Game
 class Card_Dame_Anna(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK, Card.KNIGHT]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
         self.base = Game.DARKAGES
         self.name = "Dame Anna"
         self.desc = """You may trash up to 2 cards from your hand.

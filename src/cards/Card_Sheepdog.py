@@ -10,7 +10,7 @@ import Card
 class Card_Sheepdog(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; When you gain a card, you may play this from your hand."
         self.name = 'Sheepdog'

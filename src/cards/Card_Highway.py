@@ -9,7 +9,7 @@ import Card
 class Card_Highway(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
         self.name = 'Highway'

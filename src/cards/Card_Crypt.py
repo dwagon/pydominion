@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Card_Crypt(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.NIGHT, Card.DURATION]
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
         self.base = Game.NOCTURNE
         self.desc = """Set aside any number of Treasures you have in play, face down
             (under this). While any remain, at the start of each of your turns,
@@ -25,7 +25,7 @@ class Card_Crypt(Card.Card):
             prompt='Set aside any number of Treasures you have in play',
             verbs=('Set', 'Unset'),
             anynum=True,
-            types={Card.TREASURE: True},
+            types={Card.TYPE_TREASURE: True},
             cardsrc='played'
                 )
         if cards:
@@ -61,7 +61,7 @@ class Test_Crypt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.phase = Card.NIGHT
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setPlayed('Silver', 'Gold', 'Estate')
         self.plr.test_input = ['Set Gold', 'Set Silver', 'Finish']
         self.plr.playCard(self.card)

@@ -9,7 +9,7 @@ import Card
 class Card_Bridgetroll(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
         self.base = Game.ADVENTURE
         self.desc = """Each other player takes his -1 Coin token.
             Now and at the start of your next turn: +1 Buy.

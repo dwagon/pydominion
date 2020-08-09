@@ -9,7 +9,7 @@ import Card
 class Card_Coppersmith(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "Copper produces an extra +1 this turn"
         self.name = 'Coppersmith'

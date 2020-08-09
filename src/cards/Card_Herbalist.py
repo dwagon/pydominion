@@ -9,7 +9,7 @@ import Card
 class Card_Herbalist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ALCHEMY
         self.desc = "+1 buy, +1 coin. When you discard this from play, you may put one of your Treasures from play on top of your deck"
         self.name = 'Herbalist'

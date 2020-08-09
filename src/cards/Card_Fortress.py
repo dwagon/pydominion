@@ -9,7 +9,7 @@ import Card
 class Card_Fortress(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Card +2 Actions. When you trash this, put it into your hand."""
         self.name = 'Fortress'

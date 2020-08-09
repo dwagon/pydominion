@@ -10,7 +10,7 @@ import Card
 class Card_Wayfarer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
         self.desc = "+3 Cards; You may gain a Silver. This has the same cost as the last other card gained this turn, if any."
         self.name = 'Wayfarer'

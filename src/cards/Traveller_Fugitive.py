@@ -9,7 +9,7 @@ import Card
 class Card_Fugitive(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.TRAVELLER]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = "+1 Action, +2 Cards; Discard a card"
         self.name = 'Fugitive'

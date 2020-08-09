@@ -9,7 +9,7 @@ import Card
 class Card_Changeling(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.NIGHT]
+        self.cardtype = [Card.TYPE_NIGHT]
         self.base = Game.NOCTURNE
         self.desc = """Trash this. Gain a copy of a card you have in play.
 In games using this, when you gain a card costing 3 or more, you may exchange it for a Changeling."""
@@ -54,13 +54,13 @@ class Test_Changeling(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play_keep(self):
-        self.plr.phase = Card.NIGHT
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.test_input = ['Keep Changeling']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_played('Changeling'))
 
     def test_play_swap(self):
-        self.plr.phase = Card.NIGHT
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setPlayed('Gold')
         self.plr.test_input = ['Exchange for Gold']
         self.plr.playCard(self.card)

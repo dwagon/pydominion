@@ -9,7 +9,7 @@ import Card
 class Card_Ironworks(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "Gain a card costing up to 4. If it is an ... Action card, +1 Action; Treasure card, +1 Coin; Victory card, +1 Card"
         self.name = 'Iron Works'

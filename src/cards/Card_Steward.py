@@ -9,7 +9,7 @@ import Card
 class Card_Steward(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "Choose: +2 cards, +2 coin, trash 2 cards"
         self.name = 'Steward'

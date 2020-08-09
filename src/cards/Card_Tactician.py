@@ -9,7 +9,7 @@ import Card
 class Card_Tactician(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.SEASIDE
         self.desc = "Discard hand; +5 cards, +1 buy and +1 action next turn"
         self.name = 'Tactician'

@@ -9,7 +9,7 @@ import Card
 class Card_Nobles(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.VICTORY]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
         self.base = Game.INTRIGUE
         self.desc = "2VP, choose +3 cards or +2 actions"
         self.name = 'Nobles'

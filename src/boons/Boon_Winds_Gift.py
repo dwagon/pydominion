@@ -10,7 +10,7 @@ from Boon import Boon
 class Boon_Winds_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = Card.BOON
+        self.cardtype = Card.TYPE_BOON
         self.base = Game.NOCTURNE
         self.desc = "+2 Cards; Discard 2 cards."
         self.name = "The Wind's Gift"

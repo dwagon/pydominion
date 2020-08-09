@@ -9,7 +9,7 @@ import Card
 class Card_Quarry(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.PROSPERITY
         self.desc = "+1 Coin. While this is in play, Action cards cost 2 less, but not less than 0."
         self.name = 'Quarry'

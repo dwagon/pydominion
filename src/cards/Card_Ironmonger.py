@@ -9,7 +9,7 @@ import Card
 class Card_Ironmonger(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 card, +1 action. Reveal the top card of your deck; you may
         discard it.  Either way, if it is an... Action card, +1 Action;

@@ -9,7 +9,7 @@ import Card
 class Card_Scheme(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = """+1 Card +1 Action; At the start of Clean-up this turn,
             you may choose an Action card you have in play. If you discard it from play

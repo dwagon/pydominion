@@ -9,7 +9,7 @@ import Card
 class Card_Amulet(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.ADVENTURE
         self.desc = "Now and next turn - Choose 1: +1 Coin, trash card, gain silver"
         self.name = 'Amulet'

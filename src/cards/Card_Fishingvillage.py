@@ -9,7 +9,7 @@ import Card
 class Card_Fishingvillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.SEASIDE
         self.desc = "+1 coin, +2 actions; next turn +1 coin, +1 action"
         self.name = 'Fishing Village'

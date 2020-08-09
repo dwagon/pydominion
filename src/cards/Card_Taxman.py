@@ -9,7 +9,7 @@ import Card
 class Card_Taxman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.GUILDS
         self.desc = """You may trash a Treasure from your hand.
         Each other player with 5 or more cards in hand discards a copy of it (or reveals a hand without it).
@@ -35,7 +35,7 @@ class Card_Taxman(Card.Card):
                     for c in vic.hand:
                         vic.revealCard(c)
         cardcost = player.cardCost(card) + 3
-        player.plrGainCard(cost=cardcost, types={Card.TREASURE: True})
+        player.plrGainCard(cost=cardcost, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################

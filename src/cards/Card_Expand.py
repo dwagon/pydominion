@@ -9,7 +9,7 @@ import Card
 class Card_Expand(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = "Trash a card from hand and gain one costing 3 more"
         self.name = 'Expand'

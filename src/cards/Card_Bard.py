@@ -9,7 +9,7 @@ import Card
 class Card_Bard(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.FATE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
         self.base = Game.NOCTURNE
         self.desc = "+2 Coin; Receive a boon"
         self.name = 'Bard'

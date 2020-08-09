@@ -9,7 +9,7 @@ import Card
 class Card_Hero(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.TRAVELLER]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = "+2 Coin, Gain a Treasure; Discard to replace with Champion"
         self.name = 'Hero'
@@ -20,7 +20,7 @@ class Card_Hero(Card.Card):
 
     def special(self, game, player):
         """ Gain a treasure """
-        player.plrGainCard(cost=None, types={Card.TREASURE: True})
+        player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
 
     def hook_discardThisCard(self, game, player, source):
         """ Replace with Champion """

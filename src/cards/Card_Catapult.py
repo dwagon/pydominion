@@ -9,7 +9,7 @@ import Card
 class Card_Catapult(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.required_cards = ['Curse']
         self.base = Game.EMPIRES
         self.desc = """+1 Coin; Trash a card from your hand.

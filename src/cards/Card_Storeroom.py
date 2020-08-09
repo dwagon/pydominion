@@ -9,7 +9,7 @@ import Card
 class Card_Storeroom(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Buy; Discard any number of cards. +1 Card per card
             discarded. Discard any number of cards. +1 Coin per card discarded

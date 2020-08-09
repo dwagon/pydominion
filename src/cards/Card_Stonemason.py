@@ -9,7 +9,7 @@ import Card
 class Card_Stonemason(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.GUILDS
         self.name = 'Stonemason'
         self.overpay = True
@@ -33,8 +33,8 @@ class Card_Stonemason(Card.Card):
                 player.plrGainCard(cost, 'less')
 
     def hook_overpay(self, game, player, amount):
-        player.plrGainCard(amount, 'less', types={Card.ACTION: True})
-        player.plrGainCard(amount, 'less', types={Card.ACTION: True}, prompt="Gain another card costing up to %s" % amount)
+        player.plrGainCard(amount, 'less', types={Card.TYPE_ACTION: True})
+        player.plrGainCard(amount, 'less', types={Card.TYPE_ACTION: True}, prompt="Gain another card costing up to %s" % amount)
 
 
 ###############################################################################

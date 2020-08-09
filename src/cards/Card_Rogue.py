@@ -9,7 +9,7 @@ import Card
 class Card_Rogue(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.DARKAGES
         self.desc = """+2 coin; If there are any cards in the trash costing from 3 to
             6, gain one of them. Otherwise, each other player reveals

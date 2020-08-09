@@ -10,7 +10,7 @@ from cards.Card_Castles import CastleCard
 class Card_HumbleCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.TREASURE, Card.VICTORY, Card.CASTLE]
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
         self.base = Game.EMPIRES
         self.cost = 3
         self.desc = "+1 Coin; Worth 1VP per Castle you have."

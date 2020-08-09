@@ -9,7 +9,7 @@ import Card
 class Card_Patrol(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = """+3 Cards; Reveal the top 4 cards of your deck.
             Put the Victory cards and Curses into your hand.

@@ -9,7 +9,7 @@ import Card
 class Card_Page(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.TRAVELLER]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Discard to replace with Treasure Hunter"
         self.name = 'Page'

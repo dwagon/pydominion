@@ -9,7 +9,7 @@ import Card
 class Card_Patron(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.RENAISSANCE
         self.desc = "+1 Villager; +2. When something causes you to reveal this, +1 Coffers."
         self.name = 'Patron'

@@ -9,7 +9,7 @@ import Card
 class Card_Horsetraders(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.CORNUCOPIA
         self.desc = """+1 Buy. +3 Coins. Discard 2 cards.
         When another player plays an Attack card, you may set this aside from your hand.

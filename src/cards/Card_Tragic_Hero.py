@@ -9,7 +9,7 @@ import Card
 class Card_Tragic_Hero(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.NOCTURNE
         self.desc = "+3 Cards; +1 Buys; If you have 8 or more cards in hand (after drawing), trash this and gain a Treasure."
         self.name = 'Tragic Hero'
@@ -20,7 +20,7 @@ class Card_Tragic_Hero(Card.Card):
     def special(self, game, player):
         if player.handSize() >= 8:
             player.trashCard(self)
-            player.plrGainCard(cost=None, types={Card.TREASURE: True})
+            player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################

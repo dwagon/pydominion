@@ -9,7 +9,7 @@ import Card
 class Card_FlagBearer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """When you gain or trash this, take the Flag."""
         self.name = 'Flag Bearer'

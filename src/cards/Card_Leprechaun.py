@@ -9,7 +9,7 @@ import Card
 class Card_Leprechaun(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DOOM]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DOOM]
         self.base = Game.NOCTURNE
         self.desc = "Gain a Gold. If you have exactly 7 cards in play, gain a Wish from its pile. Otherwise, receive a Hex."
         self.name = 'Leprechaun'

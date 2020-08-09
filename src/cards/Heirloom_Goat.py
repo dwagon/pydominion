@@ -9,7 +9,7 @@ import Card
 class Card_Goat(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TREASURE, Card.HEIRLOOM]
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "When you play this, you may trash a card from your hand."
         self.name = 'Goat'

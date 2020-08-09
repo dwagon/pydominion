@@ -9,7 +9,7 @@ import Card
 class Card_Grandmarket(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = "+1 card, +1 action, +1 buy, +2 coin"
         self.name = 'Grand Market'

@@ -9,7 +9,7 @@ import Card
 class Card_Scryingpool(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.ALCHEMY
         self.desc = """+1 Action. Each player (including you) reveals the top card of
         his deck and either discards it or puts it back, your choice.

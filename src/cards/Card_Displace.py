@@ -10,7 +10,7 @@ import Card
 class Card_Displace(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
         self.desc = """Exile a card from your hand. Gain a differently named card costing up to 2 Coin more than it."""
         self.name = 'Displace'

@@ -9,7 +9,7 @@ import Card
 class Card_Goons(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'

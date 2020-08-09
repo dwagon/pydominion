@@ -11,7 +11,7 @@ from PlayArea import PlayArea
 class Card_Druid(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.FATE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
         self.base = Game.NOCTURNE
         self.desc = "+1 Buy; Receive one of the set-aside Boons"
         self.name = 'Druid'
@@ -30,9 +30,9 @@ class Card_Druid(Card.Card):
             sel = '%d' % i
             bn = list(game._druid_area)[i]
             toprint = "Receive {}: {}".format(bn.name, bn.description(player))
-            options.append({'selector': sel, 'print': toprint, Card.BOON: bn})
+            options.append({'selector': sel, 'print': toprint, Card.TYPE_BOON: bn})
         b = player.userInput(options, "Which boon? ")
-        player.receive_boon(boon=b[Card.BOON], discard=False)
+        player.receive_boon(boon=b[Card.TYPE_BOON], discard=False)
 
 
 ###############################################################################

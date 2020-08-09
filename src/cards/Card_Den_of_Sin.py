@@ -9,7 +9,7 @@ import Card
 class Card_Den_of_Sin(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.NIGHT, Card.DURATION]
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
         self.base = Game.NOCTURNE
         self.name = 'Den of Sin'
         self.cost = 2

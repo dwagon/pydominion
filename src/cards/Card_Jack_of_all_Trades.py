@@ -9,7 +9,7 @@ import Card
 class Card_Jack_of_all_Trades(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = """Gain a Silver.
             Look at the top card of your deck; discard it or put it back.

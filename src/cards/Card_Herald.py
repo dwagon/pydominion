@@ -9,7 +9,7 @@ import Card
 class Card_Herald(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.base = Game.GUILDS
         self.name = 'Herald'
         self.overpay = True

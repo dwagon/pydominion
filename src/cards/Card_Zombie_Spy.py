@@ -9,7 +9,7 @@ import Card
 class Card_Zombie_Spy(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ZOMBIE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ZOMBIE]
         self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
         self.name = 'Zombie Spy'

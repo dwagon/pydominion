@@ -9,7 +9,7 @@ import Card
 class Card_Hireling(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.ADVENTURE
         self.desc = "+1 Card forever"
         self.name = 'Hireling'

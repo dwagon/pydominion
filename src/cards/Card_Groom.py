@@ -10,7 +10,7 @@ import Card
 class Card_Groom(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.cost = 4
         self.name = 'Groom'
         self.base = Game.MENAGERIE

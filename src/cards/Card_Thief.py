@@ -9,7 +9,7 @@ import Card
 class Card_Thief(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.DOMINION
         self.desc = """Each other player reveals the top 2 cards of his deck.
             If they revealed any Treasure cards, they trash one of them that you choose.

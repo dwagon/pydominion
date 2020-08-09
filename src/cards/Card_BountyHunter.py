@@ -10,7 +10,7 @@ import Card
 class Card_Bounty_Hunter(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
         self.desc = """+1 Action; Exile a card from your hand. If you didn't
             have a copy of it in Exile, +3 Coin."""

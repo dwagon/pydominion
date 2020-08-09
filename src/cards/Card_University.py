@@ -8,7 +8,7 @@ import Card
 class Card_University(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ALCHEMY
         self.desc = "Gain an action card costing up to 5"
         self.name = 'University'
@@ -18,7 +18,7 @@ class Card_University(Card.Card):
 
     def special(self, game, player):
         """ Gain an action card costing up to 5"""
-        c = player.plrGainCard(5, types={Card.ACTION: True})
+        c = player.plrGainCard(5, types={Card.TYPE_ACTION: True})
         if c:
             player.output("Gained %s from university" % c.name)
 

@@ -9,7 +9,7 @@ import Card
 class Card_Beggar(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.DARKAGES
         self.desc = """Gain 3 Coppers, putting them into your hand.
             When another player plays an Attack card, you may discard this.

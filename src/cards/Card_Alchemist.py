@@ -8,7 +8,7 @@ import Card
 class Card_Alchemist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ALCHEMY
         self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
         self.name = 'Alchemist'

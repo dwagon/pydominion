@@ -9,7 +9,7 @@ import Card
 class Card_Altar(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """Trash a card from your hand. Gain a card costing up to 5 Coin."""
         self.name = 'Altar'

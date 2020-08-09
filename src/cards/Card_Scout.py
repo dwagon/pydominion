@@ -8,7 +8,7 @@ import Card
 class Card_Scout(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "+1 action, Adjust top 4 cards of deck"
         self.name = 'Scout'

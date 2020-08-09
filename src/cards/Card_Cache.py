@@ -9,7 +9,7 @@ import Card
 class Card_Cache(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TREASURE
+        self.cardtype = Card.TYPE_TREASURE
         self.name = 'Cache'
         self.cost = 5
         self.coin = 3

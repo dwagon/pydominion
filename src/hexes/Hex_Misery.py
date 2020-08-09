@@ -10,7 +10,7 @@ from Hex import Hex
 class Hex_Misery(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = Card.HEX
+        self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "If this is your first Misery this game, take Miserable. Otherwise, flip it over to Twice Miserable."
         self.name = "Misery"

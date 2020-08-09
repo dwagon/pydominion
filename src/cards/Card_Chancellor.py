@@ -9,7 +9,7 @@ import Card
 class Card_Chancellor(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "+2 Coin; You may immediately put your deck into your discard pile."
         self.name = 'Chancellor'

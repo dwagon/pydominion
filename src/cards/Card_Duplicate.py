@@ -9,7 +9,7 @@ import Card
 class Card_Duplicate(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.RESERVE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
         self.base = Game.ADVENTURE
         self.desc = "When you gain a card costing up to 6, you may call this to gain a copy of that card"
         self.name = 'Duplicate'

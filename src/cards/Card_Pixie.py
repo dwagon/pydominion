@@ -9,7 +9,7 @@ import Card
 class Card_Pixie(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.FATE]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
         self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Discard the top Boon. You may trash this to receive that Boon twice."
         self.name = 'Pixie'

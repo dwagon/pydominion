@@ -9,7 +9,7 @@ import Card
 class Card_Saboteur(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.ATTACK]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.INTRIGUE
         self.desc = """Each other player reveals cards from the top of his deck
             until revealing one costing 3 Coin or more. He trashes that card

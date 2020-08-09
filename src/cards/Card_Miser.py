@@ -9,7 +9,7 @@ import Card
 class Card_Miser(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.ADVENTURE
         self.desc = "Put a copper onto your mat or +1 coin per copper on mat"
         self.name = 'Miser'
@@ -28,7 +28,7 @@ class Card_Miser(Card.Card):
                 ("%d coins from mat" % coins, False))
             if deposit:
                 cu = player.in_hand('Copper')
-                player.addCard(cu, Card.RESERVE)
+                player.addCard(cu, Card.TYPE_RESERVE)
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)

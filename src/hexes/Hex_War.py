@@ -10,7 +10,7 @@ from Hex import Hex
 class Hex_War(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = Card.HEX
+        self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "Reveal cards from your deck until revealing one costing 3 or 4. Trash it and discard the rest."
         self.name = "War"

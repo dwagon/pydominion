@@ -9,7 +9,7 @@ import Card
 class Card_BorderGuard(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+1 Action; Reveal the top 2 cards of your deck.
         Put one into your hand and discard the other. If both were Actions,

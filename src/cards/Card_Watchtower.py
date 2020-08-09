@@ -9,7 +9,7 @@ import Card
 class Card_Watchtower(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.REACTION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.desc = """Draw until you have 6 cards in hand.
         When you gain a card, you may reveal this from your hand. If you do, either trash that card, or put it on top of your deck."""
         self.name = 'Watchtower'

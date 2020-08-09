@@ -9,7 +9,7 @@ import Card
 class Card_Pasture(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TREASURE, Card.VICTORY, Card.HEIRLOOM]
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_VICTORY, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "+1 Coin; Worth 1VP per Estate you have"
         self.name = 'Pasture'

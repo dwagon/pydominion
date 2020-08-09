@@ -9,7 +9,7 @@ import Card
 class Card_Merchantship(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.SEASIDE
         self.desc = "+2 coins; +2 coins next turn"
         self.name = 'Merchant Ship'

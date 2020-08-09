@@ -9,7 +9,7 @@ import Card
 class Card_Treasurehunter(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.TRAVELLER]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
         self.desc = """+1 Action, +1 Coin; Gain a Silver per card the player
             to your right gained in his last turn. Discard to replace with Warrior"""

@@ -9,7 +9,7 @@ import Card
 class Card_Feodum(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.VICTORY
+        self.cardtype = Card.TYPE_VICTORY
         self.base = Game.DARKAGES
         self.desc = "1VP / 3 silvers - trash for 3 silvers"
         self.name = 'Feodum'

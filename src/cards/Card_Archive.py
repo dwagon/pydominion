@@ -10,7 +10,7 @@ import Game
 class Card_Archive(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION, Card.DURATION]
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.EMPIRES
         self.desc = """+1 Action; Set aside the top 3 cards of your deck face
             down (you may look at them). Now and at the start of your next two turns,

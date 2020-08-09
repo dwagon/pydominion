@@ -10,7 +10,7 @@ from Boon import Boon
 class Boon_Earths_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = Card.BOON
+        self.cardtype = Card.TYPE_BOON
         self.base = Game.NOCTURNE
         self.desc = "You may discard a Treasure to gain a card costing up to 4"
         self.name = "The Earth's Gift"

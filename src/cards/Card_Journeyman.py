@@ -9,7 +9,7 @@ import Card
 class Card_Journeyman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.ACTION
+        self.cardtype = Card.TYPE_ACTION
         self.base = Game.GUILDS
         self.desc = """Name a card.
         Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.

@@ -9,7 +9,7 @@ import Card
 class Card_Crossroads(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.ACTION]
+        self.cardtype = [Card.TYPE_ACTION]
         self.base = Game.HINTERLANDS
         self.desc = """Reveal your hand. +1 Card per Victory card revealed.
             If this is the first time you played a Crossroads this turn, +3 Actions."""
