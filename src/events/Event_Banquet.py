@@ -2,6 +2,7 @@
 
 import unittest
 import Game
+import Card
 from Event import Event
 
 

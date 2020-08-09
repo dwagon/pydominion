@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Event import Event
 
@@ -18,7 +19,7 @@ class Event_Summon(Event):
 
     def special(self, game, player):
         """ Gain an Action card costing up to 4"""
-        player.plrGainCard(4, types={Card.ACTION: True}, destination=Card.DURATION)
+        player.plrGainCard(4, types={Card.ACTION: True}, destination='duration')
         print("Unimplemented")
 
 
