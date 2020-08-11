@@ -34,15 +34,15 @@ class Test_Caravan(unittest.TestCase):
     def test_playcard(self):
         """ Play a caravan """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.durationpile.size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationSize(), 0)
-        self.assertEqual(self.plr.played_size(), 1)
+        self.assertEqual(self.plr.durationpile.size(), 0)
+        self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Caravan')
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

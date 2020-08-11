@@ -49,17 +49,17 @@ class Test_Barge(unittest.TestCase):
     def test_play_this_turn(self):
         self.plr.test_input = ['now']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
 
     def test_play_next_turn(self):
         self.plr.test_input = ['next']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
 
 

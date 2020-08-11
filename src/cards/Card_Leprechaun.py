@@ -19,7 +19,7 @@ class Card_Leprechaun(Card.Card):
     def special(self, game, player):
         player.output("Gained a gold")
         player.gainCard('Gold')
-        if player.played_size() + player.durationSize() == 7:
+        if player.played.size() + player.durationpile.size() == 7:
             player.gainCard('Wish')
         else:
             player.receive_hex()

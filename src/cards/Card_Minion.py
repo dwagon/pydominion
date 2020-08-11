@@ -35,7 +35,7 @@ class Card_Minion(Card.Card):
     def attack(self, game, player):
         self.dropAndDraw(player)
         for victim in player.attackVictims():
-            if victim.handSize() >= 5:
+            if victim.hand.size() >= 5:
                 self.dropAndDraw(victim)
 
     def dropAndDraw(self, plr):
@@ -59,7 +59,7 @@ class Test_Minion(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_discard(self):
         """ Play a minion and discard hand"""
@@ -67,11 +67,11 @@ class Test_Minion(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discard_size(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discard_size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 5)
 
     def test_play_victim_smallhand(self):
         """ Play a minion and discard hand - the other player has a small hand"""
@@ -80,11 +80,11 @@ class Test_Minion(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discard_size(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discard_size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_play_defended(self):
         """ Play a minion and discard hand - the other player is defended """
@@ -93,11 +93,11 @@ class Test_Minion(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discard_size(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discard_size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 5)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
 
 ###############################################################################

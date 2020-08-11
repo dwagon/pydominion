@@ -45,12 +45,12 @@ class Test_Enchantress(unittest.TestCase):
         self.plr.playCard(self.card)
         self.vic.addCard(self.r1, 'hand')
         self.vic.playCard(self.r1)
-        self.assertEqual(self.vic.handSize(), 5 + 1)    # Hand + Ench
+        self.assertEqual(self.vic.hand.size(), 5 + 1)    # Hand + Ench
         self.assertEqual(self.vic.get_actions(), 1)
         self.vic.addCard(self.m1, 'hand')
         self.vic.playCard(self.m1)
         self.g.print_state()
-        self.assertEqual(self.vic.handSize(), 5 + 1 + 2)    # Hand + Ench + Moat
+        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)    # Hand + Ench + Moat
 
 
 ###############################################################################

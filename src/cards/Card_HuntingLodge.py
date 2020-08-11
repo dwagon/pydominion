@@ -42,14 +42,14 @@ class Test_Hunting_Lodge(unittest.TestCase):
         """ Play a card and discard hand """
         self.plr.test_input = ["Discard"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_playcard_keep(self):
         """ Play a card and keep hand """
         self.plr.test_input = ["Nope"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
 

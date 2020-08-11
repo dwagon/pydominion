@@ -21,7 +21,7 @@ class Card_Menagerie(Card.Card):
         for card in player.hand:
             player.revealCard(card)
             hand.add(card.name)
-        if len(hand) == player.handSize():
+        if len(hand) == player.hand.size():
             player.output("No duplicates - picking up 3 cards")
             player.pickupCards(3)
         else:
@@ -42,14 +42,14 @@ class Test_Menagerie(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_non_unique(self):
         self.plr.setHand('Copper', 'Copper', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
 
 
 ###############################################################################

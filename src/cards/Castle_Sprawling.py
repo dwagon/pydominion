@@ -55,7 +55,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.plr.gainCard('Castles')
         self.assertIsNotNone(self.plr.in_discard('Duchy'))
         self.assertIsNone(self.plr.in_discard('Estate'))
-        self.assertEqual(self.plr.discard_size(), 1 + 1)
+        self.assertEqual(self.plr.discardpile.size(), 1 + 1)
 
     def test_gain_estate(self):
         """ Gain estates through Sprawling Castle """
@@ -67,7 +67,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.plr.gainCard('Castles')
         self.assertIsNone(self.plr.in_discard('Duchy'))
         self.assertIsNotNone(self.plr.in_discard('Estate'))
-        self.assertEqual(self.plr.discard_size(), 3 + 1)
+        self.assertEqual(self.plr.discardpile.size(), 3 + 1)
 
 
 ###############################################################################

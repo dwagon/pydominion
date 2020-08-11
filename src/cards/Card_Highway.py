@@ -34,7 +34,7 @@ class Test_Highway(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_costreduction(self):

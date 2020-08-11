@@ -37,7 +37,7 @@ class Test_Rivers_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.plr.end_turn()
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

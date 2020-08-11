@@ -40,7 +40,7 @@ class Test_Courtyard(unittest.TestCase):
         self.plr.addCard(self.cy, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.cy)
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
 
     def test_putcard(self):
         """ Use courtyard to put a card to the top of the deck """
@@ -52,7 +52,7 @@ class Test_Courtyard(unittest.TestCase):
         self.assertEqual(card.name, 'Gold')
         for c in self.plr.hand:
             self.assertNotEqual(c.name, 'Gold')
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

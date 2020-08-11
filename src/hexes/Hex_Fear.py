@@ -17,7 +17,7 @@ class Hex_Fear(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.handSize() < 5:
+        if player.hand.size() < 5:
             return
         tanda = [_ for _ in player.hand if _.isAction() or _.isTreasure()]
         player.plrDiscardCards(num=1, cardsrc=tanda, prompt="Discard an Action or a Treasure")
@@ -42,13 +42,13 @@ class Test_Fear(unittest.TestCase):
     def test_empty_war(self):
         self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.discard_size(), 1)     # The Cursed Village
+        self.assertEqual(self.plr.discardpile.size(), 1)     # The Cursed Village
 
     def test_war(self):
         self.plr.setHand('Estate', 'Duchy', 'Estate', 'Duchy', 'Copper')
         self.plr.test_input = ['Copper']
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard('Copper'))
 
 

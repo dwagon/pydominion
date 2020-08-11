@@ -40,7 +40,7 @@ class Test_Merchant(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.plr.addCard(self.s1, 'hand')
         self.plr.playCard(self.s1)
         self.assertEqual(self.plr.getCoin(), 3)

@@ -42,15 +42,15 @@ class Test_Militia(unittest.TestCase):
         self.attacker.addCard(self.mcard, 'hand')
         self.defender.addCard(self.g['Moat'].remove(), 'hand')
         self.attacker.playCard(self.mcard)
-        self.assertEqual(self.defender.handSize(), 6)   # Normal + moat
+        self.assertEqual(self.defender.hand.size(), 6)   # Normal + moat
         self.assertEqual(self.attacker.getCoin(), 2)
 
     def test_attack(self):
         self.attacker.addCard(self.mcard, 'hand')
         self.defender.test_input = ['1', '2', '0']
         self.attacker.playCard(self.mcard)
-        self.assertEqual(self.defender.handSize(), 3)   # Normal  - 2
-        self.assertEqual(self.defender.discard_size(), 2)
+        self.assertEqual(self.defender.hand.size(), 3)   # Normal  - 2
+        self.assertEqual(self.defender.discardpile.size(), 2)
         self.assertEqual(self.attacker.getCoin(), 2)
 
 

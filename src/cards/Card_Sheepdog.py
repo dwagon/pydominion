@@ -33,13 +33,13 @@ class Test_Sheepdog(unittest.TestCase):
     def test_playcard(self):
         """ Play card """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gain(self):
         """ Gain a card """
         self.plr.gainCard('Estate')
         self.g.print_state()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

@@ -44,7 +44,7 @@ class Test_BadOmens(unittest.TestCase):
     def test_play(self):
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Silver', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.deckSize(), 2)
+        self.assertEqual(self.plr.deck.size(), 2)
         self.assertEqual(self.plr.deck.count('Copper'), 2)
 
 

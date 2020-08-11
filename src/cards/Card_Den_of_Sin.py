@@ -44,7 +44,7 @@ class Test_Den_of_Sin(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

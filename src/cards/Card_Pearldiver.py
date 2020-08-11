@@ -19,7 +19,7 @@ class Card_Pearldiver(Card.Card):
 
     def special(self, game, player):
         """ Look at the bottom card of your deck. You may put it on top """
-        if player.deckSize() == 0:
+        if player.deck.size() == 0:
             player.refill_deck()
         bcard = player.deck[0]
         top = player.plrChooseOptions(
@@ -48,7 +48,7 @@ class Test_Pearldiver(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.pearldiver)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_donothing(self):
         self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')

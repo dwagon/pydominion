@@ -62,7 +62,7 @@ class Test_Oracle(unittest.TestCase):
         self.assertIsNotNone(self.vic.in_discard('Province'))
         self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.assertIsNotNone(self.plr.in_hand('Gold'))
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
 
 ###############################################################################

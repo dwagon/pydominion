@@ -64,7 +64,7 @@ class Test_Masquerade(unittest.TestCase):
         self.plr.test_input = ['select silver', 'finish']
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.plr.in_hand('Gold'))
         self.assertTrue(self.other.in_hand('Silver'))
         self.assertEqual(self.g.trashSize(), tsize)
@@ -78,7 +78,7 @@ class Test_Masquerade(unittest.TestCase):
         self.plr.test_input = ['select gold', 'trash silver']
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 - 1)
+        self.assertEqual(self.plr.hand.size(), 5 - 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

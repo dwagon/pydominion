@@ -23,7 +23,7 @@ class Card_Raider(Card.Card):
     def night(self, game, player):
         inplay = {_.name for _ in player.played}
         for pl in player.attackVictims():
-            if pl.handSize() >= 5:
+            if pl.hand.size() >= 5:
                 player.output("Raiding {}".format(pl.name))
                 todiscard = []
                 for c in pl.hand:

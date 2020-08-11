@@ -45,8 +45,8 @@ class Test_Lost_City(unittest.TestCase):
         """ Play a lost_city """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertTrue(self.other.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertTrue(self.other.hand.size(), 6)
 
 
 ###############################################################################

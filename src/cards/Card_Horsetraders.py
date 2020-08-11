@@ -43,7 +43,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
 
 ###############################################################################

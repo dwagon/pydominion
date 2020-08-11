@@ -36,7 +36,7 @@ class Test_Guide(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_call(self):
@@ -45,8 +45,8 @@ class Test_Guide(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.setReserve('Guide')
         self.plr.call_reserve('Guide')
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNone(self.plr.in_hand('Estate'))
         self.assertIsNotNone(self.plr.in_discard('Estate'))
 

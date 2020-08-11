@@ -50,7 +50,7 @@ class Test_Trader(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['estate', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Silver')
         self.assertEqual(self.g.trashSize(), tsize + 1)

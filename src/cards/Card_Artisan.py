@@ -35,8 +35,8 @@ class Test_Artisan(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Get Festival', 'Select Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discard_size(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
 
 

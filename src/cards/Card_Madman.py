@@ -19,7 +19,7 @@ class Card_Madman(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        handsize = player.handSize()
+        handsize = player.hand.size()
         player.output("Gaining %d cards from madman" % handsize)
         for _ in range(handsize):
             player.pickupCard()
@@ -40,7 +40,7 @@ class Test_Madman(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 5 * 2)
+        self.assertEqual(self.plr.hand.size(), 5 * 2)
 
 
 ###############################################################################

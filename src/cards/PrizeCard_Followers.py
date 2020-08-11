@@ -39,8 +39,8 @@ class Test_Followers(unittest.TestCase):
         self.victim.setHand('Copper', 'Copper', 'Copper', 'Silver', 'Gold')
         self.victim.test_input = ['silver', 'gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.victim.hand.size(), 3)
         self.assertIsNotNone(self.plr.in_discard('Estate'))
         self.assertIsNotNone(self.victim.in_discard('Curse'))
 

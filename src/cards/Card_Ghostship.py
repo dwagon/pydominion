@@ -20,8 +20,8 @@ class Card_Ghostship(Card.Card):
 
     def special(self, game, player):
         for vic in player.attackVictims():
-            if vic.handSize() >= 4:
-                todisc = vic.handSize()-3
+            if vic.hand.size() >= 4:
+                todisc = vic.hand.size()-3
                 vic.output("Select %d cards to put on top of your deck because of %s's Ghost Ship" % (todisc, player.name))
                 discard = vic.cardSel(
                     num=todisc,
@@ -55,8 +55,8 @@ class Test_Ghostship(unittest.TestCase):
         self.vic.setHand('Duchy', 'Province', 'Copper', 'Silver', 'Gold')
         self.vic.test_input = ['Silver', 'Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.handSize(), 3)
-        self.assertEqual(self.vic.deckSize(), 3)
+        self.assertEqual(self.vic.hand.size(), 3)
+        self.assertEqual(self.vic.deck.size(), 3)
         self.assertIn(self.vic.deck[-1].name, ('Silver', 'Gold'))
 
 

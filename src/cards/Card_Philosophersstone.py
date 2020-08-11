@@ -20,7 +20,7 @@ class Card_Philosophersstone(Card.Card):
     def hook_coinvalue(self, game, player):
         """ When you play this, count your deck and discard pile.
             Worth 1 per 5 cards total between them (rounded down) """
-        numcards = player.deckSize() + player.discard_size()
+        numcards = player.deck.size() + player.discardpile.size()
         extracoin = numcards / 5
         player.output("Gained %d coins from Philosopher's Stone" % extracoin)
         return int(extracoin)

@@ -66,7 +66,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.phase = Card.TYPE_ACTION
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2 * 2 - 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)
 
     def test_buy(self):
         """ Play a crown in a buy phase"""

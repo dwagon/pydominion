@@ -54,7 +54,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_defense(self):
@@ -66,9 +66,9 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.test_input = ['1', '1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         # 5 for hand + moat
-        self.assertEqual(self.victim.handSize(), 6)
+        self.assertEqual(self.victim.hand.size(), 6)
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_attack(self):
@@ -79,9 +79,9 @@ class Test_Mercenary(unittest.TestCase):
         self.victim.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
 
 
 ###############################################################################

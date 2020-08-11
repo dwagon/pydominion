@@ -41,7 +41,7 @@ class Test_Shantytown(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 3 + 2)
+        self.assertEqual(self.plr.hand.size(), 3 + 2)
 
     def test_actions(self):
         """ Test Shany Town with actions"""
@@ -49,7 +49,7 @@ class Test_Shantytown(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

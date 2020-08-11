@@ -59,7 +59,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_three(self):
@@ -68,7 +68,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_underattack(self):

@@ -36,15 +36,15 @@ class Test_Wharf(unittest.TestCase):
         """ Play a wharf """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.durationpile.size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationSize(), 0)
-        self.assertEqual(self.plr.played_size(), 1)
+        self.assertEqual(self.plr.durationpile.size(), 0)
+        self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Wharf')
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
 
 ###############################################################################

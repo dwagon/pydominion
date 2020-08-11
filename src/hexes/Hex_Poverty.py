@@ -40,7 +40,7 @@ class Test_Poverty(unittest.TestCase):
     def test_normal(self):
         self.plr.test_input = ['1', '2', '0']
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

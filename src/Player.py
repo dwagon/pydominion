@@ -426,7 +426,7 @@ class Player(object):
             self.output("-Card token reduce draw by one")
             handsize -= 1
             self.card_token = False
-        while self.handSize() < handsize:
+        while self.hand.size() < handsize:
             c = self.pickupCard(verb='Dealt')
             if not c:
                 self.output("Not enough cards to fill hand")
@@ -471,30 +471,6 @@ class Player(object):
         self.addCard(card, 'discard')
         if hook:
             self.hook_discardThisCard(card, source)
-
-    ###########################################################################
-    def reserveSize(self):
-        return len(self.reserve)
-
-    ###########################################################################
-    def handSize(self):
-        return len(self.hand)
-
-    ###########################################################################
-    def played_size(self):
-        return len(self.played)
-
-    ###########################################################################
-    def durationSize(self):
-        return len(self.durationpile)
-
-    ###########################################################################
-    def deckSize(self):
-        return len(self.deck)
-
-    ###########################################################################
-    def discard_size(self):
-        return len(self.discardpile)
 
     ###########################################################################
     def discardHand(self):
@@ -735,7 +711,7 @@ class Player(object):
             op, index = self.night_selection(index)
             options.extend(op)
 
-        if self.reserveSize():
+        if self.reserve.size():
             op, index = self.reserve_selection(index)
             options.extend(op)
 
@@ -904,7 +880,7 @@ class Player(object):
             self.output("| Played: <NONE>")
         self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # Debug
         self.output("| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile]))    # Debug
-        self.output("| {} cards in discard pile".format(self.discard_size()))
+        self.output("| {} cards in discard pile".format(self.discardpile.size()))
         self.output('-' * 50)
 
     ###########################################################################

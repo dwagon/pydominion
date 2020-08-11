@@ -50,7 +50,7 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card, discard=False, costAction=False)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertIsNotNone(self.g.in_trash('Zombie Apprentice'))
         self.assertIsNotNone(self.g.in_trash('Moat'))

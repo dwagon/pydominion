@@ -50,7 +50,7 @@ class Test_Treasuremap(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Treasure Map'))
-        self.assertEqual(self.plr.deckSize(), 0)
+        self.assertEqual(self.plr.deck.size(), 0)
 
     def test_trash_two(self):
         """ Trash 2 TM """
@@ -62,7 +62,7 @@ class Test_Treasuremap(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash('Treasure Map'))
-        self.assertEqual(self.plr.deckSize(), 4)
+        self.assertEqual(self.plr.deck.size(), 4)
         self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 

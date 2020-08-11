@@ -41,7 +41,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_played('Moat'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_play_non_action(self):
         """ Play a Vassal with non-action next"""
@@ -50,7 +50,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

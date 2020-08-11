@@ -85,7 +85,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.addCard(self.lookout, 'hand')
         self.plr.playCard(self.lookout)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.plr.discard_size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
 
 ###############################################################################

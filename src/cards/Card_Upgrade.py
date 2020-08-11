@@ -39,7 +39,7 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize)
 
@@ -50,11 +50,11 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Get Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 

@@ -41,13 +41,13 @@ class Test_Werewolf(unittest.TestCase):
     def test_play_day(self):
         """ Play a Werewolf during the day """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertFalse(self.vic.has_state('Deluded'))
 
     def test_play_night(self):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.vic.has_state('Deluded'))
 
 

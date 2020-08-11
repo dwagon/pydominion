@@ -18,7 +18,7 @@ class Card_Tragic_Hero(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        if player.handSize() >= 8:
+        if player.hand.size() >= 8:
             player.trashCard(self)
             player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
 
@@ -37,13 +37,13 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
-        self.assertEqual(self.plr.handSize(), 1 + 3)
+        self.assertEqual(self.plr.hand.size(), 1 + 3)
 
     def test_gainsomething(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Get Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 

@@ -42,9 +42,9 @@ class Test_Fugitive(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard('Province'))
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

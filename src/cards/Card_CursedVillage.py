@@ -17,7 +17,7 @@ class Card_CursedVillage(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        while player.handSize() < 6:
+        while player.hand.size() < 6:
             c = player.nextCard()
             player.addCard(c, 'discard')
             player.pickupCard(c)
@@ -43,7 +43,7 @@ class Test_CursedVillage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertGreaterEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
         self.plr.gainCard('Cursed Village')

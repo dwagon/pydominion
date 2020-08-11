@@ -35,7 +35,7 @@ class Test_Trade(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Gold')
         self.plr.test_input = ['copper', 'estate', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
         self.assertIsNone(self.plr.in_hand('Copper'))
