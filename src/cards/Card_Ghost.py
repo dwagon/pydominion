@@ -69,7 +69,7 @@ class Test_Ghost(unittest.TestCase):
             self.plr.playCard(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.handSize(), 5 + 2 * 2)    # Hand + Moat *2
+            self.assertEqual(self.plr.hand.size(), 5 + 2 * 2)    # Hand + Moat *2
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

@@ -50,9 +50,9 @@ class Test_Vault(unittest.TestCase):
         self.other.test_input = ['Copper', 'Silver', 'Finish']
         self.plr.test_input = ['Duchy', 'Province', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2 - 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.other.handSize(), 3 - 2 + 1)
+        self.assertEqual(self.other.hand.size(), 3 - 2 + 1)
 
 
 ###############################################################################

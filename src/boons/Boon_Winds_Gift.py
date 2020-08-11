@@ -40,7 +40,7 @@ class Test_Winds_Gift(unittest.TestCase):
         self.plr.test_input = ['Discard Duchy', 'Discard Gold', 'Finish Selecting']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.handSize(), 3)
+            self.assertEqual(self.plr.hand.size(), 3)
             self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:  # pragma: no cover
             self.g.print_state()

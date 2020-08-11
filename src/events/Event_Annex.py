@@ -15,7 +15,7 @@ class Event_Annex(Event):
         self.debtcost = 8
 
     def special(self, game, player):
-        if player.discard_size() <= 5:
+        if player.discardpile.size() <= 5:
             player.output("Not enough cards to choose")
             return
         cards = player.cardSel(

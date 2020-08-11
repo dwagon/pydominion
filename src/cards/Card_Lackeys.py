@@ -37,7 +37,7 @@ class Test_Lackeys(unittest.TestCase):
         self.card = self.g['Lackeys'].remove()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
         self.assertLessEqual(self.plr.getVillager(), 0)
 
     def test_gainCard(self):

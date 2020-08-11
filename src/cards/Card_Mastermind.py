@@ -56,7 +56,7 @@ class Test_Mastermind(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Play Moat']
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

@@ -42,7 +42,7 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper', 'Estate', 'Duchy', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
 
     def test_skys_no_gift(self):
@@ -51,7 +51,7 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper', 'Estate', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertIsNone(self.plr.in_discard('Gold'))
 
 

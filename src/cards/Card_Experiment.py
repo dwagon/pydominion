@@ -42,7 +42,7 @@ class Test_Experiment(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0 + 1)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gainCard(self):
         self.plr.gainCard('Experiment')

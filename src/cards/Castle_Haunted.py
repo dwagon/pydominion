@@ -23,7 +23,7 @@ class Card_HauntedCastle(CastleCard):
         for plr in list(game.players.values()):
             if plr == player:
                 continue
-            if plr.handSize() >= 5:
+            if plr.hand.size() >= 5:
                 cards = plr.cardSel(num=2, force=True, prompt="%s's Haunted Castle: Select 2 cards to put onto your deck" % player.name)
                 for card in cards:
                     plr.addCard(card, 'topdeck')

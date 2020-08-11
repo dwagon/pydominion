@@ -39,14 +39,14 @@ class Test_SilkMerchant(unittest.TestCase):
     def test_gain_card(self):
         self.plr.setCoffer(0)
         self.plr.gainCard('Silk Merchant')
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.getVillager(), 1)
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_trash_card(self):
         self.plr.setCoffer(0)
         self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.getVillager(), 1)
         self.assertEqual(self.plr.getCoffer(), 1)
 
@@ -54,7 +54,7 @@ class Test_SilkMerchant(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.setCoffer(0)
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.getVillager(), 0)
         self.assertEqual(self.plr.getCoffer(), 0)
 

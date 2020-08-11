@@ -18,7 +18,7 @@ class Card_Goat(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.handSize():
+        if player.hand.size():
             player.plrTrashCard()
 
 

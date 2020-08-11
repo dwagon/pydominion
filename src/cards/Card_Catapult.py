@@ -65,7 +65,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
 
 
 ###############################################################################

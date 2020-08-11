@@ -37,7 +37,7 @@ class Test_Piazza(unittest.TestCase):
         self.plr.assign_project('Piazza')
         self.plr.start_turn()
         self.assertIsNotNone(self.plr.in_played('Moat'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_noaction(self):
         self.plr.setDeck('Province', 'Silver')

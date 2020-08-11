@@ -21,7 +21,7 @@ class Card_Swashbuckler(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        if player.discard_size() >= 1:
+        if player.discardpile.size() >= 1:
             player.output("Gained a coffer")
             player.gainCoffer(1)
             if player.getCoffer() >= 4:

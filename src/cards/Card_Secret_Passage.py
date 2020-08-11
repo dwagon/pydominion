@@ -48,7 +48,7 @@ class Test_SecretPassage(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.get_actions(), 1)
-            self.assertEqual(self.plr.handSize(), 5 + 2 - 1)    # Hand + SP - back on deck
+            self.assertEqual(self.plr.hand.size(), 5 + 2 - 1)    # Hand + SP - back on deck
             self.assertEqual(self.plr.deck[0].name, 'Province')
         except AssertionError:      # pragma: no cover
             self.g.print_state()

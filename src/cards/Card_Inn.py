@@ -58,7 +58,7 @@ class Test_Inn(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Province', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 4 + 2 - 2)
+        self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):

@@ -59,8 +59,8 @@ class Test_Tribute(unittest.TestCase):
         self.victim.setDeck('Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discard_size(), 2)
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.victim.discardpile.size(), 2)
 
     def test_same(self):
         """ Victim has the same cards for Tribute"""
@@ -68,7 +68,7 @@ class Test_Tribute(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

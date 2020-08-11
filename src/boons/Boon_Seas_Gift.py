@@ -35,7 +35,7 @@ class Test_Seas_Gift(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

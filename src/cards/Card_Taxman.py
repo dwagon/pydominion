@@ -24,7 +24,7 @@ class Card_Taxman(Card.Card):
             return
         card = cards[0]
         for vic in player.attackVictims():
-            if vic.handSize() >= 5:
+            if vic.hand.size() >= 5:
                 viccard = vic.in_hand(card.name)
                 if viccard:
                     vic.output("Discarding %s due to %s's Taxman" % (viccard.name, player.name))

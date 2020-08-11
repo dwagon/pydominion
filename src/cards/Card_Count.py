@@ -81,8 +81,8 @@ class Test_Count(unittest.TestCase):
         # Discard, select card 1 and card 2, finish selecting, +3 coin
         self.plr.test_input = ['discard 2', 'discard estate', 'discard copper', 'finish', '+3 coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discard_size(), 2)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_topdeck(self):
         self.plr.setHand('Gold')

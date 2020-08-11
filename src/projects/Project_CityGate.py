@@ -34,7 +34,7 @@ class Test_CityGate(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['Select Province']
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.deck[-1].name, 'Province')
 
 

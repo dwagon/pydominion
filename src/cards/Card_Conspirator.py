@@ -40,7 +40,7 @@ class Test_Conspirator(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_actions(self):
         """ Play the conspirator with enough actions """
@@ -48,7 +48,7 @@ class Test_Conspirator(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

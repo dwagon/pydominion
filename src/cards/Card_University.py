@@ -40,7 +40,7 @@ class Test_University(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.university)
         try:
-            self.assertEqual(self.plr.discard_size(), 1)
+            self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
             self.assertLessEqual(self.plr.discardpile[0].cost, 5)
         except AssertionError:      # pragma: no cover

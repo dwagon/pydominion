@@ -31,7 +31,7 @@ class Card_Jack_of_all_Trades(Card.Card):
         else:
             player.discardCard(card)
 
-        while player.handSize() < 5:
+        while player.hand.size() < 5:
             player.pickupCard()
 
         cards = [c for c in player.hand if not c.isTreasure()]
@@ -60,7 +60,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
 
         self.assertIsNotNone(self.plr.in_hand('Gold'))  # Keep on deck, then picked up
 
-        self.assertEqual(self.plr.handSize(), 5 - 1)    # One trashed
+        self.assertEqual(self.plr.hand.size(), 5 - 1)    # One trashed
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
 

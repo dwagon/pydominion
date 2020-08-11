@@ -41,7 +41,7 @@ class Test_Embassy(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 5 - 3)
 
     def test_gain(self):
         self.plr.gainCard('Embassy')

@@ -30,6 +30,9 @@ class PlayArea(object):
     def shuffle(self):
         random.shuffle(self.cards)
 
+    def size(self):
+        return len(self)
+
     def __len__(self):
         return len(self.cards)
 

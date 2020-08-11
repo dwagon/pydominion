@@ -46,7 +46,7 @@ class Test_Baker(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

@@ -17,7 +17,7 @@ class Hex_Haunting(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.handSize() >= 4:
+        if player.hand.size() >= 4:
             card = player.cardSel(force=True)
             player.addCard(card[0], 'topdeck')
             player.hand.remove(card[0])

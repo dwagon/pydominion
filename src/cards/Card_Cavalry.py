@@ -51,7 +51,7 @@ class Test_Cavalry(unittest.TestCase):
         self.plr.gainCard('Cavalry')
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
 
 

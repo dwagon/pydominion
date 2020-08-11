@@ -19,7 +19,7 @@ class Card_Villain(Card.Card):
     def special(self, game, player):
         player.gainCoffer(2)
         for vic in player.attackVictims():
-            if vic.handSize() >= 5:
+            if vic.hand.size() >= 5:
                 from_cards = []
                 for card in vic.hand:
                     if card.cost >= 2:

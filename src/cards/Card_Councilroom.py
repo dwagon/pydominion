@@ -35,10 +35,10 @@ class Test_Councilroom(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
 
     def test_play(self):
-        self.assertEqual(self.other.handSize(), 5)
+        self.assertEqual(self.other.hand.size(), 5)
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.other.handSize(), 6)
-        self.assertEqual(self.plr.handSize(), 9)
+        self.assertEqual(self.other.hand.size(), 6)
+        self.assertEqual(self.plr.hand.size(), 9)
         self.assertEqual(self.plr.getBuys(), 2)
 
 

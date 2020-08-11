@@ -17,7 +17,7 @@ class Card_MountainVillage(Card.Card):
         self.actions = 2
 
     def special(self, game, player):
-        if player.discard_size():
+        if player.discardpile.size():
             card = player.cardSel(
                 cardsrc='discard',
                 force=True,
@@ -44,7 +44,7 @@ class Test_MountainVillage(unittest.TestCase):
         self.plr.setDiscard()
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_discard(self):
         """ Play Mountain Village with a discard card """

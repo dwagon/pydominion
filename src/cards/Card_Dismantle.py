@@ -41,8 +41,8 @@ class Test_Dismantle(unittest.TestCase):
         self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rcard)
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertEqual(self.plr.discard_size(), 0)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_non_free(self):
         self.plr.setHand('Estate', 'Silver', 'Province')
@@ -50,10 +50,10 @@ class Test_Dismantle(unittest.TestCase):
         self.plr.test_input = ['trash estate', 'get copper']
         self.plr.playCard(self.rcard)
         self.assertIsNotNone(self.g.in_trash('Estate'))
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Copper'))
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

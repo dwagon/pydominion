@@ -31,7 +31,7 @@ class Card_Soldier(Card.Card):
         player.addCoin(count)
         player.output("Gained %d extra coins" % count)
         for plr in player.attackVictims():
-            if plr.handSize() >= 4:
+            if plr.hand.size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
                 plr.plrDiscardCards(force=True)
 
@@ -75,7 +75,7 @@ class Test_Soldier(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard('Gold'))
         self.assertIsNone(self.vic.in_hand('Gold'))
-        self.assertEqual(self.vic.handSize(), 4)
+        self.assertEqual(self.vic.hand.size(), 4)
 
 
 ###############################################################################

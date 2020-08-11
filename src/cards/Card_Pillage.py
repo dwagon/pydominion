@@ -22,7 +22,7 @@ class Card_Pillage(Card.Card):
     def special(self, game, player):
         player.trashCard(self)
         for plr in player.attackVictims():
-            if plr.handSize() < 5:
+            if plr.hand.size() < 5:
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue
             self.pickACard(plr, player)
@@ -56,11 +56,11 @@ class Test_Pillage(unittest.TestCase):
         self.plr.test_input = ['copper']
         self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold', 'Silver', 'Province')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discard_size(), 1)
+        self.assertEqual(self.victim.hand.size(), 5)
+        self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertEqual(self.victim.discardpile[0].name, 'Copper')
 
     def test_short_hand(self):
@@ -69,11 +69,11 @@ class Test_Pillage(unittest.TestCase):
         self.plr.test_input = ['copper']
         self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discard_size(), 0)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
 
 ###############################################################################

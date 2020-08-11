@@ -61,7 +61,7 @@ class Test_Venture(unittest.TestCase):
                 break
         else:   # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             if c.name != 'Estate':  # pragma: no cover
                 self.fail("Didn't discard the non-treasure")

@@ -47,15 +47,15 @@ class Test_Navigator(unittest.TestCase):
         self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.navigator)
-        self.assertEqual(self.plr.discard_size(), 5)
-        self.assertEqual(self.plr.deckSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertEqual(self.plr.deck.size(), 1)
 
     def test_keep(self):
         self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['return']
         self.plr.playCard(self.navigator)
-        self.assertEqual(self.plr.discard_size(), 0)
-        self.assertEqual(self.plr.deckSize(), 6)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.deck.size(), 6)
 
 
 ###############################################################################

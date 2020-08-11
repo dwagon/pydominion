@@ -63,14 +63,14 @@ class Test_Reserve(unittest.TestCase):
     def test_setReserve(self):
         """ set reserved """
         self.plr.setReserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Silver')
 
     def test_call_reserve(self):
         self.plr.setReserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         c = self.plr.call_reserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 0)
+        self.assertEqual(self.plr.reserve.size(), 0)
         self.assertEqual(c.name, 'Silver')
 
     def test_bad_call_reserve(self):
@@ -82,7 +82,7 @@ class Test_Reserve(unittest.TestCase):
     def test_addcard_reserve(self):
         gold = self.g['Gold'].remove()
         self.plr.addCard(gold, 'reserve')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Gold')
 
     def test_isreserve(self):

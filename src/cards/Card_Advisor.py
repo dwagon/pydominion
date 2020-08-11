@@ -69,7 +69,7 @@ class Test_Advisor(unittest.TestCase):
         self.plr2.test_input = ['discard gold']
         self.plr.playCard(self.acard)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 3 - 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNone(self.plr.in_hand('Gold'))
 

@@ -31,7 +31,7 @@ class Test_Owl(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

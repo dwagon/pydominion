@@ -63,10 +63,10 @@ class Test_Rats(unittest.TestCase):
 
     def test_trashrats(self):
         """ Trashing Rats - gain another card"""
-        handsize = self.plr.handSize()
+        handsize = self.plr.hand.size()
         self.plr.trashCard(self.rats)
         # Lose rats, gain another card
-        self.assertEqual(self.plr.handSize(), handsize)
+        self.assertEqual(self.plr.hand.size(), handsize)
 
 
 ###############################################################################

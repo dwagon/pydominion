@@ -23,9 +23,12 @@ class Card_Horse(Card.Card):
 
     def special(self, game, player):
         player.discardCard(self)
-        game['Horse'].add()
-        player.played.remove(self)
-        player.discardpile.remove(self)
+        try:    # If Horse is played multiple times e.g. Kings Court
+            player.played.remove(self)
+            player.discardpile.remove(self)
+            game['Horse'].add()
+        except ValueError:
+            pass
 
 
 ###############################################################################
@@ -40,7 +43,7 @@ class Test_Horse(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_played('Horse'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

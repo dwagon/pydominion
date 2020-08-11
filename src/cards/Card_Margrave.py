@@ -43,8 +43,8 @@ class Test_Margrave(unittest.TestCase):
         """ Play the card """
         self.vic.test_input = ['1', '2', '3', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.handSize(), 3)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.vic.hand.size(), 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.plr.getBuys(), 2)
 
 

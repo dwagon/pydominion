@@ -41,20 +41,20 @@ class Test_Huntinggrounds(unittest.TestCase):
     def test_play(self):
         """ Play a Hunting Ground """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 4)
+        self.assertEqual(self.plr.hand.size(), 5 + 4)
 
     def test_trash_estate(self):
         """ Trash a hunting ground and gain estates """
         self.plr.test_input = ['Estates']
         self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.discard_size(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
         self.assertIsNotNone(self.plr.in_discard('Estate'))
 
     def test_trash_duchy(self):
         """ Trash a hunting ground and gain duchy """
         self.plr.test_input = ['Duchy']
         self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 

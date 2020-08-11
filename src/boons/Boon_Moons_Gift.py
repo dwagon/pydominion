@@ -17,7 +17,7 @@ class Boon_Moons_Gift(Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        if not player.discard_size():
+        if not player.discardpile.size():
             return
         cards = []
         cardnames = set()

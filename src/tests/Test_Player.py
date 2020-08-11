@@ -16,8 +16,8 @@ class TestPlayer(unittest.TestCase):
         """ Make sure initial hands are correct """
         self.assertEqual(len(self.plr.deck), 5)
         self.assertEqual(len(self.plr.hand), 5)
-        self.assertEqual(self.plr.played_size(), 0)
-        self.assertEqual(self.plr.discard_size(), 0)
+        self.assertEqual(self.plr.played.size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_initialDeck(self):
         """ Ensure initial player decks are correct """
@@ -64,9 +64,9 @@ class Test_discardHand(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver')
         self.plr.setPlayed('Estate', 'Duchy')
         self.plr.discardHand()
-        self.assertEqual(self.plr.handSize(), 0)
-        self.assertEqual(self.plr.played_size(), 0)
-        self.assertEqual(self.plr.discard_size(), 4)
+        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.played.size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 4)
 
 
 ###############################################################################
@@ -413,7 +413,7 @@ class Test_spendAllCards(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver', 'Estate', 'Moat')
         self.plr.spendAllCards()
         self.assertEqual(self.plr.getCoin(), 3 + 2)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
             if not c.isTreasure():  # pragma: no cover
@@ -433,8 +433,8 @@ class Test_pickupCard(unittest.TestCase):
         self.plr.setHand()
         self.plr.pickupCard()
         self.assertEqual(self.plr.hand[0].name, 'Gold')
-        self.assertEqual(self.plr.deckSize(), 0)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.hand.size(), 1)
 
     def test_pickup_empty(self):
         """ Test picking up a card from an empty deck"""
@@ -443,8 +443,8 @@ class Test_pickupCard(unittest.TestCase):
         self.plr.setHand()
         self.plr.pickupCard()
         self.assertEqual(self.plr.hand[0].name, 'Gold')
-        self.assertEqual(self.plr.deckSize(), 0)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.hand.size(), 1)
 
     def test_pick_nomore(self):
         """ Test picking up a card when there isn't one to be had """
@@ -453,13 +453,13 @@ class Test_pickupCard(unittest.TestCase):
         self.plr.setHand()
         c = self.plr.pickupCard()
         self.assertIsNone(c)
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
 
     def test_pickups(self):
         """ Test pickupCards """
         self.plr.setHand()
         self.plr.pickupCards(3, verb='test')
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
         count = 0
         for msg in self.plr.messages:
             if 'test' in msg:
@@ -476,23 +476,23 @@ class Test_misc(unittest.TestCase):
 
     def test_setPlayed(self):
         self.plr.setPlayed('Silver', 'Copper')
-        self.assertEqual(self.plr.played_size(), 2)
+        self.assertEqual(self.plr.played.size(), 2)
 
     def test_setPlayed_empty(self):
         self.plr.setPlayed()
-        self.assertEqual(self.plr.played_size(), 0)
+        self.assertEqual(self.plr.played.size(), 0)
 
     def test_setDiscard(self):
         self.plr.setDiscard('Silver', 'Copper')
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
     def test_setHand(self):
         self.plr.setHand('Silver', 'Copper')
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
     def test_setDeck(self):
         self.plr.setDeck('Silver', 'Copper')
-        self.assertEqual(self.plr.deckSize(), 2)
+        self.assertEqual(self.plr.deck.size(), 2)
 
     def test_get_actions(self):
         self.plr.actions = 3
@@ -531,18 +531,18 @@ class Test_misc(unittest.TestCase):
         self.plr.potions = 3
         self.assertEqual(self.plr.getPotions(), 3)
 
-    def test_durationSize(self):
+    def test_durationpile_size(self):
         copper = self.g['Copper'].remove()
-        self.assertEqual(self.plr.durationSize(), 0)
+        self.assertEqual(self.plr.durationpile.size(), 0)
         self.plr.durationpile.add(copper)
         self.plr.durationpile.add(copper)
-        self.assertEqual(self.plr.durationSize(), 2)
+        self.assertEqual(self.plr.durationpile.size(), 2)
 
     def test_cleanup_phase(self):
         self.plr.setHand('Copper')
         self.plr.cleanup_phase()
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.played_size(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.played.size(), 0)
 
 
 ###############################################################################
@@ -940,13 +940,13 @@ class Test_plrDiscardDownTo(unittest.TestCase):
     def test_discard_nothing(self):
         self.plr.setHand('Estate', 'Duchy', 'Province')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discard_size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_discard_one(self):
         self.plr.test_input = ['gold', 'finish']
         self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
         self.plr.plrDiscardDownTo(3)
-        self.assertEqual(self.plr.discard_size(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 

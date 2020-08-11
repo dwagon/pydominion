@@ -31,7 +31,7 @@ class Test_Squirrel(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
         self.plr.end_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

@@ -53,7 +53,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.hcard)
         self.plr.discardHand()
-        self.assertEqual(self.plr.deckSize(), 5)
+        self.assertEqual(self.plr.deck.size(), 5)
 
     def test_putgold(self):
         self.plr.setPlayed('Gold', 'Estate')
@@ -64,8 +64,8 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
         self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
-        self.assertEqual(self.plr.discard_size(), 2)
-        self.assertEqual(self.plr.deckSize(), 6)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.deck.size(), 6)
 
 
 ###############################################################################

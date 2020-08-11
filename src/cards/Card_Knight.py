@@ -107,14 +107,14 @@ class Test_Knight(unittest.TestCase):
         """ Play a knight woth no suitable cards"""
         self.vic.setDeck('Copper', 'Copper')
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.discard_size(), 2)
+        self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_playcard_one_suitable(self):
         """ Play a knight with one suitable card """
         self.vic.setDeck('Copper', 'Duchy')
         self.vic.test_input = ['Duchy']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.discard_size(), 1)
+        self.assertEqual(self.vic.discardpile.size(), 1)
 
 
 ###############################################################################

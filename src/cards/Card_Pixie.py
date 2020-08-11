@@ -45,7 +45,7 @@ class Test_Pixie(unittest.TestCase):
         self.plr.test_input = ['Discard The']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_trash(self):
         """ Play a Pixie and trash it"""
@@ -57,7 +57,7 @@ class Test_Pixie(unittest.TestCase):
         self.plr.test_input = ['Trash']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.discard_size(), 2)
+            self.assertEqual(self.plr.discardpile.size(), 2)
             for c in self.plr.discardpile:
                 self.assertEqual(c.name, 'Silver')
         except AssertionError:      # pragma: no cover

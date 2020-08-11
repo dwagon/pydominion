@@ -41,7 +41,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_nobuy(self):
         self.plr.setHand('Copper', 'Gold', 'Gold')

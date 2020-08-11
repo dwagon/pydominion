@@ -39,7 +39,7 @@ class Test_Countinghouse(unittest.TestCase):
     def test_pullcoppers(self):
         self.plr.setDiscard('Copper', 'Gold', 'Duchy', 'Copper')
         self.plr.playCard(self.ch)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         for c in self.plr.hand:
             self.assertEqual(c.name, 'Copper')
         for c in self.plr.discardpile:

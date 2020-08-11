@@ -44,7 +44,7 @@ class Test_CaravanGuard(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
@@ -55,8 +55,8 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr.setHand('Caravan Guard', 'Moat')
         self.attacker.addCard(self.militia, 'hand')
         self.attacker.playCard(self.militia)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.durationSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.durationpile.size(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
 

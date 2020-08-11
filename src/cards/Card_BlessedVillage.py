@@ -43,11 +43,11 @@ class Test_BlessedVillage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertGreaterEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
         self.plr.gainCard('Blessed Village')
-        self.assertEqual(self.plr.handSize(), 5 + 1)    # 1 from boon
+        self.assertEqual(self.plr.hand.size(), 5 + 1)    # 1 from boon
 
 
 ###############################################################################

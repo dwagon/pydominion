@@ -43,7 +43,7 @@ class Test_Quest(unittest.TestCase):
         self.plr.setHand('Witch')
         self.plr.test_input = ['witch', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Witch'))
 
@@ -52,7 +52,7 @@ class Test_Quest(unittest.TestCase):
         self.plr.setHand('Curse', 'Curse')
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discard_size(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Curse'))
 
@@ -61,7 +61,7 @@ class Test_Quest(unittest.TestCase):
         self.plr.setHand('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.test_input = ['1', '2', '3', '4', '5', '6', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discard_size(), 7)
+        self.assertEqual(self.plr.discardpile.size(), 7)
         self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_discard('Copper'))
 
@@ -70,7 +70,7 @@ class Test_Quest(unittest.TestCase):
         self.plr.setHand('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.test_input = ['1', '2', '3', '4', '5', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discard_size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 5)
         self.assertIsNone(self.plr.in_discard('Gold'))
 
 

@@ -43,7 +43,7 @@ class Test_Raid(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.buys, 0)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
         self.assertTrue(self.victim.card_token)

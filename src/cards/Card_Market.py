@@ -32,7 +32,7 @@ class Test_Market(unittest.TestCase):
     def test_play(self):
         """ Play a market """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)

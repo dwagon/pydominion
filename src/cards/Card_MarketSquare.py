@@ -41,7 +41,7 @@ class Test_MarketSquare(unittest.TestCase):
         """ Play the card """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
 

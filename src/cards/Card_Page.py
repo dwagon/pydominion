@@ -36,7 +36,7 @@ class Test_Page(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

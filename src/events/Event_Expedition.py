@@ -32,7 +32,7 @@ class Test_Expedition(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
     def test_playtwice(self):
         """ Use Expedition twice """
@@ -44,7 +44,7 @@ class Test_Expedition(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.getBuys(), 0)
         self.plr.end_turn()
-        self.assertEqual(self.plr.handSize(), 9)
+        self.assertEqual(self.plr.hand.size(), 9)
 
 
 ###############################################################################

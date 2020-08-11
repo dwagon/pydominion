@@ -48,7 +48,7 @@ class Test_SinisterPlot(unittest.TestCase):
         self.plr.test_input = ['Remove']
         self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 0)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

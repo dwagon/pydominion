@@ -34,7 +34,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_one(self):
         self.plr.setHand('Estate', 'Copper', 'Silver')
@@ -44,7 +44,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.playCard(self.ccard)
         self.assertEqual(self.plr.deck[-1].name, 'Province')
         self.assertIsNotNone(self.plr.in_hand('Gold'))
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

@@ -36,7 +36,7 @@ class Test_Banquet(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard('Copper'))
         self.assertIsNotNone(self.plr.in_discard('Silver'))
-        self.assertEqual(self.plr.discard_size(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
 
 
 ###############################################################################

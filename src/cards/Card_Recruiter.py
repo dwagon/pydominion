@@ -35,7 +35,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Silver']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2 + 1)
+        self.assertEqual(self.plr.hand.size(), 2 + 1)
         self.assertEqual(self.plr.getVillager(), 3)
         self.assertIsNotNone(self.g.in_trash('Silver'))
 

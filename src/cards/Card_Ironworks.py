@@ -46,7 +46,7 @@ class Test_Ironworks(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_silver(self):
         """ Use Ironworks to gain a Silver """
@@ -55,7 +55,7 @@ class Test_Ironworks(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[-1].name, 'Silver')
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_ironworks(self):
         """ Use Ironworks to gain an Ironworks """
@@ -64,7 +64,7 @@ class Test_Ironworks(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[-1].name, 'Iron Works')
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

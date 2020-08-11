@@ -43,18 +43,18 @@ class Test_Dungeon(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['province', 'duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)   # 2 picked up from dungeon -2 discard
+        self.assertEqual(self.plr.hand.size(), 2)   # 2 picked up from dungeon -2 discard
         self.assertIsNone(self.plr.in_hand('duchy'))
-        self.assertEqual(self.plr.durationSize(), 1)
-        self.assertEqual(self.plr.discard_size(), 2)
+        self.assertEqual(self.plr.durationpile.size(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.plr.end_turn()
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationSize(), 0)
-        self.assertEqual(self.plr.played_size(), 1)
+        self.assertEqual(self.plr.durationpile.size(), 0)
+        self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, 'Dungeon')
-        self.assertEqual(self.plr.discard_size(), 2)
-        self.assertEqual(self.plr.handSize(), 5)   # 5 dealt + 2 from dungeon -2 discard
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.hand.size(), 5)   # 5 dealt + 2 from dungeon -2 discard
 
 
 ###############################################################################

@@ -45,7 +45,7 @@ class Test_Settlers(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand('Copper'))
         self.assertIsNone(self.plr.in_discard('Copper'))
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.handSize(), 2 + 1 + 1)
+        self.assertEqual(self.plr.hand.size(), 2 + 1 + 1)
 
     def test_play_nocopper(self):
         """ Play a Settlers and pull a copper"""
@@ -55,7 +55,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_hand('Copper'))
-        self.assertEqual(self.plr.handSize(), 2 + 1)
+        self.assertEqual(self.plr.hand.size(), 2 + 1)
 
 
 ###############################################################################

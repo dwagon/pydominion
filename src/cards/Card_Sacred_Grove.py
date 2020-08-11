@@ -74,7 +74,7 @@ class Test_SacredGrove(unittest.TestCase):
         try:
             self.assertEqual(self.plr.getCoin(), 3)
             self.assertEqual(self.plr.getBuys(), 1 + 1)
-            self.assertEqual(self.vic.handSize(), 5 + 1)
+            self.assertEqual(self.vic.hand.size(), 5 + 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
