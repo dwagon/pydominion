@@ -27,9 +27,8 @@ class Event_Delay(Event):
             prompt="Set aside an action card to play next turn",
             cardsrc=actions
         )
-        player.durationpile.add(delay[0])
+        player.defer_card(delay[0])
         player.hand.remove(delay[0])
-        # TODO Need to work out how to give the card a duration function
 
 
 ###############################################################################
