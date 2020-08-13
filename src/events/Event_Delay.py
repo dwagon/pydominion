@@ -44,8 +44,7 @@ class Test_Delay(unittest.TestCase):
         self.plr.test_input = ['Select Moat']
         self.plr.setHand('Moat', 'Copper', 'Estate')
         self.plr.performEvent(self.card)
-        self.g.print_state()
-        self.assertIsNotNone(self.plr.inDuration('Moat'))
+        self.assertIsNotNone(self.plr.in_defer('Moat'))
 
 
 ###############################################################################
