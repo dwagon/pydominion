@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Wall(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When scoring, -1VP per card you have after the first 15."""
         self.name = "Wall"
 

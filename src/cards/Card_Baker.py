@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Baker(Card):
+class Card_Baker(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.desc = "+1 card, +1 action, +1 coffer"
         self.name = 'Baker'
         self.actions = 1
@@ -45,8 +45,8 @@ class Test_Baker(unittest.TestCase):
         self.plr.coffer = 0
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

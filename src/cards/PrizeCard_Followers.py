@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Followers(Card):
+class Card_Followers(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'prize']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_PRIZE]
+        self.base = Game.CORNUCOPIA
         self.name = "Followers"
         self.purchasable = False
         self.required_cards = ['Curse']
@@ -28,7 +29,6 @@ class Card_Followers(Card):
 ###############################################################################
 class Test_Followers(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
@@ -39,10 +39,10 @@ class Test_Followers(unittest.TestCase):
         self.victim.setHand('Copper', 'Copper', 'Copper', 'Silver', 'Gold')
         self.victim.test_input = ['silver', 'gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertEqual(self.victim.handSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
 
 
 ###############################################################################

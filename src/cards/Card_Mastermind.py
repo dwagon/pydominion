@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mastermind(Card):
+class Card_Mastermind(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.MENAGERIE
         self.desc = """At the start of your next turn, you may play an Action card from your hand three times."""
         self.name = 'Mastermind'
         self.cost = 5
@@ -56,7 +56,7 @@ class Test_Mastermind(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Play Moat']
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Tracker(Card):
+class Card_Tracker(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Coin, Receive a boon; While this is in play, when you gain a card, you may put that card onto your deck"
         self.name = 'Tracker'
         self.cost = 2
@@ -60,9 +60,9 @@ class Test_Tracker(unittest.TestCase):
         self.plr.setPlayed('Tracker')
         self.plr.test_input = ['discard']
         self.plr.gainCard('Gold')
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
-        self.assertFalse(self.plr.inHand('Gold'))
+        self.assertFalse(self.plr.in_hand('Gold'))
 
     def test_deck(self):
         """ Have a Tracker  - the gained card on the deck"""
@@ -70,7 +70,7 @@ class Test_Tracker(unittest.TestCase):
         self.plr.test_input = ['deck']
         self.plr.gainCard('Gold')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

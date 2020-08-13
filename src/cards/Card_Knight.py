@@ -3,14 +3,14 @@
 import random
 import unittest
 import Game
-from Card import Card
+import Card
 from CardPile import CardPile
 
 
 ###############################################################################
-class Card_Knight(Card):
+class Card_Knight(Card.Card):
     def __init__(self):
-        Card.__init__(self)
+        Card.Card.__init__(self)
         self.name = 'Knight'
 
     def setup(self, game):
@@ -18,7 +18,7 @@ class Card_Knight(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(2)
 
 
@@ -51,7 +51,7 @@ class KnightCardPile(CardPile):
 
 
 ###############################################################################
-class KnightCard(Card):
+class KnightCard(Card.Card):
     def knight_special(self, game, player):
         """ Each other player reveals the top 2 cards of his deck,
             trashes one of them costing from 3 to 6 and discards the
@@ -107,14 +107,14 @@ class Test_Knight(unittest.TestCase):
         """ Play a knight woth no suitable cards"""
         self.vic.setDeck('Copper', 'Copper')
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.discardSize(), 2)
+        self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_playcard_one_suitable(self):
         """ Play a knight with one suitable card """
         self.vic.setDeck('Copper', 'Duchy')
         self.vic.test_input = ['Duchy']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.discardSize(), 1)
+        self.assertEqual(self.vic.discardpile.size(), 1)
 
 
 ###############################################################################

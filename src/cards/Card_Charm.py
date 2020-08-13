@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Charm(Card):
+class Card_Charm(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.EMPIRES
         self.desc = """When you play this, choose one: +1 Buy and +2 Coin; or
             the next time you buy a card this turn, you may also gain a differently
             named card with the same cost."""
@@ -61,7 +61,7 @@ class Test_Charm(unittest.TestCase):
         self.plr.test_input = ['Get Duchy']
         self.plr.setCoin(5)
         self.plr.buyCard(self.g['Charm'])
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

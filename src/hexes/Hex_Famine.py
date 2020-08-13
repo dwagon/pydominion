@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,14 +10,14 @@ from Hex import Hex
 class Hex_Famine(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "Reveal the top 3 cards of your deck. Discard the Actions. Shuffle the rest into your deck."
         self.name = "Famine"
         self.purchasable = False
 
     def special(self, game, player):
-        for i in range(3):
+        for _ in range(3):
             c = player.nextCard()
             if c.isAction():
                 player.output("Discarding {}".format(c))
@@ -29,7 +31,6 @@ class Hex_Famine(Hex):
 ###############################################################################
 class Test_Famine(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -41,9 +42,9 @@ class Test_Famine(unittest.TestCase):
     def test_famine(self):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.inDiscard('Cursed Village'))
+        self.assertIsNotNone(self.plr.in_discard('Cursed Village'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

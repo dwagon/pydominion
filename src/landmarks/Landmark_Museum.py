@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Museum(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When scoring, 2VP per differently named card you have."
         self.name = "Museum"
 

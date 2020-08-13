@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Capital(Card):
+class Card_Capital(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.EMPIRES
         self.desc = "+6 Coin, +1 Buy. When you discard this from play, take 6 Debt"
         self.name = 'Capital'
         self.coin = 6

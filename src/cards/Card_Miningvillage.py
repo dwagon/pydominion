@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Miningvillage(Card):
+class Card_Miningvillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+1 card, +2 actions, trash self for +2 coin"
         self.name = 'Mining Village'
         self.cards = 1
@@ -41,8 +41,8 @@ class Test_Miningvillage(unittest.TestCase):
         """ Play a Mining Village """
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertIsNone(self.g.in_trash('Mining Village'))
         self.assertEqual(self.plr.played[-1].name, 'Mining Village')
@@ -51,9 +51,9 @@ class Test_Miningvillage(unittest.TestCase):
         """ Trash the mining village """
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertTrue(self.plr.played.isEmpty())
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertTrue(self.plr.played.is_empty())
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.g.in_trash('Mining Village'))
 

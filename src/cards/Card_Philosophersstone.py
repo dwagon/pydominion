@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Philosophersstone(Card):
+class Card_Philosophersstone(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.ALCHEMY
         self.desc = "When you play this, count your deck and discard pile. Worth 1 Coin per 5 cards total between them (rounded down)"
         self.name = "Philosopher's Stone"
         self.cost = 3
@@ -19,7 +20,7 @@ class Card_Philosophersstone(Card):
     def hook_coinvalue(self, game, player):
         """ When you play this, count your deck and discard pile.
             Worth 1 per 5 cards total between them (rounded down) """
-        numcards = player.deckSize() + player.discardSize()
+        numcards = player.deck.size() + player.discardpile.size()
         extracoin = numcards / 5
         player.output("Gained %d coins from Philosopher's Stone" % extracoin)
         return int(extracoin)
@@ -28,7 +29,6 @@ class Card_Philosophersstone(Card):
 ###############################################################################
 class Test_Philosophersstone(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Philosopher's Stone"])
         self.g.start_game()
         self.plr = self.g.player_list(0)

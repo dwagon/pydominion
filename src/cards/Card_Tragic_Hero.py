@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Tragic_Hero(Card):
+class Card_Tragic_Hero(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.NOCTURNE
         self.desc = "+3 Cards; +1 Buys; If you have 8 or more cards in hand (after drawing), trash this and gain a Treasure."
         self.name = 'Tragic Hero'
         self.cost = 5
@@ -17,15 +18,14 @@ class Card_Tragic_Hero(Card):
         self.buys = 1
 
     def special(self, game, player):
-        if player.handSize() >= 8:
+        if player.hand.size() >= 8:
             player.trashCard(self)
-            player.plrGainCard(cost=None, types={'treasure': True})
+            player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################
 class Test_Tragic_Hero(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tragic Hero'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,14 +37,14 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 1 + 1)
-        self.assertEqual(self.plr.handSize(), 1 + 3)
+        self.assertEqual(self.plr.hand.size(), 1 + 3)
 
     def test_gainsomething(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Get Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

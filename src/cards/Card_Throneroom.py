@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Throneroom(Card):
+class Card_Throneroom(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Play action twice"
         self.name = "Throne Room"
         self.cost = 4
@@ -51,10 +51,10 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.test_input = ['1', '1', '1']
         self.plr.playCard(card)
         self.assertEqual(self.plr.hand[0].name, 'Gold')
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Mine')
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.get_actions(), 0)
 
     def test_donothing(self):
         self.plr.setHand('Copper', 'Mine')

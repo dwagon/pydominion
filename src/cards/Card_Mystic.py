@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mystic(Card):
+class Card_Mystic(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = "+2 coin, +1 action; Name a card. Reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = 'Mystic'
         self.actions = 1
@@ -53,7 +53,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_good(self):
@@ -62,10 +62,10 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('Province')
         self.plr.test_input = ['Province']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertTrue(self.plr.inHand('Province'))
-        self.assertTrue(self.plr.deck.isEmpty())
+        self.assertTrue(self.plr.in_hand('Province'))
+        self.assertTrue(self.plr.deck.is_empty())
 
     def test_bad(self):
         """ When the guess is bad the card should stay on the deck """
@@ -73,10 +73,10 @@ class Test_Mystic(unittest.TestCase):
         self.plr.setDeck('Province')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertTrue(not self.plr.inHand('Gold'))
-        self.assertTrue(not self.plr.inHand('Province'))
+        self.assertTrue(not self.plr.in_hand('Gold'))
+        self.assertTrue(not self.plr.in_hand('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Province')
 
 

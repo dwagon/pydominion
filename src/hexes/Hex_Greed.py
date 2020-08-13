@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,8 +10,8 @@ from Hex import Hex
 class Hex_Greed(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "Gain a Copper onto your deck."
         self.name = "Greed"
         self.purchasable = False
@@ -21,7 +23,6 @@ class Hex_Greed(Hex):
 ###############################################################################
 class Test_Greed(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -33,7 +34,7 @@ class Test_Greed(unittest.TestCase):
     def test_famine(self):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.inDiscard('Cursed Village'))
+        self.assertIsNotNone(self.plr.in_discard('Cursed Village'))
         self.assertIsNotNone(self.plr.in_deck('Copper'))
 
 

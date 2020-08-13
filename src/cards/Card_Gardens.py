@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Gardens(Card):
+class Card_Gardens(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.DOMINION
         self.desc = "numcards / 10 VP"
         self.name = 'Gardens'
         self.playable = False
@@ -24,7 +25,6 @@ class Card_Gardens(Card):
 ###############################################################################
 class Test_Gardens(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Gardens'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

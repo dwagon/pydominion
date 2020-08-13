@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Coinoftherealm(Card):
+class Card_Coinoftherealm(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Coin; Call for +2 Actions"
         self.name = 'Coin of the Realm'
         self.coin = 1
@@ -36,8 +36,8 @@ class Test_Coinoftherealm(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.reserveSize(), 1)
-        c = self.plr.inReserve('Coin of the Realm')
+        self.assertEqual(self.plr.reserve.size(), 1)
+        c = self.plr.in_reserve('Coin of the Realm')
         self.assertEqual(c.name, 'Coin of the Realm')
 
     def test_call(self):
@@ -47,7 +47,7 @@ class Test_Coinoftherealm(unittest.TestCase):
         self.plr.playCard(self.card)
         c = self.plr.call_reserve('Coin of the Realm')
         self.assertEqual(c.name, 'Coin of the Realm')
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

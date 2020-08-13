@@ -1,11 +1,13 @@
-from Card import Card
+import Game
+import Card
 
 
-class Card_Possession(Card):
+##############################################################################
+class Card_Possession(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "Be Evil"
         self.name = 'Possession'
         self.cost = 6

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scryingpool(Card):
+class Card_Scryingpool(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.ALCHEMY
         self.desc = """+1 Action. Each player (including you) reveals the top card of
         his deck and either discards it or puts it back, your choice.
         Then reveal cards from the top of your deck until you reveal one that is not an Action.
@@ -69,10 +69,10 @@ class Test_ScryingPool(unittest.TestCase):
         self.vic.setDeck('Duchy')
         self.plr.test_input = ['discard', 'putback']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.vic.inDiscard('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Moat'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.vic.in_discard('Duchy'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
 
 
 ###############################################################################

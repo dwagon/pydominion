@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Swamphag(Card):
+class Card_Swamphag(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = "Until your next turn, when any other player buys a card, he gains a Curse. At the start of your next turn: +3 Coin"
         self.required_cards = ['Curse']
         self.name = 'Swamp Hag'
@@ -43,9 +43,9 @@ class Test_Swamphag(unittest.TestCase):
         self.attacker.end_turn()
         self.victim.buyCard(self.g['Copper'])
         self.assertEqual(self.attacker.durationpile[0].name, 'Swamp Hag')
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
         self.attacker.start_turn()
-        self.assertIsNotNone(self.attacker.inPlayed('Swamp Hag'))
+        self.assertIsNotNone(self.attacker.in_played('Swamp Hag'))
         self.assertEqual(self.attacker.getCoin(), 3)
 
 

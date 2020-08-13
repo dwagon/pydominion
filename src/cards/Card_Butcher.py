@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Butcher(Card):
+class Card_Butcher(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.desc = """Take 2 coffers. You may trash a card from your hand and then pay any number of coffer.
         If you did trash a card, gain a card with a cost of up to the the cost of the trashed cards plus the number of coffers you paid"""
         self.name = 'Butcher'
@@ -62,8 +62,8 @@ class Test_Butcher(unittest.TestCase):
         self.plr.test_input = ['trash a card', 'trash gold', 'add 2', 'get silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), 0)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))
         for m in self.plr.messages:
             if 'Province' in m:

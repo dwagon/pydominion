@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mercenary(Card):
+class Card_Mercenary(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DARKAGES
         self.desc = """You may trash 2 cards from your hand.
         If you do, +2 Cards, +2 Coin, and each other player discards down to 3 cards in hand."""
         self.name = 'Mercenary'
@@ -54,8 +54,8 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_defense(self):
         """ Make sure moats work against mercenaries """
@@ -66,10 +66,10 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.test_input = ['1', '1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         # 5 for hand + moat
-        self.assertEqual(self.victim.handSize(), 6)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertEqual(self.victim.hand.size(), 6)
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_attack(self):
         """ Attack with a mercenary """
@@ -79,9 +79,9 @@ class Test_Mercenary(unittest.TestCase):
         self.victim.test_input = ['1', '2', '0']
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
 
 
 ###############################################################################

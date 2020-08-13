@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Plunder(Card):
+class Card_Plunder(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.EMPIRES
         self.desc = """+2 Coin, +1VP"""
         self.name = 'Plunder'
         self.coin = 2

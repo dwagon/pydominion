@@ -9,13 +9,13 @@ from Event import Event
 class Event_Annex(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Look through your discard pile. Shuffle all but up to 5 cards from it into your deck. Gain a Duchy."
         self.name = "Annex"
         self.debtcost = 8
 
     def special(self, game, player):
-        if player.discardSize() <= 5:
+        if player.discardpile.size() <= 5:
             player.output("Not enough cards to choose")
             return
         cards = player.cardSel(
@@ -51,8 +51,8 @@ class Test_Annex(unittest.TestCase):
         self.plr.test_input = ['Silver', 'Copper', 'Province', 'Moat', 'Estate', 'Finish']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.debt, 8)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 

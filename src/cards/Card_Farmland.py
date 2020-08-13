@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Farmland(Card):
+class Card_Farmland(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.HINTERLANDS
         self.desc = """2VP; When you buy this, trash a card from your hand.
             Gain a card costing exactly 2 more than the trashed card."""
         self.name = 'Farmland'
@@ -40,13 +40,13 @@ class Test_Farmland(unittest.TestCase):
         """ Gain a farmland """
         try:
             tsize = self.g.trashSize()
-            self.plr.setHand('Estate', 'Estate')
-            self.plr.test_input = ['1', '1']
+            self.plr.setHand('Estate', 'Duchy')
+            self.plr.test_input = ['Trash Estate', 'Get Militia']
             self.plr.gainCard('Farmland')
             self.assertEqual(self.g.trashSize(), tsize + 1)
-            self.assertEqual(self.plr.handSize(), 1)
+            self.assertEqual(self.plr.hand.size(), 1)
             # 1 for farmland, 1 for gained card
-            self.assertEqual(self.plr.discardSize(), 2)
+            self.assertEqual(self.plr.discardpile.size(), 2)
         except (AssertionError, IOError):       # pragma: no cover
             self.g.print_state()
             raise

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scavenger(Card):
+class Card_Scavenger(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+2 Coin. You may put your deck into your discard pile.
             Look through your discard pile and put one card from it on top of
             your deck."""
@@ -27,7 +27,7 @@ class Card_Scavenger(Card):
             for card in player.deck[:]:
                 player.addCard(card, 'discard')
                 player.deck.remove(card)
-        if player.discardSize():
+        if player.discardpile.size():
             cards = []
             cardnames = set()
             for c in player.discardpile:
@@ -55,7 +55,7 @@ class Test_Scavenger(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck[-1].name, 'Moat')
-        self.assertIsNotNone(self.plr.inDiscard('Witch'))
+        self.assertIsNotNone(self.plr.in_discard('Witch'))
 
 
 ###############################################################################

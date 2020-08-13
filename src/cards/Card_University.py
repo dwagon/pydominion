@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_University(Card):
+class Card_University(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "Gain an action card costing up to 5"
         self.name = 'University'
         self.cost = 2
@@ -18,7 +18,7 @@ class Card_University(Card):
 
     def special(self, game, player):
         """ Gain an action card costing up to 5"""
-        c = player.plrGainCard(5, types={'action': True})
+        c = player.plrGainCard(5, types={Card.TYPE_ACTION: True})
         if c:
             player.output("Gained %s from university" % c.name)
 
@@ -40,7 +40,7 @@ class Test_University(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.university)
         try:
-            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
             self.assertLessEqual(self.plr.discardpile[0].cost, 5)
         except AssertionError:      # pragma: no cover
@@ -50,7 +50,7 @@ class Test_University(unittest.TestCase):
     def test_none(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.university)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
 
 
 ###############################################################################

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Treasure_Trove(Card):
+class Card_Treasure_Trove(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.ADVENTURE
         self.desc = "+2 Coin. When you play this, gain a Gold and a Copper"
         self.name = 'Treasure Trove'
         self.coin = 2
@@ -25,7 +26,6 @@ class Card_Treasure_Trove(Card):
 ###############################################################################
 class Test_Treasure_Trove(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Treasure Trove'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,7 +37,7 @@ class Test_Treasure_Trove(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
         self.assertEqual(self.plr.discardpile[1].name, 'Gold')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
 
 ###############################################################################

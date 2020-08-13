@@ -9,14 +9,13 @@ from Project import Project
 class Project_Citadel(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "The first time you play an Action card during each of your turns, play it again afterward."
         self.name = "Citadel"
         self.cost = 8
 
     def hook_postAction(self, game, player, card):
-        if player.playedSize() == 1:
+        if player.played.size() == 1:
             player.output("Citadel plays {} again".format(card.name))
             player.playCard(card, discard=False, costAction=False, postActionHook=False)
 
@@ -33,7 +32,7 @@ class Test_Citadel(unittest.TestCase):
     def test_play(self):
         self.plr.assign_project('Citadel')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2 + 2)
 
 
 ###############################################################################

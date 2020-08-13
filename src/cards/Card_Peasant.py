@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Peasant(Card):
+class Card_Peasant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy, +1 Coin; Discard to replace with Soldier"
         self.name = 'Peasant'
         self.traveller = True
@@ -25,7 +26,6 @@ class Card_Peasant(Card):
 ###############################################################################
 class Test_Peasant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peasant'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

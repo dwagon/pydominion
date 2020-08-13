@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Oasis(Card):
+class Card_Oasis(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = "+1 card, +1 action, +1 coin, discard 1 card"
         self.name = 'Oasis'
         self.cards = 1
@@ -25,7 +26,6 @@ class Card_Oasis(Card):
 ###############################################################################
 class Test_Oasis(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Oasis'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,8 +37,8 @@ class Test_Oasis(unittest.TestCase):
         """ Play an oasis """
         self.plr.test_input = ['discard gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

@@ -2,6 +2,7 @@
 
 import unittest
 import Game
+import Card
 from cards.Card_Castles import CastleCard
 
 
@@ -9,8 +10,8 @@ from cards.Card_Castles import CastleCard
 class Card_GrandCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
+        self.base = Game.EMPIRES
         self.cost = 9
         self.victory = 5
         self.name = "Grand Castle"

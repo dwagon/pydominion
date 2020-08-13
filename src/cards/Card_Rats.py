@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Rats(Card):
+class Card_Rats(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, Gain a Rats.
         Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
         When you trash this, +1 Card."""
@@ -33,7 +34,6 @@ class Card_Rats(Card):
 ###############################################################################
 class Test_Rats(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rats'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -63,10 +63,10 @@ class Test_Rats(unittest.TestCase):
 
     def test_trashrats(self):
         """ Trashing Rats - gain another card"""
-        handsize = self.plr.handSize()
+        handsize = self.plr.hand.size()
         self.plr.trashCard(self.rats)
         # Lose rats, gain another card
-        self.assertEqual(self.plr.handSize(), handsize)
+        self.assertEqual(self.plr.hand.size(), handsize)
 
 
 ###############################################################################

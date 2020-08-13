@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Artisan(Card):
+class Card_Artisan(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Gain a card to your hand costing up to 5 Coin. Put a card from your hand onto your deck."
         self.name = 'Artisan'
         self.cost = 6
@@ -35,8 +35,8 @@ class Test_Artisan(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Get Festival', 'Select Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
 
 

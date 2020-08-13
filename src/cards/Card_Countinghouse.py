@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Countinghouse(Card):
+class Card_Countinghouse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = """Look through the discard pile, reveal any number of
             copper cards from it, and put them into your hand."""
         self.name = 'Counting House'
@@ -39,7 +39,7 @@ class Test_Countinghouse(unittest.TestCase):
     def test_pullcoppers(self):
         self.plr.setDiscard('Copper', 'Gold', 'Duchy', 'Copper')
         self.plr.playCard(self.ch)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         for c in self.plr.hand:
             self.assertEqual(c.name, 'Copper')
         for c in self.plr.discardpile:

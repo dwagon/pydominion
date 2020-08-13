@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_ActingTroupe(Card):
+class Card_ActingTroupe(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.name = 'Acting Troupe'
         self.desc = "+4 Villagers. Trash this."
         self.cost = 3

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_ChariotRace(Card):
+class Card_ChariotRace(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.desc = """+1 Action
         Reveal the top card of your deck and put it into your hand.
         The player to your left reveals the top card of their deck.
@@ -47,9 +47,9 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.setDeck('Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(self.plr.score['Chariot Race'], 1)
 
     def test_play_lose(self):
@@ -59,9 +59,9 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.setDeck('Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.assertEqual(self.plr.score['Chariot Race'], 0)
 
 

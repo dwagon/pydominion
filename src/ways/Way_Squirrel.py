@@ -9,7 +9,7 @@ from Way import Way
 class Way_Squirrel(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+2 Cards at the end of this turn."
         self.name = "Squirrel"
 
@@ -24,14 +24,14 @@ class Test_Squirrel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Squirrel']
 
     def test_play(self):
         """ Perform a Squirrel """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Squirrel']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.plr.end_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

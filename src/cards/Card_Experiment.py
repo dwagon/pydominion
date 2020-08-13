@@ -1,17 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Experiment(Card):
+class Card_Experiment(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.name = 'Experiment'
-        self.desc = "+2 Cards; +1 Action; Return this to the Supply. When you gain this, gain another Experiment (that doesn't come with another)."
+        self.desc = """+2 Cards; +1 Action; Return this to the Supply. When you
+            gain this, gain another Experiment (that doesn't come with another)."""
         self.cost = 3
         self.cards = 2
         self.actions = 1
@@ -31,7 +33,6 @@ class Card_Experiment(Card):
 ###############################################################################
 class Test_Experiment(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Experiment'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,8 +41,8 @@ class Test_Experiment(unittest.TestCase):
         self.card = self.g['Experiment'].remove()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 0 + 1)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.get_actions(), 0 + 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gainCard(self):
         self.plr.gainCard('Experiment')

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Groundskeeper(Card):
+class Card_Groundskeeper(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.desc = "+1 Card. +1 Action. While this is in play, when you gain a Victory card, +1VP"
         self.name = 'Groundskeeper'
         self.cards = 1
@@ -36,8 +36,8 @@ class Test_Groundskeeper(unittest.TestCase):
         """ Play a Groundskeeper """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.plr.setCoin(5)
         self.plr.buyCard(self.g['Duchy'])
         self.assertEqual(self.plr.score['Groundskeeper'], 1)

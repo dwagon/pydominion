@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Villain(Card):
+class Card_Villain(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.RENAISSANCE
         self.name = 'Villain'
         self.desc = "+2 Coffers; Each other player with 5 or more cards in hand discards one costing 2 or more (or reveals they can't)."
         self.cost = 5
@@ -18,7 +19,7 @@ class Card_Villain(Card):
     def special(self, game, player):
         player.gainCoffer(2)
         for vic in player.attackVictims():
-            if vic.handSize() >= 5:
+            if vic.hand.size() >= 5:
                 from_cards = []
                 for card in vic.hand:
                     if card.cost >= 2:
@@ -38,7 +39,7 @@ class Card_Villain(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # oragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover
     # Discard a victory card first, then whichever
     for card in kwargs['cardsrc']:
         if card.isVictory():
@@ -49,7 +50,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # oragma: no cover
 ###############################################################################
 class Test_Villain(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Villain'], numhexes=0, numboons=0)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -62,7 +62,7 @@ class Test_Villain(unittest.TestCase):
         self.vic.test_input = ['Province']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), sc + 2)
-        self.assertIsNotNone(self.vic.inDiscard('Province'))
+        self.assertIsNotNone(self.vic.in_discard('Province'))
 
 
 ###############################################################################

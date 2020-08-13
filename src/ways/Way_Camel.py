@@ -9,7 +9,7 @@ from Way import Way
 class Way_Camel(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Exile a Gold from the Supply."
         self.name = "Camel"
 
@@ -27,12 +27,12 @@ class Test_Camel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Camel']
 
     def test_play(self):
         """ Perform a Camel """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Camel']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_exile('Gold'))
 
 

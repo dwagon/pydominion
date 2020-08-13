@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Livery(Card):
+class Card_Livery(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = """+3 Coins; This turn, when you gain a card costing 4 Coins or more, gain a Horse."""
         self.name = 'Livery'
         self.coin = 3
@@ -40,7 +40,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gainCard('Copper')
         self.plr.test_input = ['end phase', 'end phase']
         self.plr.turn()
-        self.assertIsNone(self.plr.inDiscard('Horse'))
+        self.assertIsNone(self.plr.in_discard('Horse'))
 
     def test_playcard_cost6(self):
         """ Play a livery and gain something worth 6 """
@@ -48,7 +48,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gainCard('Province')
         self.plr.test_input = ['end phase', 'end phase']
         self.plr.turn()
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
 
 
 ###############################################################################

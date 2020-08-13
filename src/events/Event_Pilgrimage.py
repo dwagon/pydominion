@@ -9,7 +9,7 @@ from Event import Event
 class Event_Pilgrimage(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """Once per turn: Turn your Journey token over; then if it's face up,
         choose up to 3 differently named cards you have in play and gain a copy of each."""
         self.name = "Pilgrimage"
@@ -58,8 +58,8 @@ class Test_Pilgrimage(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.addCoin(4)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertTrue(self.plr.journey_token)
 
 

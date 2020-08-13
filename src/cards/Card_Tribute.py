@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Tribute(Card):
+class Card_Tribute(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = """ The player to your left reveals then discards the top
             2 cards of his deck. For each differently named card revealed,
             if is an Action card, +2 actions; treasure card, +2 coin;
@@ -47,7 +48,6 @@ class Card_Tribute(Card):
 ###############################################################################
 class Test_Tribute(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tribute'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
@@ -59,16 +59,16 @@ class Test_Tribute(unittest.TestCase):
         self.victim.setDeck('Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.victim.discardpile.size(), 2)
 
     def test_same(self):
         """ Victim has the same cards for Tribute"""
         self.victim.setDeck('Tribute', 'Tribute')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

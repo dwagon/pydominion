@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Ranger(Card):
+class Card_Ranger(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy. Turn your journey over. If its face up +5 Cards"
         self.name = 'Ranger'
         self.buys = 1
@@ -25,7 +26,6 @@ class Card_Ranger(Card):
 ###############################################################################
 class Test_Ranger(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Ranger'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,7 +38,7 @@ class Test_Ranger(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
         self.assertFalse(self.plr.journey_token)
 
     def test_play_second(self):
@@ -48,7 +48,7 @@ class Test_Ranger(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.plr.journey_token)
 
 

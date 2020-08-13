@@ -9,7 +9,7 @@ from Event import Event
 class Event_Wedding(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "+1VP, Gain a Gold."
         self.name = "Wedding"
         self.cost = 4
@@ -32,7 +32,7 @@ class Test_Wedding(unittest.TestCase):
         """ Perform a Wedding """
         self.plr.addCoin(4)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertEqual(self.plr.debt, 3)
         self.assertEqual(self.plr.getScoreDetails()['Wedding'], 1)
 

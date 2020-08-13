@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Necromancer(Card):
+class Card_Necromancer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION]
+        self.base = Game.NOCTURNE
         self.desc = "Play a non-Duration Action card from the trash, leaving it there."
         self.name = 'Necromancer'
         self.cost = 4
@@ -33,7 +34,6 @@ class Card_Necromancer(Card):
 ###############################################################################
 class Test_Necromancer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Necromancer', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -45,7 +45,7 @@ class Test_Necromancer(unittest.TestCase):
         self.plr.setDeck('Gold', 'Silver')
         self.plr.test_input = ['Zombie Spy', 'Keep']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Silver'))     # From Zombie Spy
+        self.assertIsNotNone(self.plr.in_hand('Silver'))     # From Zombie Spy
 
 
 ###############################################################################

@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cache(Card):
+class Card_Cache(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
         self.name = 'Cache'
         self.cost = 5
         self.coin = 3

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Minion(Card):
+class Card_Minion(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.INTRIGUE
         self.desc = """+1 Action; Choose one: +2 Coin; or discard your hand,
             +4 Cards, and each other player with at least 5 cards in hand discards
             his hand and draws 4 cards."""
@@ -35,7 +35,7 @@ class Card_Minion(Card):
     def attack(self, game, player):
         self.dropAndDraw(player)
         for victim in player.attackVictims():
-            if victim.handSize() >= 5:
+            if victim.hand.size() >= 5:
                 self.dropAndDraw(victim)
 
     def dropAndDraw(self, plr):
@@ -58,20 +58,20 @@ class Test_Minion(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_discard(self):
         """ Play a minion and discard hand"""
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 5)
 
     def test_play_victim_smallhand(self):
         """ Play a minion and discard hand - the other player has a small hand"""
@@ -79,12 +79,12 @@ class Test_Minion(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_play_defended(self):
         """ Play a minion and discard hand - the other player is defended """
@@ -92,12 +92,12 @@ class Test_Minion(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardSize(), 5 + 1)
-        self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
+        self.assertEqual(self.victim.hand.size(), 5)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
 
 ###############################################################################

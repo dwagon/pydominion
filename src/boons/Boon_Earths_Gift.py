@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Earths_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "You may discard a Treasure to gain a card costing up to 4"
         self.name = "The Earth's Gift"
         self.purchasable = False
@@ -46,8 +47,8 @@ class Test_Earths_Gift(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
-            self.assertIsNotNone(self.plr.inDiscard('Silver'))
-            self.assertIsNotNone(self.plr.inDiscard('Copper'))
+            self.assertIsNotNone(self.plr.in_discard('Silver'))
+            self.assertIsNotNone(self.plr.in_discard('Copper'))
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

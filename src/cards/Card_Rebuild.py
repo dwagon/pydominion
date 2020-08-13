@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Rebuild(Card):
+class Card_Rebuild(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+1 action. Name a card. Reveal cards from the top
         of your deck until you reveal a Victory card that is
         not the named card.  Discard the other cards.
@@ -41,11 +42,10 @@ class Card_Rebuild(Card):
             if card.isVictory() and guess.name != card.name:
                 player.output("Found and trashing a %s" % card.name)
                 player.trashCard(card)
-                player.plrGainCard(card.cost + 3, modifier='less', types={'victory': True})
+                player.plrGainCard(card.cost + 3, modifier='less', types={Card.TYPE_VICTORY: True})
                 break
-            else:
-                player.output("Drew and discarded %s" % card.name)
-                discards.append(card)
+            player.output("Drew and discarded %s" % card.name)
+            discards.append(card)
         for c in discards:
             player.discardCard(c)
 
@@ -53,7 +53,6 @@ class Card_Rebuild(Card):
 ###############################################################################
 class Test_Rebuild(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Rebuild'], badcards=['Duchess'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -66,11 +65,11 @@ class Test_Rebuild(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Estate', 'Province', 'Gold')
         self.plr.test_input = ['Select Province', 'Get Duchy']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Estate'))
 

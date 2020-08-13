@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scheme(Card):
+class Card_Scheme(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """+1 Card +1 Action; At the start of Clean-up this turn,
             you may choose an Action card you have in play. If you discard it from play
             this turn, put it on your deck."""
@@ -43,12 +43,12 @@ class Test_Scheme(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.setPlayed('Moat')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.plr.test_input = ['moat']
         self.plr.cleanup_phase()
-        self.assertIsNotNone(self.plr.inHand('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Scheme'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Scheme'))
 
 
 ###############################################################################

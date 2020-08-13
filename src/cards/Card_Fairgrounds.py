@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Fairgrounds(Card):
+class Card_Fairgrounds(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.CORNUCOPIA
         self.desc = "2VP / 5 card types"
         self.name = 'Fairgrounds'
         self.playable = False
@@ -17,14 +18,13 @@ class Card_Fairgrounds(Card):
 
     def special_score(self, game, player):
         """ Worth 2VP for every 5 differently named cards in your deck (round down)"""
-        numtypes = set([c.name for c in player.allCards()])
+        numtypes = {c.name for c in player.allCards()}
         return 2 * int(len(numtypes) / 5)
 
 
 ###############################################################################
 class Test_Fairgrounds(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fairgrounds'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

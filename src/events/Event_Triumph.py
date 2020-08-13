@@ -9,7 +9,7 @@ from Event import Event
 class Event_Triumph(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain an Estate. If you did, +1VP per card you've gained this turn."
         self.name = "Triumph"
         self.debtcost = 5
@@ -33,7 +33,7 @@ class Test_Triumph(unittest.TestCase):
         """ Use Triumph"""
         self.plr.gainCard('Copper')
         self.plr.performEvent(self.event)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
         scores = self.plr.getScoreDetails()
         self.assertEqual(scores['Triumph'], 2)
         self.assertEqual(self.plr.debt, 5)

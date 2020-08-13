@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Embassy(Card):
+class Card_Embassy(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.desc = "+5 Cards, Discard 3. Everyone gets a silver on purchase"
         self.name = 'Embassy'
         self.cost = 5
@@ -41,7 +41,7 @@ class Test_Embassy(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 5 - 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 5 - 3)
 
     def test_gain(self):
         self.plr.gainCard('Embassy')

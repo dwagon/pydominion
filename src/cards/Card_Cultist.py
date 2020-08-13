@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cultist(Card):
+class Card_Cultist(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'looter']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_LOOTER]
+        self.base = Game.DARKAGES
         self.desc = """+2 Cards; Each other player gains a Ruins. You may play
             a Cultist from your hand.  When you trash this, +3 Cards."""
         self.name = 'Cultist'
@@ -23,7 +23,7 @@ class Card_Cultist(Card):
         for plr in player.attackVictims():
             plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gainCard('Ruins')
-        cultist = player.inHand('Cultist')
+        cultist = player.in_hand('Cultist')
         if cultist:
             ans = player.plrChooseOptions('Play another cultist?', ("Don't play cultist", False), ("Play another cultist", True))
             if ans:
@@ -46,8 +46,8 @@ class Test_Cultist(unittest.TestCase):
         """ Play a cultists - should give 2 cards """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
     def test_defense(self):
@@ -56,8 +56,8 @@ class Test_Cultist(unittest.TestCase):
         moat = self.g['Moat'].remove()
         self.victim.addCard(moat, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_noother(self):
         """ Don't ask to play another cultist if it doesn't exist """
@@ -73,7 +73,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played.size(), 1)
 
     def test_anothercultist_yes(self):
         """ Another cultist can be played for free """
@@ -81,11 +81,11 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 2)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.played.size(), 2)
+        self.assertEqual(self.plr.get_actions(), 0)
         for c in self.plr.played:
             self.assertEqual(c.name, 'Cultist')
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discardpile.size(), 2)
         for c in self.victim.discardpile:
             self.assertTrue(c.isRuin())
 
@@ -94,7 +94,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.trashCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Cultist'))
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
 
 
 ###############################################################################

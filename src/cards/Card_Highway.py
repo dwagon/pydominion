@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Highway(Card):
+class Card_Highway(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
         self.name = 'Highway'
         self.cards = 1
@@ -25,7 +26,6 @@ class Card_Highway(Card):
 ###############################################################################
 class Test_Highway(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Highway'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -34,8 +34,8 @@ class Test_Highway(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_costreduction(self):
         self.coin = 1

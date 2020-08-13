@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Vassal(Card):
+class Card_Vassal(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.name = 'Vassal'
         self.coin = 2
         self.cost = 3
@@ -28,7 +29,6 @@ class Card_Vassal(Card):
 ###############################################################################
 class Test_Vassal(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vassal', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,8 +40,8 @@ class Test_Vassal(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inPlayed('Moat'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertIsNotNone(self.plr.in_played('Moat'))
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_play_non_action(self):
         """ Play a Vassal with non-action next"""
@@ -49,8 +49,8 @@ class Test_Vassal(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

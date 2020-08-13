@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Beggar(Card):
+class Card_Beggar(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.DARKAGES
         self.desc = """Gain 3 Coppers, putting them into your hand.
             When another player plays an Attack card, you may discard this.
             If you do, gain two Silvers, putting one on top of your deck."""
@@ -41,8 +41,8 @@ class Test_Beggar(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 3)
-        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
 
     def test_attack(self):
         """ React to an attack as a beggar """
@@ -52,7 +52,7 @@ class Test_Beggar(unittest.TestCase):
         self.attacker.addCard(militia, 'hand')
         self.attacker.playCard(militia)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

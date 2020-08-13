@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Poorhouse(Card):
+class Card_Poorhouse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DARKAGES
         self.desc = """+4 Coin. Reveal your hand. -1 Coin per Treasure card in your hand, to a minimum of 0."""
         self.name = 'Poor House'
         self.cost = 1
@@ -27,7 +28,6 @@ class Card_Poorhouse(Card):
 ###############################################################################
 class Test_Poorhouse(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Poor House'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

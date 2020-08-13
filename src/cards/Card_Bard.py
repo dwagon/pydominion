@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bard(Card):
+class Card_Bard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = "+2 Coin; Receive a boon"
         self.name = 'Bard'
         self.coin = 2
@@ -38,7 +38,7 @@ class Test_Bard(unittest.TestCase):
         self.plr.playCard(self.bard)
         self.assertGreaterEqual(self.plr.getCoin(), 2)
         # Check boon happened
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

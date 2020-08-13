@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_MagicLamp(Card):
+class Card_MagicLamp(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
-        self.desc = """When you play this, if there are at least 6 cards
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
+        self.base = Game.NOCTURNE
+        self.desc = """+1 Coin; When you play this, if there are at least 6 cards
             that you have exactly 1 copy of in play, trash this. If you do,
             gain 3 Wishes from their pile."""
         self.name = 'Magic Lamp'
@@ -45,7 +45,7 @@ class Test_MagicLamp(unittest.TestCase):
         self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Duchy', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Wish'))
+        self.assertIsNotNone(self.plr.in_discard('Wish'))
 
     def test_play_fail(self):
         """ Play a Magic Lamp but don't gain wishes """
@@ -53,7 +53,7 @@ class Test_MagicLamp(unittest.TestCase):
         self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNone(self.plr.inDiscard('Wish'))
+        self.assertIsNone(self.plr.in_discard('Wish'))
 
 
 ###############################################################################

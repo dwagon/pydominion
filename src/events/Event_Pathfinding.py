@@ -9,7 +9,7 @@ from Event import Event
 class Event_Pathfinding(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Move your +1 Card Token to an Action Supply Pile"
         self.name = "Pathfinding"
         self.cost = 8

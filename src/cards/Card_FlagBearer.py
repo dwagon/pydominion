@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_FlagBearer(Card):
+class Card_FlagBearer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = """When you gain or trash this, take the Flag."""
         self.name = 'Flag Bearer'
         # self.required_cards = [('Artifact', 'Flag')]
@@ -28,7 +29,6 @@ class Card_FlagBearer(Card):
 ###############################################################################
 class Test_FlagBearer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Flag Bearer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

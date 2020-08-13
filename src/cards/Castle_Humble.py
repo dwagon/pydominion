@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -8,8 +10,8 @@ from cards.Card_Castles import CastleCard
 class Card_HumbleCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['treasure', 'victory', 'castle']
-        self.base = 'empires'
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
+        self.base = Game.EMPIRES
         self.cost = 3
         self.desc = "+1 Coin; Worth 1VP per Castle you have."
         self.coin = 1
@@ -26,7 +28,6 @@ class Card_HumbleCastle(CastleCard):
 ###############################################################################
 class Test_HumbleCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

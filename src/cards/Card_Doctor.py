@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Doctor(Card):
+class Card_Doctor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.name = 'Doctor'
         self.overpay = True
         self.cost = 3
@@ -49,17 +49,17 @@ class Card_Doctor(Card):
             player.output("Doctoring %d/%d" % (i + 1, amount))
             card = player.nextCard()
             options = []
-            options.append({'selector': '0', 'print': "Put %s back on top" % card.name, 'action': 'put back'})
-            options.append({'selector': '1', 'print': "Trash %s" % card.name, 'action': 'trash'})
-            options.append({'selector': '2', 'print': "Discard %s" % card.name, 'action': 'discard'})
+            options.append({'selector': '0', 'print': "Put %s back on top" % card.name, Card.TYPE_ACTION: 'put back'})
+            options.append({'selector': '1', 'print': "Trash %s" % card.name, Card.TYPE_ACTION: 'trash'})
+            options.append({'selector': '2', 'print': "Discard %s" % card.name, Card.TYPE_ACTION: 'discard'})
             o = player.userInput(options, "What to do with the top card %s?" % card.name)
-            if o['action'] == 'trash':
+            if o[Card.TYPE_ACTION] == 'trash':
                 player.trashCard(card)
                 player.output("Trashing %s" % card.name)
-            elif o['action'] == 'discard':
+            elif o[Card.TYPE_ACTION] == 'discard':
                 player.addCard(card, 'discard')
                 player.output("Discarding %s" % card.name)
-            elif o['action'] == 'put back':
+            elif o[Card.TYPE_ACTION] == 'put back':
                 player.addCard(card, 'topdeck')
                 player.output("Putting %s back" % card.name)
 
@@ -89,7 +89,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.setDeck('Silver', 'Province', 'Duchy')
         self.plr.buyCard(self.g['Doctor'])
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
 

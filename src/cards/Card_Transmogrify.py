@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Transmogrify(Card):
+class Card_Transmogrify(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = """+1 Action; At the start of your turn, you may call this,
         to trash a card from your hand, gain a card costing up to 1 coin more
         than it, and put that card into your hand"""
@@ -37,8 +37,8 @@ class Test_Transmogrify(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.trans)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inReserve('Transmogrify'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.plr.in_reserve('Transmogrify'))
 
     def test_call(self):
         self.plr.setHand('Duchy', 'Estate')
@@ -46,7 +46,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.test_input = ['trash duchy', 'get gold']
         self.plr.call_reserve('Transmogrify')
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

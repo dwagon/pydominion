@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Werewolf(Card):
+class Card_Werewolf(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'night', 'doom']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_NIGHT, Card.TYPE_DOOM]
+        self.base = Game.NOCTURNE
         self.desc = "If it's your Night phase, each other player receives the next Hex.  Otherwise, +3 Cards."
         self.name = 'Werewolf'
         self.cost = 5
@@ -41,13 +41,13 @@ class Test_Werewolf(unittest.TestCase):
     def test_play_day(self):
         """ Play a Werewolf during the day """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertFalse(self.vic.has_state('Deluded'))
 
     def test_play_night(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.vic.has_state('Deluded'))
 
 

@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_DefiledShrine(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When you gain an Action, move 1VP from its pile to this. When you buy a Curse, take the VP from this."
         self.name = "Defiled Shrine"
         self.required_cards = ['Curse']

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Huntinggrounds(Card):
+class Card_Huntinggrounds(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+4 Cards; When you trash this, gain a Duchy or 3 Estates."""
         self.name = 'Hunting Grounds'
         self.cards = 4
@@ -41,21 +41,21 @@ class Test_Huntinggrounds(unittest.TestCase):
     def test_play(self):
         """ Play a Hunting Ground """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 4)
+        self.assertEqual(self.plr.hand.size(), 5 + 4)
 
     def test_trash_estate(self):
         """ Trash a hunting ground and gain estates """
         self.plr.test_input = ['Estates']
         self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
     def test_trash_duchy(self):
         """ Trash a hunting ground and gain duchy """
         self.plr.test_input = ['Duchy']
         self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

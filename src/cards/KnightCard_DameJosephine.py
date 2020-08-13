@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Dame_Josephine(KnightCard):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight', 'victory']
-        self.base = 'darkages'
+        KnightCard.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT, Card.TYPE_VICTORY]
+        self.base = Game.DARKAGES
         self.name = "Dame Josephine"
         self.desc = """+2 VP. Each other player reveals the top 2 cards of his deck,
-        trashes one of them costing from 3 to 6, and discards the rest.
-        If a Knight is trashed by this, trash this card."""
+            trashes one of them costing from 3 to 6, and discards the rest.
+            If a Knight is trashed by this, trash this card."""
         self.cost = 5
         self.victory = 2
 
@@ -28,7 +29,6 @@ class Card_Dame_Josephine(KnightCard):
 ###############################################################################
 class Test_Dame_Josephine(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

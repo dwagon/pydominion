@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Ghostship(Card):
+class Card_Ghostship(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.SEASIDE
         self.desc = """+2 Cards. Each other player with 4 or more cards in
             hand puts cards from his hand on top of his deck until
             he has 3 cards in his hand."""
@@ -20,8 +20,8 @@ class Card_Ghostship(Card):
 
     def special(self, game, player):
         for vic in player.attackVictims():
-            if vic.handSize() >= 4:
-                todisc = vic.handSize()-3
+            if vic.hand.size() >= 4:
+                todisc = vic.hand.size()-3
                 vic.output("Select %d cards to put on top of your deck because of %s's Ghost Ship" % (todisc, player.name))
                 discard = vic.cardSel(
                     num=todisc,
@@ -55,8 +55,8 @@ class Test_Ghostship(unittest.TestCase):
         self.vic.setHand('Duchy', 'Province', 'Copper', 'Silver', 'Gold')
         self.vic.test_input = ['Silver', 'Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.handSize(), 3)
-        self.assertEqual(self.vic.deckSize(), 3)
+        self.assertEqual(self.vic.hand.size(), 3)
+        self.assertEqual(self.vic.deck.size(), 3)
         self.assertIn(self.vic.deck[-1].name, ('Silver', 'Gold'))
 
 

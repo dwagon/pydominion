@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bridgetroll(Card):
+class Card_Bridgetroll(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = """Each other player takes his -1 Coin token.
             Now and at the start of your next turn: +1 Buy.
             While this is in play cards cost 1 less"""

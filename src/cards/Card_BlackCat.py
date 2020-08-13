@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Black_Cat(Card):
+class Card_Black_Cat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'reaction']
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_REACTION]
+        self.base = Game.MENAGERIE
         self.desc = """+2 Cards; If it isn't your turn, each other player gains a
             Curse. When another player gains a Victory card, you may play this
             from your hand."""
@@ -42,7 +42,7 @@ class Test_Black_Cat(unittest.TestCase):
         """ Play a card """
         self.oth.gainCard('Estate')
         self.g.print_state()
-        self.assertIsNotNone(self.oth.inDiscard('Curse'))
+        self.assertIsNotNone(self.oth.in_discard('Curse'))
 
 
 ###############################################################################

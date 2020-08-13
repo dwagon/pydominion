@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bagofgold(Card):
+class Card_Bagofgold(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'prize']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_PRIZE]
+        self.base = Game.CORNUCOPIA
         self.name = "Bag of Gold"
         self.purchasable = False
         self.cost = 0
@@ -33,7 +33,7 @@ class Test_Bagofgold(unittest.TestCase):
     def test_play(self):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

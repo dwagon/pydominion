@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Transmute(Card):
+class Card_Transmute(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "Trash a card from hand to gain others"
         self.name = 'Transmute'
         self.cost = 0
@@ -57,7 +57,7 @@ class Test_Transmute(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['trash nothing']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
 
     def test_trash_treasure(self):
         """ Transmute a treasure card to gain a Transmute """

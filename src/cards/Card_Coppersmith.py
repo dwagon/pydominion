@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Coppersmith(Card):
+class Card_Coppersmith(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "Copper produces an extra +1 this turn"
         self.name = 'Coppersmith'
         self.cost = 4

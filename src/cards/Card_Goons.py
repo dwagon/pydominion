@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Goons(Card):
+class Card_Goons(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "Other players discard down to 3. +1 VP when buying"
         self.name = 'Goons'
         self.cost = 6
@@ -49,12 +49,12 @@ class Test_Goons(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
 
     def test_defended(self):
         self.victim.setHand('Moat', 'Estate', 'Gold', 'Copper')
         self.plr.playCard(self.card)
-        self.assertEqual(self.victim.handSize(), 4)
+        self.assertEqual(self.victim.hand.size(), 4)
 
     def test_buy(self):
         self.victim.setHand('Moat', 'Estate', 'Gold', 'Copper')

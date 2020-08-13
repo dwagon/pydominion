@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Treasury(Card):
+class Card_Treasury(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """+1 Card +1 Action +1 Coin; When you discard this from play,
             if you didn't buy a Victory card this turn, you may put this on top
             of your deck."""
@@ -47,8 +47,8 @@ class Test_Treasury(unittest.TestCase):
     def test_play(self):
         """ Play a trader - trashing an estate """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_buy_topdeck(self):

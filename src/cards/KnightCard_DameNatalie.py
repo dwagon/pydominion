@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Dame_Natalie(KnightCard):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        KnightCard.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
+        self.base = Game.DARKAGES
         self.name = "Dame Natalie"
         self.desc = """You may gain a card costing up to 3.
         Each other player reveals the top 2 cards of his deck, trashes one of them
@@ -26,7 +27,6 @@ class Card_Dame_Natalie(KnightCard):
 ###############################################################################
 class Test_Dame_Natalie(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,7 +40,7 @@ class Test_Dame_Natalie(unittest.TestCase):
         self.plr.test_input = ['get silver']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

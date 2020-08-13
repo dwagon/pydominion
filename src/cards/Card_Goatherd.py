@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Goatherd(Card):
+class Card_Goatherd(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = """+1 Action; You may trash a card from your hand.
             +1 Card per card the player to your right trashed on their last turn."""
         self.name = 'Goatherd'
@@ -43,8 +43,8 @@ class Test_Goatherd(unittest.TestCase):
         self.plr.test_input = ['Trash Province']
         self.plr.playCard(self.card)
         self.g.print_state()
-        self.assertIsNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
+        self.assertIsNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
 
 
 ###############################################################################

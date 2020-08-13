@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_RoyalBlacksmith(Card):
+class Card_RoyalBlacksmith(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.desc = """+5 Cards. Reveal your hand; discard the Coppers."""
         self.name = 'Royal Blacksmith'
         self.debtcost = 8
@@ -28,7 +29,6 @@ class Card_RoyalBlacksmith(Card):
 ###############################################################################
 class Test_RoyalBlacksmith(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Royal Blacksmith'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,9 +40,9 @@ class Test_RoyalBlacksmith(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 3 - 2 + 5)
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertEqual(self.plr.hand.size(), 3 - 2 + 5)
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
 
 
 ###############################################################################

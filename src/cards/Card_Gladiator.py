@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Gladiator(Card):
+class Card_Gladiator(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.EMPIRES
         self.desc = """+2 Coin
         Reveal a card from your hand. The player to your left may reveal a copy from their hand.
         If they do not, +1 Coin and trash a Gladiator from the Supply."""
@@ -25,7 +26,7 @@ class Card_Gladiator(Card):
             prompt="Select a card from your hand that the player to your left doesn't have")
         player.revealCard(mycard[0])
         lefty = game.playerToLeft(player)
-        leftycard = lefty.inHand(mycard[0].name)
+        leftycard = lefty.in_hand(mycard[0].name)
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.addCoin(1)
@@ -39,7 +40,6 @@ class Card_Gladiator(Card):
 ###############################################################################
 class Test_Gladiator(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Gladiator', 'Moat'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Palace(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When scoring, 3VP per set you have of Copper - Silver - Gold."""
         self.name = "Palace"
 

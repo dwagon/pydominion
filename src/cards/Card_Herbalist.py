@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
-class Card_Herbalist(Card):
+###############################################################################
+class Card_Herbalist(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "+1 buy, +1 coin. When you discard this from play, you may put one of your Treasures from play on top of your deck"
         self.name = 'Herbalist'
         self.cost = 2
@@ -40,7 +42,6 @@ class Card_Herbalist(Card):
 ###############################################################################
 class Test_Herbalist(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Herbalist'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -52,7 +53,7 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.hcard)
         self.plr.discardHand()
-        self.assertEqual(self.plr.deckSize(), 5)
+        self.assertEqual(self.plr.deck.size(), 5)
 
     def test_putgold(self):
         self.plr.setPlayed('Gold', 'Estate')
@@ -63,8 +64,8 @@ class Test_Herbalist(unittest.TestCase):
         self.plr.discardHand()
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
         self.assertEqual(self.plr.discardpile[-1].name, 'Estate')
-        self.assertEqual(self.plr.discardSize(), 2)
-        self.assertEqual(self.plr.deckSize(), 6)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.deck.size(), 6)
 
 
 ###############################################################################

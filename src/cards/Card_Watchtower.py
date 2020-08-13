@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Watchtower(Card):
+class Card_Watchtower(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.desc = """Draw until you have 6 cards in hand.
         When you gain a card, you may reveal this from your hand. If you do, either trash that card, or put it on top of your deck."""
         self.name = 'Watchtower'
@@ -50,7 +50,7 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.setHand('Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_react_nothing(self):
         """ React to gaining a card - but do nothing """
@@ -59,8 +59,8 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.test_input = ['nothing']
         self.plr.gainCard('Copper')
         self.assertEqual(self.plr.discardpile[0].name, 'Copper')
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
 
     def test_react_trash(self):
         """ React to gaining a card - discard card"""
@@ -72,8 +72,8 @@ class Test_Watchtower(unittest.TestCase):
             self.plr.gainCard('Copper')
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, 'Copper')
-            self.assertEqual(self.plr.handSize(), 2)
-            self.assertEqual(self.plr.inHand('Copper'), None)
+            self.assertEqual(self.plr.hand.size(), 2)
+            self.assertEqual(self.plr.in_hand('Copper'), None)
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
@@ -87,8 +87,8 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.gainCard('Silver')
         try:
             self.assertEqual(self.g.trashSize(), tsize)
-            self.assertEqual(self.plr.handSize(), 2)
-            self.assertEqual(self.plr.inHand('Silver'), None)
+            self.assertEqual(self.plr.hand.size(), 2)
+            self.assertEqual(self.plr.in_hand('Silver'), None)
             c = self.plr.nextCard()
             self.assertEqual(c.name, 'Silver')
         except AssertionError:      # pragma: no cover

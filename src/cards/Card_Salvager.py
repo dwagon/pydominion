@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Salvager(Card):
+class Card_Salvager(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """+1 Buy. Trash a card from your hand. Gain Coins equal to its cost."""
         self.name = 'Salvager'
         self.buys = 1

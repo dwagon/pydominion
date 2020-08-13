@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Harbinger(Card):
+class Card_Harbinger(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.desc = "+1 Card; +1 Action; Look through your discard pile. You may put a card from it onto your deck."
         self.name = 'Harbinger'
         self.actions = 1
@@ -42,7 +43,6 @@ class Card_Harbinger(Card):
 ###############################################################################
 class Test_Harbinger(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Harbinger'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -54,9 +54,9 @@ class Test_Harbinger(unittest.TestCase):
         self.plr.test_input = ['Put Gold']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertIsNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
 
 

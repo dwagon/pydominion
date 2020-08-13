@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Goat(Card):
+class Card_Goat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
+        self.base = Game.NOCTURNE
         self.desc = "When you play this, you may trash a card from your hand."
         self.name = 'Goat'
         self.cost = 2
@@ -17,19 +18,18 @@ class Card_Goat(Card):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.handSize():
+        if player.hand.size():
             player.plrTrashCard()
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return []
 
 
 ###############################################################################
 class Test_Goat(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pixie'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

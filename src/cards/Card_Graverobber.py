@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Graverobber(Card):
+class Card_Graverobber(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """Choose one: Gain a card from the trash costing from 3 to 6,
         putting it on top of your deck; or trash an Action card from your hand and gain a card costing up to 3 more than it."""
         self.name = 'Graverobber'
@@ -28,7 +29,7 @@ class Card_Graverobber(Card):
             card = player.plrTrashCard(cardsrc=actions)
             player.plrGainCard(cost=card[0].cost+3)
         else:
-            trash_cards = [c for c in game.trashpile if (3 <= c.cost <= 6)]
+            trash_cards = [c for c in game.trashpile if 3 <= c.cost <= 6]
             if not trash_cards:
                 player.output("No suitable cards in trash")
                 return
@@ -42,7 +43,6 @@ class Card_Graverobber(Card):
 ###############################################################################
 class Test_Graverobber(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Graverobber', 'Militia'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -55,8 +55,8 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.addCard(militia, 'hand')
         self.plr.test_input = ['1', 'militia', 'get gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNone(self.plr.inHand('Militia'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_hand('Militia'))
 
     def test_trash_empty(self):
         """ Play a grave robber - nothing to trash """

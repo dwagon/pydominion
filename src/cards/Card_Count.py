@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Count(Card):
+class Card_Count(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """Choose one: Discard 2 cards; or put a card from your hand
             on top of your deck; or gain a Copper. Choose one: +3 Coin; or trash
             your hand; or gain a Duchy"""
@@ -81,8 +81,8 @@ class Test_Count(unittest.TestCase):
         # Discard, select card 1 and card 2, finish selecting, +3 coin
         self.plr.test_input = ['discard 2', 'discard estate', 'discard copper', 'finish', '+3 coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 2)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_topdeck(self):
         self.plr.setHand('Gold')
@@ -110,7 +110,7 @@ class Test_Count(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['gain a copper', 'trash hand']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.hand.isEmpty())
+        self.assertTrue(self.plr.hand.is_empty())
         self.assertEqual(self.g.trashSize(), tsize + 5)
 
     def test_gainDuchy(self):

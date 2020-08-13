@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cobbler(Card):
+class Card_Cobbler(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.desc = "At the start of your next turn, gain a card to your hand costing up to 4."
         self.name = 'Cobbler'
         self.cost = 5

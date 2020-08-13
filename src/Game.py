@@ -25,6 +25,23 @@ from StatePile import StatePile
 from TextPlayer import TextPlayer
 from WayPile import WayPile
 
+# Source of the various cards
+ADVENTURE = 'adventure'
+ALCHEMY = 'alchemy'
+CORNUCOPIA = 'cornucopia'
+DARKAGES = 'darkages'
+DOMINION = 'dominion'
+EMPIRES = 'empires'
+GUILDS = 'guilds'
+HINTERLANDS = 'hinterlands'
+INTRIGUE = 'intrigue'
+MENAGERIE = 'menagerie'
+NOCTURNE = 'nocturne'
+PROMO = 'promo'
+PROSPERITY = 'prosperity'
+RENAISSANCE = 'renaissance'
+SEASIDE = 'seaside'
+
 
 ###############################################################################
 ###############################################################################
@@ -311,6 +328,12 @@ class Game(object):     # pylint: disable=too-many-public-methods
         unfilled = numstacks
         foundall = True
         for crd in initcards:
+            # If basecards are specified by initcards
+            cardname = self.guess_cardname(crd, prefix='BaseCard')
+            if cardname:
+                cpile = CardPile(cardname, self.cardmapping['BaseCard'][cardname], self)
+                self.cardpiles[cpile.name] = cpile
+                continue
             cardname = self.guess_cardname(crd)
             if cardname:
                 self.useCardPile(available, cardname, force=True)
@@ -445,7 +468,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
     def getAvailableCardClasses(self):
         """ Create a mapping between the cardname and the module """
         mapping = {}
-        for prefix in ('Card', 'Traveller', 'BaseCard', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
+        for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Way'] = self.getSetCardClasses('Way', self.waypath, 'ways', 'Way_')
@@ -510,12 +533,12 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         numEmpty = 0
         for cpil in self.cardpiles:
-            if self[cpil].isEmpty():
+            if self[cpil].is_empty():
                 numEmpty += 1
         if numEmpty >= 3:
             return True
 
-        if self['Province'].isEmpty():
+        if self['Province'].is_empty():
             return True
         return False
 
@@ -592,6 +615,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             print("  %s's hand: %s" % (plr.name, ", ".join([_.name for _ in plr.hand])))
             print("  %s's deck: %s" % (plr.name, ", ".join([_.name for _ in plr.deck])))
             print("  %s's discard: %s" % (plr.name, ", ".join([_.name for _ in plr.discardpile])))
+            print("  %s's defer: %s" % (plr.name, ", ".join([_.name for _ in plr.deferpile])))
             print("  %s's duration: %s" % (plr.name, ", ".join([_.name for _ in plr.durationpile])))
             print("  %s's exile: %s" % (plr.name, ", ".join([_.name for _ in plr.exilepile])))
             print("  %s's reserve: %s" % (plr.name, ", ".join([_.name for _ in plr.reserve])))
@@ -642,12 +666,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             if total:
                 sys.stderr.write("pile=%d " % total)
             for plr in self.player_list():
-                stacklist = (
-                    ('Discard', plr.discardpile), ('Hand', plr.hand),
-                    ('Reserve', plr.reserve), ('Deck', plr.deck),
-                    ('Played', plr.played), ('Duration', plr.durationpile),
-                    ('Exile', plr.exilepile))
-                for stackname, stack in stacklist:
+                for stackname, stack in plr.stacklist:
                     count = 0
                     for card in stack:
                         if card.name == pile.name:

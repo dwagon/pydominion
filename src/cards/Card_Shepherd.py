@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Shepherd(Card):
+class Card_Shepherd(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.NOCTURNE
         self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = 'Shepherd'
         self.cost = 2
@@ -18,7 +18,7 @@ class Card_Shepherd(Card):
         self.heirloom = 'Pasture'
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(num=0, anynum=True, types={'victory': True})
+        todiscard = player.plrDiscardCards(num=0, anynum=True, types={Card.TYPE_VICTORY: True})
         player.pickupCards(2*len(todiscard))
 
 
@@ -36,8 +36,8 @@ class Test_Shepherd(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Estate', 'Duchy', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

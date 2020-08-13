@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Upgrade(Card):
+class Card_Upgrade(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+1 Card, +1 Action. Trash a card from your hand. Gain a card costing exactly 1 more than it."
         self.name = 'Upgrade'
         self.cards = 1
@@ -27,7 +28,6 @@ class Card_Upgrade(Card):
 ###############################################################################
 class Test_Upgrade(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Upgrade'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -39,8 +39,8 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trash(self):
@@ -50,12 +50,12 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Get Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

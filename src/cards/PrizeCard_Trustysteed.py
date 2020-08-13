@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Trustysteed(Card):
+class Card_Trustysteed(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'prize']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_PRIZE]
+        self.base = Game.CORNUCOPIA
         self.name = "Trusty Steed"
         self.purchasable = False
         self.cost = 0
@@ -56,14 +56,14 @@ class Test_Trustysteed(unittest.TestCase):
     def test_play_a(self):
         self.plr.test_input = ['cards', 'coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_b(self):
-        self.plr.test_input = ['action', 'silver']
+        self.plr.test_input = [Card.TYPE_ACTION, 'silver']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.discardSize(), 4)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 4)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 

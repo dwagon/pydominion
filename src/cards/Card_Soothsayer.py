@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Soothsayer(Card):
+class Card_Soothsayer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.GUILDS
         self.desc = "Gain a Gold. Each other player gains a Curse. Each player who did draws a card."
         self.required_cards = ['Curse']
         self.name = 'Soothsayer'
@@ -37,9 +37,9 @@ class Test_Soothsayer(unittest.TestCase):
 
     def test_play(self):
         self.attacker.playCard(self.wcard)
-        self.assertEqual(self.victim.handSize(), 6)
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
-        self.assertIsNotNone(self.attacker.inDiscard('Gold'))
+        self.assertEqual(self.victim.hand.size(), 6)
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
+        self.assertIsNotNone(self.attacker.in_discard('Gold'))
 
 
 ###############################################################################

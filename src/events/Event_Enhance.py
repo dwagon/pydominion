@@ -9,7 +9,7 @@ from Event import Event
 class Event_Enhance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = """You may trash a non-Victory card from your hand,
             to gain a card costing up to 2 Coin more than it."""
         self.name = "Enhance"
@@ -49,7 +49,7 @@ class Test_Enhance(unittest.TestCase):
         self.plr.test_input = ['Trash Silver', 'Get Festival']
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Festival'))
+        self.assertIsNotNone(self.plr.in_discard('Festival'))
 
 
 ###############################################################################

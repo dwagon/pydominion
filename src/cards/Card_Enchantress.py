@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Enchantress(Card):
+class Card_Enchantress(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
+        self.base = Game.EMPIRES
         self.desc = """Until your next turn, the first time each other player plays an
             Action card on their turn, they get +1 Card and +1 Action instead of
             following its instructions. At the start of your next turn, +2 Cards"""
@@ -45,12 +45,12 @@ class Test_Enchantress(unittest.TestCase):
         self.plr.playCard(self.card)
         self.vic.addCard(self.r1, 'hand')
         self.vic.playCard(self.r1)
-        self.assertEqual(self.vic.handSize(), 5 + 1)    # Hand + Ench
-        self.assertEqual(self.vic.getActions(), 1)
+        self.assertEqual(self.vic.hand.size(), 5 + 1)    # Hand + Ench
+        self.assertEqual(self.vic.get_actions(), 1)
         self.vic.addCard(self.m1, 'hand')
         self.vic.playCard(self.m1)
         self.g.print_state()
-        self.assertEqual(self.vic.handSize(), 5 + 1 + 2)    # Hand + Ench + Moat
+        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)    # Hand + Ench + Moat
 
 
 ###############################################################################

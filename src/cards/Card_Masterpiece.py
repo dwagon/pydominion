@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Masterpiece(Card):
+class Card_Masterpiece(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.GUILDS
         self.name = 'Masterpiece'
         self.overpay = True
         self.coin = 1
@@ -47,7 +47,7 @@ class Test_Masterpiece(unittest.TestCase):
         self.plr.coin = 5
         self.plr.test_input = ['1']
         self.plr.buyCard(self.g['Masterpiece'])
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

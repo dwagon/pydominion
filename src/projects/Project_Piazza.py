@@ -9,8 +9,7 @@ from Project import Project
 class Project_Piazza(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, reveal the top card of your deck. If it's an Action, play it."
         self.name = "Piazza"
         self.cost = 5
@@ -37,8 +36,8 @@ class Test_Piazza(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Moat')
         self.plr.assign_project('Piazza')
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inPlayed('Moat'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertIsNotNone(self.plr.in_played('Moat'))
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_noaction(self):
         self.plr.setDeck('Province', 'Silver')

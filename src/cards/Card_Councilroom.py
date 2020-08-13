@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Councilroom(Card):
+class Card_Councilroom(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+4 cards, +1 buy. Everyone else +1 card"
         self.name = 'Council Room'
         self.cards = 4
@@ -35,10 +35,10 @@ class Test_Councilroom(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
 
     def test_play(self):
-        self.assertEqual(self.other.handSize(), 5)
+        self.assertEqual(self.other.hand.size(), 5)
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.other.handSize(), 6)
-        self.assertEqual(self.plr.handSize(), 9)
+        self.assertEqual(self.other.hand.size(), 6)
+        self.assertEqual(self.plr.hand.size(), 9)
         self.assertEqual(self.plr.getBuys(), 2)
 
 

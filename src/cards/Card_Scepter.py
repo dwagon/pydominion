@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scepter(Card):
+class Card_Scepter(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.RENAISSANCE
         self.desc = "When you play this, choose one: 2 coin; or replay an Action card you played this turn that's still in play."
         self.name = 'Scepter'
         self.cost = 5
@@ -54,7 +54,7 @@ class Test_Scepter(unittest.TestCase):
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

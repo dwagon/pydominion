@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Workshop(Card):
+class Card_Workshop(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Gain a card costing up to 4"
         self.name = 'Workshop'
         self.cost = 3
@@ -32,14 +32,14 @@ class Test_Workshop(unittest.TestCase):
     def test_gainzero(self):
         self.plr.test_input = ['Finish']
         self.plr.playCard(self.wcard)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ['Get Feast']
         self.plr.playCard(self.wcard)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 4)
 
 

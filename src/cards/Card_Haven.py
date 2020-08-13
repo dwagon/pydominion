@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Haven(Card):
+class Card_Haven(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.SEASIDE
         self.desc = "+1 cards, +1 action; play a card next turn"
         self.name = 'Haven'
         self.cards = 1
@@ -21,7 +21,7 @@ class Card_Haven(Card):
         """ Set aside a card from your hand face down. At the start of
             your next turn, put it into your hand. """
         c = player.plrPickCard(force=True, prompt='Pick card to put into hand next turn')
-        player.addCard(c, 'duration')
+        player.addCard(c, Card.TYPE_DURATION)
         player.hand.remove(c)
         self.savedHavenCard = c
 
@@ -53,15 +53,15 @@ class Test_Haven(unittest.TestCase):
         """ Play a haven """
         self.plr.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.durationSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.durationpile.size(), 2)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.playedSize(), 1)
-        self.assertTrue(self.plr.inHand('Gold'))
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.played.size(), 1)
+        self.assertTrue(self.plr.in_hand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

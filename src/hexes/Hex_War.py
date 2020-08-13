@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,8 +10,8 @@ from Hex import Hex
 class Hex_War(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "Reveal cards from your deck until revealing one costing 3 or 4. Trash it and discard the rest."
         self.name = "War"
         self.purchasable = False
@@ -23,15 +25,13 @@ class Hex_War(Hex):
                 player.output("Trashing {}".format(c.name))
                 player.trashCard(c)
                 break
-            else:
-                player.output("Discarding {}".format(c.name))
-                player.discardCard(c)
+            player.output("Discarding {}".format(c.name))
+            player.discardCard(c)
 
 
 ###############################################################################
 class Test_War(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

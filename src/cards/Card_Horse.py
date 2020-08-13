@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Horse(Card):
+class Card_Horse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
         self.name = "Horse"
         self.purchasable = False
@@ -23,9 +23,12 @@ class Card_Horse(Card):
 
     def special(self, game, player):
         player.discardCard(self)
-        game['Horse'].add()
-        player.played.remove(self)
-        player.discardpile.remove(self)
+        try:    # If Horse is played multiple times e.g. Kings Court
+            player.played.remove(self)
+            player.discardpile.remove(self)
+            game['Horse'].add()
+        except ValueError:
+            pass
 
 
 ###############################################################################
@@ -39,9 +42,9 @@ class Test_Horse(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inPlayed('Horse'))
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertIsNone(self.plr.in_played('Horse'))
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

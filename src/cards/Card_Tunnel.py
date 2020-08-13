@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Tunnel(Card):
+class Card_Tunnel(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['victory', 'reaction']
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_REACTION]
+        self.base = Game.HINTERLANDS
         self.desc = """2VP. When you discard this other than during a Clean-up phase, you may reveal it. If you do, gain a Gold."""
         self.name = "Tunnel"
         self.cost = 3
@@ -40,7 +40,7 @@ class Test_Tunnel(unittest.TestCase):
         """ Play the Tunnel """
         self.plr.test_input = ['gold']
         self.plr.discardCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
     def test_score(self):
         """ Score from a Tunnel """

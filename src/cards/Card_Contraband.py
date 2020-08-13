@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Contraband(Card):
+class Card_Contraband(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.PROSPERITY
         self.desc = "+3 Coin +1 Buy. When you play this, the player to your left names a card. You can't buy that card this turn."
         self.name = 'Contraband'
         self.cost = 5

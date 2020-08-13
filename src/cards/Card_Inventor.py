@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Inventor(Card):
+class Card_Inventor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = "Gain a card costing up to 4, then cards cost 1 less this turn (but not less than 0)."
         self.name = 'Inventor'
         self.cost = 4
@@ -27,7 +28,6 @@ class Card_Inventor(Card):
 ###############################################################################
 class Test_Inventor(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Inventor', 'Feast'], badcards=['Blessed Village', 'Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

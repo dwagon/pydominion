@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Colony(Card):
+class Card_Colony(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.PROSPERITY
         self.desc = "+10 VP"
         self.basecard = True
         self.name = 'Colony'

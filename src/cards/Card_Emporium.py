@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Emporium(Card):
+class Card_Emporium(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.name = 'Emporium'
         self.coin = 1
         self.actions = 1
@@ -19,7 +19,7 @@ class Card_Emporium(Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == 'action':
+        if player.phase == Card.TYPE_ACTION:
             return "+1 Card, +1 Action, +1 Coin"
         return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
 
@@ -45,9 +45,9 @@ class Test_Emporium(unittest.TestCase):
         """ Play the Emporium """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_gain_with_actions(self):
         """ Play the Emporium having played lots of actions"""

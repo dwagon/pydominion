@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Moat(Card):
+class Card_Moat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.DOMINION
         self.desc = "+2 cards, defense"
         self.name = 'Moat'
         self.defense = True
@@ -30,7 +30,7 @@ class Test_Moat(unittest.TestCase):
     def test_play(self):
         """ Play a moat """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
 
 ###############################################################################

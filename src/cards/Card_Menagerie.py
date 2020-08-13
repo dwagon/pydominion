@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Menagerie(Card):
+class Card_Menagerie(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.CORNUCOPIA
         self.desc = """+1 Action. Reveal your hand. If there are no duplicate cards in it, +3 Cards. Otherwise, +1 Card."""
         self.name = 'Menagerie'
         self.actions = 1
@@ -21,7 +21,7 @@ class Card_Menagerie(Card):
         for card in player.hand:
             player.revealCard(card)
             hand.add(card.name)
-        if len(hand) == player.handSize():
+        if len(hand) == player.hand.size():
             player.output("No duplicates - picking up 3 cards")
             player.pickupCards(3)
         else:
@@ -41,15 +41,15 @@ class Test_Menagerie(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_non_unique(self):
         self.plr.setHand('Copper', 'Copper', 'Duchy')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 4)
 
 
 ###############################################################################

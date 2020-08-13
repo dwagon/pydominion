@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Thief(Card):
+class Card_Thief(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DOMINION
         self.desc = """Each other player reveals the top 2 cards of his deck.
             If they revealed any Treasure cards, they trash one of them that you choose.
             You may gain any or all of these trashed cards. They discard the other revealed cards."""
@@ -86,17 +86,17 @@ class Test_Thief(unittest.TestCase):
         self.victim.setDeck('Copper', 'Silver', 'Gold')
         self.thief.playCard(self.thiefcard)
         self.assertIn('Player victim is defended', self.thief.messages)
-        self.assertEqual(self.victim.deckSize(), 3)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.deck.size(), 3)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_do_nothing(self):
         self.victim.setHand('Copper', 'Copper')
         self.victim.setDeck('Copper', 'Silver', 'Gold')
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.thiefcard)
-        self.assertEqual(self.victim.deckSize(), 1)
-        self.assertEqual(self.victim.discardSize(), 2)
-        self.assertEqual(self.thief.discardSize(), 0)
+        self.assertEqual(self.victim.deck.size(), 1)
+        self.assertEqual(self.victim.discardpile.size(), 2)
+        self.assertEqual(self.thief.discardpile.size(), 0)
 
     def test_trash_treasure(self):
         self.victim.setHand('Copper', 'Copper')

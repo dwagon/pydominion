@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Talisman(Card):
+class Card_Talisman(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.PROSPERITY
         self.desc = "+1 coin. Gain copy of non-victory cards you buy"
         self.name = 'Talisman'
         self.playable = False
@@ -40,7 +40,7 @@ class Test_Talisman(unittest.TestCase):
     def test_buy(self):
         self.plr.playCard(self.card)
         self.plr.buyCard(self.g['Copper'])
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Copper')
 
@@ -48,7 +48,7 @@ class Test_Talisman(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Gold')
 
@@ -56,7 +56,7 @@ class Test_Talisman(unittest.TestCase):
         self.plr.playCard(self.card)
         self.plr.setCoin(6)
         self.plr.buyCard(self.g['Duchy'])
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Duchy')
 

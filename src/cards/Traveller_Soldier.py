@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Soldier(Card):
+class Card_Soldier(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""
         self.name = 'Soldier'
@@ -31,7 +31,7 @@ class Card_Soldier(Card):
         player.addCoin(count)
         player.output("Gained %d extra coins" % count)
         for plr in player.attackVictims():
-            if plr.handSize() >= 4:
+            if plr.hand.size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
                 plr.plrDiscardCards(force=True)
 
@@ -73,9 +73,9 @@ class Test_Soldier(unittest.TestCase):
         self.vic.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Duchy')
         self.vic.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.vic.inDiscard('Gold'))
-        self.assertIsNone(self.vic.inHand('Gold'))
-        self.assertEqual(self.vic.handSize(), 4)
+        self.assertIsNotNone(self.vic.in_discard('Gold'))
+        self.assertIsNone(self.vic.in_hand('Gold'))
+        self.assertEqual(self.vic.hand.size(), 4)
 
 
 ###############################################################################

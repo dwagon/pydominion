@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Port(Card):
+class Card_Port(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.name = 'Port'
         self.cards = 1
         self.actions = 2
@@ -44,8 +44,8 @@ class Test_Port(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_buy(self):
         """ Buy a port """
@@ -54,7 +54,7 @@ class Test_Port(unittest.TestCase):
         self.plr.buyCard(self.g['Port'])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Port')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
 
 ###############################################################################

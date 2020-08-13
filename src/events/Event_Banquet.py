@@ -2,6 +2,7 @@
 
 import unittest
 import Game
+import Card
 from Event import Event
 
 
@@ -9,7 +10,7 @@ from Event import Event
 class Event_Banquet(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Gain 2 Coppers and a non-Victory card costing up to 5"
         self.name = "Banquet"
         self.cost = 3
@@ -17,7 +18,7 @@ class Event_Banquet(Event):
     def special(self, game, player):
         for _ in range(2):
             player.gainCard('Copper')
-        player.plrGainCard(5, types={'action': True, 'treasure': True, 'victory': False})
+        player.plrGainCard(5, types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True, Card.TYPE_VICTORY: False})
 
 
 ###############################################################################
@@ -33,9 +34,9 @@ class Test_Banquet(unittest.TestCase):
         self.plr.test_input = ['Get Silver']
         self.plr.addCoin(3)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertEqual(self.plr.discardpile.size(), 3)
 
 
 ###############################################################################

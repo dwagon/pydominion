@@ -9,7 +9,7 @@ from Event import Event
 class Event_Dominate(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain a Province. If you do, +9VP."
         self.name = "Dominate"
         self.cost = 14
@@ -32,7 +32,7 @@ class Test_Dominate(unittest.TestCase):
         """ Perform a Dominate """
         self.plr.addCoin(14)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
         self.assertEqual(self.plr.getScoreDetails()['Dominate'], 9)
 
 

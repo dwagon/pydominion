@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cellar(Card):
+class Card_Cellar(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+1 Action; Discard any number of cards. +1 card per card discarded."
         self.name = 'Cellar'
         self.actions = 1
@@ -34,7 +34,7 @@ class Test_Cellar(unittest.TestCase):
         self.plr.addCard(self.ccard, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_one(self):
         self.plr.setHand('Estate', 'Copper', 'Silver')
@@ -43,8 +43,8 @@ class Test_Cellar(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'finish']
         self.plr.playCard(self.ccard)
         self.assertEqual(self.plr.deck[-1].name, 'Province')
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

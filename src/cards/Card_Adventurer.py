@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Adventurer(Card):
+class Card_Adventurer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Dig through deck for two treasures"
         self.name = 'Adventurer'
         self.cost = 6
@@ -42,7 +42,7 @@ class Test_Adventurer(unittest.TestCase):
         self.plr.setHand('Adventurer')
         self.plr.playCard(self.plr.hand[0])
         self.assertEqual(sorted(['Silver', 'Gold']), sorted([c.name for c in self.plr.hand]))
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
         self.assertEqual(self.plr.deck[0].name, 'Copper')
 
 

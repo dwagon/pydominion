@@ -2,25 +2,25 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cutpurse(Card):
+class Card_Cutpurse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.desc = "+2 coin; Each other player discards a Copper card (or reveals a hand with no Copper)."
         self.name = 'Cutpurse'
         self.coin = 2
         self.cost = 4
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
 
     def special(self, game, player):
         """ Each other player discard a Copper card (or reveals a
             hand with no copper)."""
         for victim in player.attackVictims():
-            c = victim.inHand('Copper')
+            c = victim.in_hand('Copper')
             if c:
                 player.output("%s discarded a copper" % victim.name)
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
@@ -44,13 +44,13 @@ class Test_Cutpurse(unittest.TestCase):
         self.victim.setHand('Copper', 'Copper', 'Estate')
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.discardpile[-1].name, 'Copper')
-        self.assertEqual(self.victim.handSize(), 2)
+        self.assertEqual(self.victim.hand.size(), 2)
 
     def test_play_none(self):
         self.victim.setHand('Estate', 'Estate', 'Estate')
         self.plr.playCard(self.card)
-        self.assertTrue(self.victim.discardpile.isEmpty())
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.victim.hand.size(), 3)
 
 
 ###############################################################################

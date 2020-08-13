@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Idol(Card):
+class Card_Idol(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'attack', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_ATTACK, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = """2 Coin; When you play this, if you then have an odd number
             of Idols in play, receive a Boon; if an even number, each other player
             gains a Curse."""
@@ -48,8 +48,8 @@ class Test_Idol(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.vic.inDiscard('Curse'))
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.vic.in_discard('Curse'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
 
     def test_play_odd(self):
         """ Play an odd number of Idol """
@@ -57,8 +57,8 @@ class Test_Idol(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNone(self.vic.inDiscard('Curse'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))  # From Mountain boon
+        self.assertIsNone(self.vic.in_discard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))  # From Mountain boon
 
 
 ###############################################################################

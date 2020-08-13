@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Forum(Card):
+class Card_Forum(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.name = 'Forum'
         self.cards = 3
         self.actions = 1
@@ -42,8 +42,8 @@ class Test_Forum(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['duchy', 'province', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 3 - 2)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 3 - 2)
 
     def test_buy(self):
         self.plr.setCoin(5)

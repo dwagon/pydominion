@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Pooka(Card):
+class Card_Pooka(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.NOCTURNE
         self.desc = "You may trash a Treasure other than Cursed Gold from your hand, for +4 Cards."
         self.name = 'Pooka'
         self.cost = 5
@@ -25,7 +26,6 @@ class Card_Pooka(Card):
 ###############################################################################
 class Test_Pooka(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pooka'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,7 +37,7 @@ class Test_Pooka(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNotNone(self.g.in_trash('Copper'))
         self.assertIsNone(self.g.in_trash('Gold'))
 

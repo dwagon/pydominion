@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Witch(Card):
+class Card_Witch(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DOMINION
         self.desc = "+2 cards; Each other player gains a Curse card."
         self.required_cards = ['Curse']
         self.name = 'Witch'
@@ -38,14 +38,14 @@ class Test_Witch(unittest.TestCase):
     def test_defended(self):
         self.victim.addCard(self.mcard, 'hand')
         self.attacker.playCard(self.wcard)
-        self.assertEqual(self.victim.handSize(), 6)
-        self.assertEqual(self.attacker.handSize(), 7)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.hand.size(), 6)
+        self.assertEqual(self.attacker.hand.size(), 7)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_nodefense(self):
         self.attacker.playCard(self.wcard)
-        self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.attacker.handSize(), 7)
+        self.assertEqual(self.victim.hand.size(), 5)
+        self.assertEqual(self.attacker.hand.size(), 7)
         self.assertEqual(self.victim.discardpile[0].name, 'Curse')
 
 

@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Gear(Card):
+class Card_Gear(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = "+2 Cards; Set aside up to 2 cards from your hand. Pick up next turn"
         self.name = 'Gear'
         self.cards = 2
@@ -56,16 +56,16 @@ class Test_Gear(unittest.TestCase):
         self.plr.test_input = ['set silver', 'set gold', 'finish']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.handSize(), 1 + 2)   # Duchy + 2 picked up
-            self.assertIsNotNone(self.plr.inHand('Duchy'))
-            self.assertEqual(self.plr.durationSize(), 1)
+            self.assertEqual(self.plr.hand.size(), 1 + 2)   # Duchy + 2 picked up
+            self.assertIsNotNone(self.plr.in_hand('Duchy'))
+            self.assertEqual(self.plr.durationpile.size(), 1)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.durationSize(), 0)
-            self.assertEqual(self.plr.playedSize(), 1)
+            self.assertEqual(self.plr.durationpile.size(), 0)
+            self.assertEqual(self.plr.played.size(), 1)
             self.assertEqual(self.plr.played[-1].name, 'Gear')
-            self.assertIsNotNone(self.plr.inHand('Silver'))
-            self.assertIsNotNone(self.plr.inHand('Gold'))
+            self.assertIsNotNone(self.plr.in_hand('Silver'))
+            self.assertIsNotNone(self.plr.in_hand('Gold'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

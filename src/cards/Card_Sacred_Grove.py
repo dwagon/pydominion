@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_SacredGrove(Card):
+class Card_SacredGrove(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Buy; +3 Coin; Receive a Boon. If it doesn't give +1 Coin, each other player may receive it."
         self.name = 'Sacred Grove'
         self.cost = 5
@@ -74,7 +74,7 @@ class Test_SacredGrove(unittest.TestCase):
         try:
             self.assertEqual(self.plr.getCoin(), 3)
             self.assertEqual(self.plr.getBuys(), 1 + 1)
-            self.assertEqual(self.vic.handSize(), 5 + 1)
+            self.assertEqual(self.vic.hand.size(), 5 + 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Temple(Card):
+class Card_Temple(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'gathering']
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_GATHERING]
+        self.base = Game.EMPIRES
         self.name = 'Temple'
         self.cost = 4
 
@@ -25,7 +25,7 @@ class Card_Temple(Card):
     def special(self, game, player):
         player.addScore('Temple', 1)
         cardnames = {_.name for _ in player.hand}
-        cards = [player.inHand(_) for _ in cardnames]
+        cards = [player.in_hand(_) for _ in cardnames]
         trash = player.plrTrashCard(cardsrc=cards, prompt="Trash up to 3 different cards", num=3)
         if not trash:
             return

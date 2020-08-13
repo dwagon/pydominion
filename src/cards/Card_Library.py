@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Library(Card):
+class Card_Library(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = """Draw until you have 7 cards in hand. You may set aside
             any Action cards drawn this way, as you draw them; discard the set
             aside cards after you finish drawing"""
@@ -20,7 +21,7 @@ class Card_Library(Card):
         """ Draw until you have 7 cards in your hand. You may set
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing """
-        while player.handSize() < 7:
+        while player.hand.size() < 7:
             c = player.nextCard()
             if c.isAction():
                 if self.discardChoice(player, c):
@@ -38,7 +39,6 @@ class Card_Library(Card):
 ###############################################################################
 class Test_Library(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Library', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -49,7 +49,7 @@ class Test_Library(unittest.TestCase):
         """ Play a library where no actions are drawn """
         self.plr.setDeck('Duchy', 'Copper', 'Gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
     def test_actions_discard(self):
         """ Play a library where actions are drawn and discarded"""
@@ -57,17 +57,17 @@ class Test_Library(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Moat')
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
     def test_actions_keep(self):
         """ Play a library where actions are drawn and kept"""
         self.plr.setDeck('Duchy', 'Moat', 'Gold')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.deck[-1].name, 'Duchy')
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertTrue(self.plr.inHand('Moat'))
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertTrue(self.plr.in_hand('Moat'))
 
 
 ###############################################################################

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Hideout(Card):
+class Card_Hideout(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = """+1 Card; +2 Actions; Trash a card from your hand. If it's a Victory card, gain a Curse."""
         self.name = 'Hideout'
         self.required_cards = ['Curse']
@@ -19,7 +20,7 @@ class Card_Hideout(Card):
 
     ###########################################################################
     def special(self, game, player):
-        card = player.plrTrashCard(num=1)
+        card = player.plrTrashCard(num=1, force=True)
         if card[0].isVictory():
             player.gainCard('Curse')
 
@@ -27,7 +28,6 @@ class Card_Hideout(Card):
 ###############################################################################
 class Test_Hideout(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hideout'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -39,8 +39,8 @@ class Test_Hideout(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Copper']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2+1)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
     def test_trashVictory(self):
         self.plr.setDeck('Silver')
@@ -49,9 +49,9 @@ class Test_Hideout(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Estate']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2+1)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
 
 
 ###############################################################################

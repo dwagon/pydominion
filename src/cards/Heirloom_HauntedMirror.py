@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Haunted_Mirror(Card):
+class Card_Haunted_Mirror(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Coin; When you trash this, you may discard an Action card, to gain a Ghost from its pile."
         self.name = 'Haunted Mirror'
         self.cost = 0
@@ -30,7 +31,6 @@ class Card_Haunted_Mirror(Card):
 ###############################################################################
 class Test_Haunted_Mirror(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cemetery', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,13 +44,13 @@ class Test_Haunted_Mirror(unittest.TestCase):
     def test_trash_nothing(self):
         self.plr.setHand('Copper')
         self.plr.trashCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Ghost'))
+        self.assertIsNone(self.plr.in_discard('Ghost'))
 
     def test_trash(self):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Moat']
         self.plr.trashCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Ghost'))
+        self.assertIsNotNone(self.plr.in_discard('Ghost'))
 
 
 ###############################################################################

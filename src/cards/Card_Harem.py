@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Harem(Card):
+class Card_Harem(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'victory']
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
+        self.base = Game.INTRIGUE
         self.name = 'Harem'
         self.coin = 2
         self.victory = 2

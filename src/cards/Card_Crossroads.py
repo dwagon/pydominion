@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Crossroads(Card):
+class Card_Crossroads(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action']
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION]
+        self.base = Game.HINTERLANDS
         self.desc = """Reveal your hand. +1 Card per Victory card revealed.
             If this is the first time you played a Crossroads this turn, +3 Actions."""
         self.name = 'Crossroads'
@@ -49,8 +49,8 @@ class Test_Crossroads(unittest.TestCase):
         self.plr.setHand('Silver', 'Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 3)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.get_actions(), 3)
 
     def test_play_twice(self):
         """ Play crossroads again """
@@ -58,7 +58,8 @@ class Test_Crossroads(unittest.TestCase):
         self.plr.setPlayed('Crossroads')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.get_actions(), 0)
 
 
 ###############################################################################

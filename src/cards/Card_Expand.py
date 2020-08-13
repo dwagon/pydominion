@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Expand(Card):
+class Card_Expand(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "Trash a card from hand and gain one costing 3 more"
         self.name = 'Expand'
         self.cost = 7
@@ -38,10 +38,11 @@ class Test_Expand(unittest.TestCase):
     def test_play(self):
         self.plr.setHand('Copper')
         self.plr.addCard(self.expand, 'hand')
-        self.plr.test_input = ['1', '1']
+        self.plr.test_input = ['Trash Copper', 'Get Estate']
         self.plr.playCard(self.expand)
-        self.assertTrue(self.plr.hand.isEmpty())
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.g.print_state()
+        self.assertTrue(self.plr.hand.is_empty())
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 3)
 
 

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Warrior(Card):
+class Card_Warrior(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards
         the top card of his deck and trashes it if it
@@ -58,7 +58,7 @@ class Test_Warrior(unittest.TestCase):
         """ Play a warrior nothing to trash """
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.victim.discardSize(), 1)
+            self.assertEqual(self.victim.discardpile.size(), 1)
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 from PlayArea import PlayArea
 import Game
 
 
 ###############################################################################
-class Card_Archive(Card):
+class Card_Archive(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.EMPIRES
         self.desc = """+1 Action; Set aside the top 3 cards of your deck face
             down (you may look at them). Now and at the start of your next two turns,
             put one into your hand."""
@@ -41,7 +41,7 @@ class Card_Archive(Card):
         player.addCard(o['card'], 'hand')
         player._archive_reserve.remove(o['card'])
         player.secret_count -= 1
-        if player._archive_reserve.isEmpty():
+        if player._archive_reserve.is_empty():
             self.permanent = False
 
 
@@ -58,16 +58,16 @@ class Test_Archive(unittest.TestCase):
         self.plr.setDeck('Gold', 'Silver', 'Province')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Gold']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(len(self.plr._archive_reserve), 2)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Silver']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Province']
         self.plr.start_turn()

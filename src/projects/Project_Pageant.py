@@ -9,8 +9,7 @@ from Project import Project
 class Project_Pageant(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the end of your Buy phase, you may pay 1 Coin for +1 Coffers."
         self.name = "Pageant"
         self.cost = 3

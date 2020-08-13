@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_BanditFort(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """When scoring, -2VP for each Silver and each Gold you have."""
         self.name = "Bandit Fort"
 

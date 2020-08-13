@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_BorderGuard(Card):
+class Card_BorderGuard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = """+1 Action; Reveal the top 2 cards of your deck.
         Put one into your hand and discard the other. If both were Actions,
         take the Lantern or Horn."""
@@ -70,17 +70,17 @@ class Test_BorderGuard(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Select Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_play_actions(self):
         self.plr.setDeck('Moat', 'Guide')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Select Moat', 'Take Horn']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Guide'))
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Guide'))
         self.assertTrue(self.plr.has_artifact('Horn'))
 
 

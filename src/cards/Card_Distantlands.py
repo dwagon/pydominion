@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Distantlands(Card):
+class Card_Distantlands(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve', 'victory']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE, Card.TYPE_VICTORY]
+        self.base = Game.ADVENTURE
         self.desc = "Worth 4 VP if on your tavern mat at the end of the game, else 0"
         self.name = 'Distant Lands'
         self.cost = 5
@@ -41,8 +41,8 @@ class Test_Distantlands(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.reserveSize(), 1)
-        self.assertIsNotNone(self.plr.inReserve('Distant Lands'))
+        self.assertEqual(self.plr.reserve.size(), 1)
+        self.assertIsNotNone(self.plr.in_reserve('Distant Lands'))
 
     def test_notonmat(self):
         self.plr.setHand('Distant Lands')

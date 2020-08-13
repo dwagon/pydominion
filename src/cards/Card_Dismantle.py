@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Dismantle(Card):
+class Card_Dismantle(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'promo'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROMO
         self.desc = "Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold."
         self.name = 'Dismantle'
         self.cost = 4
@@ -41,8 +41,8 @@ class Test_Dismantle(unittest.TestCase):
         self.plr.test_input = ['trash copper']
         self.plr.playCard(self.rcard)
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_non_free(self):
         self.plr.setHand('Estate', 'Silver', 'Province')
@@ -50,10 +50,10 @@ class Test_Dismantle(unittest.TestCase):
         self.plr.test_input = ['trash estate', 'get copper']
         self.plr.playCard(self.rcard)
         self.assertIsNotNone(self.g.in_trash('Estate'))
-        self.assertEqual(self.plr.discardSize(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

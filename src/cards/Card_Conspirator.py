@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Conspirator(Card):
+class Card_Conspirator(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = """+2 coin. If you've played 3 or more actions this turn (counting
             this); +1 card, +1 action """
         self.name = 'Conspirator'
@@ -39,16 +39,16 @@ class Test_Conspirator(unittest.TestCase):
         """ Play the conspirator with not enough actions """
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getActions(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_actions(self):
         """ Play the conspirator with enough actions """
         self.plr.setPlayed('Witch', 'Witch', 'Witch')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

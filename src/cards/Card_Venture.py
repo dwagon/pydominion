@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Venture(Card):
+class Card_Venture(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
         self.desc = "+1 coin, get next treasure from deck"
         self.name = 'Venture'
         self.cost = 5
@@ -24,16 +25,14 @@ class Card_Venture(Card):
                 player.output("Picked up %s from Venture" % c.name)
                 player.playCard(c)
                 break
-            else:
-                player.output("Picked up and discarded %s" % c.name)
-                player.addCoin(c.coin)    # Compensate for not keeping card
-                player.discardCard(c)
+            player.output("Picked up and discarded %s" % c.name)
+            player.addCoin(c.coin)    # Compensate for not keeping card
+            player.discardCard(c)
 
 
 ###############################################################################
 class Test_Venture(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Venture'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -50,7 +49,7 @@ class Test_Venture(unittest.TestCase):
                 break
         else:   # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertTrue(self.plr.deck.isEmpty())
+        self.assertTrue(self.plr.deck.is_empty())
 
     def test_discard(self):
         """ Make sure we discard non-treasures """
@@ -62,7 +61,7 @@ class Test_Venture(unittest.TestCase):
                 break
         else:   # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             if c.name != 'Estate':  # pragma: no cover
                 self.fail("Didn't discard the non-treasure")

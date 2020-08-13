@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Steward(Card):
+class Card_Steward(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "Choose: +2 cards, +2 coin, trash 2 cards"
         self.name = 'Steward'
         self.cost = 3
@@ -27,7 +28,7 @@ class Card_Steward(Card):
             return
         if choice == 'trash':
             player.output("Trash two cards")
-            num = min(2, player.handSize())
+            num = min(2, player.hand.size())
             player.plrTrashCard(num=num, force=True)
             return
 
@@ -35,7 +36,6 @@ class Card_Steward(Card):
 ###############################################################################
 class Test_Steward(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Steward'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -45,13 +45,13 @@ class Test_Steward(unittest.TestCase):
     def test_cards(self):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_gold(self):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_trash(self):
@@ -60,7 +60,7 @@ class Test_Steward(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
     def test_trash_smallhand(self):
         """ Trash two when there are less than two to trash """
@@ -71,7 +71,7 @@ class Test_Steward(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
 
 
 ###############################################################################

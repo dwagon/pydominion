@@ -9,8 +9,7 @@ from Artifact import Artifact
 class Artifact_Horn(Artifact):
     def __init__(self):
         Artifact.__init__(self)
-        self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "Once per turn, when you discard a Border Guard from play, you may put it onto your deck."
         self.name = "Horn"
 
@@ -29,7 +28,7 @@ class Test_Horn(unittest.TestCase):
         self.plr.test_input = ['Put into hand']
         self.plr.discardCard(self.card)
         self.assertIsNotNone(self.plr.in_deck('Border Guard'))
-        self.assertIsNone(self.plr.inDiscard('Border Guard'))
+        self.assertIsNone(self.plr.in_discard('Border Guard'))
 
 
 ###############################################################################

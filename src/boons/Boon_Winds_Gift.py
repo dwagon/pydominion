@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Winds_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "+2 Cards; Discard 2 cards."
         self.name = "The Wind's Gift"
         self.cards = 2
@@ -39,8 +40,8 @@ class Test_Winds_Gift(unittest.TestCase):
         self.plr.test_input = ['Discard Duchy', 'Discard Gold', 'Finish Selecting']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.handSize(), 3)
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertEqual(self.plr.hand.size(), 3)
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

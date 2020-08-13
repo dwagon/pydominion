@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Mountains_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "Gain a silver"
         self.name = "The Mountain's Gift"
         self.purchasable = False
@@ -35,7 +36,7 @@ class Test_Mountains_Gift(unittest.TestCase):
     def test_mountains_gift(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

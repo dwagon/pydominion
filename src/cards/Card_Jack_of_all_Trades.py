@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Jack_of_all_Trades(Card):
+class Card_Jack_of_all_Trades(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """Gain a Silver.
-        Look at the top card of your deck; discard it or put it back.
-        Draw until you have 5 cards in your hand.
-        You may trash a card from your hand that is not a Treasure."""
+            Look at the top card of your deck; discard it or put it back.
+            Draw until you have 5 cards in your hand.
+            You may trash a card from your hand that is not a Treasure."""
         self.name = 'Jack of all Trades'
         self.cost = 4
 
@@ -30,7 +31,7 @@ class Card_Jack_of_all_Trades(Card):
         else:
             player.discardCard(card)
 
-        while (player.handSize() < 5):
+        while player.hand.size() < 5:
             player.pickupCard()
 
         cards = [c for c in player.hand if not c.isTreasure()]
@@ -41,7 +42,6 @@ class Card_Jack_of_all_Trades(Card):
 ###############################################################################
 class Test_Jack_of_all_Trades(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Jack of all Trades'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -56,11 +56,11 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
 
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))  # Gain a Silver
+        self.assertIsNotNone(self.plr.in_discard('Silver'))  # Gain a Silver
 
-        self.assertIsNotNone(self.plr.inHand('Gold'))  # Keep on deck, then picked up
+        self.assertIsNotNone(self.plr.in_hand('Gold'))  # Keep on deck, then picked up
 
-        self.assertEqual(self.plr.handSize(), 5 - 1)    # One trashed
+        self.assertEqual(self.plr.hand.size(), 5 - 1)    # One trashed
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
 

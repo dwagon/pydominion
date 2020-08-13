@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Settlers(Card):
+class Card_Settlers(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.name = 'Settlers'
         self.cards = 1
         self.actions = 1
@@ -18,7 +18,7 @@ class Card_Settlers(Card):
         self.desc = """+1 Card +1 Action. Look through your discard pile. You may reveal a Copper from it and put it into your hand."""
 
     def special(self, game, player):
-        cu = player.inDiscard('Copper')
+        cu = player.in_discard('Copper')
         if cu:
             player.addCard(cu, 'hand')
             player.discardpile.remove(cu)
@@ -42,10 +42,10 @@ class Test_Settlers(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Copper'))
-        self.assertIsNone(self.plr.inDiscard('Copper'))
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 2 + 1 + 1)
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
+        self.assertIsNone(self.plr.in_discard('Copper'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 2 + 1 + 1)
 
     def test_play_nocopper(self):
         """ Play a Settlers and pull a copper"""
@@ -54,8 +54,8 @@ class Test_Settlers(unittest.TestCase):
         self.plr.setHand('Gold', 'Silver')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inHand('Copper'))
-        self.assertEqual(self.plr.handSize(), 2 + 1)
+        self.assertIsNone(self.plr.in_hand('Copper'))
+        self.assertEqual(self.plr.hand.size(), 2 + 1)
 
 
 ###############################################################################

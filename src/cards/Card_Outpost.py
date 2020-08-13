@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Outpost(Card):
+class Card_Outpost(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.SEASIDE
         self.desc = """You only draw 3 cards (instead of 5) in this turn's Clean-up phase.
         Take an extra turn after this one.
         This can't cause you to take more than two consecutive turns."""

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Golem(Card):
+class Card_Golem(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "Dig through deck for 2 action cards and play them"
         self.name = 'Golem'
         self.cost = 4
@@ -45,7 +46,6 @@ class Card_Golem(Card):
 ###############################################################################
 class Test_Golem(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Golem', 'Village', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

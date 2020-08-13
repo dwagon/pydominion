@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Changeling(Card):
+class Card_Changeling(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT]
+        self.base = Game.NOCTURNE
         self.desc = """Trash this. Gain a copy of a card you have in play.
 In games using this, when you gain a card costing 3 or more, you may exchange it for a Changeling."""
         self.name = 'Changeling'
@@ -19,7 +19,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
     def hook_gain_card(self, game, player, card):
         if card.cost < 3:
             return None
-        if game['Changeling'].isEmpty():
+        if game['Changeling'].is_empty():
             return None
         swap = player.plrChooseOptions(
             "Swap {} for a Changeling?".format(card.name),
@@ -54,29 +54,29 @@ class Test_Changeling(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play_keep(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.test_input = ['Keep Changeling']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inPlayed('Changeling'))
+        self.assertIsNotNone(self.plr.in_played('Changeling'))
 
     def test_play_swap(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setPlayed('Gold')
         self.plr.test_input = ['Exchange for Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.g.in_trash('Changeling'))
 
     def test_gain_keep(self):
         self.plr.test_input = ['Keep Silver']
         self.plr.gainCard('Silver')
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_gain_swap(self):
         self.plr.test_input = ['Swap Silver']
         self.plr.gainCard('Silver')
-        self.assertIsNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Changeling'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Changeling'))
 
 
 ###############################################################################

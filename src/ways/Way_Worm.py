@@ -9,7 +9,7 @@ from Way import Way
 class Way_Worm(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Exile an Estate from the Supply."
         self.name = "Worm"
 
@@ -24,12 +24,12 @@ class Test_Worm(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Worm']
 
     def test_play(self):
         """ Perform a Worm """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Worm']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_exile('Estate'))
 
 

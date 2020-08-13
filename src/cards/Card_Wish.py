@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Wish(Card):
+class Card_Wish(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.NOCTURNE
         self.desc = "+1 Action; Return this to its pile. If you did, gain a card to your hand costing up to 6."
         self.name = "Wish"
         self.purchasable = False
@@ -44,15 +44,15 @@ class Test_Wish(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Return', 'Get Gold']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNone(self.plr.inPlayed('Wish'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_played('Wish'))
 
     def test_keep(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Keep']
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inPlayed('Wish'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_played('Wish'))
 
 
 ###############################################################################

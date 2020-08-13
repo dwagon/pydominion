@@ -9,8 +9,7 @@ from Artifact import Artifact
 class Artifact_TreasureChest(Artifact):
     def __init__(self):
         Artifact.__init__(self)
-        self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your Buy phase, gain a Gold."
         self.name = "Treasure Chest"
 
@@ -30,7 +29,7 @@ class Test_TreasureChest(unittest.TestCase):
         self.plr.assign_artifact('Treasure Chest')
         self.plr.test_input = ['End Phase']
         self.plr.buy_phase()
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

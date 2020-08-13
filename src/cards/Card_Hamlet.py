@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Hamlet(Card):
+class Card_Hamlet(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.CORNUCOPIA
         self.desc = "+1 Card +1 Action. You may discard a card; if you do, +1 Action.  You may discard a card; if you do, +1 Buy."
         self.name = 'Hamlet'
         self.cards = 1
@@ -28,7 +29,6 @@ class Card_Hamlet(Card):
 ###############################################################################
 class Test_Hamlet(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hamlet'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -40,26 +40,26 @@ class Test_Hamlet(unittest.TestCase):
         """ Play a hamlet """
         self.plr.test_input = ['finish selecting', 'finish selecting']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 3)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_discard_action(self):
         """ Play a hamlet and discard to gain an action """
         self.plr.test_input = ['discard silver', 'finish selecting']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getBuys(), 1)
-        self.assertIsNone(self.plr.inHand('Silver'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
 
     def test_discard_buy(self):
         """ Play a hamlet and discard to gain a buy """
         self.plr.test_input = ['finish selecting', 'discard gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bishop(Card):
+class Card_Bishop(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
         to half its cost in coins, rounded down. Each other player may trash a
         card from his hand"""
@@ -50,10 +50,10 @@ class Card_Bishop(Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Trash an estate, then a copper else nothing
-    es = player.inHand('estate')
+    es = player.in_hand('estate')
     if es:
         return [es]
-    cu = player.inHand('copper')
+    cu = player.in_hand('copper')
     if cu:
         return [cu]
     return []
@@ -81,7 +81,7 @@ class Test_Bishop(unittest.TestCase):
         self.other.test_input = ['finish']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertTrue(self.plr.hand.isEmpty())
+        self.assertTrue(self.plr.hand.is_empty())
         self.assertIsNotNone(self.g.in_trash('Gold'))
 
     def test_bothtrash(self):
@@ -93,8 +93,8 @@ class Test_Bishop(unittest.TestCase):
         self.other.test_input = ['trash province']
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.score['bishop'], 3)
-        self.assertTrue(self.plr.hand.isEmpty())
-        self.assertTrue(self.other.hand.isEmpty())
+        self.assertTrue(self.plr.hand.is_empty())
+        self.assertTrue(self.other.hand.is_empty())
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
 

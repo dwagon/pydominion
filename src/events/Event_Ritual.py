@@ -9,7 +9,7 @@ from Event import Event
 class Event_Ritual(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain a Curse. If you do, trash a card from your hand. +1VP per Coin it cost."
         self.name = "Ritual"
         self.cost = 4
@@ -39,7 +39,7 @@ class Test_Ritual(unittest.TestCase):
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.getScoreDetails()['Ritual'], 6)
         self.assertIsNotNone(self.g.in_trash('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Urchin(Card):
+class Card_Urchin(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DARKAGES
         self.desc = """+1 Card; +1 Action; Each other player discards down to 4 cards.
             When you play another Attack card with this in play, you may trash this.
             If you do, gain a Mercenary."""
@@ -61,17 +61,17 @@ class Test_Urchin(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.victim.test_input = ['1', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.victim.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.victim.hand.size(), 4)
 
     def test_merc(self):
         """ Play an Urchin and get a mercenary """
         self.plr.setPlayed('Urchin', 'Militia')
         self.plr.test_input = ['end phase', 'end phase', 'mercenary']
         self.plr.turn()
-        self.assertIsNotNone(self.plr.inDiscard('Mercenary'))
-        self.assertIsNone(self.plr.inHand('Urchin'))
+        self.assertIsNotNone(self.plr.in_discard('Mercenary'))
+        self.assertIsNone(self.plr.in_hand('Urchin'))
 
 
 ###############################################################################

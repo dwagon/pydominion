@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Guardian(Card):
+class Card_Guardian(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.desc = """Until your next turn, when another player plays an
             Attack card, it doesn't affect you. At the start of your next turn,
             +1 Coin."""
@@ -35,7 +35,7 @@ class Test_Guardian(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Guardian')
-        self.assertIsNotNone(self.plr.inHand('Guardian'))
+        self.assertIsNotNone(self.plr.in_hand('Guardian'))
 
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')

@@ -2,22 +2,22 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Moneylender(Card):
+class Card_Moneylender(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Trash a copper from hand for +3 coin"
         self.name = 'Money Lender'
         self.cost = 4
 
     def special(self, game, player):
         """ Trash a copper card from your hand. If you do +3 coin """
-        copper = player.inHand('Copper')
+        copper = player.in_hand('Copper')
         if not copper:
             player.output("No coppers in hand")
             return

@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
-class Card_Village(Card):
+###############################################################################
+class Card_Village(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+1 cards, +2 actions"
         self.name = 'Village'
         self.cards = 1
@@ -19,7 +21,6 @@ class Card_Village(Card):
 ###############################################################################
 class Test_Village(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -29,8 +30,8 @@ class Test_Village(unittest.TestCase):
     def test_play(self):
         """ Play the village """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

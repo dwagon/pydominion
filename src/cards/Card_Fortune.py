@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Fortune(Card):
+class Card_Fortune(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.EMPIRES
         self.desc = """+1 Buy
         When you play this, double your Coin if you haven't yet this turn.
         When you gain this, gain a Gold per Gladiator you have in play."""

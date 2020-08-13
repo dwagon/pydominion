@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
-class Card_Procession(Card):
+###############################################################################
+class Card_Procession(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """You may play an action card from your
             hand twice. Trash it. Gain an Action
             card costing exactly 1 more than it."""
@@ -30,13 +32,12 @@ class Card_Procession(Card):
             player.playCard(card, discard=False, costAction=False)
         player.trashCard(card)
         cost = player.cardCost(card) + 1
-        player.plrGainCard(cost, modifier='equal', types={'action': True})
+        player.plrGainCard(cost, modifier='equal', types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################
 class Test_Procession(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Procession', 'Moat', 'Witch'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -49,8 +50,8 @@ class Test_Procession(unittest.TestCase):
         self.plr.test_input = ['Moat', 'Witch']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Moat'))
-        self.assertEqual(self.plr.handSize(), 4)
-        self.assertIsNotNone(self.plr.inDiscard('Witch'))
+        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertIsNotNone(self.plr.in_discard('Witch'))
 
 
 ###############################################################################

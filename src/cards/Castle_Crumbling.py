@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Game
+import Card
 from cards.Card_Castles import CastleCard
 
 
@@ -8,8 +10,8 @@ from cards.Card_Castles import CastleCard
 class Card_CrumblingCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
+        self.base = Game.EMPIRES
         self.cost = 4
         self.desc = "1VP. When you gain or trash this, +1VP and gain a Silver."
         self.victory = 1
@@ -27,7 +29,6 @@ class Card_CrumblingCastle(CastleCard):
 ###############################################################################
 class Test_CrumblingCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -45,7 +46,7 @@ class Test_CrumblingCastle(unittest.TestCase):
     def test_trash(self):
         self.plr.trashCard(self.card)
         self.assertEqual(self.plr.getScoreDetails()['Crumbling Castle'], 1)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Aqueduct(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = "Aqueduct"
         self._goldvp = 8
         self._silvervp = 8

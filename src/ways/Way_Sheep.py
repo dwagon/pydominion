@@ -9,7 +9,7 @@ from Way import Way
 class Way_Sheep(Way):
     def __init__(self):
         Way.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "+2 Coins"
         self.name = "Sheep"
 
@@ -24,12 +24,12 @@ class Test_Sheep(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
+        self.way = self.g.ways['Sheep']
 
     def test_play(self):
         """ Perform a Sheep """
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Sheep']
-        self.plr.playCard(self.card)
+        self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
 

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Relic(Card):
+class Card_Relic(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'attack']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_ATTACK]
+        self.base = Game.ADVENTURE
         self.desc = "+2 Coin; Each other player gains a -1 Card token"
         self.name = 'Relic'
         self.coin = 2
@@ -26,7 +27,6 @@ class Card_Relic(Card):
 ###############################################################################
 class Test_Relic(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Relic'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

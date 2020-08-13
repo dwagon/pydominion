@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Duchess(Card):
+class Card_Duchess(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck, and discards it or puts it back."""
         self.name = 'Duchess'
         self.coin = 2
@@ -57,7 +57,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_deck('Province'))
-        self.assertIsNone(self.plr.inDiscard('Province'))
+        self.assertIsNone(self.plr.in_discard('Province'))
 
     def test_disacrd(self):
         """ Play duchess - discard """
@@ -67,19 +67,19 @@ class Test_Duchess(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNone(self.plr.in_deck('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
 
     def test_buy_duchess(self):
         self.plr.test_input = ['Duchess']
         self.plr.gainCard('Duchy')
-        self.assertIsNotNone(self.plr.inDiscard('Duchess'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Duchess'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
     def test_buy_duchy(self):
         self.plr.test_input = ['No']
         self.plr.gainCard('Duchy')
-        self.assertIsNone(self.plr.inDiscard('Duchess'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNone(self.plr.in_discard('Duchess'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Masquerade(Card):
+class Card_Masquerade(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+2 cards. Every player passes a card on, and you trash a card"
         self.name = 'Masquerade'
         self.cards = 2
@@ -64,9 +64,9 @@ class Test_Masquerade(unittest.TestCase):
         self.plr.test_input = ['select silver', 'finish']
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.plr.inHand('Gold'))
-        self.assertTrue(self.other.inHand('Silver'))
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertTrue(self.plr.in_hand('Gold'))
+        self.assertTrue(self.other.in_hand('Silver'))
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_play_with_trash(self):
@@ -78,7 +78,7 @@ class Test_Masquerade(unittest.TestCase):
         self.plr.test_input = ['select gold', 'trash silver']
         self.other.test_input = ['select gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 - 1)
+        self.assertEqual(self.plr.hand.size(), 5 - 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

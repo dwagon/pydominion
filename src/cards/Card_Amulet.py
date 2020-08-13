@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Amulet(Card):
+class Card_Amulet(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = "Now and next turn - Choose 1: +1 Coin, trash card, gain silver"
         self.name = 'Amulet'
         self.cost = 3
@@ -52,35 +52,35 @@ class Test_Amulet(unittest.TestCase):
         self.plr.test_input = ['coin', 'coin']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
 
     def test_play_silver(self):
         """ Play an amulet with coin """
         self.plr.test_input = ['silver', 'silver']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
     def test_play_trash(self):
         """ Play an amulet with trash """
         tsize = self.g.trashSize()
         self.plr.test_input = ['trash', 'duchy', 'finish', 'trash', '1', 'finish']
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
         self.assertIsNotNone(self.g.in_trash('Duchy'))
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNone(self.plr.inDiscard('Silver'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
 

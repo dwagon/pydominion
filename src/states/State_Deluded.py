@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from State import State
 
@@ -9,8 +10,8 @@ from State import State
 class State_Deluded(State):
     def __init__(self):
         State.__init__(self)
-        self.cardtype = 'state'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_STATE
+        self.base = Game.NOCTURNE
         self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
 

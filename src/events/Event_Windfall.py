@@ -9,13 +9,13 @@ from Event import Event
 class Event_Windfall(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "If your deck and discard pile are empty, gain 3 Golds"
         self.name = "Windfall"
         self.cost = 5
 
     def special(self, game, player):
-        if player.deck.isEmpty() and player.discardpile.isEmpty():
+        if player.deck.is_empty() and player.discardpile.is_empty():
             for _ in range(3):
                 player.gainCard('Gold')
 
@@ -34,7 +34,7 @@ class Test_Windfall(unittest.TestCase):
         self.plr.setDiscard()
         self.plr.setDeck()
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Gold')
 

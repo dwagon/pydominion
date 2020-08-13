@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_MerchantGuild(Card):
+class Card_MerchantGuild(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.desc = """+1 Buy +1 Coin. While this is in play, when you buy a card, take a Coffer."""
         self.name = 'Merchant Guild'
         self.coin = 1

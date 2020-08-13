@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Journeyman(Card):
+class Card_Journeyman(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.desc = """Name a card.
         Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.
         Put those cards into your hand and discard the rest."""
@@ -41,7 +42,6 @@ class Card_Journeyman(Card):
 ###############################################################################
 class Test_Journeyman(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Journeyman'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -53,10 +53,10 @@ class Test_Journeyman(unittest.TestCase):
         self.plr.setDeck('Copper', 'Estate', 'Duchy', 'Province', 'Gold')
         self.plr.test_input = ['Duchy']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Estate'))
 
 
 ###############################################################################

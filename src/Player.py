@@ -4,8 +4,8 @@ import operator
 import sys
 from collections import defaultdict
 
+import Card
 from PlayArea import PlayArea
-from Card import Card
 from Option import Option
 from CardPile import CardPile
 from EventPile import EventPile
@@ -32,6 +32,7 @@ class Player(object):
         self.hand = PlayArea([])
         self.exilepile = PlayArea([])
         self.durationpile = PlayArea([])
+        self.deferpile = PlayArea([])
         self.deck = PlayArea([])
         self.played = PlayArea([])
         self.discardpile = PlayArea([])
@@ -67,7 +68,7 @@ class Player(object):
             ('Discard', self.discardpile), ('Hand', self.hand),
             ('Reserve', self.reserve), ('Deck', self.deck),
             ('Played', self.played), ('Duration', self.durationpile),
-            ('Exile', self.exilepile)
+            ('Exile', self.exilepile), ('Defer', self.deferpile)
         )
 
     ###########################################################################
@@ -117,7 +118,7 @@ class Player(object):
     def replace_traveller(self, src, dst, **kwargs):
         """ For traveller cards replace the src card with a copy of the
         dst card """
-        assert isinstance(src, Card)
+        assert isinstance(src, Card.Card)
         assert isinstance(dst, str)
         dstcp = self.find_cardpile(dst)
 
@@ -212,10 +213,10 @@ class Player(object):
     ###########################################################################
     def call_reserve(self, card):
         if isinstance(card, str):
-            card = self.inReserve(card)
+            card = self.in_reserve(card)
             if not card:
                 return None
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.output("Calling %s from Reserve" % card.name)
         self.currcards.append(card)
         card.hook_call_reserve(game=self.game, player=self)
@@ -225,7 +226,7 @@ class Player(object):
         return card
 
     ###########################################################################
-    def inReserve(self, cardname):
+    def in_reserve(self, cardname):
         """ Return named card if cardname is in reserve """
         assert isinstance(cardname, str)
         for card in self.reserve:
@@ -234,7 +235,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inHand(self, cardname):
+    def in_hand(self, cardname):
         """ Return named card if cardname is in hand """
         assert isinstance(cardname, str)
 
@@ -249,11 +250,21 @@ class Player(object):
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def inDuration(self, cardname):
+    def in_duration(self, cardname):
         """ Return named card if cardname is in the duration pile """
         assert isinstance(cardname, str)
 
         for card in self.durationpile:
+            if card.name == cardname:
+                return card
+        return None
+
+    ###########################################################################
+    def in_defer(self, cardname):
+        """ Return named card if cardname is in the defer pile """
+        assert isinstance(cardname, str)
+
+        for card in self.deferpile:
             if card.name == cardname:
                 return card
         return None
@@ -269,7 +280,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inDiscard(self, cardname):
+    def in_discard(self, cardname):
         """ Return named card if cardname is in the discard pile """
         assert isinstance(cardname, str)
 
@@ -279,7 +290,7 @@ class Player(object):
         return None
 
     ###########################################################################
-    def inPlayed(self, cardname):
+    def in_played(self, cardname):
         """ Return named card if cardname is in the played pile """
         assert isinstance(cardname, str)
 
@@ -301,7 +312,7 @@ class Player(object):
     ###########################################################################
     def trashCard(self, card, **kwargs):
         """ Take a card out of the game """
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.stats['trashed'].append(card)
         trashopts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
@@ -393,7 +404,7 @@ class Player(object):
             if not card:
                 self.output("No more cards to pickup")
                 return None
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         self.addCard(card, 'hand')
         if verbose:
             self.output("%s %s" % (verb, card.name))
@@ -415,7 +426,7 @@ class Player(object):
             self.output("-Card token reduce draw by one")
             handsize -= 1
             self.card_token = False
-        while self.handSize() < handsize:
+        while self.hand.size() < handsize:
             c = self.pickupCard(verb='Dealt')
             if not c:
                 self.output("Not enough cards to fill hand")
@@ -435,7 +446,7 @@ class Player(object):
     def addCard(self, card, pile='discard'):
         if not card:   # pragma: no cover
             return
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         assert pile in ('discard', 'hand', 'topdeck', 'deck', 'played', 'duration', 'reserve')
         if pile == 'discard':
             self.discardpile.add(card)
@@ -454,36 +465,12 @@ class Player(object):
 
     ###########################################################################
     def discardCard(self, card, source=None, hook=True):
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
         self.addCard(card, 'discard')
         if hook:
             self.hook_discardThisCard(card, source)
-
-    ###########################################################################
-    def reserveSize(self):
-        return len(self.reserve)
-
-    ###########################################################################
-    def handSize(self):
-        return len(self.hand)
-
-    ###########################################################################
-    def playedSize(self):
-        return len(self.played)
-
-    ###########################################################################
-    def durationSize(self):
-        return len(self.durationpile)
-
-    ###########################################################################
-    def deckSize(self):
-        return len(self.deck)
-
-    ###########################################################################
-    def discardSize(self):
-        return len(self.discardpile)
 
     ###########################################################################
     def discardHand(self):
@@ -518,6 +505,19 @@ class Player(object):
             o['notes'] = notes
             options.append(o)
             index += 1
+            for way in self.game.ways.values():
+                sel = chr(ord('a') + index)
+                o = Option(
+                    verb="Play",
+                    selector=sel,
+                    name="Way of the {}".format(way.name),
+                    desc="{}: {}".format(p.name, way.description(self)),
+                    action='way',
+                    card=p,
+                    way=way
+                )
+                options.append(o)
+                index += 1
         return options, index
 
     ###########################################################################
@@ -711,7 +711,7 @@ class Player(object):
             op, index = self.night_selection(index)
             options.extend(op)
 
-        if self.reserveSize():
+        if self.reserve.size():
             op, index = self.reserve_selection(index)
             options.extend(op)
 
@@ -834,6 +834,8 @@ class Player(object):
             self.spendAllCards()
         elif opt['action'] == 'quit':
             return
+        elif opt['action'] == 'way':
+            self.perform_way(opt['way'], opt['card'])
         else:   # pragma: no cover
             sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
             sys.exit(1)
@@ -856,6 +858,8 @@ class Player(object):
             tknoutput.append("Journey Facedown")
         self.output("| Phase: %s" % self.phase)
         self.output("| Tokens: %s" % "; ".join(tknoutput))
+        if self.deferpile:
+            self.output("| Defer: %s" % ", ".join([c.name for c in self.deferpile]))
         if self.durationpile:
             self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.projects:
@@ -876,7 +880,7 @@ class Player(object):
             self.output("| Played: <NONE>")
         self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))    # Debug
         self.output("| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile]))    # Debug
-        self.output("| {} cards in discard pile".format(self.discardSize()))
+        self.output("| {} cards in discard pile".format(self.discardpile.size()))
         self.output('-' * 50)
 
     ###########################################################################
@@ -894,6 +898,7 @@ class Player(object):
         x += self.deck
         x += self.played
         x += self.durationpile
+        x += self.deferpile
         x += self.reserve
         x += self.exilepile
         return x
@@ -955,6 +960,13 @@ class Player(object):
             if not card.permanent:
                 self.addCard(card, 'played')
                 self.durationpile.remove(card)
+        for card in self.deferpile:
+            self.output("Playing deferred %s" % card.name)
+            self.currcards.append(card)
+            self.deferpile.remove(card)
+            self.hand.add(card)
+            self.playCard(card, costAction=False)
+            self.currcards.pop()
 
     ###########################################################################
     def hook_start_turn(self):
@@ -1058,15 +1070,25 @@ class Player(object):
         return options
 
     ###########################################################################
+    def defer_card(self, card):
+        """ Set a non-duration card to be played in its entirety next turn """
+        self.deferpile.add(card)
+        if self.in_played(card.name):
+            self.played.remove(card)
+
+    ###########################################################################
     def playCard(self, card, discard=True, costAction=True, postActionHook=True):
-        options = {'skip_card': False}
-        if card not in self.hand and discard:
+        options = {'skip_card': False, 'discard': discard}
+        if card not in self.hand and options['discard']:
             self.output("{} is no longer available".format(card.name))
             return
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction():
             options.update(self.hook_allPlayers_preAction(card))
+
+        self.playCard_Tokens(card)
+
         if card.isAction() and costAction and self.phase != 'night':
             self.actions -= 1
         if self.actions < 0:    # pragma: no cover
@@ -1074,24 +1096,18 @@ class Player(object):
             self.currcards.pop()
             self.output("Not enough actions")
             return
-        self.playCard_Tokens(card)
-        if discard:
+
+        if options['discard']:
+            self.hand.remove(card)
             if card.isDuration():
                 self.addCard(card, 'duration')
             elif card.isReserve():
                 self.addCard(card, 'reserve')
             else:
                 self.addCard(card, 'played')
-            self.hand.remove(card)
 
-        way = None
         if not options['skip_card']:
-            if self.game.ways and card.isAction():
-                way = self.select_ways()
-            if way:
-                self.perform_way(way)
-            else:
-                self.card_benefits(card)
+            self.card_benefits(card)
         self.currcards.pop()
         if postActionHook and card.isAction():
             for crd in self.played + self.durationpile + self.projects:
@@ -1099,18 +1115,24 @@ class Player(object):
                     crd.hook_postAction(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def select_ways(self):
-        """ Select a way to perform """
-        options = [("Do not use a Way", None)]
-        for way in self.game.ways.values():
-            options.append(("{}: {}".format(way.name, way.description(self)), way))
-        ans = self.plrChooseOptions("Select a Way to perform", *options)
-        return ans
-
-    ###########################################################################
-    def perform_way(self, way):
+    def perform_way(self, way, card):
         """ Perform a way """
+        opts = {'discard': True}
+        self.currcards.append(way)
+        self.actions -= 1
+        if self.actions < 0:    # pragma: no cover
+            self.actions = 0
+            self.currcards.pop()
+            self.output("Not enough actions")
+            return
+        self.hand.remove(card)
+        self.output("Playing {} through Way of the {}".format(card.name, way.name))
         self.card_benefits(way)
+        newopts = way.special_way(game=self.game, player=self, card=card)
+        if isinstance(newopts, dict):
+            opts.update(newopts)
+        if opts['discard']:
+            self.addCard(card, 'played')
 
     ###########################################################################
     def card_benefits(self, card):
@@ -1135,7 +1157,7 @@ class Player(object):
 
     ###########################################################################
     def cardCost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
+        assert isinstance(card, (Card.Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
@@ -1162,6 +1184,7 @@ class Player(object):
         if not newcard:
             self.output("No more %s" % cardpile)
             return None
+        self.output("Gained a {}".format(newcard.name))
         if callhook:
             rc = self.hook_gain_card(newcard)
             if rc:
@@ -1288,7 +1311,7 @@ class Player(object):
     ###########################################################################
     def hook_gain_card(self, card):
         """ Hook which is fired by a card being obtained by a player """
-        assert isinstance(card, Card)
+        assert isinstance(card, Card.Card)
         options = {}
         if self.hooks.get('gain_card'):
             o = self.hooks['gain_card'](game=self.game, player=self, card=card)
@@ -1343,7 +1366,7 @@ class Player(object):
         self.coin = num
 
     ###########################################################################
-    def getActions(self):
+    def get_actions(self):
         return self.actions
 
     ###########################################################################
@@ -1368,7 +1391,7 @@ class Player(object):
     ###########################################################################
     def gainPrize(self):
         prizes = [self.game[c] for c in self.game.getPrizes()]
-        available = [cp for cp in prizes if not cp.isEmpty()]
+        available = [cp for cp in prizes if not cp.is_empty()]
         if available:
             self.output("Gain a prize")
             card = self.cardSel(cardsrc=available)
@@ -1423,13 +1446,13 @@ class Player(object):
 
     ###########################################################################
     def select_by_type(self, card, types):
-        if card.isAction() and not types['action']:
+        if card.isAction() and not types[Card.TYPE_ACTION]:
             return False
-        if card.isVictory() and not types['victory']:
+        if card.isVictory() and not types[Card.TYPE_VICTORY]:
             return False
-        if card.isTreasure() and not types['treasure']:
+        if card.isTreasure() and not types[Card.TYPE_TREASURE]:
             return False
-        if card.isNight() and not types['night']:
+        if card.isNight() and not types[Card.TYPE_NIGHT]:
             return False
         return True
 
@@ -1502,10 +1525,10 @@ class Player(object):
     def typeSelector(self, types=None):
         if types is None:
             types = {}
-        assert set(types.keys()) <= set(['action', 'victory', 'treasure', 'night'])
+        assert set(types.keys()) <= set([Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_TREASURE, Card.TYPE_NIGHT])
         if not types:
-            return {'action': True, 'victory': True, 'treasure': True, 'night': True}
-        _types = {'action': False, 'victory': False, 'treasure': False, 'night': False}
+            return {Card.TYPE_ACTION: True, Card.TYPE_VICTORY: True, Card.TYPE_TREASURE: True, Card.TYPE_NIGHT: True}
+        _types = {Card.TYPE_ACTION: False, Card.TYPE_VICTORY: False, Card.TYPE_TREASURE: False, Card.TYPE_NIGHT: False}
         _types.update(types)
         return _types
 

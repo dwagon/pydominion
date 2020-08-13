@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Workersvillage(Card):
+class Card_Workersvillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.desc = "+1 card, +2 actions, +1 buy"
         self.name = "Worker's Village"
         self.cost = 4
@@ -20,7 +21,6 @@ class Card_Workersvillage(Card):
 ###############################################################################
 class Test_Workersvillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Worker's Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -30,9 +30,9 @@ class Test_Workersvillage(unittest.TestCase):
     def test_play(self):
         """ Play Workers Village """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

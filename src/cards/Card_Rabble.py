@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Rabble(Card):
+class Card_Rabble(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.desc = """+3 cards. Each other player reveals the top 3 cards of his
             deck, discards the revealed Actions and Treasures, and puts the rest
             back on top in any order he chooses."""
@@ -55,16 +55,16 @@ class Test_Rabble(unittest.TestCase):
     def test_defended(self):
         self.victim.addCard(self.moat, 'hand')
         self.attacker.playCard(self.rabble)
-        self.assertEqual(self.victim.handSize(), 6)  # 5 + moat
-        self.assertEqual(self.attacker.handSize(), 5 + 3)
-        self.assertTrue(self.victim.discardpile.isEmpty())
+        self.assertEqual(self.victim.hand.size(), 6)  # 5 + moat
+        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_nodefense(self):
         self.victim.setDeck('Copper', 'Estate', 'Rabble')
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.deck[-1].name, 'Estate')
-        self.assertEqual(self.victim.discardSize(), 2)
-        self.assertEqual(self.attacker.handSize(), 5 + 3)
+        self.assertEqual(self.victim.discardpile.size(), 2)
+        self.assertEqual(self.attacker.hand.size(), 5 + 3)
 
 
 ###############################################################################

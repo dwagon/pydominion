@@ -9,7 +9,7 @@ from Event import Event
 class Event_Trade(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Trash up to 2 cards from your hand (not played); Gain a silver per trashed"
         self.name = "Trade"
         self.cost = 5
@@ -35,11 +35,11 @@ class Test_Trade(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Gold')
         self.plr.test_input = ['copper', 'estate', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
-        self.assertIsNone(self.plr.inHand('Copper'))
-        self.assertIsNone(self.plr.inHand('Estate'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Estate'))
 
 
 ###############################################################################

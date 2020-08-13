@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Raider(Card):
+class Card_Raider(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration', 'attack']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION, Card.TYPE_ATTACK]
+        self.base = Game.NOCTURNE
         self.desc = """Each other player with 5 or more cards in hand discards
             a copy of a card you have in play (or reveals they can't). At the
             start of your next turn, +3 Coins"""
@@ -23,7 +23,7 @@ class Card_Raider(Card):
     def night(self, game, player):
         inplay = {_.name for _ in player.played}
         for pl in player.attackVictims():
-            if pl.handSize() >= 5:
+            if pl.hand.size() >= 5:
                 player.output("Raiding {}".format(pl.name))
                 todiscard = []
                 for c in pl.hand:
@@ -49,15 +49,15 @@ class Test_Raider(unittest.TestCase):
 
     def test_play(self):
         """ Play a Raider """
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setPlayed('Gold', 'Silver')
         self.vic.setHand('Silver', 'Gold', 'Estate', 'Copper', 'Copper')
         self.plr.playCard(self.card)
         try:
-            self.assertIsNotNone(self.vic.inDiscard('Gold'))
-            self.assertIsNotNone(self.vic.inDiscard('Silver'))
-            self.assertIsNone(self.vic.inHand('Gold'))
-            self.assertIsNone(self.vic.inHand('Silver'))
+            self.assertIsNotNone(self.vic.in_discard('Gold'))
+            self.assertIsNotNone(self.vic.in_discard('Silver'))
+            self.assertIsNone(self.vic.in_hand('Gold'))
+            self.assertIsNone(self.vic.in_hand('Silver'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

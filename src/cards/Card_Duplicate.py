@@ -2,22 +2,22 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Duplicate(Card):
+class Card_Duplicate(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = "When you gain a card costing up to 6, you may call this to gain a copy of that card"
         self.name = 'Duplicate'
         self.cost = 4
         self.when = ['special']
 
     def hook_gain_card(self, game, player, card):
-        if not player.inReserve('Duplicate'):
+        if not player.in_reserve('Duplicate'):
             return {}
         if card.cost > 6:
             return {}
@@ -55,7 +55,7 @@ class Test_Duplicate(unittest.TestCase):
         self.plr.setReserve('Duplicate')
         self.plr.test_input = ['Gold']
         self.plr.buyCard(self.g['Gold'])
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, 'Gold')
         self.assertEqual(self.plr.coin, 0)
@@ -66,7 +66,7 @@ class Test_Duplicate(unittest.TestCase):
         self.plr.setReserve()
         self.plr.setHand('Duplicate')
         self.plr.buyCard(self.g['Gold'])
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.coin, 0)
 
 

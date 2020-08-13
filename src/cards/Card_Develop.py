@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Develop(Card):
+class Card_Develop(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """Trash a card from your hand. Gain a card costing exactly 1 more
         than it and a card costing exactly 1 less than it, in either order, putting them on top of your deck."""
         self.name = 'Develop'

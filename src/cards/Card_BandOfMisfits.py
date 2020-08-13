@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_BandOfMisfits(Card):
+class Card_BandOfMisfits(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """Play this as if it were an Action card in the Supply
             costing less than it that you choose. This is that card until it
             leaves play."""
@@ -126,7 +126,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         """ Make the Band of Misfits be a Feast """
         self.plr.test_input = ['Feast', 'trash', 'moat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

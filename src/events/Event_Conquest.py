@@ -9,7 +9,7 @@ from Event import Event
 class Event_Conquest(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "Gain 2 Silvers. +1 VP per Silver you've gained this turn."
         self.name = "Conquest"
         self.cost = 6
@@ -37,8 +37,8 @@ class Test_Conquest(unittest.TestCase):
         """ Use Conquest """
         self.plr.addCoin(6)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertEqual(self.plr.getScoreDetails()['Conquest'], 2)
 
 

@@ -3,20 +3,20 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_NativeVillage(Card):
+class Card_NativeVillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.desc = """+2 Actions
         Choose one: Set aside the top card of your deck face down on your
         Native Village mat; or put all the cards from your mat into your hand."""
         self.name = 'Native Village'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.actions = 2
         self.cost = 2
 
@@ -61,13 +61,13 @@ class Test_NativeVillage(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Set aside']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr._native_map[0].name, 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Put all']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.secret_count, 0)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

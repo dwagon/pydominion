@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Diadem(Card):
+class Card_Diadem(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'prize']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_PRIZE]
+        self.base = Game.CORNUCOPIA
         self.name = "Diadem"
         self.purchasable = False
         self.cost = 0
@@ -24,7 +25,6 @@ class Card_Diadem(Card):
 ###############################################################################
 class Test_Diadem(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tournament'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Apothecary(Card):
+class Card_Apothecary(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ALCHEMY
         self.desc = "+1 card, +1 action, Take coppers and potions out of top 4 of deck"
         self.name = 'Apothecary'
         self.cards = 1
@@ -49,16 +49,16 @@ class Test_Apothecary(unittest.TestCase):
         apoth = self.plr.hand[0]
         self.plr.setDeck('Duchy', 'Estate', 'Estate', 'Estate', 'Province')
         self.plr.playCard(apoth)
-        self.assertEqual(self.plr.handSize(), 1)  # P
-        self.assertEqual(self.plr.deckSize(), 4)  # D + E + E + E
+        self.assertEqual(self.plr.hand.size(), 1)  # P
+        self.assertEqual(self.plr.deck.size(), 4)  # D + E + E + E
 
     def test_some(self):
         self.plr.setHand('Apothecary')
         apoth = self.plr.hand[0]
         self.plr.setDeck('Duchy', 'Potion', 'Copper', 'Estate', 'Province')
         self.plr.playCard(apoth)
-        self.assertEqual(self.plr.handSize(), 3)  # P + C + Pot
-        self.assertEqual(self.plr.deckSize(), 2)  # E + D
+        self.assertEqual(self.plr.hand.size(), 3)  # P + C + Pot
+        self.assertEqual(self.plr.deck.size(), 2)  # E + D
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Forge(Card):
+class Card_Forge(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"
         self.name = 'Forge'
         self.cost = 7
@@ -49,7 +49,7 @@ class Test_Forge(unittest.TestCase):
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertIsNotNone(self.g.in_trash('Estate'))
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
 
 
 ###############################################################################

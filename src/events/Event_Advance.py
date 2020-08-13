@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Event import Event
 
@@ -9,7 +10,7 @@ from Event import Event
 class Event_Advance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "You may trash an Action card from your hand. If you do, gain an Action card costing up to 6."
         self.name = "Advance"
         self.cost = 0
@@ -18,7 +19,7 @@ class Event_Advance(Event):
         actions = [c for c in player.hand if c.isAction()]
         trash = player.plrTrashCard(prompt="Trash a card to gain an action costing up to 6", cardsrc=actions)
         if trash:
-            player.plrGainCard(6, types={'action': True})
+            player.plrGainCard(6, types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################
@@ -34,8 +35,8 @@ class Test_Advance(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['moat', 'feast']
         self.plr.performEvent(self.card)
-        self.assertIsNone(self.plr.inHand('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Feast'))
+        self.assertIsNone(self.plr.in_hand('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Feast'))
 
 
 ###############################################################################

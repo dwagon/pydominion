@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Vault(Card):
+class Card_Vault(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
-        self.desc = "+2 Cards; Discard any number of cards. +1 Coin per card discarded. Each other player may discard 2 cards. If he does, he draws a card."
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
+        self.desc = """+2 Cards; Discard any number of cards. +1 Coin per card
+            discarded. Each other player may discard 2 cards. If he does, he
+            draws a card."""
         self.name = 'Vault'
         self.cards = 2
         self.cost = 5
@@ -28,14 +31,13 @@ class Card_Vault(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(2)
 
 
 ###############################################################################
 class Test_Vault(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Vault'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
@@ -48,9 +50,9 @@ class Test_Vault(unittest.TestCase):
         self.other.test_input = ['Copper', 'Silver', 'Finish']
         self.plr.test_input = ['Duchy', 'Province', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2 - 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.other.handSize(), 3 - 2 + 1)
+        self.assertEqual(self.other.hand.size(), 3 - 2 + 1)
 
 
 ###############################################################################

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Fields_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "+1 Action; +1 Coin"
         self.name = "The Field's Gift"
         self.purchasable = False
@@ -39,7 +40,7 @@ class Test_Fields_Gift(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
-            self.assertEqual(self.plr.getActions(), 1)
+            self.assertEqual(self.plr.get_actions(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

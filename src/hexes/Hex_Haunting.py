@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Hex import Hex
 
@@ -9,14 +10,14 @@ from Hex import Hex
 class Hex_Haunting(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "If you have at least 4 cards in hand, put one of them onto your deck."
         self.name = "Haunting"
         self.purchasable = False
 
     def special(self, game, player):
-        if player.handSize() >= 4:
+        if player.hand.size() >= 4:
             card = player.cardSel(force=True)
             player.addCard(card[0], 'topdeck')
             player.hand.remove(card[0])

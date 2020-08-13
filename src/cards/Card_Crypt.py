@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Crypt(Card):
+class Card_Crypt(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.desc = """Set aside any number of Treasures you have in play, face down
             (under this). While any remain, at the start of each of your turns,
             put one of them into your hand."""
@@ -25,7 +25,7 @@ class Card_Crypt(Card):
             prompt='Set aside any number of Treasures you have in play',
             verbs=('Set', 'Unset'),
             anynum=True,
-            types={'treasure': True},
+            types={Card.TYPE_TREASURE: True},
             cardsrc='played'
                 )
         if cards:
@@ -47,7 +47,7 @@ class Card_Crypt(Card):
         player.addCard(o['card'], 'hand')
         player._crypt_reserve.remove(o['card'])
         player.secret_count -= 1
-        if player._crypt_reserve.isEmpty():
+        if player._crypt_reserve.is_empty():
             self.permanent = False
 
 
@@ -61,19 +61,19 @@ class Test_Crypt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setPlayed('Silver', 'Gold', 'Estate')
         self.plr.test_input = ['Set Gold', 'Set Silver', 'Finish']
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Gold']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(len(self.plr._crypt_reserve), 1)
         self.plr.end_turn()
         self.plr.test_input = ['Bring back Silver']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.assertFalse(self.card.permanent)
 
 

@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Chapel(Card):
+class Card_Chapel(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Trash up to 4 cards"
         self.name = 'Chapel'
         self.cost = 2
@@ -33,14 +33,14 @@ class Test_Chapel(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ['finish']
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trashtwo(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ['trash copper', 'trash silver', 'finish']
         self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
 

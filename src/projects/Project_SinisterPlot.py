@@ -10,8 +10,7 @@ from Project import Project
 class Project_SinisterPlot(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, add a token here, or remove your tokens here for +1 Card each."
         self.name = "Sinister Plot"
         self.cost = 4
@@ -49,7 +48,7 @@ class Test_SinisterPlot(unittest.TestCase):
         self.plr.test_input = ['Remove']
         self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 0)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

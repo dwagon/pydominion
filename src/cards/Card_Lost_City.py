@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Lost_City(Card):
+class Card_Lost_City(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.name = 'Lost City'
         self.cards = 2
         self.actions = 2
@@ -18,8 +19,7 @@ class Card_Lost_City(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+2 Cards, +2 Actions; When you gain this every else gains a card"
-        else:
-            return "+2 Cards, +2 Actions"
+        return "+2 Cards, +2 Actions"
 
     def special(self, game, player):
         pass
@@ -36,7 +36,6 @@ class Card_Lost_City(Card):
 ###############################################################################
 class Test_Lost_City(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Lost City'])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
@@ -46,8 +45,8 @@ class Test_Lost_City(unittest.TestCase):
         """ Play a lost_city """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
-        self.assertTrue(self.other.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertTrue(self.other.hand.size(), 6)
 
 
 ###############################################################################

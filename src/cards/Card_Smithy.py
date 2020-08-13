@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Smithy(Card):
+class Card_Smithy(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+3 cards"
         self.name = 'Smithy'
         self.cards = 3
@@ -29,7 +29,7 @@ class Test_Smithy(unittest.TestCase):
     def test_play(self):
         """ Play the smithy """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
 
 
 ###############################################################################

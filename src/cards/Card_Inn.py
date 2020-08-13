@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Inn(Card):
+class Card_Inn(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.name = 'Inn'
         self.cards = 2
         self.actions = 2
@@ -58,8 +58,8 @@ class Test_Inn(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Duchy', 'Province', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 4 + 2 - 2)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         self.plr.setDiscard('Moat', 'Gold')

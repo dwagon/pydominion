@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Bureaucrat(Card):
+class Card_Bureaucrat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DOMINION
         self.desc = """ Gain a Silver; put it on top of your deck. Each
             other player reveals a victory card from his hand and puts
             it on his deck (or reveals a hand with no victory cards)"""
@@ -47,7 +47,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.victim.setDeck('Silver')
         self.plr.playCard(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, 'Estate')
-        self.assertIsNone(self.victim.inHand('Estate'))
+        self.assertIsNone(self.victim.in_hand('Estate'))
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
 
     def test_novictory(self):
@@ -64,7 +64,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.plr.playCard(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, 'Silver')
         self.assertEqual(self.victim.deck[-1].name, 'Province')
-        self.assertIsNotNone(self.victim.inHand('Estate'))
+        self.assertIsNotNone(self.victim.in_hand('Estate'))
 
 
 ###############################################################################

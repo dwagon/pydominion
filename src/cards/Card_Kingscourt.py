@@ -2,40 +2,39 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Kingscourt(Card):
+class Card_Kingscourt(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.desc = "Play action 3 times"
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.desc = "You may play an Action card from your hand three times."
         self.name = "King's Court"
         self.cost = 7
 
     def special(self, game, player):
         """ You may chose an Action card in your hand. Play it three times """
-        options = [{'selector': '0', 'print': "Don't play a card", 'card': None}]
+        actions = [_ for _ in player.hand if _.isAction()]
+        if not actions:
+            player.output("No action cards to repeat")
+            return
         index = 1
-        for c in player.hand:
-            if not c.isAction():
-                continue
+        options = [{'selector': '0', 'print': "Don't play a card", 'card': None}]
+        for c in actions:
             sel = "%d" % index
             pr = "Play %s thrice" % c.name
             options.append({'selector': sel, 'print': pr, 'card': c})
             index += 1
-        if index == 1:
-            player.output("No action cards to repeat")
-            return
         o = player.userInput(options, "Play which action card three times?")
         if not o['card']:
             return
+        player.hand.remove(o['card'])
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o['card'].name))
-            player.playCard(o['card'], discard=False, costAction=False)
+            player.card_benefits(o['card'])
         player.addCard(o['card'], 'played')
-        player.hand.remove(o['card'])
 
 
 ###############################################################################
@@ -53,8 +52,8 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.test_input = ['play moat']
         self.plr.playCard(self.card)
         # (moat + 2) * 3 + estate
-        self.assertEqual(self.plr.handSize(), 2 * 3 + 1)
-        self.assertEqual(self.plr.playedSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2 * 3 + 1)
+        self.assertEqual(self.plr.played.size(), 2)
         for c in self.plr.played:
             if c.name == 'Moat':
                 break
@@ -70,8 +69,8 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.setHand('Estate', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.played.size(), 1)
 
     def test_picked_nothing(self):
         """ Selected no actions with Kings court """
@@ -79,8 +78,8 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.played.size(), 1)
 
 
 ###############################################################################

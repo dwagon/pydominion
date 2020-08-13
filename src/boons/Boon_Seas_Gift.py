@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Seas_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "+1 Card"
         self.name = "The Sea's Gift"
         self.purchasable = False
@@ -34,7 +35,7 @@ class Test_Seas_Gift(unittest.TestCase):
         self.plr.setHand('Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

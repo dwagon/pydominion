@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Sheepdog(Card):
+class Card_Sheepdog(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.MENAGERIE
         self.desc = "+2 Cards; When you gain a card, you may play this from your hand."
         self.name = 'Sheepdog'
         self.cards = 2
@@ -33,13 +33,13 @@ class Test_Sheepdog(unittest.TestCase):
     def test_playcard(self):
         """ Play card """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gain(self):
         """ Gain a card """
         self.plr.gainCard('Estate')
         self.g.print_state()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

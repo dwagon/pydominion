@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Storyteller(Card):
+class Card_Storyteller(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.desc = "+1 Action, +1 Coin; Play up to 3 Treasures from your hand. Pay all of your Coins; +1 Card per Coin paid"
         self.name = 'Storyteller'
         self.actions = 1
@@ -37,7 +38,6 @@ class Card_Storyteller(Card):
 ###############################################################################
 class Test_Storyteller(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Storyteller'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -49,9 +49,9 @@ class Test_Storyteller(unittest.TestCase):
         self.plr.test_input = ['1', '2', 'silver', 'finish']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         # 1 from existing, 1 + story, 2 for two coppers and 2 for a silver
-        self.assertEqual(self.plr.handSize(), 1 + 1 + 2 + 2)
+        self.assertEqual(self.plr.hand.size(), 1 + 1 + 2 + 2)
 
 
 ###############################################################################

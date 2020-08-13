@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Royalseal(Card):
+class Card_Royalseal(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
         self.desc = "+2 Coin. While this is in play, whe you gain a card, you may put that card on top of your deck."
         self.playable = False
         self.name = 'Royal Seal'
@@ -49,9 +49,9 @@ class Test_Royalseal(unittest.TestCase):
         self.plr.setPlayed('Royal Seal')
         self.plr.test_input = ['discard']
         self.plr.gainCard('Gold')
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, 'Gold')
-        self.assertFalse(self.plr.inHand('Gold'))
+        self.assertFalse(self.plr.in_hand('Gold'))
 
     def test_deck(self):
         """ Have a Royal Seal  - the gained card on the deck"""
@@ -59,7 +59,7 @@ class Test_Royalseal(unittest.TestCase):
         self.plr.test_input = ['deck']
         self.plr.gainCard('Gold')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

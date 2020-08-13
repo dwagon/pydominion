@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Coven(Card):
+class Card_Coven(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.MENAGERIE
         self.desc = """+1 Action; +2 Coin; Each other player Exiles a Curse
             from the Supply. If they can't, they discard their Exiled Curses."""
         self.name = 'Coven'
@@ -23,7 +23,7 @@ class Card_Coven(Card):
     def special(self, game, player):
         for plr in player.attackVictims():
             plr.exile_card('Curse')
-            if game['Curse'].isEmpty():
+            if game['Curse'].is_empty():
                 num = plr.unexile('Curse')
                 plr.output("Unexiled {} Curses from {}'s Coven".format(num, player.name))
             else:
@@ -41,7 +41,7 @@ class Test_Coven(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.vic.in_exile('Curse'))
 

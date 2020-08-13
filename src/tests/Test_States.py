@@ -8,10 +8,10 @@ import Game
 class Test_assignState(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-                quiet=True, numplayers=2, initcards=['StateTester'],
-                statepath='tests/states', cardpath='tests/cards', numstacks=1,
-                boonpath='tests/boons'
-                )
+            quiet=True, numplayers=2, initcards=['StateTester'],
+            statepath='tests/states', cardpath='tests/cards', numstacks=1,
+            boonpath='tests/boons'
+        )
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
 

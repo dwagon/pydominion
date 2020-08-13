@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_LuckyCoin(Card):
+class Card_LuckyCoin(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
+        self.base = Game.NOCTURNE
         self.desc = "1 Coin; When you play this, gain a Silver."
         self.name = 'Lucky Coin'
         self.cost = 4
@@ -23,7 +24,6 @@ class Card_LuckyCoin(Card):
 ###############################################################################
 class Test_LuckyCoin(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Fool'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

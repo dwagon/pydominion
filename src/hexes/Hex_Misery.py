@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Hex import Hex
 
@@ -9,8 +10,8 @@ from Hex import Hex
 class Hex_Misery(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "If this is your first Misery this game, take Miserable. Otherwise, flip it over to Twice Miserable."
         self.name = "Misery"
         self.purchasable = False

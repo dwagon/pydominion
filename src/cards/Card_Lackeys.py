@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Lackeys(Card):
+class Card_Lackeys(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.name = 'Lackeys'
         self.cards = 2
         self.cost = 2
@@ -18,8 +19,7 @@ class Card_Lackeys(Card):
     def desc(self, player):
         if player.phase == "buy":
             return "+2 Cards; When you gain this, +2 Villagers."
-        else:
-            return "+2 Cards"
+        return "+2 Cards"
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
@@ -29,7 +29,6 @@ class Card_Lackeys(Card):
 ###############################################################################
 class Test_Lackeys(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lackeys'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -38,7 +37,7 @@ class Test_Lackeys(unittest.TestCase):
         self.card = self.g['Lackeys'].remove()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
         self.assertLessEqual(self.plr.getVillager(), 0)
 
     def test_gainCard(self):

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Merchant(Card):
+class Card_Merchant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+1 Card; +1 Action; The first time you play a Silver this turn, +1 Coin."
         self.name = 'Merchant'
         self.actions = 1
@@ -39,8 +39,8 @@ class Test_Merchant(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.plr.addCard(self.s1, 'hand')
         self.plr.playCard(self.s1)
         self.assertEqual(self.plr.getCoin(), 3)

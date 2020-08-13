@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Skys_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "You may discard 3 cards to gain a Gold."
         self.name = "The Sky's Gift"
         self.purchasable = False
@@ -41,8 +42,8 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper', 'Estate', 'Duchy', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
     def test_skys_no_gift(self):
         """ Discard less than three cards to gain nothing """
@@ -50,8 +51,8 @@ class Test_Skys_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Copper', 'Estate', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

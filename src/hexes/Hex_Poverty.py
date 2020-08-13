@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,8 +10,8 @@ from Hex import Hex
 class Hex_Poverty(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "Discard down to 3 cards in hand"
         self.name = "Poverty"
         self.purchasable = False
@@ -19,7 +21,7 @@ class Hex_Poverty(Hex):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 3
     return player.pick_to_discard(numtodiscard)
 
@@ -27,7 +29,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Poverty(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -39,7 +40,7 @@ class Test_Poverty(unittest.TestCase):
     def test_normal(self):
         self.plr.test_input = ['1', '2', '0']
         self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

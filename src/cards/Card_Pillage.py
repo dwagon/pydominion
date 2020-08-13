@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pillage(Card):
+class Card_Pillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DARKAGES
         self.desc = """Trash this. Each other player with 5 or more cards in hand
         reveals their hand and discards a card that you choose. Gain 2 Spoils
         from the Spoils pile."""
@@ -22,7 +22,7 @@ class Card_Pillage(Card):
     def special(self, game, player):
         player.trashCard(self)
         for plr in player.attackVictims():
-            if plr.handSize() < 5:
+            if plr.hand.size() < 5:
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue
             self.pickACard(plr, player)
@@ -56,11 +56,11 @@ class Test_Pillage(unittest.TestCase):
         self.plr.test_input = ['copper']
         self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold', 'Silver', 'Province')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(self.victim.handSize(), 5)
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.victim.hand.size(), 5)
+        self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertEqual(self.victim.discardpile[0].name, 'Copper')
 
     def test_short_hand(self):
@@ -69,11 +69,11 @@ class Test_Pillage(unittest.TestCase):
         self.plr.test_input = ['copper']
         self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Spoils')
-        self.assertEqual(self.victim.handSize(), 4)
-        self.assertEqual(self.victim.discardSize(), 0)
+        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.discardpile.size(), 0)
 
 
 ###############################################################################

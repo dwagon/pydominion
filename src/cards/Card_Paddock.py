@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Paddock(Card):
+class Card_Paddock(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = """+2 Coin; Gain 2 Horses. +1 Action per empty Supply pile."""
         self.name = 'Paddock'
         self.coin = 2
@@ -21,7 +21,7 @@ class Card_Paddock(Card):
     def special(self, game, player):
         player.gainCard('Horse')
         player.gainCard('Horse')
-        empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
+        empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
         player.addActions(empties)
 
 
@@ -40,8 +40,8 @@ class Test_Paddock(unittest.TestCase):
             if not c:
                 break
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
 
 
 ###############################################################################

@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Ghost(Card):
+class Card_Ghost(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration', 'spirit']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION, Card.TYPE_SPIRIT]
+        self.base = Game.NOCTURNE
         self.desc = """Reveal cards from your deck until you reveal an Action.
             Discard the other cards and set aside the Action. At the start of
             your next turn, play it twice."""
@@ -57,7 +57,7 @@ class Test_Ghost(unittest.TestCase):
 
     def test_play_with_no_actions(self):
         """ Play a Ghost with no actions """
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.playCard(self.card)
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
@@ -65,11 +65,11 @@ class Test_Ghost(unittest.TestCase):
         try:
             self.plr.setDeck('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
             self.plr.setDiscard('Silver', 'Gold', 'Estate', 'Silver', 'Moat', 'Copper')
-            self.plr.phase = 'night'
+            self.plr.phase = Card.TYPE_NIGHT
             self.plr.playCard(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.handSize(), 5 + 2 * 2)    # Hand + Moat *2
+            self.assertEqual(self.plr.hand.size(), 5 + 2 * 2)    # Hand + Moat *2
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

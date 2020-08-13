@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Cartographer(Card):
+class Card_Cartographer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """+1 Card; +1 Action; Look at the top 4 cards of your deck.
             Discard any number of them. Put the rest back on top in any order."""
         self.name = 'Cartographer'
@@ -43,12 +43,12 @@ class Test_Cartographer(unittest.TestCase):
         self.plr.setDeck('Silver', 'Gold', 'Province', 'Duchy', 'Copper')
         self.plr.test_input = ['Province', 'Duchy', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
 
 
 ###############################################################################

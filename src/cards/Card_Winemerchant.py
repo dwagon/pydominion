@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Winemerchant(Card):
+class Card_Winemerchant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
-        self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the end of your Buy phase, if you have at least 2 Coin unspent, you may discard this from your Tavern mat."""
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
+        self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the
+            end of your Buy phase, if you have at least 2 Coin unspent, you
+            may discard this from your Tavern mat."""
         self.name = 'Wine Merchant'
         self.buys = 1
         self.coin = 4
@@ -27,7 +30,6 @@ class Card_Winemerchant(Card):
 ###############################################################################
 class Test_Winemerchant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wine Merchant'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -46,7 +48,7 @@ class Test_Winemerchant(unittest.TestCase):
         self.plr.setReserve('Wine Merchant')
         self.plr.test_input = ['end phase', 'end phase']
         self.plr.turn()
-        self.assertEqual(self.plr.reserveSize(), 0)
+        self.assertEqual(self.plr.reserve.size(), 0)
 
 
 ###############################################################################

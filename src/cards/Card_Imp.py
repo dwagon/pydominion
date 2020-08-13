@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Imp(Card):
+class Card_Imp(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'spirit']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SPIRIT]
+        self.base = Game.NOCTURNE
         self.desc = "+2 Cards; You may play an Action card from your hand that you don't have a copy of in play."
         self.name = "Imp"
         self.purchasable = False
@@ -25,7 +26,7 @@ class Card_Imp(Card):
             player.output("No action cards")
             return
         # Select ones that haven't been played
-        sac = [_ for _ in ac if not player.inPlayed(_.name)]
+        sac = [_ for _ in ac if not player.in_played(_.name)]
         if not sac:
             player.output("No unplayed action cards")
             return
@@ -44,7 +45,6 @@ class Card_Imp(Card):
 ###############################################################################
 class Test_Imp(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Imp", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -55,14 +55,14 @@ class Test_Imp(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.setPlayed("Moat")
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2 + 2)
+        self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_not_played(self):
         self.plr.setHand("Moat", "Copper")
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2 + 2 + 1)    # 2 for moat, 2 for imp, 1 for hand
+        self.assertEqual(self.plr.hand.size(), 2 + 2 + 1)    # 2 for moat, 2 for imp, 1 for hand
 
 
 ###############################################################################

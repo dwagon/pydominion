@@ -24,7 +24,7 @@ class TestToken(unittest.TestCase):
         self.plr.card_token = True
         self.plr.hand.empty()
         self.plr.pickUpHand()
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
         self.assertFalse(self.plr.card_token)
 
     def test_short_draw(self):
@@ -33,10 +33,10 @@ class TestToken(unittest.TestCase):
         self.plr.setHand()
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.plr.playCard(moat)
         # 2 for moat -1 for token
-        self.assertEqual(self.plr.handSize(), 2 - 1)
+        self.assertEqual(self.plr.hand.size(), 2 - 1)
         self.assertFalse(self.plr.card_token)
 
     def test_action_token(self):
@@ -44,9 +44,9 @@ class TestToken(unittest.TestCase):
         self.plr.place_token('+1 Action', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.plr.playCard(moat)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_trashing_token(self):
         """ Does the Trashing token work """
@@ -71,10 +71,10 @@ class TestToken(unittest.TestCase):
         self.plr.place_token('+1 Card', 'Moat')
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.plr.playCard(moat)
         # 2 for moat 1 for token
-        self.assertEqual(self.plr.handSize(), 2 + 1)
+        self.assertEqual(self.plr.hand.size(), 2 + 1)
 
     def test_pluscoin_token(self):
         """ Does the +1 Coin token work """

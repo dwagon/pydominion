@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Traderoute(Card):
+class Card_Traderoute(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "+1 Buy; Trash a card from your hand. +1 Coin per Coin token on the Trade Route mat."
         self.name = 'Trade Route'
         self.cost = 3
@@ -45,7 +46,6 @@ class Card_Traderoute(Card):
 ###############################################################################
 class Test_Traderoute(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Trade Route'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

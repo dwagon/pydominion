@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_MountainPass(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = "Mountain Pass"
         self._state = "un"
 

@@ -9,7 +9,7 @@ from Event import Event
 class Event_Alliance(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'menagerie'
+        self.base = Game.MENAGERIE
         self.desc = "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
         self.name = "Alliance"
         self.cost = 10
@@ -35,9 +35,9 @@ class Test_Alliance(unittest.TestCase):
         """ Perform a Alliance """
         self.plr.addCoin(10)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
 
 
 ###############################################################################

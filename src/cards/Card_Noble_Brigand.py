@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Noble_Brigand(Card):
+class Card_Noble_Brigand(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.HINTERLANDS
         self.desc = """+1 Coin. When you buy this or play it, each other player reveals
         the top 2 cards of his deck, trashes a revealed Silver or Gold you choose,
         and discards the rest. If he didn't reveal a Treasure, he gains a Copper. You gain the trashed cards."""
@@ -80,8 +80,8 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.vic.discardSize(), 3)
-        self.assertIsNotNone(self.vic.inDiscard('Copper'))
+        self.assertEqual(self.vic.discardpile.size(), 3)
+        self.assertIsNotNone(self.vic.in_discard('Copper'))
 
     def test_gold(self):
         """ Play an Noble Brigand with a gold """
@@ -89,9 +89,9 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.discardSize(), 1)
-        self.assertIsNotNone(self.vic.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.vic.discardpile.size(), 1)
+        self.assertIsNotNone(self.vic.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

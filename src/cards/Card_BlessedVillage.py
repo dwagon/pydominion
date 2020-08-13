@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_BlessedVillage(Card):
+class Card_BlessedVillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.name = 'Blessed Village'
         self.actions = 2
         self.cards = 1
@@ -42,12 +42,12 @@ class Test_BlessedVillage(unittest.TestCase):
         """ Play Blessed Village """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertGreaterEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertGreaterEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
         self.plr.gainCard('Blessed Village')
-        self.assertEqual(self.plr.handSize(), 5 + 1)    # 1 from boon
+        self.assertEqual(self.plr.hand.size(), 5 + 1)    # 1 from boon
 
 
 ###############################################################################

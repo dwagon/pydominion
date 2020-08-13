@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Giant(Card):
+class Card_Giant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.ADVENTURE
         self.desc = """ Turn your Journey token over (it starts face up). If it's face
             down, +1 Coin. If it's face up, +5 Coin, and each other player
             reveals the top card of his deck, trashes it if it costs
@@ -64,7 +64,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
         self.assertIsNone(self.g.in_trash('Copper'))
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
 
     def test_play_no_journey(self):
         """ Play a giant - bad journey """

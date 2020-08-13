@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Haggler(Card):
+class Card_Haggler(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = "+2 Coin. While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."
         self.name = 'Haggler'
         self.coin = 2
@@ -18,7 +18,7 @@ class Card_Haggler(Card):
 
     def hook_buyCard(self, game, player, card):
         cost = card.cost - 1
-        player.plrGainCard(cost=cost, types={'action': True, 'treasure': True}, prompt="Gain a non-Victory card costing under %s" % cost)
+        player.plrGainCard(cost=cost, types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True}, prompt="Gain a non-Victory card costing under %s" % cost)
 
 
 ###############################################################################
@@ -40,8 +40,8 @@ class Test_Haggler(unittest.TestCase):
         self.plr.test_input = ['Get Silver']
         self.plr.setCoin(6)
         self.plr.buyCard(self.g['Gold'])
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

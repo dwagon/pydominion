@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Conclave(Card):
+class Card_Conclave(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION]
+        self.base = Game.NOCTURNE
         self.desc = "+2 Coin; You may play an Action card from your hand that you don't have a copy of in play. If you do, +1 Action."
         self.name = 'Conclave'
         self.cost = 4
@@ -21,7 +21,7 @@ class Card_Conclave(Card):
         if not ac:
             player.output("No actions to play")
             return
-        sac = [_ for _ in ac if not player.inPlayed(_.name)]
+        sac = [_ for _ in ac if not player.in_played(_.name)]
         if not sac:
             player.output("No suitable actions to play")
             return
@@ -58,7 +58,7 @@ class Test_Conclave(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

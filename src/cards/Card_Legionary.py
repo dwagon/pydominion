@@ -1,23 +1,24 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Legionary(Card):
+class Card_Legionary(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.EMPIRES
         self.desc = """+3 Coin. You may reveal a Gold from your hand.
-        If you do, each other player discards down to 2 cards in hand, then draws a card."""
+            If you do, each other player discards down to 2 cards in hand, then draws a card."""
         self.name = 'Legionary'
         self.cost = 5
         self.coin = 3
 
     def special(self, game, player):
-        au = player.inHand('Gold')
+        au = player.in_hand('Gold')
         if au:
             player.revealCard(au)
             for plr in player.attackVictims():
@@ -27,7 +28,7 @@ class Card_Legionary(Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     numtodiscard = len(player.hand) - 2
     return player.pick_to_discard(numtodiscard)
 
@@ -35,7 +36,6 @@ def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
 ###############################################################################
 class Test_Legionary(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Legionary'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
@@ -48,8 +48,8 @@ class Test_Legionary(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.victim.handSize(), 3)
-        self.assertEqual(self.victim.discardSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertEqual(self.victim.discardpile.size(), 3)
 
 
 ###############################################################################

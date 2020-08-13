@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Page(Card):
+class Card_Page(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Discard to replace with Treasure Hunter"
         self.name = 'Page'
         self.traveller = True
@@ -36,8 +36,8 @@ class Test_Page(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

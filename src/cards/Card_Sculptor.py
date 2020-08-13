@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Sculptor(Card):
+class Card_Sculptor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = """Gain a card to your hand costing up to 4. If it's a Treasure, +1 Villager."""
         self.name = 'Sculptor'
         self.cost = 5
@@ -37,15 +37,15 @@ class Test_Sculptor(unittest.TestCase):
         self.plr.setDeck('Moat')
         self.plr.test_input = ['Get Moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 0)
-        self.assertIsNotNone(self.plr.inHand('Moat'))
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
         self.assertLessEqual(self.plr.getVillager(), 1)
 
     def test_gaintreasure(self):
         self.plr.setDeck('Silver')
         self.plr.test_input = ['Get Silver']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
         self.assertLessEqual(self.plr.getVillager(), 1)
 
 

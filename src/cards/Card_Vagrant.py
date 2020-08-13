@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Vagrant(Card):
+class Card_Vagrant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = """+1 card, +1 action, Reveal the top card of your deck.
         If it's a Curse, Ruins, Shelter or Victory card, put it into your hand"""
         self.name = 'Vagrant'
@@ -33,7 +34,6 @@ class Card_Vagrant(Card):
 ###############################################################################
 class Test_Vagrant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vagrant'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,17 +44,17 @@ class Test_Vagrant(unittest.TestCase):
         """ Play the vagrant with unexciting next card"""
         self.plr.setDeck('Gold', 'Silver', 'Copper')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.nextCard().name, 'Silver')
 
     def test_play_exciting(self):
         """ Play the vagrant with an exciting next card"""
         self.plr.setDeck('Estate', 'Province', 'Duchy')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 7)
-        self.assertTrue(self.plr.inHand('Province'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertTrue(self.plr.in_hand('Province'))
 
 
 ###############################################################################

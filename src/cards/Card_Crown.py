@@ -2,22 +2,22 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Crown(Card):
+class Card_Crown(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'treasure']
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TREASURE]
+        self.base = Game.EMPIRES
         self.desc = """If it's your Action phase, you may play an Action from your hand twice.
         If it's your Buy phase, you may play a Treasure from your hand twice."""
         self.name = 'Crown'
         self.cost = 5
 
     def special(self, game, player):
-        if player.phase == 'action':
+        if player.phase == Card.TYPE_ACTION:
             cards = [c for c in player.hand if c.isAction()]
             self.do_twice(player, cards)
         if player.phase == 'buy':
@@ -56,17 +56,17 @@ class Test_Crown(unittest.TestCase):
         """ Play a crown with no suitable actions """
         self.plr.setHand('Duchy', 'Gold')
         self.plr.addCard(self.card, 'hand')
-        self.plr.phase = 'action'
+        self.plr.phase = Card.TYPE_ACTION
         self.plr.playCard(self.card)
 
     def test_action(self):
         """ Play a crown with a suitable action """
         self.plr.setHand('Estate', 'Duchy', 'Copper', 'Gold', 'Moat')
         self.plr.addCard(self.card, 'hand')
-        self.plr.phase = 'action'
+        self.plr.phase = Card.TYPE_ACTION
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 2 * 2 - 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)
 
     def test_buy(self):
         """ Play a crown in a buy phase"""

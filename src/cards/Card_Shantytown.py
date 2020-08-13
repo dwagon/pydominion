@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Shantytown(Card):
+class Card_Shantytown(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+2 actions. If no action in hand, +2 cards"
         self.name = 'Shanty Town'
         self.actions = 2
@@ -40,16 +40,16 @@ class Test_Shantytown(unittest.TestCase):
         self.plr.setHand('Estate', 'Estate', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 3 + 2)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 3 + 2)
 
     def test_actions(self):
         """ Test Shany Town with actions"""
         self.plr.setHand('Moat', 'Estate', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 3)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 3)
 
 
 ###############################################################################

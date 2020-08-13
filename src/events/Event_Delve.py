@@ -9,7 +9,7 @@ from Event import Event
 class Event_Delve(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "+1 Buy. Gain a Silver."
         self.name = "Delve"
         self.buys = 1
@@ -32,7 +32,7 @@ class Test_Delve(unittest.TestCase):
         """ Perform a Delve """
         self.plr.addCoin(2)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
         self.assertEqual(self.plr.getBuys(), 2)
 
 

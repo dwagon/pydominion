@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Navigator(Card):
+class Card_Navigator(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """+2 coin. Look at the top 5 cards of your deck.
             Either discard all of them, or put them back on top of your deck
             in any order"""
@@ -47,15 +47,15 @@ class Test_Navigator(unittest.TestCase):
         self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['discard']
         self.plr.playCard(self.navigator)
-        self.assertEqual(self.plr.discardSize(), 5)
-        self.assertEqual(self.plr.deckSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertEqual(self.plr.deck.size(), 1)
 
     def test_keep(self):
         self.plr.setDeck('Copper', 'Estate', 'Gold', 'Province', 'Silver', 'Duchy')
         self.plr.test_input = ['return']
         self.plr.playCard(self.navigator)
-        self.assertEqual(self.plr.discardSize(), 0)
-        self.assertEqual(self.plr.deckSize(), 6)
+        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.deck.size(), 6)
 
 
 ###############################################################################

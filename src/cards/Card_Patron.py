@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Patron(Card):
+class Card_Patron(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.RENAISSANCE
         self.desc = "+1 Villager; +2. When something causes you to reveal this, +1 Coffers."
         self.name = 'Patron'
         self.cost = 4
@@ -25,7 +26,6 @@ class Card_Patron(Card):
 ###############################################################################
 class Test_Patron(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Patron'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

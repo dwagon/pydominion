@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Messenger(Card):
+class Card_Messenger(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.name = 'Messenger'
         self.buys = 1
         self.coin = 2
@@ -61,13 +61,13 @@ class Test_Messenger(unittest.TestCase):
 
     def test_discard(self):
         """ Play a messenger and discard the deck """
-        decksize = self.plr.deckSize()
+        decksize = self.plr.deck.size()
         self.plr.test_input = ['Yes']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.deckSize(), 0)
-        self.assertEqual(self.plr.discardSize(), decksize)
+        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), decksize)
 
     def test_buy(self):
         """ Buy a messenger """
@@ -75,7 +75,7 @@ class Test_Messenger(unittest.TestCase):
         self.plr.setCoin(4)
         self.plr.buyCard(self.g['Messenger'])
         for plr in self.g.player_list():
-            self.assertIsNotNone(plr.inDiscard('Silver'))
+            self.assertIsNotNone(plr.in_discard('Silver'))
 
 
 ###############################################################################

@@ -10,7 +10,7 @@ from PlayArea import PlayArea
 class Event_Save(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy. Once per turn: Set aside a card from your hand, and put it into your hand at end of turn (after drawing)."
         self.name = "Save"
         self.cost = 1
@@ -51,7 +51,7 @@ class Test_Save(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr._save_reserve[0].name, 'Gold')
         self.plr.end_turn()
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

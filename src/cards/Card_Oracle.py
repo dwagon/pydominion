@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Oracle(Card):
+class Card_Oracle(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.HINTERLANDS
         self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:
         either he discards them or he puts them back on top in an order he chooses.  +2 cards """
         self.name = 'Oracle'
@@ -45,7 +46,6 @@ class Card_Oracle(Card):
 ###############################################################################
 class Test_Oracle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Oracle'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -58,11 +58,11 @@ class Test_Oracle(unittest.TestCase):
         self.plr.setDeck('Copper', 'Silver', 'Gold')
         self.plr.test_input = ['discard', 'top']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.vic.inDiscard('Duchy'))
-        self.assertIsNotNone(self.vic.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inHand('Silver'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertIsNotNone(self.vic.in_discard('Duchy'))
+        self.assertIsNotNone(self.vic.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 7)
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Ducat(Card):
+class Card_Ducat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.RENAISSANCE
         self.buys = 1
         self.name = 'Ducat'
         self.cost = 2
@@ -27,7 +27,7 @@ class Card_Ducat(Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        cu = player.inHand('Copper')
+        cu = player.in_hand('Copper')
         if cu:
             player.plrTrashCard(cardsrc=[cu], num=1)
         else:

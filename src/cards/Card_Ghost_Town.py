@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Ghost_Town(Card):
+class Card_Ghost_Town(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.name = 'Ghost Town'
         self.cost = 3
 
@@ -42,13 +42,13 @@ class Test_Ghost_Town(unittest.TestCase):
         self.plr.playCard(self.gtown)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         self.plr.gainCard('Ghost Town')
-        self.assertIsNone(self.plr.inDiscard('Ghost Town'))
-        self.assertIsNotNone(self.plr.inHand('Ghost Town'))
+        self.assertIsNone(self.plr.in_discard('Ghost Town'))
+        self.assertIsNotNone(self.plr.in_hand('Ghost Town'))
 
 
 ###############################################################################

@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
-class Card_Warehouse(Card):
+###############################################################################
+class Card_Warehouse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = "+3 cards, +1 action, discard 3 cards"
         self.name = 'Warehouse'
         self.cards = 3
@@ -23,7 +25,6 @@ class Card_Warehouse(Card):
 ###############################################################################
 class Test_Warehouse(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Warehouse'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,9 +38,9 @@ class Test_Warehouse(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'discard copper', 'discard duchy', 'finish']
         self.plr.playCard(self.card)
         # Initial hand size - 3 discards + 3 pickups - 1 played
-        self.assertEqual(self.plr.handSize(), 5 - 3 + 3 - 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.hand.size(), 5 - 3 + 3 - 1)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 3)
 
 
 ###############################################################################

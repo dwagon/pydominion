@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Improve(Card):
+class Card_Improve(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.RENAISSANCE
         self.desc = """+2 Coin; At the start of Clean-up, you may trash an Action
         card you would discard from play this turn, to gain a card costing exactly
         1 more than it."""
@@ -31,7 +32,6 @@ class Card_Improve(Card):
 ###############################################################################
 class Test_Improve(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Improve', 'Moat', 'Guide'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,7 +44,7 @@ class Test_Improve(unittest.TestCase):
         self.plr.test_input = ['End phase', 'End phase', 'Trash Moat', 'Get Guide']
         self.plr.turn()
         self.assertIsNotNone(self.g.in_trash('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Guide'))
+        self.assertIsNotNone(self.plr.in_discard('Guide'))
 
 
 ###############################################################################

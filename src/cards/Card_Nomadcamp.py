@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_NomadCamp(Card):
+class Card_NomadCamp(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.name = 'Nomad Camp'
         self.buys = 1
         self.cards = 2
@@ -18,8 +19,7 @@ class Card_NomadCamp(Card):
     def desc(self, player):
         if player.phase == "action":
             return "+1 Buy +2 Coins"
-        else:
-            return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
+        return "+1 Buy +2 Coins; When you gain this, put it on top of your deck."
 
     def hook_gain_this_card(self, game, player):
         return {'destination': 'topdeck'}
@@ -28,7 +28,6 @@ class Card_NomadCamp(Card):
 ###############################################################################
 class Test_NomadCamp(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nomad Camp'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,7 +36,7 @@ class Test_NomadCamp(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_gain(self):

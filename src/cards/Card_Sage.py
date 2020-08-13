@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Sage(Card):
+class Card_Sage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+1 Action. Reveal cards from the top of your deck
         until you reveal one costing 3 or more.
         Put that card into your hand and discard the rest."""
@@ -50,16 +50,16 @@ class Test_Sage(unittest.TestCase):
         self.plr.setDeck('Gold', 'Copper', 'Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
     def test_exhaust_deck(self):
         """ No good card to pick out of the pile """
         self.plr.setDeck('Copper', 'Copper', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.deckSize(), 0)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.deck.size(), 0)
 
 
 ###############################################################################

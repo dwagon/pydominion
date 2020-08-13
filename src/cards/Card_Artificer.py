@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Artificer(Card):
+class Card_Artificer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.desc = """+1 Card, +1 Action, +1 Coin; Discard any number of cards.
             You may gain a card costing exactly 1 per card discarded, putting it on top of your deck"""
         self.name = 'Artificer'
@@ -43,8 +43,8 @@ class Test_Artificer(unittest.TestCase):
         self.plr.test_input = ['finish', 'copper']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.deck[0].name, 'Copper')
 
     def test_play_more(self):
@@ -55,9 +55,9 @@ class Test_Artificer(unittest.TestCase):
         self.plr.test_input = ['discard estate', 'discard duchy', 'discard province', 'finish', 'get silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Silver')
 
 

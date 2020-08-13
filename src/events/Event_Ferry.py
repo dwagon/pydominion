@@ -9,7 +9,7 @@ from Event import Event
 class Event_Ferry(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Move your -2 Coin token to an Action Supply pile."
         self.name = "Ferry"
         self.cost = 3

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Vineyard(Card):
+class Card_Vineyard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.ALCHEMY
         self.desc = "num action cards / 3 VP"
         self.name = 'Vineyard'
         self.playable = False
@@ -29,7 +30,6 @@ class Card_Vineyard(Card):
 ###############################################################################
 class Test_Vineyard(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vineyard', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

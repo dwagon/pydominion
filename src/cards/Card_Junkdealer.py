@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Junkdealer(Card):
+class Card_Junkdealer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = "+1 card, +1 action, +1 coin, trash a card"
         self.name = 'Junk Dealer'
         self.cards = 1
@@ -24,7 +25,6 @@ class Card_Junkdealer(Card):
 ###############################################################################
 class Test_Junkdealer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Junk Dealer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -37,7 +37,7 @@ class Test_Junkdealer(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ['trash copper', 'finish']
         self.plr.playCard(self.jd)
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertEqual(self.plr.hand.size(), 4)
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

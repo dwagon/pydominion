@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mint(Card):
+class Card_Mint(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.name = 'Mint'
         self.cost = 5
 
@@ -56,9 +56,9 @@ class Test_Mint(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
     def test_buy(self):
         tsize = self.g.trashSize()

@@ -2,18 +2,18 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Lighthouse(Card):
+class Card_Lighthouse(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.desc = """+1 Action. Now and at the start of your next turn: +1 Coin.
         While this is in play, when another player plays an Attack card, it doesn't affect you."""
         self.name = 'Lighthouse'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.defense = True
         self.actions = 1
         self.cost = 2
@@ -36,7 +36,7 @@ class Test_Lighthouse(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.plr.end_turn()
         self.plr.start_turn()

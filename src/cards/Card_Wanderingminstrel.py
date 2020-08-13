@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Wanderingminstrel(Card):
+class Card_Wanderingminstrel(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck.
             Put the Actions back on top in any order and discard the rest."""
         self.name = 'Wandering Minstrel'
@@ -47,11 +47,11 @@ class Test_Wanderingminstrel(unittest.TestCase):
         """ Wandering Minstrel """
         self.plr.setDeck('Duchy', 'Moat', 'Silver', 'Gold')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertIsNotNone(self.plr.in_deck('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Duchy'))
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Duchy'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

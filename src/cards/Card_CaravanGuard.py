@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_CaravanGuard(Card):
+class Card_CaravanGuard(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration', 'reaction']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION, Card.TYPE_REACTION]
+        self.base = Game.ADVENTURE
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
             When another player plays an Attack card, you may play this from
             your hand. (+1 Action has no effect if it's not your turn.)"""
@@ -28,8 +28,8 @@ class Card_CaravanGuard(Card):
         player.output("Under attack from %s" % attacker.name)
         player.addActions(1)
         player.pickupCards(1)
-        player.addCard(self, 'duration')
-        player.hand.remove(player.inHand('Caravan Guard'))
+        player.addCard(self, Card.TYPE_DURATION)
+        player.hand.remove(player.in_hand('Caravan Guard'))
 
 
 ###############################################################################
@@ -44,8 +44,8 @@ class Test_CaravanGuard(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
@@ -55,9 +55,9 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr.setHand('Caravan Guard', 'Moat')
         self.attacker.addCard(self.militia, 'hand')
         self.attacker.playCard(self.militia)
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.durationSize(), 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.durationpile.size(), 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

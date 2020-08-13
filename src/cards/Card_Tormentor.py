@@ -1,23 +1,25 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Tormentor(Card):
+class Card_Tormentor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'doom']
-        self.base = 'nocturne'
-        self.desc = "+2 Coin; If you have no other cards in play, gain an Imp from its pile. Otherwise, each other player receives the next Hex."
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DOOM]
+        self.base = Game.NOCTURNE
+        self.desc = """+2 Coin; If you have no other cards in play, gain an Imp
+            from its pile. Otherwise, each other player receives the next Hex."""
         self.name = "Tormentor"
         self.required_cards = [('Card', 'Imp')]
         self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
-        if player.playedSize() == 1:    # Include this card
+        if player.played.size() == 1:    # Include this card
             player.gainCard('Imp')
             player.output("Gained an Imp")
         else:
@@ -30,7 +32,6 @@ class Card_Tormentor(Card):
 ###############################################################################
 class Test_Tormentor(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tormentor"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -45,14 +46,14 @@ class Test_Tormentor(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.inDiscard("Imp"))
+        self.assertIsNotNone(self.plr.in_discard("Imp"))
 
     def test_play_hex(self):
         """ Play tormentor with other cards already being played """
         self.plr.setPlayed('Tormentor')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard("Imp"))
+        self.assertIsNone(self.plr.in_discard("Imp"))
         self.assertTrue(self.vic.has_state('Deluded'))
 
 

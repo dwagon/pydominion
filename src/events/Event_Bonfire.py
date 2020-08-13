@@ -9,7 +9,7 @@ from Event import Event
 class Event_Bonfire(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Trash up to two cards you have in play"
         self.name = "Bonfire"
         self.cost = 3

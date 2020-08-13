@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Catapult(Card):
+class Card_Catapult(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.required_cards = ['Curse']
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """+1 Coin; Trash a card from your hand.
             If it costs 3 or more, each other player gains a Curse.
             If it's a Treasure, each other player discards down to 3 cards in hand."""
@@ -55,7 +55,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertIsNotNone(self.victim.inDiscard('Curse'))
+        self.assertIsNotNone(self.victim.in_discard('Curse'))
 
     def test_play_treasure(self):
         """ Play a Catapult with a treasure"""
@@ -65,7 +65,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertEqual(self.victim.handSize(), 3)
+        self.assertEqual(self.victim.hand.size(), 3)
 
 
 ###############################################################################

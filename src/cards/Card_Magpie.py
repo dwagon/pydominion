@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Magpie(Card):
+class Card_Magpie(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.desc = """+1 Card; +1 Action; Reveal the top card of your deck.
             If it's a Treasure, put it into your hand. If it's an Action or
             Victory card, gain a Magpie."""
@@ -48,18 +48,18 @@ class Test_Magpie(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         # Hand of 5, the card gained and the treasure
-        self.assertEqual(self.plr.handSize(), 5 + 1 + 1)
-        self.assertTrue(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 5 + 1 + 1)
+        self.assertTrue(self.plr.in_hand('Gold'))
 
     def test_victory(self):
         """ Play a magpie with treasure """
         self.plr.setDeck('Duchy', 'Copper')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         # Hand of 5, the card gained
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertFalse(self.plr.inHand('Duchy'))
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertFalse(self.plr.in_hand('Duchy'))
         self.assertEqual(self.plr.discardpile[0].name, 'Magpie')
 
 

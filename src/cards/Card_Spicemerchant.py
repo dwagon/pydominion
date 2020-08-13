@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_SpiceMerchant(Card):
+class Card_SpiceMerchant(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.desc = """You may trash a Treasure from your hand. If you do, choose one: +2 Cards and +1 Action; or +2 Coins and +1 Buy."""
         self.name = 'Spice Merchant'
         self.cost = 4
@@ -33,7 +34,6 @@ class Card_SpiceMerchant(Card):
 ###############################################################################
 class Test_SpiceMerchant(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Spice Merchant'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -48,8 +48,8 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))
-        self.assertEqual(self.plr.handSize(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
 
@@ -62,8 +62,8 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Gold'))
-        self.assertEqual(self.plr.handSize(), 0)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
 

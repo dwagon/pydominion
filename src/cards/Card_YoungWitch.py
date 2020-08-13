@@ -1,17 +1,20 @@
 #!/usr/bin/env python
+# pylint: disable=no-member
 
 import unittest
 import random
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_YoungWitch(Card):
+class Card_YoungWitch(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'cornucopia'
-        self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal a Bane card from his hand. If he doesn't, he gains a Curse."""
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.CORNUCOPIA
+        self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal
+            a Bane card from his hand. If he doesn't, he gains a Curse."""
         self.required_cards = ['Curse']
         self.name = 'Young Witch'
         self.cards = 2
@@ -37,7 +40,7 @@ class Card_YoungWitch(Card):
     def special(self, game, player):
         player.plrDiscardCards(num=2, force=True)
         for pl in player.attackVictims():
-            if pl.inHand(game._bane):
+            if pl.in_hand(game._bane):
                 player.output("%s has the bane: %s" % (pl.name, game._bane))
                 continue
             player.output("%s got cursed" % pl.name)
@@ -48,7 +51,6 @@ class Card_YoungWitch(Card):
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
@@ -63,8 +65,8 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.playCard(self.card)
         try:
             self.assertIn(self.g[self.g._bane].cost, (2, 3))
-            self.assertEqual(self.attacker.handSize(), 5 + 2 - 2)
-            self.assertIsNotNone(self.victim.inDiscard('Curse'))
+            self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
+            self.assertIsNotNone(self.victim.in_discard('Curse'))
         except AssertionError:      # pragma: no cover
             print("Bane={}".format(self.g._bane))
             self.g.print_state()
@@ -78,7 +80,7 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.test_input = ['Duchy', 'Province', 'finish']
         self.attacker.playCard(self.card)
         try:
-            self.assertIsNone(self.victim.inDiscard('Curse'))
+            self.assertIsNone(self.victim.in_discard('Curse'))
         except AssertionError:      # pragma: no cover
             print("Bane={}".format(self.g._bane))
             self.g.print_state()

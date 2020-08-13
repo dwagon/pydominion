@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Secretchamber(Card):
+class Card_Secretchamber(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.INTRIGUE
         self.desc = """Discard any number of cards; +1 coin per card discarded
             When another player plays an Attack card, you may reveal
             this from you hand. If you do +2 cards, then put 2 cards
@@ -59,7 +59,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_three(self):
@@ -68,7 +68,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['discard copper', 'discard silver', 'discard gold', 'finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_underattack(self):
@@ -79,12 +79,12 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.setHand('Secret Chamber', 'Silver', 'Gold')
         self.plr.test_input = ['Reveal', 'Silver', 'Gold', 'Finish']
         self.att.playCard(mil)
-        self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
         self.assertIsNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.in_deck('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Silver'))
-        self.assertIsNone(self.plr.inHand('Silver'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
 
     def test_underattack_pass(self):
         """ Secret chamber is under attack - use it """
@@ -96,8 +96,8 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.in_deck('Province'))
         self.assertIsNotNone(self.plr.in_deck('Duchy'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
-        self.assertIsNotNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
 
 
 ###############################################################################

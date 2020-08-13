@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Marauder(Card):
+class Card_Marauder(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'looter']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_LOOTER]
+        self.base = Game.DARKAGES
         self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
         self.name = 'Marauder'
         self.cost = 4
@@ -34,7 +34,7 @@ class Test_Marauder(unittest.TestCase):
         """ Play a marauder """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Spoils'))
+        self.assertIsNotNone(self.plr.in_discard('Spoils'))
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
 

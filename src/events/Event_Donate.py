@@ -9,7 +9,7 @@ from Event import Event
 class Event_Donate(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = """After this turn, put all cards from your deck and discard
             pile into your hand, trash any number, shuffle your hand into your
             deck, then draw 5 cards."""
@@ -51,8 +51,8 @@ class Test_Donate(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash('Silver'))
         self.assertIsNone(self.plr.in_deck('Gold'))
         self.assertEqual(self.g.trashSize(), tsize + 3)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
 
 ###############################################################################

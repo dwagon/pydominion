@@ -2,17 +2,17 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bazaar(Card):
+class Card_Bazaar(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.desc = "+1 cards, +2 action, +1 coin"
         self.name = 'Bazaar'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.cards = 1
         self.actions = 2
         self.coin = 1
@@ -31,9 +31,9 @@ class Test_Bazaar(unittest.TestCase):
     def test_play(self):
         """ Play Bazaar """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

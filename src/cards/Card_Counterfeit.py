@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Counterfeit(Card):
+class Card_Counterfeit(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.DARKAGES
         self.desc = "+1 Coin, +1 Buy; May play a treasure twice and trash it"
         self.name = 'Counterfeit'
         self.cost = 5
@@ -64,7 +64,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.hand.isEmpty())
+        self.assertTrue(self.plr.hand.is_empty())
         self.assertIsNotNone(self.g.in_trash('Gold'))
         # CF + 2 * Gold
         self.assertEqual(self.plr.getCoin(), 7)

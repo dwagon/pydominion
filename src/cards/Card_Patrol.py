@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Patrol(Card):
+class Card_Patrol(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = """+3 Cards; Reveal the top 4 cards of your deck.
             Put the Victory cards and Curses into your hand.
             Put the rest back in any order."""
@@ -49,9 +49,9 @@ class Test_Patrol(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Province', 'Silver', 'Gold', 'Copper', 'Copper', 'Gold')
         self.plr.playCard(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.inHand('Province'))
-        self.assertIsNotNone(self.plr.inHand('Duchy'))
-        self.assertIsNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Duchy'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
 
 
 ###############################################################################

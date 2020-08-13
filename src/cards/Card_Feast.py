@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Feast(Card):
+class Card_Feast(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Trash this card, Gain a card costing up to 5"
         self.name = 'Feast'
         self.cost = 4
@@ -73,7 +73,7 @@ class Test_Feast(unittest.TestCase):
             self.plr.playCard(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash('Feast'))
-            self.assertTrue(self.plr.played.isEmpty())
+            self.assertTrue(self.plr.played.is_empty())
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
@@ -85,9 +85,9 @@ class Test_Feast(unittest.TestCase):
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash('Feast'))
-            self.assertTrue(self.plr.played.isEmpty())
-            self.assertEqual(self.plr.discardSize(), 1)
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertTrue(self.plr.played.is_empty())
+            self.assertEqual(self.plr.discardpile.size(), 1)
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

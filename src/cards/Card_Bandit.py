@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bandit(Card):
+class Card_Bandit(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DOMINION
         self.desc = """Gain a Gold. Each other player reveals the top 2 cards
             of their deck, trashes a revealed Treasure other than Copper, and
             discards the rest."""
@@ -70,8 +70,8 @@ class Test_Bandit(unittest.TestCase):
         self.vic.setDeck('Copper', 'Silver', 'Gold')
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.card)
-        self.assertEqual(self.vic.deckSize(), 1)
-        self.assertEqual(self.vic.discardSize(), 2)
+        self.assertEqual(self.vic.deck.size(), 1)
+        self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_trash_treasure(self):
         self.vic.setHand('Copper', 'Copper')

@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Scrap(Card):
+class Card_Scrap(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = """Trash a card from your hand.
             Choose a different thing per coin it costs: +1 Card; +1 Action; +1 Buy;
             +1 Coin; gain a Silver; gain a Horse."""
@@ -67,9 +67,9 @@ class Test_Scrap(unittest.TestCase):
         self.plr.test_input = ['trash silver']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.inHand('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Province'))
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_playcard_cost6(self):
         """ Play a scrap and trash something worth more than 6 """
@@ -79,12 +79,12 @@ class Test_Scrap(unittest.TestCase):
         self.plr.test_input = ['trash province']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
 
 
 ###############################################################################

@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
+import Game
 from cards.Card_Knight import KnightCard
 
 
 ###############################################################################
 class Card_Sirmichael(KnightCard):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'knight']
-        self.base = 'darkages'
+        KnightCard.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
+        self.base = Game.DARKAGES
         self.name = "Sir Michael"
         self.desc = """Each other player discards down to 3 cards in hand.
         Each other player reveals the top 2 cards of his deck, trashes one of them
@@ -26,7 +27,6 @@ class Card_Sirmichael(KnightCard):
 ###############################################################################
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka', 'Fool'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -40,7 +40,7 @@ class Test_Sir_Michael(unittest.TestCase):
         self.vic.test_input = ['1', '2', '0']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.vic.handSize(), 3)
+        self.assertEqual(self.vic.hand.size(), 3)
 
 
 ###############################################################################

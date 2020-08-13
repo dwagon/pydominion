@@ -9,7 +9,7 @@ from Event import Event
 class Event_Quest(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Discard stuff to gain a gold"
         self.name = "Quest"
         self.cost = 0
@@ -43,35 +43,35 @@ class Test_Quest(unittest.TestCase):
         self.plr.setHand('Witch')
         self.plr.test_input = ['witch', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 2)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Witch'))
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Witch'))
 
     def test_with_curses(self):
         """ Use Quest with two curse cards """
         self.plr.setHand('Curse', 'Curse')
         self.plr.test_input = ['1', '2', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Curse'))
+        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Curse'))
 
     def test_with_six_cards(self):
         """ Use Quest with six cards """
         self.plr.setHand('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.test_input = ['1', '2', '3', '4', '5', '6', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 7)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertEqual(self.plr.discardpile.size(), 7)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
 
     def test_with_five_cards(self):
         """ Use Quest with five cards """
         self.plr.setHand('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.test_input = ['1', '2', '3', '4', '5', 'finish']
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.discardSize(), 5)
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

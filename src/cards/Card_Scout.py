@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Scout(Card):
+class Card_Scout(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+1 action, Adjust top 4 cards of deck"
         self.name = 'Scout'
         self.actions = 1
@@ -45,7 +45,7 @@ class Test_Scout(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.scout, 'hand')
         self.plr.playCard(self.scout)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
         self.plr.setHand()

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Harvest(Card):
+class Card_Harvest(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.CORNUCOPIA
         self.desc = """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
         self.name = 'Harvest'
         self.cost = 5
@@ -41,8 +41,8 @@ class Test_Harvest(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Duchy', 'Silver', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
         self.assertIsNone(self.plr.in_deck('Duchy'))
 
 

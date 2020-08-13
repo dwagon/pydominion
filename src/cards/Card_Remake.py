@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Remake(Card):
+class Card_Remake(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.CORNUCOPIA
         self.desc = "Do this twice: Trash a card from your hand, then gain a card costing exactly 1 more than the trashed card."
         self.name = 'Remake'
         self.cost = 4
@@ -36,8 +36,8 @@ class Test_Remake(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Estate', 'Get Silver', 'Trash Copper', 'Finish Selecting']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 0)
-        self.assertIsNotNone(self.plr.inDiscard('Silver'))
+        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
 
 
 ###############################################################################

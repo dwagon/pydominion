@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Displace(Card):
+class Card_Displace(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.desc = """Exile a card from your hand. Gain a differently named card costing up to 2 Coin more than it."""
         self.name = 'Displace'
         self.cost = 5
@@ -42,7 +42,7 @@ class Test_Displace(unittest.TestCase):
         self.plr.test_input = ['Exile Copper', 'Get Estate']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_exile('Copper'))
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################

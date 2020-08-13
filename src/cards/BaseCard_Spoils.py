@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Spoils(Card):
+class Card_Spoils(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.DARKAGES
         self.desc = "+3 coin. When you play this, return it to the Spoils pile."
         self.basecard = True
         self.purchasable = False
@@ -38,7 +38,7 @@ class Test_Spoils(unittest.TestCase):
         self.plr.addCard(spoils, 'hand')
         self.plr.playCard(spoils)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertTrue(self.plr.played.isEmpty())
+        self.assertTrue(self.plr.played.is_empty())
         self.assertEqual(self.g['Spoils'].numcards, numspoils)
 
 

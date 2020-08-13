@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Taxman(Card):
+class Card_Taxman(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.GUILDS
         self.desc = """You may trash a Treasure from your hand.
         Each other player with 5 or more cards in hand discards a copy of it (or reveals a hand without it).
         Gain a Treasure card costing up to 3 more than the trashed card, putting it on top of your deck."""
@@ -23,8 +24,8 @@ class Card_Taxman(Card):
             return
         card = cards[0]
         for vic in player.attackVictims():
-            if vic.handSize() >= 5:
-                viccard = vic.inHand(card.name)
+            if vic.hand.size() >= 5:
+                viccard = vic.in_hand(card.name)
                 if viccard:
                     vic.output("Discarding %s due to %s's Taxman" % (viccard.name, player.name))
                     player.output("%s discarded a %s" % (vic.name, viccard.name))
@@ -34,13 +35,12 @@ class Card_Taxman(Card):
                     for c in vic.hand:
                         vic.revealCard(c)
         cardcost = player.cardCost(card) + 3
-        player.plrGainCard(cost=cardcost, types={'treasure': True})
+        player.plrGainCard(cost=cardcost, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################
 class Test_Taxman(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Taxman'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
@@ -54,8 +54,8 @@ class Test_Taxman(unittest.TestCase):
         self.plr.test_input = ['Trash Silver', 'Get Gold']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNotNone(self.victim.inDiscard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.victim.in_discard('Silver'))
 
 
 ###############################################################################

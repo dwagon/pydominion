@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pixie(Card):
+class Card_Pixie(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; Discard the top Boon. You may trash this to receive that Boon twice."
         self.name = 'Pixie'
         self.cost = 2
@@ -44,8 +44,8 @@ class Test_Pixie(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Discard The']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_trash(self):
         """ Play a Pixie and trash it"""
@@ -57,7 +57,7 @@ class Test_Pixie(unittest.TestCase):
         self.plr.test_input = ['Trash']
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.discardSize(), 2)
+            self.assertEqual(self.plr.discardpile.size(), 2)
             for c in self.plr.discardpile:
                 self.assertEqual(c.name, 'Silver')
         except AssertionError:      # pragma: no cover

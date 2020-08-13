@@ -9,8 +9,7 @@ from Project import Project
 class Project_CropRotation(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, you may discard a Victory card for +2 Cards."
         self.name = "Crop Rotation"
         self.cost = 6
@@ -36,8 +35,8 @@ class Test_CropRotation(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver', 'Estate')
         self.plr.test_input = ['Discard Estate']
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 3 + 2 - 1)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertEqual(self.plr.hand.size(), 3 + 2 - 1)
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################

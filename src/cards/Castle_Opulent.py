@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -8,8 +10,8 @@ from cards.Card_Castles import CastleCard
 class Card_OpulentCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['action', 'victory', 'castle']
-        self.base = 'empires'
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
+        self.base = Game.EMPIRES
         self.cost = 7
         self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
         self.victory = 3
@@ -17,14 +19,16 @@ class Card_OpulentCastle(CastleCard):
 
     def special(self, game, player):
         victcards = [c for c in player.hand if c.isVictory()]
-        cards = player.plrDiscardCards(anynum=True, cardsrc=victcards, prompt="Discard any number of Victory cards. +2 Coin per card discarded")
+        cards = player.plrDiscardCards(
+            anynum=True, cardsrc=victcards,
+            prompt="Discard any number of Victory cards. +2 Coin per card discarded"
+        )
         player.addCoin(len(cards) * 2)
 
 
 ###############################################################################
 class Test_OpulentCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

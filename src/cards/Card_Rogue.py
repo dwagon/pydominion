@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Rogue(Card):
+class Card_Rogue(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.DARKAGES
         self.desc = """+2 coin; If there are any cards in the trash costing from 3 to
             6, gain one of them. Otherwise, each other player reveals
             the top 2 cards of his deck, trashes one of the costing
@@ -119,7 +119,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
-            self.assertEqual(self.plr.discardSize(), 1)
+            self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertEqual(self.plr.discardpile[-1].name, 'Gold')
         except AssertionError:      # pragma: no cover
             self.g.print_state()
@@ -134,7 +134,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Duchy'))
-        self.assertEqual(self.victim.discardSize(), 1)
+        self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, 'Gold')
 
     def test_bad_player(self):
@@ -144,7 +144,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.victim.discardSize(), 2)
+        self.assertEqual(self.victim.discardpile.size(), 2)
 
 
 ###############################################################################

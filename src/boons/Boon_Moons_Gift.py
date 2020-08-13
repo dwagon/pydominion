@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,14 +10,14 @@ from Boon import Boon
 class Boon_Moons_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "Look through your discard pile. You may put a card from it onto your deck"
         self.name = "The Moon's Gift"
         self.purchasable = False
 
     def special(self, game, player):
-        if not player.discardSize():
+        if not player.discardpile.size():
             return
         cards = []
         cardnames = set()
@@ -48,7 +49,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNone(self.plr.inDiscard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

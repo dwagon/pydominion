@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Ruinedmarket(Card):
+class Card_Ruinedmarket(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'ruin']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RUIN]
+        self.base = Game.DARKAGES
         self.name = "Ruined Market"
         self.desc = "+1 Buy"
         self.purchasable = False

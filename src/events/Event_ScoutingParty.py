@@ -9,7 +9,7 @@ from Event import Event
 class Event_ScoutingParty(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "+1 Buy, Look at the top 5 cards of your deck. Discard 3 of them and put the rest back in any order"
         self.name = "Scouting Party"
         self.buys = 1
@@ -47,7 +47,7 @@ class Test_ScoutingParty(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.deck[0].name, 'Gold')
         self.assertEqual(self.plr.deck[1].name, 'Silver')
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
 
 
 ###############################################################################

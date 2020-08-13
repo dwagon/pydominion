@@ -9,7 +9,7 @@ from Event import Event
 class Event_SaltEarth(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "+1VP. Trash a Victory card from the Supply."
         self.name = "Salt the Earth"
         self.cost = 4

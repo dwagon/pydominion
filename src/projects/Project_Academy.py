@@ -9,8 +9,7 @@ from Project import Project
 class Project_Academy(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When you gain an Action card, +1 Villager."
         self.name = "Academy"
         self.cost = 5

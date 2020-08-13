@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Disciple(Card):
+class Card_Disciple(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = 'Disciple'
         self.purchasable = False
@@ -44,7 +45,6 @@ class Card_Disciple(Card):
 ###############################################################################
 class Test_Disciple(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peasant', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -55,7 +55,7 @@ class Test_Disciple(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate')
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 1)
+        self.assertEqual(self.plr.played.size(), 1)
 
     def test_play_actions(self):
         """ Play a disciple with an action available"""
@@ -63,9 +63,9 @@ class Test_Disciple(unittest.TestCase):
         self.plr.test_input = ['moat']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.playedSize(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertEqual(self.plr.played.size(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

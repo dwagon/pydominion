@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_SecretCave(Card):
+class Card_SecretCave(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Card; +1 Action; You may discard 3 cards. If you did, then at the start of your next turn, +3 Coin"
         self.name = 'Secret Cave'
         self.cost = 3
@@ -45,9 +45,9 @@ class Test_SecretCave(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.getActions(), 1)
-            self.assertEqual(self.plr.discardSize(), 3)
-            self.assertEqual(self.plr.handSize(), 5 + 1 - 3)
+            self.assertEqual(self.plr.get_actions(), 1)
+            self.assertEqual(self.plr.discardpile.size(), 3)
+            self.assertEqual(self.plr.hand.size(), 5 + 1 - 3)
             self.plr.end_turn()
             self.plr.start_turn()
             self.assertEqual(self.plr.getCoin(), 3)

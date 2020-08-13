@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Raze(Card):
+class Card_Raze(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.ADVENTURE
         self.desc = """+1 Action; Trash this or a card from your hand. Look at a number
             of cards from the top of your deck equal to the cost in Coin of the
             trashed card. Put one into your hand and discard the rest """
@@ -41,7 +42,6 @@ class Card_Raze(Card):
 ###############################################################################
 class Test_Raze(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Raze'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -53,10 +53,10 @@ class Test_Raze(unittest.TestCase):
         self.plr.setDeck('Silver', 'Gold', 'Province')
         self.plr.test_input = ['Raze', 'Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
         self.assertIsNotNone(self.plr.in_deck('Silver'))
         self.assertIsNotNone(self.g.in_trash('Raze'))
 
@@ -67,7 +67,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.setDeck('Silver', 'Gold', 'Province')
         self.plr.test_input = ['Copper', 'Gold']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash('Copper'))
 
 

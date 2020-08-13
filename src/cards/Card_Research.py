@@ -2,16 +2,16 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Research(Card):
+class Card_Research(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'renaissance'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.RENAISSANCE
         self.name = 'Research'
         self.desc = """+1 Action; Trash a card from your hand.
             Per coin it costs, set aside a card from your deck face down.
@@ -65,12 +65,12 @@ class Test_Research(unittest.TestCase):
     def test_playCard(self):
         self.plr.test_input = ['Trash Moat', 'Set Gold', 'Set Silver', 'Finish']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash('Moat'))
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inHand('Silver'))
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

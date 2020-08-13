@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Ratcatcher(Card):
+class Card_Ratcatcher(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Call to trash a card"
         self.name = 'Ratcatcher'
         self.cards = 1
@@ -37,10 +37,10 @@ class Test_Ratcatcher(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 1)
-        self.assertEqual(self.plr.reserveSize(), 1)
-        c = self.plr.inReserve('Ratcatcher')
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
+        c = self.plr.in_reserve('Ratcatcher')
         self.assertEqual(c.name, 'Ratcatcher')
 
     def test_call(self):

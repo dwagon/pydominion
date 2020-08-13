@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Tactician(Card):
+class Card_Tactician(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.SEASIDE
         self.desc = "Discard hand; +5 cards, +1 buy and +1 action next turn"
         self.name = 'Tactician'
         self.cost = 5
@@ -22,7 +22,7 @@ class Card_Tactician(Card):
             ('Keep', False),
             ('Discard', True)
         )
-        if discard and player.handSize():
+        if discard and player.hand.size():
             self.discarded = True
             player.discardHand()
 
@@ -48,22 +48,22 @@ class Test_Tactician(unittest.TestCase):
         """ Play a tactician and discard hand"""
         self.plr.test_input = ['discard']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 0)
+        self.assertEqual(self.plr.hand.size(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 10)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 10)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_play_keep(self):
         """ Play a tactician and discard hand"""
         self.plr.test_input = ['keep']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
 
 

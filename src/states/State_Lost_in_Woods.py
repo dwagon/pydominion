@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from State import State
 
@@ -9,8 +10,8 @@ from State import State
 class State_Lost_in_woods(State):
     def __init__(self):
         State.__init__(self)
-        self.cardtype = 'state'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_STATE
+        self.base = Game.NOCTURNE
         self.desc = "At the start of your turn, you may discard a card to receive a Boon."
         self.name = "Lost in the Woods"
         self.unique_state = True
@@ -40,7 +41,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.plr._liw_dont_boon = False
         self.plr.start_turn()
         self.assertTrue(self.plr._liw_dont_boon)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
     def test_found_in_woods(self):
         self.plr.setHand('Copper', 'Estate', 'Gold')

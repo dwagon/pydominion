@@ -50,27 +50,27 @@ class Test_Reserve(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_inreserve(self):
-        """ Test inReserve() """
+        """ Test in_reserve() """
         self.plr.setReserve('Copper')
-        self.assertTrue(self.plr.inReserve('Copper'))
-        self.assertEqual(self.plr.inReserve('Copper').name, 'Copper')
+        self.assertTrue(self.plr.in_reserve('Copper'))
+        self.assertEqual(self.plr.in_reserve('Copper').name, 'Copper')
 
     def test_not_inreserve(self):
-        """ Test inReserve() """
+        """ Test in_reserve() """
         self.plr.setReserve('Copper')
-        self.assertFalse(self.plr.inReserve('Estate'))
+        self.assertFalse(self.plr.in_reserve('Estate'))
 
     def test_setReserve(self):
         """ set reserved """
         self.plr.setReserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Silver')
 
     def test_call_reserve(self):
         self.plr.setReserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         c = self.plr.call_reserve('Silver')
-        self.assertEqual(self.plr.reserveSize(), 0)
+        self.assertEqual(self.plr.reserve.size(), 0)
         self.assertEqual(c.name, 'Silver')
 
     def test_bad_call_reserve(self):
@@ -82,7 +82,7 @@ class Test_Reserve(unittest.TestCase):
     def test_addcard_reserve(self):
         gold = self.g['Gold'].remove()
         self.plr.addCard(gold, 'reserve')
-        self.assertEqual(self.plr.reserveSize(), 1)
+        self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, 'Gold')
 
     def test_isreserve(self):

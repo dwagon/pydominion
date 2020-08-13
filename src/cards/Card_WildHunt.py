@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+import Card
 
 
 ###############################################################################
-class Card_WildHunt(Card):
+class Card_WildHunt(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'gathering']
-        self.base = 'empires'
-        self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt Supply pile; or gain an Estate, and if you do, take the VP from the pile."""
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_GATHERING]
+        self.base = Game.EMPIRES
+        self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt
+            Supply pile; or gain an Estate, and if you do, take the VP from the pile."""
         self.name = 'Wild Hunt'
         self.cost = 5
 
@@ -32,7 +34,6 @@ class Card_WildHunt(Card):
 ###############################################################################
 class Test_WildHunt(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wild Hunt'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -43,7 +44,7 @@ class Test_WildHunt(unittest.TestCase):
         """ Play a Wild Hunt and take the cards"""
         self.plr.test_input = ['Cards']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 3)
+        self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.g['Wild Hunt'].getVP(), 1)
 
     def test_play_take(self):
@@ -51,8 +52,8 @@ class Test_WildHunt(unittest.TestCase):
         self.plr.test_input = ['Gain']
         self.g['Wild Hunt'].addVP(3)
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
         self.assertEqual(self.plr.getScoreDetails()['Wild Hunt'], 3)
 
 

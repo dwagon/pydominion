@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_MarketSquare(Card):
+class Card_MarketSquare(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, +1 Buy.
         When one of your cards is trashed, you may discard this from your hand. If you do, gain a Gold."""
         self.name = 'Market Square'
@@ -41,24 +41,24 @@ class Test_MarketSquare(unittest.TestCase):
         """ Play the card """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_trash_and_keep(self):
         """ Choose to keep MS after a trash """
         self.plr.setHand('Copper', 'Market Square')
         self.plr.test_input = ['keep']
-        self.plr.trashCard(self.plr.inHand('Copper'))
-        self.assertIsNotNone(self.plr.inHand('Market Square'))
+        self.plr.trashCard(self.plr.in_hand('Copper'))
+        self.assertIsNotNone(self.plr.in_hand('Market Square'))
 
     def test_trash_and_discard(self):
         """ Choose to keep MS after a trash """
         self.plr.setHand('Copper', 'Market Square')
         self.plr.test_input = ['discard']
-        self.plr.trashCard(self.plr.inHand('Copper'))
-        self.assertIsNone(self.plr.inHand('Market Square'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.plr.trashCard(self.plr.in_hand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Market Square'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

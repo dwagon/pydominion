@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Guide(Card):
+class Card_Guide(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Card, +1 Action; Call to discard hand and draw 5"
         self.name = 'Guide'
         self.cards = 1
@@ -36,8 +36,8 @@ class Test_Guide(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_call(self):
         """ Call Guide from reserve """
@@ -45,10 +45,10 @@ class Test_Guide(unittest.TestCase):
         self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Copper')
         self.plr.setReserve('Guide')
         self.plr.call_reserve('Guide')
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.discardSize(), 2)
-        self.assertIsNone(self.plr.inHand('Estate'))
-        self.assertIsNotNone(self.plr.inDiscard('Estate'))
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertIsNone(self.plr.in_hand('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Estate'))
 
 
 ###############################################################################

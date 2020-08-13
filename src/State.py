@@ -1,10 +1,10 @@
-from Card import Card
+import Card
 
 
-class State(Card):
+class State(Card.Card):
     def __init__(self, *args, **kwargs):
         super(State, self).__init__(*args, **kwargs)
-        self.cardtype = 'state'
+        self.cardtype = Card.TYPE_STATE
         self.unique_state = False
 
 # EOF

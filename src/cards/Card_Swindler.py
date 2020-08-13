@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Swindler(Card):
+class Card_Swindler(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.INTRIGUE
         self.desc = """+2 Coin. Each other player trashed the top card of his deck and
             gains a card with the same cost that you choose."""
         self.name = 'Swindler'
@@ -21,14 +22,16 @@ class Card_Swindler(Card):
             card = victim.pickupCard()
             victim.trashCard(card)
             victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
-            c = player.plrGainCard(card.cost, modifier='equal', recipient=victim, force=True, prompt="Pick which card %s will get" % victim.name)
+            c = player.plrGainCard(
+                card.cost, modifier='equal', recipient=victim, force=True,
+                prompt="Pick which card %s will get" % victim.name
+            )
             victim.output("%s picked a %s to replace your trashed %s" % (player.name, c.name, card.name))
 
 
 ###############################################################################
 class Test_Swindler(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Swindler', 'Moat'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Pawn(Card):
+class Card_Pawn(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "Choose two: +1 card, +1 action, +1 buy, +1 coin"
         self.name = 'Pawn'
         self.cost = 2
@@ -20,7 +20,7 @@ class Card_Pawn(Card):
             choices must be different)"""
         selectable = [
             ('card', '+1 card'),
-            ('action', '+1 action'),
+            (Card.TYPE_ACTION, '+1 action'),
             ('buy', '+1 buy'),
             ('coin', '+1 coin')
         ]
@@ -40,7 +40,7 @@ class Card_Pawn(Card):
         for choice in chosen:
             if choice == 'card':
                 player.pickupCard()
-            elif choice == 'action':
+            elif choice == Card.TYPE_ACTION:
                 player.addActions(1)
             elif choice == 'buy':
                 player.addBuys(1)
@@ -61,8 +61,8 @@ class Test_Pawn(unittest.TestCase):
         """ Play the pawn - select card and action"""
         self.plr.test_input = ['+1 card', '+1 action']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
 
@@ -70,8 +70,8 @@ class Test_Pawn(unittest.TestCase):
         """ Play the pawn - select buy and coin"""
         self.plr.test_input = ['+1 buy', '+1 coin']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 

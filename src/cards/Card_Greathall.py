@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Greathall(Card):
+class Card_Greathall(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'victory']
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
+        self.base = Game.INTRIGUE
         self.desc = "+1 card, +1 action, 1VP"
         self.name = 'Great Hall'
         self.cost = 3
@@ -23,7 +24,6 @@ class Card_Greathall(Card):
 ###############################################################################
 class Test_Greathall(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Great Hall'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -33,8 +33,8 @@ class Test_Greathall(unittest.TestCase):
     def test_play(self):
         """ Play a Great Hall """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 6)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
 
     def test_score(self):
         """ Have a victory point just for existing """

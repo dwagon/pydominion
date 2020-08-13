@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_CursedGold(Card):
+class Card_CursedGold(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['treasure', 'heirloom']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
+        self.base = Game.NOCTURNE
         self.desc = "3 Coin; When you play this, gain a curse"
         self.required_cards = ['Curse']
         self.name = 'Cursed Gold'
@@ -24,7 +25,6 @@ class Card_CursedGold(Card):
 ###############################################################################
 class Test_CursedGold(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pooka'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

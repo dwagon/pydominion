@@ -9,8 +9,7 @@ from Project import Project
 class Project_Cathedral(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, trash a card from your hand."
         self.name = "Cathedral"
         self.cost = 3
@@ -32,7 +31,7 @@ class Test_Cathedral(unittest.TestCase):
         self.plr.test_input = ['Copper']
         self.plr.start_turn()
         self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
 
 
 ###############################################################################

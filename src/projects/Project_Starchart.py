@@ -9,8 +9,7 @@ from Project import Project
 class Project_StarChart(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When you shuffle, you may pick one of the cards to go on top."
         self.name = "Star Chart"
         self.cost = 3
@@ -24,7 +23,7 @@ class Project_StarChart(Project):
             "Pick a card to put on top of your deck",
             *choices
             )
-        card = player.inDiscard(opt)
+        card = player.in_discard(opt)
         player.addCard(card, 'topdeck')
         player.discardpile.remove(card)
 

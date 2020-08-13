@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mine(Card):
+class Card_Mine(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "Trash a treasure, gain a better treasure"
         self.name = 'Mine'
         self.cost = 5
@@ -55,11 +55,11 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['1']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, 'Silver')
-        self.assertTrue(self.plr.discardpile.isEmpty())
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.getBuys(), 1)
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
 
     def test_convnothing(self):
         self.plr.setHand('Copper')
@@ -67,8 +67,8 @@ class Test_Mine(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, 'Copper')
-        self.assertTrue(self.plr.discardpile.isEmpty())
-        self.assertEqual(self.plr.handSize(), 1)
+        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertEqual(self.plr.hand.size(), 1)
 
 
 ###############################################################################

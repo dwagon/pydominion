@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Storeroom(Card):
+class Card_Storeroom(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
-        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card discarded. Discard any number of cards. +1 Coin per card discarded the second time """
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
+        self.desc = """+1 Buy; Discard any number of cards. +1 Card per card
+            discarded. Discard any number of cards. +1 Coin per card discarded
+            the second time """
         self.name = 'Store Room'
         self.buys = 1
         self.cost = 3
@@ -31,7 +34,6 @@ class Card_Storeroom(Card):
 ###############################################################################
 class Test_Storeroom(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Store Room'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -42,24 +44,24 @@ class Test_Storeroom(unittest.TestCase):
         """ Play a store room """
         self.plr.test_input = ['0', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertTrue(self.plr.discardpile.is_empty())
 
     def test_discardonce(self):
         """ Storeroom: Only discard during the first discard phase """
         self.plr.test_input = ['1', '0', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 - 1 + 1)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 - 1 + 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
 
     def test_discardtwice(self):
         """ Storeroom: Discard during the both discard phases """
         self.plr.test_input = ['1', '0', '1', '0']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 - 1)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.hand.size(), 5 - 1)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 

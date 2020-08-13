@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Swamps_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "Gain a Will-o'-Wisp from its pile."
         self.name = "The Swamp's Gift"
         self.purchasable = False
@@ -37,7 +38,7 @@ class Test_Swamps_Gift(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.g.print_state()
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard("Will-o'-Wisp"))
+        self.assertIsNotNone(self.plr.in_discard("Will-o'-Wisp"))
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Mandarin(Card):
+class Card_Mandarin(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.HINTERLANDS
         self.name = 'Mandarin'
         self.coin = 3
         self.cost = 5
@@ -57,7 +57,7 @@ class Test_Mandarin(unittest.TestCase):
         self.plr.setPlayed('Gold', 'Duchy')
         self.plr.gainCard('Mandarin')
         self.assertEqual(self.plr.deck[-1].name, 'Gold')
-        self.assertIsNotNone(self.plr.inPlayed('Duchy'))
+        self.assertIsNotNone(self.plr.in_played('Duchy'))
 
 
 ###############################################################################

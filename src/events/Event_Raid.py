@@ -9,7 +9,7 @@ from Event import Event
 class Event_Raid(Event):
     def __init__(self):
         Event.__init__(self)
-        self.base = 'adventure'
+        self.base = Game.ADVENTURE
         self.desc = "Gain a Silver per Silver that you have in play. Each other player puts his -1 Card token on his deck"
         self.name = "Raid"
         self.cost = 5
@@ -43,7 +43,7 @@ class Test_Raid(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.buys, 0)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
         self.assertTrue(self.victim.card_token)

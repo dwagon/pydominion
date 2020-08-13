@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Card
 import Game
 
 
 ###############################################################################
-class Card_Sacrifice(Card):
+class Card_Sacrifice(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'empires'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...
         Action card: +2 Cards, +2 Actions;
         Treasure card: +2 Coin;
@@ -46,8 +46,8 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['moat']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 2)
         self.assertIsNotNone(self.g.in_trash('Moat'))
 
     def test_play_treasure(self):

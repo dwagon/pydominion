@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from cards.Card_Castles import CastleCard
 
 
@@ -8,8 +10,8 @@ from cards.Card_Castles import CastleCard
 class Card_HauntedCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = ['victory', 'castle']
-        self.base = 'empires'
+        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
+        self.base = Game.EMPIRES
         self.cost = 6
         self.desc = """2VP. When you gain this during your turn, gain a Gold,
         and each other player with 5 or more cards in hand puts 2 cards from their hand onto their deck."""
@@ -21,7 +23,7 @@ class Card_HauntedCastle(CastleCard):
         for plr in list(game.players.values()):
             if plr == player:
                 continue
-            if plr.handSize() >= 5:
+            if plr.hand.size() >= 5:
                 cards = plr.cardSel(num=2, force=True, prompt="%s's Haunted Castle: Select 2 cards to put onto your deck" % player.name)
                 for card in cards:
                     plr.addCard(card, 'topdeck')
@@ -29,14 +31,13 @@ class Card_HauntedCastle(CastleCard):
 
 
 ###############################################################################
-def botresponse(player, kind, args=[], kwargs={}):  # pragma: no cover
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     return player.pick_to_discard(2)
 
 
 ###############################################################################
 class Test_HauntedCastle(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
@@ -55,9 +56,9 @@ class Test_HauntedCastle(unittest.TestCase):
         self.vic.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Province')
         self.vic.test_input = ['Silver', 'Gold', 'finish']
         self.plr.gainCard(newcard=self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertIsNotNone(self.vic.in_deck('Silver'))
-        self.assertIsNone(self.vic.inHand('Silver'))
+        self.assertIsNone(self.vic.in_hand('Silver'))
 
 
 ###############################################################################

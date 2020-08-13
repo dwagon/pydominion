@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Banditcamp(Card):
+class Card_Banditcamp(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = 'Bandit Camp'
         self.required_cards = ['Spoils']
@@ -35,8 +35,8 @@ class Test_Banditcamp(unittest.TestCase):
         bc = self.g['Bandit Camp'].remove()
         self.plr.addCard(bc, 'hand')
         self.plr.playCard(bc)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.discardpile[0].name, 'Spoils')
 
 

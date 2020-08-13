@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Champion(Card):
+class Card_Champion(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"
         self.name = 'Champion'
         self.permanent = True
@@ -33,12 +33,12 @@ class Test_Champion(unittest.TestCase):
 
     def test_champion(self):
         """ Play a champion """
-        self.plr.addCard(self.card, 'duration')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.plr.addCard(self.card, Card.TYPE_DURATION)
+        self.assertEqual(self.plr.get_actions(), 1)
         moat = self.g['Moat'].remove()
         self.plr.addCard(moat, 'hand')
         self.plr.playCard(moat)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

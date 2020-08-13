@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Hero(Card):
+class Card_Hero(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = "+2 Coin, Gain a Treasure; Discard to replace with Champion"
         self.name = 'Hero'
         self.purchasable = False
@@ -19,7 +20,7 @@ class Card_Hero(Card):
 
     def special(self, game, player):
         """ Gain a treasure """
-        player.plrGainCard(cost=None, types={'treasure': True})
+        player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
 
     def hook_discardThisCard(self, game, player, source):
         """ Replace with Champion """
@@ -29,7 +30,6 @@ class Card_Hero(Card):
 ###############################################################################
 class Test_Hero(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -42,7 +42,7 @@ class Test_Hero(unittest.TestCase):
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 2)
-            self.assertIsNotNone(self.plr.inDiscard('Gold'))
+            self.assertIsNotNone(self.plr.in_discard('Gold'))
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise

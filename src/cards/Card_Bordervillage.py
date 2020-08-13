@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bordervillage(Card):
+class Card_Bordervillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
         self.name = 'Border Village'
         self.cost = 6
         self.cards = 1
@@ -38,13 +38,13 @@ class Test_Bordervillage(unittest.TestCase):
 
     def test_play(self):
         self.plr.playCard(self.bv)
-        self.assertEqual(self.plr.getActions(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
         self.plr.test_input = ['get estate']
         self.plr.gainCard('Border Village')
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
 
 ###############################################################################

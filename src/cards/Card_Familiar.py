@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Familiar(Card):
+class Card_Familiar(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'alchemy'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.ALCHEMY
         self.desc = "+1 card, +1 action; Each other player gains a Curse."
         self.name = 'Familiar'
         self.cards = 1
@@ -40,15 +40,15 @@ class Test_Familiar(unittest.TestCase):
         """ Play a familiar """
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.discardpile[0].name, 'Curse')
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_defended(self):
         self.victim.setHand('Gold', 'Moat')
         self.plr.playCard(self.card)
-        self.assertTrue(self.victim.discardpile.isEmpty())
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
+        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
 
 
 ###############################################################################

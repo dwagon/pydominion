@@ -10,7 +10,7 @@ from Landmark import Landmark
 class Landmark_Orchard(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When scoring, 4VP per differently named Action card you have 3 or more copies of."
         self.name = "Orchard"
 

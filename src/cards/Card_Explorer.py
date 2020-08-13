@@ -1,24 +1,23 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Explorer(Card):
+class Card_Explorer(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.desc = "Reveal a provice to gain gold else gain silver"
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.desc = """You may reveal a Province from your hand. If you do,
+            gain a Gold to your hand. If you don't, gain a Silver to your hand."""
         self.name = 'Explorer'
-        self.base = 'seaside'
+        self.base = Game.SEASIDE
         self.cost = 5
 
     def special(self, game, player):
-        """ You may reveal a Province card from you hand. If you
-            do, gain a Gold card, putting it into your hand. Otherise,
-            gain a Silver card, putting it into your hand """
-        prov = player.inHand('Province')
+        prov = player.in_hand('Province')
         if prov:
             player.revealCard(prov)
             player.output("Gained a Gold")
@@ -31,7 +30,6 @@ class Card_Explorer(Card):
 ###############################################################################
 class Test_Explorer(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Explorer'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -41,14 +39,14 @@ class Test_Explorer(unittest.TestCase):
     def test_province(self):
         self.plr.gainCard('Province', 'hand')
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Gold'))
+        self.assertTrue(self.plr.in_hand('Gold'))
         # 5 + province + gold
-        self.assertEqual(self.plr.handSize(), 7)
+        self.assertEqual(self.plr.hand.size(), 7)
 
     def test_no_province(self):
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertTrue(self.plr.in_hand('Silver'))
+        self.assertEqual(self.plr.hand.size(), 6)
 
 
 ###############################################################################

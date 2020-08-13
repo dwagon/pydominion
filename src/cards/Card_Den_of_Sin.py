@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Den_of_Sin(Card):
+class Card_Den_of_Sin(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night', 'duration']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
+        self.base = Game.NOCTURNE
         self.name = 'Den of Sin'
         self.cost = 2
 
@@ -37,14 +37,14 @@ class Test_Den_of_Sin(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gainCard('Den of Sin')
-        self.assertIsNotNone(self.plr.inHand('Den of Sin'))
+        self.assertIsNotNone(self.plr.in_hand('Den of Sin'))
 
     def test_duration(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 5 + 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################

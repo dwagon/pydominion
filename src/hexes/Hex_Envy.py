@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,8 +10,8 @@ from Hex import Hex
 class Hex_Envy(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Envious."
         self.name = "Envy"
         self.purchasable = False
@@ -23,7 +25,6 @@ class Hex_Envy(Hex):
 ###############################################################################
 class Test_Envy(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

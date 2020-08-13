@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Embargo(Card):
+class Card_Embargo(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """+2 Coin. Trash this card. Put an Embargo token on top of a Supply pile.
         When a player buys a card, he gains a Curse card per Embargo token on that pile."""
         self.name = 'Embargo'

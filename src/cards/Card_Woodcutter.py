@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
-class Card_Woodcutter(Card):
+###############################################################################
+class Card_Woodcutter(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+1 buys, +2 coin"
         self.name = 'Woodcutter'
         self.buys = 1
@@ -19,7 +21,6 @@ class Card_Woodcutter(Card):
 ###############################################################################
 class Test_Woodcutter(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Woodcutter'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

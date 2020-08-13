@@ -9,8 +9,7 @@ from Project import Project
 class Project_Silos(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, discard any number of Coppers, revealed, and draw that many cards."
         self.name = "Silos"
         self.cost = 4
@@ -23,7 +22,7 @@ class Project_Silos(Project):
                 choices.append(("Silo: Discard {} Coppers".format(num), num))
             ans = player.plrChooseOptions("Discard how many coppers? ", *choices)
             for _ in range(ans):
-                cu = player.inHand('Copper')
+                cu = player.in_hand('Copper')
                 player.discardCard(cu)
                 player.pickupCards(1)
 
@@ -41,9 +40,9 @@ class Test_Silos(unittest.TestCase):
         self.plr.setHand('Copper', 'Estate', 'Copper', 'Province')
         self.plr.test_input = ['2']
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.inDiscard('Copper'))
-        self.assertIsNone(self.plr.inHand('Copper'))
-        self.assertEqual(self.plr.handSize(), 4)
+        self.assertIsNotNone(self.plr.in_discard('Copper'))
+        self.assertIsNone(self.plr.in_hand('Copper'))
+        self.assertEqual(self.plr.hand.size(), 4)
 
 
 ###############################################################################

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Armory(Card):
+class Card_Armory(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = "Gain a card costing up to 4 putting it on top of your deck"
         self.name = 'Armory'
         self.cost = 4
@@ -32,15 +32,15 @@ class Test_Armory(unittest.TestCase):
     def test_gainzero(self):
         self.plr.test_input = ['finish']
         self.plr.playCard(self.armory)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertTrue(self.plr.discardpile.is_empty())
 
     def test_gainone(self):
         self.plr.test_input = ['Feast']
         self.plr.deck.empty()
         self.plr.playCard(self.armory)
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertTrue(self.plr.discardpile.isEmpty())
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertTrue(self.plr.discardpile.is_empty())
         self.assertLessEqual(self.plr.deck[-1].cost, 4)
 
 

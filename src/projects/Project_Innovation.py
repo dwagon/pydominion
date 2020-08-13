@@ -9,8 +9,7 @@ from Project import Project
 class Project_Innovation(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "The first time you gain an Action card in each of your turns, you may set it aside. If you do, play it."
         self.name = "Innovation"
         self.cost = 6
@@ -48,18 +47,18 @@ class Test_Innovation(unittest.TestCase):
         self.plr.test_input = ['Play card']
         self.plr.start_turn()
         self.plr.gainCard('Moat')
-        self.assertEqual(self.plr.handSize(), 5 + 1 + 2)
-        self.assertIsNotNone(self.plr.inHand('Moat'))
-        self.assertIsNone(self.plr.inDiscard('Moat'))
+        self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)
+        self.assertIsNotNone(self.plr.in_hand('Moat'))
+        self.assertIsNone(self.plr.in_discard('Moat'))
 
     def test_dontplay(self):
         self.plr.assign_project('Innovation')
         self.plr.test_input = ["Don't play"]
         self.plr.start_turn()
         self.plr.gainCard('Moat')
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertIsNone(self.plr.inHand('Moat'))
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertIsNone(self.plr.in_hand('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 
 ###############################################################################

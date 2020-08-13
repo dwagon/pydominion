@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Ironworks(Card):
+class Card_Ironworks(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "Gain a card costing up to 4. If it is an ... Action card, +1 Action; Treasure card, +1 Coin; Victory card, +1 Card"
         self.name = 'Iron Works'
         self.cost = 4
 
-    def special(self, player, game):
+    def special(self, game, player):
         """ Gain a card costing up to 4. If it is an action card:
             +1 action; treasure card +1 coin; victory card, +1 card"""
         c = player.plrGainCard(4, force=True)
@@ -29,7 +30,6 @@ class Card_Ironworks(Card):
 ###############################################################################
 class Test_Ironworks(unittest.TestCase):
     def setUp(self):
-        import Game
         # Make most of the cards too expensive to ensure we can select what we want
         initcards = ['Iron Works', 'Great Hall', 'Apprentice', 'Bandit Camp',
                      'City', 'Count', 'Duke', 'Library', 'Market', 'Rebuild']
@@ -44,27 +44,27 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.test_input = ['great']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_silver(self):
         """ Use Ironworks to gain a Silver """
         self.plr.test_input = ['Silver']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Silver')
-        self.assertEqual(self.plr.getActions(), 0)
+        self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_ironworks(self):
         """ Use Ironworks to gain an Ironworks """
         self.plr.test_input = ['iron']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, 'Iron Works')
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.handSize(), 5)
+        self.assertEqual(self.plr.hand.size(), 5)
 
 
 ###############################################################################

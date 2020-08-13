@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Farmingvillage(Card):
+class Card_Farmingvillage(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.desc = """+2 actions. Reveal cards from the top of your deck until you reveal an Action or Treasure card. Put that card into your hand and discard the other cards."""
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.desc = """+2 actions. Reveal cards from the top of your deck until
+            you reveal an Action or Treasure card. Put that card into your hand
+            and discard the other cards."""
         self.name = 'Farming Village'
         self.actions = 2
         self.cost = 4
@@ -25,15 +28,13 @@ class Card_Farmingvillage(Card):
                 player.output("Added %s to hand" % c.name)
                 player.addCard(c, 'hand')
                 break
-            else:
-                player.output("Picked up and discarded %s" % c.name)
-                player.discardCard(c)
+            player.output("Picked up and discarded %s" % c.name)
+            player.discardCard(c)
 
 
 ###############################################################################
 class Test_Farmingvillage(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Farming Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,8 +45,8 @@ class Test_Farmingvillage(unittest.TestCase):
         """ Play farming village with a treasure in deck """
         self.plr.setDeck('Estate', 'Estate', 'Silver', 'Estate', 'Estate')
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Silver'))
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertTrue(self.plr.in_hand('Silver'))
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Estate')
 
@@ -53,8 +54,8 @@ class Test_Farmingvillage(unittest.TestCase):
         """ Play farming village with an action in deck"""
         self.plr.setDeck('Estate', 'Estate', 'Farming Village', 'Estate', 'Estate')
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Farming Village'))
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertTrue(self.plr.in_hand('Farming Village'))
+        self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Estate')
 

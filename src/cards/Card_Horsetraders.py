@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Horsetraders(Card):
+class Card_Horsetraders(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.CORNUCOPIA
         self.desc = """+1 Buy. +3 Coins. Discard 2 cards.
         When another player plays an Attack card, you may set this aside from your hand.
         If you do, then at the start of your next turn, +1 Card and return this to your hand."""
@@ -25,13 +26,11 @@ class Card_Horsetraders(Card):
         """ When another player plays an Attack card, you may set
         this aside from your hand.  If you do, then at the start
         of your next turn, +1 Card and return this to your hand. """
-        pass
 
 
 ###############################################################################
 class Test_Horsetraders(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Horse Traders'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -44,7 +43,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getBuys(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.discardSize(), 2)
+        self.assertEqual(self.plr.discardpile.size(), 2)
 
 
 ###############################################################################

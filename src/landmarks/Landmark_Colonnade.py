@@ -9,7 +9,7 @@ from Landmark import Landmark
 class Landmark_Colonnade(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.name = "Colonnade"
 
     def desc(self, player):
@@ -25,7 +25,7 @@ class Landmark_Colonnade(Landmark):
             return
         if not self._vp:
             return
-        if player.inPlayed(card.name):
+        if player.in_played(card.name):
             self._vp -= 2
             player.addScore('Colonnade', 2)
             player.output("Gained 2VP from Colonnade")

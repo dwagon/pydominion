@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Hostelry(Card):
+class Card_Hostelry(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.MENAGERIE
         self.name = 'Hostelry'
         self.cards = 1
         self.actions = 2
@@ -52,16 +52,16 @@ class Test_Hostelry(unittest.TestCase):
     def test_playcard(self):
         """ Play a card """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         """ Gain the card """
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.test_input = ['Copper', 'Silver', 'Finish']
         self.plr.gainCard('Hostelry')
-        self.assertIsNotNone(self.plr.inDiscard('Horse'))
-        self.assertIsNone(self.plr.inHand('Silver'))
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
 
 
 ###############################################################################

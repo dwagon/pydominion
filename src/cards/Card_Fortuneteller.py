@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Fortuneteller(Card):
+class Card_Fortuneteller(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.CORNUCOPIA
         self.desc = """2 Coin. Each other player reveals cards from the top of his deck
         until he reveals a Victory or Curse card. He puts it on top and discards the other revealed cards."""
         self.name = 'Fortune Teller'
@@ -46,8 +46,8 @@ class Test_Fortuneteller(unittest.TestCase):
         self.vic.setDeck('Duchy', 'Silver', 'Copper')
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.vic.inDiscard('Silver'))
-        self.assertIsNotNone(self.vic.inDiscard('Copper'))
+        self.assertIsNotNone(self.vic.in_discard('Silver'))
+        self.assertIsNotNone(self.vic.in_discard('Copper'))
         self.assertEqual(self.vic.deck[-1].name, 'Duchy')
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
 import Game
 from Boon import Boon
 
@@ -9,8 +10,8 @@ from Boon import Boon
 class Boon_Suns_Gift(Boon):
     def __init__(self):
         Boon.__init__(self)
-        self.cardtype = 'boon'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_BOON
+        self.base = Game.NOCTURNE
         self.desc = "Look at the top 4 cards of your deck. Discard any number of them and put the rest back in any order."
         self.name = "The Sun's Gift"
         self.purchasable = False
@@ -48,8 +49,8 @@ class Test_Suns_Gift(unittest.TestCase):
         try:
             self.assertIsNotNone(self.plr.in_deck('Silver'))
             self.assertIsNotNone(self.plr.in_deck('Gold'))
-            self.assertIsNotNone(self.plr.inDiscard('Province'))
-            self.assertIsNotNone(self.plr.inDiscard('Duchy'))
+            self.assertIsNotNone(self.plr.in_discard('Province'))
+            self.assertIsNotNone(self.plr.in_discard('Duchy'))
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

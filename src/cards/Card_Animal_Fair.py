@@ -3,15 +3,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Animal_Fair(Card):
+class Card_Animal_Fair(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'menagerie'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.MENAGERIE
         self.desc = """+4 Coin; +1 Buy per empty supply pile.
             Instead of paying this card's cost, you may trash an Action card
             from your hand."""
@@ -21,7 +21,7 @@ class Card_Animal_Fair(Card):
         self.cost = 7
 
     def special(self, game, player):
-        empties = sum([1 for st in game.cardpiles if game[st].isEmpty()])
+        empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
         player.addBuys(empties)
 
     def todo_hook_buy_this_card(self, game, player):

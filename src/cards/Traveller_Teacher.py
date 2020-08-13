@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Teacher(Card):
+class Card_Teacher(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reserve']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
+        self.base = Game.ADVENTURE
         self.desc = """At the start of your turn, you may call this,
-        to move your +1 Card, +1 Action, +1 Buy or +1 Coin token
-        to an Action Supply pile you have no tokens on"""
+            to move your +1 Card, +1 Action, +1 Buy or +1 Coin token
+            to an Action Supply pile you have no tokens on"""
         self.name = 'Teacher'
         self.purchasable = False
         self.cost = 6
@@ -38,7 +39,6 @@ class Card_Teacher(Card):
 ###############################################################################
 class Test_Teacher(unittest.TestCase):
     def setUp(self):
-        import Game
         initcards = ['Page', 'Cellar', 'Chapel', 'Moat', 'Chancellor', 'Village', 'Woodcutter', 'Workshop', 'Bureaucrat', 'Venture']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
         self.g.start_game()

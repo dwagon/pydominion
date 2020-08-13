@@ -1,11 +1,12 @@
-from Card import Card
+import Game
+import Card
 
 
-class Card_Silver(Card):
+class Card_Silver(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.DOMINION
         self.desc = "+2 coin"
         self.playable = False
         self.basecard = True

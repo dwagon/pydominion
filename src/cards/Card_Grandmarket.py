@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Grandmarket(Card):
+class Card_Grandmarket(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "+1 card, +1 action, +1 buy, +2 coin"
         self.name = 'Grand Market'
         self.cost = 6
@@ -39,9 +39,9 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCard(self.gm, 'hand')
         self.plr.playCard(self.gm)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getActions(), 1)
+        self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getBuys(), 2)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_nobuy(self):
         self.plr.setHand('Copper', 'Gold', 'Gold')

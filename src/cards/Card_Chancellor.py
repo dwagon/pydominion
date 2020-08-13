@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Chancellor(Card):
+class Card_Chancellor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'dominion'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DOMINION
         self.desc = "+2 Coin; You may immediately put your deck into your discard pile."
         self.name = 'Chancellor'
         self.coin = 2
@@ -40,8 +40,8 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.test_input = ["Don't discard"]
         self.plr.playCard(self.ccard)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.deckSize(), 3)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.deck.size(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
 
     def test_discard(self):
         self.plr.setDeck('Copper', 'Silver', 'Gold')
@@ -49,8 +49,8 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.test_input = ['discard deck']
         self.plr.playCard(self.ccard)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.deckSize(), 0)
-        self.assertEqual(self.plr.discardSize(), 6)
+        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 6)
 
 
 ###############################################################################

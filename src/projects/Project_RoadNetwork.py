@@ -9,8 +9,7 @@ from Project import Project
 class Project_RoadNetwork(Project):
     def __init__(self):
         Project.__init__(self)
-        self.cardtype = 'project'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When another player gains a Victory card, +1 Card."
         self.name = "Road Network"
         self.cost = 5
@@ -32,15 +31,15 @@ class Test_RoadNetwork(unittest.TestCase):
         self.plr.assign_project('Road Network')
         self.plr.setDeck('Gold')
         self.other.gainCard('Duchy')
-        self.assertEqual(self.plr.handSize(), 5 + 1)
-        self.assertIsNotNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
 
     def test_not_victory(self):
         self.plr.assign_project('Road Network')
         self.plr.setDeck('Gold')
         self.other.gainCard('Copper')
-        self.assertEqual(self.plr.handSize(), 5)
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

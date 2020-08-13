@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_HauntedWoods(Card):
+class Card_HauntedWoods(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack', 'duration']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
+        self.base = Game.ADVENTURE
         self.desc = """Until you next turn, when any other player buys a card,
             he puts his hand on top of his deck in any order.
             At the start of your next turn: +3 Cards"""
@@ -53,7 +53,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.assertIsNotNone(self.vic.in_deck('Province'))
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
 
 
 ###############################################################################

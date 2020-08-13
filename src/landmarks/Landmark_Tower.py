@@ -9,13 +9,13 @@ from Landmark import Landmark
 class Landmark_Tower(Landmark):
     def __init__(self):
         Landmark.__init__(self)
-        self.base = 'empires'
+        self.base = Game.EMPIRES
         self.desc = "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
         self.name = "Tower"
 
     def hook_end_of_game(self, game, player):
         player.addScore('Tower', 0)
-        empties = [st for st in game.cardpiles if game[st].isEmpty() and not game[st].isVictory()]
+        empties = [st for st in game.cardpiles if game[st].is_empty() and not game[st].isVictory()]
         for emp in empties:
             for card in player.allCards():
                 if card.name == emp:

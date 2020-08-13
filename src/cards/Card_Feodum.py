@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Feodum(Card):
+class Card_Feodum(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'victory'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_VICTORY
+        self.base = Game.DARKAGES
         self.desc = "1VP / 3 silvers - trash for 3 silvers"
         self.name = 'Feodum'
         self.playable = False
@@ -54,7 +54,7 @@ class Test_Feodum(unittest.TestCase):
         card = self.g['Feodum'].remove()
         self.plr.addCard(card, 'hand')
         self.plr.trashCard(card)
-        self.assertEqual(self.plr.discardSize(), 3)
+        self.assertEqual(self.plr.discardpile.size(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, 'Silver')
 

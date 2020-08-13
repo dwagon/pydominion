@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Catacombs(Card):
+class Card_Catacombs(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """Look at the top 3 cards of your deck. Choose one: Put them
             into your hand; or discard them and +3 cards. When you trash this, gain a cheaper card."""
         self.name = 'Catacombs'
@@ -49,7 +49,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.test_input = ['keep the three']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == 'Gold'])
         self.assertEqual(numgold, 3)
 
@@ -58,7 +58,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.test_input = ['discard and draw']
         self.plr.playCard(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(self.plr.handSize(), 8)
+        self.assertEqual(self.plr.hand.size(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == 'Gold'])
         self.assertEqual(numgold, 0)
         numprov = sum([1 for c in self.plr.hand if c.name == 'Province'])
@@ -69,7 +69,7 @@ class Test_Catacombs(unittest.TestCase):
     def test_trash(self):
         self.plr.test_input = ['get estate']
         self.plr.trashCard(self.cat)
-        self.assertEqual(self.plr.discardSize(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)
         self.assertIsNotNone(self.g.in_trash('Catacombs'))
 

@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_IGG(Card):
+class Card_IGG(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'hinterlands'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.HINTERLANDS
         self.required_cards = ['Curse']
         self.name = 'Ill-Gotten Gains'
         self.cost = 5
@@ -52,14 +52,14 @@ class Test_IGG(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['copper']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inHand('Copper'))
+        self.assertIsNotNone(self.plr.in_hand('Copper'))
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_gain(self):
         """ Gain an Ill-Gotten Gains"""
         self.plr.setHand('Estate')
         self.plr.gainCard('Ill-Gotten Gains')
-        self.assertIsNotNone(self.vic.inDiscard('Curse'))
+        self.assertIsNotNone(self.vic.in_discard('Curse'))
 
 
 ###############################################################################

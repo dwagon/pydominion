@@ -3,16 +3,16 @@
 import unittest
 import random
 import Game
-from Card import Card
+import Card
 from PlayArea import PlayArea
 
 
 ###############################################################################
-class Card_Druid(Card):
+class Card_Druid(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'fate']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.base = Game.NOCTURNE
         self.desc = "+1 Buy; Receive one of the set-aside Boons"
         self.name = 'Druid'
         self.buys = 1
@@ -30,9 +30,9 @@ class Card_Druid(Card):
             sel = '%d' % i
             bn = list(game._druid_area)[i]
             toprint = "Receive {}: {}".format(bn.name, bn.description(player))
-            options.append({'selector': sel, 'print': toprint, 'boon': bn})
+            options.append({'selector': sel, 'print': toprint, Card.TYPE_BOON: bn})
         b = player.userInput(options, "Which boon? ")
-        player.receive_boon(boon=b['boon'], discard=False)
+        player.receive_boon(boon=b[Card.TYPE_BOON], discard=False)
 
 
 ###############################################################################

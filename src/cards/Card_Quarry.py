@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-from Card import Card
 import unittest
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Quarry(Card):
+class Card_Quarry(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'treasure'
-        self.base = 'prosperity'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.PROSPERITY
         self.desc = "+1 Coin. While this is in play, Action cards cost 2 less, but not less than 0."
         self.name = 'Quarry'
         self.coin = 1
@@ -24,7 +25,6 @@ class Card_Quarry(Card):
 ###############################################################################
 class Test_Quarry(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Quarry', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

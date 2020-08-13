@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Bat(Card):
+class Card_Bat(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['night']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_NIGHT]
+        self.base = Game.NOCTURNE
         self.desc = "Trash up to 2 cards from your hand. If you trashed at least one, exchange this for a Vampire."
         self.name = 'Bat'
         self.cost = 2
@@ -32,13 +32,13 @@ class Test_Bat(unittest.TestCase):
         self.card = self.g['Bat'].remove()
 
     def test_play(self):
-        self.plr.phase = 'night'
+        self.plr.phase = Card.TYPE_NIGHT
         self.plr.setHand('Duchy', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Trash Silver', 'Trash Gold', 'Finish']
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.inDiscard('Bat'))
-        self.assertIsNotNone(self.plr.inDiscard('Vampire'))
+        self.assertIsNone(self.plr.in_discard('Bat'))
+        self.assertIsNotNone(self.plr.in_discard('Vampire'))
 
 
 ###############################################################################

@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_FaithfulHound(Card):
+class Card_FaithfulHound(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'reaction']
-        self.base = 'nocturne'
-        self.desc = "+2 Cards; When you discard this other than during Clean-up, you may set it aside, and put it into your hand at end of turn."
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.base = Game.NOCTURNE
+        self.desc = """+2 Cards; When you discard this other than during Clean-up,
+            you may set it aside, and put it into your hand at end of turn."""
         self.name = 'Faithful Hound'
         self.cards = 2
         self.cost = 2
@@ -23,7 +25,6 @@ class Card_FaithfulHound(Card):
 ###############################################################################
 class Test_FaithfulHound(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Faithful Hound'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -34,7 +35,7 @@ class Test_FaithfulHound(unittest.TestCase):
         """ Play a Faithful Hound """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.handSize(), 5+2)
+        self.assertEqual(self.plr.hand.size(), 5+2)
 
     def test_discard(self):
         pass    # TODO

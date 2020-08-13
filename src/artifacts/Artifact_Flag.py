@@ -9,8 +9,7 @@ from Artifact import Artifact
 class Artifact_Flag(Artifact):
     def __init__(self):
         Artifact.__init__(self)
-        self.cardtype = 'artifact'
-        self.base = 'renaissance'
+        self.base = Game.RENAISSANCE
         self.desc = "When drawing your hand, +1 Card"
         self.name = "Flag"
 

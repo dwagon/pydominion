@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Smugglers(Card):
+class Card_Smugglers(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """Gain a copy of a card costing up to 6 that the player to your right gained on his last turn."""
         self.name = 'Smugglers'
         self.cost = 3
@@ -40,7 +40,7 @@ class Test_Smugglers(unittest.TestCase):
         self.plr.test_input = ['gold']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
 
 
 ###############################################################################

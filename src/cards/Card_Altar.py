@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Altar(Card):
+class Card_Altar(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'darkages'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.DARKAGES
         self.desc = """Trash a card from your hand. Gain a card costing up to 5 Coin."""
         self.name = 'Altar'
         self.cost = 6
@@ -37,7 +37,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
         self.plr.test_input = ['Province', 'Moat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.inDiscard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard('Moat'))
         self.assertIsNotNone(self.g.in_trash('Province'))
 
 

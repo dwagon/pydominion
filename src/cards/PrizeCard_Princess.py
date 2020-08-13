@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Princess(Card):
+class Card_Princess(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'prize']
-        self.base = 'cornucopia'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_PRIZE]
+        self.base = Game.CORNUCOPIA
         self.name = "Princess"
         self.purchasable = False
         self.cost = 0
@@ -23,7 +24,6 @@ class Card_Princess(Card):
 ###############################################################################
 class Test_Princess(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tournament'])
         self.g.start_game()
         self.plr = self.g.player_list(0)

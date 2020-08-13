@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_PirateShip(Card):
+class Card_PirateShip(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'attack']
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.base = Game.SEASIDE
         self.desc = """Choose one: Each other player reveals the top 2 cards of his deck,
         trashes a revealed Treasure that you choose, discards the rest,
         and if anyone trashed a Treasure you take a Coin token;
@@ -23,10 +23,10 @@ class Card_PirateShip(Card):
             "Pick one",
             ("Each other player reveals the top 2 cards of his deck, trashes a " +
              "revealed Treasure that you choose, discards the rest, and if anyone " +
-             "trashed a Treasure you take a Coin token", 'attack'),
+             "trashed a Treasure you take a Coin token", Card.TYPE_ATTACK),
             ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend')
         )
-        if choice == 'attack':
+        if choice == Card.TYPE_ATTACK:
             trashed = False
             for victim in player.attackVictims():
                 if self.attack_player(player, victim):

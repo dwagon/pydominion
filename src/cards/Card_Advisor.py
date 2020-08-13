@@ -2,15 +2,15 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
 ###############################################################################
-class Card_Advisor(Card):
+class Card_Advisor(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'guilds'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.GUILDS
         self.desc = "+1 action, +3 cards, plr to left discards one of them"
         self.name = 'Advisor'
         self.actions = 1
@@ -68,10 +68,10 @@ class Test_Advisor(unittest.TestCase):
         self.plr.setDeck('Duchy', 'Silver', 'Gold')
         self.plr2.test_input = ['discard gold']
         self.plr.playCard(self.acard)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 5 + 3 - 1)
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
-        self.assertIsNone(self.plr.inHand('Gold'))
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
 
 
 ###############################################################################

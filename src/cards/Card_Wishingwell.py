@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Wishingwell(Card):
+class Card_Wishingwell(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'intrigue'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.INTRIGUE
         self.desc = "+1 Card +1 Action; Name a card, then reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = 'Wishing Well'
         self.actions = 1
@@ -41,7 +42,6 @@ class Card_Wishingwell(Card):
 ###############################################################################
 class Test_Wishingwell(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wishing Well'], badcards=["Fool's Gold", "Tournament", "Pooka"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -52,23 +52,23 @@ class Test_Wishingwell(unittest.TestCase):
         """ No guess still gets a card and action """
         self.plr.test_input = ['no guess']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.handSize(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.hand.size(), 6)
 
     def test_good(self):
         """ A good guess means the card ends up in the hand"""
         self.plr.setDeck('Silver', 'Copper')
         self.plr.test_input = ['Silver']
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.inHand('Silver'))
+        self.assertTrue(self.plr.in_hand('Silver'))
 
     def test_bad(self):
         """ Guessing badly should result in the card staying on the deck """
         self.plr.setDeck('Province', 'Copper')
         self.plr.test_input = ['Gold']
         self.plr.playCard(self.card)
-        self.assertTrue(not self.plr.inHand('Gold'))
-        self.assertTrue(not self.plr.inHand('Province'))
+        self.assertTrue(not self.plr.in_hand('Gold'))
+        self.assertTrue(not self.plr.in_hand('Province'))
 
 
 ###############################################################################

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+import Card
+import Game
 from Hex import Hex
 
 
@@ -8,8 +10,8 @@ from Hex import Hex
 class Hex_Plague(Hex):
     def __init__(self):
         Hex.__init__(self)
-        self.cardtype = 'hex'
-        self.base = 'nocturne'
+        self.cardtype = Card.TYPE_HEX
+        self.base = Game.NOCTURNE
         self.desc = "Gain a Curse to your hand."
         self.name = "Plague"
         self.purchasable = False
@@ -22,7 +24,6 @@ class Hex_Plague(Hex):
 ###############################################################################
 class Test_Plague(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -34,7 +35,7 @@ class Test_Plague(unittest.TestCase):
     def test_plague(self):
         self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
         self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.inHand('Curse'))
+        self.assertIsNotNone(self.plr.in_hand('Curse'))
 
 
 ###############################################################################

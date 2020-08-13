@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Fugitive(Card):
+class Card_Fugitive(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'traveller']
-        self.base = 'adventure'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
+        self.base = Game.ADVENTURE
         self.desc = "+1 Action, +2 Cards; Discard a card"
         self.name = 'Fugitive'
         self.purchasable = False
@@ -29,7 +30,6 @@ class Card_Fugitive(Card):
 ###############################################################################
 class Test_Fugitive(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -41,10 +41,10 @@ class Test_Fugitive(unittest.TestCase):
         self.plr.test_input = ['province']
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getActions(), 1)
-        self.assertEqual(self.plr.discardSize(), 1)
-        self.assertIsNotNone(self.plr.inDiscard('Province'))
-        self.assertEqual(self.plr.handSize(), 2)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertEqual(self.plr.hand.size(), 2)
 
 
 ###############################################################################

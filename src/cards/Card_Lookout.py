@@ -2,14 +2,14 @@
 
 import unittest
 import Game
-from Card import Card
+import Card
 
 
-class Card_Lookout(Card):
+class Card_Lookout(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = 'action'
-        self.base = 'seaside'
+        Card.Card.__init__(self)
+        self.cardtype = Card.TYPE_ACTION
+        self.base = Game.SEASIDE
         self.desc = """+1 Action; Look at the top 3 cards of your deck.
             Trash one of them. Discard one of them. Put the other one on top of
             your deck"""
@@ -74,7 +74,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.test_input = ['Province', 'Gold']
         self.plr.playCard(self.lookout)
         self.assertIsNotNone(self.g.in_trash('Province'))
-        self.assertIsNotNone(self.plr.inDiscard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
         self.assertEqual(self.plr.deck[0].name, 'Copper')
         self.assertEqual(self.plr.deck[1].name, 'Estate')
 
@@ -85,7 +85,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.addCard(self.lookout, 'hand')
         self.plr.playCard(self.lookout)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.plr.discardSize(), 0)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
 
 ###############################################################################

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-from Card import Card
+import Game
+import Card
 
 
 ###############################################################################
-class Card_Zombie_Apprentice(Card):
+class Card_Zombie_Apprentice(Card.Card):
     def __init__(self):
-        Card.__init__(self)
-        self.cardtype = ['action', 'zombie']
-        self.base = 'nocturne'
+        Card.Card.__init__(self)
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ZOMBIE]
+        self.base = Game.NOCTURNE
         self.desc = "You may trash an Action card from your hand for +3 Cards and +1 Action."
         self.name = 'Zombie Apprentice'
         self.cost = 3
@@ -34,7 +35,6 @@ class Card_Zombie_Apprentice(Card):
 ###############################################################################
 class Test_Zombie_Apprentice(unittest.TestCase):
     def setUp(self):
-        import Game
         self.g = Game.Game(quiet=True, numplayers=1, initcards=['Zombie Apprentice', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -50,8 +50,8 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.plr.setHand('Moat')
         self.plr.test_input = ['Moat']
         self.plr.playCard(self.card, discard=False, costAction=False)
-        self.assertEqual(self.plr.handSize(), 3)
-        self.assertEqual(self.plr.getActions(), 2)
+        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.get_actions(), 2)
         self.assertIsNotNone(self.g.in_trash('Zombie Apprentice'))
         self.assertIsNotNone(self.g.in_trash('Moat'))
 
