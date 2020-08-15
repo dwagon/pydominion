@@ -8,7 +8,7 @@ import Card
 from PlayArea import PlayArea
 from Option import Option
 from CardPile import CardPile
-from EventPile import EventPile
+from Event import EventPile
 from ProjectPile import ProjectPile
 
 
@@ -1423,25 +1423,30 @@ class Player(object):
         return True
 
     ###########################################################################
-    def performEvent(self, event):
-        assert issubclass(event.__class__, EventPile)
+    def performEvent(self, evnt):
+        try:
+            assert isinstance(evnt, EventPile)
+        except AssertionError:
+            print("Event={} ({})".format(evnt, type(evnt)))
+            raise
+
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
         if self.debt != 0:
             self.output("Must pay off debt first")
-        if self.coin < event.cost:
-            self.output("Need %d coins to perform this event" % event.cost)
+        if self.coin < evnt.cost:
+            self.output("Need %d coins to perform this event" % evnt.cost)
             return False
         self.buys -= 1
-        self.coin -= event.cost
-        self.debt += event.debtcost
-        self.buys += event.buys
-        self.output("Using event %s" % event.name)
-        self.currcards.append(event)
-        event.special(game=self.game, player=self)
+        self.coin -= evnt.cost
+        self.debt += evnt.debtcost
+        self.buys += evnt.buys
+        self.output("Using event %s" % evnt.name)
+        self.currcards.append(evnt)
+        evnt.special(game=self.game, player=self)
         self.currcards.pop()
-        self.played_events.add(event)
+        self.played_events.add(evnt)
         return True
 
     ###########################################################################

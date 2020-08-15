@@ -13,7 +13,7 @@ from ArtifactPile import ArtifactPile
 from BoonPile import BoonPile
 from BotPlayer import BotPlayer
 from CardPile import CardPile
-from EventPile import EventPile
+from Event import EventPile
 from HexPile import HexPile
 from LandmarkPile import LandmarkPile
 from Names import playerNames
@@ -211,17 +211,22 @@ class Game(object):     # pylint: disable=too-many-public-methods
     ###########################################################################
     def loadWays(self):
         """ TODO """
-        self.loadNonKingdomCards('Way', self.waycards, self.numways, WayPile, self.ways)
+        self.ways = self.loadNonKingdomCards('Way', self.waycards, self.numways, WayPile)
 
     ###########################################################################
     def loadEvents(self):
         """ TODO """
-        self.loadNonKingdomCards('Event', self.eventcards, self.numevents, EventPile, self.events)
+        self.events = self.loadNonKingdomCards(
+            cardtype='Event',
+            specified=self.eventcards,
+            numrequired=self.numevents,
+            cardKlass=EventPile
+        )
 
     ###########################################################################
     def loadLandmarks(self):
         """ TODO """
-        self.loadNonKingdomCards('Landmark', self.landmarkcards, self.numlandmarks, LandmarkPile, self.landmarks)
+        self.landmarks = self.loadNonKingdomCards('Landmark', self.landmarkcards, self.numlandmarks, LandmarkPile)
 
     ###########################################################################
     def loadBoons(self):
@@ -229,8 +234,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         if self.boons:
             return
         self.output("Using boons")
-        d = {}
-        self.loadNonKingdomCards('Boon', None, None, BoonPile, d)
+        d = self.loadNonKingdomCards('Boon', None, None, BoonPile)
         self.boons = list(d.values())
         random.shuffle(self.boons)
 
@@ -239,9 +243,8 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ TODO """
         if self.hexes:
             return
-        d = {}
         self.output("Using hexes")
-        self.loadNonKingdomCards('Hex', None, None, HexPile, d)
+        d = self.loadNonKingdomCards('Hex', None, None, HexPile)
         self.hexes = list(d.values())
         random.shuffle(self.hexes)
 
@@ -251,7 +254,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         if self.states:
             return
         self.output("Using states")
-        self.loadNonKingdomCards('State', None, None, StatePile, self.states)
+        self.states = self.loadNonKingdomCards('State', None, None, StatePile)
 
     ###########################################################################
     def loadArtifacts(self):
@@ -259,7 +262,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         if self.artifacts:
             return
         self.output("Using artifacts")
-        self.loadNonKingdomCards('Artifact', None, None, ArtifactPile, self.artifacts)
+        self.artifacts = self.loadNonKingdomCards('Artifact', None, None, ArtifactPile)
 
     ###########################################################################
     def loadProjects(self):
@@ -267,11 +270,17 @@ class Game(object):     # pylint: disable=too-many-public-methods
         if self.projects:
             return
         self.output("Using projects")
-        self.loadNonKingdomCards('Project', self.initprojects, self.numprojects, ProjectPile, self.projects)
+        self.projects = self.loadNonKingdomCards('Project', self.initprojects, self.numprojects, ProjectPile)
 
     ###########################################################################
-    def loadNonKingdomCards(self, cardtype, specified, numspecified, cardKlass, dest):
-        """ TODO """
+    def loadNonKingdomCards(self, cardtype, specified, numrequired, cardKlass):
+        """ Load non kingdom cards into the game
+        If specific cards are required they need to be in `specified`
+        Up to numrequired cards will be used
+
+        Returns a dictionary; key is the name, value is the instance
+        """
+        dest = {}
         available = self.getAvailableCards(cardtype)
         # Specified cards
         if specified is not None:
@@ -285,20 +294,21 @@ class Game(object):     # pylint: disable=too-many-public-methods
                 except (ValueError, KeyError):
                     sys.stderr.write("Unknown %s '%s'\n" % (cardtype, nkc))
                     sys.exit(1)
-        if numspecified is not None:
+        if numrequired is not None:
             # To make up the numbers
-            while len(dest) < numspecified:
+            while len(dest) < numrequired:
                 nkc = random.choice(available)
                 klass = self.cardmapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
                 available.remove(nkc)
-        else:
+        else:   # Do them all
             for nkc in available:
                 klass = self.cardmapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
 
         for crd in dest:
             self.output("Playing with %s %s" % (cardtype, crd))
+        return dest
 
     ###########################################################################
     def guess_cardname(self, name, prefix='Card'):
