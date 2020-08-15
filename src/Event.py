@@ -1,8 +1,10 @@
+""" http://wiki.dominionstrategy.com/index.php/Event """
 from Card import Card
 
 
 ###############################################################################
 class Event(Card):
+    """ Class representing events - mostly just card code """
     pass
 
 
