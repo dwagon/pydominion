@@ -8,7 +8,7 @@ class Event(Card):
 
 ###############################################################################
 class EventPile(object):
-    """ Pile of Events but events are only singletons 
+    """ Pile of Events but events are only singletons
         Here so Game code can treat every card type like a pile of cards """
     def __init__(self, cardname, klass):
         self.cardname = cardname
