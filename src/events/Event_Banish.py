@@ -27,8 +27,11 @@ class Event_Banish(Event):
         if card is None:
             return
         if player.hand.count(card) == 1:
-            player.exile_card(card)
-            player.hand.remove(card)
+            for crd in player.hand:
+                if crd.name == card:
+                    player.exile_card(crd)
+                    player.hand.remove(crd)
+                    break
         else:
             options = []
             for i in range(player.hand.count(card)+1):
@@ -37,8 +40,11 @@ class Event_Banish(Event):
                 "How many to exile",
                 *options)
             for _ in range(count):
-                player.exile_card(card)
-                player.hand.remove(card)
+                for crd in player.hand:
+                    if crd.name == card:
+                        player.exile_card(crd)
+                        player.hand.remove(crd)
+                        break
 
 
 ###############################################################################
@@ -46,27 +52,27 @@ class Test_Banish(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, eventcards=['Banish'],
-            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop'],
-            badcards=['Hostelry', 'Border Village', 'Inn', 'Cursed Village']
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events['Banish']
 
-    def test_Banish(self):
+    def test_Banish_multi(self):
         """ Use Banish """
-        self.plr.addCoin(5)
+        self.plr.addCoin(4)
+        self.plr.setHand('Estate', 'Estate', 'Estate', 'Duchy')
+        self.plr.test_input = ['Estate', '2']
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Horse'))
-        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertIsNotNone(self.plr.in_exile('Estate'))
+        self.assertIsNotNone(self.plr.in_hand('Estate'))
 
-    def test_no_Banish(self):
-        """ Use Banish with played lots """
-        self.plr.setPlayed('Copper', 'Silver', 'Gold', 'Copper', 'Silver', 'Gold')
-        self.plr.addCoin(5)
+    def test_Banish_single(self):
+        """ Use Banish """
+        self.plr.addCoin(4)
+        self.plr.setHand('Estate', 'Estate', 'Estate', 'Duchy')
+        self.plr.test_input = ['Duchy']
         self.plr.performEvent(self.card)
-        self.assertIsNone(self.plr.in_discard('Horse'))
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertIsNotNone(self.plr.in_exile('Duchy'))
 
 
 ###############################################################################
