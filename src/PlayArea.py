@@ -1,5 +1,9 @@
 import random
 import sys
+import Card
+import CardPile
+import Event
+import BoonPile
 
 
 ###############################################################################
@@ -13,6 +17,11 @@ class PlayArea(object):
         return "<PlayArea: %s>" % ", ".join([c.name for c in self.cards])
 
     def add(self, card):
+        try:
+            assert isinstance(card, (Card.Card, CardPile.CardPile, Event.EventPile, BoonPile.BoonPile))
+        except AssertionError:
+            print("Card={} ({})".format(card, type(card)))
+            raise
         self.cards.append(card)
 
     def remove(self, card):

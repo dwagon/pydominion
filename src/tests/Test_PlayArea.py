@@ -2,6 +2,7 @@
 
 import unittest
 from PlayArea import PlayArea
+from Card import Card
 
 
 ###############################################################################
@@ -20,9 +21,11 @@ class Test_PlayArea(unittest.TestCase):
         self.assertEqual(s.count(CT('c')), 2)
 
     def test_add(self):
-        s = PlayArea(['a'])
-        s.add('b')
-        self.assertEqual(s.cards, ['a', 'b'])
+        card_a = Card()
+        card_b = Card()
+        s = PlayArea([card_a])
+        s.add(card_b)
+        self.assertEqual(s.cards, [card_a, card_b])
 
     def test_remove(self):
         s = PlayArea(['a', 'b'])
