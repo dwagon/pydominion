@@ -12,9 +12,9 @@ class Card_PirateShip(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.SEASIDE
         self.desc = """Choose one: Each other player reveals the top 2 cards of his deck,
-        trashes a revealed Treasure that you choose, discards the rest,
-        and if anyone trashed a Treasure you take a Coin token;
-        or, +1 per Coin token you've taken with Pirate Ships this game."""
+            trashes a revealed Treasure that you choose, discards the rest,
+            and if anyone trashed a Treasure you take a Coin token;
+            or, +1 per Coin token you've taken with Pirate Ships this game."""
         self.name = 'Pirate Ship'
         self.cost = 4
 
@@ -23,10 +23,10 @@ class Card_PirateShip(Card.Card):
             "Pick one",
             ("Each other player reveals the top 2 cards of his deck, trashes a " +
              "revealed Treasure that you choose, discards the rest, and if anyone " +
-             "trashed a Treasure you take a Coin token", Card.TYPE_ATTACK),
+             "trashed a Treasure you take a Coin token", 'attack'),
             ("+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship, 'spend')
         )
-        if choice == Card.TYPE_ATTACK:
+        if choice == 'attack':
             trashed = False
             for victim in player.attackVictims():
                 if self.attack_player(player, victim):
@@ -51,14 +51,13 @@ class Card_PirateShip(Card.Card):
             to_trash = player.plrTrashCard(
                 prompt="Trash a card from %s" % victim.name,
                 cardsrc=cards)
-            if to_trash:
-                trashed = True
-                for card in cards:
-                    if card not in to_trash:
-                        victim.addCard(card, 'discard')
-                        victim.output("Discarded %s" % card.name)
-                    else:
-                        victim.output("Trashed %s" % card.name)
+            trashed = True
+            for card in cards:
+                if card not in to_trash:
+                    victim.addCard(card, 'discard')
+                    victim.output("Discarded %s" % card.name)
+                else:
+                    victim.output("Trashed %s" % card.name)
         else:
             player.output("Player %s has no treasures to trash" % victim.name)
         return trashed
@@ -90,6 +89,13 @@ class Test_PirateShip(unittest.TestCase):
         except AssertionError:      # pragma: no cover
             self.g.print_state()
             raise
+
+    def test_trash_nothing(self):
+        """ Play the card but chose to not trash anything """
+        self.vic.setDeck('Copper', 'Estate')
+        self.plr.test_input = ['Each other', 'Finish selecting']
+        self.plr.playCard(self.card)
+        self.assertIsNotNone(self.vic.in_discard('Copper'))
 
     def test_spend(self):
         self.plr._pirate_ship = 2
