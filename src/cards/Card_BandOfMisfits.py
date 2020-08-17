@@ -9,7 +9,7 @@ import Card
 class Card_BandOfMisfits(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_COMMAND]
         self.base = Game.DARKAGES
         self.desc = """Play this as if it were an Action card in the Supply
             costing less than it that you choose. This is that card until it
