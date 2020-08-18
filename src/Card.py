@@ -5,6 +5,7 @@ TYPE_ARTIFACT = 'artifact'
 TYPE_ATTACK = 'attack'
 TYPE_BOON = 'boon'
 TYPE_CASTLE = 'castle'
+TYPE_COMMAND = 'command'
 TYPE_DOOM = 'doom'
 TYPE_DURATION = 'duration'
 TYPE_FATE = 'fate'
@@ -126,6 +127,13 @@ class Card(object):
     ##########################################################################
     def isGathering(self):
         if TYPE_GATHERING in self.cardtype:
+            return True
+        return False
+
+    ##########################################################################
+    def isCommand(self):
+        """ http://wiki.dominionstrategy.com/index.php/Command """
+        if TYPE_COMMAND in self.cardtype:
             return True
         return False
 
