@@ -11,20 +11,33 @@ class Card_Deathcart(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LOOTER]
         self.base = Game.DARKAGES
-        self.desc = """You may trash an Action card from your hand. If you don't, trash this.
-        When you gain this, gain two Ruins."""
+        self.desc = """You may trash this or an Action card from your hand, for +5 Coin.
+            When you gain this, gain 2 Ruins."""
         self.name = 'Death Cart'
-        self.coin = 5
         self.cost = 4
 
     def special(self, game, player):
         action_cards = [c for c in player.hand if c.isAction()]
-        trash = None
+        choices = [
+            ("Trash this Death Cart for 5 Gold", 'trash_dc'),
+            ]
         if action_cards:
+            choices.append(("Trash an Action card for 5 Gold", 'trash_action'))
+        else:
+            choices.append(("No action cards to trash", 'nothing'))
+        choices.append(("Do nothing", 'nothing'))
+        ans = player.plrChooseOptions("What to do with Death Cart?", *choices)
+        trash = None
+        if ans == 'nothing':
+            return
+        if ans == 'trash_action':
             trash = player.plrTrashCard(cardsrc=action_cards)
-        if not trash:
-            player.output("Didn't trash action - so trashing this card")
+        if ans == 'trash_dc':
+            player.output("Trashing Death Cart")
             player.trashCard(self)
+            trash = True
+        if trash:
+            player.addCoin(5)
 
     def hook_gain_this_card(self, game, player):
         for _ in range(2):
@@ -43,24 +56,31 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play(self):
         """ Play a death cart - no actions """
-        tsize = self.g.trashSize()
         self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['Do nothing']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.in_trash('Death Cart'))
+        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertIsNone(self.g.in_trash('Death Cart'))
 
-    def test_play_trash(self):
+    def test_play_trash_action(self):
         """ Play a death cart - no actions """
-        tsize = self.g.trashSize()
         self.plr.setHand('Copper', 'Moat')
         self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['moat']
+        self.plr.test_input = ['Trash an Action', 'Trash Moat']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
-        self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash('Moat'))
         self.assertIsNone(self.g.in_trash('Death Cart'))
+
+    def test_play_trash_self(self):
+        """ Play a death cart - no actions """
+        self.plr.setHand('Copper', 'Moat')
+        self.plr.addCard(self.card, 'hand')
+        self.plr.test_input = ['Trash this Death']
+        self.plr.playCard(self.card)
+        self.assertEqual(self.plr.getCoin(), 5)
+        self.assertIsNone(self.g.in_trash('Moat'))
+        self.assertIsNotNone(self.g.in_trash('Death Cart'))
 
 
 ###############################################################################
