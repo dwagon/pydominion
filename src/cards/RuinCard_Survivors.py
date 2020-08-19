@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Survivors """
 
+import unittest
 import Game
 import Card
 
@@ -31,4 +33,41 @@ class Card_Survivors(Card.Card):
             player.addCard(crds[0], 'deck')
             player.addCard(crds[1], 'deck')
 
+
+###############################################################################
+class Test_Survivors(unittest.TestCase):
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cultist'])
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+        while True:
+            self.card = self.g['Ruins'].remove()
+            if self.card.name == 'Survivors':
+                break
+        self.plr.addCard(self.card, 'hand')
+
+    def test_play_discard(self):
+        """ Play a survivor and discard cards """
+        self.plr.setDeck('Copper', 'Silver', 'Gold')
+        self.plr.test_input = ['Discard']
+        self.plr.playCard(self.card)
+        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNone(self.plr.in_hand('Gold'))
+        self.assertIsNone(self.plr.in_hand('Silver'))
+
+    def test_play_keep(self):
+        """ Play a survivor and keep cards """
+        self.plr.setDeck('Copper', 'Silver', 'Gold')
+        self.plr.test_input = ['Return']
+        self.plr.playCard(self.card)
+        self.assertIsNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand('Silver'))
+
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 # EOF
