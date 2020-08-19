@@ -12,12 +12,13 @@ class Card_Survivors(Card.Card):
         self.base = Game.DARKAGES
         self.purchasable = False
         self.cost = 0
-        self.desc = "Look at top 2 cards of deck. Discard or retain on deck"
+        self.desc = "TODO: Look at top 2 cards of deck. Discard or retain on deck"
         self.name = "Survivors"
 
     def special(self, game, player):
         """ Look at the top 2 cards of your deck. Discard them or
             put them back in any order """
         # TODO
+        player.output("Not implemented yet")
 
 # EOF
