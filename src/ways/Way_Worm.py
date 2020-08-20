@@ -11,7 +11,7 @@ class Way_Worm(Way):
         Way.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "Exile an Estate from the Supply."
-        self.name = "Worm"
+        self.name = "Way of the Worm"
 
     def special(self, game, player):
         player.exile_card('Estate')
@@ -20,11 +20,11 @@ class Way_Worm(Way):
 ###############################################################################
 class Test_Worm(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Worm'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Worm'], initcards=['Moat'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Worm']
+        self.way = self.g.ways['Way of the Worm']
 
     def test_play(self):
         """ Perform a Worm """

@@ -13,7 +13,7 @@ class Way_Mole(Way):
         self.base = Game.MENAGERIE
         self.desc = "+1 Action; Discard your hand. +3 Cards."
         self.actions = 1
-        self.name = "Mole"
+        self.name = "Way of the Mole"
 
     def special(self, game, player):
         player.discardHand()
@@ -24,13 +24,13 @@ class Way_Mole(Way):
 class Test_Mole(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, waycards=['Mole'],
+            quiet=True, numplayers=1, waycards=['Way of the Mole'],
             initcards=['Moat'], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Mole']
+        self.way = self.g.ways['Way of the Mole']
 
     def test_play(self):
         """ Perform a Mole """

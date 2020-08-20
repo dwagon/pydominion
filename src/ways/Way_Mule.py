@@ -11,7 +11,7 @@ class Way_Mule(Way):
         Way.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "+1 Action; +1 Coin"
-        self.name = "Mule"
+        self.name = "Way of the Mule"
         self.actions = 1
         self.coin = 1
 
@@ -19,11 +19,11 @@ class Way_Mule(Way):
 ###############################################################################
 class Test_Mule(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Mule'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Mule'], initcards=['Moat'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Mule']
+        self.way = self.g.ways['Way of the Mule']
 
     def test_play(self):
         """ Perform a Mule """
