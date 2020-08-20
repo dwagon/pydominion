@@ -11,7 +11,7 @@ class Way_Seal(Way):
         Way.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
-        self.name = "Seal"
+        self.name = "Way of the Seal"
 
     def special(self, game, player):
         player.addCoin(1)
@@ -32,11 +32,11 @@ class Way_Seal(Way):
 ###############################################################################
 class Test_Seal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Seal'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Seal'], initcards=['Moat'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Seal']
+        self.way = self.g.ways['Way of the Seal']
 
     def test_play(self):
         """ Perform a Seal """

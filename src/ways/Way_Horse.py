@@ -11,7 +11,7 @@ class Way_Horse(Way):
         Way.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
-        self.name = "Horse"
+        self.name = "Way of the Horse"
         self.cards = 2
         self.actions = 1
 
@@ -23,11 +23,11 @@ class Way_Horse(Way):
 ###############################################################################
 class Test_Horse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Horse'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Horse'], initcards=['Moat'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Horse']
+        self.way = self.g.ways['Way of the Horse']
 
     def test_play(self):
         """ Perform a Horse """

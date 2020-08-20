@@ -11,7 +11,7 @@ class Way_Turtle(Way):
         Way.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "Set this aside. If you did, play it at the start of your next turn."
-        self.name = "Turtle"
+        self.name = "Way of the Turtle"
         self.actions = 2
 
     def special_way(self, game, player, card):
@@ -22,11 +22,11 @@ class Way_Turtle(Way):
 ###############################################################################
 class Test_Turtle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Turtle'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Turtle'], initcards=['Moat'], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Turtle']
+        self.way = self.g.ways['Way of the Turtle']
 
     def test_play(self):
         """ Perform a Turtle """
