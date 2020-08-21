@@ -211,7 +211,18 @@ class Game(object):     # pylint: disable=too-many-public-methods
     ###########################################################################
     def loadWays(self):
         """ TODO """
-        self.ways = self.loadNonKingdomCards('Way', self.waycards, self.numways, WayPile)
+        waycards = []
+        for wname in self.waycards:
+            if not wname.lower().startswith('way of the '):
+                waycards.append('Way of the {}'.format(wname))
+            else:
+                waycards.append(wname)
+        self.ways = self.loadNonKingdomCards(
+            cardtype='Way',
+            specified=waycards,
+            numrequired=self.numways,
+            cardKlass=WayPile
+        )
 
     ###########################################################################
     def loadEvents(self):
@@ -351,10 +362,16 @@ class Game(object):     # pylint: disable=too-many-public-methods
             if eventname:
                 self.eventcards.append(eventname)
                 continue
+
             wayname = self.guess_cardname(crd, 'Way')
             if wayname:
                 self.waycards.append(wayname)
                 continue
+            wayname = self.guess_cardname(crd, 'Way of the {}'.format(crd))
+            if wayname:
+                self.waycards.append(wayname)
+                continue
+
             landmarkname = self.guess_cardname(crd, 'Landmark')
             if landmarkname:
                 self.landmarkcards.append(landmarkname)
