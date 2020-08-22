@@ -367,10 +367,6 @@ class Game(object):     # pylint: disable=too-many-public-methods
             if wayname:
                 self.waycards.append(wayname)
                 continue
-            wayname = self.guess_cardname(crd, 'Way of the {}'.format(crd))
-            if wayname:
-                self.waycards.append(wayname)
-                continue
 
             landmarkname = self.guess_cardname(crd, 'Landmark')
             if landmarkname:
