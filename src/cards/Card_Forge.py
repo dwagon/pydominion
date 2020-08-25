@@ -33,7 +33,7 @@ class Card_Forge(Card.Card):
 ###############################################################################
 class Test_Forge(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Feast'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forge', 'Bureaucrat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.forge = self.g['Forge'].remove()
@@ -44,7 +44,7 @@ class Test_Forge(unittest.TestCase):
         self.plr.setHand('Estate', 'Estate', 'Estate')
         self.plr.addCard(self.forge, 'hand')
         # Trash two cards, Finish Trashing, Select another
-        self.plr.test_input = ['1', '2', 'finish', 'Feast']
+        self.plr.test_input = ['1', '2', 'finish', 'Bureaucrat']
         self.plr.playCard(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertIsNotNone(self.g.in_trash('Estate'))

@@ -23,7 +23,7 @@ class Card_Workshop(Card.Card):
 ###############################################################################
 class Test_Workshop(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Feast'], badcards=['Blessed Village', 'Cemetery'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Workshop', 'Gardens'], badcards=['Blessed Village', 'Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.wcard = self.g['Workshop'].remove()
@@ -36,7 +36,7 @@ class Test_Workshop(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_gainone(self):
-        self.plr.test_input = ['Get Feast']
+        self.plr.test_input = ['Get Gardens']
         self.plr.playCard(self.wcard)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 1)

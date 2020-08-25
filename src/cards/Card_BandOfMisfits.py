@@ -28,7 +28,7 @@ class Card_BandOfMisfits(Card.Card):
 ###############################################################################
 class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Feast', 'Bureaucrat', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Village', 'Bureaucrat', 'Moat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Band of Misfits'].remove()
@@ -41,10 +41,11 @@ class Test_BandOfMisfits(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_deck('Silver'))
 
     def test_play_feast(self):
-        """ Make the Band of Misfits be a Feast """
-        self.plr.test_input = ['Feast', 'trash', 'moat']
+        """ Make the Band of Misfits be a Village """
+        self.plr.test_input = ['Village']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################
