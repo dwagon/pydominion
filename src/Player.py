@@ -445,7 +445,7 @@ class Player(object):
     ###########################################################################
     def addCard(self, card, pile='discard'):
         if not card:   # pragma: no cover
-            return
+            return None
         assert isinstance(card, Card.Card)
         assert pile in ('discard', 'hand', 'topdeck', 'deck', 'played', 'duration', 'reserve')
         if pile == 'discard':
@@ -462,6 +462,7 @@ class Player(object):
             self.durationpile.add(card)
         elif pile == 'reserve':
             self.reserve.add(card)
+        return card
 
     ###########################################################################
     def discardCard(self, card, source=None, hook=True):
