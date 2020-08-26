@@ -26,7 +26,7 @@ class Test_Populate(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, eventcards=['Populate'],
-            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop', 'Gardens', 'Mine', 'Library', 'Thief'],
+            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop', 'Gardens', 'Mine', 'Library', 'Scout'],
             badcards=['Hostelry', 'Border Village', 'Inn']
         )
         self.g.start_game()
@@ -37,7 +37,6 @@ class Test_Populate(unittest.TestCase):
         """ Use Populate """
         self.plr.addCoin(10)
         self.plr.performEvent(self.card)
-        self.g.print_state()
         self.assertIsNotNone(self.plr.in_discard('Moat'))
 
 

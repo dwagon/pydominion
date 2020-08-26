@@ -34,17 +34,17 @@ class Card_Cardinal(Card.Card):
 ###############################################################################
 class Test_Cardinal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cardinal', 'Adventurer'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Cardinal', 'Village'])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g['Cardinal'].remove()
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.oth.setDeck('Silver', 'Adventurer')
+        self.oth.setDeck('Silver', 'Village')
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.oth.in_discard('Silver'))
-        self.assertIsNotNone(self.oth.in_exile('Adventurer'))
+        self.assertIsNotNone(self.oth.in_exile('Village'))
 
 
 ###############################################################################

@@ -31,7 +31,7 @@ class Event_Raid(Event):
 ###############################################################################
 class Test_Raid(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, eventcards=['Raid'], initcards=['Feast'])
+        self.g = Game.Game(quiet=True, numplayers=2, eventcards=['Raid'], initcards=['Militia'])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g.events['Raid']

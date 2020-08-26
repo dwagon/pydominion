@@ -35,23 +35,24 @@ class Card_Captain(Card.Card):
 ###############################################################################
 class Test_Captain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Captain', 'Feast', 'Bureaucrat', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Captain', 'Workshop', 'Bureaucrat'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g['Captain'].remove()
         self.plr.addCard(self.card, 'hand')
 
-    def test_play_market(self):
+    def test_play_bureaucrat(self):
         """ Make the Captain be a Bureaucrat """
         self.plr.test_input = ['Bureaucrat']
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_deck('Silver'))
 
-    def test_play_feast(self):
-        """ Make the Captain be a Feast """
-        self.plr.test_input = ['Feast', 'trash', 'moat']
+    def test_play_market(self):
+        """ Make the Captain be a Workshop """
+        self.plr.test_input = ['Select Workshop', 'Get Bureaucrat']
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNone(self.plr.in_discard('Workshop'))
+        self.assertIsNotNone(self.plr.in_discard('Bureaucrat'))
 
 
 ###############################################################################
