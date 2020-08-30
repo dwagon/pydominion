@@ -84,6 +84,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.statepath = args['statepath'] if 'statepath' in args else 'states'
         self.artifactpath = args['artifactpath'] if 'artifactpath' in args else 'artifacts'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
+        self.oldcards = args['oldcards'] if 'oldcards' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
@@ -491,6 +492,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
         mapping = {}
         for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
+        if self.oldcards:
+            oldpath = os.path.join(self.cardpath, 'old')
+            for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
+                mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, 'cards', 'Card_'))
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Way'] = self.getSetCardClasses('Way', self.waypath, 'ways', 'Way_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
@@ -758,6 +763,7 @@ def parse_cli_args(args=None):
 
     parser.add_argument('--numprojects', type=int, default=0,
                         help='Number of projects to use')
+    parser.add_argument('--oldcards', action='store_true', default=False, help='Use old cards')
     parser.add_argument('--project', action='append', dest='initprojects',
                         default=[],
                         help='Include project')
