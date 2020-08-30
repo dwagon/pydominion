@@ -38,7 +38,7 @@ class Event_Alms(Event):
 ###############################################################################
 class Test_Alms(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], initcards=['Scout'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], initcards=['Lurker'])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events['Alms']
@@ -52,19 +52,19 @@ class Test_Alms(unittest.TestCase):
     def test_without_treasure(self):
         """ Use Alms with no treasures"""
         self.plr.setHand('Estate')
-        self.plr.test_input = ['Scout']
+        self.plr.test_input = ['Lurker']
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, 'Scout')
+        self.assertEqual(self.plr.discardpile[0].name, 'Lurker')
 
     def test_twice(self):
         """ Use Alms twice"""
         self.plr.setHand('Estate')
-        self.plr.test_input = ['Scout']
+        self.plr.test_input = ['Lurker']
         self.plr.performEvent(self.card)
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, 'Scout')
+        self.assertEqual(self.plr.discardpile[0].name, 'Lurker')
 
 
 ###############################################################################
