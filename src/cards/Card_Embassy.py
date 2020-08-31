@@ -13,6 +13,7 @@ class Card_Embassy(Card.Card):
         self.desc = "+5 Cards, Discard 3. Everyone gets a silver on purchase"
         self.name = 'Embassy'
         self.cost = 5
+        self.base = Game.HINTERLANDS
         self.cards = 5
 
     def special(self, game, player):
