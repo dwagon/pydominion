@@ -10,6 +10,7 @@ class Card_Workersvillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = "+1 card, +2 actions, +1 buy"
         self.name = "Worker's Village"
         self.cost = 4

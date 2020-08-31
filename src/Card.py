@@ -34,9 +34,6 @@ TYPE_ZOMBIE = 'zombie'
 ##############################################################################
 class Card(object):
     def __init__(self):
-        self.image = None
-        self.name = "TODO"
-        self.base = "TODO"
         self.basecard = False
         self.cost = -1
         self.debtcost = 0
@@ -67,6 +64,26 @@ class Card(object):
         self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
+
+    ##########################################################################
+    def check(self):
+        """ Check for some basic validity
+            Some of these checks are caused by inconsistent naming standards
+        """
+        if not hasattr(self, 'base'):
+            raise NotImplementedError("{} has no base".format(self.__class__.__name__))
+        if not hasattr(self, 'name'):
+            raise NotImplementedError("{} has no name".format(self.__class__.__name__))
+        if hasattr(self, 'coins'):
+            raise NotImplementedError("{} has coins not coin".format(self.__class__.__name__))
+        if hasattr(self, 'action'):
+            raise NotImplementedError("{} has action not actions".format(self.__class__.__name__))
+        if hasattr(self, 'potions'):
+            raise NotImplementedError("{} has potions not potion".format(self.__class__.__name__))
+        if hasattr(self, 'card'):
+            raise NotImplementedError("{} has card not cards".format(self.__class__.__name__))
+        if hasattr(self, 'buy'):
+            raise NotImplementedError("{} has buy not buys".format(self.__class__.__name__))
 
     ##########################################################################
     def get_cardtype_repr(self):

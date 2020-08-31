@@ -10,6 +10,7 @@ class Card_Royalseal(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
+        self.base = Game.PROSPERITY
         self.desc = "+2 Coin. While this is in play, whe you gain a card, you may put that card on top of your deck."
         self.playable = False
         self.name = 'Royal Seal'

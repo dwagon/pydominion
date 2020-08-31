@@ -525,6 +525,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             else:   # pragma: no cover
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
             mapping[klass().name] = klass
+            klass().check()
         return mapping
 
     ###########################################################################
