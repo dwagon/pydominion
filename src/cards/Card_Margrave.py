@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Margrave """
 
 import unittest
 import Game
@@ -6,21 +7,24 @@ import Card
 
 
 ###############################################################################
+###############################################################################
 class Card_Margrave(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DARKAGES
-        self.desc = """+3 Card +1 Buy. Each other player draws a card, then discards down to 3 cards in hand"""
+        self.base = Game.HINTERLANDS
+        self.desc = """+3 Card; +1 Buy; Each other player draws a card, then
+            discards down to 3 cards in hand."""
         self.name = 'Margrave'
-        self.cards = 3
         self.buys = 1
+        self.cards = 3
         self.cost = 5
 
     def special(self, game, player):
+        """ Each other player draws a card, then discards down to 3 cards in hand"""
         for plr in player.attackVictims():
-            plr.output("Due to %s's Margrave gain a card then discard down to 3" % player.name)
             plr.pickupCard()
+            plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
             plr.plrDiscardDownTo(3)
 
 
@@ -33,19 +37,27 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Margrave(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Margrave'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Margrave', 'Moat'])
         self.g.start_game()
-        self.plr, self.vic = self.g.player_list()
+        self.attacker, self.defender = self.g.player_list()
         self.card = self.g['Margrave'].remove()
-        self.plr.addCard(self.card, 'hand')
 
-    def test_play(self):
-        """ Play the card """
-        self.vic.test_input = ['1', '2', '3', '0']
-        self.plr.playCard(self.card)
-        self.assertEqual(self.vic.hand.size(), 3)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertEqual(self.plr.getBuys(), 2)
+    def test_defense(self):
+        self.attacker.addCard(self.card, 'hand')
+        self.defender.addCard(self.g['Moat'].remove(), 'hand')
+        self.attacker.playCard(self.card)
+        self.assertEqual(self.defender.hand.size(), 5 + 1)  # Moat
+        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertEqual(self.attacker.getBuys(), 1 + 1)
+
+    def test_attack(self):
+        self.attacker.addCard(self.card, 'hand')
+        self.defender.test_input = ['1', '2', '3', '0']
+        self.attacker.playCard(self.card)
+        self.assertEqual(self.defender.hand.size(), 3)
+        self.assertEqual(self.defender.discardpile.size(), 3)
+        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertEqual(self.attacker.getBuys(), 1 + 1)
 
 
 ###############################################################################
