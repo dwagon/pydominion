@@ -35,7 +35,7 @@ class Card_Soldier(Card.Card):
                 plr.output("%s's Soldier: Discard a card" % player.name)
                 plr.plrDiscardCards(force=True)
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ Replace with Hero """
         player.replace_traveller(self, 'Fugitive')
 

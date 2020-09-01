@@ -317,7 +317,7 @@ class Card(object):
         pass    # pragma: no cover
 
     ##########################################################################
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         pass    # pragma: no cover
 
     ##########################################################################

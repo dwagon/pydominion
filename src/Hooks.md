@@ -31,7 +31,7 @@ hook_allPlayers_buyCard
 If any player buys a card call this for any card in everyone's duration pile
 
 
-hook_discardThisCard
+hook_discard_this_card
 ----------------
 This is called when this card is discarded.
 

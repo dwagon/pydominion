@@ -471,16 +471,16 @@ class Player(object):
             self.hand.remove(card)
         self.addCard(card, 'discard')
         if hook:
-            self.hook_discardThisCard(card, source)
+            self.hook_discard_this_card(card, source)
 
     ###########################################################################
     def discardHand(self):
         # Activate hooks first so they can still access contents of the
         # players hand etc. before they get discarded
         for card in self.hand:
-            self.hook_discardThisCard(card, 'hand')
+            self.hook_discard_this_card(card, 'hand')
         for card in self.played:
-            self.hook_discardThisCard(card, 'played')
+            self.hook_discard_this_card(card, 'played')
         while self.hand:
             card = self.hand.topcard()
             self.discardCard(card, 'hand', hook=False)
@@ -1015,10 +1015,10 @@ class Player(object):
         self.hadcards = []
 
     ###########################################################################
-    def hook_discardThisCard(self, card, source=None):
+    def hook_discard_this_card(self, card, source=None):
         """ A card has been discarded """
         self.currcards.append(card)
-        card.hook_discardThisCard(game=self.game, player=self, source=source)
+        card.hook_discard_this_card(game=self.game, player=self, source=source)
         self.currcards.pop()
 
     ###########################################################################

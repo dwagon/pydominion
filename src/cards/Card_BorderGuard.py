@@ -44,7 +44,7 @@ class Card_BorderGuard(Card.Card):
             )
             player.assign_artifact(art)
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         if not player.has_artifact('Horn'):
             return
         ch = player.plrChooseOptions(

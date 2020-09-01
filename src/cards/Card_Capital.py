@@ -17,7 +17,7 @@ class Card_Capital(Card.Card):
         self.buys = 1
         self.cost = 5
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         if source == 'played':
             player.debt += 6
             player.payback()

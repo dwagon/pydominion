@@ -18,7 +18,7 @@ class Card_Page(Card.Card):
         self.actions = 1
         self.cost = 2
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ Replace with Treasure Hunter """
         player.replace_traveller(self, 'Treasure Hunter')
 

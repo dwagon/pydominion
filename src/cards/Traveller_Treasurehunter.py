@@ -28,7 +28,7 @@ class Card_Treasurehunter(Card.Card):
         for _ in range(numsilver):
             player.gainCard('Silver')
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ Replace with Warrior """
         player.replace_traveller(self, 'Warrior')
 
