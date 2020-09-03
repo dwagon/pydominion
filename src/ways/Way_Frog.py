@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Frog """
 
 import unittest
 import Game
@@ -10,11 +11,13 @@ class Way_Frog(Way):
     def __init__(self):
         Way.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = "Draw until you have 6 cards in hand."
+        self.desc = "+1 Action; When you discard this from play this turn, put it onto your deck."
+        self.actions = 1
         self.name = "Way of the Frog"
 
-    def special(self, game, player):
-        player.pickUpHand(6)
+    def hook_way_discard_this_card(self, game, player, card):
+        player.addCard(card, 'topdeck')
+        player.played.remove(card)
 
 
 ###############################################################################
@@ -31,7 +34,9 @@ class Test_Frog(unittest.TestCase):
         self.plr.setHand('Copper', 'Silver', 'Gold')
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.get_actions(), 1)
+        self.plr.discardHand()
+        self.assertIsNotNone(self.plr.in_deck('Moat'))
 
 
 ###############################################################################
