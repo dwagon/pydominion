@@ -143,7 +143,7 @@ class Player(object):
         destination = kwargs['destination'] if 'destination' in kwargs else 'discard'
 
         dstcp = self.find_cardpile(dst)
-        newcard = self.gainCard(cardpile=dstcp, destination=destination)
+        newcard = self.gainCard(cardpile=dstcp, destination=destination, callhook=False)
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add()
@@ -325,7 +325,7 @@ class Player(object):
                 self.played.remove(card)
             elif card in self.hand:
                 self.hand.remove(card)
-        for crd in self.hand + self.game.landmarks + self.played + self.projects:
+        for crd in self.relevant_cards():
             if crd.name not in kwargs.get('exclude_hook', []):
                 rc = crd.hook_trash_card(game=self.game, player=self, card=card)
                 if rc:
@@ -933,7 +933,7 @@ class Player(object):
     ###########################################################################
     def hook_preBuy(self):
         """ Hook that fires off before the buy phase """
-        for card in list(self.game.landmarks.values()) + self.states + self.artifacts:
+        for card in self.relevant_cards():
             card.hook_preBuy(game=self.game, player=self)
 
     ###########################################################################
@@ -944,7 +944,7 @@ class Player(object):
     ###########################################################################
     def hook_buyCard(self, card):
         """ Hook for after purchasing a card """
-        for c in self.played + self.reserve + self.game.landmarks:
+        for c in self.relevant_cards():
             c.hook_buyCard(game=self.game, player=self, card=card)
 
     ###########################################################################
@@ -1119,7 +1119,7 @@ class Player(object):
             self.card_benefits(card)
         self.currcards.pop()
         if postActionHook and card.isAction():
-            for crd in self.played + self.durationpile + self.projects:
+            for crd in self.relevant_cards():
                 if hasattr(crd, 'hook_postAction'):
                     crd.hook_postAction(game=self.game, player=self, card=card)
 
@@ -1172,7 +1172,7 @@ class Player(object):
         cost = card.cost
         if '-Cost' in self.which_token(card.name):
             cost -= 2
-        for crd in self.hand + self.played + self.durationpile + self.states + self.projects:
+        for crd in self.relevant_cards():
             cost += crd.hook_cardCost(game=self.game, player=self, card=card)
         cost += card.hook_this_card_cost(game=self.game, player=self)
         return max(0, cost)
@@ -1312,12 +1312,19 @@ class Player(object):
     ###########################################################################
     def hook_allplayers_gain_card(self, card):
         for player in self.game.player_list():
-            for crd in player.hand + player.projects:
+            for crd in player.relevant_cards():
                 crd.hook_allplayers_gain_card(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def add_hook(self, hook_name, hook):
         self.hooks[hook_name] = hook
+
+    ###########################################################################
+    def relevant_cards(self):
+        """ Return a list of all cards whos hooks we should look at """
+        return self.hand + self.played + self.durationpile + self.reserve \
+            + self.game.landmarks + self.projects + self.game.ways \
+            + self.played_events + self.states + self.artifacts
 
     ###########################################################################
     def hook_gain_card(self, card):
@@ -1327,7 +1334,8 @@ class Player(object):
         if self.hooks.get('gain_card'):
             o = self.hooks['gain_card'](game=self.game, player=self, card=card)
             options.update(o)
-        for c in self.hand + self.played + self.durationpile + self.reserve + self.game.landmarks + self.projects + self.game.ways:
+
+        for c in self.relevant_cards():
             self.currcards.append(c)
             o = c.hook_gain_card(game=self.game, player=self, card=card)
             self.currcards.pop()
