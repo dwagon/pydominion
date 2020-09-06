@@ -803,7 +803,6 @@ class Player(object):
         self.had_cards = self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile
         self.phase = 'cleanup'
         self.game.cleanup_boons()
-        self.game.cleanup_hexes()
         for card in self.played + self.reserve + self.artifacts:
             card.hook_cleanup(self.game, self)
         self.discardHand()
