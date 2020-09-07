@@ -27,10 +27,14 @@ class Card_Sleigh(Card.Card):
         choice = player.plrChooseOptions(
             "What to do with {}?".format(card.name),
             ("Discard by default", 'discard'),
-            ("Put into hand and discard Sleigh", 'hand'),
-            ("Put onto your deck and discard Sleigh", 'deck')
+            ("Put {} into hand and discard Sleigh".format(card.name), 'hand'),
+            ("Put {} onto your deck and discard Sleigh".format(card.name), 'topdeck')
         )
         if choice != 'discard':
+            if self in player.played:
+                player.played.remove(self)
+            if self in player.hand:
+                player.hand.remove(self)
             player.discardCard(self)
         return {'destination': choice}
 
@@ -45,10 +49,18 @@ class Test_Sleigh(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_playcard(self):
-        """ Play a supplies """
+        """ Play a sleigh """
+        self.plr.test_input = ['Discard by default', 'Put Horse into hand']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.deck[-1].name, 'Horse')
+        self.assertIsNotNone(self.plr.in_discard('Horse'))
+        self.assertIsNotNone(self.plr.in_hand('Horse'))
+
+    def test_gaincard(self):
+        """ Gain a card while Sleigh in hand """
+        self.plr.test_input = ['Put Estate onto your deck']
+        self.plr.gainCard("Estate")
+        self.assertIsNotNone(self.plr.in_deck('Estate'))
+        self.assertIsNotNone(self.plr.in_discard('Sleigh'))
 
 
 ###############################################################################
