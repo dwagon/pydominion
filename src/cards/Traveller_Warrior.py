@@ -40,7 +40,7 @@ class Card_Warrior(Card.Card):
                     victim.output("Discarding %s due to %s's Warrior" % (c.name, player.name))
                     victim.addCard(c, 'discard')
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ Replace with Hero """
         player.replace_traveller(self, 'Hero')
 

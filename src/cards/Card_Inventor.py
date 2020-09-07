@@ -28,14 +28,14 @@ class Card_Inventor(Card.Card):
 ###############################################################################
 class Test_Inventor(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Inventor', 'Feast'], badcards=['Blessed Village', 'Cemetery'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Inventor', 'Gardens'], badcards=['Blessed Village', 'Cemetery'])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.inventor = self.g['Inventor'].remove()
         self.plr.addCard(self.inventor, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['Get Feast']
+        self.plr.test_input = ['Get Gardens']
         self.assertEqual(self.plr.cardCost(self.g['Gold']), 6)
         self.plr.playCard(self.inventor)
         self.assertEqual(self.plr.cardCost(self.g['Gold']), 5)

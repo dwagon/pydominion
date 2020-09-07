@@ -7,6 +7,7 @@ class Boon_Test(Boon):
         Boon.__init__(self)
         self.cardtype = 'boon'
         self.desc = "Test Boon"
+        self.base = "TEST"
         self.name = "TestBoon"
 
 # EOF

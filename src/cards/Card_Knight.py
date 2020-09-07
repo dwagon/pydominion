@@ -12,6 +12,7 @@ class Card_Knight(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.name = 'Knight'
+        self.base = Game.DARKAGES
 
     def setup(self, game):
         game.cardpiles['Knight'] = KnightCardPile(game.cardmapping['KnightCard'])

@@ -11,14 +11,14 @@ class Card_Procession(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
-        self.desc = """You may play an action card from your
+        self.desc = """You may play a non-Duration Action card from your
             hand twice. Trash it. Gain an Action
             card costing exactly 1 more than it."""
         self.name = 'Procession'
         self.cost = 4
 
     def special(self, game, player):
-        actcards = [c for c in player.hand if c.isAction()]
+        actcards = [c for c in player.hand if c.isAction() and not c.isDuration()]
         if not actcards:
             player.output("No suitable action cards")
             return

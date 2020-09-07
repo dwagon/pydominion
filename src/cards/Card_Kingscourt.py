@@ -13,6 +13,7 @@ class Card_Kingscourt(Card.Card):
         self.desc = "You may play an Action card from your hand three times."
         self.name = "King's Court"
         self.cost = 7
+        self.base = Game.PROSPERITY
 
     def special(self, game, player):
         """ You may chose an Action card in your hand. Play it three times """

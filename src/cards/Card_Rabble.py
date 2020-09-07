@@ -10,6 +10,7 @@ class Card_Rabble(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
+        self.base = Game.PROSPERITY
         self.desc = """+3 cards. Each other player reveals the top 3 cards of his
             deck, discards the revealed Actions and Treasures, and puts the rest
             back on top in any order he chooses."""

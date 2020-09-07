@@ -37,7 +37,7 @@ class Card_Disciple(Card.Card):
             if c:
                 player.output("Gained a %s from Disciple" % c.name)
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ Replace with Teacher """
         player.replace_traveller(self, 'Teacher')
 

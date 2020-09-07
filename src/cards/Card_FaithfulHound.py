@@ -17,7 +17,7 @@ class Card_FaithfulHound(Card.Card):
         self.cards = 2
         self.cost = 2
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         if player.phase != 'cleanup':
             player.addCard(self, 'hand')
 

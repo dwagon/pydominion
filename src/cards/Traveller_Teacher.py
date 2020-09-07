@@ -39,7 +39,7 @@ class Card_Teacher(Card.Card):
 ###############################################################################
 class Test_Teacher(unittest.TestCase):
     def setUp(self):
-        initcards = ['Page', 'Cellar', 'Chapel', 'Moat', 'Chancellor', 'Village', 'Woodcutter', 'Workshop', 'Bureaucrat', 'Venture']
+        initcards = ['Page', 'Cellar', 'Chapel', 'Moat', 'Vassal', 'Village', 'Harbinger', 'Workshop', 'Bureaucrat', 'Venture']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -47,12 +47,12 @@ class Test_Teacher(unittest.TestCase):
         self.plr.addCard(self.card, 'hand')
 
     def test_play(self):
-        self.plr.test_input = ['Cellar', 'Chapel', 'Moat', 'Chancellor']
+        self.plr.test_input = ['Cellar', 'Chapel', 'Moat', 'Vassal']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.tokens['+1 Card'], 'Cellar')
         self.assertEqual(self.plr.tokens['+1 Action'], 'Chapel')
         self.assertEqual(self.plr.tokens['+1 Buy'], 'Moat')
-        self.assertEqual(self.plr.tokens['+1 Coin'], 'Chancellor')
+        self.assertEqual(self.plr.tokens['+1 Coin'], 'Vassal')
 
     def test_which_stacks(self):
         output = self.card.which_stacks(self.g, self.plr)

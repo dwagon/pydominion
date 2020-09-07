@@ -12,8 +12,8 @@ class Card_Bishop(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
-        to half its cost in coins, rounded down. Each other player may trash a
-        card from his hand"""
+            to half its cost in coins, rounded down. Each other player may trash a
+            card from his hand"""
         self.name = 'Bishop'
         self.coin = 1
         self.victory = 1
@@ -21,8 +21,8 @@ class Card_Bishop(Card.Card):
 
     def special(self, game, player):
         """ Trash a card from your hand. +VP equal to half its cost
-        in coins, rounded down. Each other player may trash a card
-        from his hand """
+            in coins, rounded down. Each other player may trash a card
+            from his hand """
         for plr in game.player_list():
             if plr == player:
                 self.trashOwnCard(game, player)

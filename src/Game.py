@@ -84,6 +84,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
         self.statepath = args['statepath'] if 'statepath' in args else 'states'
         self.artifactpath = args['artifactpath'] if 'artifactpath' in args else 'artifacts'
         self.prosperity = args['prosperity'] if 'prosperity' in args else False
+        self.oldcards = args['oldcards'] if 'oldcards' in args else False
         self.quiet = args['quiet'] if 'quiet' in args else False
         self.numplayers = args['numplayers'] if 'numplayers' in args else 2
         self.initcards = args['initcards'] if 'initcards' in args else []
@@ -211,7 +212,18 @@ class Game(object):     # pylint: disable=too-many-public-methods
     ###########################################################################
     def loadWays(self):
         """ TODO """
-        self.ways = self.loadNonKingdomCards('Way', self.waycards, self.numways, WayPile)
+        waycards = []
+        for wname in self.waycards:
+            if not wname.lower().startswith('way of the '):
+                waycards.append('Way of the {}'.format(wname))
+            else:
+                waycards.append(wname)
+        self.ways = self.loadNonKingdomCards(
+            cardtype='Way',
+            specified=waycards,
+            numrequired=self.numways,
+            cardKlass=WayPile
+        )
 
     ###########################################################################
     def loadEvents(self):
@@ -315,8 +327,6 @@ class Game(object):     # pylint: disable=too-many-public-methods
         """ Don't force the user to give the exact card name on the command
         line - maybe we can guess it """
         available = self.getAvailableCards(prefix)
-        if prefix == 'Way':
-            name = name.replace('Way of the ', '')
         if name in available:
             return name
         for crd in available:
@@ -353,10 +363,12 @@ class Game(object):     # pylint: disable=too-many-public-methods
             if eventname:
                 self.eventcards.append(eventname)
                 continue
+
             wayname = self.guess_cardname(crd, 'Way')
             if wayname:
                 self.waycards.append(wayname)
                 continue
+
             landmarkname = self.guess_cardname(crd, 'Landmark')
             if landmarkname:
                 self.landmarkcards.append(landmarkname)
@@ -480,6 +492,10 @@ class Game(object):     # pylint: disable=too-many-public-methods
         mapping = {}
         for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, 'cards', 'Card_')
+        if self.oldcards:
+            oldpath = os.path.join(self.cardpath, 'old')
+            for prefix in ('Card', 'BaseCard', 'Traveller', 'RuinCard', 'PrizeCard', 'KnightCard', 'Castle', 'Heirloom'):
+                mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, 'cards', 'Card_'))
         mapping['Event'] = self.getSetCardClasses('Event', self.eventpath, 'events', 'Event_')
         mapping['Way'] = self.getSetCardClasses('Way', self.waypath, 'ways', 'Way_')
         mapping['Landmark'] = self.getSetCardClasses('Landmark', self.landmarkpath, 'landmarks', 'Landmark_')
@@ -509,6 +525,7 @@ class Game(object):     # pylint: disable=too-many-public-methods
             else:   # pragma: no cover
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
             mapping[klass().name] = klass
+            klass().check()
         return mapping
 
     ###########################################################################
@@ -747,6 +764,7 @@ def parse_cli_args(args=None):
 
     parser.add_argument('--numprojects', type=int, default=0,
                         help='Number of projects to use')
+    parser.add_argument('--oldcards', action='store_true', default=False, help='Use old cards')
     parser.add_argument('--project', action='append', dest='initprojects',
                         default=[],
                         help='Include project')

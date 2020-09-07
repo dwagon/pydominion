@@ -29,7 +29,7 @@ class Test_University(unittest.TestCase):
         self.g = Game.Game(
             quiet=True, numplayers=1,
             initcards=['University'],
-            badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village', 'Experiment', 'Ducat']
+            badcards=['Inn', 'Death Cart', 'Blessed Village', 'Cursed Village', 'Experiment', 'Ducat', 'Hostelry']
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

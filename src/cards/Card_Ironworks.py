@@ -31,7 +31,7 @@ class Card_Ironworks(Card.Card):
 class Test_Ironworks(unittest.TestCase):
     def setUp(self):
         # Make most of the cards too expensive to ensure we can select what we want
-        initcards = ['Iron Works', 'Great Hall', 'Apprentice', 'Bandit Camp',
+        initcards = ['Iron Works', 'Mill', 'Apprentice', 'Bandit Camp',
                      'City', 'Count', 'Duke', 'Library', 'Market', 'Rebuild']
         self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
         self.g.start_game()
@@ -41,9 +41,9 @@ class Test_Ironworks(unittest.TestCase):
 
     def test_play_great_hall(self):
         """ Use Ironworks to gain a Great Hall """
-        self.plr.test_input = ['great']
+        self.plr.test_input = ['Mill']
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, 'Great Hall')
+        self.assertEqual(self.plr.discardpile[-1].name, 'Mill')
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.hand.size(), 6)

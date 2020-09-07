@@ -11,6 +11,7 @@ class Card_Venture(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.desc = "+1 coin, get next treasure from deck"
+        self.base = Game.PROSPERITY
         self.name = 'Venture'
         self.cost = 5
 

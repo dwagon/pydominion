@@ -18,7 +18,7 @@ class Card_Alchemist(Card.Card):
         self.potcost = True
         self.required_cards = ['Potion']
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ When you discard this from play, you may put this on
             top of your deck if you have a Potion in play """
         # As we can't guarantee where we are in the discard cycle

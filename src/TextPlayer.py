@@ -115,6 +115,9 @@ class TextPlayer(Player):
 
     ###########################################################################
     def cardSelSource(self, **kwargs):
+        """ Understand the various places to select cards from - either a
+            text desctiption of the source, a list of cards, or by default
+            the players hand """
         if 'cardsrc' in kwargs:
             if kwargs['cardsrc'] == 'hand':
                 selectfrom = self.hand

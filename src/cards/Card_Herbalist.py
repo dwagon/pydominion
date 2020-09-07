@@ -17,7 +17,7 @@ class Card_Herbalist(Card.Card):
         self.buys = 1
         self.coin = 1
 
-    def hook_discardThisCard(self, game, player, source):
+    def hook_discard_this_card(self, game, player, source):
         """ When you discard this from play, you may put one of
             your Treasures from play on top of your deck """
         if source == 'played':
