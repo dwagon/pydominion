@@ -45,8 +45,6 @@ class Player(object):
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
-        self.cleaned = False
-        self.is_start = False
         self.test_input = []
         self.forbidden_to_buy = []
         self.played_events = PlayArea([])
@@ -60,6 +58,10 @@ class Player(object):
         self.secret_count = 0   # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
         self.phase = None
+        self.misc = {
+            'is_start': False,
+            'cleaned': False
+        }
         self.states = []
         self.artifacts = []
         self.projects = []
@@ -165,7 +167,7 @@ class Player(object):
         self.output("{}".format(hx.description(self)))
         for _ in range(hx.cards):
             self.pickupCard()
-        self.actions += hx.actions
+        self.addActions(hx.actions)
         self.buys += hx.buys
         self.coin += self.hook_spendValue(hx, actual=True)
         hx.special(game=self.game, player=self)
@@ -179,7 +181,7 @@ class Player(object):
         self.output("{}".format(boon.description(self)))
         for _ in range(boon.cards):
             self.pickupCard()
-        self.actions += boon.actions
+        self.addActions(boon.actions)
         self.buys += boon.buys
         self.coin += self.hook_spendValue(boon, actual=True)
         boon.special(game=self.game, player=self)
@@ -577,7 +579,7 @@ class Player(object):
         for c in self.played:
             if c.isAction():
                 whens.append('postaction')
-        if self.is_start:
+        if self.misc['is_start']:
             whens.append('start')
         return whens
 
@@ -808,7 +810,7 @@ class Player(object):
         self.discardHand()
         self.pickUpHand()
         self.hooks = {}
-        self.cleaned = True
+        self.misc['cleaned'] = True
 
     ###########################################################################
     def payback(self):
@@ -846,7 +848,7 @@ class Player(object):
         else:   # pragma: no cover
             sys.stderr.write("ERROR: Unhandled action %s" % opt['action'])
             sys.exit(1)
-        self.is_start = False
+        self.misc['is_start'] = False
 
     ###########################################################################
     def displayOverview(self):  # pylint: disable=too-many-branches
@@ -954,9 +956,11 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
-        self.cleaned = False
         self.played_ways = []
-        self.is_start = True
+        self.misc = {
+            'is_start': True,
+            'cleaned': False
+        }
         self.stats = {'gained': [], 'bought': [], 'trashed': []}
         self.displayOverview()
         self.hook_start_turn()
@@ -994,7 +998,7 @@ class Player(object):
         if self.villager <= 0:
             return
         self.villager -= 1
-        self.actions += 1
+        self.addActions(1)
         self.output("Spent a villager")
 
     ###########################################################################
@@ -1007,7 +1011,7 @@ class Player(object):
 
     ###########################################################################
     def end_turn(self):
-        if not self.cleaned:
+        if not self.misc['cleaned']:
             self.cleanup_phase()
         for card in self.had_cards:
             self.currcards.append(card)
@@ -1056,7 +1060,7 @@ class Player(object):
         tkns = self.which_token(card.name)
         if '+1 Action' in tkns:
             self.output("Gaining action from +1 Action token")
-            self.actions += 1
+            self.addActions(1)
         if '+1 Card' in tkns:
             c = self.pickupCard()
             self.output("Picked up %s from +1 Card token" % c.name)
@@ -1146,7 +1150,7 @@ class Player(object):
 
     ###########################################################################
     def card_benefits(self, card):
-        self.actions += card.actions
+        self.addActions(card.actions)
         self.coin += self.hook_spendValue(card, actual=True)
         self.buys += card.buys
         self.potions += card.potion
@@ -1390,10 +1394,11 @@ class Player(object):
     ###########################################################################
     def addActions(self, num=1):
         assert isinstance(num, int)
-        self.actions += num
+        if not self.misc.get('no_actions'):
+            self.actions += num
 
     ###########################################################################
-    def getBuys(self):
+    def get_buys(self):
         return self.buys
 
     ###########################################################################
