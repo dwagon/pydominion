@@ -50,7 +50,7 @@ class Test_FarmersMarket(unittest.TestCase):
         self.plr.addCard(self.c1, 'hand')
         self.g["Farmers' Market"].addVP(3)
         self.plr.playCard(self.c1)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
+        self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 4)
         self.plr.addCard(self.c2, 'hand')
         self.plr.playCard(self.c2)

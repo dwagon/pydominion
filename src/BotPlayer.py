@@ -56,7 +56,7 @@ class BotPlayer(Player):
         opts = self.getOptions(options)
         if 'spendall' in opts:
             return opts['spendall']
-        if self.getBuys() == 0:
+        if self.get_buys() == 0:
             return opts['quit']
         coin = self.getCoin()
         self.output("Have %d coins" % coin)

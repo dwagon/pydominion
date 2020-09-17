@@ -33,7 +33,7 @@ class Test_Delve(unittest.TestCase):
         self.plr.addCoin(2)
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard('Silver'))
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
 
 
 ###############################################################################

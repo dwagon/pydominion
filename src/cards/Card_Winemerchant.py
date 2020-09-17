@@ -39,7 +39,7 @@ class Test_Winemerchant(unittest.TestCase):
         """ Play a Wine Merchant """
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 4)
 
     def test_recover(self):

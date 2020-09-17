@@ -43,14 +43,14 @@ class Test_Cavalry(unittest.TestCase):
     def test_play(self):
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
         self.assertIsNotNone(self.plr.in_discard('Horse'))
 
     def test_gain(self):
         self.plr.phase = 'buy'
         self.plr.gainCard('Cavalry')
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
+        self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
 

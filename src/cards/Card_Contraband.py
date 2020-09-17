@@ -55,7 +55,7 @@ class Test_Contraband(unittest.TestCase):
             if 'Buy Gold' in msg['line']:
                 self.fail("Allowed to buy Gold")
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
 
 
 ###############################################################################

@@ -42,7 +42,7 @@ class Test_Expedition(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 4)
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getBuys(), 0)
+        self.assertEqual(self.plr.get_buys(), 0)
         self.plr.end_turn()
         self.assertEqual(self.plr.hand.size(), 9)
 

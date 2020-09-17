@@ -48,7 +48,7 @@ class Test_Forum(unittest.TestCase):
     def test_buy(self):
         self.plr.setCoin(5)
         self.plr.buyCard(self.g['Forum'])
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
 
 
 ###############################################################################

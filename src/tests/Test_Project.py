@@ -64,7 +64,7 @@ class Test_buyProject(unittest.TestCase):
         self.plr.setCoin(3)
         rc = self.plr.buyProject(PA)
         self.assertEqual(rc, True)
-        self.assertEqual(self.plr.getBuys(), 0)
+        self.assertEqual(self.plr.get_buys(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.projects[0].name, 'ProjectA')
 

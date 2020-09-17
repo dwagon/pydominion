@@ -53,7 +53,7 @@ class Test_Tactician(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 10)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
 
     def test_play_keep(self):
         """ Play a tactician and discard hand"""
@@ -64,7 +64,7 @@ class Test_Tactician(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
 
 
 ###############################################################################

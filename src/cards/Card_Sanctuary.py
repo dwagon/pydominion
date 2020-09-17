@@ -43,7 +43,7 @@ class Test_Sanctuary(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNotNone(self.plr.in_exile('Copper'))
 
 

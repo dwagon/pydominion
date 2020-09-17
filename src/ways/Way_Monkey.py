@@ -29,7 +29,7 @@ class Test_Monkey(unittest.TestCase):
         """ Perform a Monkey """
         self.plr.addCard(self.card, 'hand')
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
+        self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

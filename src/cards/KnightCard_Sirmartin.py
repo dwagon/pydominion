@@ -38,7 +38,7 @@ class Test_Sir_Martin(unittest.TestCase):
         """ Play the Sir"""
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getBuys(), 3)
+        self.assertEqual(self.plr.get_buys(), 3)
 
 
 ###############################################################################

@@ -504,9 +504,9 @@ class Test_misc(unittest.TestCase):
         self.plr.addActions(2)
         self.assertEqual(self.plr.actions, 5)
 
-    def test_getBuys(self):
+    def test_get_buys(self):
         self.plr.buys = 3
-        numbuys = self.plr.getBuys()
+        numbuys = self.plr.get_buys()
         self.assertEqual(numbuys, 3)
 
     def test_addBuys(self):

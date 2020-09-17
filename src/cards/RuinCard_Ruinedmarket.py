@@ -33,5 +33,5 @@ class Test_RuinedMarket(unittest.TestCase):
     def test_play(self):
         """ Play a ruined market """
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getBuys(), 1 + 1)
+        self.assertEqual(self.plr.get_buys(), 1 + 1)
 # EOF

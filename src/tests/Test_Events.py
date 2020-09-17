@@ -18,7 +18,7 @@ class Test_performEvent(unittest.TestCase):
         self.plr.coin = 5
         sc = self.plr.performEvent(self.card)
         self.assertTrue(sc)
-        self.assertEqual(self.plr.getBuys(), 0)
+        self.assertEqual(self.plr.get_buys(), 0)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_no_buy(self):
@@ -27,7 +27,7 @@ class Test_performEvent(unittest.TestCase):
         self.plr.coin = 2
         sc = self.plr.performEvent(self.card)
         self.assertFalse(sc)
-        self.assertEqual(self.plr.getBuys(), 0)
+        self.assertEqual(self.plr.get_buys(), 0)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_no_coin(self):
@@ -36,7 +36,7 @@ class Test_performEvent(unittest.TestCase):
         self.plr.buys = 1
         sc = self.plr.performEvent(self.card)
         self.assertFalse(sc)
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
 
 

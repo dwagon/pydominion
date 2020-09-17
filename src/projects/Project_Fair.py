@@ -28,7 +28,7 @@ class Test_Fair(unittest.TestCase):
     def test_play(self):
         self.plr.assign_project('Fair')
         self.plr.start_turn()
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
 
 
 ###############################################################################

@@ -50,7 +50,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.test_input = ['0']
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
 
     def test_notreasures(self):
         self.plr.setHand('Estate', 'Estate', 'Estate')

@@ -36,7 +36,7 @@ class Test_Peasant(unittest.TestCase):
         self.plr.setHand()
         self.plr.addCard(self.card, 'hand')
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

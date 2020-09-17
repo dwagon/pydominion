@@ -48,7 +48,7 @@ class Test_Druid(unittest.TestCase):
         """ Play a Druid """
         self.plr.test_input = ['0', '0']
         self.plr.playCard(self.card)
-        self.assertGreaterEqual(self.plr.getBuys(), 2)
+        self.assertGreaterEqual(self.plr.get_buys(), 2)
 
     def test_setaside(self):
         """ Test that we don't get a set aside boon """

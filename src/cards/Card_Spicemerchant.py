@@ -50,7 +50,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_coins(self):
@@ -64,7 +64,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash('Gold'))
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.get_actions(), 0)
-        self.assertEqual(self.plr.getBuys(), 2)
+        self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
 
 

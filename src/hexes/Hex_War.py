@@ -17,7 +17,8 @@ class Hex_War(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        while True:
+        count = player.discardpile.size() + player.deck.size()
+        while count:
             c = player.nextCard()
             if not c:
                 break
@@ -27,6 +28,9 @@ class Hex_War(Hex):
                 break
             player.output("Discarding {}".format(c.name))
             player.discardCard(c)
+            count -= 1
+        else:
+            player.output("No cards costing 3 or 4 in deck")
 
 
 ###############################################################################

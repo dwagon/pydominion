@@ -27,7 +27,7 @@ class Card_Crypt(Card.Card):
             anynum=True,
             types={Card.TYPE_TREASURE: True},
             cardsrc='played'
-                )
+        )
         if cards:
             for card in cards:
                 player._crypt_reserve.add(card)

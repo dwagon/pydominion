@@ -58,7 +58,7 @@ class Test_Mine(unittest.TestCase):
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.getBuys(), 1)
+        self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.get_actions(), 0)
 
     def test_convnothing(self):
