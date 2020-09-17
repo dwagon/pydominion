@@ -1394,7 +1394,9 @@ class Player(object):
     ###########################################################################
     def addActions(self, num=1):
         assert isinstance(num, int)
-        if not self.misc.get('no_actions'):
+        if self.misc.get('no_actions'):
+            self.output("No more additional actions allowed")
+        else:
             self.actions += num
 
     ###########################################################################
