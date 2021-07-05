@@ -12,15 +12,19 @@ class State_Lost_in_woods(State):
         State.__init__(self)
         self.cardtype = Card.TYPE_STATE
         self.base = Game.NOCTURNE
-        self.desc = "At the start of your turn, you may discard a card to receive a Boon."
+        self.desc = (
+            "At the start of your turn, you may discard a card to receive a Boon."
+        )
         self.name = "Lost in the Woods"
         self.unique_state = True
 
     def hook_start_turn(self, game, player):
-        dc = player.plrDiscardCards(prompt="Lost in the Woods: Discard a card to receive a boon")
+        dc = player.plrDiscardCards(
+            prompt="Lost in the Woods: Discard a card to receive a boon"
+        )
         if dc:
             # Hack to make testing possible
-            if not hasattr(player, '_liw_dont_boon'):
+            if not hasattr(player, "_liw_dont_boon"):
                 player.receive_boon()
             else:
                 player._liw_dont_boon = True
@@ -29,24 +33,24 @@ class State_Lost_in_woods(State):
 ###############################################################################
 class Test_Lost_in_woods(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bard"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.state = self.g.states['Lost in the Woods']
+        self.state = self.g.states["Lost in the Woods"]
 
     def test_lost_in_woods(self):
-        self.plr.setHand('Copper', 'Estate', 'Gold')
-        self.plr.assign_state('Lost in the Woods')
-        self.plr.test_input = ['Estate']
+        self.plr.setHand("Copper", "Estate", "Gold")
+        self.plr.assign_state("Lost in the Woods")
+        self.plr.test_input = ["Estate"]
         self.plr._liw_dont_boon = False
         self.plr.start_turn()
         self.assertTrue(self.plr._liw_dont_boon)
-        self.assertIsNotNone(self.plr.in_discard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard("Estate"))
 
     def test_found_in_woods(self):
-        self.plr.setHand('Copper', 'Estate', 'Gold')
-        self.plr.assign_state('Lost in the Woods')
-        self.plr.test_input = ['Finish']
+        self.plr.setHand("Copper", "Estate", "Gold")
+        self.plr.assign_state("Lost in the Woods")
+        self.plr.test_input = ["Finish"]
         self.plr._liw_dont_boon = False
         self.plr.start_turn()
         self.assertFalse(self.plr._liw_dont_boon)

@@ -10,9 +10,10 @@ class Card_Silver(Card.Card):
         self.desc = "+2 coin"
         self.playable = False
         self.basecard = True
-        self.name = 'Silver'
+        self.name = "Silver"
         self.coin = 2
         self.cost = 3
         self.numcards = 40
+
 
 # EOF

@@ -14,7 +14,7 @@ class Card_Courtier(Card.Card):
         self.desc = """Reveal a card from your hand. For each type it has
         (Action, Attack, etc.), choose one: +1 Action; or +1 Buy; or +3 Coin;
         or gain a Gold. The choices must be different."""
-        self.name = 'Courtier'
+        self.name = "Courtier"
         self.cost = 5
 
     def special(self, game, player):
@@ -36,56 +36,53 @@ class Card_Courtier(Card.Card):
                 choices.append(("+3 Coin", "coin"))
             if "gold" not in chosen:
                 choices.append(("Gain Gold", "gold"))
-            opt = player.plrChooseOptions(
-                "Select one",
-                *choices
-            )
+            opt = player.plrChooseOptions("Select one", *choices)
             chosen.append(opt)
             if opt == Card.TYPE_ACTION:
                 player.addActions(1)
-            if opt == 'buy':
+            if opt == "buy":
                 player.addBuys(1)
-            if opt == 'coin':
+            if opt == "coin":
                 player.addCoin(3)
-            if opt == 'gold':
-                player.gainCard('Gold')
+            if opt == "gold":
+                player.gainCard("Gold")
 
 
 ###############################################################################
 class Test_Courtier(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Courtier', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Courtier", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Courtier'].remove()
-        self.plr.setHand('Copper', 'Moat', 'Estate')
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Courtier"].remove()
+        self.plr.setHand("Copper", "Moat", "Estate")
+        self.plr.addCard(self.card, "hand")
 
     def test_play_action(self):
-        self.plr.test_input = ['Copper', '+1 Action']
+        self.plr.test_input = ["Copper", "+1 Action"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 0)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_discard("Gold"))
 
     def test_play_buy(self):
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Moat', '+1 Buy', '+3 Coin']
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Moat", "+1 Buy", "+3 Coin"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertIsNone(self.plr.in_discard('Gold'))
+        self.assertIsNone(self.plr.in_discard("Gold"))
 
     def test_play_gold(self):
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Estate', 'Gain Gold']
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Estate", "Gain Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1 + 0)
         self.assertEqual(self.plr.getCoin(), 0)
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
 
 
 ###############################################################################

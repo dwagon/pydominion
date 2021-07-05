@@ -26,17 +26,17 @@ class Card_Sir_Martin(KnightCard):
 ###############################################################################
 class Test_Sir_Martin(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Knight"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Knight'].remove()
-            if self.card.name == 'Sir Martin':
+            self.card = self.g["Knight"].remove()
+            if self.card.name == "Sir Martin":
                 break
 
     def test_score(self):
-        """ Play the Sir"""
-        self.plr.addCard(self.card, 'hand')
+        """Play the Sir"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 3)
 

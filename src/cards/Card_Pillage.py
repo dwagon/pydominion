@@ -14,8 +14,8 @@ class Card_Pillage(Card.Card):
         self.desc = """Trash this. Each other player with 5 or more cards in hand
         reveals their hand and discards a card that you choose. Gain 2 Spoils
         from the Spoils pile."""
-        self.name = 'Pillage'
-        self.required_cards = ['Spoils']
+        self.name = "Pillage"
+        self.required_cards = ["Spoils"]
         self.cost = 5
 
     ###########################################################################
@@ -27,16 +27,15 @@ class Card_Pillage(Card.Card):
                 continue
             self.pickACard(plr, player)
         for _ in range(2):
-            player.gainCard('Spoils')
+            player.gainCard("Spoils")
 
     ###########################################################################
     def pickACard(self, victim, player):
         for card in victim.hand:
             victim.revealCard(card)
         cards = player.cardSel(
-            cardsrc=victim.hand,
-            prompt="Which card to discard from %s" % victim.name
-            )
+            cardsrc=victim.hand, prompt="Which card to discard from %s" % victim.name
+        )
         card = cards[0]
         victim.discardCard(card)
         victim.output("%s pillaged your %s" % (player.name, card.name))
@@ -45,33 +44,33 @@ class Card_Pillage(Card.Card):
 ###############################################################################
 class Test_Pillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Pillage'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Pillage"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Pillage'].remove()
+        self.card = self.g["Pillage"].remove()
 
     def test_play(self):
-        """ Play the Pillage """
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['copper']
-        self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold', 'Silver', 'Province')
+        """Play the Pillage"""
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["copper"]
+        self.victim.setHand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
-            self.assertEqual(c.name, 'Spoils')
+            self.assertEqual(c.name, "Spoils")
         self.assertEqual(self.victim.hand.size(), 5)
         self.assertEqual(self.victim.discardpile.size(), 1)
-        self.assertEqual(self.victim.discardpile[0].name, 'Copper')
+        self.assertEqual(self.victim.discardpile[0].name, "Copper")
 
     def test_short_hand(self):
-        """ Play the Pillage with the victim having a small hand"""
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['copper']
-        self.victim.setHand('Copper', 'Estate', 'Duchy', 'Gold')
+        """Play the Pillage with the victim having a small hand"""
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["copper"]
+        self.victim.setHand("Copper", "Estate", "Duchy", "Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
-            self.assertEqual(c.name, 'Spoils')
+            self.assertEqual(c.name, "Spoils")
         self.assertEqual(self.victim.hand.size(), 4)
         self.assertEqual(self.victim.discardpile.size(), 0)
 

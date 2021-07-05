@@ -17,18 +17,20 @@ class Artifact_Horn(Artifact):
 ###############################################################################
 class Test_Horn(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Horn'], initcards=['Border Guard'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initartifacts=["Horn"], initcards=["Border Guard"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.artifact = self.g.artifacts['Horn']
-        self.card = self.g['Border Guard'].remove()
+        self.artifact = self.g.artifacts["Horn"]
+        self.card = self.g["Border Guard"].remove()
 
     def test_horn(self):
-        self.plr.assign_artifact('Horn')
-        self.plr.test_input = ['Put into hand']
+        self.plr.assign_artifact("Horn")
+        self.plr.test_input = ["Put into hand"]
         self.plr.discardCard(self.card)
-        self.assertIsNotNone(self.plr.in_deck('Border Guard'))
-        self.assertIsNone(self.plr.in_discard('Border Guard'))
+        self.assertIsNotNone(self.plr.in_deck("Border Guard"))
+        self.assertIsNone(self.plr.in_discard("Border Guard"))
 
 
 ###############################################################################

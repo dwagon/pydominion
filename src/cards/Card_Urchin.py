@@ -14,8 +14,8 @@ class Card_Urchin(Card.Card):
         self.desc = """+1 Card; +1 Action; Each other player discards down to 4 cards.
             When you play another Attack card with this in play, you may trash this.
             If you do, gain a Mercenary."""
-        self.name = 'Urchin'
-        self.required_cards = [('Card', 'Mercenary')]
+        self.name = "Urchin"
+        self.required_cards = [("Card", "Mercenary")]
         self.actions = 1
         self.cards = 1
         self.cost = 3
@@ -35,8 +35,8 @@ class Card_Urchin(Card.Card):
             trash = player.plrChooseOptions(
                 "Trash the urchin?",
                 ("Keep the Urchin", False),
-                ("Trash and gain a Mercenary", True)
-                )
+                ("Trash and gain a Mercenary", True),
+            )
             if trash:
                 player.trashCard(self)
                 player.gainCard("Mercenary")
@@ -51,27 +51,27 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Urchin(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Urchin', 'Militia'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Urchin'].remove()
+        self.card = self.g["Urchin"].remove()
 
     def test_play(self):
-        """ Play an Urchin """
-        self.plr.addCard(self.card, 'hand')
-        self.victim.test_input = ['1', '0']
+        """Play an Urchin"""
+        self.plr.addCard(self.card, "hand")
+        self.victim.test_input = ["1", "0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.victim.hand.size(), 4)
 
     def test_merc(self):
-        """ Play an Urchin and get a mercenary """
-        self.plr.setPlayed('Urchin', 'Militia')
-        self.plr.test_input = ['end phase', 'end phase', 'mercenary']
+        """Play an Urchin and get a mercenary"""
+        self.plr.setPlayed("Urchin", "Militia")
+        self.plr.test_input = ["end phase", "end phase", "mercenary"]
         self.plr.turn()
-        self.assertIsNotNone(self.plr.in_discard('Mercenary'))
-        self.assertIsNone(self.plr.in_hand('Urchin'))
+        self.assertIsNotNone(self.plr.in_discard("Mercenary"))
+        self.assertIsNone(self.plr.in_hand("Urchin"))
 
 
 ###############################################################################

@@ -12,7 +12,7 @@ class Card_Market(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "+1 cards, +1 action, +1 coin, +1 buys"
-        self.name = 'Market'
+        self.name = "Market"
         self.cards = 1
         self.actions = 1
         self.buys = 1
@@ -23,14 +23,14 @@ class Card_Market(Card.Card):
 ###############################################################################
 class Test_Market(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Market'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Market"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Market'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Market"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a market """
+        """Play a market"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)

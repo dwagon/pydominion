@@ -11,30 +11,34 @@ class Card_Shepherd(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.NOCTURNE
-        self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
-        self.name = 'Shepherd'
+        self.desc = (
+            "+1 action; Discard any number of victory cards +2 cards per card discarded"
+        )
+        self.name = "Shepherd"
         self.cost = 2
         self.actions = 1
-        self.heirloom = 'Pasture'
+        self.heirloom = "Pasture"
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(num=0, anynum=True, types={Card.TYPE_VICTORY: True})
-        player.pickupCards(2*len(todiscard))
+        todiscard = player.plrDiscardCards(
+            num=0, anynum=True, types={Card.TYPE_VICTORY: True}
+        )
+        player.pickupCards(2 * len(todiscard))
 
 
 ###############################################################################
 class Test_Shepherd(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shepherd'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Shepherd'].remove()
+        self.card = self.g["Shepherd"].remove()
 
     def test_play(self):
-        """ Play a Shepherd """
-        self.plr.setHand('Estate', 'Province', 'Duchy')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Estate', 'Duchy', 'Finish']
+        """Play a Shepherd"""
+        self.plr.setHand("Estate", "Province", "Duchy")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5)

@@ -15,7 +15,7 @@ class Card_Tribute(Card.Card):
             2 cards of his deck. For each differently named card revealed,
             if is an Action card, +2 actions; treasure card, +2 coin;
             victory card, +2 cards """
-        self.name = 'Tribute'
+        self.name = "Tribute"
         self.cost = 5
 
     def special(self, game, player):
@@ -29,7 +29,7 @@ class Card_Tribute(Card.Card):
         for c in cards:
             player.output("Looking at %s from %s" % (c.name, victim.name))
             victim.output("%s's Tribute discarded %s" % (player.name, c.name))
-            victim.addCard(c, 'discard')
+            victim.addCard(c, "discard")
             if c.name == cardname:
                 player.output("Duplicate - no extra")
                 continue
@@ -48,23 +48,23 @@ class Card_Tribute(Card.Card):
 ###############################################################################
 class Test_Tribute(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tribute'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tribute"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Tribute'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Tribute"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a tribute """
-        self.victim.setDeck('Copper', 'Estate')
+        """Play a tribute"""
+        self.victim.setDeck("Copper", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 2)
 
     def test_same(self):
-        """ Victim has the same cards for Tribute"""
-        self.victim.setDeck('Tribute', 'Tribute')
+        """Victim has the same cards for Tribute"""
+        self.victim.setDeck("Tribute", "Tribute")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)

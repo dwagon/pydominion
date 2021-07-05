@@ -12,37 +12,37 @@ class Card_FlagBearer(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """When you gain or trash this, take the Flag."""
-        self.name = 'Flag Bearer'
+        self.name = "Flag Bearer"
         # self.required_cards = [('Artifact', 'Flag')]
         self.needsartifacts = True
         self.cost = 4
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.assign_artifact('Flag')
+        player.assign_artifact("Flag")
 
     ###########################################################################
     def hook_trashThisCard(self, game, player):
-        player.assign_artifact('Flag')
+        player.assign_artifact("Flag")
 
 
 ###############################################################################
 class Test_FlagBearer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Flag Bearer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Flag Bearer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Flag Bearer'].remove()
+        self.card = self.g["Flag Bearer"].remove()
 
     def test_gain(self):
-        self.plr.gainCard('Flag Bearer')
-        self.assertIsNotNone(self.plr.has_artifact('Flag'))
+        self.plr.gainCard("Flag Bearer")
+        self.assertIsNotNone(self.plr.has_artifact("Flag"))
 
     def test_trash(self):
-        card = self.g['Flag Bearer'].remove()
-        self.plr.addCard(card, 'hand')
+        card = self.g["Flag Bearer"].remove()
+        self.plr.addCard(card, "hand")
         self.plr.trashCard(card)
-        self.assertIsNotNone(self.plr.has_artifact('Flag'))
+        self.assertIsNotNone(self.plr.has_artifact("Flag"))
 
 
 ###############################################################################

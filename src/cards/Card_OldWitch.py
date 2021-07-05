@@ -12,9 +12,9 @@ class Card_OldWitch(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.RENAISSANCE
         self.desc = """+3 Cards; Each other player gains a Curse and may trash a Curse from their hand."""
-        self.required_cards = ['Curse']
+        self.required_cards = ["Curse"]
         self.cards = 3
-        self.name = 'Old Witch'
+        self.name = "Old Witch"
         self.cost = 5
 
     ###########################################################################
@@ -22,8 +22,8 @@ class Card_OldWitch(Card.Card):
         for pl in player.attackVictims():
             player.output("{} got cursed".format(pl.name))
             pl.output("{}'s Old Witch cursed you".format(player.name))
-            pl.gainCard('Curse')
-            tr = pl.in_hand('Curse')
+            pl.gainCard("Curse")
+            tr = pl.in_hand("Curse")
             if tr:
                 c = pl.plrTrashCard(cardsrc=[tr], prompt="You may trash a Curse")
                 if c:
@@ -32,31 +32,31 @@ class Card_OldWitch(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    return kwargs['cardsrc']
+    return kwargs["cardsrc"]
 
 
 ###############################################################################
 class Test_OldWitch(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Old Witch'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Old Witch"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Old Witch'].remove()
+        self.card = self.g["Old Witch"].remove()
 
     def test_play(self):
         self.plr.setHand()
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
-        self.assertIsNotNone(self.vic.in_discard('Curse'))
+        self.assertIsNotNone(self.vic.in_discard("Curse"))
 
     def test_has_curse(self):
-        self.vic.setHand('Curse')
-        self.plr.addCard(self.card, 'hand')
-        self.vic.test_input = ['Trash Curse']
+        self.vic.setHand("Curse")
+        self.plr.addCard(self.card, "hand")
+        self.vic.test_input = ["Trash Curse"]
         self.plr.playCard(self.card)
-        self.assertIsNone(self.vic.in_hand('Curse'))
-        self.assertIsNotNone(self.g.in_trash('Curse'))
+        self.assertIsNone(self.vic.in_hand("Curse"))
+        self.assertIsNotNone(self.g.in_trash("Curse"))
 
 
 ###############################################################################

@@ -15,18 +15,18 @@ class Card_Crypt(Card.Card):
         self.desc = """Set aside any number of Treasures you have in play, face down
             (under this). While any remain, at the start of each of your turns,
             put one of them into your hand."""
-        self.name = 'Crypt'
+        self.name = "Crypt"
         self.cost = 5
 
     def night(self, game, player):
-        if not hasattr(player, '_crypt_reserve'):
+        if not hasattr(player, "_crypt_reserve"):
             player._crypt_reserve = PlayArea([])
         cards = player.cardSel(
-            prompt='Set aside any number of Treasures you have in play',
-            verbs=('Set', 'Unset'),
+            prompt="Set aside any number of Treasures you have in play",
+            verbs=("Set", "Unset"),
             anynum=True,
             types={Card.TYPE_TREASURE: True},
-            cardsrc='played'
+            cardsrc="played",
         )
         if cards:
             for card in cards:
@@ -41,11 +41,11 @@ class Card_Crypt(Card.Card):
         for card in player._crypt_reserve:
             sel = "{}".format(index)
             toprint = "Bring back {}".format(card.name)
-            options.append({'selector': sel, 'print': toprint, 'card': card})
+            options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.userInput(options, "What card to bring back from the crypt?")
-        player.addCard(o['card'], 'hand')
-        player._crypt_reserve.remove(o['card'])
+        player.addCard(o["card"], "hand")
+        player._crypt_reserve.remove(o["card"])
         player.secret_count -= 1
         if player._crypt_reserve.is_empty():
             self.permanent = False
@@ -54,26 +54,28 @@ class Card_Crypt(Card.Card):
 ###############################################################################
 class Test_Crypt(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Crypt'], badcards=['Duchess'])
+        self.g = Game.Game(
+            quiet=True, numplayers=2, initcards=["Crypt"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Crypt'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Crypt"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setPlayed('Silver', 'Gold', 'Estate')
-        self.plr.test_input = ['Set Gold', 'Set Silver', 'Finish']
+        self.plr.setPlayed("Silver", "Gold", "Estate")
+        self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
         self.plr.playCard(self.card)
         self.plr.end_turn()
-        self.plr.test_input = ['Bring back Gold']
+        self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertEqual(len(self.plr._crypt_reserve), 1)
         self.plr.end_turn()
-        self.plr.test_input = ['Bring back Silver']
+        self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand('Silver'))
+        self.assertIsNotNone(self.plr.in_hand("Silver"))
         self.assertFalse(self.card.permanent)
 
 

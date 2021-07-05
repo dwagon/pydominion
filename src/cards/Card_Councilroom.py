@@ -12,27 +12,29 @@ class Card_Councilroom(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "+4 cards, +1 buy. Everyone else +1 card"
-        self.name = 'Council Room'
+        self.name = "Council Room"
         self.cards = 4
         self.buys = 1
         self.cost = 5
 
     def special(self, game, player):
-        """ Each other player draws a card """
+        """Each other player draws a card"""
         for pl in game.player_list():
             if pl != player:
-                pl.output("Picking up card due to %s playing a Council Room" % player.name)
+                pl.output(
+                    "Picking up card due to %s playing a Council Room" % player.name
+                )
                 pl.pickupCard()
 
 
 ###############################################################################
 class Test_Councilroom(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Council Room'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Council Room"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.ccard = self.g['Council Room'].remove()
-        self.plr.addCard(self.ccard, 'hand')
+        self.ccard = self.g["Council Room"].remove()
+        self.plr.addCard(self.ccard, "hand")
 
     def test_play(self):
         self.assertEqual(self.other.hand.size(), 5)

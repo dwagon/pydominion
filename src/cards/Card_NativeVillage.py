@@ -15,21 +15,27 @@ class Card_NativeVillage(Card.Card):
         self.desc = """+2 Actions
         Choose one: Set aside the top card of your deck face down on your
         Native Village mat; or put all the cards from your mat into your hand."""
-        self.name = 'Native Village'
+        self.name = "Native Village"
         self.base = Game.SEASIDE
         self.actions = 2
         self.cost = 2
 
     def special(self, game, player):
-        if not hasattr(player, '_native_map'):
+        if not hasattr(player, "_native_map"):
             player._native_map = PlayArea([])
-        player.output("Native Village contains: %s" % ", ".join(c.name for c in player._native_map))
+        player.output(
+            "Native Village contains: %s"
+            % ", ".join(c.name for c in player._native_map)
+        )
         choice = player.plrChooseOptions(
             "Choose One",
-            ("Set aside the top card of your deck face down on your Native Village mat", 'push'),
-            ("Put all the cards from your mat into your hand.", 'pull')
-            )
-        if choice == 'push':
+            (
+                "Set aside the top card of your deck face down on your Native Village mat",
+                "push",
+            ),
+            ("Put all the cards from your mat into your hand.", "pull"),
+        )
+        if choice == "push":
             card = player.nextCard()
             player._native_map.add(card)
             player.output("Adding %s to the Native Village" % card.name)
@@ -43,7 +49,7 @@ class Card_NativeVillage(Card.Card):
     def pull_back(self, player):
         for card in player._native_map[:]:
             player.output("Returning %s from Native Map" % card.name)
-            player.addCard(card, 'hand')
+            player.addCard(card, "hand")
             player._native_map.remove(card)
             player.secret_count -= 1
 
@@ -51,23 +57,23 @@ class Card_NativeVillage(Card.Card):
 ###############################################################################
 class Test_NativeVillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Native Village'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Native Village"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Native Village'].remove()
+        self.card = self.g["Native Village"].remove()
 
     def test_play(self):
-        self.plr.setDeck('Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Set aside']
+        self.plr.setDeck("Gold")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Set aside"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr._native_map[0].name, 'Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Put all']
+        self.assertEqual(self.plr._native_map[0].name, "Gold")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Put all"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.secret_count, 0)
-        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand("Gold"))
 
 
 ###############################################################################

@@ -36,28 +36,28 @@ class Card_GrandCastle(CastleCard):
 ###############################################################################
 class Test_GrandCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
     def test_play(self):
-        """ Play a sprawling castle"""
+        """Play a sprawling castle"""
         while True:
-            self.card = self.g['Castles'].remove()
-            if self.card.name == 'Grand Castle':
+            self.card = self.g["Castles"].remove()
+            if self.card.name == "Grand Castle":
                 break
-        self.plr.addCard(self.card, 'hand')
-        self.assertEqual(self.plr.getScoreDetails()['Grand Castle'], 5)
+        self.plr.addCard(self.card, "hand")
+        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 5)
 
     def test_gain(self):
-        """ Gain Grand Castle """
-        self.plr.setHand('Duchy', 'Province')
+        """Gain Grand Castle"""
+        self.plr.setHand("Duchy", "Province")
         while True:
-            self.card = self.g['Castles'].remove()
-            if self.card.name == 'Sprawling Castle':  # One before Grand
+            self.card = self.g["Castles"].remove()
+            if self.card.name == "Sprawling Castle":  # One before Grand
                 break
-        self.plr.gainCard('Castles')
-        self.assertEqual(self.plr.getScoreDetails()['Grand Castle'], 2)
+        self.plr.gainCard("Castles")
+        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 2)
 
 
 ###############################################################################

@@ -15,7 +15,7 @@ class Card_Animal_Fair(Card.Card):
         self.desc = """+4 Coin; +1 Buy per empty supply pile.
             Instead of paying this card's cost, you may trash an Action card
             from your hand."""
-        self.name = 'Animal Fair'
+        self.name = "Animal Fair"
         self.coin = 4
         self.always_buyable = True
         self.cost = 7
@@ -28,7 +28,9 @@ class Card_Animal_Fair(Card.Card):
         actions = [_ for _ in player.hand if _.isAction()]
         if not actions:
             return 0
-        tc = player.plrTrashCard(prompt="Trash card to get Animal Fair for free", cardsrc=actions)
+        tc = player.plrTrashCard(
+            prompt="Trash card to get Animal Fair for free", cardsrc=actions
+        )
         if tc:
             return -7
         return 0
@@ -37,17 +39,17 @@ class Card_Animal_Fair(Card.Card):
 ###############################################################################
 class Test_Animal_Fair(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Animal Fair', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Animal Fair", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Animal Fair'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Animal Fair"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play a supplies """
-        c = self.g['Moat'].remove()
+        """Play a supplies"""
+        c = self.g["Moat"].remove()
         while c:
-            c = self.g['Moat'].remove()
+            c = self.g["Moat"].remove()
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
         self.assertEqual(self.plr.get_buys(), 1 + 1)

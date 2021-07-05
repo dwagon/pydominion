@@ -12,12 +12,12 @@ class Card_Shantytown(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "+2 actions. If no action in hand, +2 cards"
-        self.name = 'Shanty Town'
+        self.name = "Shanty Town"
         self.actions = 2
         self.cost = 3
 
     def special(self, game, player):
-        """ Reveal your hand. If you have no Action cards in hand, +2 cards"""
+        """Reveal your hand. If you have no Action cards in hand, +2 cards"""
         for c in player.hand:
             player.revealCard(c)
             if c.isAction():
@@ -30,23 +30,23 @@ class Card_Shantytown(Card.Card):
 ###############################################################################
 class Test_Shantytown(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shanty Town', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Shanty Town", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Shanty Town'].remove()
+        self.card = self.g["Shanty Town"].remove()
 
     def test_no_actions(self):
-        """ Test Shany Town with no actions"""
-        self.plr.setHand('Estate', 'Estate', 'Gold')
-        self.plr.addCard(self.card, 'hand')
+        """Test Shany Town with no actions"""
+        self.plr.setHand("Estate", "Estate", "Gold")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3 + 2)
 
     def test_actions(self):
-        """ Test Shany Town with actions"""
-        self.plr.setHand('Moat', 'Estate', 'Gold')
-        self.plr.addCard(self.card, 'hand')
+        """Test Shany Town with actions"""
+        self.plr.setHand("Moat", "Estate", "Gold")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3)

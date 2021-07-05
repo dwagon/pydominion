@@ -12,7 +12,7 @@ class Card_Champion(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"
-        self.name = 'Champion'
+        self.name = "Champion"
         self.permanent = True
         self.purchasable = False
         self.defense = True
@@ -26,17 +26,17 @@ class Card_Champion(Card.Card):
 ###############################################################################
 class Test_Champion(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Page', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Page", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Champion'].remove()
+        self.card = self.g["Champion"].remove()
 
     def test_champion(self):
-        """ Play a champion """
+        """Play a champion"""
         self.plr.addCard(self.card, Card.TYPE_DURATION)
         self.assertEqual(self.plr.get_actions(), 1)
-        moat = self.g['Moat'].remove()
-        self.plr.addCard(moat, 'hand')
+        moat = self.g["Moat"].remove()
+        self.plr.addCard(moat, "hand")
         self.plr.playCard(moat)
         self.assertEqual(self.plr.get_actions(), 1)
 

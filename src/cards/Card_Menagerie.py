@@ -12,7 +12,7 @@ class Card_Menagerie(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.CORNUCOPIA
         self.desc = """+1 Action. Reveal your hand. If there are no duplicate cards in it, +3 Cards. Otherwise, +1 Card."""
-        self.name = 'Menagerie'
+        self.name = "Menagerie"
         self.actions = 1
         self.cost = 3
 
@@ -32,21 +32,21 @@ class Card_Menagerie(Card.Card):
 ###############################################################################
 class Test_Menagerie(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Menagerie'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Menagerie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Menagerie'].remove()
+        self.card = self.g["Menagerie"].remove()
 
     def test_play_unique(self):
-        self.plr.setHand('Copper', 'Estate', 'Duchy')
-        self.plr.addCard(self.card, 'hand')
+        self.plr.setHand("Copper", "Estate", "Duchy")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_non_unique(self):
-        self.plr.setHand('Copper', 'Copper', 'Duchy')
-        self.plr.addCard(self.card, 'hand')
+        self.plr.setHand("Copper", "Copper", "Duchy")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 4)

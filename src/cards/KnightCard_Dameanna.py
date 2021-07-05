@@ -28,23 +28,23 @@ class Card_Dame_Anna(KnightCard):
 ###############################################################################
 class Test_Dame_Anna(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Knight"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Knight'].remove()
-            if self.card.name == 'Dame Anna':
+            self.card = self.g["Knight"].remove()
+            if self.card.name == "Dame Anna":
                 break
 
     def test_score(self):
-        """ Play the Dame"""
+        """Play the Dame"""
         tsize = self.g.trashSize()
-        self.plr.setHand('Duchy', 'Province')
-        self.plr.test_input = ['duchy', 'province', 'finish']
-        self.plr.addCard(self.card, 'hand')
+        self.plr.setHand("Duchy", "Province")
+        self.plr.test_input = ["duchy", "province", "finish"]
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
-        self.assertIsNotNone(self.g.in_trash('Province'))
+        self.assertIsNotNone(self.g.in_trash("Province"))
 
 
 ###############################################################################

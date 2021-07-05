@@ -13,7 +13,7 @@ class Card_Oracle(Card.Card):
         self.base = Game.HINTERLANDS
         self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:
         either he discards them or he puts them back on top in an order he chooses.  +2 cards """
-        self.name = 'Oracle'
+        self.name = "Oracle"
         self.cost = 3
 
     def special(self, game, player):
@@ -32,36 +32,39 @@ class Card_Oracle(Card.Card):
         discard = player.plrChooseOptions(
             "What to do with %s cards: %s" % (name, cardnames),
             ("Discard %s" % cardnames, True),
-            ("Put %s on top of deck" % cardnames, False))
+            ("Put %s on top of deck" % cardnames, False),
+        )
         if discard:
             for card in cards:
                 victim.discardCard(card)
             victim.output("%s's Oracle discarded your %s" % (player.name, cardnames))
         else:
             for card in cards:
-                victim.addCard(card, 'topdeck')
-            victim.output("%s's Oracle put %s on top of your deck" % (player.name, cardnames))
+                victim.addCard(card, "topdeck")
+            victim.output(
+                "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
+            )
 
 
 ###############################################################################
 class Test_Oracle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Oracle'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Oracle"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Oracle'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Oracle"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_card(self):
-        """ Play Oracle """
-        self.vic.setDeck('Estate', 'Duchy', 'Province')
-        self.plr.setDeck('Copper', 'Silver', 'Gold')
-        self.plr.test_input = ['discard', 'top']
+        """Play Oracle"""
+        self.vic.setDeck("Estate", "Duchy", "Province")
+        self.plr.setDeck("Copper", "Silver", "Gold")
+        self.plr.test_input = ["discard", "top"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.vic.in_discard('Duchy'))
-        self.assertIsNotNone(self.vic.in_discard('Province'))
-        self.assertIsNotNone(self.plr.in_hand('Silver'))
-        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.vic.in_discard("Duchy"))
+        self.assertIsNotNone(self.vic.in_discard("Province"))
+        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertEqual(self.plr.hand.size(), 7)
 
 

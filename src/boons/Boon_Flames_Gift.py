@@ -23,7 +23,9 @@ class Boon_Flames_Gift(Boon):
 ###############################################################################
 class Test_Flames_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:
@@ -31,14 +33,14 @@ class Test_Flames_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g['Bard'].remove()
+        self.card = self.g["Bard"].remove()
 
     def test_flames_gift(self):
-        self.plr.setHand('Duchy')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Duchy']
+        self.plr.setHand("Duchy")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Duchy"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.in_trash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash("Duchy"))
 
 
 ###############################################################################

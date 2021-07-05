@@ -14,7 +14,10 @@ class Landmark_Colonnade(Landmark):
 
     def desc(self, player):
         if self._vp:
-            return "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left" % self._vp
+            return (
+                "When you buy an Action card, if you have a copy of it in play, take 2VP from here. %d left"
+                % self._vp
+            )
         return "No VP left"
 
     def setup(self, game):
@@ -27,23 +30,25 @@ class Landmark_Colonnade(Landmark):
             return
         if player.in_played(card.name):
             self._vp -= 2
-            player.addScore('Colonnade', 2)
+            player.addScore("Colonnade", 2)
             player.output("Gained 2VP from Colonnade")
 
 
 ###############################################################################
 class Test_Colonnade(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Colonnade'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, landmarkcards=["Colonnade"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_play(self):
-        """ Test Colonnade"""
-        self.plr.setPlayed('Moat')
+        """Test Colonnade"""
+        self.plr.setPlayed("Moat")
         self.plr.setCoin(5)
-        self.plr.buyCard(self.g['Moat'])
-        self.assertEqual(self.plr.getScoreDetails()['Colonnade'], 2)
+        self.plr.buyCard(self.g["Moat"])
+        self.assertEqual(self.plr.getScoreDetails()["Colonnade"], 2)
 
 
 ###############################################################################

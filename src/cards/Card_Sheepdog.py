@@ -13,7 +13,7 @@ class Card_Sheepdog(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.MENAGERIE
         self.desc = "+2 Cards; When you gain a card, you may play this from your hand."
-        self.name = 'Sheepdog'
+        self.name = "Sheepdog"
         self.cards = 2
         self.cost = 3
 
@@ -24,20 +24,20 @@ class Card_Sheepdog(Card.Card):
 ###############################################################################
 class Test_Sheepdog(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Sheepdog'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Sheepdog"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Sheepdog'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Sheepdog"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play card """
+        """Play card"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gain(self):
-        """ Gain a card """
-        self.plr.gainCard('Estate')
+        """Gain a card"""
+        self.plr.gainCard("Estate")
         self.g.print_state()
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 

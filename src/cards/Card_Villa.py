@@ -11,7 +11,7 @@ class Card_Villa(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.EMPIRES
-        self.name = 'Villa'
+        self.name = "Villa"
         self.cost = 4
         self.actions = 2
         self.buys = 1
@@ -25,33 +25,35 @@ class Card_Villa(Card.Card):
             Action phase."""
 
     def hook_gain_this_card(self, game, player):
-        if player.phase == 'buy':
+        if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
         player.addActions(1)
-        return {'destination': 'hand'}
+        return {"destination": "hand"}
 
 
 ###############################################################################
 class Test_Villa(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Villa'], badcards=['Duchess'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Villa"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Villa'].remove()
+        self.card = self.g["Villa"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.phase = 'buy'
-        self.plr.gainCard('Villa')
+        self.plr.phase = "buy"
+        self.plr.gainCard("Villa")
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
-        self.assertIsNotNone(self.plr.in_hand('Villa'))
+        self.assertIsNotNone(self.plr.in_hand("Villa"))
 
 
 ###############################################################################

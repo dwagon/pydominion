@@ -15,10 +15,10 @@ class Card_Black_Cat(Card.Card):
         self.desc = """+2 Cards; If it isn't your turn, each other player gains a
             Curse. When another player gains a Victory card, you may play this
             from your hand."""
-        self.name = 'Black Cat'
+        self.name = "Black Cat"
         self.cards = 2
         self.cost = 2
-        self.required_cards = ['Curse']
+        self.required_cards = ["Curse"]
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if owner == player:
@@ -26,23 +26,23 @@ class Card_Black_Cat(Card.Card):
         if card.isVictory():
             for plr in owner.attackVictims():
                 plr.output("{}'s Black Cat Cursed you".format(owner.name))
-                plr.gainCard('Curse', callhook=False)
+                plr.gainCard("Curse", callhook=False)
 
 
 ###############################################################################
 class Test_Black_Cat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Black Cat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Black Cat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
-        self.card = self.g['Black Cat'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Black Cat"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play a card """
-        self.oth.gainCard('Estate')
+        """Play a card"""
+        self.oth.gainCard("Estate")
         self.g.print_state()
-        self.assertIsNotNone(self.oth.in_discard('Curse'))
+        self.assertIsNotNone(self.oth.in_discard("Curse"))
 
 
 ###############################################################################

@@ -36,7 +36,7 @@ class Hex_War(Hex):
 ###############################################################################
 class Test_War(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -46,10 +46,10 @@ class Test_War(unittest.TestCase):
 
     def test_war(self):
         tsize = self.g.trashSize()
-        self.plr.setDeck('Duchy', 'Cursed Village', 'Silver')
-        self.plr.gainCard('Cursed Village')
+        self.plr.setDeck("Duchy", "Cursed Village", "Silver")
+        self.plr.gainCard("Cursed Village")
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.in_trash('Silver'))
+        self.assertIsNotNone(self.g.in_trash("Silver"))
 
 
 ###############################################################################

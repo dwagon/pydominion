@@ -17,19 +17,19 @@ class Hex_Misery(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.has_state('Twice Miserable'):
+        if player.has_state("Twice Miserable"):
             pass
-        elif player.has_state('Miserable'):
-            player.remove_state('Miserable')
-            player.assign_state('Twice Miserable')
+        elif player.has_state("Miserable"):
+            player.remove_state("Miserable")
+            player.assign_state("Twice Miserable")
         else:
-            player.assign_state('Miserable')
+            player.assign_state("Miserable")
 
 
 ###############################################################################
 class Test_Misery(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -37,10 +37,10 @@ class Test_Misery(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_normal(self):
-        self.plr.gainCard('Cursed Village')
-        self.assertTrue(self.plr.has_state('Miserable'))
-        self.plr.gainCard('Cursed Village')
-        self.assertTrue(self.plr.has_state('Twice Miserable'))
+        self.plr.gainCard("Cursed Village")
+        self.assertTrue(self.plr.has_state("Miserable"))
+        self.plr.gainCard("Cursed Village")
+        self.assertTrue(self.plr.has_state("Twice Miserable"))
 
 
 ###############################################################################

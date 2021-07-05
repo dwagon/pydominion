@@ -13,7 +13,10 @@ class Landmark_Arena(Landmark):
         self.name = "Arena"
 
     def desc(self, player):
-        return "At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. (%d left)" % self._vp
+        return (
+            "At the start of your Buy phase, you may discard an Action card. If you do, take 2VP from here. (%d left)"
+            % self._vp
+        )
 
     def setup(self, game):
         self._vp = 6 * game.numplayers
@@ -27,26 +30,30 @@ class Landmark_Arena(Landmark):
                 actions.append(card)
         if not actions:
             return
-        disc = player.plrDiscardCards(prompt="Arena: Discard an action to gain 2VP", cardsrc=actions)
+        disc = player.plrDiscardCards(
+            prompt="Arena: Discard an action to gain 2VP", cardsrc=actions
+        )
         if disc:
             player.output("Gained 2 VP from Arena")
             self._vp -= 2
-            player.addScore('Arena', 2)
+            player.addScore("Arena", 2)
 
 
 ###############################################################################
 class Test_Arena(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Arena'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, landmarkcards=["Arena"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_gain(self):
-        """ Use Arena """
-        self.plr.setHand('Moat')
-        self.plr.test_input = ['Discard Moat', 'End Phase']
+        """Use Arena"""
+        self.plr.setHand("Moat")
+        self.plr.test_input = ["Discard Moat", "End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getScoreDetails()['Arena'], 2)
+        self.assertEqual(self.plr.getScoreDetails()["Arena"], 2)
 
 
 ###############################################################################

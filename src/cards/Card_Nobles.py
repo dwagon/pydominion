@@ -12,15 +12,15 @@ class Card_Nobles(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
         self.base = Game.INTRIGUE
         self.desc = "2VP, choose +3 cards or +2 actions"
-        self.name = 'Nobles'
+        self.name = "Nobles"
         self.victory = 2
         self.cost = 6
 
     def special(self, game, player):
-        """ Choose one: +3 Cards; or +2 Actions """
+        """Choose one: +3 Cards; or +2 Actions"""
         cards = player.plrChooseOptions(
-            "Choose one",
-            ('+3 Cards', True), ('+2 Actions', False))
+            "Choose one", ("+3 Cards", True), ("+2 Actions", False)
+        )
         if cards:
             player.pickupCards(3)
         else:
@@ -30,30 +30,30 @@ class Card_Nobles(Card.Card):
 ###############################################################################
 class Test_Nobles(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Nobles'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Nobles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Nobles'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Nobles"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_cards(self):
-        """ Play the Nobles - chosing cards """
-        self.plr.test_input = ['0']
+        """Play the Nobles - chosing cards"""
+        self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
         self.assertEqual(self.plr.get_actions(), 0)
 
     def test_actions(self):
-        """ Play the Nobles - chosing actions """
-        self.plr.test_input = ['1']
+        """Play the Nobles - chosing actions"""
+        self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_score(self):
-        """ Score the nobles """
+        """Score the nobles"""
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Nobles'], 2)
+        self.assertEqual(sc["Nobles"], 2)
 
 
 ###############################################################################

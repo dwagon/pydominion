@@ -37,8 +37,10 @@ class Landmark_MountainPass(Landmark):
 
             if winning_plr:
                 winning_plr.debt += curbid
-                winning_plr.addScore('Mountain Pass', 8)
-                game.output("%s won with a bid of %d for 8VP" % (winning_plr.name, curbid))
+                winning_plr.addScore("Mountain Pass", 8)
+                game.output(
+                    "%s won with a bid of %d for 8VP" % (winning_plr.name, curbid)
+                )
                 self._state = "done"
             else:
                 game.output("No one bid for Mountain Pass")
@@ -52,7 +54,7 @@ class Landmark_MountainPass(Landmark):
     def generate_bids(self, minbid):
         options = []
         options.append(("Don't bid", -1))
-        for i in range(minbid+1, 41):
+        for i in range(minbid + 1, 41):
             options.append(("Bid %d" % i, i))
         return options
 
@@ -65,24 +67,24 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_MountainPass(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=['Mountain Pass'])
+        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=["Mountain Pass"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.mp = self.g.landmarks['Mountain Pass']
+        self.mp = self.g.landmarks["Mountain Pass"]
 
     def test_play(self):
-        """ Test Mountain Pass"""
-        self.assertEqual(self.mp._state, 'un')
-        self.plr.gainCard('Province')
-        self.assertEqual(self.mp._state, 'do')
-        self.other.test_input = ['24']
-        self.plr.test_input = ['25']
+        """Test Mountain Pass"""
+        self.assertEqual(self.mp._state, "un")
+        self.plr.gainCard("Province")
+        self.assertEqual(self.mp._state, "do")
+        self.other.test_input = ["24"]
+        self.plr.test_input = ["25"]
         self.plr.end_turn()
         self.assertEqual(self.plr.debt, 25)
         self.assertEqual(self.other.debt, 0)
-        self.assertEqual(self.plr.getScoreDetails()['Mountain Pass'], 8)
-        self.assertNotIn('Mountain Pass', self.other.getScoreDetails())
-        self.assertEqual(self.mp._state, 'done')
+        self.assertEqual(self.plr.getScoreDetails()["Mountain Pass"], 8)
+        self.assertNotIn("Mountain Pass", self.other.getScoreDetails())
+        self.assertEqual(self.mp._state, "done")
 
 
 ###############################################################################

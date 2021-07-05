@@ -1,5 +1,3 @@
-
-
 ###############################################################################
 class LandmarkPile(object):
     def __init__(self, cardname, klass):
@@ -13,5 +11,6 @@ class LandmarkPile(object):
     ###########################################################################
     def __repr__(self):
         return "Landmark %s" % self.name
+
 
 # EOF

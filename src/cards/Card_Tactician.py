@@ -12,22 +12,20 @@ class Card_Tactician(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.SEASIDE
         self.desc = "Discard hand; +5 cards, +1 buy and +1 action next turn"
-        self.name = 'Tactician'
+        self.name = "Tactician"
         self.cost = 5
 
     def special(self, game, player):
         self.discarded = False
         discard = player.plrChooseOptions(
-            'Discard hand for good stuff next turn?',
-            ('Keep', False),
-            ('Discard', True)
+            "Discard hand for good stuff next turn?", ("Keep", False), ("Discard", True)
         )
         if discard and player.hand.size():
             self.discarded = True
             player.discardHand()
 
     def duration(self, game, player):
-        """ +5 Cards, +1 Buy, +1 Action """
+        """+5 Cards, +1 Buy, +1 Action"""
         if self.discarded:
             player.pickupCards(5)
             player.addBuys(1)
@@ -38,15 +36,15 @@ class Card_Tactician(Card.Card):
 ###############################################################################
 class Test_Tactician(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tactician'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tactician"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Tactician'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Tactician"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_discard(self):
-        """ Play a tactician and discard hand"""
-        self.plr.test_input = ['discard']
+        """Play a tactician and discard hand"""
+        self.plr.test_input = ["discard"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.plr.end_turn()
@@ -56,8 +54,8 @@ class Test_Tactician(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_play_keep(self):
-        """ Play a tactician and discard hand"""
-        self.plr.test_input = ['keep']
+        """Play a tactician and discard hand"""
+        self.plr.test_input = ["keep"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()

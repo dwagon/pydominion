@@ -13,12 +13,12 @@ class Card_Island(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
         self.base = Game.SEASIDE
         self.desc = """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""
-        self.name = 'Island'
+        self.name = "Island"
         self.cost = 4
         self.victory = 2
 
     def special(self, game, player):
-        if not hasattr(player, 'island_reserve'):
+        if not hasattr(player, "island_reserve"):
             player.island_reserve = PlayArea([])
         c = player.cardSel(prompt="Select a card to set aside for the rest of the game")
         if c:
@@ -42,43 +42,43 @@ class Card_Island(Card.Card):
 ###############################################################################
 class Test_Island(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Island'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Island"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Island'].remove()
+        self.card = self.g["Island"].remove()
 
     def test_play_province(self):
-        """ Play an island on a province """
-        self.plr.setHand('Silver', 'Province')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['province']
+        """Play an island on a province"""
+        self.plr.setHand("Silver", "Province")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["province"]
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.in_played('Island'))
-        self.assertIsNone(self.plr.in_hand('Island'))
-        self.assertIsNone(self.plr.in_discard('Island'))
-        self.assertIsNone(self.plr.in_hand('Province'))
-        self.assertIsNone(self.plr.in_discard('Province'))
+        self.assertIsNone(self.plr.in_played("Island"))
+        self.assertIsNone(self.plr.in_hand("Island"))
+        self.assertIsNone(self.plr.in_discard("Island"))
+        self.assertIsNone(self.plr.in_hand("Province"))
+        self.assertIsNone(self.plr.in_discard("Province"))
         self.assertEqual(self.plr.secret_count, 2)
         self.plr.gameOver()
-        self.assertIsNotNone(self.plr.in_discard('Island'))
-        self.assertIsNotNone(self.plr.in_discard('Province'))
+        self.assertIsNotNone(self.plr.in_discard("Island"))
+        self.assertIsNotNone(self.plr.in_discard("Province"))
         score = self.plr.getScoreDetails()
-        self.assertEqual(score['Island'], 2)
-        self.assertEqual(score['Province'], 6)
+        self.assertEqual(score["Island"], 2)
+        self.assertEqual(score["Province"], 6)
 
     def test_play_alone(self):
-        """ Play a island but don't pick another card"""
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['finish']
+        """Play a island but don't pick another card"""
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["finish"]
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.in_played('Island'))
-        self.assertIsNone(self.plr.in_hand('Island'))
-        self.assertIsNone(self.plr.in_discard('Island'))
+        self.assertIsNone(self.plr.in_played("Island"))
+        self.assertIsNone(self.plr.in_hand("Island"))
+        self.assertIsNone(self.plr.in_discard("Island"))
         self.assertEqual(self.plr.secret_count, 1)
         self.plr.gameOver()
-        self.assertIsNotNone(self.plr.in_discard('Island'))
+        self.assertIsNotNone(self.plr.in_discard("Island"))
         score = self.plr.getScoreDetails()
-        self.assertEqual(score['Island'], 2)
+        self.assertEqual(score["Island"], 2)
 
 
 ###############################################################################

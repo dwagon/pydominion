@@ -12,7 +12,7 @@ class Card_SilkMerchant(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+2 Cards; +1 Buy; When you gain or trash this, +1 Coffers and +1 Villager."""
-        self.name = 'Silk Merchant'
+        self.name = "Silk Merchant"
         self.cards = 2
         self.cost = 4
 
@@ -30,15 +30,15 @@ class Card_SilkMerchant(Card.Card):
 ###############################################################################
 class Test_SilkMerchant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Silk Merchant'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Silk Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Silk Merchant'].remove()
+        self.card = self.g["Silk Merchant"].remove()
         self.plr.setHand()
 
     def test_gain_card(self):
         self.plr.setCoffer(0)
-        self.plr.gainCard('Silk Merchant')
+        self.plr.gainCard("Silk Merchant")
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.getVillager(), 1)
         self.assertEqual(self.plr.getCoffer(), 1)
@@ -51,7 +51,7 @@ class Test_SilkMerchant(unittest.TestCase):
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_play_card(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.setCoffer(0)
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2)

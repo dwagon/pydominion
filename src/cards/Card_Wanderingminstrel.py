@@ -13,7 +13,7 @@ class Card_Wanderingminstrel(Card.Card):
         self.base = Game.DARKAGES
         self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck.
             Put the Actions back on top in any order and discard the rest."""
-        self.name = 'Wandering Minstrel'
+        self.name = "Wandering Minstrel"
         self.cards = 1
         self.actions = 2
         self.cost = 4
@@ -27,31 +27,33 @@ class Card_Wanderingminstrel(Card.Card):
                 cards.append(c)
                 player.output("Revealed a %s and put on top of deck" % c.name)
             else:
-                player.addCard(c, 'discard')
+                player.addCard(c, "discard")
                 player.output("Discarded %s" % c.name)
 
         for card in cards:
-            player.addCard(card, 'topdeck')
+            player.addCard(card, "topdeck")
 
 
 ###############################################################################
 class Test_Wanderingminstrel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wandering Minstrel', 'Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Wandering Minstrel", "Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Wandering Minstrel'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Wandering Minstrel"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Wandering Minstrel """
-        self.plr.setDeck('Duchy', 'Moat', 'Silver', 'Gold')
+        """Wandering Minstrel"""
+        self.plr.setDeck("Duchy", "Moat", "Silver", "Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertIsNotNone(self.plr.in_deck('Moat'))
-        self.assertIsNotNone(self.plr.in_discard('Duchy'))
-        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_deck("Moat"))
+        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 
 ###############################################################################

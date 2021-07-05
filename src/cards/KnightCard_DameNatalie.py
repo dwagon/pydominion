@@ -27,20 +27,20 @@ class Card_Dame_Natalie(KnightCard):
 ###############################################################################
 class Test_Dame_Natalie(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Knight"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Knight'].remove()
-            if self.card.name == 'Dame Natalie':
+            self.card = self.g["Knight"].remove()
+            if self.card.name == "Dame Natalie":
                 break
 
     def test_score(self):
-        """ Play the Dame"""
-        self.plr.test_input = ['get silver']
-        self.plr.addCard(self.card, 'hand')
+        """Play the Dame"""
+        self.plr.test_input = ["get silver"]
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 
 ###############################################################################

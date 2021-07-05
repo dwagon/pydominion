@@ -1,32 +1,32 @@
 # pylint: disable=no-member
 
-TYPE_ACTION = 'action'
-TYPE_ARTIFACT = 'artifact'
-TYPE_ATTACK = 'attack'
-TYPE_BOON = 'boon'
-TYPE_CASTLE = 'castle'
-TYPE_COMMAND = 'command'
-TYPE_DOOM = 'doom'
-TYPE_DURATION = 'duration'
-TYPE_FATE = 'fate'
-TYPE_GATHERING = 'gathering'
-TYPE_HEIRLOOM = 'heirloom'
-TYPE_HEX = 'hex'
-TYPE_KNIGHT = 'knight'
-TYPE_LOOTER = 'looter'
-TYPE_NIGHT = 'night'
-TYPE_PRIZE = 'prize'
-TYPE_PROJECT = 'project'
-TYPE_REACTION = 'reaction'
-TYPE_RESERVE = 'reserve'
-TYPE_RUIN = 'ruin'
-TYPE_SHELTER = 'shelter'
-TYPE_SPIRIT = 'spirit'
-TYPE_STATE = 'state'
-TYPE_TRAVELLER = 'traveller'
-TYPE_TREASURE = 'treasure'
-TYPE_VICTORY = 'victory'
-TYPE_ZOMBIE = 'zombie'
+TYPE_ACTION = "action"
+TYPE_ARTIFACT = "artifact"
+TYPE_ATTACK = "attack"
+TYPE_BOON = "boon"
+TYPE_CASTLE = "castle"
+TYPE_COMMAND = "command"
+TYPE_DOOM = "doom"
+TYPE_DURATION = "duration"
+TYPE_FATE = "fate"
+TYPE_GATHERING = "gathering"
+TYPE_HEIRLOOM = "heirloom"
+TYPE_HEX = "hex"
+TYPE_KNIGHT = "knight"
+TYPE_LOOTER = "looter"
+TYPE_NIGHT = "night"
+TYPE_PRIZE = "prize"
+TYPE_PROJECT = "project"
+TYPE_REACTION = "reaction"
+TYPE_RESERVE = "reserve"
+TYPE_RUIN = "ruin"
+TYPE_SHELTER = "shelter"
+TYPE_SPIRIT = "spirit"
+TYPE_STATE = "state"
+TYPE_TRAVELLER = "traveller"
+TYPE_TREASURE = "treasure"
+TYPE_VICTORY = "victory"
+TYPE_ZOMBIE = "zombie"
 
 
 ##############################################################################
@@ -39,7 +39,7 @@ class Card(object):
         self.debtcost = 0
         self.always_buyable = False
         self.potcost = False
-        self.cardtype = 'unknown'
+        self.cardtype = "unknown"
         self.purchasable = True
         self.permanent = False
         self.playable = True
@@ -51,7 +51,7 @@ class Card(object):
         self.overpay = False
         self.insupply = True
         self.traveller = False
-        self.when = 'any'
+        self.when = "any"
         self.actions = 0
         self.buys = 0
         self.coin = 0
@@ -67,23 +67,33 @@ class Card(object):
 
     ##########################################################################
     def check(self):
-        """ Check for some basic validity
-            Some of these checks are caused by inconsistent naming standards
+        """Check for some basic validity
+        Some of these checks are caused by inconsistent naming standards
         """
-        if not hasattr(self, 'base'):
+        if not hasattr(self, "base"):
             raise NotImplementedError("{} has no base".format(self.__class__.__name__))
-        if not hasattr(self, 'name'):
+        if not hasattr(self, "name"):
             raise NotImplementedError("{} has no name".format(self.__class__.__name__))
-        if hasattr(self, 'coins'):
-            raise NotImplementedError("{} has coins not coin".format(self.__class__.__name__))
-        if hasattr(self, 'action'):
-            raise NotImplementedError("{} has action not actions".format(self.__class__.__name__))
-        if hasattr(self, 'potions'):
-            raise NotImplementedError("{} has potions not potion".format(self.__class__.__name__))
-        if hasattr(self, 'card'):
-            raise NotImplementedError("{} has card not cards".format(self.__class__.__name__))
-        if hasattr(self, 'buy'):
-            raise NotImplementedError("{} has buy not buys".format(self.__class__.__name__))
+        if hasattr(self, "coins"):
+            raise NotImplementedError(
+                "{} has coins not coin".format(self.__class__.__name__)
+            )
+        if hasattr(self, "action"):
+            raise NotImplementedError(
+                "{} has action not actions".format(self.__class__.__name__)
+            )
+        if hasattr(self, "potions"):
+            raise NotImplementedError(
+                "{} has potions not potion".format(self.__class__.__name__)
+            )
+        if hasattr(self, "card"):
+            raise NotImplementedError(
+                "{} has card not cards".format(self.__class__.__name__)
+            )
+        if hasattr(self, "buy"):
+            raise NotImplementedError(
+                "{} has buy not buys".format(self.__class__.__name__)
+            )
 
     ##########################################################################
     def get_cardtype_repr(self):
@@ -123,19 +133,19 @@ class Card(object):
 
     ##########################################################################
     def special(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def night(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def duration(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def setup(self, game):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hasDefense(self):
@@ -149,7 +159,7 @@ class Card(object):
 
     ##########################################################################
     def isCommand(self):
-        """ http://wiki.dominionstrategy.com/index.php/Command """
+        """http://wiki.dominionstrategy.com/index.php/Command"""
         if TYPE_COMMAND in self.cardtype:
             return True
         return False
@@ -256,104 +266,105 @@ class Card(object):
 
     ##########################################################################
     def special_score(self, game, player):
-        return 0    # pragma: nocover
+        return 0  # pragma: nocover
 
     ##########################################################################
     def hook_cleanup(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_allPlayers_preAction(self, game, player, owner, card):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_allPlayers_buyCard(self, game, player, owner, card):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_buyCard(self, game, player, card):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_buy_this_card(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_call_reserve(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_allowedToBuy(self, game, player):
-        return True     # pragma: no cover
+        return True  # pragma: no cover
 
     ##########################################################################
     def hook_allplayers_gain_card(self, game, player, owner, card):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_gain_card(self, game, player, card):
-        return {}   # pragma: no cover
+        return {}  # pragma: no cover
 
     ##########################################################################
     def hook_cardCost(self, game, player, card):
-        return 0    # pragma: no cover
+        return 0  # pragma: no cover
 
     ##########################################################################
     def hook_this_card_cost(self, game, player):
-        return 0    # pragma: no cover
+        return 0  # pragma: no cover
 
     ##########################################################################
     def hook_coinvalue(self, game, player):
-        """ How much coin does this card contribute """
-        return self.coin    # pragma: no cover
+        """How much coin does this card contribute"""
+        return self.coin  # pragma: no cover
 
     ##########################################################################
     def hook_spendValue(self, game, player, card):
-        """ Does this card make any  modifications on the value of spending a card """
-        return 0    # pragma: no cover
+        """Does this card make any  modifications on the value of spending a card"""
+        return 0  # pragma: no cover
 
     ##########################################################################
     def hook_underAttack(self, game, player, attacker):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_discard_this_card(self, game, player, source):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_trashThisCard(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_trash_card(self, game, player, card):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_gain_this_card(self, game, player):
-        return {}    # pragma: no cover
+        return {}  # pragma: no cover
 
     ##########################################################################
     def hook_end_turn(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_end_of_game(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_preBuy(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_endBuyPhase(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_start_turn(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
 
     ##########################################################################
     def hook_revealThisCard(self, game, player):
-        pass    # pragma: no cover
+        pass  # pragma: no cover
+
 
 # EOF

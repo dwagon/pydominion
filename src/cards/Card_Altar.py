@@ -12,7 +12,7 @@ class Card_Altar(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """Trash a card from your hand. Gain a card costing up to 5 Coin."""
-        self.name = 'Altar'
+        self.name = "Altar"
         self.cost = 6
 
     def special(self, game, player):
@@ -26,19 +26,19 @@ class Card_Altar(Card.Card):
 ###############################################################################
 class Test_Altar(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Altar', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Altar", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Altar'].remove()
+        self.card = self.g["Altar"].remove()
 
     def test_play(self):
-        """ Play an Altar"""
-        self.plr.setHand('Province')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Province', 'Moat']
+        """Play an Altar"""
+        self.plr.setHand("Province")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Province", "Moat"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
-        self.assertIsNotNone(self.g.in_trash('Province'))
+        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIsNotNone(self.g.in_trash("Province"))
 
 
 ###############################################################################

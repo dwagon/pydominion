@@ -15,7 +15,7 @@ class Card_Copper(Card.Card):
         self.playable = False
         self.callable = False
         self.desc = "+1 coin"
-        self.name = 'Copper'
+        self.name = "Copper"
         self.coin = 1
         self.cost = 0
 
@@ -29,8 +29,8 @@ class Test_Copper(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Copper'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Copper"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)

@@ -28,16 +28,16 @@ class State_Deluded(State):
 ###############################################################################
 class Test_Deluded(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bard"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.state = self.g.states['Deluded']
+        self.state = self.g.states["Deluded"]
 
     def test_deluded(self):
-        self.plr.assign_state('Deluded')
-        self.plr.test_input = ['Estate']
-        self.assertGreater(self.plr.cardCost(self.g['Bard']), 99)
-        self.plr.test_input = ['End Phase']
+        self.plr.assign_state("Deluded")
+        self.plr.test_input = ["Estate"]
+        self.assertGreater(self.plr.cardCost(self.g["Bard"]), 99)
+        self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.states, [])
 

@@ -27,18 +27,20 @@ class Card_Sirmichael(KnightCard):
 ###############################################################################
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Knight'], badcards=['Pooka', 'Fool'])
+        self.g = Game.Game(
+            quiet=True, numplayers=2, initcards=["Knight"], badcards=["Pooka", "Fool"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:
-            self.card = self.g['Knight'].remove()
-            if self.card.name == 'Sir Michael':
+            self.card = self.g["Knight"].remove()
+            if self.card.name == "Sir Michael":
                 break
 
     def test_score(self):
-        """ Play the Sir """
-        self.vic.test_input = ['1', '2', '0']
-        self.plr.addCard(self.card, 'hand')
+        """Play the Sir"""
+        self.vic.test_input = ["1", "2", "0"]
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
 

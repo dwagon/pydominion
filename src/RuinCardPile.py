@@ -5,7 +5,7 @@ from CardPile import CardPile
 
 ###############################################################################
 class RuinCardPile(CardPile):
-    def __init__(self, mapping, pilesize=10):   # pylint: disable=super-init-not-called
+    def __init__(self, mapping, pilesize=10):  # pylint: disable=super-init-not-called
         self.pilesize = pilesize
         ruintypes = mapping
 
@@ -15,7 +15,7 @@ class RuinCardPile(CardPile):
             self.ruins.append(ruintypes[c]())
 
     def __getattr__(self, key):
-        if key == 'card':
+        if key == "card":
             return self.ruins[-1]
         return getattr(self.ruins[-1], key)
 
@@ -27,5 +27,6 @@ class RuinCardPile(CardPile):
 
     def __repr__(self):
         return "RuinCardPile %s: %d" % (self.name, self.pilesize)
+
 
 # EOF

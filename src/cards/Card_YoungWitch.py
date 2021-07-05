@@ -15,15 +15,15 @@ class Card_YoungWitch(Card.Card):
         self.base = Game.CORNUCOPIA
         self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal
             a Bane card from his hand. If he doesn't, he gains a Curse."""
-        self.required_cards = ['Curse']
-        self.name = 'Young Witch'
+        self.required_cards = ["Curse"]
+        self.name = "Young Witch"
         self.cards = 2
         self.cost = 4
 
     def setup(self, game):
         """Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply. Cards from that pile are Bane cards."""
         banes = []
-        for klass in game.cardmapping['Card'].values():
+        for klass in game.cardmapping["Card"].values():
             card = klass()
             if card.name in game:
                 continue
@@ -45,43 +45,48 @@ class Card_YoungWitch(Card.Card):
                 continue
             player.output("%s got cursed" % pl.name)
             pl.output("%s's Young Witch cursed you" % player.name)
-            pl.gainCard('Curse')
+            pl.gainCard("Curse")
 
 
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Young Witch'], badcards=['Secret Chamber', 'Duchess', 'Caravan Guard'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=2,
+            initcards=["Young Witch"],
+            badcards=["Secret Chamber", "Duchess", "Caravan Guard"],
+        )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.card = self.g['Young Witch'].remove()
+        self.card = self.g["Young Witch"].remove()
 
     def test_play_nobane(self):
-        """ Play the young witch without a bane """
-        self.victim.setHand('Copper', 'Silver')
-        self.attacker.setHand('Copper', 'Silver', 'Gold', 'Duchy', 'Province')
-        self.attacker.addCard(self.card, 'hand')
-        self.attacker.test_input = ['Duchy', 'Province', 'finish']
+        """Play the young witch without a bane"""
+        self.victim.setHand("Copper", "Silver")
+        self.attacker.setHand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.attacker.addCard(self.card, "hand")
+        self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.playCard(self.card)
         try:
             self.assertIn(self.g[self.g._bane].cost, (2, 3))
             self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
-            self.assertIsNotNone(self.victim.in_discard('Curse'))
-        except AssertionError:      # pragma: no cover
+            self.assertIsNotNone(self.victim.in_discard("Curse"))
+        except AssertionError:  # pragma: no cover
             print("Bane={}".format(self.g._bane))
             self.g.print_state()
             raise
 
     def test_play_bane(self):
-        """ Play the young witch with a bane """
-        self.victim.setHand('Copper', 'Silver', self.g._bane)
-        self.attacker.setHand('Copper', 'Silver', 'Gold', 'Duchy', 'Province')
-        self.attacker.addCard(self.card, 'hand')
-        self.attacker.test_input = ['Duchy', 'Province', 'finish']
+        """Play the young witch with a bane"""
+        self.victim.setHand("Copper", "Silver", self.g._bane)
+        self.attacker.setHand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.attacker.addCard(self.card, "hand")
+        self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.playCard(self.card)
         try:
-            self.assertIsNone(self.victim.in_discard('Curse'))
-        except AssertionError:      # pragma: no cover
+            self.assertIsNone(self.victim.in_discard("Curse"))
+        except AssertionError:  # pragma: no cover
             print("Bane={}".format(self.g._bane))
             self.g.print_state()
             raise

@@ -11,7 +11,7 @@ class Card_Priest(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
-        self.name = 'Priest'
+        self.name = "Priest"
         self.desc = "+2 Coin. Trash a card from your hand. For the rest of this turn, when you trash a card, +2 Coin."
         self.cost = 4
         self.coin = 2
@@ -33,21 +33,21 @@ class Card_Priest(Card.Card):
 ###############################################################################
 class Test_Priest(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Priest', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Priest", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Priest'].remove()
-        self.plr.addCard(self.card, 'hand')
-        self.moat = self.g['Moat'].remove()
-        self.plr.addCard(self.moat, 'hand')
-        self.gold = self.g['Gold'].remove()
-        self.plr.addCard(self.gold, 'hand')
+        self.card = self.g["Priest"].remove()
+        self.plr.addCard(self.card, "hand")
+        self.moat = self.g["Moat"].remove()
+        self.plr.addCard(self.moat, "hand")
+        self.gold = self.g["Gold"].remove()
+        self.plr.addCard(self.gold, "hand")
 
     def test_playCard(self):
-        self.plr.test_input = ['Trash Moat']
+        self.plr.test_input = ["Trash Moat"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.g.in_trash('Moat'))
+        self.assertIsNotNone(self.g.in_trash("Moat"))
         self.plr.trashCard(self.gold)
         self.assertEqual(self.plr.getCoin(), 4)
 

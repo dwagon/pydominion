@@ -23,23 +23,23 @@ class Card_Sirvander(KnightCard):
         self.knight_special(game, player)
 
     def hook_trashcard(self, game, player):
-        player.gainCard('gold')
+        player.gainCard("gold")
 
 
 ###############################################################################
 class Test_Sir_Vander(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Knight'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Knight"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Knight'].remove()
-            if self.card.name == 'Sir Vander':
+            self.card = self.g["Knight"].remove()
+            if self.card.name == "Sir Vander":
                 break
 
     def test_score(self):
-        """ Play the Sir"""
-        self.plr.addCard(self.card, 'hand')
+        """Play the Sir"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
 
 

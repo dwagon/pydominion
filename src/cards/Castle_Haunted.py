@@ -19,14 +19,19 @@ class Card_HauntedCastle(CastleCard):
         self.name = "Haunted Castle"
 
     def hook_gain_this_card(self, game, player):
-        player.gainCard('Gold')
+        player.gainCard("Gold")
         for plr in list(game.players.values()):
             if plr == player:
                 continue
             if plr.hand.size() >= 5:
-                cards = plr.cardSel(num=2, force=True, prompt="%s's Haunted Castle: Select 2 cards to put onto your deck" % player.name)
+                cards = plr.cardSel(
+                    num=2,
+                    force=True,
+                    prompt="%s's Haunted Castle: Select 2 cards to put onto your deck"
+                    % player.name,
+                )
                 for card in cards:
-                    plr.addCard(card, 'topdeck')
+                    plr.addCard(card, "topdeck")
                     plr.hand.remove(card)
 
 
@@ -38,27 +43,27 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_HauntedCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:
-            self.card = self.g['Castles'].remove()
-            if self.card.name == 'Haunted Castle':
+            self.card = self.g["Castles"].remove()
+            if self.card.name == "Haunted Castle":
                 break
 
     def test_play(self):
-        """ Play a castle """
-        self.plr.addCard(self.card, 'hand')
+        """Play a castle"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()['Haunted Castle'], 2)
+        self.assertEqual(self.plr.getScoreDetails()["Haunted Castle"], 2)
 
     def test_gain(self):
-        self.vic.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Province')
-        self.vic.test_input = ['Silver', 'Gold', 'finish']
+        self.vic.setHand("Copper", "Silver", "Gold", "Estate", "Province")
+        self.vic.test_input = ["Silver", "Gold", "finish"]
         self.plr.gainCard(newcard=self.card)
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
-        self.assertIsNotNone(self.vic.in_deck('Silver'))
-        self.assertIsNone(self.vic.in_hand('Silver'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIsNotNone(self.vic.in_deck("Silver"))
+        self.assertIsNone(self.vic.in_hand("Silver"))
 
 
 ###############################################################################

@@ -12,40 +12,40 @@ class Card_Explorer(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.desc = """You may reveal a Province from your hand. If you do,
             gain a Gold to your hand. If you don't, gain a Silver to your hand."""
-        self.name = 'Explorer'
+        self.name = "Explorer"
         self.base = Game.SEASIDE
         self.cost = 5
 
     def special(self, game, player):
-        prov = player.in_hand('Province')
+        prov = player.in_hand("Province")
         if prov:
             player.revealCard(prov)
             player.output("Gained a Gold")
-            player.gainCard('Gold', destination='hand')
+            player.gainCard("Gold", destination="hand")
         else:
             player.output("Gained a Silver")
-            player.gainCard('Silver', destination='hand')
+            player.gainCard("Silver", destination="hand")
 
 
 ###############################################################################
 class Test_Explorer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Explorer'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Explorer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Explorer'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Explorer"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_province(self):
-        self.plr.gainCard('Province', 'hand')
+        self.plr.gainCard("Province", "hand")
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.in_hand('Gold'))
+        self.assertTrue(self.plr.in_hand("Gold"))
         # 5 + province + gold
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_no_province(self):
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.in_hand('Silver'))
+        self.assertTrue(self.plr.in_hand("Silver"))
         self.assertEqual(self.plr.hand.size(), 6)
 
 

@@ -15,27 +15,31 @@ class Event_Training(Event):
         self.cost = 6
 
     def special(self, game, player):
-        """ Move your +1 Coin token to an Action Supply Pile """
+        """Move your +1 Coin token to an Action Supply Pile"""
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(num=1, prompt='What stack to add the +1 Coin Token to?', cardsrc=actionpiles)
+        stacks = player.cardSel(
+            num=1, prompt="What stack to add the +1 Coin Token to?", cardsrc=actionpiles
+        )
         if stacks:
-            player.place_token('+1 Coin', stacks[0].name)
+            player.place_token("+1 Coin", stacks[0].name)
 
 
 ###############################################################################
 class Test_Training(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Training'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, eventcards=["Training"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Training']
+        self.card = self.g.events["Training"]
 
     def test_with_treasure(self):
-        """ Use Training """
+        """Use Training"""
         self.plr.addCoin(6)
-        self.plr.test_input = ['moat']
+        self.plr.test_input = ["moat"]
         self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.tokens['+1 Coin'], 'Moat')
+        self.assertEqual(self.plr.tokens["+1 Coin"], "Moat")
         self.assertEqual(self.plr.getCoin(), 0)
 
 

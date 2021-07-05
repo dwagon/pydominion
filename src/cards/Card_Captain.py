@@ -14,7 +14,7 @@ class Card_Captain(Card.Card):
         self.desc = """Now and at the start of your next turn:
             Play a non-Duration, non-Command Action card from the Supply costing
             up to 4 Coin, leaving it there."""
-        self.name = 'Captain'
+        self.name = "Captain"
         self.cost = 6
 
     def special(self, game, player):
@@ -24,10 +24,14 @@ class Card_Captain(Card.Card):
         self.special_sauce(game, player)
 
     def special_sauce(self, game, player):
-        actionpiles = [_ for _ in game.getActionPiles(4) if not _.isDuration() and not _.isCommand()]
+        actionpiles = [
+            _
+            for _ in game.getActionPiles(4)
+            if not _.isDuration() and not _.isCommand()
+        ]
         actions = player.cardSel(
-            prompt="What action card do you want to imitate?",
-            cardsrc=actionpiles)
+            prompt="What action card do you want to imitate?", cardsrc=actionpiles
+        )
         if actions:
             player.card_benefits(actions[0])
 
@@ -35,24 +39,26 @@ class Card_Captain(Card.Card):
 ###############################################################################
 class Test_Captain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Captain', 'Workshop', 'Bureaucrat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Captain'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Captain"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_bureaucrat(self):
-        """ Make the Captain be a Bureaucrat """
-        self.plr.test_input = ['Bureaucrat']
+        """Make the Captain be a Bureaucrat"""
+        self.plr.test_input = ["Bureaucrat"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_deck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck("Silver"))
 
     def test_play_market(self):
-        """ Make the Captain be a Workshop """
-        self.plr.test_input = ['Select Workshop', 'Get Bureaucrat']
+        """Make the Captain be a Workshop"""
+        self.plr.test_input = ["Select Workshop", "Get Bureaucrat"]
         self.plr.playCard(self.card)
-        self.assertIsNone(self.plr.in_discard('Workshop'))
-        self.assertIsNotNone(self.plr.in_discard('Bureaucrat'))
+        self.assertIsNone(self.plr.in_discard("Workshop"))
+        self.assertIsNotNone(self.plr.in_discard("Bureaucrat"))
 
 
 ###############################################################################

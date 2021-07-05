@@ -15,19 +15,20 @@ class Card_Jack_of_all_Trades(Card.Card):
             Look at the top card of your deck; discard it or put it back.
             Draw until you have 5 cards in your hand.
             You may trash a card from your hand that is not a Treasure."""
-        self.name = 'Jack of all Trades'
+        self.name = "Jack of all Trades"
         self.cost = 4
 
     def special(self, game, player):
-        player.gainCard('Silver')
+        player.gainCard("Silver")
 
         card = player.nextCard()
         topdeck = player.plrChooseOptions(
             "Put %s back on top of your deck?" % card.name,
             ("Discard %s" % card.name, False),
-            ("Keep %s on top of your deck" % card.name, True))
+            ("Keep %s on top of your deck" % card.name, True),
+        )
         if topdeck:
-            player.addCard(card, 'topdeck')
+            player.addCard(card, "topdeck")
         else:
             player.discardCard(card)
 
@@ -42,27 +43,27 @@ class Card_Jack_of_all_Trades(Card.Card):
 ###############################################################################
 class Test_Jack_of_all_Trades(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Jack of all Trades'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Jack of all Trades"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g['Jack of all Trades'].remove()
+        self.card = self.g["Jack of all Trades"].remove()
 
     def test_play(self):
-        """ Play a Jack of all Trades"""
+        """Play a Jack of all Trades"""
         tsize = self.g.trashSize()
-        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Copper', 'Copper', 'Gold')
-        self.plr.setHand('Duchy')
-        self.plr.test_input = ['keep', 'duchy']
-        self.plr.addCard(self.card, 'hand')
+        self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
+        self.plr.setHand("Duchy")
+        self.plr.test_input = ["keep", "duchy"]
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
 
-        self.assertIsNotNone(self.plr.in_discard('Silver'))  # Gain a Silver
+        self.assertIsNotNone(self.plr.in_discard("Silver"))  # Gain a Silver
 
-        self.assertIsNotNone(self.plr.in_hand('Gold'))  # Keep on deck, then picked up
+        self.assertIsNotNone(self.plr.in_hand("Gold"))  # Keep on deck, then picked up
 
-        self.assertEqual(self.plr.hand.size(), 5 - 1)    # One trashed
+        self.assertEqual(self.plr.hand.size(), 5 - 1)  # One trashed
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertIsNotNone(self.g.in_trash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash("Duchy"))
 
 
 ###############################################################################

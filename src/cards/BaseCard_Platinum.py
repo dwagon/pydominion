@@ -12,7 +12,7 @@ class Card_Platinum(Card.Card):
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.PROSPERITY
         self.desc = "+5 coin"
-        self.name = 'Platinum'
+        self.name = "Platinum"
         self.playable = False
         self.basecard = True
         self.coin = 5
@@ -26,11 +26,11 @@ class Test_Platinum(unittest.TestCase):
         self.g = Game.Game(quiet=True, prosperity=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Platinum'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Platinum"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a platinum """
+        """Play a platinum"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
 

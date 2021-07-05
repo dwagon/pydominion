@@ -11,16 +11,18 @@ class Card_Merchant(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
-        self.desc = "+1 Card; +1 Action; The first time you play a Silver this turn, +1 Coin."
-        self.name = 'Merchant'
+        self.desc = (
+            "+1 Card; +1 Action; The first time you play a Silver this turn, +1 Coin."
+        )
+        self.name = "Merchant"
         self.actions = 1
         self.cards = 1
         self.cost = 3
 
     def hook_spendValue(self, game, player, card):
-        if card.name != 'Silver':
+        if card.name != "Silver":
             return 0
-        ag_count = player.played.count('Silver')
+        ag_count = player.played.count("Silver")
         if ag_count == 1:
             return 1
         return 0
@@ -29,22 +31,22 @@ class Card_Merchant(Card.Card):
 ###############################################################################
 class Test_Merchant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Merchant'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Merchant'].remove()
-        self.s1 = self.g['Silver'].remove()
-        self.s2 = self.g['Silver'].remove()
+        self.card = self.g["Merchant"].remove()
+        self.s1 = self.g["Silver"].remove()
+        self.s2 = self.g["Silver"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.plr.addCard(self.s1, 'hand')
+        self.plr.addCard(self.s1, "hand")
         self.plr.playCard(self.s1)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.plr.addCard(self.s2, 'hand')
+        self.plr.addCard(self.s2, "hand")
         self.plr.playCard(self.s2)
         self.assertEqual(self.plr.getCoin(), 5)
 

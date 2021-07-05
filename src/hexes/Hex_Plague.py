@@ -15,16 +15,16 @@ class Hex_Plague(Hex):
         self.desc = "Gain a Curse to your hand."
         self.name = "Plague"
         self.purchasable = False
-        self.required_cards = ['Curse']
+        self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        player.gainCard('Curse', destination='hand')
+        player.gainCard("Curse", destination="hand")
 
 
 ###############################################################################
 class Test_Plague(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -33,9 +33,9 @@ class Test_Plague(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_plague(self):
-        self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
-        self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.in_hand('Curse'))
+        self.plr.setDeck("Duchy", "Cursed Village", "Gold")
+        self.plr.gainCard("Cursed Village")
+        self.assertIsNotNone(self.plr.in_hand("Curse"))
 
 
 ###############################################################################

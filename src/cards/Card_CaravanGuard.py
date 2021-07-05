@@ -14,7 +14,7 @@ class Card_CaravanGuard(Card.Card):
         self.desc = """+1 Card +1 Action. At the start of your next turn, +1 Coin.
             When another player plays an Attack card, you may play this from
             your hand. (+1 Action has no effect if it's not your turn.)"""
-        self.name = 'Caravan Guard'
+        self.name = "Caravan Guard"
         self.cost = 3
 
     def special(self, game, player):
@@ -29,18 +29,20 @@ class Card_CaravanGuard(Card.Card):
         player.addActions(1)
         player.pickupCards(1)
         player.addCard(self, Card.TYPE_DURATION)
-        player.hand.remove(player.in_hand('Caravan Guard'))
+        player.hand.remove(player.in_hand("Caravan Guard"))
 
 
 ###############################################################################
 class Test_CaravanGuard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Caravan Guard', 'Militia', 'Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
-        self.card = self.g['Caravan Guard'].remove()
-        self.militia = self.g['Militia'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Caravan Guard"].remove()
+        self.militia = self.g["Militia"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
@@ -52,8 +54,8 @@ class Test_CaravanGuard(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_attack(self):
-        self.plr.setHand('Caravan Guard', 'Moat')
-        self.attacker.addCard(self.militia, 'hand')
+        self.plr.setHand("Caravan Guard", "Moat")
+        self.attacker.addCard(self.militia, "hand")
         self.attacker.playCard(self.militia)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.durationpile.size(), 1)

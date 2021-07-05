@@ -29,7 +29,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Poverty(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -38,8 +38,8 @@ class Test_Poverty(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_normal(self):
-        self.plr.test_input = ['1', '2', '0']
-        self.plr.gainCard('Cursed Village')
+        self.plr.test_input = ["1", "2", "0"]
+        self.plr.gainCard("Cursed Village")
         self.assertEqual(self.plr.hand.size(), 3)
 
 

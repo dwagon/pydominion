@@ -14,7 +14,7 @@ class Card_Bridgetroll(Card.Card):
         self.desc = """Each other player takes his -1 Coin token.
             Now and at the start of your next turn: +1 Buy.
             While this is in play cards cost 1 less"""
-        self.name = 'Bridge Troll'
+        self.name = "Bridge Troll"
         self.buys = 1
         self.cost = 5
         self._played = False
@@ -38,14 +38,14 @@ class Card_Bridgetroll(Card.Card):
 ###############################################################################
 class Test_Bridgetroll(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bridge Troll'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Bridge Troll"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Bridge Troll'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Bridge Troll"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play a bridge troll """
+        """Play a bridge troll"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertTrue(self.victim.coin_token)
@@ -55,9 +55,9 @@ class Test_Bridgetroll(unittest.TestCase):
 
     def test_costreduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.cardCost(self.g['Gold']), 6)
+        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.cardCost(self.g['Gold']), 5)
+        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
 
 
 ###############################################################################

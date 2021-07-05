@@ -13,6 +13,7 @@ class Option(object):
     output = 'everything on one line'
 
     """
+
     def __init__(self, *args, **kwargs):
         self.msgs = args
         self.data = kwargs
@@ -24,13 +25,14 @@ class Option(object):
         return key in self.data
 
     def __getitem__(self, key):
-        if key == 'print':
-            raise Exception('print')
+        if key == "print":
+            raise Exception("print")
         if key not in self.data:
-            return ''
+            return ""
         return self.data[key]
 
     def __repr__(self):
         return "<Option: %s>" % self.data
+
 
 # EOF

@@ -19,15 +19,21 @@ class Way_Monkey(Way):
 ###############################################################################
 class Test_Monkey(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Monkey'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Monkey"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Monkey']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Monkey"]
 
     def test_play(self):
-        """ Perform a Monkey """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Monkey"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 1)

@@ -17,15 +17,15 @@ class Hex_Delusion(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.has_state('Deluded') or player.has_state('Envious'):
+        if player.has_state("Deluded") or player.has_state("Envious"):
             return
-        player.assign_state('Deluded')
+        player.assign_state("Deluded")
 
 
 ###############################################################################
 class Test_Delusion(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -34,13 +34,13 @@ class Test_Delusion(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_preexisting(self):
-        self.plr.assign_state('Envious')
-        self.plr.gainCard('Cursed Village')
-        self.assertTrue(self.plr.has_state('Envious'))
+        self.plr.assign_state("Envious")
+        self.plr.gainCard("Cursed Village")
+        self.assertTrue(self.plr.has_state("Envious"))
 
     def test_normal(self):
-        self.plr.gainCard('Cursed Village')
-        self.assertTrue(self.plr.has_state('Deluded'))
+        self.plr.gainCard("Cursed Village")
+        self.assertTrue(self.plr.has_state("Deluded"))
 
 
 ###############################################################################

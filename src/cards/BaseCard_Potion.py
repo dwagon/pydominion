@@ -10,8 +10,9 @@ class Card_Potion(Card.Card):
         self.basecard = True
         self.playable = False
         self.desc = "+1 potion"
-        self.name = 'Potion'
+        self.name = "Potion"
         self.potion = 1
         self.cost = 4
+
 
 # EOF

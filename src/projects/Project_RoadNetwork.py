@@ -17,29 +17,38 @@ class Project_RoadNetwork(Project):
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
             owner.pickupCards(1)
-            owner.output("Road Network gives card due to {} picking up {}".format(player.name, card.name))
+            owner.output(
+                "Road Network gives card due to {} picking up {}".format(
+                    player.name, card.name
+                )
+            )
 
 
 ###############################################################################
 class Test_RoadNetwork(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initprojects=['Road Network'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=2,
+            initprojects=["Road Network"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
 
     def test_victory(self):
-        self.plr.assign_project('Road Network')
-        self.plr.setDeck('Gold')
-        self.other.gainCard('Duchy')
+        self.plr.assign_project("Road Network")
+        self.plr.setDeck("Gold")
+        self.other.gainCard("Duchy")
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertIsNotNone(self.plr.in_hand('Gold'))
+        self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_not_victory(self):
-        self.plr.assign_project('Road Network')
-        self.plr.setDeck('Gold')
-        self.other.gainCard('Copper')
+        self.plr.assign_project("Road Network")
+        self.plr.setDeck("Gold")
+        self.other.gainCard("Copper")
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIsNone(self.plr.in_hand('Gold'))
+        self.assertIsNone(self.plr.in_hand("Gold"))
 
 
 ###############################################################################

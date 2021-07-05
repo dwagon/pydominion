@@ -23,19 +23,21 @@ class Event_Ball(Event):
 ###############################################################################
 class Test_Ball(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Ball'], initcards=['Militia', 'Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, eventcards=["Ball"], initcards=["Militia", "Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Ball']
+        self.card = self.g.events["Ball"]
 
     def test_ball(self):
-        """ Use Ball """
+        """Use Ball"""
         self.plr.addCoin(5)
-        self.plr.test_input = ['militia', 'moat']
+        self.plr.test_input = ["militia", "moat"]
         self.plr.performEvent(self.card)
         self.assertTrue(self.plr.coin_token)
-        self.assertIsNotNone(self.plr.in_discard('Militia'))
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard("Militia"))
+        self.assertIsNotNone(self.plr.in_discard("Moat"))
 
 
 ###############################################################################

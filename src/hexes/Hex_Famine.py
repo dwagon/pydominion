@@ -24,14 +24,14 @@ class Hex_Famine(Hex):
                 player.discardCard(c)
             else:
                 player.output("Putting {} back in deck".format(c))
-                player.addCard(c, 'topdeck')
+                player.addCard(c, "topdeck")
         player.deck.shuffle()
 
 
 ###############################################################################
 class Test_Famine(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -40,11 +40,11 @@ class Test_Famine(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
-        self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.in_discard('Cursed Village'))
-        self.assertIsNotNone(self.plr.in_deck('Gold'))
-        self.assertIsNone(self.plr.in_discard('Gold'))
+        self.plr.setDeck("Duchy", "Cursed Village", "Gold")
+        self.plr.gainCard("Cursed Village")
+        self.assertIsNotNone(self.plr.in_discard("Cursed Village"))
+        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIsNone(self.plr.in_discard("Gold"))
 
 
 ###############################################################################

@@ -31,25 +31,38 @@ class Landmark_Keep(Landmark):
         for card in cards:
             m = max(cards[card].values())
             if player.name in cards[card] and cards[card][player.name] == m:
-                player.output("Gaining 5 from Landmark as you have the most %s (%d)" % (card, m))
-                player.addScore('Keep', 5)
+                player.output(
+                    "Gaining 5 from Landmark as you have the most %s (%d)" % (card, m)
+                )
+                player.addScore("Keep", 5)
 
 
 ###############################################################################
 class Test_Keep(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=2, landmarkcards=['Keep'],
-            badcards=['Shepherd', 'Tracker', 'Fool', 'Cemetery', 'Pooka', 'Pixie', 'Secret Cave'])
+            quiet=True,
+            numplayers=2,
+            landmarkcards=["Keep"],
+            badcards=[
+                "Shepherd",
+                "Tracker",
+                "Fool",
+                "Cemetery",
+                "Pooka",
+                "Pixie",
+                "Secret Cave",
+            ],
+        )
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
 
     def test_most(self):
-        """ Use Keep when we have the most Silver"""
-        self.plr.setDeck('Silver')
+        """Use Keep when we have the most Silver"""
+        self.plr.setDeck("Silver")
         self.plr.gameOver()
         try:
-            self.assertEqual(self.plr.getScoreDetails()['Keep'], 5)
+            self.assertEqual(self.plr.getScoreDetails()["Keep"], 5)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

@@ -18,8 +18,8 @@ class Event_Gamble(Event):
         self.cost = 2
 
     def special(self, game, player):
-        """ Reveal the top card of your deck. If it's a Treasure
-            or Action, you may play it. Otherwise, discard it. """
+        """Reveal the top card of your deck. If it's a Treasure
+        or Action, you may play it. Otherwise, discard it."""
         nxt = player.nextCard()
         player.output("Next card is {}".format(nxt.name))
         if nxt.isAction() or nxt.isTreasure():
@@ -32,27 +32,29 @@ class Event_Gamble(Event):
 ###############################################################################
 class Test_Gamble(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Gamble'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, eventcards=["Gamble"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Gamble']
+        self.card = self.g.events["Gamble"]
 
     def test_play_treasure(self):
-        """ Perform a Gamble with a treasure """
+        """Perform a Gamble with a treasure"""
         self.plr.addCoin(2)
-        self.plr.setDeck('Gold')
+        self.plr.setDeck("Gold")
         self.assertEqual(self.plr.get_buys(), 1)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.get_buys(), 1)
 
     def test_play_action(self):
-        """ Perform a Gamble with an action """
+        """Perform a Gamble with an action"""
         self.plr.addCoin(2)
-        self.plr.setDeck('Estate', 'Estate', 'Copper', 'Moat')
+        self.plr.setDeck("Estate", "Estate", "Copper", "Moat")
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.get_buys(), 1)

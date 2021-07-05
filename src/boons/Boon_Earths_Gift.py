@@ -21,7 +21,10 @@ class Boon_Earths_Gift(Boon):
         treasures = [c for c in player.hand if c.isTreasure()]
         if not treasures:
             return
-        tr = player.plrDiscardCards(cardsrc=treasures, prompt="Discard a Treasure to gain a card costing up to 4")
+        tr = player.plrDiscardCards(
+            cardsrc=treasures,
+            prompt="Discard a Treasure to gain a card costing up to 4",
+        )
         if tr:
             player.plrGainCard(4)
 
@@ -29,7 +32,9 @@ class Boon_Earths_Gift(Boon):
 ###############################################################################
 class Test_Earths_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:
@@ -37,18 +42,18 @@ class Test_Earths_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g['Bard'].remove()
+        self.card = self.g["Bard"].remove()
 
     def test_earths_gift(self):
         self.coins = 0
-        self.plr.setHand('Copper')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Discard Copper', 'Get Silver']
+        self.plr.setHand("Copper")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Discard Copper", "Get Silver"]
         self.plr.playCard(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 2 + 2)     # Boon + Bard
-            self.assertIsNotNone(self.plr.in_discard('Silver'))
-            self.assertIsNotNone(self.plr.in_discard('Copper'))
+            self.assertEqual(self.plr.getCoin(), 2 + 2)  # Boon + Bard
+            self.assertIsNotNone(self.plr.in_discard("Silver"))
+            self.assertIsNotNone(self.plr.in_discard("Copper"))
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

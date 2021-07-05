@@ -11,8 +11,10 @@ class Card_Zombie_Apprentice(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ZOMBIE]
         self.base = Game.NOCTURNE
-        self.desc = "You may trash an Action card from your hand for +3 Cards and +1 Action."
-        self.name = 'Zombie Apprentice'
+        self.desc = (
+            "You may trash an Action card from your hand for +3 Cards and +1 Action."
+        )
+        self.name = "Zombie Apprentice"
         self.cost = 3
         self.insupply = False
         self.purchasable = False
@@ -26,7 +28,10 @@ class Card_Zombie_Apprentice(Card.Card):
         if not actions:
             player.output("No actions to trash")
             return
-        tr = player.plrTrashCard(prompt="Trash an action from your hand for +3 Cards and +1 Action", cardsrc=actions)
+        tr = player.plrTrashCard(
+            prompt="Trash an action from your hand for +3 Cards and +1 Action",
+            cardsrc=actions,
+        )
         if tr:
             player.pickupCards(3)
             player.addActions(1)
@@ -35,25 +40,27 @@ class Card_Zombie_Apprentice(Card.Card):
 ###############################################################################
 class Test_Zombie_Apprentice(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Zombie Apprentice', 'Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Zombie Apprentice", "Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Zombie Apprentice'].remove()
+        self.card = self.g["Zombie Apprentice"].remove()
 
     def test_play_noactions(self):
         tsize = self.g.trashSize()
         self.plr.playCard(self.card, discard=False, costAction=False)
-        self.assertIsNotNone(self.g.in_trash('Zombie Apprentice'))
+        self.assertIsNotNone(self.g.in_trash("Zombie Apprentice"))
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_play_action(self):
-        self.plr.setHand('Moat')
-        self.plr.test_input = ['Moat']
+        self.plr.setHand("Moat")
+        self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card, discard=False, costAction=False)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertIsNotNone(self.g.in_trash('Zombie Apprentice'))
-        self.assertIsNotNone(self.g.in_trash('Moat'))
+        self.assertIsNotNone(self.g.in_trash("Zombie Apprentice"))
+        self.assertIsNotNone(self.g.in_trash("Moat"))
 
 
 ###############################################################################

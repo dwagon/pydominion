@@ -12,28 +12,28 @@ class Card_Monument(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
         self.desc = "+2 coin, +1 VP"
-        self.name = 'Monument'
+        self.name = "Monument"
         self.cost = 4
         self.coin = 2
 
     def special(self, game, player):
-        player.addScore('Monument', 1)
+        player.addScore("Monument", 1)
 
 
 ###############################################################################
 class Test_Monument(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Monument'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Monument"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Monument'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Monument"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Monument'], 1)
+        self.assertEqual(sc["Monument"], 1)
 
 
 ###############################################################################

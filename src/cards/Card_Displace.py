@@ -13,13 +13,13 @@ class Card_Displace(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
         self.desc = """Exile a card from your hand. Gain a differently named card costing up to 2 Coin more than it."""
-        self.name = 'Displace'
+        self.name = "Displace"
         self.cost = 5
 
     def special(self, game, player):
         crd = player.cardSel(
             prompt="Exile a card to gain a different one costing 2 more",
-            verbs=('Exile', 'Unexile')
+            verbs=("Exile", "Unexile"),
         )
         if crd:
             player.hand.remove(crd[0])
@@ -30,19 +30,19 @@ class Card_Displace(Card.Card):
 ###############################################################################
 class Test_Displace(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Displace'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Displace"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g['Displace'].remove()
+        self.card = self.g["Displace"].remove()
 
     def test_playcard(self):
-        """ Play a card """
-        self.plr.setHand('Copper', 'Silver')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Exile Copper', 'Get Estate']
+        """Play a card"""
+        self.plr.setHand("Copper", "Silver")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Exile Copper", "Get Estate"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_exile('Copper'))
-        self.assertIsNotNone(self.plr.in_discard('Estate'))
+        self.assertIsNotNone(self.plr.in_exile("Copper"))
+        self.assertIsNotNone(self.plr.in_discard("Estate"))
 
 
 ###############################################################################

@@ -12,16 +12,14 @@ class Card_Scepter(Card.Card):
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.RENAISSANCE
         self.desc = "When you play this, choose one: 2 coin; or replay an Action card you played this turn that's still in play."
-        self.name = 'Scepter'
+        self.name = "Scepter"
         self.cost = 5
 
     def special(self, game, player):
         acts = [_ for _ in player.played if _.isAction()]
         if acts:
             get_coin = player.plrChooseOptions(
-                "Pick one? ",
-                ("2 Coin", True),
-                ("Replay an action card", False)
+                "Pick one? ", ("2 Coin", True), ("Replay an action card", False)
             )
         else:
             get_coin = True
@@ -30,7 +28,7 @@ class Card_Scepter(Card.Card):
             player.addCoin(2)
         else:
             card = player.cardSel(cardsrc=acts)
-            player.addCard(card[0], 'hand')
+            player.addCard(card[0], "hand")
             player.played.remove(card[0])
             player.playCard(card[0], costAction=False)
 
@@ -38,11 +36,11 @@ class Card_Scepter(Card.Card):
 ###############################################################################
 class Test_Scepter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scepter', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Scepter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Scepter'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Scepter"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
@@ -50,7 +48,7 @@ class Test_Scepter(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_replay(self):
-        self.plr.setPlayed('Moat')
+        self.plr.setPlayed("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)

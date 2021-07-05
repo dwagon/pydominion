@@ -6,4 +6,5 @@ class Artifact(Card.Card):
         super(Artifact, self).__init__(*args, **kwargs)
         self.cardtype = Card.TYPE_ARTIFACT
 
+
 # EOF

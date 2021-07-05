@@ -10,11 +10,11 @@ from CardPile import CardPile
 class Card_Castles(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.name = 'Castles'
+        self.name = "Castles"
         self.base = Game.EMPIRES
 
     def setup(self, game):
-        game.cardpiles['Castles'] = CastleCardPile(game.cardmapping['Castle'])
+        game.cardpiles["Castles"] = CastleCardPile(game.cardmapping["Castle"])
 
 
 ###############################################################################
@@ -24,11 +24,13 @@ class CastleCardPile(CardPile):
         self.embargo_level = 0
         castletypes = mapping
 
-        self.castles = sorted([c() for c in castletypes.values()], key=lambda x: x.cost, reverse=True)
+        self.castles = sorted(
+            [c() for c in castletypes.values()], key=lambda x: x.cost, reverse=True
+        )
 
     def __getattr__(self, key):
         try:
-            if key == 'card':
+            if key == "card":
                 return self.castles[-1]
             return getattr(self.castles[-1], key)
         except IndexError:
@@ -52,12 +54,12 @@ class CastleCard(Card.Card):
 ###############################################################################
 class Test_Castle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Castles'].remove()
-        self.plr.setHand('Silver', 'Gold')
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Castles"].remove()
+        self.plr.setHand("Silver", "Gold")
+        self.plr.addCard(self.card, "hand")
 
     def test_castles(self):
         pass

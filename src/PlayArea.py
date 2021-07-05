@@ -18,7 +18,9 @@ class PlayArea(object):
 
     def add(self, card):
         try:
-            assert isinstance(card, (Card.Card, CardPile.CardPile, Event.EventPile, BoonPile.BoonPile))
+            assert isinstance(
+                card, (Card.Card, CardPile.CardPile, Event.EventPile, BoonPile.BoonPile)
+            )
         except AssertionError:
             print("Card={} ({})".format(card, type(card)))
             raise
@@ -29,8 +31,9 @@ class PlayArea(object):
             self.cards.remove(card)
         except ValueError:
             sys.stderr.write(
-                "Trying to remove a card (%s) that doesn't exist (%s)\n" %
-                (card.name, ", ".join([c.name for c in self.cards])))
+                "Trying to remove a card (%s) that doesn't exist (%s)\n"
+                % (card.name, ", ".join([c.name for c in self.cards]))
+            )
             raise
 
     def addToTop(self, card):
@@ -52,7 +55,7 @@ class PlayArea(object):
         self.cards = []
 
     def count(self, card):
-        if hasattr(card, 'name'):
+        if hasattr(card, "name"):
             cname = card.name
         else:
             cname = card
@@ -62,13 +65,13 @@ class PlayArea(object):
         return self.cards == []
 
     def __eq__(self, a):
-        if hasattr(a, 'cards'):
+        if hasattr(a, "cards"):
             return self.cards == a.cards
         return self.cards == a
 
     def __add__(self, a):
         x = self.cards[:]
-        if hasattr(a, 'values'):
+        if hasattr(a, "values"):
             x.extend(a.values())
         elif isinstance(a, PlayArea):
             x.extend(a.cards[:])
@@ -87,5 +90,6 @@ class PlayArea(object):
 
     def __getitem__(self, key):
         return self.cards[key]
+
 
 # EOF

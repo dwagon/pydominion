@@ -28,24 +28,24 @@ class Card_HumbleCastle(CastleCard):
 ###############################################################################
 class Test_HumbleCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Castles'].remove()
-            if self.card.name == 'Humble Castle':
+            self.card = self.g["Castles"].remove()
+            if self.card.name == "Humble Castle":
                 break
 
     def test_play(self):
-        """ Play a castle """
-        self.plr.addCard(self.card, 'hand')
+        """Play a castle"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_score(self):
-        self.plr.addCard(self.card, 'discard')
+        self.plr.addCard(self.card, "discard")
         score = self.plr.getScoreDetails()
-        self.assertEqual(score['Humble Castle'], 1)
+        self.assertEqual(score["Humble Castle"], 1)
 
 
 ###############################################################################

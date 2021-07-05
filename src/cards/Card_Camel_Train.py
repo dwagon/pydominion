@@ -12,7 +12,7 @@ class Card_Camel_Train(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
-        self.name = 'Camel Train'
+        self.name = "Camel Train"
         self.cost = 3
 
     def desc(self, player):
@@ -27,26 +27,26 @@ class Card_Camel_Train(Card.Card):
             player.exile_card(toex[0].name)
 
     def hook_gain_this_card(self, game, player):
-        player.exile_card('Gold')
+        player.exile_card("Gold")
 
 
 ###############################################################################
 class Test_Camel_Train(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Camel Train'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Camel Train"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g['Camel Train'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Camel Train"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        self.plr.test_input = ['Select Silver']
+        self.plr.test_input = ["Select Silver"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_exile('Silver'))
+        self.assertIsNotNone(self.plr.in_exile("Silver"))
 
     def test_gain(self):
-        self.plr.gainCard('Camel Train')
-        self.assertIsNotNone(self.plr.in_exile('Gold'))
+        self.plr.gainCard("Camel Train")
+        self.assertIsNotNone(self.plr.in_exile("Gold"))
 
 
 ###############################################################################

@@ -24,17 +24,20 @@ class Way_Mole(Way):
 class Test_Mole(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, waycards=['Way of the Mole'],
-            initcards=['Moat'], badcards=["Duchess"]
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Mole"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Mole']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Mole"]
 
     def test_play(self):
-        """ Perform a Mole """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Mole"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 3)

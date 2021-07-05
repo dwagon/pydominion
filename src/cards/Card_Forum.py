@@ -11,7 +11,7 @@ class Card_Forum(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.EMPIRES
-        self.name = 'Forum'
+        self.name = "Forum"
         self.cards = 3
         self.actions = 1
         self.cost = 5
@@ -31,23 +31,23 @@ class Card_Forum(Card.Card):
 ###############################################################################
 class Test_Forum(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forum'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Forum"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Forum'].remove()
+        self.card = self.g["Forum"].remove()
 
     def test_play(self):
-        """ Play a Forum """
-        self.plr.setHand('Gold', 'Duchy', 'Estate', 'Province', 'Copper')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['duchy', 'province', 'finish']
+        """Play a Forum"""
+        self.plr.setHand("Gold", "Duchy", "Estate", "Province", "Copper")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["duchy", "province", "finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 2)
 
     def test_buy(self):
         self.plr.setCoin(5)
-        self.plr.buyCard(self.g['Forum'])
+        self.plr.buyCard(self.g["Forum"])
         self.assertEqual(self.plr.get_buys(), 1)
 
 

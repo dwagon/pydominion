@@ -26,17 +26,18 @@ class Card_Fools_Gold(Card.Card):
             player.addCoin(1)
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
-        if card.name != 'Province':
+        if card.name != "Province":
             return
         if owner == player:
             return
         trash = owner.plrChooseOptions(
             "%s gained a Province. Trash this card to gain a gold?" % player.name,
             ("Keep Fool's Gold", False),
-            ("Trash and gain a Gold?", True))
+            ("Trash and gain a Gold?", True),
+        )
         if trash:
             owner.trashCard(self)
-            owner.gainCard('Gold', destination='topdeck')
+            owner.gainCard("Gold", destination="topdeck")
 
 
 ###############################################################################
@@ -46,31 +47,31 @@ class Test_Fools_Gold(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Fool's Gold"].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
 
     def test_play_once(self):
-        """ Play the Fools_Gold """
+        """Play the Fools_Gold"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_play_twice(self):
-        """ Play the Fools_Gold again """
+        """Play the Fools_Gold again"""
         self.plr.setPlayed("Fool's Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
 
     def test_gain_province(self):
         tsize = self.g.trashSize()
-        self.plr.test_input = ['trash']
-        self.other.gainCard('Province')
-        self.assertEqual(self.plr.deck[-1].name, 'Gold')
+        self.plr.test_input = ["trash"]
+        self.other.gainCard("Province")
+        self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Fool's Gold"))
 
     def test_self_gain_province(self):
         tsize = self.g.trashSize()
-        self.plr.gainCard('Province')
-        self.assertNotEqual(self.plr.deck[-1].name, 'Gold')
+        self.plr.gainCard("Province")
+        self.assertNotEqual(self.plr.deck[-1].name, "Gold")
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertIsNone(self.g.in_trash("Fool's Gold"))
 

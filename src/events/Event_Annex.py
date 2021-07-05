@@ -19,41 +19,52 @@ class Event_Annex(Event):
             player.output("Not enough cards to choose")
             return
         cards = player.cardSel(
-            num=5,
-            cardsrc='discard',
-            prompt="Select 5 cards to leave in discard pile"
-            )
+            num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile"
+        )
         keep = []
         for card in player.discardpile[:]:
             if card in cards:
                 keep.append(card)
             else:
-                player.addCard(card, 'deck')
+                player.addCard(card, "deck")
         player.deck.shuffle()
         player.setDiscard()
         for card in keep:
-            player.addCard(card, 'discard')
-        if player.gainCard('Duchy'):
+            player.addCard(card, "discard")
+        if player.gainCard("Duchy"):
             player.output("Gained a Duchy")
 
 
 ###############################################################################
 class Test_Annex(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Annex'], initcards=['Moat'], badcards=['Duchess'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            eventcards=["Annex"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Annex']
+        self.card = self.g.events["Annex"]
 
     def test_play(self):
-        """ Perform Annex """
-        self.plr.setDiscard('Gold', 'Silver', 'Copper', 'Province', 'Moat', 'Estate')
-        self.plr.test_input = ['Silver', 'Copper', 'Province', 'Moat', 'Estate', 'Finish']
+        """Perform Annex"""
+        self.plr.setDiscard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
+        self.plr.test_input = [
+            "Silver",
+            "Copper",
+            "Province",
+            "Moat",
+            "Estate",
+            "Finish",
+        ]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.debt, 8)
-        self.assertIsNotNone(self.plr.in_discard('Duchy'))
-        self.assertIsNone(self.plr.in_discard('Gold'))
-        self.assertIsNotNone(self.plr.in_deck('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertIsNotNone(self.plr.in_deck("Gold"))
 
 
 ###############################################################################

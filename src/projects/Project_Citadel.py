@@ -23,14 +23,16 @@ class Project_Citadel(Project):
 ###############################################################################
 class Test_Citadel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Citadel'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initprojects=["Citadel"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Moat"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        self.plr.assign_project('Citadel')
+        self.plr.assign_project("Citadel")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 + 2)
 

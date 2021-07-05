@@ -18,13 +18,13 @@ class Hex_BadOmens(Hex):
 
     def special(self, game, player):
         for c in player.deck[:]:
-            player.addCard(c, 'discard')
+            player.addCard(c, "discard")
             player.deck.remove(c)
         numcu = 0
         for c in player.discardpile[:]:
-            if c.name == 'Copper':
+            if c.name == "Copper":
                 numcu += 1
-                player.addCard(c, 'deck')
+                player.addCard(c, "deck")
                 player.discardpile.remove(c)
                 if numcu == 2:
                     break
@@ -33,7 +33,7 @@ class Hex_BadOmens(Hex):
 ###############################################################################
 class Test_BadOmens(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -42,10 +42,10 @@ class Test_BadOmens(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play(self):
-        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Silver', 'Gold')
-        self.plr.gainCard('Cursed Village')
+        self.plr.setDeck("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.plr.gainCard("Cursed Village")
         self.assertEqual(self.plr.deck.size(), 2)
-        self.assertEqual(self.plr.deck.count('Copper'), 2)
+        self.assertEqual(self.plr.deck.count("Copper"), 2)
 
 
 ###############################################################################

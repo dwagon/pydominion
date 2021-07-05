@@ -12,7 +12,7 @@ class Card_Scholar(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """Discard your hand. +7 Cards."""
-        self.name = 'Scholar'
+        self.name = "Scholar"
         self.cost = 5
 
     ###########################################################################
@@ -24,13 +24,13 @@ class Card_Scholar(Card.Card):
 ###############################################################################
 class Test_Scholar(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scholar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Scholar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Scholar'].remove()
+        self.card = self.g["Scholar"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 

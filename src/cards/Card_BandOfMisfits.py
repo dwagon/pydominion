@@ -13,14 +13,13 @@ class Card_BandOfMisfits(Card.Card):
         self.base = Game.DARKAGES
         self.desc = """Play a non-Command Action card from the Supply that costs
             less than this, leaving it there."""
-        self.name = 'Band of Misfits'
+        self.name = "Band of Misfits"
         self.cost = 5
 
     def special(self, game, player):
         actionpiles = game.getActionPiles(self.cost - 1)
         actions = player.cardSel(
-            prompt="What action card do you want to play?",
-            cardsrc=actionpiles
+            prompt="What action card do you want to play?", cardsrc=actionpiles
         )
         player.card_benefits(actions[0])
 
@@ -28,21 +27,25 @@ class Card_BandOfMisfits(Card.Card):
 ###############################################################################
 class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Band of Misfits', 'Village', 'Bureaucrat', 'Moat'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            initcards=["Band of Misfits", "Village", "Bureaucrat", "Moat"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Band of Misfits'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Band of Misfits"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_market(self):
-        """ Make the Band of Misfits be a Bureaucrat """
-        self.plr.test_input = ['Bureaucrat']
+        """Make the Band of Misfits be a Bureaucrat"""
+        self.plr.test_input = ["Bureaucrat"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_deck('Silver'))
+        self.assertIsNotNone(self.plr.in_deck("Silver"))
 
     def test_play_feast(self):
-        """ Make the Band of Misfits be a Village """
-        self.plr.test_input = ['Select Village']
+        """Make the Band of Misfits be a Village"""
+        self.plr.test_input = ["Select Village"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)

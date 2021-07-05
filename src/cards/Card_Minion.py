@@ -14,19 +14,23 @@ class Card_Minion(Card.Card):
         self.desc = """+1 Action; Choose one: +2 Coin; or discard your hand,
             +4 Cards, and each other player with at least 5 cards in hand discards
             his hand and draws 4 cards."""
-        self.name = 'Minion'
+        self.name = "Minion"
         self.cost = 5
         self.actions = 1
 
     def special(self, game, player):
-        """ Choose one: +2 coin or
-            discard your hand, +4 cards and each other player with
-            at least 5 card in hand discards his hand and draws 4
-            cards """
+        """Choose one: +2 coin or
+        discard your hand, +4 cards and each other player with
+        at least 5 card in hand discards his hand and draws 4
+        cards"""
         attack = player.plrChooseOptions(
             "What do you want to do?",
             ("+2 coin", False),
-            ("Discard your hand, +4 cards and each other player with 5 cards discards and draws 4", True))
+            (
+                "Discard your hand, +4 cards and each other player with 5 cards discards and draws 4",
+                True,
+            ),
+        )
         if attack:
             self.attack(game, player)
         else:
@@ -47,23 +51,23 @@ class Card_Minion(Card.Card):
 ###############################################################################
 class Test_Minion(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Minion', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Minion", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Minion'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Minion"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_gold(self):
-        """ Play a minion and gain two gold"""
-        self.plr.test_input = ['0']
+        """Play a minion and gain two gold"""
+        self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_discard(self):
-        """ Play a minion and discard hand"""
-        self.plr.test_input = ['1']
+        """Play a minion and discard hand"""
+        self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -74,9 +78,9 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.victim.discardpile.size(), 5)
 
     def test_play_victim_smallhand(self):
-        """ Play a minion and discard hand - the other player has a small hand"""
-        self.victim.setHand('Estate', 'Estate', 'Estate', 'Estate')
-        self.plr.test_input = ['1']
+        """Play a minion and discard hand - the other player has a small hand"""
+        self.victim.setHand("Estate", "Estate", "Estate", "Estate")
+        self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -87,9 +91,9 @@ class Test_Minion(unittest.TestCase):
         self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_play_defended(self):
-        """ Play a minion and discard hand - the other player is defended """
-        self.victim.setHand('Estate', 'Estate', 'Estate', 'Estate', 'Moat')
-        self.plr.test_input = ['1']
+        """Play a minion and discard hand - the other player is defended"""
+        self.victim.setHand("Estate", "Estate", "Estate", "Estate", "Moat")
+        self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)

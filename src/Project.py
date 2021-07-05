@@ -6,4 +6,5 @@ class Project(Card.Card):
         Card.Card.__init__(self, *args, **kwargs)
         self.cardtype = Card.TYPE_PROJECT
 
+
 # EOF

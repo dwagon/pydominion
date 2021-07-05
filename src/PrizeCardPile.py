@@ -4,14 +4,14 @@ from CardPile import CardPile
 
 ###############################################################################
 class PrizeCardPile(CardPile):
-    def __init__(self, cardname, klass):    # pylint: disable=super-init-not-called
+    def __init__(self, cardname, klass):  # pylint: disable=super-init-not-called
         self.pilesize = 1
         self.cardname = cardname
         self.cardclass = klass
         self.card = klass()
 
-#    def __getattr__(self, key):
-#        return getattr(self.prizes[-1], key)
+    #    def __getattr__(self, key):
+    #        return getattr(self.prizes[-1], key)
 
     def remove(self):
         if self.pilesize:

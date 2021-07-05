@@ -14,23 +14,25 @@ class Card_Gladiator(Card.Card):
         self.desc = """+2 Coin
         Reveal a card from your hand. The player to your left may reveal a copy from their hand.
         If they do not, +1 Coin and trash a Gladiator from the Supply."""
-        self.name = 'Gladiator'
+        self.name = "Gladiator"
         self.cost = 3
         self.coin = 2
         self.numcards = 5
-        self.split = 'Fortune'
+        self.split = "Fortune"
 
     def special(self, game, player):
         mycard = player.cardSel(
-            num=1, force=True,
-            prompt="Select a card from your hand that the player to your left doesn't have")
+            num=1,
+            force=True,
+            prompt="Select a card from your hand that the player to your left doesn't have",
+        )
         player.revealCard(mycard[0])
         lefty = game.playerToLeft(player)
         leftycard = lefty.in_hand(mycard[0].name)
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.addCoin(1)
-            c = game['Gladiator'].remove()
+            c = game["Gladiator"].remove()
             player.trashCard(c)
         else:
             player.output("%s has a %s" % (lefty.name, mycard[0].name))
@@ -40,28 +42,28 @@ class Card_Gladiator(Card.Card):
 ###############################################################################
 class Test_Gladiator(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Gladiator', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Gladiator", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Gladiator'].remove()
+        self.card = self.g["Gladiator"].remove()
 
     def test_play_nothave(self):
-        """ Play a Gladiator - something the other player doesn't have """
-        self.plr.setHand('Moat', 'Copper', 'Estate')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Moat']
+        """Play a Gladiator - something the other player doesn't have"""
+        self.plr.setHand("Moat", "Copper", "Estate")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.in_trash('Gladiator'))
+        self.assertIsNotNone(self.g.in_trash("Gladiator"))
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_play_has(self):
-        """ Play a Gladiator - something the other player has """
-        self.plr.setHand('Moat', 'Copper', 'Estate')
-        self.vic.setHand('Moat', 'Copper', 'Estate')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Moat']
+        """Play a Gladiator - something the other player has"""
+        self.plr.setHand("Moat", "Copper", "Estate")
+        self.vic.setHand("Moat", "Copper", "Estate")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)
-        self.assertIsNone(self.g.in_trash('Gladiator'))
+        self.assertIsNone(self.g.in_trash("Gladiator"))
         self.assertEqual(self.plr.getCoin(), 2)
 
 

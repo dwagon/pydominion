@@ -23,14 +23,16 @@ class Project_Academy(Project):
 ###############################################################################
 class Test_Academy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Academy'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initprojects=["Academy"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_have(self):
         self.assertEqual(self.plr.getVillager(), 0)
-        self.plr.assign_project('Academy')
-        self.plr.gainCard('Moat')
+        self.plr.assign_project("Academy")
+        self.plr.gainCard("Moat")
         self.assertEqual(self.plr.getVillager(), 1)
 
 

@@ -13,7 +13,7 @@ class Card_Conspirator(Card.Card):
         self.base = Game.INTRIGUE
         self.desc = """+2 coin. If you've played 3 or more actions this turn (counting
             this); +1 card, +1 action """
-        self.name = 'Conspirator'
+        self.name = "Conspirator"
         self.coin = 2
         self.cost = 4
 
@@ -29,22 +29,22 @@ class Card_Conspirator(Card.Card):
 ###############################################################################
 class Test_Conspirator(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Conspirator', 'Witch'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Conspirator", "Witch"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Conspirator'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Conspirator"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play the conspirator with not enough actions """
+        """Play the conspirator with not enough actions"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_actions(self):
-        """ Play the conspirator with enough actions """
-        self.plr.setPlayed('Witch', 'Witch', 'Witch')
+        """Play the conspirator with enough actions"""
+        self.plr.setPlayed("Witch", "Witch", "Witch")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)

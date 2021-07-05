@@ -22,14 +22,14 @@ class Project_Guildhall(Project):
 ###############################################################################
 class Test_Guildhall(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Guildhall'])
+        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Guildhall"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
         numc = self.plr.getCoffer()
-        self.plr.assign_project('Guildhall')
-        self.plr.gainCard('Silver')
+        self.plr.assign_project("Guildhall")
+        self.plr.gainCard("Silver")
         self.assertEqual(self.plr.getCoffer(), numc + 1)
 
 

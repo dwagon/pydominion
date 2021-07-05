@@ -7,4 +7,5 @@ class State(Card.Card):
         self.cardtype = Card.TYPE_STATE
         self.unique_state = False
 
+
 # EOF

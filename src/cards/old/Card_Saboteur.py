@@ -15,14 +15,14 @@ class Card_Saboteur(Card.Card):
             until revealing one costing 3 Coin or more. He trashes that card
             and may gain a card costing at most 2 Coin less than it. He discards
             the revealed cards."""
-        self.name = 'Saboteur'
+        self.name = "Saboteur"
         self.cost = 5
 
     def special(self, game, player):
-        """ Each other player reveals cards from the top of his
-            deck until revealing one costing 3 or more. He trashes that
-            card and may gain a card costing at most 2 less than it.
-            He discards the other revealed cards. """
+        """Each other player reveals cards from the top of his
+        deck until revealing one costing 3 or more. He trashes that
+        card and may gain a card costing at most 2 less than it.
+        He discards the other revealed cards."""
         for victim in player.attackVictims():
             card = self.pickCard(victim, player)
             if not card:
@@ -45,10 +45,10 @@ class Card_Saboteur(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):      # pragma: no coverage
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage
     toget = []
-    for card in kwargs['cardsrc']:
-        if card.name in ('Copper', 'Silver', 'Gold'):
+    for card in kwargs["cardsrc"]:
+        if card.name in ("Copper", "Silver", "Gold"):
             toget.append((card.cost, card))
     if toget:
         return [sorted(toget)[-1][1]]
@@ -59,21 +59,22 @@ def botresponse(player, kind, args=None, kwargs=None):      # pragma: no coverag
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=2,
-            initcards=['Saboteur'],
-            badcards=['Blessed Village', 'Cemetery', 'Necromancer', 'Animal Fair']
+            quiet=True,
+            numplayers=2,
+            initcards=["Saboteur"],
+            badcards=["Blessed Village", "Cemetery", "Necromancer", "Animal Fair"],
         )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g['Saboteur'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Saboteur"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a saboteur """
+        """Play a saboteur"""
         tsize = self.g.trashSize()
         try:
-            self.victim.test_input = ['Get Estate']
-            self.victim.setDeck('Gold', 'Copper', 'Estate')
+            self.victim.test_input = ["Get Estate"]
+            self.victim.setDeck("Gold", "Copper", "Estate")
             self.plr.playCard(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             trashed = self.g.trashpile[0]
@@ -81,14 +82,14 @@ class Test_Saboteur(unittest.TestCase):
             for c in self.victim.discardpile[:-1]:
                 self.assertTrue(c.cost < 3)
             self.assertTrue(self.victim.discardpile[-1].cost <= trashed.cost - 2)
-        except AssertionError:      # pragma: no cover
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 
     def test_nomatching(self):
-        """ Play a saboteur where the victim doesn't have a suitable card """
+        """Play a saboteur where the victim doesn't have a suitable card"""
         tsize = self.g.trashSize()
-        self.victim.setDeck('Copper', 'Copper', 'Estate')
+        self.victim.setDeck("Copper", "Copper", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.discardpile:

@@ -11,7 +11,7 @@ class Card_Lackeys(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
-        self.name = 'Lackeys'
+        self.name = "Lackeys"
         self.cards = 2
         self.cost = 2
 
@@ -29,19 +29,19 @@ class Card_Lackeys(Card.Card):
 ###############################################################################
 class Test_Lackeys(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Lackeys'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Lackeys"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_playCard(self):
-        self.card = self.g['Lackeys'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Lackeys"].remove()
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertLessEqual(self.plr.getVillager(), 0)
 
     def test_gainCard(self):
-        self.plr.gainCard('Lackeys')
+        self.plr.gainCard("Lackeys")
         self.assertLessEqual(self.plr.getVillager(), 2)
 
 

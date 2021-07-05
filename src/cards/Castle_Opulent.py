@@ -13,15 +13,18 @@ class Card_OpulentCastle(CastleCard):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
         self.base = Game.EMPIRES
         self.cost = 7
-        self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
+        self.desc = (
+            """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
+        )
         self.victory = 3
         self.name = "Opulent Castle"
 
     def special(self, game, player):
         victcards = [c for c in player.hand if c.isVictory()]
         cards = player.plrDiscardCards(
-            anynum=True, cardsrc=victcards,
-            prompt="Discard any number of Victory cards. +2 Coin per card discarded"
+            anynum=True,
+            cardsrc=victcards,
+            prompt="Discard any number of Victory cards. +2 Coin per card discarded",
         )
         player.addCoin(len(cards) * 2)
 
@@ -29,21 +32,21 @@ class Card_OpulentCastle(CastleCard):
 ###############################################################################
 class Test_OpulentCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:
-            self.card = self.g['Castles'].remove()
-            if self.card.name == 'Opulent Castle':
+            self.card = self.g["Castles"].remove()
+            if self.card.name == "Opulent Castle":
                 break
 
     def test_play(self):
-        """ Play a castle """
-        self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['estate', 'duchy', 'province', 'finish']
+        """Play a castle"""
+        self.plr.setHand("Estate", "Duchy", "Province", "Gold")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()['Opulent Castle'], 3)
+        self.assertEqual(self.plr.getScoreDetails()["Opulent Castle"], 3)
         self.assertEqual(self.plr.getCoin(), 6)
 
 

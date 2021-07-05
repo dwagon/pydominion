@@ -15,14 +15,14 @@ class Project_Silos(Project):
         self.cost = 4
 
     def hook_start_turn(self, game, player):
-        cus = [_ for _ in player.hand if _.name == 'Copper']
+        cus = [_ for _ in player.hand if _.name == "Copper"]
         if cus:
             choices = []
-            for num in range(len(cus)+1):
+            for num in range(len(cus) + 1):
                 choices.append(("Silo: Discard {} Coppers".format(num), num))
             ans = player.plrChooseOptions("Discard how many coppers? ", *choices)
             for _ in range(ans):
-                cu = player.in_hand('Copper')
+                cu = player.in_hand("Copper")
                 player.discardCard(cu)
                 player.pickupCards(1)
 
@@ -30,18 +30,18 @@ class Project_Silos(Project):
 ###############################################################################
 class Test_Silos(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Silos'])
+        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Silos"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        self.plr.assign_project('Silos')
-        self.plr.setDeck('Estate', 'Estate', 'Estate')
-        self.plr.setHand('Copper', 'Estate', 'Copper', 'Province')
-        self.plr.test_input = ['2']
+        self.plr.assign_project("Silos")
+        self.plr.setDeck("Estate", "Estate", "Estate")
+        self.plr.setHand("Copper", "Estate", "Copper", "Province")
+        self.plr.test_input = ["2"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_discard('Copper'))
-        self.assertIsNone(self.plr.in_hand('Copper'))
+        self.assertIsNotNone(self.plr.in_discard("Copper"))
+        self.assertIsNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.hand.size(), 4)
 
 

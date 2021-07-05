@@ -12,7 +12,7 @@ class Card_CargoShip(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
         self.base = Game.RENAISSANCE
-        self.name = 'Cargo Ship'
+        self.name = "Cargo Ship"
         self.desc = """+2 Coin; Once this turn, when you gain a card, you may
             set it aside face up (on this). At the start of your next turn,
             put it into your hand."""
@@ -21,29 +21,29 @@ class Card_CargoShip(Card.Card):
 
     ###########################################################################
     def hook_gain_card(self, game, player, card):
-        if not player.in_duration('Cargo Ship'):
+        if not player.in_duration("Cargo Ship"):
             return None
         if not player._cargo_ship:
             choice = player.plrChooseOptions(
                 "Do you want to set {} aside to play next turn?".format(card.name),
                 ("Yes", True),
-                ("No", False)
+                ("No", False),
             )
             if choice:
                 player._cargo_ship.add(card)
                 player.secret_count += 1
-                return {'dontadd': True}
+                return {"dontadd": True}
         return None
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        if not hasattr(player, '_cargo_ship'):
+        if not hasattr(player, "_cargo_ship"):
             player._cargo_ship = PlayArea([])
 
     ###########################################################################
     def duration(self, game, player):
         for card in player._cargo_ship:
-            player.addCard(card, 'hand')
+            player.addCard(card, "hand")
             player._cargo_ship.remove(card)
             player.secret_count -= 1
 
@@ -51,35 +51,35 @@ class Card_CargoShip(Card.Card):
 ###############################################################################
 class Test_CargoShip(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cargo Ship', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cargo Ship", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_playCard_yes(self):
-        self.card = self.g['Cargo Ship'].remove()
+        self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.plr.test_input = ['Yes']
-        self.plr.buyCard(self.g['Moat'])
-        self.assertEqual(self.plr._cargo_ship[0].name, 'Moat')
+        self.plr.test_input = ["Yes"]
+        self.plr.buyCard(self.g["Moat"])
+        self.assertEqual(self.plr._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertTrue(self.plr.in_hand('Moat'))
+        self.assertTrue(self.plr.in_hand("Moat"))
 
     def test_playCard_no(self):
-        self.card = self.g['Cargo Ship'].remove()
+        self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.plr.test_input = ['No']
-        self.plr.buyCard(self.g['Moat'])
+        self.plr.test_input = ["No"]
+        self.plr.buyCard(self.g["Moat"])
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIsNone(self.plr.in_hand('Moat'))
+        self.assertIsNone(self.plr.in_hand("Moat"))
 
 
 ###############################################################################

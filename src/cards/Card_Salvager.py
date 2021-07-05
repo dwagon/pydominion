@@ -11,8 +11,10 @@ class Card_Salvager(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.SEASIDE
-        self.desc = """+1 Buy. Trash a card from your hand. Gain Coins equal to its cost."""
-        self.name = 'Salvager'
+        self.desc = (
+            """+1 Buy. Trash a card from your hand. Gain Coins equal to its cost."""
+        )
+        self.name = "Salvager"
         self.buys = 1
         self.cost = 4
 
@@ -25,19 +27,19 @@ class Card_Salvager(Card.Card):
 ###############################################################################
 class Test_Salvager(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Salvager'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Salvager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Salvager'].remove()
+        self.card = self.g["Salvager"].remove()
 
     def test_play(self):
-        """ Play a salvage """
-        self.plr.setHand('Duchy', 'Estate')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['duchy']
+        """Play a salvage"""
+        self.plr.setHand("Duchy", "Estate")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["duchy"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.g.in_trash('Duchy'))
+        self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertEqual(self.plr.getCoin(), 5)
 
 

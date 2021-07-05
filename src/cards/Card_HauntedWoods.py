@@ -14,7 +14,7 @@ class Card_HauntedWoods(Card.Card):
         self.desc = """Until you next turn, when any other player buys a card,
             he puts his hand on top of his deck in any order.
             At the start of your next turn: +3 Cards"""
-        self.name = 'Haunted Woods'
+        self.name = "Haunted Woods"
         self.cost = 5
 
     def duration(self, game, player):
@@ -27,7 +27,7 @@ class Card_HauntedWoods(Card.Card):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
         for crd in player.hand[:]:
-            player.addCard(crd, 'topdeck')
+            player.addCard(crd, "topdeck")
             player.hand.remove(crd)
             player.output("Moving %s to deck" % crd.name)
 
@@ -35,22 +35,22 @@ class Card_HauntedWoods(Card.Card):
 ###############################################################################
 class Test_HauntedWoods(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Haunted Woods'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Haunted Woods"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Haunted Woods'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Haunted Woods"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_buy(self):
-        """ Play a Haunted Woods """
-        self.vic.setHand('Silver', 'Duchy', 'Province')
+        """Play a Haunted Woods"""
+        self.vic.setHand("Silver", "Duchy", "Province")
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.vic.setCoin(6)
-        self.vic.buyCard(self.g['Gold'])
-        self.assertIsNotNone(self.vic.in_deck('Silver'))
-        self.assertIsNotNone(self.vic.in_deck('Duchy'))
-        self.assertIsNotNone(self.vic.in_deck('Province'))
+        self.vic.buyCard(self.g["Gold"])
+        self.assertIsNotNone(self.vic.in_deck("Silver"))
+        self.assertIsNotNone(self.vic.in_deck("Duchy"))
+        self.assertIsNotNone(self.vic.in_deck("Province"))
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 8)

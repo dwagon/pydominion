@@ -9,4 +9,5 @@ class Project_ProjectB(Project):
         self.desc = "ProjectB"
         self.name = "ProjectB"
 
+
 # EOF

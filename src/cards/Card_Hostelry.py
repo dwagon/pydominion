@@ -12,11 +12,11 @@ class Card_Hostelry(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
-        self.name = 'Hostelry'
+        self.name = "Hostelry"
         self.cards = 1
         self.actions = 2
         self.cost = 4
-        self.required_cards = [('Card', 'Horse')]
+        self.required_cards = [("Card", "Horse")]
 
     def desc(self, player):
         if player.phase == "buy":
@@ -30,38 +30,38 @@ class Card_Hostelry(Card.Card):
             return
         discards = player.cardSel(
             prompt="Discard number of cards to gain that number of horses",
-            verbs=('Discard', 'Undiscard'),
+            verbs=("Discard", "Undiscard"),
             anynum=True,
-            cardsrc=treas
-            )
+            cardsrc=treas,
+        )
         for crd in discards:
             player.discardCard(crd)
             player.revealCard(crd)
-            player.gainCard('Horse')
+            player.gainCard("Horse")
 
 
 ###############################################################################
 class Test_Hostelry(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Hostelry'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Hostelry"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Hostelry'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Hostelry"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play a card """
+        """Play a card"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        """ Gain the card """
-        self.plr.setHand('Copper', 'Silver', 'Gold')
-        self.plr.test_input = ['Copper', 'Silver', 'Finish']
-        self.plr.gainCard('Hostelry')
-        self.assertIsNotNone(self.plr.in_discard('Horse'))
-        self.assertIsNone(self.plr.in_hand('Silver'))
+        """Gain the card"""
+        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.test_input = ["Copper", "Silver", "Finish"]
+        self.plr.gainCard("Hostelry")
+        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIsNone(self.plr.in_hand("Silver"))
 
 
 ###############################################################################

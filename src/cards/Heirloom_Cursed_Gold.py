@@ -12,29 +12,29 @@ class Card_CursedGold(Card.Card):
         self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "3 Coin; When you play this, gain a curse"
-        self.required_cards = ['Curse']
-        self.name = 'Cursed Gold'
+        self.required_cards = ["Curse"]
+        self.name = "Cursed Gold"
         self.cost = 4
         self.coin = 3
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard('Curse')
+        player.gainCard("Curse")
 
 
 ###############################################################################
 class Test_CursedGold(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Pooka'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Pooka"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Cursed Gold'].remove()
+        self.card = self.g["Cursed Gold"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
-        self.assertEqual(self.plr.discardpile[0].name, 'Curse')
+        self.assertEqual(self.plr.discardpile[0].name, "Curse")
 
 
 ###############################################################################

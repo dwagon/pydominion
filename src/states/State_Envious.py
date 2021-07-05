@@ -20,9 +20,9 @@ class State_Envious(State):
 
     def hook_spendValue(self, game, player, card):
         # Silver and Gold make 1
-        if card.name == 'Silver':
+        if card.name == "Silver":
             return -1
-        if card.name == 'Gold':
+        if card.name == "Gold":
             return -2
         return 0
 
@@ -30,19 +30,19 @@ class State_Envious(State):
 ###############################################################################
 class Test_Envious(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_envious_return(self):
-        self.plr.assign_state('Envious')
-        self.plr.test_input = ['End Phase']
+        self.plr.assign_state("Envious")
+        self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.states, [])
 
     def test_envious(self):
-        self.plr.assign_state('Envious')
-        self.plr.setHand('Silver', 'Gold')
+        self.plr.assign_state("Envious")
+        self.plr.setHand("Silver", "Gold")
         self.plr.playCard(self.plr.hand[0])
         self.assertEqual(self.plr.getCoin(), 1)
         self.plr.playCard(self.plr.hand[0])

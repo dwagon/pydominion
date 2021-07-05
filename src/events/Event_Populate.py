@@ -25,19 +25,32 @@ class Event_Populate(Event):
 class Test_Populate(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=['Populate'],
-            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop', 'Gardens', 'Mine', 'Library', 'Lurker'],
-            badcards=['Hostelry', 'Border Village', 'Inn']
+            quiet=True,
+            numplayers=1,
+            eventcards=["Populate"],
+            initcards=[
+                "Cellar",
+                "Chapel",
+                "Moat",
+                "Militia",
+                "Village",
+                "Workshop",
+                "Gardens",
+                "Mine",
+                "Library",
+                "Lurker",
+            ],
+            badcards=["Hostelry", "Border Village", "Inn"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Populate']
+        self.card = self.g.events["Populate"]
 
     def test_Populate(self):
-        """ Use Populate """
+        """Use Populate"""
         self.plr.addCoin(10)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
+        self.assertIsNotNone(self.plr.in_discard("Moat"))
 
 
 ###############################################################################

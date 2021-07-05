@@ -20,19 +20,21 @@ class Way_Goat(Way):
 ###############################################################################
 class Test_Goat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Goat'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, waycards=["Way of the Goat"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Goat']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Goat"]
 
     def test_play(self):
-        """ Perform a Goat """
-        self.plr.setHand('Copper', 'Silver')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Trash Copper']
+        """Perform a Goat"""
+        self.plr.setHand("Copper", "Silver")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Trash Copper"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.g.in_trash('Copper'))
+        self.assertIsNotNone(self.g.in_trash("Copper"))
 
 
 ###############################################################################

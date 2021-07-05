@@ -20,15 +20,21 @@ class Way_Sheep(Way):
 ###############################################################################
 class Test_Sheep(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Sheep'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Sheep"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Sheep']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Sheep"]
 
     def test_play(self):
-        """ Perform a Sheep """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Sheep"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

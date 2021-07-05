@@ -12,7 +12,7 @@ class Card_CityQuarter(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.EMPIRES
         self.desc = "+2 Actions. Reveal your hand. +1 Card per Action card revealed."
-        self.name = 'City Quarter'
+        self.name = "City Quarter"
         self.debtcost = 8
         self.actions = 2
         self.coin = 1
@@ -30,15 +30,15 @@ class Card_CityQuarter(Card.Card):
 ###############################################################################
 class Test_CityQuarter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['City Quarter', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["City Quarter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['City Quarter'].remove()
+        self.card = self.g["City Quarter"].remove()
 
     def test_play(self):
-        """ Play a City Quarter """
-        self.plr.setHand('Moat', 'Moat', 'Estate')
-        self.plr.addCard(self.card, 'hand')
+        """Play a City Quarter"""
+        self.plr.setHand("Moat", "Moat", "Estate")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3 + 2)

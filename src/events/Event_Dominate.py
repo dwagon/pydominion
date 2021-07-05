@@ -15,25 +15,25 @@ class Event_Dominate(Event):
         self.cost = 14
 
     def special(self, game, player):
-        c = player.gainCard('Province')
+        c = player.gainCard("Province")
         if c:
-            player.addScore('Dominate', 9)
+            player.addScore("Dominate", 9)
 
 
 ###############################################################################
 class Test_Dominate(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Dominate'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Dominate"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.events['Dominate']
+        self.card = self.g.events["Dominate"]
 
     def test_play(self):
-        """ Perform a Dominate """
+        """Perform a Dominate"""
         self.plr.addCoin(14)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Province'))
-        self.assertEqual(self.plr.getScoreDetails()['Dominate'], 9)
+        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertEqual(self.plr.getScoreDetails()["Dominate"], 9)
 
 
 ###############################################################################

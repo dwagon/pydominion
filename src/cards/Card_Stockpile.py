@@ -13,7 +13,7 @@ class Card_Stockpile(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
         self.desc = """3 Coin; +1 Buy; When you play this, Exile it."""
-        self.name = 'Stockpile'
+        self.name = "Stockpile"
         self.coin = 3
         self.buys = 1
         self.cost = 3
@@ -26,15 +26,15 @@ class Card_Stockpile(Card.Card):
 ###############################################################################
 class Test_Stockpile(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Stockpile'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Stockpile"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Stockpile'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Stockpile"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_exile('Stockpile'))
+        self.assertIsNotNone(self.plr.in_exile("Stockpile"))
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
 

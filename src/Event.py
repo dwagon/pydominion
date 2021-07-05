@@ -4,14 +4,16 @@ from Card import Card
 
 ###############################################################################
 class Event(Card):
-    """ Class representing events - mostly just card code """
+    """Class representing events - mostly just card code"""
+
     pass
 
 
 ###############################################################################
 class EventPile(object):
-    """ Pile of Events but events are only singletons
-        Here so Game code can treat every card type like a pile of cards """
+    """Pile of Events but events are only singletons
+    Here so Game code can treat every card type like a pile of cards"""
+
     def __init__(self, cardname, klass):
         self.cardname = cardname
         self.event = klass()
@@ -23,5 +25,6 @@ class EventPile(object):
     ###########################################################################
     def __repr__(self):
         return "Event %s" % self.name
+
 
 # EOF

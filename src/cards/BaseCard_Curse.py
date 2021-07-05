@@ -15,7 +15,7 @@ class Card_Curse(Card.Card):
         self.basecard = True
         self.playable = False
         self.purchasable = True
-        self.name = 'Curse'
+        self.name = "Curse"
         self.cost = 0
         self.victory = -1
 
@@ -28,19 +28,19 @@ class Card_Curse(Card.Card):
 ###############################################################################
 class Test_Curse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Witch'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Witch"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Curse'].remove()
+        self.card = self.g["Curse"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
 
     def test_have(self):
         self.plr.addCard(self.card)
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Curse'], -1)
+        self.assertEqual(sc["Curse"], -1)
 
 
 ###############################################################################

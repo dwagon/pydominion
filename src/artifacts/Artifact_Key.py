@@ -20,13 +20,13 @@ class Artifact_Key(Artifact):
 ###############################################################################
 class Test_Key(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Key'])
+        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=["Key"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.artifact = self.g.artifacts['Key']
+        self.artifact = self.g.artifacts["Key"]
 
     def test_flag(self):
-        self.plr.assign_artifact('Key')
+        self.plr.assign_artifact("Key")
         self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)
 

@@ -16,25 +16,25 @@ class Event_Wedding(Event):
         self.debtcost = 3
 
     def special(self, game, player):
-        player.addScore('Wedding', 1)
-        player.gainCard('Gold')
+        player.addScore("Wedding", 1)
+        player.gainCard("Gold")
 
 
 ###############################################################################
 class Test_Wedding(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Wedding'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Wedding"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.events['Wedding']
+        self.card = self.g.events["Wedding"]
 
     def test_play(self):
-        """ Perform a Wedding """
+        """Perform a Wedding"""
         self.plr.addCoin(4)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.debt, 3)
-        self.assertEqual(self.plr.getScoreDetails()['Wedding'], 1)
+        self.assertEqual(self.plr.getScoreDetails()["Wedding"], 1)
 
 
 ###############################################################################

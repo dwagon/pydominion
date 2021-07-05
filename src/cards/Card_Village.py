@@ -12,7 +12,7 @@ class Card_Village(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "+1 cards, +2 actions"
-        self.name = 'Village'
+        self.name = "Village"
         self.cards = 1
         self.actions = 2
         self.cost = 3
@@ -21,14 +21,14 @@ class Card_Village(Card.Card):
 ###############################################################################
 class Test_Village(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Village'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Village"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play the village """
+        """Play the village"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 2)

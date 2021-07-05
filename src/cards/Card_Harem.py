@@ -11,7 +11,7 @@ class Card_Harem(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
         self.base = Game.INTRIGUE
-        self.name = 'Harem'
+        self.name = "Harem"
         self.coin = 2
         self.victory = 2
         self.cost = 6
@@ -25,21 +25,21 @@ class Card_Harem(Card.Card):
 ###############################################################################
 class Test_Harem(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Harem'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Harem"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Harem'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Harem"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a Harem """
+        """Play a Harem"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_score(self):
-        """ Score the harem """
+        """Score the harem"""
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Harem'], 2)
+        self.assertEqual(sc["Harem"], 2)
 
 
 ###############################################################################

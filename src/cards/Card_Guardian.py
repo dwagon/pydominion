@@ -14,7 +14,7 @@ class Card_Guardian(Card.Card):
         self.desc = """Until your next turn, when another player plays an
             Attack card, it doesn't affect you. At the start of your next turn,
             +1 Coin."""
-        self.name = 'Guardian'
+        self.name = "Guardian"
         self.defense = True
         self.cost = 2
 
@@ -22,23 +22,23 @@ class Card_Guardian(Card.Card):
         player.addCoin(1)
 
     def hook_gain_this_card(self, game, player):
-        return {'destination': 'hand'}
+        return {"destination": "hand"}
 
 
 ###############################################################################
 class Test_Guardian(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Guardian'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Guardian"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Guardian'].remove()
+        self.card = self.g["Guardian"].remove()
 
     def test_gain(self):
-        self.plr.gainCard('Guardian')
-        self.assertIsNotNone(self.plr.in_hand('Guardian'))
+        self.plr.gainCard("Guardian")
+        self.assertIsNotNone(self.plr.in_hand("Guardian"))
 
     def test_duration(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.start_turn()

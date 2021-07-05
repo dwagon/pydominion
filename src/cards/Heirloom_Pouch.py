@@ -12,7 +12,7 @@ class Card_Pouch(Card.Card):
         self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "+1 Coin, +1 Buy"
-        self.name = 'Pouch'
+        self.name = "Pouch"
         self.cost = 2
         self.coin = 1
         self.buys = 1
@@ -22,13 +22,13 @@ class Card_Pouch(Card.Card):
 ###############################################################################
 class Test_Pouch(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tracker'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tracker"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Pouch'].remove()
+        self.card = self.g["Pouch"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.buys = 0
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)

@@ -30,16 +30,16 @@ class Card_Imp(Card.Card):
         if not sac:
             player.output("No unplayed action cards")
             return
-        options = [{'selector': '0', 'print': 'Nothing', 'card': None}]
+        options = [{"selector": "0", "print": "Nothing", "card": None}]
         index = 1
         for p in sac:
             selector = "{}".format(index)
-            toprint = 'Play {} ({})'.format(p.name, p.description(player))
-            options.append({'selector': selector, 'print': toprint, 'card': p})
+            toprint = "Play {} ({})".format(p.name, p.description(player))
+            options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
         o = player.userInput(options, "What card do you want to play?")
-        if o['card']:
-            player.playCard(o['card'], costAction=False)
+        if o["card"]:
+            player.playCard(o["card"], costAction=False)
 
 
 ###############################################################################
@@ -52,17 +52,19 @@ class Test_Imp(unittest.TestCase):
 
     def test_played(self):
         self.plr.setHand("Moat", "Copper")
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.setPlayed("Moat")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_not_played(self):
         self.plr.setHand("Moat", "Copper")
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Moat']
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2 + 1)    # 2 for moat, 2 for imp, 1 for hand
+        self.assertEqual(
+            self.plr.hand.size(), 2 + 2 + 1
+        )  # 2 for moat, 2 for imp, 1 for hand
 
 
 ###############################################################################

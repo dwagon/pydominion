@@ -13,48 +13,53 @@ class Card_WildHunt(Card.Card):
         self.base = Game.EMPIRES
         self.desc = """Choose one: +3 Cards and add 1 VP to the Wild Hunt
             Supply pile; or gain an Estate, and if you do, take the VP from the pile."""
-        self.name = 'Wild Hunt'
+        self.name = "Wild Hunt"
         self.cost = 5
 
     def special(self, game, player):
         give = player.plrChooseOptions(
             "Choose one:",
             ("+3 Cards and add 1 VP to the Wild Hunt Supply pile", True),
-            ("Gain an Estate, and if you do, take %d VP from the pile." % game['Wild Hunt'].getVP(), False))
+            (
+                "Gain an Estate, and if you do, take %d VP from the pile."
+                % game["Wild Hunt"].getVP(),
+                False,
+            ),
+        )
         if give:
             player.pickupCards(3)
-            game['Wild Hunt'].addVP()
+            game["Wild Hunt"].addVP()
         else:
-            player.gainCard('Estate')
-            score = game['Wild Hunt'].drainVP()
+            player.gainCard("Estate")
+            score = game["Wild Hunt"].drainVP()
             player.output("Gaining %d VP from Wild Hunt" % score)
-            player.addScore('Wild Hunt', score)
+            player.addScore("Wild Hunt", score)
 
 
 ###############################################################################
 class Test_WildHunt(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Wild Hunt'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Wild Hunt"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Wild Hunt'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Wild Hunt"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play_give(self):
-        """ Play a Wild Hunt and take the cards"""
-        self.plr.test_input = ['Cards']
+        """Play a Wild Hunt and take the cards"""
+        self.plr.test_input = ["Cards"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertEqual(self.g['Wild Hunt'].getVP(), 1)
+        self.assertEqual(self.g["Wild Hunt"].getVP(), 1)
 
     def test_play_take(self):
-        """ Play a Wild Hunt and take the score"""
-        self.plr.test_input = ['Gain']
-        self.g['Wild Hunt'].addVP(3)
+        """Play a Wild Hunt and take the score"""
+        self.plr.test_input = ["Gain"]
+        self.g["Wild Hunt"].addVP(3)
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIsNotNone(self.plr.in_discard('Estate'))
-        self.assertEqual(self.plr.getScoreDetails()['Wild Hunt'], 3)
+        self.assertIsNotNone(self.plr.in_discard("Estate"))
+        self.assertEqual(self.plr.getScoreDetails()["Wild Hunt"], 3)
 
 
 ###############################################################################

@@ -21,12 +21,12 @@ class Project_Barracks(Project):
 ###############################################################################
 class Test_Barracks(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Barracks'])
+        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Barracks"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_flag(self):
-        self.plr.assign_project('Barracks')
+        self.plr.assign_project("Barracks")
         self.plr.start_turn()
         self.assertEqual(self.plr.get_actions(), 2)
 

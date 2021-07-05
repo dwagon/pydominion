@@ -16,7 +16,7 @@ class Event_Pilgrimage(Event):
         self.cost = 4
 
     def special(self, game, player):
-        if not player.do_once('Pilgrimage'):
+        if not player.do_once("Pilgrimage"):
             player.output("Already performed a Pilgrimage this turn")
             return
         if not player.flip_journey_token():
@@ -25,15 +25,15 @@ class Event_Pilgrimage(Event):
         cardnames = {c.name for c in player.played if c.purchasable}
         selected = []
         while True:
-            options = [{'selector': '0', 'print': 'Finish', 'opt': None}]
+            options = [{"selector": "0", "print": "Finish", "opt": None}]
             index = 1
             for cn in cardnames:
-                options.append({'selector': '%d' % index, 'print': cn, 'opt': cn})
+                options.append({"selector": "%d" % index, "print": cn, "opt": cn})
                 index += 1
             choice = player.userInput(options, "Select a card to gain - up to 3!")
-            if choice['opt']:
-                selected.append(choice['opt'])
-                cardnames.remove(choice['opt'])
+            if choice["opt"]:
+                selected.append(choice["opt"])
+                cardnames.remove(choice["opt"])
             else:
                 break
             if len(selected) == 3:
@@ -46,20 +46,22 @@ class Event_Pilgrimage(Event):
 ###############################################################################
 class Test_Pilgrimage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Pilgrimage'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, eventcards=["Pilgrimage"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.events['Pilgrimage']
+        self.card = self.g.events["Pilgrimage"]
 
     def test_play(self):
-        """ Perform a Pilgrimage """
-        self.plr.setPlayed('Moat', 'Silver', 'Gold', 'Copper', 'Duchy')
-        self.plr.test_input = ['moat', 'silver', 'finish']
+        """Perform a Pilgrimage"""
+        self.plr.setPlayed("Moat", "Silver", "Gold", "Copper", "Duchy")
+        self.plr.test_input = ["moat", "silver", "finish"]
         self.plr.journey_token = False
         self.plr.addCoin(4)
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Moat'))
-        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertTrue(self.plr.journey_token)
 
 

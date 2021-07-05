@@ -14,12 +14,12 @@ class Card_Philosophersstone(Card.Card):
         self.desc = "When you play this, count your deck and discard pile. Worth 1 Coin per 5 cards total between them (rounded down)"
         self.name = "Philosopher's Stone"
         self.cost = 3
-        self.required_cards = ['Potion']
+        self.required_cards = ["Potion"]
         self.potcost = True
 
     def hook_coinvalue(self, game, player):
-        """ When you play this, count your deck and discard pile.
-            Worth 1 per 5 cards total between them (rounded down) """
+        """When you play this, count your deck and discard pile.
+        Worth 1 per 5 cards total between them (rounded down)"""
         numcards = player.deck.size() + player.discardpile.size()
         extracoin = numcards / 5
         player.output("Gained %d coins from Philosopher's Stone" % extracoin)
@@ -33,19 +33,19 @@ class Test_Philosophersstone(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Philosopher's Stone"].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a philosophers stone with not much on"""
-        self.plr.setDeck('Estate')
-        self.plr.setDiscard('Estate')
+        """Play a philosophers stone with not much on"""
+        self.plr.setDeck("Estate")
+        self.plr.setDiscard("Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_value(self):
-        """ Play a philosophers stone with the full Nicholas Flamel """
-        self.plr.setDeck('Estate', 'Estate', 'Estate', 'Estate', 'Silver')
-        self.plr.setDiscard('Estate', 'Estate', 'Estate', 'Estate', 'Silver')
+        """Play a philosophers stone with the full Nicholas Flamel"""
+        self.plr.setDeck("Estate", "Estate", "Estate", "Estate", "Silver")
+        self.plr.setDiscard("Estate", "Estate", "Estate", "Estate", "Silver")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

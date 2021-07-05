@@ -11,7 +11,7 @@ class Card_Masterpiece(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.GUILDS
-        self.name = 'Masterpiece'
+        self.name = "Masterpiece"
         self.overpay = True
         self.coin = 1
         self.cost = 3
@@ -25,29 +25,29 @@ class Card_Masterpiece(Card.Card):
     def hook_overpay(self, game, player, amount):
         player.output("Gained %d Silvers" % amount)
         for _ in range(amount):
-            player.gainCard('Silver')
+            player.gainCard("Silver")
 
 
 ###############################################################################
 class Test_Masterpiece(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Masterpiece'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Masterpiece"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Masterpiece'].remove()
+        self.card = self.g["Masterpiece"].remove()
 
     def test_play(self):
-        """ Play a Masterpiece """
-        self.plr.addCard(self.card, 'hand')
+        """Play a Masterpiece"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_buy(self):
-        """ Buy a Masterpiece """
+        """Buy a Masterpiece"""
         self.plr.coin = 5
-        self.plr.test_input = ['1']
-        self.plr.buyCard(self.g['Masterpiece'])
-        self.assertIsNotNone(self.plr.in_discard('Silver'))
+        self.plr.test_input = ["1"]
+        self.plr.buyCard(self.g["Masterpiece"])
+        self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 
 ###############################################################################

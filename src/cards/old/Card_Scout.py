@@ -11,57 +11,57 @@ class Card_Scout(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.INTRIGUE
         self.desc = "+1 action, Adjust top 4 cards of deck"
-        self.name = 'Scout'
+        self.name = "Scout"
         self.actions = 1
         self.cost = 4
 
     def special(self, game, player):
-        """ Reveal the top 4 cards of your deck. Put the revealed
-            victory cards into your hand. Put the other cards on top
-            of your deck in any order """
+        """Reveal the top 4 cards of your deck. Put the revealed
+        victory cards into your hand. Put the other cards on top
+        of your deck in any order"""
         # TODO: Currently you can't order the cards you return
         cards = []
         for _ in range(4):
             c = player.nextCard()
             player.revealCard(c)
             if c.isVictory():
-                player.addCard(c, 'hand')
+                player.addCard(c, "hand")
                 player.output("Adding %s to hand" % c.name)
             else:
                 cards.append(c)
         for c in cards:
             player.output("Putting %s back on deck" % c.name)
-            player.addCard(c, 'deck')
+            player.addCard(c, "deck")
 
 
 ###############################################################################
 class Test_Scout(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Scout'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Scout"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.scout = self.g['Scout'].remove()
+        self.scout = self.g["Scout"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.scout, 'hand')
+        self.plr.addCard(self.scout, "hand")
         self.plr.playCard(self.scout)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
         self.plr.setHand()
-        self.plr.addCard(self.scout, 'hand')
+        self.plr.addCard(self.scout, "hand")
         self.plr.playCard(self.scout)
         for c in self.plr.hand:
             self.assertTrue(c.isVictory())
 
     def test_deck(self):
         self.plr.setHand()
-        self.plr.addCard(self.scout, 'hand')
-        self.plr.setDeck('Copper', 'Copper', 'Copper', 'Duchy')
+        self.plr.addCard(self.scout, "hand")
+        self.plr.setDeck("Copper", "Copper", "Copper", "Duchy")
         self.plr.playCard(self.scout)
-        self.assertEqual(self.plr.hand[0].name, 'Duchy')
+        self.assertEqual(self.plr.hand[0].name, "Duchy")
         for c in self.plr.deck:
-            self.assertEqual(c.name, 'Copper')
+            self.assertEqual(c.name, "Copper")
 
 
 ###############################################################################

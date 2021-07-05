@@ -13,7 +13,7 @@ class Card_Peddler(Card.Card):
         self.base = Game.PROSPERITY
         self.desc = """+1 Card, +1 Action, +1 Coin. During your Buy phase, this
             costs 2 less per Action card you have in play, but not less than 0"""
-        self.name = 'Peddler'
+        self.name = "Peddler"
         self.cards = 1
         self.actions = 1
         self.coin = 1
@@ -30,20 +30,20 @@ class Card_Peddler(Card.Card):
 ###############################################################################
 class Test_Peddler(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Peddler', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Peddler", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g['Peddler'].remove()
+        self.card = self.g["Peddler"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_buy(self):
-        self.plr.setPlayed('Moat')
+        self.plr.setPlayed("Moat")
         cost = self.plr.cardCost(self.card)
         self.assertEqual(cost, 6)
 

@@ -14,7 +14,9 @@ class Card_Princess(Card.Card):
         self.name = "Princess"
         self.purchasable = False
         self.cost = 0
-        self.desc = "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
+        self.desc = (
+            "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
+        )
         self.buys = 1
 
     def hook_cardCost(self, game, player, card):
@@ -24,16 +26,16 @@ class Card_Princess(Card.Card):
 ###############################################################################
 class Test_Princess(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Tournament'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Princess'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Princess"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.cardCost(self.g['Gold']), 4)
+        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 4)
 
 
 ###############################################################################

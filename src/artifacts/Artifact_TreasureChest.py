@@ -21,15 +21,15 @@ class Artifact_TreasureChest(Artifact):
 ###############################################################################
 class Test_TreasureChest(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Treasure Chest'])
+        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=["Treasure Chest"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_treasurechest(self):
-        self.plr.assign_artifact('Treasure Chest')
-        self.plr.test_input = ['End Phase']
+        self.plr.assign_artifact("Treasure Chest")
+        self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
 
 
 ###############################################################################

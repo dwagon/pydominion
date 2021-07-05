@@ -11,7 +11,7 @@ class Card_Vassal(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
-        self.name = 'Vassal'
+        self.name = "Vassal"
         self.coin = 2
         self.cost = 3
         self.desc = "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
@@ -20,36 +20,36 @@ class Card_Vassal(Card.Card):
         card = player.nextCard()
         player.revealCard(card)
         if card.isAction():
-            player.addCard(card, 'hand')
+            player.addCard(card, "hand")
             player.playCard(card, costAction=False)
         else:
-            player.addCard(card, 'discard')
+            player.addCard(card, "discard")
 
 
 ###############################################################################
 class Test_Vassal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Vassal', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Vassal", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Vassal'].remove()
+        self.card = self.g["Vassal"].remove()
 
     def test_play_action(self):
-        """ Play a Vassal with action next"""
-        self.plr.setDeck('Silver', 'Gold', 'Moat')
-        self.plr.addCard(self.card, 'hand')
+        """Play a Vassal with action next"""
+        self.plr.setDeck("Silver", "Gold", "Moat")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.in_played('Moat'))
+        self.assertIsNotNone(self.plr.in_played("Moat"))
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_play_non_action(self):
-        """ Play a Vassal with non-action next"""
-        self.plr.setDeck('Silver', 'Gold')
-        self.plr.addCard(self.card, 'hand')
+        """Play a Vassal with non-action next"""
+        self.plr.setDeck("Silver", "Gold")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertIsNotNone(self.plr.in_discard('Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.hand.size(), 5)
 
 

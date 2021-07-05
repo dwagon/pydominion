@@ -11,7 +11,7 @@ class Card_Spices(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.RENAISSANCE
-        self.name = 'Spices'
+        self.name = "Spices"
         self.coin = 2
         self.buys = 1
         self.cost = 5
@@ -30,13 +30,13 @@ class Card_Spices(Card.Card):
 ###############################################################################
 class Test_Spices(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Spices'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Spices"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_playCard(self):
-        self.card = self.g['Spices'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Spices"].remove()
+        self.plr.addCard(self.card, "hand")
         self.plr.setCoffer(0)
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
@@ -45,7 +45,7 @@ class Test_Spices(unittest.TestCase):
 
     def test_gainCard(self):
         self.plr.setCoffer(0)
-        self.plr.gainCard('Spices')
+        self.plr.gainCard("Spices")
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.getCoffer(), 2)

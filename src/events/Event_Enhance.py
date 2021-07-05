@@ -23,8 +23,8 @@ class Event_Enhance(Event):
         tc = player.plrTrashCard(
             prompt="Trash to gain a card costing 2 more than",
             printcost=True,
-            cardsrc=crds
-            )
+            cardsrc=crds,
+        )
         if not tc:
             return
         new_cost = tc[0].cost + 2
@@ -35,21 +35,24 @@ class Event_Enhance(Event):
 class Test_Enhance(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=['Enhance'],
-            initcards=['Festival'], badcards=["Duchess"]
+            quiet=True,
+            numplayers=1,
+            eventcards=["Enhance"],
+            initcards=["Festival"],
+            badcards=["Duchess"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g.events['Enhance']
+        self.card = self.g.events["Enhance"]
 
     def test_play(self):
-        """ Perform a Enhance """
+        """Perform a Enhance"""
         self.plr.addCoin(3)
-        self.plr.setHand('Copper', 'Silver', 'Estate')
-        self.plr.test_input = ['Trash Silver', 'Get Festival']
+        self.plr.setHand("Copper", "Silver", "Estate")
+        self.plr.test_input = ["Trash Silver", "Get Festival"]
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.g.in_trash('Silver'))
-        self.assertIsNotNone(self.plr.in_discard('Festival'))
+        self.assertIsNotNone(self.g.in_trash("Silver"))
+        self.assertIsNotNone(self.plr.in_discard("Festival"))
 
 
 ###############################################################################

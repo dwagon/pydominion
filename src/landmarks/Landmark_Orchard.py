@@ -20,23 +20,28 @@ class Landmark_Orchard(Landmark):
             if card.isAction():
                 actions[card.name] += 1
         score = sum([4 for x in actions.values() if x > 3])
-        player.addScore('Orchard', score)
+        player.addScore("Orchard", score)
 
 
 ###############################################################################
 class Test_Orchard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Orchard'], initcards=['Moat', 'Militia'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            landmarkcards=["Orchard"],
+            initcards=["Moat", "Militia"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_gain(self):
-        """ Use Orchard """
-        self.plr.setDiscard('Moat', 'Moat', 'Militia', 'Duchy')
-        self.plr.setDeck('Moat', 'Moat', 'Copper', 'Duchy')
-        self.plr.setHand('Moat', 'Militia', 'Copper', 'Copper', 'Duchy')
+        """Use Orchard"""
+        self.plr.setDiscard("Moat", "Moat", "Militia", "Duchy")
+        self.plr.setDeck("Moat", "Moat", "Copper", "Duchy")
+        self.plr.setHand("Moat", "Militia", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Orchard'], 4)
+        self.assertEqual(self.plr.getScoreDetails()["Orchard"], 4)
 
 
 ###############################################################################

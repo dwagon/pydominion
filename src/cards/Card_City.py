@@ -13,7 +13,7 @@ class Card_City(Card.Card):
         self.base = Game.PROSPERITY
         self.desc = """+1 card, +2 action; If there are one or more empty Supply
             piles, +1 card. If there are two or more, +1 coin, +1 buy """
-        self.name = 'City'
+        self.name = "City"
         self.cost = 5
         self.cards = 1
         self.actions = 2
@@ -31,22 +31,24 @@ class Card_City(Card.Card):
 ###############################################################################
 class Test_City(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['City', 'Moat', 'Cellar'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["City", "Moat", "Cellar"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.city = self.g['City'].remove()
-        self.plr.addCard(self.city, 'hand')
+        self.city = self.g["City"].remove()
+        self.plr.addCard(self.city, "hand")
 
     def test_nostacks(self):
-        """ Play a city with no stacks empty """
+        """Play a city with no stacks empty"""
         self.plr.playCard(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_onestack(self):
-        """ Play a city with one stacks empty """
+        """Play a city with one stacks empty"""
         while True:
-            c = self.g['Moat'].remove()
+            c = self.g["Moat"].remove()
             if not c:
                 break
         self.plr.playCard(self.city)
@@ -54,13 +56,13 @@ class Test_City(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_twostack(self):
-        """ Play a city with two stacks empty """
+        """Play a city with two stacks empty"""
         while True:
-            c = self.g['Moat'].remove()
+            c = self.g["Moat"].remove()
             if not c:
                 break
         while True:
-            c = self.g['Cellar'].remove()
+            c = self.g["Cellar"].remove()
             if not c:
                 break
         self.plr.playCard(self.city)

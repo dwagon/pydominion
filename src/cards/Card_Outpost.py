@@ -14,7 +14,7 @@ class Card_Outpost(Card.Card):
         self.desc = """You only draw 3 cards (instead of 5) in this turn's Clean-up phase.
         Take an extra turn after this one.
         This can't cause you to take more than two consecutive turns."""
-        self.name = 'Outpost'
+        self.name = "Outpost"
         self.cost = 5
 
     def hook_cleanup(self, game, player):
@@ -31,14 +31,14 @@ class Card_Outpost(Card.Card):
 ###############################################################################
 class Test_Outpost(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Outpost'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Outpost"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Outpost'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Outpost"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play Outpost """
+        """Play Outpost"""
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.g.print_state()

@@ -1,5 +1,3 @@
-
-
 ###############################################################################
 class WayPile(object):
     def __init__(self, cardname, klass):
@@ -13,5 +11,6 @@ class WayPile(object):
     ###########################################################################
     def __repr__(self):
         return "Way %s" % self.name
+
 
 # EOF

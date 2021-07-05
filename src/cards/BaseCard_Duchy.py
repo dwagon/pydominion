@@ -14,7 +14,7 @@ class Card_Duchy(Card.Card):
         self.desc = "3 VP"
         self.playable = False
         self.basecard = True
-        self.name = 'Duchy'
+        self.name = "Duchy"
         self.cost = 5
         self.victory = 3
 
@@ -24,19 +24,18 @@ class Card_Duchy(Card.Card):
         return 12
 
     def hook_gain_this_card(self, game, player):
-        if 'Duchess' in game:
+        if "Duchess" in game:
             duchess = player.plrChooseOptions(
-                "Gain a Duchess as well?",
-                ("No thanks", False),
-                ("Gain Duchess", True))
+                "Gain a Duchess as well?", ("No thanks", False), ("Gain Duchess", True)
+            )
             if duchess:
-                player.gainCard('Duchess')
+                player.gainCard("Duchess")
         return {}
 
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    return False    # Don't gain a duchess
+    return False  # Don't gain a duchess
 
 
 ###############################################################################
@@ -45,12 +44,12 @@ class Test_Duchy(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Duchy'].remove()
+        self.card = self.g["Duchy"].remove()
 
     def test_have(self):
         self.plr.addCard(self.card)
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Duchy'], 3)
+        self.assertEqual(sc["Duchy"], 3)
 
 
 ###############################################################################

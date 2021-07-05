@@ -25,9 +25,9 @@ class Event_Alms(Event):
         return t
 
     def special(self, game, player):
-        """ Once per turn: If you have no treasures in play, gain a
+        """Once per turn: If you have no treasures in play, gain a
         card costing up to 4"""
-        if not player.do_once('Alms'):
+        if not player.do_once("Alms"):
             player.output("Already used Alms this turn")
             return
 
@@ -38,33 +38,35 @@ class Event_Alms(Event):
 ###############################################################################
 class Test_Alms(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Alms'], initcards=['Lurker'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, eventcards=["Alms"], initcards=["Lurker"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Alms']
+        self.card = self.g.events["Alms"]
 
     def test_with_treasure(self):
-        """ Use Alms with treasures"""
-        self.plr.setHand('Copper')
+        """Use Alms with treasures"""
+        self.plr.setHand("Copper")
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_without_treasure(self):
-        """ Use Alms with no treasures"""
-        self.plr.setHand('Estate')
-        self.plr.test_input = ['Lurker']
+        """Use Alms with no treasures"""
+        self.plr.setHand("Estate")
+        self.plr.test_input = ["Lurker"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, 'Lurker')
+        self.assertEqual(self.plr.discardpile[0].name, "Lurker")
 
     def test_twice(self):
-        """ Use Alms twice"""
-        self.plr.setHand('Estate')
-        self.plr.test_input = ['Lurker']
+        """Use Alms twice"""
+        self.plr.setHand("Estate")
+        self.plr.test_input = ["Lurker"]
         self.plr.performEvent(self.card)
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, 'Lurker')
+        self.assertEqual(self.plr.discardpile[0].name, "Lurker")
 
 
 ###############################################################################

@@ -17,27 +17,33 @@ class Way_Horse(Way):
 
     def special_way(self, game, player, card):
         game[card.name].add()
-        return {'discard': False}
+        return {"discard": False}
 
 
 ###############################################################################
 class Test_Horse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Horse'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Horse"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Horse']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Horse"]
 
     def test_play(self):
-        """ Perform a Horse """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Horse"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.g['Moat'].pilesize, 10)
-        self.assertIsNone(self.plr.in_hand('Moat'))
-        self.assertIsNone(self.plr.in_discard('Moat'))
+        self.assertEqual(self.g["Moat"].pilesize, 10)
+        self.assertIsNone(self.plr.in_hand("Moat"))
+        self.assertIsNone(self.plr.in_discard("Moat"))
 
 
 ###############################################################################

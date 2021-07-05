@@ -23,24 +23,35 @@ class Landmark_WolfDen(Landmark):
             if num == 1:
                 score -= 3
                 player.output("Wolf Den: -3 due to only one %s" % card)
-        player.addScore('Wolf Den', score)
+        player.addScore("Wolf Den", score)
 
 
 ###############################################################################
 class Test_WolfDen(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, landmarkcards=['Wolf Den'],
-            badcards=['Shepherd', 'Pooka', 'Fool', 'Tracker', 'Cemetery', 'Pixie', 'Secret Cave'])
+            quiet=True,
+            numplayers=1,
+            landmarkcards=["Wolf Den"],
+            badcards=[
+                "Shepherd",
+                "Pooka",
+                "Fool",
+                "Tracker",
+                "Cemetery",
+                "Pixie",
+                "Secret Cave",
+            ],
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_gain(self):
-        """ Use Wolf Den """
-        self.plr.setDiscard('Gold', 'Silver')
+        """Use Wolf Den"""
+        self.plr.setDiscard("Gold", "Silver")
         self.plr.gameOver()
         try:
-            self.assertEqual(self.plr.getScoreDetails()['Wolf Den'], -6)
+            self.assertEqual(self.plr.getScoreDetails()["Wolf Den"], -6)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

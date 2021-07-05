@@ -11,7 +11,7 @@ class Card_Experiment(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
-        self.name = 'Experiment'
+        self.name = "Experiment"
         self.desc = """+2 Cards; +1 Action; Return this to the Supply. When you
             gain this, gain another Experiment (that doesn't come with another)."""
         self.cost = 3
@@ -20,7 +20,7 @@ class Card_Experiment(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainCard('Experiment', callhook=False)
+        player.gainCard("Experiment", callhook=False)
         player.output("Gained a new experiment")
 
     ###########################################################################
@@ -33,22 +33,22 @@ class Card_Experiment(Card.Card):
 ###############################################################################
 class Test_Experiment(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Experiment'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Experiment"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_playCard(self):
-        self.card = self.g['Experiment'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Experiment"].remove()
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gainCard(self):
-        self.plr.gainCard('Experiment')
+        self.plr.gainCard("Experiment")
         count = 0
         for card in self.plr.discardpile:
-            if card.name == 'Experiment':
+            if card.name == "Experiment":
                 count += 1
         self.assertEqual(count, 2)
 

@@ -11,7 +11,7 @@ class Card_Messenger(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.ADVENTURE
-        self.name = 'Messenger'
+        self.name = "Messenger"
         self.buys = 1
         self.coin = 2
         self.cost = 4
@@ -25,44 +25,46 @@ class Card_Messenger(Card.Card):
 
     def special(self, game, player):
         o = player.plrChooseOptions(
-            'Put entire deck into discard pile?',
-            ('No - keep it as it is', False),
-            ('Yes - dump it', True)
-            )
+            "Put entire deck into discard pile?",
+            ("No - keep it as it is", False),
+            ("Yes - dump it", True),
+        )
         if o:
             for c in player.deck[:]:
-                player.addCard(c, 'discard')
+                player.addCard(c, "discard")
                 player.deck.remove(c)
 
     def hook_buy_this_card(self, game, player):
-        if len(player.stats['bought']) == 1:
+        if len(player.stats["bought"]) == 1:
             c = player.plrGainCard(4, prompt="Pick a card for everyone to gain")
             for plr in game.player_list():
                 if plr != player:
                     plr.gainCard(newcard=c)
-                    plr.output("Gained a %s from %s's Messenger" % (c.name, player.name))
+                    plr.output(
+                        "Gained a %s from %s's Messenger" % (c.name, player.name)
+                    )
 
 
 ###############################################################################
 class Test_Messenger(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Messenger'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Messenger"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g['Messenger'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Messenger"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a Messenger - do nothing"""
-        self.plr.test_input = ['No']
+        """Play a Messenger - do nothing"""
+        self.plr.test_input = ["No"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_discard(self):
-        """ Play a messenger and discard the deck """
+        """Play a messenger and discard the deck"""
         decksize = self.plr.deck.size()
-        self.plr.test_input = ['Yes']
+        self.plr.test_input = ["Yes"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 2)
@@ -70,12 +72,12 @@ class Test_Messenger(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), decksize)
 
     def test_buy(self):
-        """ Buy a messenger """
-        self.plr.test_input = ['get silver']
+        """Buy a messenger"""
+        self.plr.test_input = ["get silver"]
         self.plr.setCoin(4)
-        self.plr.buyCard(self.g['Messenger'])
+        self.plr.buyCard(self.g["Messenger"])
         for plr in self.g.player_list():
-            self.assertIsNotNone(plr.in_discard('Silver'))
+            self.assertIsNotNone(plr.in_discard("Silver"))
 
 
 ###############################################################################

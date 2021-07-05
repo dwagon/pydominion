@@ -13,7 +13,7 @@ class Card_Colony(Card.Card):
         self.base = Game.PROSPERITY
         self.desc = "+10 VP"
         self.basecard = True
-        self.name = 'Colony'
+        self.name = "Colony"
         self.playable = False
         self.cost = 11
         self.victory = 10
@@ -30,13 +30,13 @@ class Test_Colony(unittest.TestCase):
         self.g = Game.Game(quiet=True, prosperity=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Colony'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Colony"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_score(self):
-        """ Score a colony """
+        """Score a colony"""
         sc = self.plr.getScoreDetails()
-        self.assertEqual(sc['Colony'], 10)
+        self.assertEqual(sc["Colony"], 10)
 
 
 ###############################################################################

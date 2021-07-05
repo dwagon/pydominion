@@ -17,7 +17,9 @@ class Event_Advance(Event):
 
     def special(self, game, player):
         actions = [c for c in player.hand if c.isAction()]
-        trash = player.plrTrashCard(prompt="Trash a card to gain an action costing up to 6", cardsrc=actions)
+        trash = player.plrTrashCard(
+            prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
+        )
         if trash:
             player.plrGainCard(6, types={Card.TYPE_ACTION: True})
 
@@ -25,18 +27,23 @@ class Event_Advance(Event):
 ###############################################################################
 class Test_Advance(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Advance'], initcards=['Moat', 'Lurker'])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            eventcards=["Advance"],
+            initcards=["Moat", "Lurker"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Advance']
+        self.card = self.g.events["Advance"]
 
     def test_advance(self):
-        """ Use Advance twice"""
-        self.plr.setHand('Moat')
-        self.plr.test_input = ['Trash moat', 'Get Lurker']
+        """Use Advance twice"""
+        self.plr.setHand("Moat")
+        self.plr.test_input = ["Trash moat", "Get Lurker"]
         self.plr.performEvent(self.card)
-        self.assertIsNone(self.plr.in_hand('Moat'))
-        self.assertIsNotNone(self.plr.in_discard('Lurker'))
+        self.assertIsNone(self.plr.in_hand("Moat"))
+        self.assertIsNotNone(self.plr.in_discard("Lurker"))
 
 
 ###############################################################################

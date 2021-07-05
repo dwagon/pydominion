@@ -10,4 +10,5 @@ class Project_ProjectA(Project):
         self.cost = 3
         self.name = "ProjectA"
 
+
 # EOF

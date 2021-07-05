@@ -14,23 +14,29 @@ class Way_Worm(Way):
         self.name = "Way of the Worm"
 
     def special(self, game, player):
-        player.exile_card('Estate')
+        player.exile_card("Estate")
 
 
 ###############################################################################
 class Test_Worm(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Worm'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Worm"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Worm']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Worm"]
 
     def test_play(self):
-        """ Perform a Worm """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Worm"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.in_exile('Estate'))
+        self.assertIsNotNone(self.plr.in_exile("Estate"))
 
 
 ###############################################################################

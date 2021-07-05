@@ -23,17 +23,17 @@ class Card_KingsCastle(CastleCard):
 ###############################################################################
 class Test_KingsCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Castles'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_have(self):
-        """ Have a kings castle"""
+        """Have a kings castle"""
         while True:
-            self.card = self.g['Castles'].remove()
+            self.card = self.g["Castles"].remove()
             if self.card.name == "King's Castle":  # One before Kings
                 break
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.assertEqual(self.plr.getScoreDetails()["King's Castle"], 2)
 
 

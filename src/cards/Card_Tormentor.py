@@ -14,13 +14,13 @@ class Card_Tormentor(Card.Card):
         self.desc = """+2 Coin; If you have no other cards in play, gain an Imp
             from its pile. Otherwise, each other player receives the next Hex."""
         self.name = "Tormentor"
-        self.required_cards = [('Card', 'Imp')]
+        self.required_cards = [("Card", "Imp")]
         self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
-        if player.played.size() == 1:    # Include this card
-            player.gainCard('Imp')
+        if player.played.size() == 1:  # Include this card
+            player.gainCard("Imp")
             player.output("Gained an Imp")
         else:
             for pl in player.attackVictims():
@@ -42,19 +42,19 @@ class Test_Tormentor(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play_imp(self):
-        """ Play tormentor with no other cards being played """
-        self.plr.addCard(self.card, 'hand')
+        """Play tormentor with no other cards being played"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_discard("Imp"))
 
     def test_play_hex(self):
-        """ Play tormentor with other cards already being played """
-        self.plr.setPlayed('Tormentor')
-        self.plr.addCard(self.card, 'hand')
+        """Play tormentor with other cards already being played"""
+        self.plr.setPlayed("Tormentor")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_discard("Imp"))
-        self.assertTrue(self.vic.has_state('Deluded'))
+        self.assertTrue(self.vic.has_state("Deluded"))
 
 
 ###############################################################################

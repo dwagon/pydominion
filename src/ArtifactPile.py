@@ -1,5 +1,3 @@
-
-
 ###############################################################################
 class ArtifactPile(object):
     def __init__(self, cardname, klass):
@@ -13,5 +11,6 @@ class ArtifactPile(object):
     ###########################################################################
     def __repr__(self):
         return self.name
+
 
 # EOF

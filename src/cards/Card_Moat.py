@@ -12,7 +12,7 @@ class Card_Moat(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.DOMINION
         self.desc = "+2 cards, defense"
-        self.name = 'Moat'
+        self.name = "Moat"
         self.defense = True
         self.cost = 2
         self.cards = 2
@@ -21,14 +21,14 @@ class Card_Moat(Card.Card):
 ###############################################################################
 class Test_Moat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Moat'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Moat"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a moat """
+        """Play a moat"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 

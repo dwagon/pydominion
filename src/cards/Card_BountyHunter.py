@@ -14,15 +14,12 @@ class Card_Bounty_Hunter(Card.Card):
         self.base = Game.MENAGERIE
         self.desc = """+1 Action; Exile a card from your hand. If you didn't
             have a copy of it in Exile, +3 Coin."""
-        self.name = 'Bounty Hunter'
+        self.name = "Bounty Hunter"
         self.cost = 4
         self.actions = 1
 
     def special(self, game, player):
-        crd = player.cardSel(
-            prompt="Exile a card",
-            verbs=('Exile', 'Unexile')
-        )
+        crd = player.cardSel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
             if not player.in_exile(crd[0].name):
                 player.addCoin(3)
@@ -33,16 +30,16 @@ class Card_Bounty_Hunter(Card.Card):
 ###############################################################################
 class Test_Bounty_Hunter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bounty Hunter'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bounty Hunter"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g['Bounty Hunter'].remove()
+        self.card = self.g["Bounty Hunter"].remove()
 
     def test_play(self):
-        self.plr.set_exile('Copper')
-        self.plr.setHand('Silver', 'Copper')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Exile Silver']
+        self.plr.set_exile("Copper")
+        self.plr.setHand("Silver", "Copper")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Exile Silver"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 3)

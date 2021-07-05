@@ -12,9 +12,13 @@ class Card_Exorcist(Card.Card):
         self.cardtype = [Card.TYPE_NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Trash a card from your hand. Gain a cheaper Spirit from one of the Spirit piles."
-        self.name = 'Exorcist'
+        self.name = "Exorcist"
         self.cost = 4
-        self.required_cards = [('Card', 'Ghost'), ('Card', 'Imp'), ('Card', "Will-o'-Wisp")]
+        self.required_cards = [
+            ("Card", "Ghost"),
+            ("Card", "Imp"),
+            ("Card", "Will-o'-Wisp"),
+        ]
 
     def night(self, game, player):
         if player.hand.is_empty():
@@ -26,15 +30,15 @@ class Card_Exorcist(Card.Card):
         cost = trashed[0].cost
         options = []
         idx = 0
-        for card in ('Ghost', 'Imp', "Will-o'-Wisp"):
+        for card in ("Ghost", "Imp", "Will-o'-Wisp"):
             if game[card].cost < cost:
                 sel = "{}".format(idx)
                 toprint = "Get {}".format(card)
-                options.append({'selector': sel, 'print': toprint, 'card': card})
+                options.append({"selector": sel, "print": toprint, "card": card})
                 idx += 1
         if idx:
             o = player.userInput(options, "Gain a spirit")
-            player.gainCard(o['card'])
+            player.gainCard(o["card"])
         else:
             player.output("No spirits available at that price")
 
@@ -42,19 +46,19 @@ class Card_Exorcist(Card.Card):
 ###############################################################################
 class Test_Exorcist(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Exorcist'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Exorcist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Exorcist'].remove()
+        self.card = self.g["Exorcist"].remove()
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setHand('Silver', 'Gold', 'Province')
-        self.plr.test_input = ['Silver', 'Imp']
-        self.plr.addCard(self.card, 'hand')
+        self.plr.setHand("Silver", "Gold", "Province")
+        self.plr.test_input = ["Silver", "Imp"]
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Imp'))
-        self.assertIsNotNone(self.g.in_trash('Silver'))
+        self.assertIsNotNone(self.plr.in_discard("Imp"))
+        self.assertIsNotNone(self.g.in_trash("Silver"))
         self.g.print_state()
 
 

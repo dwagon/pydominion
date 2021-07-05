@@ -12,7 +12,7 @@ class Card_Forager(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Action +1 Buy;Trash a card from your hand. A coin per differently named Treasure in the trash."""
-        self.name = 'Forager'
+        self.name = "Forager"
         self.actions = 1
         self.buys = 1
         self.cost = 3
@@ -31,22 +31,22 @@ class Card_Forager(Card.Card):
 ###############################################################################
 class Test_Forager(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Forager'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Forager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Forager'].remove()
+        self.card = self.g["Forager"].remove()
 
     def test_play(self):
-        """ Play a forager """
-        self.plr.trashCard(self.g['Copper'].remove())
-        self.plr.trashCard(self.g['Silver'].remove())
-        self.plr.setHand('Province')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['province']
+        """Play a forager"""
+        self.plr.trashCard(self.g["Copper"].remove())
+        self.plr.trashCard(self.g["Silver"].remove())
+        self.plr.setHand("Province")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["province"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.g.in_trash('Province'))
+        self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertEqual(self.plr.getCoin(), 2)
 
 

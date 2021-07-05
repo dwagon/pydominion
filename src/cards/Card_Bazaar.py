@@ -11,7 +11,7 @@ class Card_Bazaar(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.desc = "+1 cards, +2 action, +1 coin"
-        self.name = 'Bazaar'
+        self.name = "Bazaar"
         self.base = Game.SEASIDE
         self.cards = 1
         self.actions = 2
@@ -22,14 +22,14 @@ class Card_Bazaar(Card.Card):
 ###############################################################################
 class Test_Bazaar(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bazaar'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bazaar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Bazaar'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Bazaar"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play Bazaar """
+        """Play Bazaar"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 1)

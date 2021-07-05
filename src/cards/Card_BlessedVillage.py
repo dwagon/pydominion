@@ -11,7 +11,7 @@ class Card_BlessedVillage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
         self.base = Game.NOCTURNE
-        self.name = 'Blessed Village'
+        self.name = "Blessed Village"
         self.actions = 2
         self.cards = 1
         self.cost = 4
@@ -28,10 +28,12 @@ class Card_BlessedVillage(Card.Card):
 ###############################################################################
 class Test_BlessedVillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Blessed Village'], badcards=['Druid'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Blessed Village"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Blessed Village'].remove()
+        self.card = self.g["Blessed Village"].remove()
         for b in self.g.boons:
             if b.name == "The Sea's Gift":
                 myboon = b
@@ -39,15 +41,15 @@ class Test_BlessedVillage(unittest.TestCase):
         self.g.boons = [myboon]
 
     def test_play_card(self):
-        """ Play Blessed Village """
-        self.plr.addCard(self.card, 'hand')
+        """Play Blessed Village"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertGreaterEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
-        self.plr.gainCard('Blessed Village')
-        self.assertEqual(self.plr.hand.size(), 5 + 1)    # 1 from boon
+        self.plr.gainCard("Blessed Village")
+        self.assertEqual(self.plr.hand.size(), 5 + 1)  # 1 from boon
 
 
 ###############################################################################

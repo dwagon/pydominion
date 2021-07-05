@@ -16,27 +16,33 @@ class Way_Frog(Way):
         self.name = "Way of the Frog"
 
     def hook_way_discard_this_card(self, game, player, card):
-        player.addCard(card, 'topdeck')
+        player.addCard(card, "topdeck")
         player.played.remove(card)
 
 
 ###############################################################################
 class Test_Frog(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Frog'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Frog"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Frog']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Frog"]
 
     def test_play(self):
-        """ Perform a Frog """
-        self.plr.setHand('Copper', 'Silver', 'Gold')
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Frog"""
+        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.discardHand()
-        self.assertIsNotNone(self.plr.in_deck('Moat'))
+        self.assertIsNotNone(self.plr.in_deck("Moat"))
 
 
 ###############################################################################

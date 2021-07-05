@@ -11,7 +11,7 @@ class Card_ActingTroupe(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
-        self.name = 'Acting Troupe'
+        self.name = "Acting Troupe"
         self.desc = "+4 Villagers. Trash this."
         self.cost = 3
 
@@ -24,16 +24,16 @@ class Card_ActingTroupe(Card.Card):
 ###############################################################################
 class Test_ActingTroupe(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Acting Troupe'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Acting Troupe"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_playCard(self):
-        self.card = self.g['Acting Troupe'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Acting Troupe"].remove()
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertLessEqual(self.plr.getVillager(), 4)
-        self.assertIsNotNone(self.g.in_trash('Acting Troupe'))
+        self.assertIsNotNone(self.g.in_trash("Acting Troupe"))
 
 
 ###############################################################################

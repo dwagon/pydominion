@@ -23,7 +23,9 @@ class Boon_Forest_Gift(Boon):
 ###############################################################################
 class Test_Forest_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Bard'], badcards=['Druid'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:
@@ -31,14 +33,14 @@ class Test_Forest_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g['Bard'].remove()
+        self.card = self.g["Bard"].remove()
 
     def test_fields_gift(self):
         self.plr.coin = 0
         self.plr.buys = 0
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1 + 2)     # Boon + Bard
+        self.assertEqual(self.plr.getCoin(), 1 + 2)  # Boon + Bard
         self.assertEqual(self.plr.get_buys(), 1)
 
 

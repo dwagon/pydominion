@@ -15,9 +15,9 @@ class Event_Borrow(Event):
         self.cost = 0
 
     def special(self, game, player):
-        """ Once per turn: If your -1 Card Token isn't on your deck put it
+        """Once per turn: If your -1 Card Token isn't on your deck put it
         there and +1 Coin"""
-        if not player.do_once('Borrow'):
+        if not player.do_once("Borrow"):
             player.output("Already used Borrow this turn")
             return
         if player.card_token:
@@ -30,20 +30,20 @@ class Event_Borrow(Event):
 ###############################################################################
 class Test_Borrow(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Borrow'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Borrow"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Borrow']
+        self.card = self.g.events["Borrow"]
 
     def test_play(self):
-        """ Perform a Borrow """
+        """Perform a Borrow"""
         self.plr.coin = 0
         self.plr.performEvent(self.card)
         self.assertTrue(self.plr.card_token)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_play_alreadyset(self):
-        """ Perform a Borrow """
+        """Perform a Borrow"""
         self.plr.card_token = True
         self.plr.coin = 0
         self.plr.performEvent(self.card)

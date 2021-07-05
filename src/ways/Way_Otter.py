@@ -18,15 +18,21 @@ class Way_Otter(Way):
 ###############################################################################
 class Test_Otter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Otter'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Otter"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Otter']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Otter"]
 
     def test_play(self):
-        """ Perform a Otter """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Otter"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 

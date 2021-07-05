@@ -15,27 +15,27 @@ class Event_Triumph(Event):
         self.debtcost = 5
 
     def special(self, game, player):
-        new = player.gainCard('Estate')
+        new = player.gainCard("Estate")
         if new:
-            vps = len(player.stats['gained'])
-            player.addScore('Triumph', vps)
+            vps = len(player.stats["gained"])
+            player.addScore("Triumph", vps)
 
 
 ###############################################################################
 class Test_Triumph(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=['Triumph'])
+        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Triumph"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.event = self.g.events['Triumph']
+        self.event = self.g.events["Triumph"]
 
     def test_triumph(self):
-        """ Use Triumph"""
-        self.plr.gainCard('Copper')
+        """Use Triumph"""
+        self.plr.gainCard("Copper")
         self.plr.performEvent(self.event)
-        self.assertIsNotNone(self.plr.in_discard('Estate'))
+        self.assertIsNotNone(self.plr.in_discard("Estate"))
         scores = self.plr.getScoreDetails()
-        self.assertEqual(scores['Triumph'], 2)
+        self.assertEqual(scores["Triumph"], 2)
         self.assertEqual(self.plr.debt, 5)
 
 

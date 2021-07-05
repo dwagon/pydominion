@@ -14,7 +14,7 @@ class Card_Province(Card.Card):
         self.desc = "6 VP"
         self.playable = False
         self.basecard = True
-        self.name = 'Province'
+        self.name = "Province"
         self.cost = 8
         self.victory = 6
 
@@ -34,13 +34,13 @@ class Test_Province(unittest.TestCase):
     def test_two_player(self):
         self.g = Game.Game(quiet=True, numplayers=2)
         self.g.start_game()
-        self.assertEqual(self.g['Province'].pilesize, 8)
+        self.assertEqual(self.g["Province"].pilesize, 8)
         self.plr = self.g.player_list()[0]
 
     def Xtest_five(self):
         self.g = Game.Game(quiet=True, numplayers=5)
         self.g.start_game()
-        self.assertEqual(self.g['Province'].pilesize, 15)
+        self.assertEqual(self.g["Province"].pilesize, 15)
 
 
 ###############################################################################

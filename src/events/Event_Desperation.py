@@ -10,20 +10,22 @@ class Event_Desperation(Event):
     def __init__(self):
         Event.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = "Once per turn: You may gain a Curse. If you do, +1 Buy and +2 Coin."
+        self.desc = (
+            "Once per turn: You may gain a Curse. If you do, +1 Buy and +2 Coin."
+        )
         self.name = "Desperation"
         self.cost = 0
-        self.required_cards = ['Curse']
+        self.required_cards = ["Curse"]
 
     def special(self, game, player):
         opt = player.plrChooseOptions(
             "Gain a curse to get +1 Buy and +2 Coin",
             ("Nope", False),
-            ("Gain a curse", True)
+            ("Gain a curse", True),
         )
         if opt:
-            if player.do_once('Desperation'):
-                curse = player.gainCard('Curse')
+            if player.do_once("Desperation"):
+                curse = player.gainCard("Curse")
                 if curse:
                     player.addBuys(1)
                     player.addCoin(2)
@@ -37,20 +39,22 @@ class Event_Desperation(Event):
 class Test_Desperation(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=['Desperation'],
-            initcards=['Cellar', 'Chapel', 'Moat', 'Militia', 'Village', 'Workshop'],
-            badcards=['Hostelry', 'Border Village', 'Inn', 'Cursed Village']
+            quiet=True,
+            numplayers=1,
+            eventcards=["Desperation"],
+            initcards=["Cellar", "Chapel", "Moat", "Militia", "Village", "Workshop"],
+            badcards=["Hostelry", "Border Village", "Inn", "Cursed Village"],
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g.events['Desperation']
+        self.card = self.g.events["Desperation"]
 
     def test_Desperation(self):
-        """ Use Desperation """
+        """Use Desperation"""
         self.plr.addCoin(0)
-        self.plr.test_input = ['Gain a curse']
+        self.plr.test_input = ["Gain a curse"]
         self.plr.performEvent(self.card)
-        self.assertIsNotNone(self.plr.in_discard('Curse'))
+        self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
 

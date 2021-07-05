@@ -11,7 +11,7 @@ class Card_Cache(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.HINTERLANDS
-        self.name = 'Cache'
+        self.name = "Cache"
         self.cost = 5
         self.coin = 3
 
@@ -21,28 +21,28 @@ class Card_Cache(Card.Card):
         return "+3 coin"
 
     def hook_gain_this_card(self, game, player):
-        """ When you gain this, gain two Coppers"""
+        """When you gain this, gain two Coppers"""
         player.output("Gained 2 copper from cache")
         for _ in range(2):
-            player.gainCard('Copper')
+            player.gainCard("Copper")
         return {}
 
 
 ###############################################################################
 class Test_Cache(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cache'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cache"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.cache = self.g['Cache'].remove()
+        self.cache = self.g["Cache"].remove()
 
     def test_gain(self):
-        self.plr.gainCard('Cache')
+        self.plr.gainCard("Cache")
         sdp = sorted([c.name for c in self.plr.discardpile])
-        self.assertEqual(sorted(['Copper', 'Copper', 'Cache']), sdp)
+        self.assertEqual(sorted(["Copper", "Copper", "Cache"]), sdp)
 
     def test_play(self):
-        self.plr.addCard(self.cache, 'hand')
+        self.plr.addCard(self.cache, "hand")
         self.plr.playCard(self.cache)
         self.assertEqual(self.plr.getCoin(), 3)
 

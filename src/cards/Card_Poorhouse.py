@@ -12,7 +12,7 @@ class Card_Poorhouse(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.DARKAGES
         self.desc = """+4 Coin. Reveal your hand. -1 Coin per Treasure card in your hand, to a minimum of 0."""
-        self.name = 'Poor House'
+        self.name = "Poor House"
         self.cost = 1
 
     def special(self, game, player):
@@ -28,15 +28,15 @@ class Card_Poorhouse(Card.Card):
 ###############################################################################
 class Test_Poorhouse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Poor House'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Poor House"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Poor House'].remove()
+        self.card = self.g["Poor House"].remove()
 
     def test_play(self):
-        """ Play an Poor House """
-        self.plr.setHand('Estate', 'Copper')
-        self.plr.addCard(self.card, 'hand')
+        """Play an Poor House"""
+        self.plr.setHand("Estate", "Copper")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 4 - 1)
 

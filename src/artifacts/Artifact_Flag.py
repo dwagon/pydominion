@@ -20,13 +20,13 @@ class Artifact_Flag(Artifact):
 ###############################################################################
 class Test_Flag(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=['Flag'])
+        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=["Flag"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.artifact = self.g.artifacts['Flag']
+        self.artifact = self.g.artifacts["Flag"]
 
     def test_flag(self):
-        self.plr.assign_artifact('Flag')
+        self.plr.assign_artifact("Flag")
         self.plr.end_turn()
 
 

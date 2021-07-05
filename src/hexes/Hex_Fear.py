@@ -12,7 +12,9 @@ class Hex_Fear(Hex):
         Hex.__init__(self)
         self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
-        self.desc = "If you have at least 5 cards in hand, discard an Action or Treasure"
+        self.desc = (
+            "If you have at least 5 cards in hand, discard an Action or Treasure"
+        )
         self.name = "Fear"
         self.purchasable = False
 
@@ -20,7 +22,9 @@ class Hex_Fear(Hex):
         if player.hand.size() < 5:
             return
         tanda = [_ for _ in player.hand if _.isAction() or _.isTreasure()]
-        player.plrDiscardCards(num=1, cardsrc=tanda, prompt="Discard an Action or a Treasure")
+        player.plrDiscardCards(
+            num=1, cardsrc=tanda, prompt="Discard an Action or a Treasure"
+        )
 
 
 ###############################################################################
@@ -31,7 +35,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Fear(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -40,16 +44,16 @@ class Test_Fear(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_empty_war(self):
-        self.plr.setHand('Estate', 'Duchy', 'Province', 'Gold')
-        self.plr.gainCard('Cursed Village')
-        self.assertEqual(self.plr.discardpile.size(), 1)     # The Cursed Village
+        self.plr.setHand("Estate", "Duchy", "Province", "Gold")
+        self.plr.gainCard("Cursed Village")
+        self.assertEqual(self.plr.discardpile.size(), 1)  # The Cursed Village
 
     def test_war(self):
-        self.plr.setHand('Estate', 'Duchy', 'Estate', 'Duchy', 'Copper')
-        self.plr.test_input = ['Copper']
-        self.plr.gainCard('Cursed Village')
+        self.plr.setHand("Estate", "Duchy", "Estate", "Duchy", "Copper")
+        self.plr.test_input = ["Copper"]
+        self.plr.gainCard("Cursed Village")
         self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNotNone(self.plr.in_discard('Copper'))
+        self.assertIsNotNone(self.plr.in_discard("Copper"))
 
 
 ###############################################################################

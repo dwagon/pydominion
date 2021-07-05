@@ -22,17 +22,21 @@ class Card_Enchantress(Card.Card):
 
     def hook_allPlayers_preAction(self, game, player, owner, card):
         if len(player.played) == 0:
-            player.output("{}'s Enchantress gazump'd your {}".format(owner.name, card.name))
+            player.output(
+                "{}'s Enchantress gazump'd your {}".format(owner.name, card.name)
+            )
             player.addActions(1)
             player.pickupCard()
-            return {'skip_card': True}
+            return {"skip_card": True}
         return None
 
 
 ###############################################################################
 class Test_Enchantress(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
+        self.g = Game.Game(
+            quiet=True, numplayers=2, initcards=["Enchantress", "Remodel", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Enchantress"].remove()
@@ -40,17 +44,17 @@ class Test_Enchantress(unittest.TestCase):
         self.m1 = self.g["Moat"].remove()
 
     def test_play(self):
-        """ Play an Enchantress"""
-        self.plr.addCard(self.card, 'hand')
+        """Play an Enchantress"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
-        self.vic.addCard(self.r1, 'hand')
+        self.vic.addCard(self.r1, "hand")
         self.vic.playCard(self.r1)
-        self.assertEqual(self.vic.hand.size(), 5 + 1)    # Hand + Ench
+        self.assertEqual(self.vic.hand.size(), 5 + 1)  # Hand + Ench
         self.assertEqual(self.vic.get_actions(), 1)
-        self.vic.addCard(self.m1, 'hand')
+        self.vic.addCard(self.m1, "hand")
         self.vic.playCard(self.m1)
         self.g.print_state()
-        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)    # Hand + Ench + Moat
+        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Ench + Moat
 
 
 ###############################################################################

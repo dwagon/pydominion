@@ -17,29 +17,32 @@ class Way_Butterfly(Way):
     def special_way(self, game, player, card):
         game[card.name].add()
         cst = player.cardCost(card)
-        player.plrGainCard(cst + 1, 'equal')
-        return {'discard': False}
+        player.plrGainCard(cst + 1, "equal")
+        return {"discard": False}
 
 
 ###############################################################################
 class Test_Butterfly(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
-            quiet=True, numplayers=1, waycards=['Way of the Butterfly'],
-            initcards=['Moat', 'Witch'], badcards=["Duchess"]
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Butterfly"],
+            initcards=["Moat", "Witch"],
+            badcards=["Duchess"],
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Butterfly']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Butterfly"]
 
     def test_play(self):
-        """ Perform a Butterfly """
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Get Witch']
+        """Perform a Butterfly"""
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.in_discard('Witch'))
-        self.assertEqual(self.g['Moat'].stack_size(), 10)
+        self.assertIsNotNone(self.plr.in_discard("Witch"))
+        self.assertEqual(self.g["Moat"].stack_size(), 10)
 
 
 ###############################################################################

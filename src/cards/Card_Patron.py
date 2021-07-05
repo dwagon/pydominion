@@ -11,8 +11,10 @@ class Card_Patron(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.RENAISSANCE
-        self.desc = "+1 Villager; +2. When something causes you to reveal this, +1 Coffers."
-        self.name = 'Patron'
+        self.desc = (
+            "+1 Villager; +2. When something causes you to reveal this, +1 Coffers."
+        )
+        self.name = "Patron"
         self.cost = 4
         self.coin = 2
 
@@ -26,11 +28,11 @@ class Card_Patron(Card.Card):
 ###############################################################################
 class Test_Patron(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Patron'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Patron"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Patron'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Patron"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)

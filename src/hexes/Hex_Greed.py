@@ -17,13 +17,13 @@ class Hex_Greed(Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard('Copper', 'deck')
+        player.gainCard("Copper", "deck")
 
 
 ###############################################################################
 class Test_Greed(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cursed Village'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for h in self.g.hexes[:]:
@@ -32,10 +32,10 @@ class Test_Greed(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.setDeck('Duchy', 'Cursed Village', 'Gold')
-        self.plr.gainCard('Cursed Village')
-        self.assertIsNotNone(self.plr.in_discard('Cursed Village'))
-        self.assertIsNotNone(self.plr.in_deck('Copper'))
+        self.plr.setDeck("Duchy", "Cursed Village", "Gold")
+        self.plr.gainCard("Cursed Village")
+        self.assertIsNotNone(self.plr.in_discard("Cursed Village"))
+        self.assertIsNotNone(self.plr.in_deck("Copper"))
 
 
 ###############################################################################

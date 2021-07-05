@@ -14,7 +14,7 @@ class Card_Tournament(Card.Card):
         self.desc = """+1 Action. Each player may reveal a Province from his hand.
             If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
             putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""
-        self.name = 'Tournament'
+        self.name = "Tournament"
         self.needsprize = True
         self.actions = 1
         self.cost = 4
@@ -23,13 +23,13 @@ class Card_Tournament(Card.Card):
         found = False
         for plr in game.player_list():
             if plr != player:
-                prov = plr.in_hand('Province')
+                prov = plr.in_hand("Province")
                 if prov:
                     plr.revealCard(prov)
                     found = True
-        if player.in_hand('Province'):
+        if player.in_hand("Province"):
             player.output("Province revealed so gain a prize")
-            player.discardCard(player.in_hand('Province'))
+            player.discardCard(player.in_hand("Province"))
             player.gainPrize()
         if not found:
             player.output("No Province revealed")
@@ -40,39 +40,39 @@ class Card_Tournament(Card.Card):
 ###############################################################################
 class Test_Tournament(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Tournament'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g['Tournament'].remove()
+        self.card = self.g["Tournament"].remove()
 
     def test_play(self):
-        """ Play a tournament - no provinces """
-        self.plr.addCard(self.card, 'hand')
+        """Play a tournament - no provinces"""
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_play_have_province(self):
-        """ Play a tournament - self provinces """
-        self.plr.test_input = ['Bag']
-        self.plr.setHand('Province')
-        self.plr.addCard(self.card, 'hand')
+        """Play a tournament - self provinces"""
+        self.plr.test_input = ["Bag"]
+        self.plr.setHand("Province")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard('Bag of Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
 
     def test_play_all_province(self):
-        """ Play a tournament - others have provinces """
-        self.other.setHand('Province')
-        self.plr.test_input = ['Bag']
-        self.plr.setHand('Province')
-        self.plr.addCard(self.card, 'hand')
+        """Play a tournament - others have provinces"""
+        self.other.setHand("Province")
+        self.plr.test_input = ["Bag"]
+        self.plr.setHand("Province")
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIsNotNone(self.plr.in_discard('Bag of Gold'))
+        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
 
 
 ###############################################################################

@@ -15,10 +15,10 @@ class Card_Scryingpool(Card.Card):
         his deck and either discards it or puts it back, your choice.
         Then reveal cards from the top of your deck until you reveal one that is not an Action.
         Put all of your revealed cards into your hand."""
-        self.name = 'Scrying Pool'
+        self.name = "Scrying Pool"
         self.actions = 1
         self.cost = 2
-        self.required_cards = ['Potion']
+        self.required_cards = ["Potion"]
         self.potcost = True
 
     def special(self, game, player):
@@ -33,7 +33,7 @@ class Card_Scryingpool(Card.Card):
                 break
             revealed.append(topcard)
         for card in revealed:
-            player.addCard(card, 'hand')
+            player.addCard(card, "hand")
 
     def discardOrPutBack(self, victim, player):
         if player == victim:
@@ -44,35 +44,36 @@ class Card_Scryingpool(Card.Card):
         victim.revealCard(topcard)
         putback = player.plrChooseOptions(
             "For %s which one?" % name[0],
-            ('Discard %s' % topcard.name, False),
-            ('Putback %s' % topcard.name, True))
+            ("Discard %s" % topcard.name, False),
+            ("Putback %s" % topcard.name, True),
+        )
         if putback:
             victim.output("Put %s back on %s deck" % (topcard.name, name[1]))
-            victim.addCard(topcard, 'deck')
+            victim.addCard(topcard, "deck")
         else:
             victim.output("Discarded %s" % topcard.name)
-            victim.addCard(topcard, 'discard')
+            victim.addCard(topcard, "discard")
 
 
 ###############################################################################
 class Test_ScryingPool(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Scrying Pool', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Scrying Pool", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g['Scrying Pool'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Scrying Pool"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):
-        """ Play a scrying pool """
-        self.plr.setDeck('Moat', 'Gold')
-        self.vic.setDeck('Duchy')
-        self.plr.test_input = ['discard', 'putback']
+        """Play a scrying pool"""
+        self.plr.setDeck("Moat", "Gold")
+        self.vic.setDeck("Duchy")
+        self.plr.test_input = ["discard", "putback"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.vic.in_discard('Duchy'))
-        self.assertIsNotNone(self.plr.in_hand('Gold'))
-        self.assertIsNotNone(self.plr.in_hand('Moat'))
+        self.assertIsNotNone(self.vic.in_discard("Duchy"))
+        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIsNotNone(self.plr.in_hand("Moat"))
 
 
 ###############################################################################

@@ -1,14 +1,12 @@
-
-
 ###############################################################################
 class CardPile(object):
-    def __init__(self, cardname, klass, game, cardpath='cards'):
+    def __init__(self, cardname, klass, game, cardpath="cards"):
         self.cardpath = cardpath
         self.cardname = cardname
         self.cardclass = klass
         self.card = klass()
         self.embargo_level = 0
-        if hasattr(self.card, 'calc_numcards'):
+        if hasattr(self.card, "calc_numcards"):
             self.pilesize = self.card.calc_numcards(game)
         else:
             self.pilesize = self.card.numcards
@@ -51,5 +49,6 @@ class CardPile(object):
     ###########################################################################
     def __repr__(self):
         return "CardPile %s: %d" % (self.name, self.pilesize)
+
 
 # EOF

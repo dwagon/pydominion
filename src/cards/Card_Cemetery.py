@@ -12,10 +12,10 @@ class Card_Cemetery(Card.Card):
         self.cardtype = Card.TYPE_VICTORY
         self.base = Game.NOCTURNE
         self.desc = "+2 VP; When you gain this, trash up to 4 cards from your hand."
-        self.name = 'Cemetery'
+        self.name = "Cemetery"
         self.cost = 4
         self.victory = 2
-        self.heirloom = 'Haunted Mirror'
+        self.heirloom = "Haunted Mirror"
 
     def hook_gain_this_card(self, game, player):
         player.plrTrashCard(num=4)
@@ -24,20 +24,20 @@ class Card_Cemetery(Card.Card):
 ###############################################################################
 class Test_Cemetery(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Cemetery'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cemetery"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Cemetery'].remove()
+        self.card = self.g["Cemetery"].remove()
 
     def test_gain(self):
-        """ Gain a Cemetery """
-        self.plr.setHand('Copper', 'Silver', 'Gold', 'Estate', 'Duchy', 'Province')
-        self.plr.test_input = ['Copper', 'Silver', 'Gold', 'Estate', 'Finish']
-        self.plr.gainCard('Cemetery')
-        self.assertIsNotNone(self.g.in_trash('Copper'))
-        self.assertIsNotNone(self.g.in_trash('Gold'))
-        self.assertIsNone(self.g.in_trash('Duchy'))
-        self.assertEqual(self.plr.getScoreDetails()['Cemetery'], 2)
+        """Gain a Cemetery"""
+        self.plr.setHand("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
+        self.plr.gainCard("Cemetery")
+        self.assertIsNotNone(self.g.in_trash("Copper"))
+        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertIsNone(self.g.in_trash("Duchy"))
+        self.assertEqual(self.plr.getScoreDetails()["Cemetery"], 2)
 
 
 ###############################################################################

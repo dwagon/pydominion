@@ -12,7 +12,7 @@ class Card_NightWatchman(Card.Card):
         self.cardtype = [Card.TYPE_NIGHT]
         self.base = Game.NOCTURNE
         self.desc = "Look at the top 5 cards of your deck, discard any number, and put the rest back in any order."
-        self.name = 'Night Watchman'
+        self.name = "Night Watchman"
         self.cost = 3
 
     def night(self, game, player):
@@ -20,47 +20,55 @@ class Card_NightWatchman(Card.Card):
         for _ in range(5):
             c = player.nextCard()
             cards.append(c)
-        player.output("Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards]))
+        player.output(
+            "Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards])
+        )
         for c in cards:
             discard = player.plrChooseOptions(
-                'What do you want to do?',
-                ('Discard {}'.format(c.name), True),
-                ('Return {} to the deck'.format(c.name), False)
-                )
+                "What do you want to do?",
+                ("Discard {}".format(c.name), True),
+                ("Return {} to the deck".format(c.name), False),
+            )
             if discard:
                 player.discardCard(c)
             else:
-                player.addCard(c, 'topdeck')
+                player.addCard(c, "topdeck")
 
     def hook_gain_this_card(self, game, player):
-        return {'destination': 'hand'}
+        return {"destination": "hand"}
 
 
 ###############################################################################
 class Test_NightWatchman(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Night Watchman'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Night Watchman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Night Watchman'].remove()
+        self.card = self.g["Night Watchman"].remove()
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setDeck('Gold', 'Province', 'Gold', 'Duchy', 'Silver')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Return Silver', 'Discard Duchy', 'Return Gold', 'Discard Province', 'Return Gold']
+        self.plr.setDeck("Gold", "Province", "Gold", "Duchy", "Silver")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = [
+            "Return Silver",
+            "Discard Duchy",
+            "Return Gold",
+            "Discard Province",
+            "Return Gold",
+        ]
         self.plr.playCard(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_discard('Duchy'))
-            self.assertIsNotNone(self.plr.in_discard('Province'))
-            self.assertIsNone(self.plr.in_discard('Gold'))
-            self.assertIsNone(self.plr.in_discard('Silver'))
+            self.assertIsNotNone(self.plr.in_discard("Duchy"))
+            self.assertIsNotNone(self.plr.in_discard("Province"))
+            self.assertIsNone(self.plr.in_discard("Gold"))
+            self.assertIsNone(self.plr.in_discard("Silver"))
 
-            self.assertIsNone(self.plr.in_deck('Duchy'))
-            self.assertIsNone(self.plr.in_deck('Province'))
-            self.assertIsNotNone(self.plr.in_deck('Gold'))
-            self.assertIsNotNone(self.plr.in_deck('Silver'))
-        except AssertionError:      # pragma: no cover
+            self.assertIsNone(self.plr.in_deck("Duchy"))
+            self.assertIsNone(self.plr.in_deck("Province"))
+            self.assertIsNotNone(self.plr.in_deck("Gold"))
+            self.assertIsNotNone(self.plr.in_deck("Silver"))
+        except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 

@@ -15,13 +15,13 @@ class Card_Margrave(Card.Card):
         self.base = Game.HINTERLANDS
         self.desc = """+3 Card; +1 Buy; Each other player draws a card, then
             discards down to 3 cards in hand."""
-        self.name = 'Margrave'
+        self.name = "Margrave"
         self.buys = 1
         self.cards = 3
         self.cost = 5
 
     def special(self, game, player):
-        """ Each other player draws a card, then discards down to 3 cards in hand"""
+        """Each other player draws a card, then discards down to 3 cards in hand"""
         for plr in player.attackVictims():
             plr.pickupCard()
             plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
@@ -37,22 +37,22 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Margrave(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Margrave', 'Moat'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Margrave", "Moat"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.card = self.g['Margrave'].remove()
+        self.card = self.g["Margrave"].remove()
 
     def test_defense(self):
-        self.attacker.addCard(self.card, 'hand')
-        self.defender.addCard(self.g['Moat'].remove(), 'hand')
+        self.attacker.addCard(self.card, "hand")
+        self.defender.addCard(self.g["Moat"].remove(), "hand")
         self.attacker.playCard(self.card)
         self.assertEqual(self.defender.hand.size(), 5 + 1)  # Moat
         self.assertEqual(self.attacker.hand.size(), 5 + 3)
         self.assertEqual(self.attacker.get_buys(), 1 + 1)
 
     def test_attack(self):
-        self.attacker.addCard(self.card, 'hand')
-        self.defender.test_input = ['1', '2', '3', '0']
+        self.attacker.addCard(self.card, "hand")
+        self.defender.test_input = ["1", "2", "3", "0"]
         self.attacker.playCard(self.card)
         self.assertEqual(self.defender.hand.size(), 3)
         self.assertEqual(self.defender.discardpile.size(), 3)

@@ -21,17 +21,19 @@ class Card_RuinedLibrary(Card.Card):
 ###############################################################################
 class Test_RuinedLibrary(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=4, initcards=['Cultist'])
+        self.g = Game.Game(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g['Ruins'].remove()
-            if self.card.name == 'Ruined Library':
+            self.card = self.g["Ruins"].remove()
+            if self.card.name == "Ruined Library":
                 break
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play a ruined library """
+        """Play a ruined library"""
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.hand.size(), 5+1)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+
+
 # EOF

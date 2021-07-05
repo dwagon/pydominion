@@ -14,15 +14,15 @@ class Card_Bishop(Card.Card):
         self.desc = """+1 Coin, +1 VP; Trash a card from your hand. +VP equal
             to half its cost in coins, rounded down. Each other player may trash a
             card from his hand"""
-        self.name = 'Bishop'
+        self.name = "Bishop"
         self.coin = 1
         self.victory = 1
         self.cost = 4
 
     def special(self, game, player):
-        """ Trash a card from your hand. +VP equal to half its cost
-            in coins, rounded down. Each other player may trash a card
-            from his hand """
+        """Trash a card from your hand. +VP equal to half its cost
+        in coins, rounded down. Each other player may trash a card
+        from his hand"""
         for plr in game.player_list():
             if plr == player:
                 self.trashOwnCard(game, player)
@@ -30,12 +30,14 @@ class Card_Bishop(Card.Card):
                 self.trashOtherCard(game, player, plr)
 
     def trashOwnCard(self, game, player):
-        tc = player.plrTrashCard(printcost=True, prompt="Gain VP worth half the cost of the card you trash")
+        tc = player.plrTrashCard(
+            printcost=True, prompt="Gain VP worth half the cost of the card you trash"
+        )
         if not tc:
             return
         card = tc[0]
         points = int(card.cost / 2)
-        player.addScore('bishop', points)
+        player.addScore("bishop", points)
         player.output("Trashing %s for %d points" % (card.name, points))
 
     def trashOtherCard(self, game, player, victim):
@@ -50,10 +52,10 @@ class Card_Bishop(Card.Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Trash an estate, then a copper else nothing
-    es = player.in_hand('estate')
+    es = player.in_hand("estate")
     if es:
         return [es]
-    cu = player.in_hand('copper')
+    cu = player.in_hand("copper")
     if cu:
         return [cu]
     return []
@@ -62,37 +64,37 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=['Bishop'])
+        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Bishop"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.bishop = self.g['Bishop'].remove()
+        self.bishop = self.g["Bishop"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['finish']
-        self.other.test_input = ['finish']
+        self.plr.addCard(self.bishop, "hand")
+        self.plr.test_input = ["finish"]
+        self.other.test_input = ["finish"]
         self.plr.playCard(self.bishop)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_trash(self):
-        self.plr.setHand('Gold')
-        self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['trash gold']
-        self.other.test_input = ['finish']
+        self.plr.setHand("Gold")
+        self.plr.addCard(self.bishop, "hand")
+        self.plr.test_input = ["trash gold"]
+        self.other.test_input = ["finish"]
         self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.score['bishop'], 3)
+        self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.hand.is_empty())
-        self.assertIsNotNone(self.g.in_trash('Gold'))
+        self.assertIsNotNone(self.g.in_trash("Gold"))
 
     def test_bothtrash(self):
         tsize = self.g.trashSize()
-        self.plr.setHand('Gold')
-        self.other.setHand('Province')
-        self.plr.addCard(self.bishop, 'hand')
-        self.plr.test_input = ['trash gold']
-        self.other.test_input = ['trash province']
+        self.plr.setHand("Gold")
+        self.other.setHand("Province")
+        self.plr.addCard(self.bishop, "hand")
+        self.plr.test_input = ["trash gold"]
+        self.other.test_input = ["trash province"]
         self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.score['bishop'], 3)
+        self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.hand.is_empty())
         self.assertTrue(self.other.hand.is_empty())
         self.assertEqual(self.g.trashSize(), tsize + 2)

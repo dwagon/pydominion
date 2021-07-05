@@ -21,12 +21,12 @@ class Project_Fair(Project):
 ###############################################################################
 class Test_Fair(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Fair'])
+        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Fair"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        self.plr.assign_project('Fair')
+        self.plr.assign_project("Fair")
         self.plr.start_turn()
         self.assertEqual(self.plr.get_buys(), 2)
 

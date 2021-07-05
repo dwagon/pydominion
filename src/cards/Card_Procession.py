@@ -14,7 +14,7 @@ class Card_Procession(Card.Card):
         self.desc = """You may play a non-Duration Action card from your
             hand twice. Trash it. Gain an Action
             card costing exactly 1 more than it."""
-        self.name = 'Procession'
+        self.name = "Procession"
         self.cost = 4
 
     def special(self, game, player):
@@ -22,7 +22,9 @@ class Card_Procession(Card.Card):
         if not actcards:
             player.output("No suitable action cards")
             return
-        cards = player.cardSel(prompt="Select a card to play twice, then trash", cardsrc=actcards)
+        cards = player.cardSel(
+            prompt="Select a card to play twice, then trash", cardsrc=actcards
+        )
         if not cards:
             return
         card = cards[0]
@@ -32,26 +34,28 @@ class Card_Procession(Card.Card):
             player.playCard(card, discard=False, costAction=False)
         player.trashCard(card)
         cost = player.cardCost(card) + 1
-        player.plrGainCard(cost, modifier='equal', types={Card.TYPE_ACTION: True})
+        player.plrGainCard(cost, modifier="equal", types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################
 class Test_Procession(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Procession', 'Moat', 'Witch'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initcards=["Procession", "Moat", "Witch"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Procession'].remove()
+        self.card = self.g["Procession"].remove()
 
     def test_play(self):
-        """ Play procession to trash moat and buy a witch """
-        self.plr.setHand('Moat')
-        self.plr.addCard(self.card, 'hand')
-        self.plr.test_input = ['Moat', 'Witch']
+        """Play procession to trash moat and buy a witch"""
+        self.plr.setHand("Moat")
+        self.plr.addCard(self.card, "hand")
+        self.plr.test_input = ["Moat", "Witch"]
         self.plr.playCard(self.card)
-        self.assertIsNotNone(self.g.in_trash('Moat'))
+        self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.hand.size(), 4)
-        self.assertIsNotNone(self.plr.in_discard('Witch'))
+        self.assertIsNotNone(self.plr.in_discard("Witch"))
 
 
 ###############################################################################

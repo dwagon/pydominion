@@ -12,17 +12,17 @@ class Card_Baker(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.GUILDS
         self.desc = "+1 card, +1 action, +1 coffer"
-        self.name = 'Baker'
+        self.name = "Baker"
         self.actions = 1
         self.cards = 1
         self.cost = 5
 
     def special(self, game, player):
-        """ Take a Coin Token """
+        """Take a Coin Token"""
         player.gainCoffer(1)
 
     def setup(self, game):
-        """ Each Player takes a coin token"""
+        """Each Player takes a coin token"""
         for plr in game.player_list():
             plr.gainCoffer(1)
 
@@ -30,18 +30,18 @@ class Card_Baker(Card.Card):
 ###############################################################################
 class Test_Baker(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Baker'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Baker"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Baker'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Baker"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_setup(self):
-        """ Test each player having a coin """
+        """Test each player having a coin"""
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_play(self):
-        """ Play a baker """
+        """Play a baker"""
         self.plr.coffer = 0
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), 1)

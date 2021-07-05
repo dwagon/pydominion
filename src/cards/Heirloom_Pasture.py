@@ -12,7 +12,7 @@ class Card_Pasture(Card.Card):
         self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_VICTORY, Card.TYPE_HEIRLOOM]
         self.base = Game.NOCTURNE
         self.desc = "+1 Coin; Worth 1VP per Estate you have"
-        self.name = 'Pasture'
+        self.name = "Pasture"
         self.cost = 2
         self.coin = 1
         self.purchasable = False
@@ -25,21 +25,21 @@ class Card_Pasture(Card.Card):
 ###############################################################################
 class Test_Pasture(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Shepherd'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Pasture'].remove()
+        self.card = self.g["Pasture"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, 'hand')
+        self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_score(self):
-        self.plr.setHand('Estate', 'Pasture')
-        self.plr.setDeck('Estate')
+        self.plr.setHand("Estate", "Pasture")
+        self.plr.setDeck("Estate")
         score = self.plr.getScoreDetails()
-        self.assertEqual(score['Pasture'], 2)
+        self.assertEqual(score["Pasture"], 2)
 
 
 ###############################################################################

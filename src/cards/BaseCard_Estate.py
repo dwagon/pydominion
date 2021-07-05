@@ -10,7 +10,7 @@ class Card_Estate(Card.Card):
         self.desc = "1 VP"
         self.playable = False
         self.basecard = True
-        self.name = 'Estate'
+        self.name = "Estate"
         self.cost = 2
         self.victory = 1
 
@@ -18,5 +18,6 @@ class Card_Estate(Card.Card):
         if game.numplayers == 2:
             return 8
         return 12
+
 
 # EOF

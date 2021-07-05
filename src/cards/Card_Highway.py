@@ -12,7 +12,7 @@ class Card_Highway(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
         self.desc = "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
-        self.name = 'Highway'
+        self.name = "Highway"
         self.cards = 1
         self.actions = 1
         self.cost = 5
@@ -26,11 +26,11 @@ class Card_Highway(Card.Card):
 ###############################################################################
 class Test_Highway(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Highway'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Highway"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Highway'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Highway"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
@@ -39,9 +39,9 @@ class Test_Highway(unittest.TestCase):
 
     def test_costreduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.cardCost(self.g['Gold']), 6)
+        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.cardCost(self.g['Gold']), 5)
+        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
 
 
 ###############################################################################

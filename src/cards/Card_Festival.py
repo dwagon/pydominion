@@ -12,7 +12,7 @@ class Card_Festival(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DOMINION
         self.desc = "+2 actions, +1 buys, +2 coin"
-        self.name = 'Festival'
+        self.name = "Festival"
         self.actions = 2
         self.buys = 1
         self.coin = 2
@@ -22,11 +22,11 @@ class Card_Festival(Card.Card):
 ###############################################################################
 class Test_Festival(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Festival'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Festival"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Festival'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Festival"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)

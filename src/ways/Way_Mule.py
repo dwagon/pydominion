@@ -19,15 +19,21 @@ class Way_Mule(Way):
 ###############################################################################
 class Test_Mule(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, waycards=['Way of the Mule'], initcards=['Moat'], badcards=["Duchess"])
+        self.g = Game.Game(
+            quiet=True,
+            numplayers=1,
+            waycards=["Way of the Mule"],
+            initcards=["Moat"],
+            badcards=["Duchess"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Moat'].remove()
-        self.way = self.g.ways['Way of the Mule']
+        self.card = self.g["Moat"].remove()
+        self.way = self.g.ways["Way of the Mule"]
 
     def test_play(self):
-        """ Perform a Mule """
-        self.plr.addCard(self.card, 'hand')
+        """Perform a Mule"""
+        self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)

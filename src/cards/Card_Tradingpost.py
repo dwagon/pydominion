@@ -16,11 +16,11 @@ class Card_Tradingpost(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        """ Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
+        """Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         num = min(2, player.hand.size())
         trash = player.plrTrashCard(num=num, prompt="Trash two cards to gain a silver")
         if len(trash) == 2:
-            player.gainCard('Silver', 'hand')
+            player.gainCard("Silver", "hand")
             player.addCoin(2)
         else:
             player.output("Not enough cards trashed")
@@ -29,26 +29,26 @@ class Card_Tradingpost(Card.Card):
 ###############################################################################
 class Test_Tradingpost(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=['Trading Post'])
+        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Trading Post"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g['Trading Post'].remove()
-        self.plr.addCard(self.card, 'hand')
+        self.card = self.g["Trading Post"].remove()
+        self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        """ Play Trading Post """
+        """Play Trading Post"""
         tsize = self.g.trashSize()
-        self.plr.test_input = ['1', '2', '0']
+        self.plr.test_input = ["1", "2", "0"]
         self.plr.playCard(self.card)
-        self.assertTrue(self.plr.in_hand('Silver'))
+        self.assertTrue(self.plr.in_hand("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_trash_little(self):
-        """ Play a trading post but don't trash enough """
+        """Play a trading post but don't trash enough"""
         tsize = self.g.trashSize()
-        self.plr.test_input = ['1', '0']
+        self.plr.test_input = ["1", "0"]
         self.plr.playCard(self.card)
-        self.assertFalse(self.plr.in_hand('Silver'))
+        self.assertFalse(self.plr.in_hand("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 
 

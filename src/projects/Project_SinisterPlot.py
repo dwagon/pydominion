@@ -20,8 +20,13 @@ class Project_SinisterPlot(Project):
         ch = player.plrChooseOptions(
             "Sinister Plot Action? ",
             ("Add a token here?", True),
-            ("Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]), False)
-            )
+            (
+                "Remove {} tokens for {} cards?".format(
+                    self._token[player.name], self._token[player.name]
+                ),
+                False,
+            ),
+        )
         if ch:
             self._token[player.name] += 1
         else:
@@ -32,20 +37,22 @@ class Project_SinisterPlot(Project):
 ###############################################################################
 class Test_SinisterPlot(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=['Sinister Plot'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initprojects=["Sinister Plot"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_add(self):
-        self.plr.assign_project('Sinister Plot')
-        self.plr.test_input = ['Add a token']
+        self.plr.assign_project("Sinister Plot")
+        self.plr.test_input = ["Add a token"]
         self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 1)
 
     def test_use(self):
-        self.plr.assign_project('Sinister Plot')
+        self.plr.assign_project("Sinister Plot")
         self.plr.projects[0]._token[self.plr.name] = 2
-        self.plr.test_input = ['Remove']
+        self.plr.test_input = ["Remove"]
         self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)

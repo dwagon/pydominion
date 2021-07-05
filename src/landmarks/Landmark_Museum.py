@@ -17,23 +17,25 @@ class Landmark_Museum(Landmark):
         c = set()
         for card in player.allCards():
             c.add(card.name)
-        player.addScore('Museum', len(c) * 2)
+        player.addScore("Museum", len(c) * 2)
 
 
 ###############################################################################
 class Test_Museum(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=['Museum'], initcards=['Moat'])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, landmarkcards=["Museum"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
     def test_gain(self):
-        """ Use Museum """
-        self.plr.setHand('Copper', 'Estate')
-        self.plr.setDiscard('Gold', 'Silver', 'Copper')
-        self.plr.setDeck('Gold', 'Moat', 'Moat')
+        """Use Museum"""
+        self.plr.setHand("Copper", "Estate")
+        self.plr.setDiscard("Gold", "Silver", "Copper")
+        self.plr.setDeck("Gold", "Moat", "Moat")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()['Museum'], 10)
+        self.assertEqual(self.plr.getScoreDetails()["Museum"], 10)
 
 
 ###############################################################################
