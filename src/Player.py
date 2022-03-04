@@ -41,6 +41,7 @@ class Player(object):
         self.actions = 1
         self.coin = 0
         self.potions = 0
+        self.favors = 0
         self.newhandsize = 5
         self.card_token = False
         self.coin_token = False
@@ -821,6 +822,8 @@ class Player(object):
             status += " Debt=%s" % self.debt
         if self.potions:
             status += " Potion"
+        if self.favors:
+            status += " Favours=%s" % self.favors
         if self.coffer:
             status += " Coffer=%d" % self.coffer
         if self.villager:
@@ -1250,6 +1253,7 @@ class Player(object):
         self.addActions(card.actions)
         self.coin += self.hook_spendValue(card, actual=True)
         self.buys += card.buys
+        self.favors += card.favors
         self.potions += card.potion
 
         modif = 0
@@ -1485,6 +1489,20 @@ class Player(object):
     ###########################################################################
     def getVillager(self):
         return self.villager
+
+    ###########################################################################
+    def addFavor(self, num=1):
+        assert isinstance(num, int)
+        self.favors += num
+
+    ###########################################################################
+    def setFavor(self, num=1):
+        assert isinstance(num, int)
+        self.favors = num
+
+    ###########################################################################
+    def getFavor(self):
+        return self.favors
 
     ###########################################################################
     def addCoin(self, num=1):
@@ -1723,7 +1741,7 @@ class Player(object):
             cardsrc=cardsrc,
             anynum=anynum,
             verbs=("Trash", "Untrash"),
-            **kwargs
+            **kwargs,
         )
         for crd in trash:
             self.trashCard(crd, **kwargs)
@@ -1738,7 +1756,7 @@ class Player(object):
         recipient=None,
         force=False,
         destination="discard",
-        **kwargs
+        **kwargs,
     ):
         """Gain a card up to cost coin
         if recipient defined then that player gets the card"""
@@ -1767,7 +1785,7 @@ class Player(object):
             recipient=recipient,
             verbs=("Get", "Unget"),
             force=force,
-            **kwargs
+            **kwargs,
         )
         if cards:
             cardpile = cards[0]

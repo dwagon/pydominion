@@ -13,6 +13,7 @@ TYPE_GATHERING = "gathering"
 TYPE_HEIRLOOM = "heirloom"
 TYPE_HEX = "hex"
 TYPE_KNIGHT = "knight"
+TYPE_LIAISON = "liaison"
 TYPE_LOOTER = "looter"
 TYPE_NIGHT = "night"
 TYPE_PRIZE = "prize"
@@ -54,6 +55,7 @@ class Card(object):
         self.when = "any"
         self.actions = 0
         self.buys = 0
+        self.favors = 0
         self.coin = 0
         self.potion = 0
         self.cards = 0

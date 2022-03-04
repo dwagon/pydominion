@@ -28,6 +28,7 @@ from WayPile import WayPile
 # Source of the various cards
 ADVENTURE = "adventure"
 ALCHEMY = "alchemy"
+ALLIES = "allies"
 CORNUCOPIA = "cornucopia"
 DARKAGES = "darkages"
 DOMINION = "dominion"

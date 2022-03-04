@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" Testing player code """
 
 import unittest
 import Card
@@ -978,6 +979,35 @@ class Test_plrDiscardDownTo(unittest.TestCase):
         self.plr.plrDiscardDownTo(3)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
+
+
+###############################################################################
+class Test_Favor(unittest.TestCase):
+    """Favor testing"""
+
+    def setUp(self):
+        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_setfavor(self):
+        """plr.setFavor()"""
+        self.plr.favors = 0
+        self.plr.setFavor(3)
+        self.assertEqual(self.plr.favors, 3)
+
+    def test_addfavor(self):
+        """plr.addFavor()"""
+        self.plr.favors = 0
+        self.plr.addFavor()
+        self.assertEqual(self.plr.favors, 1)
+        self.plr.addFavor(1)
+        self.assertEqual(self.plr.favors, 2)
+
+    def test_getfavor(self):
+        """plr.getFavor()"""
+        self.plr.favors = 3
+        self.assertEqual(self.plr.getFavor(), 3)
 
 
 ###############################################################################
