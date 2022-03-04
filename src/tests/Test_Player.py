@@ -8,6 +8,8 @@ import Game
 
 ###############################################################################
 class TestPlayer(unittest.TestCase):
+    """Test cases for Player class"""
+
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -56,6 +58,8 @@ class TestPlayer(unittest.TestCase):
 
 ###############################################################################
 class Test_discardHand(unittest.TestCase):
+    """Test plr.discardHand()"""
+
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
