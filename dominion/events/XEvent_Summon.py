@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Card
-import Game
-from Event import Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
-class Event_Summon(Event):
+class Event_Summon(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.PROMO
         self.desc = """Gain an Action card costing up to 4. Set it asidee
             If you do, then at the start of your next turn, play it"""
