@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-import Card
-from Event import Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
-class Event_Banquet(Event):
+class Event_Banquet(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.ADVENTURE
         self.desc = "Gain 2 Coppers and a non-Victory card costing up to 5"
         self.name = "Banquet"

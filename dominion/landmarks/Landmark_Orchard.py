@@ -2,14 +2,13 @@
 
 import unittest
 from collections import defaultdict
-import Game
-from Landmark import Landmark
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_Orchard(Landmark):
+class Landmark_Orchard(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "When scoring, 4VP per differently named Action card you have 3 or more copies of."
         self.name = "Orchard"

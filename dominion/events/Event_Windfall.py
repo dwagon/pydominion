@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_Windfall(Event):
+class Event_Windfall(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "If your deck and discard pile are empty, gain 3 Golds"
         self.name = "Windfall"

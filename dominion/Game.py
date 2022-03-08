@@ -80,12 +80,12 @@ class Game(object):  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
-        self.hexpath = "hexes"
+        self.hexpath = "dominion/hexes"
         self.numstacks = args["numstacks"] if "numstacks" in args else 10
-        self.boonpath = args["boonpath"] if "boonpath" in args else "boons"
-        self.statepath = args["statepath"] if "statepath" in args else "states"
+        self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
+        self.statepath = args["statepath"] if "statepath" in args else "dominion/states"
         self.artifactpath = (
-            args["artifactpath"] if "artifactpath" in args else "artifacts"
+            args["artifactpath"] if "artifactpath" in args else "dominion/artifacts"
         )
         self.prosperity = args["prosperity"] if "prosperity" in args else False
         self.oldcards = args["oldcards"] if "oldcards" in args else False
@@ -93,25 +93,27 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.numplayers = args["numplayers"] if "numplayers" in args else 2
         self.initcards = args["initcards"] if "initcards" in args else []
         self.badcards = args["badcards"] if "badcards" in args else []
-        self.cardpath = args["cardpath"] if "cardpath" in args else "cards"
+        self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
         self.bot = args["bot"] if "bot" in args else False
 
         self.eventcards = args["eventcards"] if "eventcards" in args else []
         self.waycards = args["waycards"] if "waycards" in args else []
-        self.eventpath = "events"
+        self.eventpath = "dominion/events"
         self.numevents = args["numevents"] if "numevents" in args else 0
-        self.waypath = "ways"
+        self.waypath = "dominion/ways"
         self.numways = args["numways"] if "numways" in args else 0
 
         self.landmarkcards = args["landmarkcards"] if "landmarkcards" in args else []
         self.landmarkpath = (
-            args["landmarkpath"] if "landmarkpath" in args else "landmarks"
+            args["landmarkpath"] if "landmarkpath" in args else "dominion/landmarks"
         )
         self.numlandmarks = args["numlandmarks"] if "numlandmarks" in args else 0
 
         self.numprojects = args["numprojects"] if "numprojects" in args else 0
-        self.projectpath = args["projectpath"] if "projectpath" in args else "projects"
+        self.projectpath = (
+            args["projectpath"] if "projectpath" in args else "dominion/projects"
+        )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
 
     ###########################################################################
@@ -576,8 +578,8 @@ class Game(object):  # pylint: disable=too-many-public-methods
         This is slow, but it is the only way that I can think of"""
         mapping = {}
         files = glob.glob("%s/%s_*.py" % (path, prefix))
+        print(f"DBG {files=}")
         for fname in [os.path.basename(_) for _ in files]:
-            print(f"{fname=}")
             fname = fname.replace(".py", "")
             fp, pathname, desc = imp.find_module(fname, [path, defdir])
             mod = imp.load_module(fname, fp, pathname, desc)
@@ -591,6 +593,8 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
             mapping[klass().name] = klass
             klass().check()
+        if not mapping:
+            print(f"DBG getSetCardClasses({prefix=}, {path=}, {defdir=}, {class_prefix=})")
         return mapping
 
     ###########################################################################
@@ -912,9 +916,7 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS
     )
-    parser.add_argument(
-        "--boonpath", default="dominion/boons", help=argparse.SUPPRESS
-    )
+    parser.add_argument("--boonpath", default="dominion/boons", help=argparse.SUPPRESS)
     parser.add_argument("--numstacks", default=10, help=argparse.SUPPRESS)
     parser.add_argument(
         "--prosperity",

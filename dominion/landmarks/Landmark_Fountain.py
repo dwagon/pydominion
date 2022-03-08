@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Landmark import Landmark
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_Fountain(Landmark):
+class Landmark_Fountain(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "When scoring, 15VP if you have at least 10 Coppers."
         self.name = "Fountain"

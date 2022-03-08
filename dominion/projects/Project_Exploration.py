@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Project import Project
+from dominion import Game, Project
 
 
 ###############################################################################
-class Project_Exploration(Project):
+class Project_Exploration(Project.Project):
     def __init__(self):
-        Project.__init__(self)
+        Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "At the end of your Buy phase, if you didn't buy any cards, +1 Coffers and +1 Villager."
         self.name = "Exploration"

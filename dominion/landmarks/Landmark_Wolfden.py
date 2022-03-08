@@ -2,14 +2,13 @@
 
 import unittest
 from collections import defaultdict
-from Landmark import Landmark
-import Game
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_WolfDen(Landmark):
+class Landmark_WolfDen(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = """When scoring, -3VP per card you have exactly one copy of."""
         self.name = "Wolf Den"

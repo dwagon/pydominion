@@ -6,9 +6,9 @@ from dominion import Artifact
 
 
 ###############################################################################
-class Artifact_TreasureChest(Artifact):
+class Artifact_TreasureChest(Artifact.Artifact):
     def __init__(self):
-        Artifact.__init__(self)
+        Artifact.Artifact.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your Buy phase, gain a Gold."
         self.name = "Treasure Chest"

@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_Enhance(Event):
+class Event_Enhance(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = """You may trash a non-Victory card from your hand,
             to gain a card costing up to 2 Coin more than it."""

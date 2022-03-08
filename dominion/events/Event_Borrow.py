@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_Borrow(Event):
+class Event_Borrow(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.ADVENTURE
         self.desc = "Once per turn - place -1 Card token and gain 1 Coin"
         self.name = "Borrow"

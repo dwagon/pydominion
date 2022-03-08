@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Landmark import Landmark
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_DefiledShrine(Landmark):
+class Landmark_DefiledShrine(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "When you gain an Action, move 1VP from its pile to this. When you buy a Curse, take the VP from this."
         self.name = "Defiled Shrine"

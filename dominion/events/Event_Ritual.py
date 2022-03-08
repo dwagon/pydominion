@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_Ritual(Event):
+class Event_Ritual(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "Gain a Curse. If you do, trash a card from your hand. +1VP per Coin it cost."
         self.name = "Ritual"

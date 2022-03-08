@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Project import Project
+from dominion import Game, Project
 
 
 ###############################################################################
-class Project_Academy(Project):
+class Project_Academy(Project.Project):
     def __init__(self):
-        Project.__init__(self)
+        Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "When you gain an Action card, +1 Villager."
         self.name = "Academy"

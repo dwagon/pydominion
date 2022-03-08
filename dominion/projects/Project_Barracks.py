@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Project import Project
+from dominion import Game, Project
 
 
 ###############################################################################
-class Project_Barracks(Project):
+class Project_Barracks(Project.Project):
     def __init__(self):
-        Project.__init__(self)
+        Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Action."
         self.name = "Barracks"

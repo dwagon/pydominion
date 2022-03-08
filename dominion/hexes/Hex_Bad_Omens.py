@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Card
-import Game
-from Hex import Hex
+from dominion import Card, Game, Hex
 
 
 ###############################################################################
-class Hex_BadOmens(Hex):
+class Hex_BadOmens(Hex.Hex):
     def __init__(self):
-        Hex.__init__(self)
+        Hex.Hex.__init__(self)
         self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "Put your deck into your discard pile. Look through it and put 2 Coppers from it onto your deck"

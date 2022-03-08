@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_SaltEarth(Event):
+class Event_SaltEarth(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.EMPIRES
         self.desc = "+1VP. Trash a Victory card from the Supply."
         self.name = "Salt the Earth"

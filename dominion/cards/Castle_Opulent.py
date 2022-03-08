@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Card as Card
-import dominion.Game as Game
-from cards.Card_Castles import CastleCard
+from dominion import Game, Card
+from dominion.cards.Card_Castles import CastleCard
 
 
 ###############################################################################

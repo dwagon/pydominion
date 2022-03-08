@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Landmark import Landmark
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_Tomb(Landmark):
+class Landmark_Tomb(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = """When you trash a card, +1VP"""
         self.name = "Tomb"

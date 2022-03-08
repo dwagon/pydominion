@@ -2,14 +2,13 @@
 
 import unittest
 from collections import defaultdict
-import Game
-from Project import Project
+from dominion import Game, Project
 
 
 ###############################################################################
-class Project_SinisterPlot(Project):
+class Project_SinisterPlot(Project.Project):
     def __init__(self):
-        Project.__init__(self)
+        Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, add a token here, or remove your tokens here for +1 Card each."
         self.name = "Sinister Plot"

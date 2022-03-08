@@ -2,14 +2,13 @@
 
 import unittest
 from collections import defaultdict
-import Game
-from Landmark import Landmark
+from dominion import Game, Landmark
 
 
 ###############################################################################
-class Landmark_TriumphalArch(Landmark):
+class Landmark_TriumphalArch(Landmark.Landmark):
     def __init__(self):
-        Landmark.__init__(self)
+        Landmark.Landmark.__init__(self)
         self.base = Game.EMPIRES
         self.desc = """When scoring, 3VP per copy you have of the 2nd most common
         Action card among your cards (if it's a tie, count either)."""

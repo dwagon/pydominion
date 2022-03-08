@@ -6,9 +6,9 @@ from dominion import Artifact
 
 
 ###############################################################################
-class Artifact_Key(Artifact):
+class Artifact_Key(Artifact.Artifact):
     def __init__(self):
-        Artifact.__init__(self)
+        Artifact.Artifact.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "At the start of your turn, +1 Coin."
         self.name = "Key"

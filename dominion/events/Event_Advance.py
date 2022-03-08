@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Card
-import Game
-from Event import Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
-class Event_Advance(Event):
+class Event_Advance(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.ADVENTURE
         self.desc = "You may trash an Action card from your hand. If you do, gain an Action card costing up to 6."
         self.name = "Advance"

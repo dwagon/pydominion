@@ -6,9 +6,9 @@ from dominion import Artifact
 
 
 ###############################################################################
-class Artifact_Flag(Artifact):
+class Artifact_Flag(Artifact.Artifact):
     def __init__(self):
-        Artifact.__init__(self)
+        Artifact.Artifact.__init__(self)
         self.base = Game.RENAISSANCE
         self.desc = "When drawing your hand, +1 Card"
         self.name = "Flag"

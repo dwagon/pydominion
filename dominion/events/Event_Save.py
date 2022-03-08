@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
-from PlayArea import PlayArea
+from dominion import Game, Event, PlayArea
 
 
 ###############################################################################
-class Event_Save(Event):
+class Event_Save(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.ADVENTURE
         self.desc = "+1 Buy. Once per turn: Set aside a card from your hand, and put it into your hand at end of turn (after drawing)."
         self.name = "Save"
@@ -19,7 +17,7 @@ class Event_Save(Event):
         if not player.do_once("Save"):
             player.output("Already used save this turn")
             return
-        player._save_reserve = PlayArea([])
+        player._save_reserve = PlayArea.PlayArea([])
         card = player.cardSel(
             num=1,
             cardsrc="hand",

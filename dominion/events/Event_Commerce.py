@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-from Event import Event
+from dominion import Game, Event
 
 
 ###############################################################################
-class Event_Commerce(Event):
+class Event_Commerce(Event.Event):
     def __init__(self):
-        Event.__init__(self)
+        Event.Event.__init__(self)
         self.base = Game.MENAGERIE
         self.desc = "Gain a Gold per differently named card you've gained this turn."
         self.name = "Commerce"

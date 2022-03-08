@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import Card
-import Game
-from Hex import Hex
+from dominion import Card, Game, Hex
 
 
 ###############################################################################
-class Hex_Envy(Hex):
+class Hex_Envy(Hex.Hex):
     def __init__(self):
-        Hex.__init__(self)
+        Hex.Hex.__init__(self)
         self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Envious."
