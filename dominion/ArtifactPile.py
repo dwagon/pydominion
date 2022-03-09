@@ -2,11 +2,11 @@
 class ArtifactPile:
     def __init__(self, cardname, klass):
         self.cardname = cardname
-        self.boon = klass()
+        self.artif = klass()
 
     ###########################################################################
     def __getattr__(self, name):
-        return getattr(self.boon, name)
+        return getattr(self.artif, name)
 
     ###########################################################################
     def __repr__(self):
