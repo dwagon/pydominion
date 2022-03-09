@@ -984,6 +984,8 @@ class Player:
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
             self.output("| Played: <NONE>")
+        if self.game.ally:
+            self.output("| Ally: %s: %s" % (self.game.ally.name, self.game.ally.description(self)))
         self.output(
             "| Discard: %s" % ", ".join([c.name for c in self.discardpile])
         )  # Debug
@@ -1440,6 +1442,7 @@ class Player:
             + self.played_events
             + self.states
             + self.artifacts
+            + self.game.ally
         )
 
     ###########################################################################

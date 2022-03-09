@@ -1,6 +1,7 @@
 # pylint: disable=no-member
 
 TYPE_ACTION = "action"
+TYPE_ALLY = "ally"
 TYPE_ARTIFACT = "artifact"
 TYPE_ATTACK = "attack"
 TYPE_BOON = "boon"
@@ -152,6 +153,14 @@ class Card:
     ##########################################################################
     def hasDefense(self):
         return self.defense
+
+    ##########################################################################
+    def isLiaison(self):
+        """ Is this card a Liaison
+        http://wiki.dominionstrategy.com/index.php/Liaison """
+        if TYPE_LIAISON in self.cardtype:
+            return True
+        return False
 
     ##########################################################################
     def isGathering(self):

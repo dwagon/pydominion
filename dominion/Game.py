@@ -10,6 +10,7 @@ import sys
 import uuid
 
 from dominion.ArtifactPile import ArtifactPile
+from dominion.Ally import AllyPile
 from dominion.BoonPile import BoonPile
 from dominion.BotPlayer import BotPlayer
 from dominion.CardPile import CardPile
@@ -65,6 +66,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.discarded_boons = []
         self.retained_boons = []
         self.hexes = []
+        self.ally = None
         self.discarded_hexes = []
         self.trashpile = PlayArea([])
         self.gameover = False
@@ -80,6 +82,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
+        self.allypath = "dominion/allies"
         self.hexpath = "dominion/hexes"
         self.numstacks = args["numstacks"] if "numstacks" in args else 10
         self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
@@ -115,6 +118,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
             args["projectpath"] if "projectpath" in args else "dominion/projects"
         )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
+        self.initally = args["initally"] if "initally" in args else []
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
@@ -306,6 +310,15 @@ class Game(object):  # pylint: disable=too-many-public-methods
         )
 
     ###########################################################################
+    def loadAlly(self):
+        """ Load the allies and pick a single one to have in the game"""
+        if self.ally:
+            return
+        self.output("Using Allies")
+        allies = self.loadNonKingdomCards("Ally", self.initally, None, AllyPile)
+        self.ally = random.choice(list(allies.values())).ally
+
+    ###########################################################################
     def loadNonKingdomCards(self, cardtype, specified, numrequired, cardKlass):
         """Load non kingdom cards into the game
         If specific cards are required they need to be in `specified`
@@ -494,6 +507,8 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 self.loadBoons()
             if self.cardpiles[card].isDoom() and not self.hexes:
                 self.loadHexes()
+            if self.cardpiles[card].isLiaison():
+                self.loadAlly()
             if self.cardpiles[card].traveller:
                 self.loadTravellers()
             if self.cardpiles[card].needsprize:
@@ -569,6 +584,9 @@ class Game(object):  # pylint: disable=too-many-public-methods
         )
         mapping["Project"] = self.getSetCardClasses(
             "Project", self.projectpath, "projects", "Project_"
+        )
+        mapping["Ally"] = self.getSetCardClasses(
+            "Ally", self.allypath, "allies", "Ally_"
         )
         return mapping
 
@@ -897,6 +915,12 @@ def parse_cli_args(args=None):
     )
     parser.add_argument(
         "--projectpath", default="dominion/projects", help=argparse.SUPPRESS
+    )
+    parser.add_argument(
+        "--ally",
+        dest="initally",
+        default=None,
+        help="Include specific ally",
     )
 
     parser.add_argument(
