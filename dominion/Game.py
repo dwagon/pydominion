@@ -578,7 +578,6 @@ class Game(object):  # pylint: disable=too-many-public-methods
         This is slow, but it is the only way that I can think of"""
         mapping = {}
         files = glob.glob("%s/%s_*.py" % (path, prefix))
-        print(f"DBG {files=}")
         for fname in [os.path.basename(_) for _ in files]:
             fname = fname.replace(".py", "")
             fp, pathname, desc = imp.find_module(fname, [path, defdir])
@@ -593,8 +592,6 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
             mapping[klass().name] = klass
             klass().check()
-        if not mapping:
-            print(f"DBG getSetCardClasses({prefix=}, {path=}, {defdir=}, {class_prefix=})")
         return mapping
 
     ###########################################################################
