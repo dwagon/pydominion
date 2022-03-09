@@ -1,1 +1,0 @@
-../../cards/BaseCard_Copper.py
