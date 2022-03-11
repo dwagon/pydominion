@@ -20,6 +20,8 @@ class Card_Broker(Card.Card):
     def special(self, game, player):
         tr = player.plrTrashCard(printcost=True)
         cost = tr[0].cost
+        if cost == 0:
+            return
         options = []
         options.append((f"+{cost} cards", "card"))
         options.append((f"+{cost} actions", "action"))
