@@ -82,7 +82,8 @@ class BotPlayer(Player):
         stack = inspect.stack()
         for st in stack:
             mod = inspect.getmodule(st[0])
-            if mod.__name__ not in ("BotPlayer", "Player", "__main__"):
+            mod_name = mod.__name__.replace('dominion.', '')
+            if mod_name not in ("BotPlayer", "Player", "__main__"):
                 mod = inspect.getmodule(st[0])
                 return mod
         return None
