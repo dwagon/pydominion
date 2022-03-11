@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -28,11 +27,11 @@ class Card_Advisor(Card.Card):
             cards.append(card)
         to_discard = choser.cardSel(
             force=True,
-            prompt="Pick a card of %s to discard from Advisor" % player.name,
+            prompt=f"Pick a card of {player.name} to discard from Advisor",
             cardsrc=cards,
             verbs=("Discard", "Undiscard"),
         )[0]
-        player.output("%s discarded %s" % (choser.name, to_discard.name))
+        player.output(f"{choser.name} discarded {to_discard.name}")
         player.discardCard(to_discard)
 
 
