@@ -673,7 +673,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def project_selection(self, index):
+    def _project_selection(self, index):
         if not self.game.projects:
             return None, index
         # Can only have two projects
@@ -801,7 +801,7 @@ class Player:
             options.extend(op)
             op, index = self.event_selection(index)
             options.extend(op)
-            op, index = self.project_selection(index)
+            op, index = self._project_selection(index)
             if op:
                 options.extend(op)
 
