@@ -632,7 +632,7 @@ class Player:
         return whens
 
     ###########################################################################
-    def reserve_selection(self, index):
+    def _reserve_selection(self, index):
         whens = self._get_whens()
         options = []
         for card in self.reserve:
@@ -810,7 +810,7 @@ class Player:
             options.extend(op)
 
         if self.reserve.size():
-            op, index = self.reserve_selection(index)
+            op, index = self._reserve_selection(index)
             options.extend(op)
 
         op, index = self.landmark_selection(index)
