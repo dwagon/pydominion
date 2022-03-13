@@ -657,7 +657,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def landmark_selection(self, index):
+    def _landmark_selection(self, index):
         options = []
         for lm in self.game.landmarks.values():
             o = Option(
@@ -813,7 +813,7 @@ class Player:
             op, index = self._reserve_selection(index)
             options.extend(op)
 
-        op, index = self.landmark_selection(index)
+        op, index = self._landmark_selection(index)
         options.extend(op)
 
         status = "Actions=%d Buys=%d" % (self.actions, self.buys)
