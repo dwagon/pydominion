@@ -57,8 +57,8 @@ class TestPlayer(unittest.TestCase):
 
 
 ###############################################################################
-class Test_discardHand(unittest.TestCase):
-    """Test plr.discardHand()"""
+class Test_discard_hand(unittest.TestCase):
+    """Test plr.discard_hand()"""
 
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
@@ -68,7 +68,7 @@ class Test_discardHand(unittest.TestCase):
     def test_discard(self):
         self.plr.set_hand("Copper", "Silver")
         self.plr.set_played("Estate", "Duchy")
-        self.plr.discardHand()
+        self.plr.discard_hand()
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.played.size(), 0)
         self.assertEqual(self.plr.discardpile.size(), 4)

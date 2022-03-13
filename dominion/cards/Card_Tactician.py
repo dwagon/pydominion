@@ -22,7 +22,7 @@ class Card_Tactician(Card.Card):
         )
         if discard and player.hand.size():
             self.discarded = True
-            player.discardHand()
+            player.discard_hand()
 
     def duration(self, game, player):
         """+5 Cards, +1 Buy, +1 Action"""

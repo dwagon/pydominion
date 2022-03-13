@@ -16,7 +16,7 @@ class Way_Mole(Way.Way):
         self.name = "Way of the Mole"
 
     def special(self, game, player):
-        player.discardHand()
+        player.discard_hand()
         player.pickup_cards(3)
 
 

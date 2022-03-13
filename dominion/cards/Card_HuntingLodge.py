@@ -23,7 +23,7 @@ class Card_Hunting_Lodge(Card.Card):
             "Discard hand?", ("Nope", False), ("Discard hand and draw 5 cards", True)
         )
         if disc:
-            player.discardHand()
+            player.discard_hand()
             player.pickup_cards(5)
 
 

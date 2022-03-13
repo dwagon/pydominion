@@ -84,7 +84,7 @@ class Test_Hermit(unittest.TestCase):
         """Discard a Hermit and gain a Madman"""
         self.plr.test_input = ["madman"]
         self.plr.add_card(self.card, "hand")
-        self.plr.discardHand()
+        self.plr.discard_hand()
         self.assertIsNotNone(self.plr.in_discard("Madman"))
         self.assertIsNone(self.plr.in_hand("Hermit"))
 

@@ -492,7 +492,7 @@ class Player:
                 way.hook_way_discard_this_card(game=self.game, player=self, card=crd)
 
     ###########################################################################
-    def discardHand(self):
+    def discard_hand(self):
         # Activate hooks first so they can still access contents of the
         # players hand etc. before they get discarded
         for card in self.hand:
@@ -903,7 +903,7 @@ class Player:
         self.game.cleanup_boons()
         for card in self.played + self.reserve + self.artifacts:
             card.hook_cleanup(self.game, self)
-        self.discardHand()
+        self.discard_hand()
         self.pick_up_hand()
         self.hooks = {}
         self.misc["cleaned"] = True
