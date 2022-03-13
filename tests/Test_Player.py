@@ -781,7 +781,7 @@ class Test_choice_selection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_night_selection(unittest.TestCase):
+class Test__night_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Monastery", "Moat"])
         self.g.start_game()
@@ -790,7 +790,7 @@ class Test_night_selection(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_hand("Copper", "Moat", "Monastery")
-        opts, idx = self.plr.night_selection(1)
+        opts, idx = self.plr._night_selection(1)
         self.assertEqual(idx, 2)
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["verb"], "Play")
@@ -799,7 +799,7 @@ class Test_night_selection(unittest.TestCase):
 
     def test_no_night(self):
         self.plr.set_hand("Copper", "Moat")
-        opts = self.plr.night_selection(0)
+        opts = self.plr._night_selection(0)
         self.assertEqual(opts, ([], 0))
 
 

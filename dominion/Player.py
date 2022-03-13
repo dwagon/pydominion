@@ -555,7 +555,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def night_selection(self, index):
+    def _night_selection(self, index):
         options = []
         nights = [c for c in self.hand if c.isNight()]
         if nights:
@@ -806,7 +806,7 @@ class Player:
                 options.extend(op)
 
         if self.phase == "night":
-            op, index = self.night_selection(index)
+            op, index = self._night_selection(index)
             options.extend(op)
 
         if self.reserve.size():
