@@ -20,10 +20,8 @@ class Card_Explorer(Card.Card):
         prov = player.in_hand("Province")
         if prov:
             player.revealCard(prov)
-            player.output("Gained a Gold")
             player.gainCard("Gold", destination="hand")
         else:
-            player.output("Gained a Silver")
             player.gainCard("Silver", destination="hand")
 
 
