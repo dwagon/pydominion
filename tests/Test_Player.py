@@ -710,7 +710,7 @@ class Test__playable_selection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_choice_selection(unittest.TestCase):
+class Test__choice_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat", "Alchemist"])
         self.g.start_game()
@@ -721,7 +721,7 @@ class Test_choice_selection(unittest.TestCase):
     def test_action_phase(self):
         self.plr.set_hand("Moat")
         self.plr.phase = Card.TYPE_ACTION
-        opts, _ = self.plr.choice_selection()
+        opts, _ = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
         self.assertEqual(opts[0][Card.TYPE_ACTION], "quit")
@@ -738,8 +738,8 @@ class Test_choice_selection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.set_hand("Copper")
         self.plr.phase = "buy"
-        self.plr.coffer = 0  # Stop card choice_selection breaking test
-        opts, _ = self.plr.choice_selection()
+        self.plr.coffer = 0  # Stop card _choice_selection breaking test
+        opts, _ = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
         self.assertEqual(opts[0][Card.TYPE_ACTION], "quit")
@@ -757,7 +757,7 @@ class Test_choice_selection(unittest.TestCase):
         self.plr.coffer = 1
         self.plr.phase = "buy"
         self.plr.debt = 2
-        _, prompt = self.plr.choice_selection()
+        _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=3", prompt)
         self.assertIn("Coins=5", prompt)
         self.assertIn("Buys=7", prompt)
@@ -772,7 +772,7 @@ class Test_choice_selection(unittest.TestCase):
         self.plr.coin = 0
         self.plr.coffer = 0
         self.plr.phase = "buy"
-        _, prompt = self.plr.choice_selection()
+        _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=0", prompt)
         self.assertIn("Buys=0", prompt)
         self.assertNotIn("Coins", prompt)

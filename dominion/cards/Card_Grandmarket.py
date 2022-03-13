@@ -48,7 +48,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"
@@ -61,7 +61,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"
@@ -73,7 +73,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.addCoin(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"

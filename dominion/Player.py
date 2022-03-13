@@ -784,7 +784,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def choice_selection(self):
+    def _choice_selection(self):
         index = 0
         o = Option(selector="0", verb="End Phase", card=None, action="quit")
         options = [o]
@@ -852,7 +852,7 @@ class Player:
         self.phase = "night"
         while True:
             self.displayOverview()
-            options, prompt = self.choice_selection()
+            options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt["action"] == "quit":
@@ -864,7 +864,7 @@ class Player:
         self.phase = "action"
         while True:
             self.displayOverview()
-            options, prompt = self.choice_selection()
+            options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt["action"] == "quit":
@@ -877,7 +877,7 @@ class Player:
         self.hook_preBuy()
         while True:
             self.displayOverview()
-            options, prompt = self.choice_selection()
+            options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self.perform_action(opt)
             if opt["action"] == "quit":

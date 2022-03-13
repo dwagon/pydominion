@@ -52,7 +52,7 @@ class Test_Contraband(unittest.TestCase):
         self.plr.coins = 6
         self.plr.playCard(self.card)
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for msg in options:
             if "Buy Gold" in msg["line"]:
                 self.fail("Allowed to buy Gold")
