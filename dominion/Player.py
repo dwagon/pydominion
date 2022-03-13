@@ -55,7 +55,7 @@ class Player:
         self.once = {}
         self.turn_number = 0
         self.stats = {"gained": [], "bought": [], "trashed": []}
-        self.pickUpHand()
+        self.pick_up_hand()
         self.secret_count = 0  # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
         self.phase = None
@@ -425,7 +425,7 @@ class Player:
         self.discardpile.shuffle()
 
     ###########################################################################
-    def pickUpHand(self, handsize=None):
+    def pick_up_hand(self, handsize=None):
         if handsize is None:
             handsize = self.newhandsize
         if self.card_token:
@@ -904,7 +904,7 @@ class Player:
         for card in self.played + self.reserve + self.artifacts:
             card.hook_cleanup(self.game, self)
         self.discardHand()
-        self.pickUpHand()
+        self.pick_up_hand()
         self.hooks = {}
         self.misc["cleaned"] = True
 

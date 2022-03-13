@@ -23,7 +23,7 @@ class TestToken(unittest.TestCase):
         """Ensure we have smaller hand if -Card token in place"""
         self.plr.card_token = True
         self.plr.hand.empty()
-        self.plr.pickUpHand()
+        self.plr.pick_up_hand()
         self.assertEqual(self.plr.hand.size(), 4)
         self.assertFalse(self.plr.card_token)
 

@@ -14,7 +14,7 @@ class Way_Owl(Way.Way):
         self.name = "Way of the Owl"
 
     def special(self, game, player):
-        player.pickUpHand(6)
+        player.pick_up_hand(6)
 
 
 ###############################################################################

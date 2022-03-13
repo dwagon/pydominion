@@ -19,7 +19,7 @@ class Card_Watchtower(Card.Card):
 
     def special(self, game, player):
         """Draw until you have 6 cards in hand."""
-        player.pickUpHand(6)
+        player.pick_up_hand(6)
 
     def hook_gain_card(self, game, player, card):
         """When you gain a card, you may reveal this from your
