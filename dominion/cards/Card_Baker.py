@@ -19,12 +19,12 @@ class Card_Baker(Card.Card):
 
     def special(self, game, player):
         """Take a Coin Token"""
-        player.gainCoffer(1)
+        player.add_coffer(1)
 
     def setup(self, game):
         """Each Player takes a coin token"""
         for plr in game.player_list():
-            plr.gainCoffer(1)
+            plr.add_coffer(1)
 
 
 ###############################################################################

@@ -16,7 +16,7 @@ class Project_Exploration(Project.Project):
     def hook_endBuyPhase(self, game, player):
         if player.stats["bought"]:
             return
-        player.gainCoffer(1)
+        player.add_coffer(1)
         player.add_villager(1)
 
 

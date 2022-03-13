@@ -821,7 +821,7 @@ class Test_spendable_selection(unittest.TestCase):
         self.plr.set_hand("Copper", "Estate")
         self.plr.addCard(self.potion, "hand")
         self.plr.addCard(self.moat, "hand")
-        self.plr.gainCoffer(1)
+        self.plr.add_coffer(1)
         self.plr.add_villager(1)
         opts = self.plr.spendable_selection()
         self.assertEqual(opts[0]["selector"], "1")

@@ -444,7 +444,7 @@ class Player:
         self.villager += num
 
     ###########################################################################
-    def gainCoffer(self, num=1):
+    def add_coffer(self, num=1):
         """Gain a number of coffer"""
         self.coffer += num
 

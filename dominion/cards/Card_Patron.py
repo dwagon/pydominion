@@ -22,7 +22,7 @@ class Card_Patron(Card.Card):
         player.add_villager(1)
 
     def hook_revealThisCard(self, game, player):
-        player.gainCoffer()
+        player.add_coffer()
 
 
 ###############################################################################

@@ -19,12 +19,12 @@ class Card_SilkMerchant(Card.Card):
     ###########################################################################
     def hook_gain_this_card(self, game, player):
         player.add_villager()
-        player.gainCoffer()
+        player.add_coffer()
 
     ###########################################################################
     def hook_trashThisCard(self, game, player):
         player.add_villager()
-        player.gainCoffer()
+        player.add_coffer()
 
 
 ###############################################################################

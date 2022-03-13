@@ -23,7 +23,7 @@ class Card_Ducat(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.gainCoffer()
+        player.add_coffer()
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):

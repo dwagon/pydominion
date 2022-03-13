@@ -15,7 +15,7 @@ class Project_Guildhall(Project.Project):
 
     def hook_gain_card(self, game, player, card):
         if card.isTreasure():
-            player.gainCoffer()
+            player.add_coffer()
 
 
 ###############################################################################

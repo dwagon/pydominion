@@ -24,7 +24,7 @@ class Card_Spices(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainCoffer(2)
+        player.add_coffer(2)
 
 
 ###############################################################################

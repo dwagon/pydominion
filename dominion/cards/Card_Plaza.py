@@ -24,7 +24,7 @@ class Card_Plaza(Card.Card):
                 num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer"
             )
             if disc:
-                player.gainCoffer(1)
+                player.add_coffer(1)
 
 
 ###############################################################################

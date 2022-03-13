@@ -19,7 +19,7 @@ class Card_Candlestickmaker(Card.Card):
 
     def special(self, game, player):
         """Take a Coin Token"""
-        player.gainCoffer(1)
+        player.add_coffer(1)
 
 
 ###############################################################################

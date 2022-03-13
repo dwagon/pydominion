@@ -23,7 +23,7 @@ class Card_Swashbuckler(Card.Card):
     def special(self, game, player):
         if player.discardpile.size() >= 1:
             player.output("Gained a coffer")
-            player.gainCoffer(1)
+            player.add_coffer(1)
             if player.getCoffer() >= 4:
                 if not player.has_artifact("Treasure Chest"):
                     player.output("Gained the Treasure Chest")
