@@ -318,7 +318,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         if self.ally:
             return
         self.output("Using Allies")
-        allies = self.loadNonKingdomCards("Ally", [self.initally], 1, AllyPile)
+        allies = self.loadNonKingdomCards("Ally", self.initally, 1, AllyPile)
         self.ally = random.choice(list(allies.values())).ally
 
     ###########################################################################
@@ -413,6 +413,10 @@ class Game(object):  # pylint: disable=too-many-public-methods
             projectname = self.guess_cardname(crd, "Project")
             if projectname:
                 self.initprojects.append(projectname)
+                continue
+            allyname = self.guess_cardname(crd, "Ally")
+            if allyname:
+                self.initally.append(allyname)
                 continue
             print("Can't guess what card '%s' is" % crd)
             foundall = False
@@ -922,7 +926,8 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--ally",
         dest="initally",
-        default=None,
+        action="append",
+        default=[],
         help="Include specific ally",
     )
 
