@@ -29,7 +29,7 @@ class Project_SinisterPlot(Project.Project):
         if ch:
             self._token[player.name] += 1
         else:
-            player.pickupCards(self._token[player.name])
+            player.pickup_cards(self._token[player.name])
             self._token[player.name] = 0
 
 

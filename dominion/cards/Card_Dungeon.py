@@ -24,7 +24,7 @@ class Card_Dungeon(Card.Card):
 
     def sifter(self, game, player):
         """+2 Cards, then discard 2 cards."""
-        player.pickupCards(2)
+        player.pickup_cards(2)
         player.plrDiscardCards(num=2, force=True)
 
 

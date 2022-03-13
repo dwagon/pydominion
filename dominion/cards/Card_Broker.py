@@ -29,7 +29,7 @@ class Card_Broker(Card.Card):
         options.append((f"+{cost} favors", "favor"))
         dc = player.plrChooseOptions("Pick one:", *options)
         if dc == "card":
-            player.pickupCards(cost)
+            player.pickup_cards(cost)
         elif dc == "action":
             player.addActions(cost)
         elif dc == "cash":

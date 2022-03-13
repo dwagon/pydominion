@@ -32,7 +32,7 @@ class Card_Catacombs(Card.Card):
         else:
             for c in cards:
                 player.addCard(c, "discard")
-            player.pickupCards(3)
+            player.pickup_cards(3)
 
     def hook_trashThisCard(self, game, player):
         """When you trash this, gain a cheaper card"""

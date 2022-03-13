@@ -27,7 +27,7 @@ class Card_Tactician(Card.Card):
     def duration(self, game, player):
         """+5 Cards, +1 Buy, +1 Action"""
         if self.discarded:
-            player.pickupCards(5)
+            player.pickup_cards(5)
             player.addBuys(1)
             player.addActions(1)
             self.discarded = False

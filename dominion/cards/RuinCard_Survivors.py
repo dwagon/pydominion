@@ -20,7 +20,7 @@ class Card_Survivors(Card.Card):
     def special(self, game, player):
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
-        crds = player.pickupCards(2)
+        crds = player.pickup_cards(2)
         ans = player.plrChooseOptions(
             "What to do with survivors?",
             ("Discard {} and {}".format(crds[0].name, crds[1].name), "discard"),

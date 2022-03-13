@@ -22,7 +22,7 @@ class Card_Nobles(Card.Card):
             "Choose one", ("+3 Cards", True), ("+2 Actions", False)
         )
         if cards:
-            player.pickupCards(3)
+            player.pickup_cards(3)
         else:
             player.addActions(2)
 

@@ -396,7 +396,7 @@ class Player:
             self.addCard(self.discardpile.topcard(), "deck")
 
     ###########################################################################
-    def pickupCards(self, num, verbose=True, verb="Picked up"):
+    def pickup_cards(self, num, verbose=True, verb="Picked up"):
         cards = []
         for _ in range(num):
             cards.append(self.pickupCard(verbose=verbose, verb=verb))

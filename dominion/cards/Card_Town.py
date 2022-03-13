@@ -21,7 +21,7 @@ class Card_Town(Card.Card):
             ("+1 Buy and +$2 Coin", "buy"),
         )
         if choice == "card":
-            player.pickupCards(1)
+            player.pickup_cards(1)
             player.addActions(2)
         elif choice == "buy":
             player.addBuys(1)

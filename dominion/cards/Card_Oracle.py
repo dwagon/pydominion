@@ -20,7 +20,7 @@ class Card_Oracle(Card.Card):
         for plr in player.attackVictims():
             self.attack(player, plr, "%s's" % plr.name)
         self.attack(player, player, "your")
-        player.pickupCards(2)
+        player.pickup_cards(2)
 
     def attack(self, player, victim, name):
         cards = []

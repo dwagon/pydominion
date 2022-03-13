@@ -30,7 +30,7 @@ class Card_Secretchamber(Card.Card):
         if not self.doRevealCard(player):
             return
         player.reveal_card(self)
-        player.pickupCards(2)
+        player.pickup_cards(2)
         player.output("Put two cards onto deck")
         cards = player.cardSel(
             prompt="Put which two cards on top of deck?",

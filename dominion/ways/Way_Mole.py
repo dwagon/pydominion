@@ -17,7 +17,7 @@ class Way_Mole(Way.Way):
 
     def special(self, game, player):
         player.discardHand()
-        player.pickupCards(3)
+        player.pickup_cards(3)
 
 
 ###############################################################################

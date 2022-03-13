@@ -24,7 +24,7 @@ class Card_Pooka(Card.Card):
             prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures
         )
         if tr:
-            player.pickupCards(4)
+            player.pickup_cards(4)
 
 
 ###############################################################################

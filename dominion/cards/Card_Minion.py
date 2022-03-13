@@ -45,7 +45,7 @@ class Card_Minion(Card.Card):
     def dropAndDraw(self, plr):
         # TODO: Do you discard the minion as well?
         plr.discardHand()
-        plr.pickupCards(4)
+        plr.pickup_cards(4)
 
 
 ###############################################################################

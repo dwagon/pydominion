@@ -24,7 +24,7 @@ class Card_Steward(Card.Card):
             ("Trash 2", "trash"),
         )
         if choice == "cards":
-            player.pickupCards(2)
+            player.pickup_cards(2)
             return
         if choice == "coin":
             player.addCoin(2)

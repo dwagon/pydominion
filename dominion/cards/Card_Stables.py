@@ -22,7 +22,7 @@ class Card_Stables(Card.Card):
         )
         if tr:
             player.addActions(1)
-            player.pickupCards(3)
+            player.pickup_cards(3)
 
 
 ###############################################################################

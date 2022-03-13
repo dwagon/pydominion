@@ -23,10 +23,10 @@ class Card_Menagerie(Card.Card):
             hand.add(card.name)
         if len(hand) == player.hand.size():
             player.output("No duplicates - picking up 3 cards")
-            player.pickupCards(3)
+            player.pickup_cards(3)
         else:
             player.output("Duplicates - picking up 1 card")
-            player.pickupCards(1)
+            player.pickup_cards(1)
 
 
 ###############################################################################

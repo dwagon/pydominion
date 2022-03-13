@@ -15,7 +15,7 @@ class Project_RoadNetwork(Project.Project):
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
-            owner.pickupCards(1)
+            owner.pickup_cards(1)
             owner.output(
                 "Road Network gives card due to {} picking up {}".format(
                     player.name, card.name

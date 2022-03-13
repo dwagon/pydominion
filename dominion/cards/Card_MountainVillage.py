@@ -27,7 +27,7 @@ class Card_MountainVillage(Card.Card):
             player.addCard(card[0], "hand")
         else:
             player.output("No cards in discard pile")
-            player.pickupCards(1)
+            player.pickup_cards(1)
 
 
 ###############################################################################

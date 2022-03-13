@@ -23,7 +23,7 @@ class Project_CropRotation(Project.Project):
             prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics
         )
         if card:
-            player.pickupCards(2)
+            player.pickup_cards(2)
 
 
 ###############################################################################

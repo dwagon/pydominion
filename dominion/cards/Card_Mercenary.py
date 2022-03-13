@@ -29,7 +29,7 @@ class Card_Mercenary(Card.Card):
         if not ans:
             return
         player.plrTrashCard(2, force=True)
-        player.pickupCards(2)
+        player.pickup_cards(2)
         player.addCoin(2)
         for plr in player.attackVictims():
             plr.plrDiscardDownTo(3)

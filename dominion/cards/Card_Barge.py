@@ -24,7 +24,7 @@ class Card_Barge(Card.Card):
             ("Next Turn: +3 Cards and +1 Buy", "then"),
         )
         if choice == "now":
-            player.pickupCards(3)
+            player.pickup_cards(3)
             player.addBuys(1)
             self._choice = "now"
         else:
@@ -32,7 +32,7 @@ class Card_Barge(Card.Card):
 
     def duration(self, game, player):
         if self._choice == "then":
-            player.pickupCards(3)
+            player.pickup_cards(3)
             player.addBuys(1)
         self._choice = "undef"
 

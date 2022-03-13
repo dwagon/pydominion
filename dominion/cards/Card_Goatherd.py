@@ -24,7 +24,7 @@ class Card_Goatherd(Card.Card):
         ctr = len(ptr.stats["trashed"])
         if ctr:
             player.output("Picking up {} cards".format(ctr))
-            player.pickupCards(ctr)
+            player.pickup_cards(ctr)
 
 
 ###############################################################################

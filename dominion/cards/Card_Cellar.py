@@ -24,7 +24,7 @@ class Card_Cellar(Card.Card):
             anynum=True,
             prompt="Discard any number of cards and gain one per card discarded",
         )
-        player.pickupCards(len(todiscard))
+        player.pickup_cards(len(todiscard))
 
 
 ###############################################################################

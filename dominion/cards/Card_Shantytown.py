@@ -24,7 +24,7 @@ class Card_Shantytown(Card.Card):
                 break
         else:
             player.output("No actions - picking up 2 cards")
-            player.pickupCards(2)
+            player.pickup_cards(2)
 
 
 ###############################################################################

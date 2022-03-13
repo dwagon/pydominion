@@ -479,9 +479,9 @@ class Test_pickupCard(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 0)
 
     def test_pickups(self):
-        """Test pickupCards"""
+        """Test pickup_cards"""
         self.plr.set_hand()
-        self.plr.pickupCards(3, verb="test")
+        self.plr.pickup_cards(3, verb="test")
         self.assertEqual(self.plr.hand.size(), 3)
         count = 0
         for msg in self.plr.messages:

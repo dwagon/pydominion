@@ -19,7 +19,7 @@ class Card_CaravanGuard(Card.Card):
 
     def special(self, game, player):
         player.addActions(1)
-        player.pickupCards(1)
+        player.pickup_cards(1)
 
     def duration(self, game, player):
         player.addCoin(1)
@@ -27,7 +27,7 @@ class Card_CaravanGuard(Card.Card):
     def hook_underAttack(self, game, player, attacker):
         player.output("Under attack from %s" % attacker.name)
         player.addActions(1)
-        player.pickupCards(1)
+        player.pickup_cards(1)
         player.addCard(self, Card.TYPE_DURATION)
         player.hand.remove(player.in_hand("Caravan Guard"))
 

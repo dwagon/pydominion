@@ -23,7 +23,7 @@ class Project_Silos(Project.Project):
             for _ in range(ans):
                 cu = player.in_hand("Copper")
                 player.discardCard(cu)
-                player.pickupCards(1)
+                player.pickup_cards(1)
 
 
 ###############################################################################

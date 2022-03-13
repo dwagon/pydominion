@@ -27,7 +27,7 @@ class Card_WildHunt(Card.Card):
             ),
         )
         if give:
-            player.pickupCards(3)
+            player.pickup_cards(3)
             game["Wild Hunt"].addVP()
         else:
             player.gainCard("Estate")

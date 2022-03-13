@@ -20,7 +20,7 @@ class Card_Ranger(Card.Card):
         """Turn your Journey token over. If it's face up, +5 cards"""
         if player.flip_journey_token():
             player.output("Ranger gives +5 Cards")
-            player.pickupCards(5)
+            player.pickup_cards(5)
 
 
 ###############################################################################

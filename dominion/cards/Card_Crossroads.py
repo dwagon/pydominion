@@ -28,7 +28,7 @@ class Card_Crossroads(Card.Card):
                 vict += 1
         if vict:
             player.output("Picking up %d cards" % vict)
-            player.pickupCards(vict)
+            player.pickup_cards(vict)
         else:
             player.output("No victory cards")
         numcross = sum([1 for c in player.played if c.name == "Crossroads"])

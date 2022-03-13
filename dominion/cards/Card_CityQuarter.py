@@ -24,7 +24,7 @@ class Card_CityQuarter(Card.Card):
             if c.isAction():
                 actions += 1
         player.output("Revealed %d actions" % actions)
-        player.pickupCards(actions)
+        player.pickup_cards(actions)
 
 
 ###############################################################################

@@ -24,7 +24,7 @@ class Card_Hunting_Lodge(Card.Card):
         )
         if disc:
             player.discardHand()
-            player.pickupCards(5)
+            player.pickup_cards(5)
 
 
 ###############################################################################

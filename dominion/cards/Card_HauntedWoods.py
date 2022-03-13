@@ -18,7 +18,7 @@ class Card_HauntedWoods(Card.Card):
         self.cost = 5
 
     def duration(self, game, player):
-        player.pickupCards(3)
+        player.pickup_cards(3)
 
     def hook_allPlayers_buyCard(self, game, player, owner, card):
         if player == owner:

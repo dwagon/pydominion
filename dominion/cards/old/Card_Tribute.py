@@ -42,7 +42,7 @@ class Card_Tribute(Card.Card):
                 player.addCoin(2)
             elif c.isVictory():
                 player.output("Gained two cards")
-                player.pickupCards(2)
+                player.pickup_cards(2)
 
 
 ###############################################################################

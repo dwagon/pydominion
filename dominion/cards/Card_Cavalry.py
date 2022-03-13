@@ -28,7 +28,7 @@ class Card_Cavalry(Card.Card):
     def hook_gain_this_card(self, game, player):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
-        player.pickupCards(2)
+        player.pickup_cards(2)
         player.addBuys(1)
 
 

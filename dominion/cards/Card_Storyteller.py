@@ -31,7 +31,7 @@ class Card_Storyteller(Card.Card):
         for card in toplay:
             player.playCard(card)
         player.output("Converting %d coin to cards" % player.coin)
-        player.pickupCards(player.coin)
+        player.pickup_cards(player.coin)
         player.coin = 0
 
 

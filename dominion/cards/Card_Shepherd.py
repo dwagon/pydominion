@@ -23,7 +23,7 @@ class Card_Shepherd(Card.Card):
         todiscard = player.plrDiscardCards(
             num=0, anynum=True, types={Card.TYPE_VICTORY: True}
         )
-        player.pickupCards(2 * len(todiscard))
+        player.pickup_cards(2 * len(todiscard))
 
 
 ###############################################################################

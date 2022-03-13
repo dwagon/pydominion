@@ -18,7 +18,7 @@ class Card_Scholar(Card.Card):
     ###########################################################################
     def special(self, game, player):
         player.discardHand()
-        player.pickupCards(7)
+        player.pickup_cards(7)
 
 
 ###############################################################################
