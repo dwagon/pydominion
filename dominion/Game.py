@@ -118,7 +118,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
             args["projectpath"] if "projectpath" in args else "dominion/projects"
         )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
-        self.initally = args["initally"] if "initally" in args else []
+        self.initally = args["ally"] if "ally" in args else []
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
@@ -318,7 +318,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         if self.ally:
             return
         self.output("Using Allies")
-        allies = self.loadNonKingdomCards("Ally", self.initally, None, AllyPile)
+        allies = self.loadNonKingdomCards("Ally", self.initally, 1, AllyPile)
         self.ally = random.choice(list(allies.values())).ally
 
     ###########################################################################
@@ -341,7 +341,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
                     dest[nkc] = cardKlass(nkc, klass)
                     available.remove(nkc)
                 except (ValueError, KeyError):
-                    sys.stderr.write("Unknown %s '%s'\n" % (cardtype, nkc))
+                    sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
                     sys.exit(1)
         if numrequired is not None:
             # To make up the numbers
@@ -356,7 +356,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 dest[nkc] = cardKlass(nkc, klass)
 
         for crd in dest:
-            self.output("Playing with %s %s" % (cardtype, crd))
+            self.output(f"Playing with {cardtype} {crd}")
         return dest
 
     ###########################################################################
@@ -413,6 +413,10 @@ class Game(object):  # pylint: disable=too-many-public-methods
             projectname = self.guess_cardname(crd, "Project")
             if projectname:
                 self.initprojects.append(projectname)
+                continue
+            allyname = self.guess_cardname(crd, "Ally")
+            if allyname:
+                self.initally.append(allyname)
                 continue
             print("Can't guess what card '%s' is" % crd)
             foundall = False
@@ -713,6 +717,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         print("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
         print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
         print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
+        print(f"Ally: {self.ally}")
         print(
             "Projects: {}".format(", ".join([_.name for _ in self.projects.values()]))
         )
@@ -772,8 +777,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
             )
             print("  %s's tokens: %s" % (plr.name, plr.tokens))
             print(
-                "  %s's turn: coin=%d debt=%d actions=%d buys=%d"
-                % (plr.name, plr.coin, plr.debt, plr.actions, plr.buys)
+                f"  {plr.name}'s turn: coin={plr.coin} debt={plr.debt} actions={plr.actions} buys={plr.buys} favors={plr.favors}"
             )
             print(
                 "  %s: coffers=%d villagers=%d potions=%d"
@@ -922,7 +926,8 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--ally",
         dest="initally",
-        default=None,
+        action="append",
+        default=[],
         help="Include specific ally",
     )
 
