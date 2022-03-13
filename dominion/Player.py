@@ -728,7 +728,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def getAllPurchasable(self):
+    def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
         all_cards = PlayArea([])
         for c in self.game.cardTypes():
@@ -742,7 +742,7 @@ class Player:
     ###########################################################################
     def buyable_selection(self, index):
         options = []
-        all_cards = self.getAllPurchasable()
+        all_cards = self._get_all_purchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
         for card in all_cards:
             if not self.hook_allowedToBuy(card):
