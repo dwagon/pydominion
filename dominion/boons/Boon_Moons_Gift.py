@@ -50,7 +50,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_moons_gift(self):
-        self.plr.setDiscard("Province", "Gold")
+        self.plr.set_discard("Province", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)

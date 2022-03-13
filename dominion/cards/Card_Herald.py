@@ -65,7 +65,7 @@ class Test_Herald(unittest.TestCase):
         """Buy a Herald"""
         self.plr.coin = 5
         self.plr.test_input = ["1", "moat"]
-        self.plr.setDiscard("Estate", "Moat", "Copper")
+        self.plr.set_discard("Estate", "Moat", "Copper")
         self.plr.buyCard(self.g["Herald"])
         self.assertEqual(self.plr.deck[-1].name, "Moat")
 

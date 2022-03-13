@@ -47,7 +47,7 @@ class Test_Haven(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haven"].remove()
-        self.plr.setDiscard("Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.setDeck("Estate", "Estate", "Estate", "Estate", "Gold")
         self.plr.addCard(self.card, "hand")
 

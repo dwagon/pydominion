@@ -34,7 +34,7 @@ class Test_Palace(unittest.TestCase):
 
     def test_gain(self):
         """Use Palace"""
-        self.plr.setDiscard("Gold", "Silver", "Silver", "Copper", "Duchy")
+        self.plr.set_discard("Gold", "Silver", "Silver", "Copper", "Duchy")
         self.plr.setDeck("Gold", "Silver", "Copper", "Copper", "Duchy")
         self.plr.setHand("Silver", "Copper", "Copper", "Copper", "Duchy")
         self.plr.gameOver()

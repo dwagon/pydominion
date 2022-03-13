@@ -27,7 +27,7 @@ class Event_Annex(Event.Event):
             else:
                 player.addCard(card, "deck")
         player.deck.shuffle()
-        player.setDiscard()
+        player.set_discard()
         for card in keep:
             player.addCard(card, "discard")
         if player.gainCard("Duchy"):
@@ -50,7 +50,7 @@ class Test_Annex(unittest.TestCase):
 
     def test_play(self):
         """Perform Annex"""
-        self.plr.setDiscard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
+        self.plr.set_discard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
         self.plr.test_input = [
             "Silver",
             "Copper",

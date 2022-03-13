@@ -38,14 +38,14 @@ class Test_Philosophersstone(unittest.TestCase):
     def test_play(self):
         """Play a philosophers stone with not much on"""
         self.plr.setDeck("Estate")
-        self.plr.setDiscard("Estate")
+        self.plr.set_discard("Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_play_value(self):
         """Play a philosophers stone with the full Nicholas Flamel"""
         self.plr.setDeck("Estate", "Estate", "Estate", "Estate", "Silver")
-        self.plr.setDiscard("Estate", "Estate", "Estate", "Estate", "Silver")
+        self.plr.set_discard("Estate", "Estate", "Estate", "Estate", "Silver")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

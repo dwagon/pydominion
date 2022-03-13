@@ -113,24 +113,24 @@ class Test_in_discard(unittest.TestCase):
 
     def test_emptydiscard(self):
         """Test in_discard() with no discard pile"""
-        self.plr.setDiscard()
+        self.plr.set_discard()
         self.assertIsNone(self.plr.in_discard("Copper"))
 
     def test_indiscard(self):
         """Test in_discard() with it the only card in the discard pile"""
-        self.plr.setDiscard("Copper")
+        self.plr.set_discard("Copper")
         self.assertIsNotNone(self.plr.in_discard("Copper"))
 
     def test_inmultidiscard(self):
         """Test in_discard() with it one of many cards in the discard pile"""
-        self.plr.setDiscard("Copper", "Gold", "Copper")
+        self.plr.set_discard("Copper", "Gold", "Copper")
         c = self.plr.in_discard("Gold")
         self.assertIsNotNone(c)
         self.assertEqual(c.name, "Gold")
 
     def test_notinmultidiscard(self):
         """Test in_discard() with it not one of many cards in the discard pile"""
-        self.plr.setDiscard("Copper", "Gold", "Copper")
+        self.plr.set_discard("Copper", "Gold", "Copper")
         self.assertIsNone(self.plr.in_discard("Estate"))
 
 
@@ -143,7 +143,7 @@ class Test_nextCard(unittest.TestCase):
 
     def test_emptyDeck(self):
         self.plr.deck.empty()
-        self.plr.setDiscard("Gold")
+        self.plr.set_discard("Gold")
         c = self.plr.nextCard()
         self.assertEqual(c.name, "Gold")
 
@@ -462,7 +462,7 @@ class Test_pickupCard(unittest.TestCase):
     def test_pickup_empty(self):
         """Test picking up a card from an empty deck"""
         self.plr.setDeck()
-        self.plr.setDiscard("Gold")
+        self.plr.set_discard("Gold")
         self.plr.setHand()
         self.plr.pickupCard()
         self.assertEqual(self.plr.hand[0].name, "Gold")
@@ -472,7 +472,7 @@ class Test_pickupCard(unittest.TestCase):
     def test_pick_nomore(self):
         """Test picking up a card when there isn't one to be had"""
         self.plr.setDeck()
-        self.plr.setDiscard()
+        self.plr.set_discard()
         self.plr.setHand()
         c = self.plr.pickupCard()
         self.assertIsNone(c)
@@ -507,8 +507,8 @@ class Test_misc(unittest.TestCase):
         self.plr.set_played()
         self.assertEqual(self.plr.played.size(), 0)
 
-    def test_setDiscard(self):
-        self.plr.setDiscard("Silver", "Copper")
+    def test_set_discard(self):
+        self.plr.set_discard("Silver", "Copper")
         self.assertEqual(self.plr.discardpile.size(), 2)
 
     def test_setHand(self):
@@ -609,7 +609,7 @@ class Test_displayOverview(unittest.TestCase):
 
     def test_discards(self):
         self.plr.messages = []
-        self.plr.setDiscard("Copper")
+        self.plr.set_discard("Copper")
         self.plr.displayOverview()
         self.assertIn("| 1 cards in discard pile", self.plr.messages)
 

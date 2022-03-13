@@ -49,7 +49,7 @@ class Test_Port(unittest.TestCase):
 
     def test_buy(self):
         """Buy a port"""
-        self.plr.setDiscard()
+        self.plr.set_discard()
         self.plr.setCoin(5)
         self.plr.buyCard(self.g["Port"])
         for c in self.plr.discardpile:

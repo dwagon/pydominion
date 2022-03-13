@@ -50,7 +50,7 @@ class Test_Mastermind(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setDiscard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.set_discard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.setHand("Moat")

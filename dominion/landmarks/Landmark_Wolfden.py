@@ -47,7 +47,7 @@ class Test_WolfDen(unittest.TestCase):
 
     def test_gain(self):
         """Use Wolf Den"""
-        self.plr.setDiscard("Gold", "Silver")
+        self.plr.set_discard("Gold", "Silver")
         self.plr.gameOver()
         try:
             self.assertEqual(self.plr.getScoreDetails()["Wolf Den"], -6)

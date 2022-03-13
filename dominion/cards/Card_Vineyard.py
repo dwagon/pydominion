@@ -37,13 +37,13 @@ class Test_Vineyard(unittest.TestCase):
     def test_scoreOne(self):
         self.plr.setHand("Vineyard")
         self.plr.setDeck("Copper")
-        self.plr.setDiscard("Moat", "Moat", "Moat", "Moat")
+        self.plr.set_discard("Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 1)
 
     def test_scoreTwo(self):
         self.plr.setHand("Vineyard")
         self.plr.setDeck("Vineyard")
-        self.plr.setDiscard("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
+        self.plr.set_discard("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 4)
 
 

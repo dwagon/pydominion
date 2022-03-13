@@ -35,7 +35,7 @@ class Test_StarChart(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Star Chart")
-        self.plr.setDiscard("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
+        self.plr.set_discard("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
         self.plr.setDeck()
         self.plr.test_input = ["Put Gold"]
         c = self.plr.nextCard()

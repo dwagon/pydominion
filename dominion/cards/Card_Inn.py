@@ -66,13 +66,13 @@ class Test_Inn(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.setDiscard("Moat", "Gold")
+        self.plr.set_discard("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
         self.plr.gainCard("Inn")
         self.assertIsNotNone(self.plr.in_deck("Moat"))
 
     def test_gain_self(self):
-        self.plr.setDiscard()
+        self.plr.set_discard()
         self.plr.test_input = ["Inn", "finish"]
         self.plr.gainCard("Inn")
         self.assertIsNotNone(self.plr.in_deck("Inn"))

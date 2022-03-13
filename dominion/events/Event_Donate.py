@@ -38,7 +38,7 @@ class Test_Donate(unittest.TestCase):
         """Use Donate"""
         tsize = self.g.trashSize()
         self.plr.setHand("Gold", "Estate", "Copper", "Copper")
-        self.plr.setDiscard("Province", "Estate", "Copper", "Copper")
+        self.plr.set_discard("Province", "Estate", "Copper", "Copper")
         self.plr.setDeck("Silver", "Estate", "Copper", "Copper")
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.debt, 8)

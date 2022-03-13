@@ -358,7 +358,7 @@ class Player:
             self.played.add(self.game[c].remove())
 
     ###########################################################################
-    def setDiscard(self, *cards):
+    def set_discard(self, *cards):
         """This is mostly used for testing"""
         self.discardpile.empty()
         for c in cards:

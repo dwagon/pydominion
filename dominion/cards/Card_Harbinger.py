@@ -54,7 +54,7 @@ class Test_Harbinger(unittest.TestCase):
 
     def test_play(self):
         """Play a harbinger"""
-        self.plr.setDiscard("Gold", "Silver", "Province")
+        self.plr.set_discard("Gold", "Silver", "Province")
         self.plr.test_input = ["Put Gold"]
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

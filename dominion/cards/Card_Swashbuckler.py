@@ -40,7 +40,7 @@ class Test_Swashbuckler(unittest.TestCase):
 
     def test_play_no_discard(self):
         self.plr.setCoffer(0)
-        self.plr.setDiscard()
+        self.plr.set_discard()
         card = self.g["Swashbuckler"].remove()
         self.plr.addCard(card, "hand")
         self.plr.playCard(card)
@@ -49,7 +49,7 @@ class Test_Swashbuckler(unittest.TestCase):
     def test_play_no_discard_coffers(self):
         """Player shouldn't get the Treasure Chest if they have no discards"""
         self.plr.setCoffer(4)
-        self.plr.setDiscard()
+        self.plr.set_discard()
         card = self.g["Swashbuckler"].remove()
         self.plr.addCard(card, "hand")
         self.plr.playCard(card)
@@ -58,7 +58,7 @@ class Test_Swashbuckler(unittest.TestCase):
 
     def test_play_discard(self):
         self.plr.setCoffer(0)
-        self.plr.setDiscard("Copper")
+        self.plr.set_discard("Copper")
         card = self.g["Swashbuckler"].remove()
         self.plr.addCard(card, "hand")
         self.plr.playCard(card)
@@ -66,7 +66,7 @@ class Test_Swashbuckler(unittest.TestCase):
 
     def test_play_coffers(self):
         self.plr.setCoffer(3)
-        self.plr.setDiscard("Copper")
+        self.plr.set_discard("Copper")
         card = self.g["Swashbuckler"].remove()
         self.plr.addCard(card, "hand")
         self.plr.playCard(card)
