@@ -40,7 +40,7 @@ class Test_Poacher(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_empty(self):
-        self.plr.setHand("Gold", "Province")
+        self.plr.set_hand("Gold", "Province")
         while True:
             c = self.g["Moat"].remove()
             if not c:

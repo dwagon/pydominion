@@ -34,7 +34,7 @@ class Test_Owl(unittest.TestCase):
 
     def test_play(self):
         """Perform a Owl"""
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.hand.size(), 6)

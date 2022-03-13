@@ -36,7 +36,7 @@ class Test_Goatherd(unittest.TestCase):
         self.card = self.g["Goatherd"].remove()
 
     def test_play_this_turn(self):
-        self.plr.setHand("Copper", "Silver", "Gold", "Province", "Estate")
+        self.plr.set_hand("Copper", "Silver", "Gold", "Province", "Estate")
         self.plr.setDeck("Duchy")
         self.plr.addCard(self.card, "hand")
         self.other.stats["trashed"] = ["Silver"]

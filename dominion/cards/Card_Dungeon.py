@@ -41,7 +41,7 @@ class Test_Dungeon(unittest.TestCase):
         self.plr.setDeck(
             "Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold"
         )
-        self.plr.setHand("Province", "Duchy")
+        self.plr.set_hand("Province", "Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["province", "duchy", "finish"]
         self.plr.playCard(self.card)

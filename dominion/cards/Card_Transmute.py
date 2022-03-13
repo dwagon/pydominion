@@ -65,7 +65,7 @@ class Test_Transmute(unittest.TestCase):
 
     def test_trash_treasure(self):
         """Transmute a treasure card to gain a Transmute"""
-        self.plr.setHand("Gold", "Estate", "Transmute")
+        self.plr.set_hand("Gold", "Estate", "Transmute")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["trash gold"]
         self.plr.playCard(self.card)
@@ -73,7 +73,7 @@ class Test_Transmute(unittest.TestCase):
 
     def test_trash_action(self):
         """Transmute a action card to gain a Duchy"""
-        self.plr.setHand("Gold", "Estate", "Transmute")
+        self.plr.set_hand("Gold", "Estate", "Transmute")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["trash transmute"]
         self.plr.playCard(self.card)
@@ -81,7 +81,7 @@ class Test_Transmute(unittest.TestCase):
 
     def test_trash_victory(self):
         """Transmute a victory card to gain a Gold"""
-        self.plr.setHand("Gold", "Estate", "Transmute")
+        self.plr.set_hand("Gold", "Estate", "Transmute")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["trash estate"]
         self.plr.playCard(self.card)

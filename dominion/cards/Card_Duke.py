@@ -34,7 +34,7 @@ class Test_Duke(unittest.TestCase):
 
     def test_score(self):
         self.plr.setDeck("Duchy", "Duchy", "Estate")
-        self.plr.setHand("Silver")
+        self.plr.set_hand("Silver")
         self.plr.set_discard("Duke")
         sc = self.plr.getScore()
         self.assertEqual(sc, 9)  # 3 per duchy, 1 per estate, 2 from duke

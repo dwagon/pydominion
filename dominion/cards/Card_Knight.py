@@ -112,7 +112,7 @@ class Test_Knight(unittest.TestCase):
         while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
             self.card = self.g["Knight"].remove()
 
-        self.plr.setHand("Silver", "Gold")
+        self.plr.set_hand("Silver", "Gold")
         self.plr.addCard(self.card, "hand")
 
     def test_playcard_nosuitable(self):

@@ -54,7 +54,7 @@ class Test_Ghostship(unittest.TestCase):
     def test_playcard(self):
         """Play a wharf"""
         self.vic.setDeck("Estate")
-        self.vic.setHand("Duchy", "Province", "Copper", "Silver", "Gold")
+        self.vic.set_hand("Duchy", "Province", "Copper", "Silver", "Gold")
         self.vic.test_input = ["Silver", "Gold", "Finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.vic.hand.size(), 3)

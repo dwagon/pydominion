@@ -30,7 +30,7 @@ class Test_Sculptor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sculptor"].remove()
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
 
     def test_gainaction(self):

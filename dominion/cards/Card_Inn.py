@@ -58,7 +58,7 @@ class Test_Inn(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.setHand("Duchy", "Province", "Gold", "Silver")
+        self.plr.set_hand("Duchy", "Province", "Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Duchy", "Province", "finish"]
         self.plr.playCard(self.card)

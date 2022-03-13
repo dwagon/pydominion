@@ -49,7 +49,7 @@ class Test_Upgrade(unittest.TestCase):
     def test_trash(self):
         """Trash an upgrade"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Duchy", "Copper")
+        self.plr.set_hand("Duchy", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Duchy", "Get Gold"]
         self.plr.playCard(self.card)

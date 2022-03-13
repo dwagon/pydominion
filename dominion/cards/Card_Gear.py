@@ -53,7 +53,7 @@ class Test_Gear(unittest.TestCase):
 
     def test_playcard(self):
         """Play a gear"""
-        self.plr.setHand("Duchy", "Silver", "Gold")
+        self.plr.set_hand("Duchy", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["set silver", "set gold", "finish"]
         self.plr.playCard(self.card)

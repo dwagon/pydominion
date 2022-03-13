@@ -41,7 +41,7 @@ class Test_Port(unittest.TestCase):
 
     def test_play(self):
         """Play a port"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 1)

@@ -48,14 +48,14 @@ class Test_MarketSquare(unittest.TestCase):
 
     def test_trash_and_keep(self):
         """Choose to keep MS after a trash"""
-        self.plr.setHand("Copper", "Market Square")
+        self.plr.set_hand("Copper", "Market Square")
         self.plr.test_input = ["keep"]
         self.plr.trash_card(self.plr.in_hand("Copper"))
         self.assertIsNotNone(self.plr.in_hand("Market Square"))
 
     def test_trash_and_discard(self):
         """Choose to keep MS after a trash"""
-        self.plr.setHand("Copper", "Market Square")
+        self.plr.set_hand("Copper", "Market Square")
         self.plr.test_input = ["discard"]
         self.plr.trash_card(self.plr.in_hand("Copper"))
         self.assertIsNone(self.plr.in_hand("Market Square"))

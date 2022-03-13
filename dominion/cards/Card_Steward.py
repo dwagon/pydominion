@@ -68,7 +68,7 @@ class Test_Steward(unittest.TestCase):
     def test_trash_smallhand(self):
         """Trash two when there are less than two to trash"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["2", "1", "0"]
         self.plr.playCard(self.card)

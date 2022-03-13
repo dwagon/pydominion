@@ -33,7 +33,7 @@ class Test_Altar(unittest.TestCase):
 
     def test_play(self):
         """Play an Altar"""
-        self.plr.setHand("Province")
+        self.plr.set_hand("Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Province", "Moat"]
         self.plr.playCard(self.card)

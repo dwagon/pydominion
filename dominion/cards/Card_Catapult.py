@@ -51,7 +51,7 @@ class Test_Catapult(unittest.TestCase):
 
     def test_play(self):
         """Play a Catapult with a non-treasure"""
-        self.plr.setHand("Duchy")
+        self.plr.set_hand("Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Duchy"]
         self.plr.playCard(self.card)
@@ -61,7 +61,7 @@ class Test_Catapult(unittest.TestCase):
 
     def test_play_treasure(self):
         """Play a Catapult with a treasure"""
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.victim.test_input = ["1", "2", "0"]
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Copper"]

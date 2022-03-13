@@ -38,12 +38,12 @@ class Test_Tower(unittest.TestCase):
 
     def test_none(self):
         """Use Tower"""
-        self.plr.setHand("Moat", "Moat")
+        self.plr.set_hand("Moat", "Moat")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Tower"], 0)
 
     def test_one(self):
-        self.plr.setHand("Moat", "Moat")
+        self.plr.set_hand("Moat", "Moat")
         while True:
             c = self.g["Moat"].remove()
             if not c:

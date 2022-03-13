@@ -37,7 +37,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.state = self.g.states["Lost in the Woods"]
 
     def test_lost_in_woods(self):
-        self.plr.setHand("Copper", "Estate", "Gold")
+        self.plr.set_hand("Copper", "Estate", "Gold")
         self.plr.assign_state("Lost in the Woods")
         self.plr.test_input = ["Estate"]
         self.plr._liw_dont_boon = False
@@ -46,7 +46,7 @@ class Test_Lost_in_woods(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_discard("Estate"))
 
     def test_found_in_woods(self):
-        self.plr.setHand("Copper", "Estate", "Gold")
+        self.plr.set_hand("Copper", "Estate", "Gold")
         self.plr.assign_state("Lost in the Woods")
         self.plr.test_input = ["Finish"]
         self.plr._liw_dont_boon = False

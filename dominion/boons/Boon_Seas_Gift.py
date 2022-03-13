@@ -34,7 +34,7 @@ class Test_Seas_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_seas_gift(self):
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2)

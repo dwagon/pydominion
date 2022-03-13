@@ -57,7 +57,7 @@ class Test_Treasuremap(unittest.TestCase):
         """Trash 2 TM"""
         tsize = self.g.trashSize()
         self.plr.setDeck()
-        self.plr.setHand("Treasure Map")
+        self.plr.set_hand("Treasure Map")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["1", "finish"]
         self.plr.playCard(self.card)

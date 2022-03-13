@@ -68,7 +68,7 @@ class Test_Bandit(unittest.TestCase):
         self.thief.addCard(self.card, "hand")
 
     def test_do_nothing(self):
-        self.vic.setHand("Copper", "Copper")
+        self.vic.set_hand("Copper", "Copper")
         self.vic.setDeck("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.card)
@@ -76,7 +76,7 @@ class Test_Bandit(unittest.TestCase):
         self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_trash_treasure(self):
-        self.vic.setHand("Copper", "Copper")
+        self.vic.set_hand("Copper", "Copper")
         self.vic.setDeck("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
         self.thief.playCard(self.card)

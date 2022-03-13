@@ -48,14 +48,14 @@ class Test_Scout(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.scout, "hand")
         self.plr.playCard(self.scout)
         for c in self.plr.hand:
             self.assertTrue(c.isVictory())
 
     def test_deck(self):
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.scout, "hand")
         self.plr.setDeck("Copper", "Copper", "Copper", "Duchy")
         self.plr.playCard(self.scout)

@@ -50,14 +50,14 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_play(self):
         """Play a watch tower"""
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_react_nothing(self):
         """React to gaining a card - but do nothing"""
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["nothing"]
         self.plr.gainCard("Copper")
@@ -70,7 +70,7 @@ class Test_Watchtower(unittest.TestCase):
         tsize = self.g.trashSize()
         try:
             self.plr.test_input = ["trash"]
-            self.plr.setHand("Gold")
+            self.plr.set_hand("Gold")
             self.plr.addCard(self.card, "hand")
             self.plr.gainCard("Copper")
             self.assertEqual(self.g.trashSize(), tsize + 1)
@@ -85,7 +85,7 @@ class Test_Watchtower(unittest.TestCase):
         """React to gaining a card - put card on deck"""
         tsize = self.g.trashSize()
         self.plr.test_input = ["top"]
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.gainCard("Silver")
         try:

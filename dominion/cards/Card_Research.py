@@ -57,7 +57,7 @@ class Test_Research(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Research"].remove()
-        self.plr.setHand("Gold", "Silver", "Copper")
+        self.plr.set_hand("Gold", "Silver", "Copper")
         self.plr.addCard(self.card, "hand")
         self.moat = self.g["Moat"].remove()
         self.plr.addCard(self.moat, "hand")

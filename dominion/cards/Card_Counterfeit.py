@@ -55,14 +55,14 @@ class Test_Counterfiet(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_notreasures(self):
-        self.plr.setHand("Estate", "Estate", "Estate")
+        self.plr.set_hand("Estate", "Estate", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
     def test_twice(self):
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.playCard(self.card)

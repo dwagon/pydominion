@@ -38,13 +38,13 @@ class Test_Feodum(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.setHand("Feodum")
+        self.plr.set_hand("Feodum")
         self.plr.setDeck("Copper")
         self.plr.set_discard("Silver", "Silver", "Silver", "Silver")
         self.assertEqual(self.plr.getScoreDetails()["Feodum"], 1)
 
     def test_scoreTwo(self):
-        self.plr.setHand("Feodum")
+        self.plr.set_hand("Feodum")
         self.plr.setDeck("Feodum")
         self.plr.set_discard("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
         self.assertEqual(self.plr.getScoreDetails()["Feodum"], 4)

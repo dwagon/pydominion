@@ -365,7 +365,7 @@ class Player:
             self.discardpile.add(self.game[c].remove())
 
     ###########################################################################
-    def setHand(self, *cards):
+    def set_hand(self, *cards):
         """This is mostly used for testing"""
         self.hand.empty()
         for c in cards:

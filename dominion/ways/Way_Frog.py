@@ -37,7 +37,7 @@ class Test_Frog(unittest.TestCase):
 
     def test_play(self):
         """Perform a Frog"""
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)

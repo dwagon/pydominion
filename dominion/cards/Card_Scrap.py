@@ -52,7 +52,7 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost0(self):
         """Play a scrap and trash something worth 0"""
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["trash copper"]
         self.plr.playCard(self.card)
@@ -60,7 +60,7 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost3(self):
         """Play a scrap and trash something worth 3"""
-        self.plr.setHand("Silver")
+        self.plr.set_hand("Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.setDeck("Province")
         self.plr.test_input = ["trash silver"]
@@ -72,7 +72,7 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost6(self):
         """Play a scrap and trash something worth more than 6"""
-        self.plr.setHand("Province")
+        self.plr.set_hand("Province")
         self.plr.addCard(self.card, "hand")
         self.plr.setDeck("Copper")
         self.plr.test_input = ["trash province"]

@@ -41,7 +41,7 @@ class Test_Guide(unittest.TestCase):
 
     def test_call(self):
         """Call Guide from reserve"""
-        self.plr.setHand("Estate", "Estate")
+        self.plr.set_hand("Estate", "Estate")
         self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.set_reserve("Guide")
         self.plr.call_reserve("Guide")

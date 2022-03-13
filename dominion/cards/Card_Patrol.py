@@ -44,7 +44,7 @@ class Test_Patrol(unittest.TestCase):
         self.card = self.g["Patrol"].remove()
 
     def test_play(self):
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.setDeck(
             "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"

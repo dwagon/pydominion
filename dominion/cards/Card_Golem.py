@@ -55,7 +55,7 @@ class Test_Golem(unittest.TestCase):
 
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.setDeck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
@@ -66,7 +66,7 @@ class Test_Golem(unittest.TestCase):
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.setDeck(
             "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
         )
@@ -80,7 +80,7 @@ class Test_Golem(unittest.TestCase):
         )
 
     def test_nocards(self):
-        self.plr.setHand("Copper", "Copper", "Copper")
+        self.plr.set_hand("Copper", "Copper", "Copper")
         self.plr.setDeck("Copper", "Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

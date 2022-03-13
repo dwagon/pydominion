@@ -38,7 +38,7 @@ class Test_Orchard(unittest.TestCase):
         """Use Orchard"""
         self.plr.set_discard("Moat", "Moat", "Militia", "Duchy")
         self.plr.setDeck("Moat", "Moat", "Copper", "Duchy")
-        self.plr.setHand("Moat", "Militia", "Copper", "Copper", "Duchy")
+        self.plr.set_hand("Moat", "Militia", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Orchard"], 4)
 

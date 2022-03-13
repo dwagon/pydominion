@@ -49,7 +49,7 @@ class Test_Spy(unittest.TestCase):
         self.defender.setDeck("Estate", "Gold")
 
     def test_moat(self):
-        self.defender.setHand("Moat")
+        self.defender.set_hand("Moat")
         scard = self.attacker.gainCard("Spy", "hand")
         self.attacker.test_input = ["0"]
         self.attacker.playCard(scard)

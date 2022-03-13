@@ -48,7 +48,7 @@ class Test_Kingscourt(unittest.TestCase):
 
     def test_play(self):
         self.plr.setDeck("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
-        self.plr.setHand("Moat", "Estate")
+        self.plr.set_hand("Moat", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["play moat"]
         self.plr.playCard(self.card)
@@ -67,7 +67,7 @@ class Test_Kingscourt(unittest.TestCase):
             self.fail("Didn't put moat in played")
 
     def test_noactions(self):
-        self.plr.setHand("Estate", "Estate")
+        self.plr.set_hand("Estate", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
@@ -75,7 +75,7 @@ class Test_Kingscourt(unittest.TestCase):
 
     def test_picked_nothing(self):
         """Selected no actions with Kings court"""
-        self.plr.setHand("Estate", "Estate", "Moat")
+        self.plr.set_hand("Estate", "Estate", "Moat")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)

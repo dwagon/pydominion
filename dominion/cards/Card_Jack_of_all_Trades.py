@@ -52,7 +52,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         """Play a Jack of all Trades"""
         tsize = self.g.trashSize()
         self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
-        self.plr.setHand("Duchy")
+        self.plr.set_hand("Duchy")
         self.plr.test_input = ["keep", "duchy"]
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

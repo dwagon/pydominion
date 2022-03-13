@@ -40,11 +40,11 @@ class Test_Haunting(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_none(self):
-        self.plr.setHand("Duchy", "Gold", "Silver")
+        self.plr.set_hand("Duchy", "Gold", "Silver")
         self.plr.gainCard("Cursed Village")
 
     def test_activate(self):
-        self.plr.setHand("Duchy", "Gold", "Silver", "Province")
+        self.plr.set_hand("Duchy", "Gold", "Silver", "Province")
         self.plr.test_input = ["Gold"]
         self.plr.gainCard("Cursed Village")
         self.assertEqual(self.plr.deck[-1].name, "Gold")

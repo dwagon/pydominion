@@ -53,7 +53,7 @@ class Test_Exorcist(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setHand("Silver", "Gold", "Province")
+        self.plr.set_hand("Silver", "Gold", "Province")
         self.plr.test_input = ["Silver", "Imp"]
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

@@ -40,7 +40,7 @@ class Test_Improve(unittest.TestCase):
         self.card = self.g["Improve"].remove()
 
     def test_play(self):
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]

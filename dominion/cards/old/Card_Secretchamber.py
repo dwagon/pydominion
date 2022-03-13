@@ -75,7 +75,7 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_play_three(self):
         """Play the Secret Chamber - discard three"""
-        self.plr.setHand("Copper", "Silver", "Gold", "Province", "Estate")
+        self.plr.set_hand("Copper", "Silver", "Gold", "Province", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = [
             "discard copper",
@@ -92,7 +92,7 @@ class Test_Secretchamber(unittest.TestCase):
         mil = self.g["Militia"].remove()
         self.plr.setDeck("Duchy", "Province")
         self.att.addCard(mil, "hand")
-        self.plr.setHand("Secret Chamber", "Silver", "Gold")
+        self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["Reveal", "Silver", "Gold", "Finish"]
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.in_hand("Province"))
@@ -107,7 +107,7 @@ class Test_Secretchamber(unittest.TestCase):
         mil = self.g["Militia"].remove()
         self.plr.setDeck("Duchy", "Province")
         self.att.addCard(mil, "hand")
-        self.plr.setHand("Secret Chamber", "Silver", "Gold")
+        self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["nothing"]
         self.att.playCard(mil)
         self.assertIsNotNone(self.plr.in_deck("Province"))

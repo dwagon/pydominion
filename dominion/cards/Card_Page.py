@@ -33,7 +33,7 @@ class Test_Page(unittest.TestCase):
 
     def test_page(self):
         """Play a page"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 1)

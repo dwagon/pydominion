@@ -35,13 +35,13 @@ class Test_Vineyard(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.setHand("Vineyard")
+        self.plr.set_hand("Vineyard")
         self.plr.setDeck("Copper")
         self.plr.set_discard("Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 1)
 
     def test_scoreTwo(self):
-        self.plr.setHand("Vineyard")
+        self.plr.set_hand("Vineyard")
         self.plr.setDeck("Vineyard")
         self.plr.set_discard("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 4)

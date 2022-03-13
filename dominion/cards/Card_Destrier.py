@@ -31,7 +31,7 @@ class Test_Destrier(unittest.TestCase):
         self.card = self.g["Destrier"].remove()
 
     def test_play(self):
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

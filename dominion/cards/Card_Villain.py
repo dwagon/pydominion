@@ -63,7 +63,7 @@ class Test_Villain(unittest.TestCase):
 
     def test_playCard(self):
         sc = self.plr.getCoffer()
-        self.vic.setHand("Gold", "Province", "Copper", "Copper", "Copper")
+        self.vic.set_hand("Gold", "Province", "Copper", "Copper", "Copper")
         self.vic.test_input = ["Province"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoffer(), sc + 2)

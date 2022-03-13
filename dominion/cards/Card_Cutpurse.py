@@ -41,13 +41,13 @@ class Test_Cutpurse(unittest.TestCase):
         self.plr.addCard(self.card, "hand")
 
     def test_play_coppers(self):
-        self.victim.setHand("Copper", "Copper", "Estate")
+        self.victim.set_hand("Copper", "Copper", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.victim.discardpile[-1].name, "Copper")
         self.assertEqual(self.victim.hand.size(), 2)
 
     def test_play_none(self):
-        self.victim.setHand("Estate", "Estate", "Estate")
+        self.victim.set_hand("Estate", "Estate", "Estate")
         self.plr.playCard(self.card)
         self.assertTrue(self.victim.discardpile.is_empty())
         self.assertEqual(self.victim.hand.size(), 3)

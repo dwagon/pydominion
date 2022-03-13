@@ -28,7 +28,7 @@ class Test_Sewers(unittest.TestCase):
         self.card = self.g["Chapel"].remove()
 
     def test_play(self):
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]

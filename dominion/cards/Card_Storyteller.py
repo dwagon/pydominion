@@ -45,7 +45,7 @@ class Test_Storyteller(unittest.TestCase):
 
     def test_play(self):
         """Play a Storyteller"""
-        self.plr.setHand("Copper", "Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Copper", "Silver", "Gold")
         self.plr.test_input = ["1", "2", "silver", "finish"]
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

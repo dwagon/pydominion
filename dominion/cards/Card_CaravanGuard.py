@@ -54,7 +54,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_attack(self):
-        self.plr.setHand("Caravan Guard", "Moat")
+        self.plr.set_hand("Caravan Guard", "Moat")
         self.attacker.addCard(self.militia, "hand")
         self.attacker.playCard(self.militia)
         self.assertEqual(self.plr.hand.size(), 2)

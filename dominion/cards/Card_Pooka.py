@@ -37,7 +37,7 @@ class Test_Pooka(unittest.TestCase):
 
     def test_play(self):
         """Play a Pooka"""
-        self.plr.setHand("Copper", "Gold")
+        self.plr.set_hand("Copper", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Copper"]
         self.plr.playCard(self.card)

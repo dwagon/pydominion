@@ -39,7 +39,7 @@ class Test_Settlers(unittest.TestCase):
     def test_play(self):
         """Play a Settlers and pull a copper"""
         self.plr.set_discard("Gold", "Silver", "Copper")
-        self.plr.setHand("Gold", "Silver")
+        self.plr.set_hand("Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
@@ -51,7 +51,7 @@ class Test_Settlers(unittest.TestCase):
         """Play a Settlers and pull a copper"""
         self.plr.setDeck("Gold", "Silver")
         self.plr.set_discard("Gold", "Silver", "Duchy")
-        self.plr.setHand("Gold", "Silver")
+        self.plr.set_hand("Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_hand("Copper"))

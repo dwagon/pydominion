@@ -53,7 +53,7 @@ class Test_Pillage(unittest.TestCase):
         """Play the Pillage"""
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.victim.setHand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
+        self.victim.set_hand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
@@ -66,7 +66,7 @@ class Test_Pillage(unittest.TestCase):
         """Play the Pillage with the victim having a small hand"""
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.victim.setHand("Copper", "Estate", "Duchy", "Gold")
+        self.victim.set_hand("Copper", "Estate", "Duchy", "Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:

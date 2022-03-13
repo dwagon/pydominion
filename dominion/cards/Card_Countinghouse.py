@@ -33,7 +33,7 @@ class Test_Countinghouse(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.ch, "hand")
 
     def test_pullcoppers(self):

@@ -39,7 +39,7 @@ class Test_Rats(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.rats = self.g["Rats"].remove()
         self.plr.setDeck("Estate", "Province", "Duchy")
-        self.plr.setHand("Copper", "Gold", "Silver", "Rats")
+        self.plr.set_hand("Copper", "Gold", "Silver", "Rats")
         self.plr.addCard(self.rats, "hand")
 
     def test_play(self):

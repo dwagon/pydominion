@@ -46,7 +46,7 @@ class Test_Earths_Gift(unittest.TestCase):
 
     def test_earths_gift(self):
         self.coins = 0
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Discard Copper", "Get Silver"]
         self.plr.playCard(self.card)

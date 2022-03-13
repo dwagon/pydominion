@@ -49,7 +49,7 @@ class Test_Island(unittest.TestCase):
 
     def test_play_province(self):
         """Play an island on a province"""
-        self.plr.setHand("Silver", "Province")
+        self.plr.set_hand("Silver", "Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["province"]
         self.plr.playCard(self.card)

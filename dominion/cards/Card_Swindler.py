@@ -46,14 +46,14 @@ class Test_Swindler(unittest.TestCase):
 
     def test_play(self):
         """Play the Swindler"""
-        self.victim.setHand("Moat")
+        self.victim.set_hand("Moat")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_defended(self):
         """Swindle a defended player"""
         tsize = self.g.trashSize()
-        self.victim.setHand("Moat")
+        self.victim.set_hand("Moat")
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
 

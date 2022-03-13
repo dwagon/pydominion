@@ -30,7 +30,7 @@ class Test_Oasis(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Oasis"].remove()
-        self.plr.setHand("Gold", "Copper", "Copper", "Copper", "Copper")
+        self.plr.set_hand("Gold", "Copper", "Copper", "Copper", "Copper")
         self.plr.addCard(self.card, "hand")
 
     def test_playcard(self):

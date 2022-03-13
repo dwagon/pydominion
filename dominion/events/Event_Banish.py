@@ -58,7 +58,7 @@ class Test_Banish(unittest.TestCase):
     def test_Banish_multi(self):
         """Use Banish"""
         self.plr.addCoin(4)
-        self.plr.setHand("Estate", "Estate", "Estate", "Duchy")
+        self.plr.set_hand("Estate", "Estate", "Estate", "Duchy")
         self.plr.test_input = ["Estate", "2"]
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_exile("Estate"))
@@ -67,7 +67,7 @@ class Test_Banish(unittest.TestCase):
     def test_Banish_single(self):
         """Use Banish"""
         self.plr.addCoin(4)
-        self.plr.setHand("Estate", "Estate", "Estate", "Duchy")
+        self.plr.set_hand("Estate", "Estate", "Estate", "Duchy")
         self.plr.test_input = ["Duchy"]
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_exile("Duchy"))

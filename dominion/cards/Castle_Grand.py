@@ -50,7 +50,7 @@ class Test_GrandCastle(unittest.TestCase):
 
     def test_gain(self):
         """Gain Grand Castle"""
-        self.plr.setHand("Duchy", "Province")
+        self.plr.set_hand("Duchy", "Province")
         while True:
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":  # One before Grand

@@ -64,7 +64,7 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play_trash_action(self):
         """Play a death cart - no actions"""
-        self.plr.setHand("Copper", "Moat")
+        self.plr.set_hand("Copper", "Moat")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Trash an Action", "Trash Moat"]
         self.plr.playCard(self.card)
@@ -74,7 +74,7 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play_trash_self(self):
         """Play a death cart - no actions"""
-        self.plr.setHand("Copper", "Moat")
+        self.plr.set_hand("Copper", "Moat")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Trash this Death"]
         self.plr.playCard(self.card)

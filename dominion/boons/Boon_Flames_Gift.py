@@ -36,7 +36,7 @@ class Test_Flames_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_flames_gift(self):
-        self.plr.setHand("Duchy")
+        self.plr.set_hand("Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Duchy"]
         self.plr.playCard(self.card)

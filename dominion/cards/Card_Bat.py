@@ -33,7 +33,7 @@ class Test_Bat(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setHand("Duchy", "Silver", "Gold")
+        self.plr.set_hand("Duchy", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Trash Silver", "Trash Gold", "Finish"]
         self.plr.playCard(self.card)

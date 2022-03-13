@@ -54,7 +54,7 @@ class Test_Butcher(unittest.TestCase):
 
     def test_trash_gold(self):
         """Trash a gold"""
-        self.plr.setHand("Copper", "Gold", "Silver")
+        self.plr.set_hand("Copper", "Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.coffer = 0
         # Trash a card

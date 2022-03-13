@@ -49,7 +49,7 @@ class Test_Mandarin(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.setHand("Gold", "Copper")
+        self.plr.set_hand("Gold", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)

@@ -77,7 +77,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_trash(self):
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.addCard(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["finish"]
@@ -88,8 +88,8 @@ class Test_Bishop(unittest.TestCase):
 
     def test_bothtrash(self):
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold")
-        self.other.setHand("Province")
+        self.plr.set_hand("Gold")
+        self.other.set_hand("Province")
         self.plr.addCard(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["trash province"]

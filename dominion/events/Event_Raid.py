@@ -40,7 +40,7 @@ class Test_Raid(unittest.TestCase):
     def test_play(self):
         """Perform a Raid"""
         self.plr.addCoin(5)
-        self.plr.setHand("Silver", "Silver")
+        self.plr.set_hand("Silver", "Silver")
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.buys, 0)

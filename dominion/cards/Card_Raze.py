@@ -64,7 +64,7 @@ class Test_Raze(unittest.TestCase):
 
     def test_copper(self):
         """Play a raze - trashing copper - a zero value card"""
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.setDeck("Silver", "Gold", "Province")
         self.plr.test_input = ["Copper", "Gold"]

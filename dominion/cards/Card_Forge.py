@@ -45,7 +45,7 @@ class Test_Forge(unittest.TestCase):
     def test_play(self):
         """Play the Forge"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Estate", "Estate", "Estate")
+        self.plr.set_hand("Estate", "Estate", "Estate")
         self.plr.addCard(self.forge, "hand")
         # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ["1", "2", "finish", "Bureaucrat"]

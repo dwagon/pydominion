@@ -34,7 +34,7 @@ class Test_Relic(unittest.TestCase):
 
     def test_play(self):
         """Play a relic"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)

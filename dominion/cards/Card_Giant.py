@@ -50,7 +50,7 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_journey_trashed(self):
         """Play a giant - good journey - trashable victim"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.victim.setDeck("Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.journey_token = False
@@ -60,7 +60,7 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_journey_untrashed(self):
         """Play a giant - good journey - untrashable victim"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.victim.setDeck("Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.journey_token = False
@@ -71,7 +71,7 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_no_journey(self):
         """Play a giant - bad journey"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.journey_token = True
         self.plr.playCard(self.card)

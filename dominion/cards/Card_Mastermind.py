@@ -53,7 +53,7 @@ class Test_Mastermind(unittest.TestCase):
         self.plr.set_discard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.playCard(self.card)
         self.plr.end_turn()
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.test_input = ["Play Moat"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 6)

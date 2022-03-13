@@ -66,7 +66,7 @@ class Test_Stonemason(unittest.TestCase):
 
     def test_play(self):
         """Play a stonemason"""
-        self.plr.setHand("Province")
+        self.plr.set_hand("Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.playCard(self.card)

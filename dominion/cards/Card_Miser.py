@@ -46,7 +46,7 @@ class Test_Miser(unittest.TestCase):
 
     def test_put(self):
         """Play a miser with coppers in hand"""
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_hand("Copper", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["put"]
         self.plr.playCard(self.card)
@@ -56,7 +56,7 @@ class Test_Miser(unittest.TestCase):
 
     def test_put_none(self):
         """Play a miser with no coppers in hand"""
-        self.plr.setHand("Estate", "Estate")
+        self.plr.set_hand("Estate", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_reserve("Copper"))
@@ -64,7 +64,7 @@ class Test_Miser(unittest.TestCase):
 
     def test_add(self):
         """Play a miser with coppers in reserve"""
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_hand("Copper", "Estate")
         self.plr.set_reserve("Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["coins from mat"]

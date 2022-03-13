@@ -34,7 +34,7 @@ class Test_SilkMerchant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Silk Merchant"].remove()
-        self.plr.setHand()
+        self.plr.set_hand()
 
     def test_gain_card(self):
         self.plr.setCoffer(0)

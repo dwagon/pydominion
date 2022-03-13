@@ -32,7 +32,7 @@ class Test_Coinoftherealm(unittest.TestCase):
 
     def test_play(self):
         """Play a coin of the realm"""
-        self.plr.setHand()
+        self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)

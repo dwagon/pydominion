@@ -30,14 +30,14 @@ class Test_Gardens(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score_0(self):
-        self.plr.setHand("Gardens", "Copper", "Copper")
+        self.plr.set_hand("Gardens", "Copper", "Copper")
         self.plr.setDeck("Copper", "Copper", "Copper")
         self.plr.set_discard("Copper", "Copper", "Copper")
         score = self.plr.getScoreDetails()
         self.assertEqual(score["Gardens"], 0)
 
     def test_score_1(self):
-        self.plr.setHand("Gardens", "Copper", "Copper")
+        self.plr.set_hand("Gardens", "Copper", "Copper")
         self.plr.setDeck("Copper", "Copper", "Copper", "Copper")
         self.plr.set_discard("Copper", "Copper", "Copper")
         score = self.plr.getScoreDetails()

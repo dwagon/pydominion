@@ -39,7 +39,7 @@ class Test_Plaza(unittest.TestCase):
         """Play a plaza"""
         try:
             self.plr.coffer = 0
-            self.plr.setHand("Gold")
+            self.plr.set_hand("Gold")
             self.plr.test_input = ["discard gold"]
             self.plr.addCard(self.card, "hand")
             self.plr.playCard(self.card)

@@ -37,7 +37,7 @@ class Test_Winds_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.setHand("Duchy", "Gold", "Silver")
+        self.plr.set_hand("Duchy", "Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Discard Duchy", "Discard Gold", "Finish Selecting"]
         self.plr.playCard(self.card)

@@ -89,7 +89,7 @@ class Test_Thief(unittest.TestCase):
         self.assertIn("Player victim has no treasures", self.thief.messages)
 
     def test_moat_defense(self):
-        self.victim.setHand("Moat", "Copper", "Copper")
+        self.victim.set_hand("Moat", "Copper", "Copper")
         self.victim.setDeck("Copper", "Silver", "Gold")
         self.thief.playCard(self.thiefcard)
         self.assertIn("Player victim is defended", self.thief.messages)
@@ -97,7 +97,7 @@ class Test_Thief(unittest.TestCase):
         self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_do_nothing(self):
-        self.victim.setHand("Copper", "Copper")
+        self.victim.set_hand("Copper", "Copper")
         self.victim.setDeck("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
         self.thief.playCard(self.thiefcard)
@@ -106,7 +106,7 @@ class Test_Thief(unittest.TestCase):
         self.assertEqual(self.thief.discardpile.size(), 0)
 
     def test_trash_treasure(self):
-        self.victim.setHand("Copper", "Copper")
+        self.victim.set_hand("Copper", "Copper")
         self.victim.setDeck("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
         self.thief.playCard(self.thiefcard)
@@ -118,7 +118,7 @@ class Test_Thief(unittest.TestCase):
 
     def test_steal_treasure(self):
         tsize = self.g.trashSize()
-        self.victim.setHand("Copper", "Copper")
+        self.victim.set_hand("Copper", "Copper")
         self.victim.setDeck("Copper", "Silver", "Gold")
         self.thief.test_input = ["steal gold"]
         self.thief.playCard(self.thiefcard)

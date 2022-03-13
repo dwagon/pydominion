@@ -51,14 +51,14 @@ class Test_Imp(unittest.TestCase):
         self.card = self.g["Imp"].remove()
 
     def test_played(self):
-        self.plr.setHand("Moat", "Copper")
+        self.plr.set_hand("Moat", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.set_played("Moat")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_not_played(self):
-        self.plr.setHand("Moat", "Copper")
+        self.plr.set_hand("Moat", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)

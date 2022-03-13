@@ -37,7 +37,7 @@ class Test_Donate(unittest.TestCase):
     def test_with_treasure(self):
         """Use Donate"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold", "Estate", "Copper", "Copper")
+        self.plr.set_hand("Gold", "Estate", "Copper", "Copper")
         self.plr.set_discard("Province", "Estate", "Copper", "Copper")
         self.plr.setDeck("Silver", "Estate", "Copper", "Copper")
         self.plr.performEvent(self.card)

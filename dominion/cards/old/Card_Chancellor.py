@@ -33,7 +33,7 @@ class Test_Chancellor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chancellor"].remove()
-        self.plr.setHand("Estate")
+        self.plr.set_hand("Estate")
         self.plr.addCard(self.ccard, "hand")
 
     def test_nodiscard(self):

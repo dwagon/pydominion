@@ -58,7 +58,7 @@ class Test_Ambassador(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.setHand("Gold", "Duchy", "Silver")
+        self.plr.set_hand("Gold", "Duchy", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Duchy", "finish"]
         self.plr.playCard(self.card)
@@ -67,7 +67,7 @@ class Test_Ambassador(unittest.TestCase):
 
     def test_discard_two(self):
         """Play the card  and discard two"""
-        self.plr.setHand("Duchy", "Duchy", "Silver")
+        self.plr.set_hand("Duchy", "Duchy", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.playCard(self.card)

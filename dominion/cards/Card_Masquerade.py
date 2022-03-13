@@ -57,8 +57,8 @@ class Test_Masquerade(unittest.TestCase):
     def test_play(self):
         """Play a masquerade"""
         tsize = self.g.trashSize()
-        self.other.setHand("Copper", "Silver", "Gold")
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.other.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.setDeck("Estate", "Duchy", "Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["select silver", "finish"]
@@ -72,8 +72,8 @@ class Test_Masquerade(unittest.TestCase):
     def test_play_with_trash(self):
         """Play a masquerade and trash after"""
         tsize = self.g.trashSize()
-        self.other.setHand("Copper", "Silver", "Gold")
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.other.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["select gold", "trash silver"]
         self.other.test_input = ["select gold"]

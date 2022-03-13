@@ -46,7 +46,7 @@ class Test_Delay(unittest.TestCase):
     def test_play(self):
         """Perform a Delay"""
         self.plr.test_input = ["Select Moat"]
-        self.plr.setHand("Moat", "Copper", "Estate")
+        self.plr.set_hand("Moat", "Copper", "Estate")
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_defer("Moat"))
 

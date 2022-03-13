@@ -42,7 +42,7 @@ class Test_SecretCave(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Secret Cave"""
-        self.plr.setHand("Silver", "Estate", "Duchy", "Province", "Copper")
+        self.plr.set_hand("Silver", "Estate", "Duchy", "Province", "Copper")
         self.plr.test_input = [
             "Discard Silver",
             "Discard Duchy",

@@ -33,7 +33,7 @@ class Test_Trade(unittest.TestCase):
     def test_play(self):
         """Perform a Trade"""
         self.plr.addCoin(5)
-        self.plr.setHand("Copper", "Estate", "Gold")
+        self.plr.set_hand("Copper", "Estate", "Gold")
         self.plr.test_input = ["copper", "estate", "finish"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)

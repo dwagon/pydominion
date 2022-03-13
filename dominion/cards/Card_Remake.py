@@ -32,7 +32,7 @@ class Test_Remake(unittest.TestCase):
 
     def test_playcard(self):
         """Play a remake"""
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_hand("Copper", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = [
             "Trash Estate",

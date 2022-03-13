@@ -46,13 +46,13 @@ class Test_Alms(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Alms with treasures"""
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_without_treasure(self):
         """Use Alms with no treasures"""
-        self.plr.setHand("Estate")
+        self.plr.set_hand("Estate")
         self.plr.test_input = ["Lurker"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
@@ -60,7 +60,7 @@ class Test_Alms(unittest.TestCase):
 
     def test_twice(self):
         """Use Alms twice"""
-        self.plr.setHand("Estate")
+        self.plr.set_hand("Estate")
         self.plr.test_input = ["Lurker"]
         self.plr.performEvent(self.card)
         self.plr.performEvent(self.card)

@@ -49,7 +49,7 @@ class Test_Treasurer(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Treasurer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.plr.setHand("Copper", "Silver")
+        self.plr.set_hand("Copper", "Silver")
         self.card = self.g["Treasurer"].remove()
         self.plr.addCard(self.card, "hand")
 

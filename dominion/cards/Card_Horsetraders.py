@@ -37,7 +37,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.card = self.g["Horse Traders"].remove()
 
     def test_play(self):
-        self.plr.setHand("Estate", "Duchy", "Province")
+        self.plr.set_hand("Estate", "Duchy", "Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.playCard(self.card)

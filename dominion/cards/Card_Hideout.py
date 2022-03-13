@@ -34,7 +34,7 @@ class Test_Hideout(unittest.TestCase):
 
     def test_playCard(self):
         self.plr.setDeck("Silver")
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
@@ -44,7 +44,7 @@ class Test_Hideout(unittest.TestCase):
 
     def test_trashVictory(self):
         self.plr.setDeck("Silver")
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]

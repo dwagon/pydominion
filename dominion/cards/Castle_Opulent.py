@@ -41,7 +41,7 @@ class Test_OpulentCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.setHand("Estate", "Duchy", "Province", "Gold")
+        self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.playCard(self.card)

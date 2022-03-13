@@ -37,7 +37,7 @@ class Test_Displace(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setHand("Copper", "Silver")
+        self.plr.set_hand("Copper", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Exile Copper", "Get Estate"]
         self.plr.playCard(self.card)

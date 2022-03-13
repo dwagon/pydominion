@@ -49,7 +49,7 @@ class Test_Procession(unittest.TestCase):
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.playCard(self.card)
