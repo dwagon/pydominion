@@ -703,7 +703,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def event_selection(self, index):
+    def _event_selection(self, index):
         options = []
         for op in self.game.events.values():
             index += 1
@@ -799,7 +799,7 @@ class Player:
             options.extend(op)
             op, index = self.buyable_selection(index)
             options.extend(op)
-            op, index = self.event_selection(index)
+            op, index = self._event_selection(index)
             options.extend(op)
             op, index = self._project_selection(index)
             if op:
