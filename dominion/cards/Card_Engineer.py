@@ -25,7 +25,7 @@ class Card_Engineer(Card.Card):
             ("Trash to gain a card costing up to 4", True),
         )
         if trash:
-            player.trashCard(self)
+            player.trash_card(self)
             player.plrGainCard(4)
 
 

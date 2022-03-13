@@ -41,7 +41,7 @@ class Card_Transmute(Card.Card):
         o = player.userInput(options, "Trash which card?")
         if not o["card"]:
             return
-        player.trashCard(o["card"])
+        player.trash_card(o["card"])
         if o["gain"] != "Nothing":
             player.gainCard(o["gain"])
 

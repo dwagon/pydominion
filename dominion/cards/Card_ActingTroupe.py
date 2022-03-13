@@ -18,7 +18,7 @@ class Card_ActingTroupe(Card.Card):
     ###########################################################################
     def special(self, game, player):
         player.gainVillager(4)
-        player.trashCard(self)
+        player.trash_card(self)
 
 
 ###############################################################################

@@ -38,7 +38,7 @@ class Card_Mint(Card.Card):
         totrash = [c for c in player.played if c.isTreasure()]
         for c in totrash:
             player.output("Mint trashing %s" % c.name)
-            player.trashCard(c)
+            player.trash_card(c)
 
 
 ###############################################################################

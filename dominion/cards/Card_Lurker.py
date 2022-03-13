@@ -34,7 +34,7 @@ class Card_Lurker(Card.Card):
             )
             card = game[cards[0].name].remove()
             player.addCard(card, "played")  # In order to trash
-            player.trashCard(card)
+            player.trash_card(card)
         if ch == "from":
             acts = [_ for _ in game.trashpile if _.isAction()]
             if not acts:

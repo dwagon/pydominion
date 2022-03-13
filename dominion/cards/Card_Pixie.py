@@ -31,7 +31,7 @@ class Card_Pixie(Card.Card):
             ),
         )
         if opt:
-            player.trashCard(self)
+            player.trash_card(self)
             player.receive_boon(boon=topboon, discard=False)
             player.receive_boon(boon=topboon)
 

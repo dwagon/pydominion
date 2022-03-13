@@ -49,7 +49,7 @@ class Card_Bandit(Card.Card):
             if o["card"] != tc:
                 victim.addCard(tc, "discard")
             else:
-                victim.trashCard(o["card"])
+                victim.trash_card(o["card"])
                 bandit.output("Trashed %s from %s" % (o["card"].name, victim.name))
                 victim.output(
                     "%s's Bandit trashed your %s" % (bandit.name, o["card"].name)

@@ -27,7 +27,7 @@ class Card_Hornofplenty(Card.Card):
             % len(cards),
         )
         if card and card.isVictory():
-            player.trashCard(self)
+            player.trash_card(self)
 
 
 ###############################################################################

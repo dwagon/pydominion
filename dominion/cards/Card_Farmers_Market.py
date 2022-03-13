@@ -25,7 +25,7 @@ class Card_FarmersMarket(Card.Card):
         vps = game["Farmers' Market"].getVP()
         if vps >= 4:
             player.addScore("Farmers' Market", vps)
-            player.trashCard(self)
+            player.trash_card(self)
             player.output("Gaining {} VPs and trashing the Farmers' Market".format(vps))
             game["Farmers' Market"].drainVP()
         else:

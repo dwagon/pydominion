@@ -45,7 +45,7 @@ class Test_SilkMerchant(unittest.TestCase):
 
     def test_trash_card(self):
         self.plr.setCoffer(0)
-        self.plr.trashCard(self.card)
+        self.plr.trash_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.getVillager(), 1)
         self.assertEqual(self.plr.getCoffer(), 1)

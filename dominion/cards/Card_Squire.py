@@ -79,7 +79,7 @@ class Test_Squire(unittest.TestCase):
     def test_trash(self):
         """Trash a Squire"""
         self.plr.test_input = ["militia"]
-        self.plr.trashCard(self.card)
+        self.plr.trash_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Militia"))
 
 

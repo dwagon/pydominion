@@ -89,7 +89,7 @@ class KnightCard(Card.Card):
                 "%s trashed a knight: %s - trashing your %s"
                 % (victim.name, to_trash.name, self.name)
             )
-            player.trashCard(self)
+            player.trash_card(self)
 
         for crd in cards:
             if crd != to_trash:

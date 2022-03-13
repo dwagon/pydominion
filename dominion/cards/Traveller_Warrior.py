@@ -37,7 +37,7 @@ class Card_Warrior(Card.Card):
                         "Trashing %s due to %s's Warrior" % (c.name, player.name)
                     )
                     player.output("Trashing %s from %s" % (c.name, victim.name))
-                    victim.trashCard(c)
+                    victim.trash_card(c)
                 else:
                     victim.output(
                         "Discarding %s due to %s's Warrior" % (c.name, player.name)

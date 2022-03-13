@@ -34,7 +34,7 @@ class Card_Deathcart(Card.Card):
             trash = player.plrTrashCard(cardsrc=action_cards)
         if ans == "trash_dc":
             player.output("Trashing Death Cart")
-            player.trashCard(self)
+            player.trash_card(self)
             trash = True
         if trash:
             player.addCoin(5)

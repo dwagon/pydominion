@@ -50,7 +50,7 @@ class Card_Count(Card.Card):
         elif ans == "trash":
             for c in player.hand[:]:
                 player.output("Trashing %s" % c.name)
-                player.trashCard(c)
+                player.trash_card(c)
         else:
             player.addCoin(3)
 

@@ -32,7 +32,7 @@ class TestPlayer(unittest.TestCase):
         """Test that trashing a card from hand works"""
         num_cards = self.g.countCards()
         card = self.plr.hand[0]
-        self.plr.trashCard(card)
+        self.plr.trash_card(card)
         self.assertEqual(num_cards, self.g.countCards())
         self.assertIsNotNone(self.g.in_trash(card))
 
@@ -41,7 +41,7 @@ class TestPlayer(unittest.TestCase):
         num_cards = self.g.countCards()
         self.plr.setPlayed("Estate")
         card = self.plr.played[0]
-        self.plr.trashCard(card)
+        self.plr.trash_card(card)
         self.assertEqual(num_cards, self.g.countCards())
         self.assertIsNotNone(self.g.in_trash(card))
 

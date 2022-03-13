@@ -17,7 +17,7 @@ class Card_Feast(Card.Card):
 
     def special(self, game, player):
         """Trash this card. Gain a card costing up to 5"""
-        if self.trashCard(player):
+        if self.trash_card(player):
             self.selectNewCard(game, player)
 
     def selectNewCard(self, game, player):
@@ -36,12 +36,12 @@ class Card_Feast(Card.Card):
             player.gainCard(o["card"])
             player.output("Took %s" % o["card"].name)
 
-    def trashCard(self, player):
+    def trash_card(self, player):
         ans = player.plrChooseOptions(
             "Trash this card?", ("Keep this card", False), ("Trash this card", True)
         )
         if ans:
-            player.trashCard(self)
+            player.trash_card(self)
             return True
         return False
 

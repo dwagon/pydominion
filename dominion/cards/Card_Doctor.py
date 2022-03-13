@@ -41,7 +41,7 @@ class Card_Doctor(Card.Card):
             player.reveal_card(card)
             if card.name == o["card"].name:
                 player.output("Trashing %s" % card.name)
-                player.trashCard(card)
+                player.trash_card(card)
             else:
                 player.output("Putting %s back" % card.name)
                 player.addCard(card, "topdeck")
@@ -76,7 +76,7 @@ class Card_Doctor(Card.Card):
                 options, "What to do with the top card %s?" % card.name
             )
             if o[Card.TYPE_ACTION] == "trash":
-                player.trashCard(card)
+                player.trash_card(card)
                 player.output("Trashing %s" % card.name)
             elif o[Card.TYPE_ACTION] == "discard":
                 player.addCard(card, "discard")

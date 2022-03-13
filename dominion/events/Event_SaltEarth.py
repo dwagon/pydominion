@@ -22,7 +22,7 @@ class Event_SaltEarth(Event.Event):
         if not cp:
             return
         cd = cp[0].remove()
-        player.trashCard(cd)
+        player.trash_card(cd)
 
 
 ###############################################################################

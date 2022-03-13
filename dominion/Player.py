@@ -316,7 +316,7 @@ class Player:
         return None
 
     ###########################################################################
-    def trashCard(self, card, **kwargs):
+    def trash_card(self, card, **kwargs):
         """Take a card out of the game"""
         assert isinstance(card, Card.Card)
         self.stats["trashed"].append(card)
@@ -1328,7 +1328,7 @@ class Player:
         if callhook:
             self.hook_allplayers_gain_card(newcard)
         if options.get("trash", False):
-            self.trashCard(newcard)
+            self.trash_card(newcard)
             return newcard
         if not options.get("dontadd", False):
             self.addCard(newcard, destination)
@@ -1748,7 +1748,7 @@ class Player:
             **kwargs,
         )
         for crd in trash:
-            self.trashCard(crd, **kwargs)
+            self.trash_card(crd, **kwargs)
         return trash
 
     ###########################################################################

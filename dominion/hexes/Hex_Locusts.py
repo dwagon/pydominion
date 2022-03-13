@@ -36,7 +36,7 @@ class Hex_Locusts(Hex.Hex):
             }
             player.plrGainCard(cost=nxt.cost - 1, types=types)
         player.output("Trashing your {}".format(nxt.name))
-        player.trashCard(nxt)
+        player.trash_card(nxt)
 
 
 ###############################################################################

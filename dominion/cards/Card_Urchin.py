@@ -38,7 +38,7 @@ class Card_Urchin(Card.Card):
                 ("Trash and gain a Mercenary", True),
             )
             if trash:
-                player.trashCard(self)
+                player.trash_card(self)
                 player.gainCard("Mercenary")
 
 

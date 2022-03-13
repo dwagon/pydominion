@@ -33,7 +33,7 @@ class Card_Gladiator(Card.Card):
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.addCoin(1)
             c = game["Gladiator"].remove()
-            player.trashCard(c)
+            player.trash_card(c)
         else:
             player.output("%s has a %s" % (lefty.name, mycard[0].name))
             lefty.reveal_card(leftycard)

@@ -34,7 +34,7 @@ class Card_Hermit(Card.Card):
                 player.discardpile.remove(choice[0])
             else:
                 player.hand.remove(choice[0])
-            player.trashCard(choice[0])
+            player.trash_card(choice[0])
         # Gain a card costing up to 3.
         player.plrGainCard(3)
 
@@ -48,7 +48,7 @@ class Card_Hermit(Card.Card):
                 ("Gain Madman", True),
             )
             if trash:
-                player.trashCard(self)
+                player.trash_card(self)
                 player.gainCard("Madman")
 
 

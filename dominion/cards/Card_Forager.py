@@ -38,8 +38,8 @@ class Test_Forager(unittest.TestCase):
 
     def test_play(self):
         """Play a forager"""
-        self.plr.trashCard(self.g["Copper"].remove())
-        self.plr.trashCard(self.g["Silver"].remove())
+        self.plr.trash_card(self.g["Copper"].remove())
+        self.plr.trash_card(self.g["Silver"].remove())
         self.plr.setHand("Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["province"]

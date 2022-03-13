@@ -28,7 +28,7 @@ class Card_Saboteur(Card.Card):
             if not card:
                 continue
             victim.output("%s's saboteur trashed %s" % (player.name, card.name))
-            victim.trashCard(card)
+            victim.trash_card(card)
             victim.plrGainCard(card.cost - 2)
 
     def pickCard(self, victim, player):

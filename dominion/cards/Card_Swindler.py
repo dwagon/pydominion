@@ -20,7 +20,7 @@ class Card_Swindler(Card.Card):
     def special(self, game, player):
         for victim in player.attackVictims():
             card = victim.pickupCard()
-            victim.trashCard(card)
+            victim.trash_card(card)
             victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
             c = player.plrGainCard(
                 card.cost,

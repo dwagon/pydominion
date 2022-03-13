@@ -26,7 +26,7 @@ class Card_Moneylender(Card.Card):
             "Trash a copper?", ("Don't trash a copper", False), ("Trash a copper", True)
         )
         if trash:
-            player.trashCard(copper)
+            player.trash_card(copper)
             player.addCoin(3)
 
 

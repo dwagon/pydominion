@@ -40,7 +40,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
             index += 1
         o = player.userInput(options, "Trash Changeling to gain a card")
         if o["card"]:
-            player.trashCard(self)
+            player.trash_card(self)
             player.gainCard(o["card"].name)
 
 

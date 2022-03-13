@@ -46,7 +46,7 @@ class Test_Apprentice(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.g.trashSize(), tsize)
 
-    def test_trashCard(self):
+    def test_trash_card(self):
         self.plr.setHand("Silver")
         self.plr.addCard(self.apprentice, "hand")
         self.plr.test_input = ["silver"]

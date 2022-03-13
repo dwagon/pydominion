@@ -22,7 +22,7 @@ class Hex_War(Hex.Hex):
                 break
             if c.cost in (3, 4):
                 player.output("Trashing {}".format(c.name))
-                player.trashCard(c)
+                player.trash_card(c)
                 break
             player.output("Discarding {}".format(c.name))
             player.discardCard(c)

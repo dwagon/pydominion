@@ -26,7 +26,7 @@ class Card_MagicLamp(Card.Card):
             if player.played.count(c) == 1:
                 cards.append(c)
         if len(cards) >= 6:
-            player.trashCard(self)
+            player.trash_card(self)
             for _ in range(3):
                 player.gainCard("Wish")
 

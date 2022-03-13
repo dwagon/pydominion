@@ -35,7 +35,7 @@ class Card_Loan(Card.Card):
         if discard:
             player.discardCard(c)
         else:
-            player.trashCard(c)
+            player.trash_card(c)
 
 
 ###############################################################################

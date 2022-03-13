@@ -18,7 +18,7 @@ class Card_Treasuremap(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.trashCard(self)
+        player.trash_card(self)
         tmaps = [c for c in player.hand if c.name == "Treasure Map"][:1]
         if not tmaps:
             return

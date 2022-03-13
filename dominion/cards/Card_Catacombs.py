@@ -72,7 +72,7 @@ class Test_Catacombs(unittest.TestCase):
 
     def test_trash(self):
         self.plr.test_input = ["get estate"]
-        self.plr.trashCard(self.cat)
+        self.plr.trash_card(self.cat)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)
         self.assertIsNotNone(self.g.in_trash("Catacombs"))

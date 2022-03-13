@@ -20,7 +20,7 @@ class Card_Pillage(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.trashCard(self)
+        player.trash_card(self)
         for plr in player.attackVictims():
             if plr.hand.size() < 5:
                 player.output("Player %s has too small a hand size" % plr.name)

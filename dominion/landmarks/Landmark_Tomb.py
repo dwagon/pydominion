@@ -27,7 +27,7 @@ class Test_Tomb(unittest.TestCase):
     def test_trash(self):
         """Test Tomb"""
         cu = self.plr.in_hand("Copper")
-        self.plr.trashCard(cu)
+        self.plr.trash_card(cu)
         self.assertEqual(self.plr.getScoreDetails()["Tomb"], 1)
 
 

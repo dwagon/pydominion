@@ -53,7 +53,7 @@ class Card_Rogue(Card.Card):
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
         o = player.userInput(options, "Trash which card from %s?" % victim.name)
         victim.output("%s's rogue trashed your %s" % (player.name, o["card"].name))
-        victim.trashCard(o["card"])
+        victim.trash_card(o["card"])
         # Discard what the rogue didn't trash
         for c in cards:
             if c != o["card"]:
@@ -122,7 +122,7 @@ class Test_Rogue(unittest.TestCase):
         tsize = self.g.trashSize()
         for _ in range(2):
             gold = self.g["Gold"].remove()
-            self.plr.trashCard(gold)
+            self.plr.trash_card(gold)
         self.plr.test_input = ["1"]
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

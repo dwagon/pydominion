@@ -37,7 +37,7 @@ class Card_Mine(Card.Card):
                 if game[tc].cost == val + 3:
                     c = player.gainCard(tc, "hand")
                     player.output("Converted to %s" % c.name)
-                    player.trashCard(o["card"])
+                    player.trash_card(o["card"])
                     break
             else:  # pragma: no cover
                 player.output("No appropriate treasure card exists")

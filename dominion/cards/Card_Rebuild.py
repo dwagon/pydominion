@@ -41,7 +41,7 @@ class Card_Rebuild(Card.Card):
                 break
             if card.isVictory() and guess.name != card.name:
                 player.output("Found and trashing a %s" % card.name)
-                player.trashCard(card)
+                player.trash_card(card)
                 player.plrGainCard(
                     card.cost + 3, modifier="less", types={Card.TYPE_VICTORY: True}
                 )

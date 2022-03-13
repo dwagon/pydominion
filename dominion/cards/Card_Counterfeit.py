@@ -36,7 +36,7 @@ class Card_Counterfeit(Card.Card):
             return
         for _ in range(2):
             player.playCard(o["card"], costAction=False, discard=False)
-        player.trashCard(o["card"])
+        player.trash_card(o["card"])
 
 
 ###############################################################################

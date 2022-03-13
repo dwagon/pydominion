@@ -36,7 +36,7 @@ class Card_Fools_Gold(Card.Card):
             ("Trash and gain a Gold?", True),
         )
         if trash:
-            owner.trashCard(self)
+            owner.trash_card(self)
             owner.gainCard("Gold", destination="topdeck")
 
 

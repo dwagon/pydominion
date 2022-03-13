@@ -67,7 +67,7 @@ class Card_Thief(Card.Card):
                 thief.output("Stealing %s from %s" % (o["card"].name, victim.name))
                 victim.output("%s stole your %s" % (thief.name, o["card"].name))
             else:
-                victim.trashCard(o["card"])
+                victim.trash_card(o["card"])
                 thief.output("Trashed %s from %s" % (o["card"].name, victim.name))
                 victim.output("%s trashed your %s" % (thief.name, o["card"].name))
 
