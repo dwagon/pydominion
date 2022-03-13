@@ -21,7 +21,7 @@ class Card_Recruiter(Card.Card):
     ###########################################################################
     def special(self, game, player):
         cards = player.plrTrashCard(force=True, num=1)
-        player.gainVillager(cards[0].cost)
+        player.add_villager(cards[0].cost)
 
 
 ###############################################################################

@@ -20,7 +20,7 @@ class Card_Sculptor(Card.Card):
         card = player.plrGainCard(4, destination="hand", force=True)
         if card.isTreasure():
             player.output("Gained  villager")
-            player.gainVillager()
+            player.add_villager()
 
 
 ###############################################################################

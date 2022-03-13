@@ -16,7 +16,7 @@ class Project_Academy(Project.Project):
     def hook_gain_card(self, game, player, card):
         if card.isAction():
             player.output("Gained a villager from Academy")
-            player.gainVillager()
+            player.add_villager()
 
 
 ###############################################################################

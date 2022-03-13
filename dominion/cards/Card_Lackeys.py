@@ -23,7 +23,7 @@ class Card_Lackeys(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainVillager(2)
+        player.add_villager(2)
 
 
 ###############################################################################

@@ -17,7 +17,7 @@ class Project_Exploration(Project.Project):
         if player.stats["bought"]:
             return
         player.gainCoffer(1)
-        player.gainVillager(1)
+        player.add_villager(1)
 
 
 ###############################################################################

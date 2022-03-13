@@ -439,7 +439,7 @@ class Player:
                 break
 
     ###########################################################################
-    def gainVillager(self, num=1):
+    def add_villager(self, num=1):
         """Gain a number of villager"""
         self.villager += num
 
