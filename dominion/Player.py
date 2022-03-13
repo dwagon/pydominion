@@ -740,7 +740,7 @@ class Player:
         return all_cards
 
     ###########################################################################
-    def buyable_selection(self, index):
+    def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
@@ -797,7 +797,7 @@ class Player:
         if self.phase == "buy":
             op = self._spendable_selection()
             options.extend(op)
-            op, index = self.buyable_selection(index)
+            op, index = self._buyable_selection(index)
             options.extend(op)
             op, index = self._event_selection(index)
             options.extend(op)

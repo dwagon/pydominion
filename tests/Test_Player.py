@@ -627,7 +627,7 @@ class Test_displayOverview(unittest.TestCase):
 
 
 ###############################################################################
-class Test_buyable_selection(unittest.TestCase):
+class Test__buyable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
@@ -638,7 +638,7 @@ class Test_buyable_selection(unittest.TestCase):
 
     def test_buy_moat(self):
         self.plr.addCoin(3)
-        opts, ind = self.plr.buyable_selection(1)
+        opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i["name"] == "Moat":
@@ -651,7 +651,7 @@ class Test_buyable_selection(unittest.TestCase):
 
     def test_buy_copper(self):
         self.plr.coin = 0
-        opts, ind = self.plr.buyable_selection(1)
+        opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i["name"].startswith("Copper"):
@@ -669,7 +669,7 @@ class Test_buyable_selection(unittest.TestCase):
     def test_buy_token(self):
         self.plr.addCoin(2)
         self.plr.place_token("+1 Card", "Moat")
-        opts, ind = self.plr.buyable_selection(1)
+        opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
             if i["name"] == "Moat":
