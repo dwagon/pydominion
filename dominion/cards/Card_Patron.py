@@ -41,7 +41,7 @@ class Test_Patron(unittest.TestCase):
 
     def test_reveal(self):
         num = self.plr.getCoffer()
-        self.plr.revealCard(self.card)
+        self.plr.reveal_card(self.card)
         self.assertEqual(self.plr.getCoffer(), num + 1)
 
 

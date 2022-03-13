@@ -36,7 +36,7 @@ class Card_Hostelry(Card.Card):
         )
         for crd in discards:
             player.discardCard(crd)
-            player.revealCard(crd)
+            player.reveal_card(crd)
             player.gainCard("Horse")
 
 

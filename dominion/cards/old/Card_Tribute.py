@@ -23,7 +23,7 @@ class Card_Tribute(Card.Card):
         cards = []
         for _ in range(2):
             card = victim.nextCard()
-            victim.revealCard(card)
+            victim.reveal_card(card)
             cards.append(card)
         cardname = None
         for c in cards:

@@ -22,7 +22,7 @@ class Card_GrandCastle(CastleCard):
 
     def hook_gain_this_card(self, game, player):
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
         vics = sum([1 for _ in player.hand if _.isVictory()])
         player.output("Gaining %d VPs from your Victory Cards" % vics)
         player.addScore("Grand Castle", vics)

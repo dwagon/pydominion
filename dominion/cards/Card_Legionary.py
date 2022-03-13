@@ -20,7 +20,7 @@ class Card_Legionary(Card.Card):
     def special(self, game, player):
         au = player.in_hand("Gold")
         if au:
-            player.revealCard(au)
+            player.reveal_card(au)
             for plr in player.attackVictims():
                 plr.output(
                     "%s's Legionary forces you to discard down to 2" % player.name

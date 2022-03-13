@@ -48,7 +48,7 @@ class Card_PirateShip(Card.Card):
         cards = []
         for _ in range(2):
             card = victim.nextCard()
-            victim.revealCard(card)
+            victim.reveal_card(card)
             if card.isTreasure():
                 cards.append(card)
             else:

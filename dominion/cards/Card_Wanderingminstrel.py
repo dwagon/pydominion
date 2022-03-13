@@ -22,7 +22,7 @@ class Card_Wanderingminstrel(Card.Card):
         cards = []
         for _ in range(3):
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isAction():
                 cards.append(c)
                 player.output("Revealed a %s and put on top of deck" % c.name)

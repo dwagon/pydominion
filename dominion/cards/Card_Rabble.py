@@ -22,7 +22,7 @@ class Card_Rabble(Card.Card):
         cards = []
         for _ in range(3):
             c = victim.nextCard()
-            victim.revealCard(c)
+            victim.reveal_card(c)
             if c.isAction() or c.isTreasure():
                 victim.output(
                     "Discarding %s due to %s's rabble" % (c.name, attacker.name)

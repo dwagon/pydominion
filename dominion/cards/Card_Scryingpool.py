@@ -28,7 +28,7 @@ class Card_Scryingpool(Card.Card):
         revealed = []
         while True:
             topcard = player.pickupCard()
-            player.revealCard(topcard)
+            player.reveal_card(topcard)
             if not topcard.isAction():
                 break
             revealed.append(topcard)
@@ -41,7 +41,7 @@ class Card_Scryingpool(Card.Card):
         else:
             name = (victim.name, "%s's" % victim.name)
         topcard = victim.nextCard()
-        victim.revealCard(topcard)
+        victim.reveal_card(topcard)
         putback = player.plrChooseOptions(
             "For %s which one?" % name[0],
             ("Discard %s" % topcard.name, False),

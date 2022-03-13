@@ -26,7 +26,7 @@ class Card_Sage(Card.Card):
             if not card:
                 player.output("No card costing 3 or more found")
                 break
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
                 player.addCard(card, "hand")

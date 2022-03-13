@@ -37,7 +37,7 @@ class Card_Raider(Card.Card):
                         todiscard.append(c)
                 if not todiscard:
                     for card in pl.hand:
-                        pl.revealCard(card)
+                        pl.reveal_card(card)
                 for c in todiscard[:]:
                     pl.discardCard(c)
 

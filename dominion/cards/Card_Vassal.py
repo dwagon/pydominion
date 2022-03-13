@@ -18,7 +18,7 @@ class Card_Vassal(Card.Card):
 
     def special(self, game, player):
         card = player.nextCard()
-        player.revealCard(card)
+        player.reveal_card(card)
         if card.isAction():
             player.addCard(card, "hand")
             player.playCard(card, costAction=False)

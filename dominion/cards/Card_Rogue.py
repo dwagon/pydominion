@@ -34,7 +34,7 @@ class Card_Rogue(Card.Card):
         cards = []
         for _ in range(2):
             c = victim.nextCard()
-            victim.revealCard(c)
+            victim.reveal_card(c)
             if 3 <= c.cost <= 6:
                 cards.append(c)
             else:

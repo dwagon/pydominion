@@ -28,7 +28,7 @@ class Card_Mint(Card.Card):
         toget = player.cardSel(
             num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"
         )
-        player.revealCard(toget[0])
+        player.reveal_card(toget[0])
         if toget:
             player.output("Gained a %s from the Mint" % toget[0].name)
             player.gainCard(toget[0].name)

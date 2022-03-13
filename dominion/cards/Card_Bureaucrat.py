@@ -23,7 +23,7 @@ class Card_Bureaucrat(Card.Card):
         for pl in player.attackVictims():
             for c in pl.hand:
                 if c.isVictory():
-                    pl.revealCard(c)
+                    pl.reveal_card(c)
                     pl.addCard(c, "topdeck")
                     pl.hand.remove(c)
                     pl.output(

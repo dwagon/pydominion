@@ -22,7 +22,7 @@ class Card_Settlers(Card.Card):
         if cu:
             player.addCard(cu, "hand")
             player.discardpile.remove(cu)
-            player.revealCard(cu)
+            player.reveal_card(cu)
             player.output("Pulled Copper from discard into hand")
         else:
             player.output("No Copper in discard")

@@ -251,7 +251,7 @@ class Player:
         return None
 
     ###########################################################################
-    def revealCard(self, card):
+    def reveal_card(self, card):
         self.game.output("{} reveals {}".format(self.name, card.name))
         card.hook_revealThisCard(game=self.game, player=self)
 

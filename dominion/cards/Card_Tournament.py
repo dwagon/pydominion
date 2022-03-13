@@ -25,7 +25,7 @@ class Card_Tournament(Card.Card):
             if plr != player:
                 prov = plr.in_hand("Province")
                 if prov:
-                    plr.revealCard(prov)
+                    plr.reveal_card(prov)
                     found = True
         if player.in_hand("Province"):
             player.output("Province revealed so gain a prize")

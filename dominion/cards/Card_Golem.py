@@ -26,7 +26,7 @@ class Card_Golem(Card.Card):
         count = 0
         while len(actions) != 2:
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             count += 1
             if count > maxnum:
                 player.output("Not enough action cards in deck")

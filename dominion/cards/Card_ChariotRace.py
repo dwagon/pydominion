@@ -21,7 +21,7 @@ class Card_ChariotRace(Card.Card):
 
     def special(self, game, player):
         card = player.pickupCard()
-        player.revealCard(card)
+        player.reveal_card(card)
         other = game.playerToLeft(player)
         othercard = other.nextCard()
         if card.cost > othercard.cost:

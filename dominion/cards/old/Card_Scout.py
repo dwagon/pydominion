@@ -23,7 +23,7 @@ class Card_Scout(Card.Card):
         cards = []
         for _ in range(4):
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isVictory():
                 player.addCard(c, "hand")
                 player.output("Adding %s to hand" % c.name)

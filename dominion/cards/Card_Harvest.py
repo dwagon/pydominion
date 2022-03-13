@@ -19,7 +19,7 @@ class Card_Harvest(Card.Card):
         cards = set()
         for _ in range(4):
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             cards.add(c.name)
             player.output("Revealed a %s" % c.name)
             player.addCard(c, "discard")

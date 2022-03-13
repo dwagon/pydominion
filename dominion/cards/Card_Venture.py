@@ -21,7 +21,7 @@ class Card_Venture(Card.Card):
         Treasure"""
         while True:
             c = player.pickupCard(verbose=False)
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isTreasure():
                 player.output("Picked up %s from Venture" % c.name)
                 player.playCard(c)

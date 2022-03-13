@@ -21,7 +21,7 @@ class Card_WilloWisp(Card.Card):
 
     def special(self, game, player):
         c = player.nextCard()
-        player.revealCard(c)
+        player.reveal_card(c)
         if c.cost <= 2 and not c.potcost and not c.debtcost:
             player.addCard(c, "hand")
             player.output("Moving {} from your deck to your hand".format(c.name))

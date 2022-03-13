@@ -19,7 +19,7 @@ class Card_Explorer(Card.Card):
     def special(self, game, player):
         prov = player.in_hand("Province")
         if prov:
-            player.revealCard(prov)
+            player.reveal_card(prov)
             player.gainCard("Gold", destination="hand")
         else:
             player.gainCard("Silver", destination="hand")

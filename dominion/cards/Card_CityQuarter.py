@@ -20,7 +20,7 @@ class Card_CityQuarter(Card.Card):
     def special(self, game, player):
         actions = 0
         for c in player.hand:
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isAction():
                 actions += 1
         player.output("Revealed %d actions" % actions)

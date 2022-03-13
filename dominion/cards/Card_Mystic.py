@@ -31,7 +31,7 @@ class Card_Mystic(Card.Card):
         if not o["card"]:
             return
         c = player.nextCard()
-        player.revealCard(c)
+        player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")
             player.addCard(c, "hand")

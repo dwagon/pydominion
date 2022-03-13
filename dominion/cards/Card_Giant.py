@@ -24,7 +24,7 @@ class Card_Giant(Card.Card):
             player.addCoin(5)
             for victim in player.attackVictims():
                 c = victim.nextCard()
-                victim.revealCard(c)
+                victim.reveal_card(c)
                 if c.cost >= 3 and c.cost <= 6:
                     victim.trashCard(c)
                     victim.output("%s's Giant trashed your %s" % (player.name, c.name))

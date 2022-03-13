@@ -23,7 +23,7 @@ class Card_Crossroads(Card.Card):
         +3 Actions"""
         vict = 0
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.isVictory():
                 vict += 1
         if vict:

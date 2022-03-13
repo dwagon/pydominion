@@ -31,7 +31,7 @@ class Card_Inn(Card.Card):
         cards = []
         for card in player.discardpile[:]:
             if card.isAction():
-                player.revealCard(card)
+                player.reveal_card(card)
                 cards.append(card)
         cards.append(self)
         back = player.cardSel(

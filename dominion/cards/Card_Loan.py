@@ -24,7 +24,7 @@ class Card_Loan(Card.Card):
         other cards"""
         while True:
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isTreasure():
                 break
             player.output("Revealed and discarded %s" % c.name)

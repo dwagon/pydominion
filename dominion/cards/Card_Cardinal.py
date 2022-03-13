@@ -21,7 +21,7 @@ class Card_Cardinal(Card.Card):
             exilecount = 0
             for _ in range(2):
                 crd = plr.pickupCard()
-                plr.revealCard(crd)
+                plr.reveal_card(crd)
                 if 3 <= crd.cost <= 6 and not exilecount:
                     plr.exile_card(crd)
                     plr.output(

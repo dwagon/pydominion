@@ -26,7 +26,7 @@ class Card_Oracle(Card.Card):
         cards = []
         for _ in range(2):
             card = victim.nextCard()
-            victim.revealCard(card)
+            victim.reveal_card(card)
             cards.append(card)
         cardnames = ", ".join([c.name for c in cards])
         discard = player.plrChooseOptions(

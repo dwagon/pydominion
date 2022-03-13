@@ -22,7 +22,7 @@ class Card_Patrol(Card.Card):
         cards = set()
         for _ in range(4):
             c = player.nextCard()
-            player.revealCard(c)
+            player.reveal_card(c)
             if c is None:
                 break
             if c.isVictory() or c.name == "Curse":

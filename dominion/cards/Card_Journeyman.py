@@ -31,7 +31,7 @@ class Card_Journeyman(Card.Card):
         cards = []
         while len(cards) < 3:
             card = player.nextCard()
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.name == o["card"].name:
                 player.output("Discarding %s" % card.name)
                 player.discardCard(card)

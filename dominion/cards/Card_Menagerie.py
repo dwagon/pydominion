@@ -19,7 +19,7 @@ class Card_Menagerie(Card.Card):
     def special(self, game, player):
         hand = set()
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             hand.add(card.name)
         if len(hand) == player.hand.size():
             player.output("No duplicates - picking up 3 cards")

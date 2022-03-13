@@ -32,7 +32,7 @@ class Card_Pillage(Card.Card):
     ###########################################################################
     def pickACard(self, victim, player):
         for card in victim.hand:
-            victim.revealCard(card)
+            victim.reveal_card(card)
         cards = player.cardSel(
             cardsrc=victim.hand, prompt="Which card to discard from %s" % victim.name
         )

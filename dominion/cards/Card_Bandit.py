@@ -27,7 +27,7 @@ class Card_Bandit(Card.Card):
         treasures = []
         for _ in range(2):
             c = victim.nextCard()
-            victim.revealCard(c)
+            victim.reveal_card(c)
             if c.isTreasure() and c.name != "Copper":
                 treasures.append(c)
             else:

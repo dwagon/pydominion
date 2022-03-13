@@ -29,7 +29,7 @@ class Card_Secretchamber(Card.Card):
         player.output("Under attack from %s" % attacker.name)
         if not self.doRevealCard(player):
             return
-        player.revealCard(self)
+        player.reveal_card(self)
         player.pickupCards(2)
         player.output("Put two cards onto deck")
         cards = player.cardSel(

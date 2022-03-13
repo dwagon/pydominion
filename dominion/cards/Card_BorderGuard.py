@@ -23,7 +23,7 @@ class Card_BorderGuard(Card.Card):
         cards = []
         for _ in range(ncards):
             card = player.nextCard()
-            player.revealCard(card)
+            player.reveal_card(card)
             cards.append(card)
         nacts = sum([1 for _ in cards if _.isAction()])
         ch = player.cardSel(

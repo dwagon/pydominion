@@ -18,7 +18,7 @@ class Card_Poorhouse(Card.Card):
     def special(self, game, player):
         coins = 4
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.isTreasure():
                 coins -= 1
         player.output("Gaining %d coins" % max(coins, 0))

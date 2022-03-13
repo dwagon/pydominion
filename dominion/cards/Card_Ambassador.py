@@ -36,7 +36,7 @@ class Card_Ambassador(Card.Card):
         if not choice:
             return
         cardname = choice[0].name
-        player.revealCard(choice[0])
+        player.reveal_card(choice[0])
         player.output("Putting %s back" % cardname)
         for card in choice:
             player.hand.remove(card)
