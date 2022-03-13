@@ -50,7 +50,7 @@ class Card_Noble_Brigand(Card.Card):
                         "%s's Noble Brigand discarded your %s"
                         % (player.name, card.name)
                     )
-                    victim.discardCard(card)
+                    victim.discard_card(card)
 
     def getTreasureCards(self, plr, player):
         cards = []

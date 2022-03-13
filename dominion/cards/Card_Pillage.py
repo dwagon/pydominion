@@ -37,7 +37,7 @@ class Card_Pillage(Card.Card):
             cardsrc=victim.hand, prompt="Which card to discard from %s" % victim.name
         )
         card = cards[0]
-        victim.discardCard(card)
+        victim.discard_card(card)
         victim.output("%s pillaged your %s" % (player.name, card.name))
 
 

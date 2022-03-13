@@ -30,7 +30,7 @@ class Card_Jack_of_all_Trades(Card.Card):
         if topdeck:
             player.add_card(card, "topdeck")
         else:
-            player.discardCard(card)
+            player.discard_card(card)
 
         while player.hand.size() < 5:
             player.pickup_card()

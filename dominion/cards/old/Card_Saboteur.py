@@ -38,7 +38,7 @@ class Card_Saboteur(Card.Card):
             if c.cost >= 3:
                 return c
             victim.output("Saboteur checking and discarding %s" % c.name)
-            victim.discardCard(c)
+            victim.discard_card(c)
         victim.output("Don't have any suitable cards")
         player.output("%s doesn't have any suitable cards")
         return None

@@ -23,7 +23,7 @@ class Card_Mountebank(Card.Card):
                 if c.name == "Curse":
                     player.output("Player %s discarded a curse" % plr.name)
                     plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
-                    plr.discardCard(c)
+                    plr.discard_card(c)
                     break
             else:
                 player.output("Player %s gained a curse and a copper" % plr.name)

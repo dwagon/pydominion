@@ -30,7 +30,7 @@ class Card_NightWatchman(Card.Card):
                 ("Return {} to the deck".format(c.name), False),
             )
             if discard:
-                player.discardCard(c)
+                player.discard_card(c)
             else:
                 player.add_card(c, "topdeck")
 

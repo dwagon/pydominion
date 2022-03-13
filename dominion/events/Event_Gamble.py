@@ -25,7 +25,7 @@ class Event_Gamble(Event.Event):
             player.card_benefits(nxt)
         else:
             player.output("Card isn't a Treasure or Action - discarding")
-        player.discardCard(nxt)
+        player.discard_card(nxt)
 
 
 ###############################################################################

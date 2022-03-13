@@ -19,7 +19,7 @@ class Hex_Famine(Hex.Hex):
             c = player.next_card()
             if c.isAction():
                 player.output("Discarding {}".format(c))
-                player.discardCard(c)
+                player.discard_card(c)
             else:
                 player.output("Putting {} back in deck".format(c))
                 player.add_card(c, "topdeck")

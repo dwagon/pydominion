@@ -25,7 +25,7 @@ class Hex_War(Hex.Hex):
                 player.trash_card(c)
                 break
             player.output("Discarding {}".format(c.name))
-            player.discardCard(c)
+            player.discard_card(c)
             count -= 1
         else:
             player.output("No cards costing 3 or 4 in deck")

@@ -20,7 +20,7 @@ class Card_Seahag(Card.Card):
         then gains a Curse card, putting it on top of his deck"""
         for pl in player.attackVictims():
             c = pl.next_card()
-            pl.discardCard(c)
+            pl.discard_card(c)
             pl.output("Discarded your %s" % c.name)
             pl.gainCard("Curse", destination="topdeck")
             pl.output("Got cursed by %s's Sea Hag" % player.name)

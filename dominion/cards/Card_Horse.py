@@ -22,7 +22,7 @@ class Card_Horse(Card.Card):
         self.numcards = 30
 
     def special(self, game, player):
-        player.discardCard(self)
+        player.discard_card(self)
         try:  # If Horse is played multiple times e.g. Kings Court
             player.played.remove(self)
             player.discardpile.remove(self)

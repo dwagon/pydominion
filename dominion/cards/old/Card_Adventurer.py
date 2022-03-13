@@ -26,7 +26,7 @@ class Card_Adventurer(Card.Card):
                 treasures.append(c)
                 player.output("Adding %s" % c.name)
             else:
-                player.discardCard(c)
+                player.discard_card(c)
                 player.output("Discarding %s as not treasure" % c.name)
 
 

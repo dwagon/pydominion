@@ -20,7 +20,7 @@ class Card_Guide(Card.Card):
     def hook_call_reserve(self, game, player):
         player.output("Discarding current hand and picking up 5 new cards")
         while player.hand:
-            player.discardCard(player.hand.topcard())
+            player.discard_card(player.hand.topcard())
         player.discardHand()
         player.pickup_cards(5)
 

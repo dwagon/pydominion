@@ -21,7 +21,7 @@ class Card_RoyalBlacksmith(Card.Card):
         for card in player.hand:
             player.reveal_card(card)
             if card.name == "Copper":
-                player.discardCard(card)
+                player.discard_card(card)
                 count += 1
         player.output("Discarding %d coppers" % count)
 

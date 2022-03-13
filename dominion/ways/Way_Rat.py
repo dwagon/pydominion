@@ -22,7 +22,7 @@ class Way_Rat(Way.Way):
         t_to_disc = player.cardSel(prompt="Select Treasure to discard", cardsrc=treas)
         if not t_to_disc:
             return
-        player.discardCard(t_to_disc[0])
+        player.discard_card(t_to_disc[0])
         player.gainCard(card.name)
 
 

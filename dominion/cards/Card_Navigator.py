@@ -32,7 +32,7 @@ class Card_Navigator(Card.Card):
         )
         if discard:
             for c in cards:
-                player.discardCard(c)
+                player.discard_card(c)
         else:
             for c in cards:
                 player.add_card(c, "topdeck")

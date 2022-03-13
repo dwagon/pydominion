@@ -32,7 +32,7 @@ class Card_Cardinal(Card.Card):
                     plr.output(
                         "{}'s Cardinal discarded your {}".format(player.name, crd.name)
                     )
-                    plr.discardCard(crd)
+                    plr.discard_card(crd)
 
 
 ###############################################################################

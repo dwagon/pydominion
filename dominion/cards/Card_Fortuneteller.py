@@ -34,7 +34,7 @@ class Card_Fortuneteller(Card.Card):
                 plr.output(
                     "%s's Fortune Teller discarded your %s" % (player.name, card.name)
                 )
-                plr.discardCard(card)
+                plr.discard_card(card)
 
 
 ###############################################################################

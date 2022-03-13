@@ -31,7 +31,7 @@ class Card_Ironmonger(Card.Card):
             ("Discard %s" % card.name, True),
         )
         if ans:
-            player.discardCard(card)
+            player.discard_card(card)
         else:
             player.add_card(card, "topdeck")
         if card.isVictory():

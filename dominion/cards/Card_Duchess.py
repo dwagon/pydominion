@@ -32,7 +32,7 @@ class Card_Duchess(Card.Card):
                 plr.add_card(card, "topdeck")
             else:
                 plr.output("Discarding %s" % card.name)
-                plr.discardCard(card)
+                plr.discard_card(card)
 
 
 ###############################################################################

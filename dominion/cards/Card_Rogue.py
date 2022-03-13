@@ -58,7 +58,7 @@ class Card_Rogue(Card.Card):
         for c in cards:
             if c != o["card"]:
                 victim.output("Rogue discarding %s as leftovers" % c.name)
-                victim.discardCard(c)
+                victim.discard_card(c)
 
     ###########################################################################
     def riffleTrash(self, game, player):

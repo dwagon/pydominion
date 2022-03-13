@@ -28,7 +28,7 @@ class Card_Rabble(Card.Card):
                     "Discarding %s due to %s's rabble" % (c.name, attacker.name)
                 )
                 attacker.output("%s discarding %s" % (victim.name, c.name))
-                victim.discardCard(c)
+                victim.discard_card(c)
             else:
                 cards.append(c)
         # TODO - let victim pick order

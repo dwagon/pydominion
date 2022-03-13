@@ -41,7 +41,7 @@ class Card_Crown(Card.Card):
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, o["card"].name))
             player.playCard(o["card"], discard=False, costAction=False)
-        player.discardCard(o["card"])
+        player.discard_card(o["card"])
 
 
 ###############################################################################

@@ -71,7 +71,7 @@ class KnightCard(Card.Card):
                 victim.output(
                     "%s's %s discarded your %s" % (player.name, self.name, crd.name)
                 )
-                victim.discardCard(crd)
+                victim.discard_card(crd)
         if not cards:
             return
         player.output("Looking at %s" % ", ".join([x.name for x in cards]))
@@ -96,7 +96,7 @@ class KnightCard(Card.Card):
                 victim.output(
                     "%s's %s discarded your %s" % (player.name, self.name, crd.name)
                 )
-                victim.discardCard(crd)
+                victim.discard_card(crd)
 
 
 ###############################################################################

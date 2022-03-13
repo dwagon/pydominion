@@ -36,7 +36,7 @@ class Card_Oracle(Card.Card):
         )
         if discard:
             for card in cards:
-                victim.discardCard(card)
+                victim.discard_card(card)
             victim.output("%s's Oracle discarded your %s" % (player.name, cardnames))
         else:
             for card in cards:

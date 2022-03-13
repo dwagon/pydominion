@@ -26,7 +26,7 @@ class Card_MarketSquare(Card.Card):
             ("Discard and gain a Gold", True),
         )
         if gold:
-            player.discardCard(self)
+            player.discard_card(self)
             player.gainCard("Gold")
 
 

@@ -32,7 +32,7 @@ class Card_Advisor(Card.Card):
             verbs=("Discard", "Undiscard"),
         )[0]
         player.output(f"{choser.name} discarded {to_discard.name}")
-        player.discardCard(to_discard)
+        player.discard_card(to_discard)
 
 
 ###############################################################################

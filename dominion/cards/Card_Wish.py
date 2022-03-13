@@ -26,7 +26,7 @@ class Card_Wish(Card.Card):
             ("Keep", False),
         )
         if dc:
-            player.discardCard(self)
+            player.discard_card(self)
             game["Wish"].add()
             player.played.remove(self)
             player.plrGainCard(cost=6)

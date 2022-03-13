@@ -479,7 +479,7 @@ class Player:
         return card
 
     ###########################################################################
-    def discardCard(self, card, source=None, hook=True):
+    def discard_card(self, card, source=None, hook=True):
         assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
@@ -503,10 +503,10 @@ class Player:
             way.hook_way_discard_this_card(game=self.game, player=self, card=card)
         while self.hand:
             card = self.hand.topcard()
-            self.discardCard(card, "hand", hook=False)
+            self.discard_card(card, "hand", hook=False)
         while self.played:
             card = self.played.topcard()
-            self.discardCard(card, "played", hook=False)
+            self.discard_card(card, "played", hook=False)
 
     ###########################################################################
     def playable_selection(self, index):
@@ -1881,7 +1881,7 @@ class Player:
         )
         for c in discard:
             self.output("Discarding %s" % c.name)
-            self.discardCard(c)
+            self.discard_card(c)
         return discard
 
     ###########################################################################

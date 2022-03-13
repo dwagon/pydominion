@@ -34,7 +34,7 @@ class Card_Taxman(Card.Card):
                         "Discarding %s due to %s's Taxman" % (viccard.name, player.name)
                     )
                     player.output("%s discarded a %s" % (vic.name, viccard.name))
-                    vic.discardCard(viccard)
+                    vic.discard_card(viccard)
                 else:
                     player.output("%s doesn't have a %s" % (vic.name, card.name))
                     for c in vic.hand:

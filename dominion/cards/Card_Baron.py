@@ -26,7 +26,7 @@ class Card_Baron(Card.Card):
                 ("Discard an Estate - Gain +4 Gold", True),
             )
             if ans:
-                player.discardCard(hasEstate)
+                player.discard_card(hasEstate)
                 player.addCoin(4)
                 return
         player.output("Gained an Estate")

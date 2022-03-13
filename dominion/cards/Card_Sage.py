@@ -34,7 +34,7 @@ class Card_Sage(Card.Card):
             player.output("Discarding %s" % card.name)
             todiscard.append(card)
         for card in todiscard:
-            player.discardCard(card)
+            player.discard_card(card)
 
 
 ###############################################################################

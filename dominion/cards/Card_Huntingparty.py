@@ -37,7 +37,7 @@ class Card_Huntingparty(Card.Card):
             player.add_card(card, "hand")
             break
         for card in discards:
-            player.discardCard(card)
+            player.discard_card(card)
 
 
 ###############################################################################

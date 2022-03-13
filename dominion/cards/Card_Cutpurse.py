@@ -24,7 +24,7 @@ class Card_Cutpurse(Card.Card):
             if c:
                 player.output("%s discarded a copper" % victim.name)
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
-                victim.discardCard(c)
+                victim.discard_card(c)
             else:
                 for card in victim.hand:
                     victim.reveal_card(card)

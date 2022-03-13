@@ -35,7 +35,7 @@ class Card_Sleigh(Card.Card):
                 player.played.remove(self)
             if self in player.hand:
                 player.hand.remove(self)
-            player.discardCard(self)
+            player.discard_card(self)
         return {"destination": choice}
 
 

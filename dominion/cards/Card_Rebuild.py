@@ -49,7 +49,7 @@ class Card_Rebuild(Card.Card):
             player.output("Drew and discarded %s" % card.name)
             discards.append(card)
         for c in discards:
-            player.discardCard(c)
+            player.discard_card(c)
 
 
 ###############################################################################

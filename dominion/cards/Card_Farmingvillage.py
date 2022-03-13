@@ -30,7 +30,7 @@ class Card_Farmingvillage(Card.Card):
                 player.add_card(c, "hand")
                 break
             player.output("Picked up and discarded %s" % c.name)
-            player.discardCard(c)
+            player.discard_card(c)
 
 
 ###############################################################################

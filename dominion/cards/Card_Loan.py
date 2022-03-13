@@ -28,12 +28,12 @@ class Card_Loan(Card.Card):
             if c.isTreasure():
                 break
             player.output("Revealed and discarded %s" % c.name)
-            player.discardCard(c)
+            player.discard_card(c)
         discard = player.plrChooseOptions(
             "What to do?", ("Discard %s" % c.name, True), ("Trash %s" % c.name, False)
         )
         if discard:
-            player.discardCard(c)
+            player.discard_card(c)
         else:
             player.trash_card(c)
 

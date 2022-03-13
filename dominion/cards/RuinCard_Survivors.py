@@ -27,8 +27,8 @@ class Card_Survivors(Card.Card):
             ("Return {} and {} to deck".format(crds[0].name, crds[1].name), "return"),
         )
         if ans == "discard":
-            player.discardCard(crds[0])
-            player.discardCard(crds[1])
+            player.discard_card(crds[0])
+            player.discard_card(crds[1])
         else:
             player.add_card(crds[0], "deck")
             player.add_card(crds[1], "deck")

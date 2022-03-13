@@ -39,7 +39,7 @@ class Card_Raider(Card.Card):
                     for card in pl.hand:
                         pl.reveal_card(card)
                 for c in todiscard[:]:
-                    pl.discardCard(c)
+                    pl.discard_card(c)
 
 
 ###############################################################################
