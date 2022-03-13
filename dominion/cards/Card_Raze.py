@@ -30,7 +30,7 @@ class Card_Raze(Card.Card):
         if cost:
             cards = []
             for c in range(cost):
-                cards.append(player.nextCard())
+                cards.append(player.next_card())
             ans = player.cardSel(
                 force=True, prompt="Pick a card to put into your hand", cardsrc=cards
             )

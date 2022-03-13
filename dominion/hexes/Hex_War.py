@@ -17,7 +17,7 @@ class Hex_War(Hex.Hex):
     def special(self, game, player):
         count = player.discardpile.size() + player.deck.size()
         while count:
-            c = player.nextCard()
+            c = player.next_card()
             if not c:
                 break
             if c.cost in (3, 4):

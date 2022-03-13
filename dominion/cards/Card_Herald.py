@@ -26,7 +26,7 @@ class Card_Herald(Card.Card):
         return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game, player):
-        card = player.nextCard()
+        card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
             player.addCard(card, "hand")

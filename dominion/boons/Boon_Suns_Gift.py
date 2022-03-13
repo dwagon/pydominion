@@ -19,7 +19,7 @@ class Boon_Suns_Gift(Boon.Boon):
     def special(self, game, player):
         cards = []
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             if c:
                 cards.append(c)
         todisc = player.plrDiscardCards(

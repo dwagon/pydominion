@@ -21,7 +21,7 @@ class Card_Jester(Card.Card):
 
     def special(self, game, player):
         for plr in player.attackVictims():
-            card = plr.nextCard()
+            card = plr.next_card()
             plr.discardCard(card)
             plr.output("%s's Jester discarded your %s" % (player.name, card.name))
             if card.isVictory():

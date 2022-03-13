@@ -23,7 +23,7 @@ class Card_Loan(Card.Card):
         you reveal a Treasure. Discard it or trash it. Discard the
         other cards"""
         while True:
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.isTreasure():
                 break

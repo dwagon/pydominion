@@ -21,7 +21,7 @@ class Card_Vagrant(Card.Card):
     def special(self, game, player):
         """ " Reveal the top card of your deck. If it's a Curse,
         Ruins, Shelter or Victory card, put it into your hand"""
-        c = player.nextCard()
+        c = player.next_card()
         player.reveal_card(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == "Ruins":
             player.addCard(c, "hand")
@@ -46,7 +46,7 @@ class Test_Vagrant(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.nextCard().name, "Silver")
+        self.assertEqual(self.plr.next_card().name, "Silver")
 
     def test_play_exciting(self):
         """Play the vagrant with an exciting next card"""

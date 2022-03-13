@@ -25,7 +25,7 @@ class Card_Ghost(Card.Card):
             player._ghost_reserve = PlayArea.PlayArea([])
         count = len(player.allCards())
         while count:
-            card = player.nextCard()
+            card = player.next_card()
             player.reveal_card(card)
             if card.isAction():
                 player._ghost_reserve.add(card)

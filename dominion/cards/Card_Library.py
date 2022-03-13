@@ -22,7 +22,7 @@ class Card_Library(Card.Card):
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing"""
         while player.hand.size() < 7:
-            c = player.nextCard()
+            c = player.next_card()
             if c.isAction():
                 if self.discardChoice(player, c):
                     player.addCard(c, "discard")

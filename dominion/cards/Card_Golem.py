@@ -25,7 +25,7 @@ class Card_Golem(Card.Card):
         maxnum = len(player.allCards())
         count = 0
         while len(actions) != 2:
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             count += 1
             if count > maxnum:

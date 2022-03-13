@@ -18,7 +18,7 @@ class Card_CursedVillage(Card.Card):
 
     def special(self, game, player):
         while player.hand.size() < 6:
-            c = player.nextCard()
+            c = player.next_card()
             player.addCard(c, "discard")
             player.pickupCard(c)
 

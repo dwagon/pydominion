@@ -24,7 +24,7 @@ class Card_Huntingparty(Card.Card):
         for card in player.hand:
             player.reveal_card(card)
         while True:
-            card = player.nextCard()
+            card = player.next_card()
             player.reveal_card(card)
             if not card:
                 player.output("No more cards")

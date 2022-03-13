@@ -379,7 +379,7 @@ class Player:
             self.deck.add(self.game[c].remove())
 
     ###########################################################################
-    def nextCard(self):
+    def next_card(self):
         """Return the next card from the deck"""
         if not self.deck:
             self.refill_deck()
@@ -406,7 +406,7 @@ class Player:
     def pickupCard(self, card=None, verbose=True, verb="Picked up"):
         """Pick a card from the deck and put it into the players hand"""
         if card is None:
-            card = self.nextCard()
+            card = self.next_card()
             if not card:
                 self.output("No more cards to pickup")
                 return None

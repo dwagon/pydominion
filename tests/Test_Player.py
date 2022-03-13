@@ -52,7 +52,7 @@ class TestPlayer(unittest.TestCase):
         gold = self.g["Gold"].remove()
         self.plr.addCard(estate, "deck")
         self.plr.addCard(gold, "topdeck")
-        c = self.plr.nextCard()
+        c = self.plr.next_card()
         self.assertEqual(c.name, "Gold")
 
 
@@ -135,7 +135,7 @@ class Test_in_discard(unittest.TestCase):
 
 
 ###############################################################################
-class Test_nextCard(unittest.TestCase):
+class Test_next_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -144,19 +144,19 @@ class Test_nextCard(unittest.TestCase):
     def test_emptyDeck(self):
         self.plr.deck.empty()
         self.plr.set_discard("Gold")
-        c = self.plr.nextCard()
+        c = self.plr.next_card()
         self.assertEqual(c.name, "Gold")
 
     def test_noCards(self):
         self.plr.deck.empty()
         self.plr.discardpile.empty()
-        c = self.plr.nextCard()
+        c = self.plr.next_card()
         self.assertIsNone(c)
 
     def test_drawOne(self):
         self.plr.set_deck("Province")
         self.plr.discardpile.empty()
-        c = self.plr.nextCard()
+        c = self.plr.next_card()
         self.assertEqual(c.name, "Province")
         self.assertTrue(self.plr.deck.is_empty())
 

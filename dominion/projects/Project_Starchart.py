@@ -38,7 +38,7 @@ class Test_StarChart(unittest.TestCase):
         self.plr.set_discard("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
         self.plr.set_deck()
         self.plr.test_input = ["Put Gold"]
-        c = self.plr.nextCard()
+        c = self.plr.next_card()
         self.assertEqual(c.name, "Gold")
 
 

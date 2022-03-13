@@ -22,7 +22,7 @@ class Card_BorderGuard(Card.Card):
         ncards = 3 if player.has_artifact("Lantern") else 2
         cards = []
         for _ in range(ncards):
-            card = player.nextCard()
+            card = player.next_card()
             player.reveal_card(card)
             cards.append(card)
         nacts = sum([1 for _ in cards if _.isAction()])

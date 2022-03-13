@@ -19,7 +19,7 @@ class Card_Patrician(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        topcard = player.nextCard()
+        topcard = player.next_card()
         player.reveal_card(topcard)
         if topcard.cost >= 5:
             player.addCard(topcard, "hand")

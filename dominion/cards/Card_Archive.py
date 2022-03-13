@@ -23,7 +23,7 @@ class Card_Archive(Card.Card):
         if not hasattr(player, "_archive_reserve"):
             player._archive_reserve = PlayArea.PlayArea([])
         for _ in range(3):
-            card = player.nextCard()
+            card = player.next_card()
             player.output("Putting {} in the archive".format(card.name))
             player._archive_reserve.add(card)
             player.secret_count += 1

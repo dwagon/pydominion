@@ -16,7 +16,7 @@ class Hex_Famine(Hex.Hex):
 
     def special(self, game, player):
         for _ in range(3):
-            c = player.nextCard()
+            c = player.next_card()
             if c.isAction():
                 player.output("Discarding {}".format(c))
                 player.discardCard(c)

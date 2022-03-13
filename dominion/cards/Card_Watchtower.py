@@ -92,7 +92,7 @@ class Test_Watchtower(unittest.TestCase):
             self.assertEqual(self.g.trashSize(), tsize)
             self.assertEqual(self.plr.hand.size(), 2)
             self.assertEqual(self.plr.in_hand("Silver"), None)
-            c = self.plr.nextCard()
+            c = self.plr.next_card()
             self.assertEqual(c.name, "Silver")
         except AssertionError:  # pragma: no cover
             self.g.print_state()

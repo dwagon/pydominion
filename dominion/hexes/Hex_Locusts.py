@@ -17,7 +17,7 @@ class Hex_Locusts(Hex.Hex):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        nxt = player.nextCard()
+        nxt = player.next_card()
         if nxt.name in ("Copper", "Estate"):
             player.output(
                 "Gaining a curse because your next card is {}".format(nxt.name)

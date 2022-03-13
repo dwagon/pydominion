@@ -50,7 +50,7 @@ class Test_Courtyard(unittest.TestCase):
         self.plr.addCard(self.cy, "hand")
         self.plr.test_input = ["put gold"]
         self.plr.playCard(self.cy)
-        card = self.plr.nextCard()
+        card = self.plr.next_card()
         self.assertEqual(card.name, "Gold")
         for c in self.plr.hand:
             self.assertNotEqual(c.name, "Gold")

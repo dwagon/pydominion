@@ -36,7 +36,7 @@ class Card_Doctor(Card.Card):
         )
         cards = []
         for _ in range(3):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         for card in cards:
             player.reveal_card(card)
             if card.name == o["card"].name:
@@ -49,7 +49,7 @@ class Card_Doctor(Card.Card):
     def hook_overpay(self, game, player, amount):
         for i in range(amount):
             player.output("Doctoring %d/%d" % (i + 1, amount))
-            card = player.nextCard()
+            card = player.next_card()
             options = []
             options.append(
                 {

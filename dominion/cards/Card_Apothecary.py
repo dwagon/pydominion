@@ -25,7 +25,7 @@ class Card_Apothecary(Card.Card):
         back on top of your deck in any order"""
         unput = []
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.name in ("Copper", "Potion"):
                 player.output("Putting %s in hand" % c.name)

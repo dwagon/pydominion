@@ -18,7 +18,7 @@ class Card_NightWatchman(Card.Card):
     def night(self, game, player):
         cards = []
         for _ in range(5):
-            c = player.nextCard()
+            c = player.next_card()
             cards.append(c)
         player.output(
             "Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards])

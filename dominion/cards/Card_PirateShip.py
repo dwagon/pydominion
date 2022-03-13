@@ -47,7 +47,7 @@ class Card_PirateShip(Card.Card):
         trashed = False
         cards = []
         for _ in range(2):
-            card = victim.nextCard()
+            card = victim.next_card()
             victim.reveal_card(card)
             if card.isTreasure():
                 cards.append(card)

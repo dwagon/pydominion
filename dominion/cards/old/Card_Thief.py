@@ -29,7 +29,7 @@ class Card_Thief(Card.Card):
     def thieveOn(self, victim, thief):
         treasures = []
         for _ in range(2):
-            c = victim.nextCard()
+            c = victim.next_card()
             victim.reveal_card(c)
             if c.isTreasure():
                 treasures.append(c)

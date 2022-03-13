@@ -21,7 +21,7 @@ class Card_Rabble(Card.Card):
     def attack(self, victim, attacker):
         cards = []
         for _ in range(3):
-            c = victim.nextCard()
+            c = victim.next_card()
             victim.reveal_card(c)
             if c.isAction() or c.isTreasure():
                 victim.output(

@@ -24,7 +24,7 @@ class Card_Zombie_Spy(Card.Card):
         game.trashpile.add(self)
 
     def special(self, game, player):
-        c = player.nextCard()
+        c = player.next_card()
         discard = player.plrChooseOptions(
             "Discard your card?",
             ("Keep %s on your deck" % c.name, False),

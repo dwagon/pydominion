@@ -33,7 +33,7 @@ class Card_Saboteur(Card.Card):
 
     def pickCard(self, victim, player):
         for _ in range(len(victim.allCards())):
-            c = victim.nextCard()
+            c = victim.next_card()
             victim.reveal_card(c)
             if c.cost >= 3:
                 return c

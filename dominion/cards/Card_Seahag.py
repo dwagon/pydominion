@@ -19,7 +19,7 @@ class Card_Seahag(Card.Card):
         """Each other player discards the top card of his deck,
         then gains a Curse card, putting it on top of his deck"""
         for pl in player.attackVictims():
-            c = pl.nextCard()
+            c = pl.next_card()
             pl.discardCard(c)
             pl.output("Discarded your %s" % c.name)
             pl.gainCard("Curse", destination="topdeck")

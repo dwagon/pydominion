@@ -22,7 +22,7 @@ class Card_Magpie(Card.Card):
     def special(self, game, player):
         """Reveal the top card of your deck. If it's a treasure, put it into your
         hand. If it's an Action or Victory card, gain a Magpie"""
-        c = player.nextCard()
+        c = player.next_card()
         player.reveal_card(c)
         if c.isTreasure():
             player.output("Putting revealed %s into hand" % c.name)

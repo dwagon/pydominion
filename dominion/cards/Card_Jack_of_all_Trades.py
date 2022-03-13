@@ -21,7 +21,7 @@ class Card_Jack_of_all_Trades(Card.Card):
     def special(self, game, player):
         player.gainCard("Silver")
 
-        card = player.nextCard()
+        card = player.next_card()
         topdeck = player.plrChooseOptions(
             "Put %s back on top of your deck?" % card.name,
             ("Discard %s" % card.name, False),

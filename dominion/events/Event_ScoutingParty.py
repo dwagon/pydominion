@@ -17,7 +17,7 @@ class Event_ScoutingParty(Event.Event):
     def special(self, game, player):
         cards = []
         for _ in range(5):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         discards = player.cardSel(
             num=3, cardsrc=cards, force=True, prompt="Select cards to discard"
         )

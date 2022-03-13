@@ -25,7 +25,7 @@ class Card_Oracle(Card.Card):
     def attack(self, player, victim, name):
         cards = []
         for _ in range(2):
-            card = victim.nextCard()
+            card = victim.next_card()
             victim.reveal_card(card)
             cards.append(card)
         cardnames = ", ".join([c.name for c in cards])

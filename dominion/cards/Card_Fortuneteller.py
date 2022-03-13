@@ -20,7 +20,7 @@ class Card_Fortuneteller(Card.Card):
     def special(self, game, player):
         for plr in player.attackVictims():
             while True:
-                card = plr.nextCard()
+                card = plr.next_card()
                 plr.reveal_card(card)
                 if not card:
                     break

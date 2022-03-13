@@ -23,7 +23,7 @@ class Card_Farmingvillage(Card.Card):
         an Action or Treasure card. Put that card into your hand
         and discard the other cards."""
         while True:
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.isTreasure() or c.isAction():
                 player.output("Added %s to hand" % c.name)

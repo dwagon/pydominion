@@ -19,7 +19,7 @@ class Card_Catacombs(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(3):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         player.output("You drew %s" % ", ".join([c.name for c in cards]))
         ans = player.plrChooseOptions(
             "What do you want to do?",

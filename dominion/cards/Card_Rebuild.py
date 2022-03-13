@@ -35,7 +35,7 @@ class Card_Rebuild(Card.Card):
             return
         discards = []
         while True:
-            card = player.nextCard()
+            card = player.next_card()
             player.reveal_card(card)
             if not card:
                 break

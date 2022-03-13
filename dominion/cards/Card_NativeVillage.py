@@ -36,7 +36,7 @@ class Card_NativeVillage(Card.Card):
             ("Put all the cards from your mat into your hand.", "pull"),
         )
         if choice == "push":
-            card = player.nextCard()
+            card = player.next_card()
             player._native_map.add(card)
             player.output("Adding %s to the Native Village" % card.name)
             player.secret_count += 1

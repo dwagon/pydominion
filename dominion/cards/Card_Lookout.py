@@ -23,7 +23,7 @@ class Card_Lookout(Card.Card):
         """
         cards = []
         for _ in range(3):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         cards = [c for c in cards if c]
         if not cards:
             player.output("No cards available")

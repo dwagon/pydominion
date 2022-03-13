@@ -22,7 +22,7 @@ class Card_Sage(Card.Card):
     def special(self, game, player):
         todiscard = []
         while True:
-            card = player.nextCard()
+            card = player.next_card()
             if not card:
                 player.output("No card costing 3 or more found")
                 break

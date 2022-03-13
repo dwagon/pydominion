@@ -23,7 +23,7 @@ class Card_Ironmonger(Card.Card):
         """Reveal the top card of your deck; you may discard it.
         Either way, if it is an... Action card, +1 Action; Treasure
         Card, +1 coin; Victory Card, +1 card"""
-        card = player.nextCard()
+        card = player.next_card()
         player.reveal_card(card)
         ans = player.plrChooseOptions(
             "What to do with %s" % card.name,

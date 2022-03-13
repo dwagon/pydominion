@@ -14,7 +14,7 @@ class Project_Piazza(Project.Project):
         self.cost = 5
 
     def hook_start_turn(self, game, player):
-        c = player.nextCard()
+        c = player.next_card()
         if c.isAction():
             player.output("Piazza playing {}".format(c.name))
             player.addCard(c, "hand")

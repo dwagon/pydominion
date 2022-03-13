@@ -21,7 +21,7 @@ class Card_Sentry(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        cards = [player.nextCard() for _ in range(2)]
+        cards = [player.next_card() for _ in range(2)]
         player.output(
             "Look at the top two cards of your deck. Trash, discard or move to deck"
         )

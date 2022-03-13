@@ -18,7 +18,7 @@ class Card_Duchess(Card.Card):
 
     def special(self, game, player):
         for plr in game.player_list():
-            card = plr.nextCard()
+            card = plr.next_card()
             if plr == player:
                 name = "your"
             else:

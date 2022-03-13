@@ -22,7 +22,7 @@ class Card_Tribute(Card.Card):
         victim = game.playerToLeft(player)
         cards = []
         for _ in range(2):
-            card = victim.nextCard()
+            card = victim.next_card()
             victim.reveal_card(card)
             cards.append(card)
         cardname = None

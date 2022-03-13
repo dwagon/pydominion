@@ -20,7 +20,7 @@ class Card_WilloWisp(Card.Card):
         self.cost = 0
 
     def special(self, game, player):
-        c = player.nextCard()
+        c = player.next_card()
         player.reveal_card(c)
         if c.cost <= 2 and not c.potcost and not c.debtcost:
             player.addCard(c, "hand")

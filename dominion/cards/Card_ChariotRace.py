@@ -23,7 +23,7 @@ class Card_ChariotRace(Card.Card):
         card = player.pickupCard()
         player.reveal_card(card)
         other = game.playerToLeft(player)
-        othercard = other.nextCard()
+        othercard = other.next_card()
         if card.cost > othercard.cost:
             player.output(
                 "Your %s costs more than %s's %s"

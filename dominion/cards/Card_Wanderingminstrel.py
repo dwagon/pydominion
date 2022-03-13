@@ -21,7 +21,7 @@ class Card_Wanderingminstrel(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(3):
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.isAction():
                 cards.append(c)

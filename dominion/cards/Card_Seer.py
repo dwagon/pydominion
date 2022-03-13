@@ -22,7 +22,7 @@ class Card_Seer(Card.Card):
     def special(self, game, player):
         drawn = []
         for _ in range(3):
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
                 player.output("Putting {} into your hand".format(c))

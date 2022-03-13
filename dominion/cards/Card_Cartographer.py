@@ -21,7 +21,7 @@ class Card_Cartographer(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             if c:
                 cards.append(c)
         todisc = player.plrDiscardCards(

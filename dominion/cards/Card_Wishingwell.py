@@ -29,7 +29,7 @@ class Card_Wishingwell(Card.Card):
         o = player.userInput(options, "Guess the top card")
         if not o["card"]:
             return
-        c = player.nextCard()
+        c = player.next_card()
         player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")

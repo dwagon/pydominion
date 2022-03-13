@@ -21,7 +21,7 @@ class Card_Patrol(Card.Card):
     def special(self, game, player):
         cards = set()
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c is None:
                 break

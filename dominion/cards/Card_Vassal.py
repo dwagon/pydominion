@@ -17,7 +17,7 @@ class Card_Vassal(Card.Card):
         self.desc = "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
 
     def special(self, game, player):
-        card = player.nextCard()
+        card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
             player.addCard(card, "hand")

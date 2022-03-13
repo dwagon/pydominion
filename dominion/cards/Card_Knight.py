@@ -63,7 +63,7 @@ class KnightCard(Card.Card):
     def knight_attack(self, game, player, victim):
         cards = []
         for _ in range(2):
-            crd = victim.nextCard()
+            crd = victim.next_card()
             victim.reveal_card(crd)
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)

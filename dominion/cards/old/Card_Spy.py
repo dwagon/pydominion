@@ -24,7 +24,7 @@ class Card_Spy(Card.Card):
             self.spyOn(player, pl)
 
     def spyOn(self, attacker, victim):
-        c = victim.nextCard()
+        c = victim.next_card()
         victim.reveal_card(c)
         vicname = "your" if attacker == victim else "%s's" % victim.name
         discard = attacker.plrChooseOptions(

@@ -33,7 +33,7 @@ class Card_Rogue(Card.Card):
     def riffleVictim(self, victim, player):
         cards = []
         for _ in range(2):
-            c = victim.nextCard()
+            c = victim.next_card()
             victim.reveal_card(c)
             if 3 <= c.cost <= 6:
                 cards.append(c)

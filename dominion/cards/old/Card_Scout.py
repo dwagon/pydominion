@@ -22,7 +22,7 @@ class Card_Scout(Card.Card):
         # TODO: Currently you can't order the cards you return
         cards = []
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             player.reveal_card(c)
             if c.isVictory():
                 player.addCard(c, "hand")

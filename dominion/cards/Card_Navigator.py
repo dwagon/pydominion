@@ -21,7 +21,7 @@ class Card_Navigator(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(5):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         player.output(
             "Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards])
         )

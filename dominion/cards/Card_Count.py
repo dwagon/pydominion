@@ -101,7 +101,7 @@ class Test_Count(unittest.TestCase):
         # top deck, card select, +3 coin
         self.plr.test_input = ["top of your deck", "put gold", "+3 coin"]
         self.plr.playCard(self.card)
-        nc = self.plr.nextCard()
+        nc = self.plr.next_card()
         self.assertEqual(nc.name, "Gold")
 
     def test_gainCopper(self):
