@@ -391,7 +391,7 @@ class Player:
 
     ###########################################################################
     def refill_deck(self):
-        self.shuffleDiscard()
+        self._shuffle_discard()
         while self.discardpile:
             self.addCard(self.discardpile.topcard(), "deck")
 
@@ -417,7 +417,7 @@ class Player:
         return card
 
     ###########################################################################
-    def shuffleDiscard(self):
+    def _shuffle_discard(self):
         self.output(f"Shuffling Pile of {len(self.discardpile)} cards")
         for card in self.projects:
             if hasattr(card, "hook_preShuffle"):
