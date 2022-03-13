@@ -25,7 +25,7 @@ class TestPlayer(unittest.TestCase):
     def test_initialDeck(self):
         """Ensure initial player decks are correct"""
         self.plr.deck.empty()
-        self.plr.initial_Deck(heirlooms=[])
+        self.plr._initial_deck(heirlooms=[])
         self.assertEqual(len(self.plr.deck), 10)
 
     def test_trashcard_hand(self):

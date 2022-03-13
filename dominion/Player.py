@@ -50,7 +50,7 @@ class Player:
         self.forbidden_to_buy = []
         self.played_events = PlayArea([])
         self.played_ways = []
-        self.initial_Deck(heirlooms)
+        self._initial_deck(heirlooms)
         self.initial_tokens()
         self.once = {}
         self.turn_number = 0
@@ -77,7 +77,7 @@ class Player:
         game.output(f"Player {name} is at the table")
 
     ###########################################################################
-    def initial_Deck(self, heirlooms=None):
+    def _initial_deck(self, heirlooms=None):
         """Provide the initial deck - cards don't come from the piles
         hence add them back
         """
