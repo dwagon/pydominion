@@ -14,16 +14,12 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
         self.name = "Fellowship of Scribes"
 
     def hook_postAction(self, game, player, card):
-        player.output("Z")
         if not player.getFavor():
-            player.output("A")
             return
         if player.hand.size() > 4:
-            player.output("B")
             return
-        player.output("C")
         choice = player.plrChooseOptions(
-            "Use Fellowship of Scribes to spend a favor to gain a card",
+            "Use Fellowship of Scribes to spend a favor to gain a card?",
             ("Gain a card", "gain"),
             ("No thanks", "no"),
         )
