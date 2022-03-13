@@ -64,7 +64,7 @@ class Test_Crypt(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setPlayed("Silver", "Gold", "Estate")
+        self.plr.set_played("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
         self.plr.playCard(self.card)
         self.plr.end_turn()

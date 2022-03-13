@@ -50,7 +50,7 @@ class Test_Tormentor(unittest.TestCase):
 
     def test_play_hex(self):
         """Play tormentor with other cards already being played"""
-        self.plr.setPlayed("Tormentor")
+        self.plr.set_played("Tormentor")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_discard("Imp"))

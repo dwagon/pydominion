@@ -57,7 +57,7 @@ class Test_Grandmarket(unittest.TestCase):
 
     def test_nobuy_played(self):
         self.plr.setHand("Gold", "Gold", "Gold")
-        self.plr.setPlayed("Copper")
+        self.plr.set_played("Copper")
         self.plr.addCoin(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"

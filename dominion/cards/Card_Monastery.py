@@ -52,7 +52,7 @@ class Test_Monastery(unittest.TestCase):
         """Play Monastery when you have a copper"""
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.setHand("Duchy")
-        self.plr.setPlayed("Copper")
+        self.plr.set_played("Copper")
         self.plr.addCard(self.monastery, "hand")
         self.plr.gainCard("Silver")
         self.plr.test_input = ["Copper"]

@@ -39,7 +39,7 @@ class TestPlayer(unittest.TestCase):
     def test_trashcard_played(self):
         """Test that trashing a card from played works"""
         num_cards = self.g.countCards()
-        self.plr.setPlayed("Estate")
+        self.plr.set_played("Estate")
         card = self.plr.played[0]
         self.plr.trash_card(card)
         self.assertEqual(num_cards, self.g.countCards())
@@ -67,7 +67,7 @@ class Test_discardHand(unittest.TestCase):
 
     def test_discard(self):
         self.plr.setHand("Copper", "Silver")
-        self.plr.setPlayed("Estate", "Duchy")
+        self.plr.set_played("Estate", "Duchy")
         self.plr.discardHand()
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.played.size(), 0)
@@ -83,24 +83,24 @@ class Test_in_played(unittest.TestCase):
 
     def test_emptydiscard(self):
         """Test in_played() with no played pile"""
-        self.plr.setPlayed()
+        self.plr.set_played()
         self.assertIsNone(self.plr.in_played("Copper"))
 
     def test_indiscard(self):
         """Test in_played() with it the only card in the played pile"""
-        self.plr.setPlayed("Copper")
+        self.plr.set_played("Copper")
         self.assertIsNotNone(self.plr.in_played("Copper"))
 
     def test_inmultidiscard(self):
         """Test in_played() with it one of many cards in the played pile"""
-        self.plr.setPlayed("Copper", "Gold", "Copper")
+        self.plr.set_played("Copper", "Gold", "Copper")
         c = self.plr.in_played("Gold")
         self.assertIsNotNone(c)
         self.assertEqual(c.name, "Gold")
 
     def test_notinmultidiscard(self):
         """Test in_played() with it not one of many cards in the played pile"""
-        self.plr.setPlayed("Copper", "Gold", "Copper")
+        self.plr.set_played("Copper", "Gold", "Copper")
         self.assertIsNone(self.plr.in_played("Estate"))
 
 
@@ -499,12 +499,12 @@ class Test_misc(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_setPlayed(self):
-        self.plr.setPlayed("Silver", "Copper")
+    def test_set_played(self):
+        self.plr.set_played("Silver", "Copper")
         self.assertEqual(self.plr.played.size(), 2)
 
-    def test_setPlayed_empty(self):
-        self.plr.setPlayed()
+    def test_set_played_empty(self):
+        self.plr.set_played()
         self.assertEqual(self.plr.played.size(), 0)
 
     def test_setDiscard(self):
@@ -582,7 +582,7 @@ class Test_displayOverview(unittest.TestCase):
     def test_empty(self):
         self.plr.messages = []
         self.plr.setHand()
-        self.plr.setPlayed()
+        self.plr.set_played()
         self.plr.displayOverview()
         self.assertIn("| Hand: <EMPTY>", self.plr.messages)
         self.assertIn("| Played: <NONE>", self.plr.messages)
@@ -590,7 +590,7 @@ class Test_displayOverview(unittest.TestCase):
     def test_non_empty(self):
         self.plr.messages = []
         self.plr.setHand("Copper", "Estate")
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         self.plr.displayOverview()
         self.assertIn("| Hand: Copper, Estate", self.plr.messages)
         self.assertIn("| Played: Moat", self.plr.messages)

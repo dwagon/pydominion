@@ -67,7 +67,7 @@ class Test_Urchin(unittest.TestCase):
 
     def test_merc(self):
         """Play an Urchin and get a mercenary"""
-        self.plr.setPlayed("Urchin", "Militia")
+        self.plr.set_played("Urchin", "Militia")
         self.plr.test_input = ["end phase", "end phase", "mercenary"]
         self.plr.turn()
         self.assertIsNotNone(self.plr.in_discard("Mercenary"))

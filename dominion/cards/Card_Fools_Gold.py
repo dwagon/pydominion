@@ -56,7 +56,7 @@ class Test_Fools_Gold(unittest.TestCase):
 
     def test_play_twice(self):
         """Play the Fools_Gold again"""
-        self.plr.setPlayed("Fool's Gold")
+        self.plr.set_played("Fool's Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
 

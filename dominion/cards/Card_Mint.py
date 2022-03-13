@@ -62,7 +62,7 @@ class Test_Mint(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.coin = 5
         self.plr.setHand("Gold", "Estate")
-        self.plr.setPlayed("Copper", "Silver", "Estate", "Moat")
+        self.plr.set_played("Copper", "Silver", "Estate", "Moat")
         self.plr.buyCard(self.g["Mint"])
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Copper"))

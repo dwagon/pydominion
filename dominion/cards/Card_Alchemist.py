@@ -65,7 +65,7 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_discard(self):
         """Discard an Alchemist even if we have a potion in play"""
-        self.plr.setPlayed("Potion")
+        self.plr.set_played("Potion")
         self.plr.test_input = ["discard"]
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()
@@ -76,7 +76,7 @@ class Test_Alchemist(unittest.TestCase):
 
     def test_keep(self):
         """Keep an Alchemist for next turn"""
-        self.plr.setPlayed("Potion")
+        self.plr.set_played("Potion")
         self.plr.test_input = ["top of deck"]
         self.plr.playCard(self.alchemist)
         self.plr.discardHand()

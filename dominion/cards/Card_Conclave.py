@@ -49,7 +49,7 @@ class Test_Conclave(unittest.TestCase):
     def test_played(self):
         self.plr.setHand("Moat", "Copper")
         self.plr.addCard(self.card, "hand")
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

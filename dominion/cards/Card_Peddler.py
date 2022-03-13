@@ -43,7 +43,7 @@ class Test_Peddler(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_buy(self):
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         cost = self.plr.cardCost(self.card)
         self.assertEqual(cost, 6)
 

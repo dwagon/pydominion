@@ -48,7 +48,7 @@ class Test_Scepter(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_replay(self):
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)

@@ -58,7 +58,7 @@ class Test_Tracker(unittest.TestCase):
 
     def test_discard(self):
         """Have a Tracker  - discard the gained card"""
-        self.plr.setPlayed("Tracker")
+        self.plr.set_played("Tracker")
         self.plr.test_input = ["discard"]
         self.plr.gainCard("Gold")
         self.assertEqual(self.plr.discardpile.size(), 1)
@@ -67,7 +67,7 @@ class Test_Tracker(unittest.TestCase):
 
     def test_deck(self):
         """Have a Tracker  - the gained card on the deck"""
-        self.plr.setPlayed("Tracker")
+        self.plr.set_played("Tracker")
         self.plr.test_input = ["deck"]
         self.plr.gainCard("Gold")
         self.assertEqual(self.plr.deck[-1].name, "Gold")

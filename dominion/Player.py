@@ -351,7 +351,7 @@ class Player:
             self.reserve.add(self.game[c].remove())
 
     ###########################################################################
-    def setPlayed(self, *cards):
+    def set_played(self, *cards):
         """This is mostly used for testing"""
         self.played.empty()
         for c in cards:

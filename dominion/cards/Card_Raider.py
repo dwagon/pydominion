@@ -54,7 +54,7 @@ class Test_Raider(unittest.TestCase):
     def test_play(self):
         """Play a Raider"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setPlayed("Gold", "Silver")
+        self.plr.set_played("Gold", "Silver")
         self.vic.setHand("Silver", "Gold", "Estate", "Copper", "Copper")
         self.plr.playCard(self.card)
         try:

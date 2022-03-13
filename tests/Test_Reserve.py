@@ -29,10 +29,10 @@ class Test_getWhens(unittest.TestCase):
         self.assertIn("any", whens)
 
     def test_postaction(self):
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         whens = self.plr.getWhens()
         self.assertIn("postaction", whens)
-        self.plr.setPlayed("Copper")
+        self.plr.set_played("Copper")
         whens = self.plr.getWhens()
         self.assertNotIn("postaction", whens)
 

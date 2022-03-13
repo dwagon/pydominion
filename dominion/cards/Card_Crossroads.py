@@ -55,7 +55,7 @@ class Test_Crossroads(unittest.TestCase):
     def test_play_twice(self):
         """Play crossroads again"""
         self.plr.setHand("Silver", "Copper", "Crossroads")
-        self.plr.setPlayed("Crossroads")
+        self.plr.set_played("Crossroads")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 3)

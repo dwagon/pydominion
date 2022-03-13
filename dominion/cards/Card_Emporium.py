@@ -51,7 +51,7 @@ class Test_Emporium(unittest.TestCase):
 
     def test_gain_with_actions(self):
         """Play the Emporium having played lots of actions"""
-        self.plr.setPlayed("Moat", "Moat", "Moat", "Moat", "Moat")
+        self.plr.set_played("Moat", "Moat", "Moat", "Moat", "Moat")
         self.plr.gainCard("Emporium")
         self.assertEqual(self.plr.getScoreDetails()["Emporium"], 2)
 

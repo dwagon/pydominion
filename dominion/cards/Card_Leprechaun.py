@@ -46,7 +46,7 @@ class Test_Leprechaun(unittest.TestCase):
 
     def test_play_with_seven(self):
         """Play a Leprechaun with 7 cards in play"""
-        self.plr.setPlayed("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
+        self.plr.set_played("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertFalse(self.plr.has_state("Deluded"))
