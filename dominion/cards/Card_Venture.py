@@ -20,7 +20,7 @@ class Card_Venture(Card.Card):
         you reveal a Treasure. Discard the other cards. Play that
         Treasure"""
         while True:
-            c = player.pickupCard(verbose=False)
+            c = player.pickup_card(verbose=False)
             player.reveal_card(c)
             if c.isTreasure():
                 player.output("Picked up %s from Venture" % c.name)

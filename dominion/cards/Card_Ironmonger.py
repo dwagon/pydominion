@@ -36,7 +36,7 @@ class Card_Ironmonger(Card.Card):
             player.addCard(card, "topdeck")
         if card.isVictory():
             player.output("Picking up card as %s was a victory card" % card.name)
-            player.pickupCard()
+            player.pickup_card()
         if card.isAction():
             player.output("Gaining action as %s was an action card" % card.name)
             player.addActions(1)

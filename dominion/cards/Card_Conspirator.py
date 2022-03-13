@@ -19,7 +19,7 @@ class Card_Conspirator(Card.Card):
 
     def special(self, game, player):
         if self.numActionsPlayed(player) >= 3:
-            player.pickupCard()
+            player.pickup_card()
             player.addActions(1)
 
     def numActionsPlayed(self, player):

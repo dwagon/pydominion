@@ -20,7 +20,7 @@ class Card_ChariotRace(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        card = player.pickupCard()
+        card = player.pickup_card()
         player.reveal_card(card)
         other = game.playerToLeft(player)
         othercard = other.next_card()

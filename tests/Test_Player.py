@@ -444,7 +444,7 @@ class Test_spendAllCards(unittest.TestCase):
 
 
 ###############################################################################
-class Test_pickupCard(unittest.TestCase):
+class Test_pickup_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -454,7 +454,7 @@ class Test_pickupCard(unittest.TestCase):
         """Test picking up a card"""
         self.plr.set_deck("Gold")
         self.plr.set_hand()
-        self.plr.pickupCard()
+        self.plr.pickup_card()
         self.assertEqual(self.plr.hand[0].name, "Gold")
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.hand.size(), 1)
@@ -464,7 +464,7 @@ class Test_pickupCard(unittest.TestCase):
         self.plr.set_deck()
         self.plr.set_discard("Gold")
         self.plr.set_hand()
-        self.plr.pickupCard()
+        self.plr.pickup_card()
         self.assertEqual(self.plr.hand[0].name, "Gold")
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.hand.size(), 1)
@@ -474,7 +474,7 @@ class Test_pickupCard(unittest.TestCase):
         self.plr.set_deck()
         self.plr.set_discard()
         self.plr.set_hand()
-        c = self.plr.pickupCard()
+        c = self.plr.pickup_card()
         self.assertIsNone(c)
         self.assertEqual(self.plr.hand.size(), 0)
 

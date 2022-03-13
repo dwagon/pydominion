@@ -27,7 +27,7 @@ class Card_Groom(Card.Card):
         if card.isTreasure():
             player.gainCard("Silver")
         if card.isVictory():
-            player.pickupCard()
+            player.pickup_card()
             player.addActions(1)
 
 

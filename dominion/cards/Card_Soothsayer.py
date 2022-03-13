@@ -23,7 +23,7 @@ class Card_Soothsayer(Card.Card):
             player.output("%s got cursed" % pl.name)
             pl.output("%s's Soothsayer cursed you" % player.name)
             pl.gainCard("Curse")
-            pl.pickupCard()
+            pl.pickup_card()
 
 
 ###############################################################################

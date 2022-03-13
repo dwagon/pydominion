@@ -21,7 +21,7 @@ class Card_Den_of_Sin(Card.Card):
 
     def duration(self, game, player):
         for _ in range(2):
-            player.pickupCard()
+            player.pickup_card()
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}

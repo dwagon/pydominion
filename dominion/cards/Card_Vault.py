@@ -33,7 +33,7 @@ class Card_Vault(Card.Card):
                 )
                 plrdiscards = plr.plrDiscardCards(num=2)
                 if len(plrdiscards) == 2:
-                    plr.pickupCard()
+                    plr.pickup_card()
 
 
 ###############################################################################

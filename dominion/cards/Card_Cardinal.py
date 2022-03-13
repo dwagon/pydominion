@@ -20,7 +20,7 @@ class Card_Cardinal(Card.Card):
         for plr in player.attackVictims():
             exilecount = 0
             for _ in range(2):
-                crd = plr.pickupCard()
+                crd = plr.pickup_card()
                 plr.reveal_card(crd)
                 if 3 <= crd.cost <= 6 and not exilecount:
                     plr.exile_card(crd)

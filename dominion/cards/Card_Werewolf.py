@@ -22,7 +22,7 @@ class Card_Werewolf(Card.Card):
 
     def special(self, game, player):
         for _ in range(3):
-            player.pickupCard()
+            player.pickup_card()
 
     def night(self, game, player):
         for plr in player.attackVictims():

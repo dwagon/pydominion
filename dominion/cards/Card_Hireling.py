@@ -20,7 +20,7 @@ class Card_Hireling(Card.Card):
         pass
 
     def duration(self, game, player):
-        player.pickupCard()
+        player.pickup_card()
 
 
 ###############################################################################

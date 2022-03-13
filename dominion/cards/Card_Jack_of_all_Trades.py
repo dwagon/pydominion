@@ -33,7 +33,7 @@ class Card_Jack_of_all_Trades(Card.Card):
             player.discardCard(card)
 
         while player.hand.size() < 5:
-            player.pickupCard()
+            player.pickup_card()
 
         cards = [c for c in player.hand if not c.isTreasure()]
         if cards:

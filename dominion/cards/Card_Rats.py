@@ -28,7 +28,7 @@ class Card_Rats(Card.Card):
 
     def hook_trashThisCard(self, game, player):
         """When you trash this +1 Card"""
-        player.pickupCard(verb="Due to trashing Rats picked up")
+        player.pickup_card(verb="Due to trashing Rats picked up")
 
 
 ###############################################################################

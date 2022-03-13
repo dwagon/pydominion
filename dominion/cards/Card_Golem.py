@@ -32,7 +32,7 @@ class Card_Golem(Card.Card):
                 player.output("Not enough action cards in deck")
                 break
             if c.isAction() and c.name != "Golem":
-                player.pickupCard(card=c)
+                player.pickup_card(card=c)
                 actions.append(c)
             else:
                 player.output("Drew and discarded %s" % c.name)

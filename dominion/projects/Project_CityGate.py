@@ -14,7 +14,7 @@ class Project_CityGate(Project.Project):
         self.cost = 3
 
     def hook_start_turn(self, game, player):
-        player.pickupCard()
+        player.pickup_card()
         card = player.cardSel(
             force=True,
             cardsrc="hand",

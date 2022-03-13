@@ -24,7 +24,7 @@ class Card_Councilroom(Card.Card):
                 pl.output(
                     "Picking up card due to %s playing a Council Room" % player.name
                 )
-                pl.pickupCard()
+                pl.pickup_card()
 
 
 ###############################################################################

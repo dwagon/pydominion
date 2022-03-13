@@ -39,7 +39,7 @@ class Card_Pawn(Card.Card):
 
         for choice in chosen:
             if choice == "card":
-                player.pickupCard()
+                player.pickup_card()
             elif choice == Card.TYPE_ACTION:
                 player.addActions(1)
             elif choice == "buy":

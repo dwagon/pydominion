@@ -26,7 +26,7 @@ class Card_Enchantress(Card.Card):
                 "{}'s Enchantress gazump'd your {}".format(owner.name, card.name)
             )
             player.addActions(1)
-            player.pickupCard()
+            player.pickup_card()
             return {"skip_card": True}
         return None
 

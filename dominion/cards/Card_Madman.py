@@ -22,7 +22,7 @@ class Card_Madman(Card.Card):
         handsize = player.hand.size()
         player.output("Gaining %d cards from madman" % handsize)
         for _ in range(handsize):
-            player.pickupCard()
+            player.pickup_card()
         game["Madman"].add()
         player.played.remove(self)
 

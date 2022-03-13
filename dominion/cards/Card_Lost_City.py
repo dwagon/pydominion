@@ -28,7 +28,7 @@ class Card_Lost_City(Card.Card):
         """When you gain this, each other player draws a card"""
         for pl in game.player_list():
             if pl != player:
-                c = pl.pickupCard()
+                c = pl.pickup_card()
                 pl.output(
                     "Picking up a %s due to %s playing a Lost City"
                     % (c.name, player.name)

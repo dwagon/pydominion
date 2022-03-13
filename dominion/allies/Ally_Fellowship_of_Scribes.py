@@ -24,7 +24,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
             ("No thanks", "no"),
         )
         if choice == "gain":
-            player.pickupCard()
+            player.pickup_card()
             player.addFavor(-1)
 
 

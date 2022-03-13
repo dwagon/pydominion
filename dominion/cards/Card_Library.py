@@ -27,7 +27,7 @@ class Card_Library(Card.Card):
                 if self.discardChoice(player, c):
                     player.addCard(c, "discard")
                     continue
-            player.pickupCard(c)
+            player.pickup_card(c)
 
     def discardChoice(self, plr, card):
         ans = plr.plrChooseOptions(

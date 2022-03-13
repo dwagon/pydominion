@@ -20,7 +20,7 @@ class Card_CursedVillage(Card.Card):
         while player.hand.size() < 6:
             c = player.next_card()
             player.addCard(c, "discard")
-            player.pickupCard(c)
+            player.pickup_card(c)
 
     def hook_gain_this_card(self, game, player):
         player.receive_hex()

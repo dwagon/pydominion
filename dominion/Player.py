@@ -169,7 +169,7 @@ class Player:
         self.output(f"Received {hx} as a hex")
         self.output(hx.description(self))
         for _ in range(hx.cards):
-            self.pickupCard()
+            self.pickup_card()
         self.addActions(hx.actions)
         self.buys += hx.buys
         self.coin += self.hook_spendValue(hx, actual=True)
@@ -183,7 +183,7 @@ class Player:
         self.output(f"Received {boon} as a boon")
         self.output(boon.description(self))
         for _ in range(boon.cards):
-            self.pickupCard()
+            self.pickup_card()
         self.addActions(boon.actions)
         self.buys += boon.buys
         self.coin += self.hook_spendValue(boon, actual=True)
@@ -399,11 +399,11 @@ class Player:
     def pickup_cards(self, num, verbose=True, verb="Picked up"):
         cards = []
         for _ in range(num):
-            cards.append(self.pickupCard(verbose=verbose, verb=verb))
+            cards.append(self.pickup_card(verbose=verbose, verb=verb))
         return cards
 
     ###########################################################################
-    def pickupCard(self, card=None, verbose=True, verb="Picked up"):
+    def pickup_card(self, card=None, verbose=True, verb="Picked up"):
         """Pick a card from the deck and put it into the players hand"""
         if card is None:
             card = self.next_card()
@@ -433,7 +433,7 @@ class Player:
             handsize -= 1
             self.card_token = False
         while self.hand.size() < handsize:
-            c = self.pickupCard(verb="Dealt")
+            c = self.pickup_card(verb="Dealt")
             if not c:
                 self.output("Not enough cards to fill hand")
                 break
@@ -1163,7 +1163,7 @@ class Player:
             self.output("Gaining action from +1 Action token")
             self.addActions(1)
         if "+1 Card" in tkns:
-            c = self.pickupCard()
+            c = self.pickup_card()
             self.output("Picked up %s from +1 Card token" % c.name)
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
@@ -1266,7 +1266,7 @@ class Player:
             modif = -1
 
         for _ in range(card.cards + modif):
-            self.pickupCard()
+            self.pickup_card()
 
         if self.phase == "night":
             card.night(game=self.game, player=self)
