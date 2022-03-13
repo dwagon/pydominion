@@ -51,13 +51,13 @@ class Test_Distantlands(unittest.TestCase):
 
     def test_onmat(self):
         """Distant lands on mat"""
-        self.plr.setReserve("Distant Lands")
+        self.plr.set_reserve("Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()["Distant Lands"], 4)
 
     def test_onmat_twice(self):
         """Two Distant lands on mat"""
-        self.plr.setReserve("Distant Lands", "Distant Lands")
+        self.plr.set_reserve("Distant Lands", "Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.getScoreDetails()["Distant Lands"], 8)
 

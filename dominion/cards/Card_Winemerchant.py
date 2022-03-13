@@ -45,7 +45,7 @@ class Test_Winemerchant(unittest.TestCase):
     def test_recover(self):
         """Recover a wine merchant"""
         self.plr.coin = 2
-        self.plr.setReserve("Wine Merchant")
+        self.plr.set_reserve("Wine Merchant")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
         self.assertEqual(self.plr.reserve.size(), 0)

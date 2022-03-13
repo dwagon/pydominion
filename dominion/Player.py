@@ -344,7 +344,7 @@ class Player:
             self.exilepile.add(self.game[c].remove())
 
     ###########################################################################
-    def setReserve(self, *cards):
+    def set_reserve(self, *cards):
         """This is mostly used for testing"""
         self.reserve.empty()
         for c in cards:

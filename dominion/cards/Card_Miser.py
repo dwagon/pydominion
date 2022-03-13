@@ -65,7 +65,7 @@ class Test_Miser(unittest.TestCase):
     def test_add(self):
         """Play a miser with coppers in reserve"""
         self.plr.setHand("Copper", "Estate")
-        self.plr.setReserve("Copper", "Copper")
+        self.plr.set_reserve("Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["coins from mat"]
         self.plr.playCard(self.card)

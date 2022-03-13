@@ -52,7 +52,7 @@ class Test_Duplicate(unittest.TestCase):
     def test_buy(self):
         """Call Duplicate from reserve"""
         self.plr.coin = 6
-        self.plr.setReserve("Duplicate")
+        self.plr.set_reserve("Duplicate")
         self.plr.test_input = ["Gold"]
         self.plr.buyCard(self.g["Gold"])
         self.assertEqual(self.plr.discardpile.size(), 2)
@@ -63,7 +63,7 @@ class Test_Duplicate(unittest.TestCase):
     def test_buy_non_reserve(self):
         """Buy a card when duplicate just in hand"""
         self.plr.coin = 6
-        self.plr.setReserve()
+        self.plr.set_reserve()
         self.plr.setHand("Duplicate")
         self.plr.buyCard(self.g["Gold"])
         self.assertEqual(self.plr.discardpile.size(), 1)

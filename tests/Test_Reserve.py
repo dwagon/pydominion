@@ -53,23 +53,23 @@ class Test_Reserve(unittest.TestCase):
 
     def test_inreserve(self):
         """Test in_reserve()"""
-        self.plr.setReserve("Copper")
+        self.plr.set_reserve("Copper")
         self.assertTrue(self.plr.in_reserve("Copper"))
         self.assertEqual(self.plr.in_reserve("Copper").name, "Copper")
 
     def test_not_inreserve(self):
         """Test in_reserve()"""
-        self.plr.setReserve("Copper")
+        self.plr.set_reserve("Copper")
         self.assertFalse(self.plr.in_reserve("Estate"))
 
-    def test_setReserve(self):
+    def test_set_reserve(self):
         """set reserved"""
-        self.plr.setReserve("Silver")
+        self.plr.set_reserve("Silver")
         self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, "Silver")
 
     def test_call_reserve(self):
-        self.plr.setReserve("Silver")
+        self.plr.set_reserve("Silver")
         self.assertEqual(self.plr.reserve.size(), 1)
         c = self.plr.call_reserve("Silver")
         self.assertEqual(self.plr.reserve.size(), 0)
@@ -77,7 +77,7 @@ class Test_Reserve(unittest.TestCase):
 
     def test_bad_call_reserve(self):
         """Call a reserve that isn't there!"""
-        self.plr.setReserve("Copper")
+        self.plr.set_reserve("Copper")
         c = self.plr.call_reserve("Silver")
         self.assertIsNone(c)
 

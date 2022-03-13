@@ -597,7 +597,7 @@ class Test_displayOverview(unittest.TestCase):
 
     def test_reserve(self):
         self.plr.messages = []
-        self.plr.setReserve("Copper")
+        self.plr.set_reserve("Copper")
         self.plr.displayOverview()
         self.assertIn("| Reserve: Copper", self.plr.messages)
 
