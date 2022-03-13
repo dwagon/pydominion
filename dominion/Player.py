@@ -509,7 +509,7 @@ class Player:
             self.discard_card(card, "played", hook=False)
 
     ###########################################################################
-    def playable_selection(self, index):
+    def _playable_selection(self, index):
         options = []
         playable = [c for c in self.hand if c.playable and c.isAction()]
         if self.villager:
@@ -791,7 +791,7 @@ class Player:
 
         if self.phase == "action":
             if self.actions or self.villager:
-                op, index = self.playable_selection(index)
+                op, index = self._playable_selection(index)
                 options.extend(op)
 
         if self.phase == "buy":

@@ -680,7 +680,7 @@ class Test_buyable_selection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_playable_selection(unittest.TestCase):
+class Test__playable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
         self.g.start_game()
@@ -689,7 +689,7 @@ class Test_playable_selection(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.moat, "hand")
-        opts, ind = self.plr.playable_selection(1)
+        opts, ind = self.plr._playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["card"], self.moat)
@@ -701,7 +701,7 @@ class Test_playable_selection(unittest.TestCase):
     def test_token(self):
         self.plr.place_token("+1 Card", "Moat")
         self.plr.add_card(self.moat, "hand")
-        opts, ind = self.plr.playable_selection(1)
+        opts, ind = self.plr._playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "b")
         self.assertEqual(opts[0]["card"], self.moat)
