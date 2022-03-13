@@ -53,7 +53,7 @@ class Test_Loan(unittest.TestCase):
 
     def test_discard(self):
         tsize = self.g.trashSize()
-        self.plr.setDeck("Estate", "Gold", "Estate", "Duchy")
+        self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.loan)
         self.assertEqual(self.plr.discardpile[-1].name, "Gold")
@@ -63,7 +63,7 @@ class Test_Loan(unittest.TestCase):
 
     def test_trash(self):
         tsize = self.g.trashSize()
-        self.plr.setDeck("Estate", "Gold", "Estate", "Duchy")
+        self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["1"]
         self.plr.playCard(self.loan)
         self.assertEqual(self.g.trashSize(), tsize + 1)

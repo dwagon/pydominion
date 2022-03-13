@@ -49,13 +49,13 @@ class Test_Library(unittest.TestCase):
 
     def test_noactions(self):
         """Play a library where no actions are drawn"""
-        self.plr.setDeck("Duchy", "Copper", "Gold")
+        self.plr.set_deck("Duchy", "Copper", "Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_actions_discard(self):
         """Play a library where actions are drawn and discarded"""
-        self.plr.setDeck("Duchy", "Moat", "Gold")
+        self.plr.set_deck("Duchy", "Moat", "Gold")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Moat")
@@ -63,7 +63,7 @@ class Test_Library(unittest.TestCase):
 
     def test_actions_keep(self):
         """Play a library where actions are drawn and kept"""
-        self.plr.setDeck("Duchy", "Moat", "Gold")
+        self.plr.set_deck("Duchy", "Moat", "Gold")
         self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.discardpile.is_empty())

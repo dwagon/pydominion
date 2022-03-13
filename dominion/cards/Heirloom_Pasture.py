@@ -37,7 +37,7 @@ class Test_Pasture(unittest.TestCase):
 
     def test_score(self):
         self.plr.set_hand("Estate", "Pasture")
-        self.plr.setDeck("Estate")
+        self.plr.set_deck("Estate")
         score = self.plr.getScoreDetails()
         self.assertEqual(score["Pasture"], 2)
 

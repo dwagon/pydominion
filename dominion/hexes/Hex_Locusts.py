@@ -64,14 +64,14 @@ class Test_Locusts(unittest.TestCase):
 
     def test_curse(self):
         """Locusts to gain a Curse"""
-        self.plr.setDeck("Estate")
+        self.plr.set_deck("Estate")
         self.plr.gainCard("Cursed Village")
         self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertIsNotNone(self.g.in_trash("Estate"))
 
     def test_gain(self):
         """Locusts to gain a cheaper card"""
-        self.plr.setDeck("Duchy")
+        self.plr.set_deck("Duchy")
         self.plr.test_input = ["Get Estate"]
         self.plr.gainCard("Cursed Village")
         self.assertIsNone(self.plr.in_discard("Curse"))

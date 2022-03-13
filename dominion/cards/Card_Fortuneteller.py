@@ -48,7 +48,7 @@ class Test_Fortuneteller(unittest.TestCase):
 
     def test_play(self):
         """Fortune Teller"""
-        self.vic.setDeck("Duchy", "Silver", "Copper")
+        self.vic.set_deck("Duchy", "Silver", "Copper")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.vic.in_discard("Silver"))

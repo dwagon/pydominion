@@ -60,7 +60,7 @@ class Test_Swindler(unittest.TestCase):
     def test_attack(self):
         """Swindle an undefended player"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Gold")
+        self.victim.set_deck("Gold")
         self.plr.test_input = ["Get Gold"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Gold"))

@@ -64,7 +64,7 @@ class Test_Mystic(unittest.TestCase):
     def test_good(self):
         """When the guess is good the card should move to the hand"""
         self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Province")
+        self.plr.set_deck("Province")
         self.plr.test_input = ["Province"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -75,7 +75,7 @@ class Test_Mystic(unittest.TestCase):
     def test_bad(self):
         """When the guess is bad the card should stay on the deck"""
         self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Province")
+        self.plr.set_deck("Province")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

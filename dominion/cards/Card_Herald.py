@@ -54,7 +54,7 @@ class Test_Herald(unittest.TestCase):
 
     def test_play(self):
         """Play a Herald"""
-        self.plr.setDeck("Moat", "Copper")
+        self.plr.set_deck("Moat", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)

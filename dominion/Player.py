@@ -372,7 +372,7 @@ class Player:
             self.hand.add(self.game[c].remove())
 
     ###########################################################################
-    def setDeck(self, *cards):
+    def set_deck(self, *cards):
         """This is mostly used for testing"""
         self.deck.empty()
         for c in cards:

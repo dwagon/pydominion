@@ -97,7 +97,7 @@ class Test_Doctor(unittest.TestCase):
 
     def test_play_card(self):
         """Play the Doctor"""
-        self.plr.setDeck("Silver", "Province", "Duchy")
+        self.plr.set_deck("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
@@ -108,7 +108,7 @@ class Test_Doctor(unittest.TestCase):
         """Buy a Doctor"""
         self.plr.coin = 6
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
-        self.plr.setDeck("Silver", "Province", "Duchy")
+        self.plr.set_deck("Silver", "Province", "Duchy")
         self.plr.buyCard(self.g["Doctor"])
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Province"))

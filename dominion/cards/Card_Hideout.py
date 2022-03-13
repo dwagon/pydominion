@@ -33,7 +33,7 @@ class Test_Hideout(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_playCard(self):
-        self.plr.setDeck("Silver")
+        self.plr.set_deck("Silver")
         self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.addCard(self.card, "hand")
@@ -43,7 +43,7 @@ class Test_Hideout(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2)
 
     def test_trashVictory(self):
-        self.plr.setDeck("Silver")
+        self.plr.set_deck("Silver")
         self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.addCard(self.card, "hand")

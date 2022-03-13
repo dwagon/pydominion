@@ -66,7 +66,7 @@ class Test_Rebuild(unittest.TestCase):
     def test_play(self):
         """Play a rebuild"""
         tsize = self.g.trashSize()
-        self.plr.setDeck("Copper", "Copper", "Estate", "Province", "Gold")
+        self.plr.set_deck("Copper", "Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["Select Province", "Get Duchy"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

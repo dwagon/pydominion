@@ -68,7 +68,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.card = self.g["Border Guard"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Silver", "Gold")
+        self.plr.set_deck("Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
         self.plr.playCard(self.card)
@@ -77,7 +77,7 @@ class Test_BorderGuard(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_play_actions(self):
-        self.plr.setDeck("Moat", "Guide")
+        self.plr.set_deck("Moat", "Guide")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.playCard(self.card)

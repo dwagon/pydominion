@@ -44,7 +44,7 @@ class Test_Cellar(unittest.TestCase):
 
     def test_one(self):
         self.plr.set_hand("Estate", "Copper", "Silver")
-        self.plr.setDeck("Province", "Gold")
+        self.plr.set_deck("Province", "Gold")
         self.plr.addCard(self.ccard, "hand")
         self.plr.test_input = ["discard estate", "finish"]
         self.plr.playCard(self.ccard)

@@ -43,7 +43,7 @@ class Test_Seer(unittest.TestCase):
         self.card = self.g["Seer"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Copper", "Silver", "Estate", "Province")
+        self.plr.set_deck("Copper", "Silver", "Estate", "Province")
         self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

@@ -154,7 +154,7 @@ class Test_nextCard(unittest.TestCase):
         self.assertIsNone(c)
 
     def test_drawOne(self):
-        self.plr.setDeck("Province")
+        self.plr.set_deck("Province")
         self.plr.discardpile.empty()
         c = self.plr.nextCard()
         self.assertEqual(c.name, "Province")
@@ -367,13 +367,13 @@ class Test_in_deck(unittest.TestCase):
 
     def test_indeck(self):
         """Test card is in deck"""
-        self.plr.setDeck("Copper")
+        self.plr.set_deck("Copper")
         self.assertTrue(self.plr.in_deck("Copper"))
         self.assertEqual(self.plr.in_deck("Copper").name, "Copper")
 
     def test_notindeck(self):
         """Test card that isn't in deck"""
-        self.plr.setDeck("Copper")
+        self.plr.set_deck("Copper")
         self.assertFalse(self.plr.in_deck("Estate"))
 
 
@@ -452,7 +452,7 @@ class Test_pickupCard(unittest.TestCase):
 
     def test_pickup(self):
         """Test picking up a card"""
-        self.plr.setDeck("Gold")
+        self.plr.set_deck("Gold")
         self.plr.set_hand()
         self.plr.pickupCard()
         self.assertEqual(self.plr.hand[0].name, "Gold")
@@ -461,7 +461,7 @@ class Test_pickupCard(unittest.TestCase):
 
     def test_pickup_empty(self):
         """Test picking up a card from an empty deck"""
-        self.plr.setDeck()
+        self.plr.set_deck()
         self.plr.set_discard("Gold")
         self.plr.set_hand()
         self.plr.pickupCard()
@@ -471,7 +471,7 @@ class Test_pickupCard(unittest.TestCase):
 
     def test_pick_nomore(self):
         """Test picking up a card when there isn't one to be had"""
-        self.plr.setDeck()
+        self.plr.set_deck()
         self.plr.set_discard()
         self.plr.set_hand()
         c = self.plr.pickupCard()
@@ -515,8 +515,8 @@ class Test_misc(unittest.TestCase):
         self.plr.set_hand("Silver", "Copper")
         self.assertEqual(self.plr.hand.size(), 2)
 
-    def test_setDeck(self):
-        self.plr.setDeck("Silver", "Copper")
+    def test_set_deck(self):
+        self.plr.set_deck("Silver", "Copper")
         self.assertEqual(self.plr.deck.size(), 2)
 
     def test_get_actions(self):

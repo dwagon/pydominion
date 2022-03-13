@@ -38,7 +38,7 @@ class Test_Dungeon(unittest.TestCase):
 
     def test_playcard(self):
         """Play a dungeon"""
-        self.plr.setDeck(
+        self.plr.set_deck(
             "Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold"
         )
         self.plr.set_hand("Province", "Duchy")

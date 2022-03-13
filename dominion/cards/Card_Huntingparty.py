@@ -51,7 +51,7 @@ class Test_Huntingparty(unittest.TestCase):
 
     def test_playcard(self):
         """Play a hunting party"""
-        self.plr.setDeck("Copper", "Province", "Silver", "Gold", "Duchy")
+        self.plr.set_deck("Copper", "Province", "Silver", "Gold", "Duchy")
         self.plr.set_hand("Gold", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

@@ -47,7 +47,7 @@ class Test_Wanderingminstrel(unittest.TestCase):
 
     def test_play(self):
         """Wandering Minstrel"""
-        self.plr.setDeck("Duchy", "Moat", "Silver", "Gold")
+        self.plr.set_deck("Duchy", "Moat", "Silver", "Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)

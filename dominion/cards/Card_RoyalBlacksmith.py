@@ -36,7 +36,7 @@ class Test_RoyalBlacksmith(unittest.TestCase):
 
     def test_play(self):
         """Play an Royal Blacksmith"""
-        self.plr.setDeck("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
+        self.plr.set_deck("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
         self.plr.set_hand("Copper", "Silver", "Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)

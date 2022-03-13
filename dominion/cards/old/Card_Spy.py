@@ -45,8 +45,8 @@ class Test_Spy(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Spy", "Moat"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.attacker.setDeck("Estate", "Province", "Duchy")
-        self.defender.setDeck("Estate", "Gold")
+        self.attacker.set_deck("Estate", "Province", "Duchy")
+        self.defender.set_deck("Estate", "Gold")
 
     def test_moat(self):
         self.defender.set_hand("Moat")

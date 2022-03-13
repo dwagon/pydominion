@@ -48,7 +48,7 @@ class Test_NightWatchman(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setDeck("Gold", "Province", "Gold", "Duchy", "Silver")
+        self.plr.set_deck("Gold", "Province", "Gold", "Duchy", "Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = [
             "Return Silver",

@@ -44,7 +44,7 @@ class Test_Artificer(unittest.TestCase):
 
     def test_play(self):
         """Play an artificer - discard none and pick up a copper"""
-        self.plr.setDeck("Province")
+        self.plr.set_deck("Province")
         self.plr.set_hand()
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["finish", "copper"]
@@ -56,7 +56,7 @@ class Test_Artificer(unittest.TestCase):
 
     def test_play_more(self):
         """Play an artificer - discard three and pick up a silver"""
-        self.plr.setDeck("Gold")
+        self.plr.set_deck("Gold")
         self.plr.set_hand("Estate", "Duchy", "Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = [

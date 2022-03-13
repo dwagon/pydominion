@@ -49,7 +49,7 @@ class Test_Settlers(unittest.TestCase):
 
     def test_play_nocopper(self):
         """Play a Settlers and pull a copper"""
-        self.plr.setDeck("Gold", "Silver")
+        self.plr.set_deck("Gold", "Silver")
         self.plr.set_discard("Gold", "Silver", "Duchy")
         self.plr.set_hand("Gold", "Silver")
         self.plr.addCard(self.card, "hand")

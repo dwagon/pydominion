@@ -50,14 +50,14 @@ class Test_Sentry(unittest.TestCase):
         self.plr.addCard(self.card, "hand")
 
     def test_trash_discard(self):
-        self.plr.setDeck("Copper", "Province", "Duchy")
+        self.plr.set_deck("Copper", "Province", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish", "Discard Province", "Finish"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
 
     def test_discard_keep(self):
-        self.plr.setDeck("Gold", "Province", "Duchy")
+        self.plr.set_deck("Gold", "Province", "Duchy")
         self.plr.test_input = ["Finish", "Discard Province", "Finish"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard("Province"))

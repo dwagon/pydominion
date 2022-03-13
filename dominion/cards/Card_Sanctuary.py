@@ -38,7 +38,7 @@ class Test_Sanctuary(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setDeck("Estate", "Duchy", "Province")
+        self.plr.set_deck("Estate", "Duchy", "Province")
         self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Exile Copper"]

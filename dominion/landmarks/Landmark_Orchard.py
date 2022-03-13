@@ -37,7 +37,7 @@ class Test_Orchard(unittest.TestCase):
     def test_gain(self):
         """Use Orchard"""
         self.plr.set_discard("Moat", "Moat", "Militia", "Duchy")
-        self.plr.setDeck("Moat", "Moat", "Copper", "Duchy")
+        self.plr.set_deck("Moat", "Moat", "Copper", "Duchy")
         self.plr.set_hand("Moat", "Militia", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Orchard"], 4)

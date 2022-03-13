@@ -56,7 +56,7 @@ class Test_Golem(unittest.TestCase):
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
         self.plr.set_hand()
-        self.plr.setDeck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
+        self.plr.set_deck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(
@@ -67,7 +67,7 @@ class Test_Golem(unittest.TestCase):
     def test_golem(self):
         """Ensure golem isn't picked up"""
         self.plr.set_hand()
-        self.plr.setDeck(
+        self.plr.set_deck(
             "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
         )
         self.plr.addCard(self.card, "hand")
@@ -81,7 +81,7 @@ class Test_Golem(unittest.TestCase):
 
     def test_nocards(self):
         self.plr.set_hand("Copper", "Copper", "Copper")
-        self.plr.setDeck("Copper", "Copper", "Copper")
+        self.plr.set_deck("Copper", "Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
 

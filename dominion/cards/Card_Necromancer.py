@@ -50,7 +50,7 @@ class Test_Necromancer(unittest.TestCase):
 
     def test_play(self):
         """Play a Necromancer"""
-        self.plr.setDeck("Gold", "Silver")
+        self.plr.set_deck("Gold", "Silver")
         self.plr.test_input = ["Zombie Spy", "Keep"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_hand("Silver"))  # From Zombie Spy

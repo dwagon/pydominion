@@ -35,7 +35,7 @@ class Test_Silos(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Silos")
-        self.plr.setDeck("Estate", "Estate", "Estate")
+        self.plr.set_deck("Estate", "Estate", "Estate")
         self.plr.set_hand("Copper", "Estate", "Copper", "Province")
         self.plr.test_input = ["2"]
         self.plr.start_turn()

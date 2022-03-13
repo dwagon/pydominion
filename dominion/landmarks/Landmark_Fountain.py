@@ -29,7 +29,7 @@ class Test_Fountain(unittest.TestCase):
     def test_gain(self):
         """Use Fountain"""
         self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Fountain"], 15)
 

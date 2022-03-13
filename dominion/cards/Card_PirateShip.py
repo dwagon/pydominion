@@ -88,7 +88,7 @@ class Test_PirateShip(unittest.TestCase):
 
     def test_play_attack(self):
         tsize = self.g.trashSize()
-        self.vic.setDeck("Copper", "Estate")
+        self.vic.set_deck("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
         self.plr.playCard(self.card)
         try:
@@ -101,7 +101,7 @@ class Test_PirateShip(unittest.TestCase):
 
     def test_trash_nothing(self):
         """Play the card but chose to not trash anything"""
-        self.vic.setDeck("Copper", "Estate")
+        self.vic.set_deck("Copper", "Estate")
         self.plr.test_input = ["Each other", "Finish selecting"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard("Copper"))

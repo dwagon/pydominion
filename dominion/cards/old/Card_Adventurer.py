@@ -38,7 +38,7 @@ class Test_Adventurer(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_treasures(self):
-        self.plr.setDeck("Copper", "Silver", "Gold", "Estate")
+        self.plr.set_deck("Copper", "Silver", "Gold", "Estate")
         self.plr.set_hand("Adventurer")
         self.plr.playCard(self.plr.hand[0])
         self.assertEqual(

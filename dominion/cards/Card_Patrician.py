@@ -39,7 +39,7 @@ class Test_Patrician(unittest.TestCase):
 
     def test_play_cheap(self):
         """Play the Patrician"""
-        self.plr.setDeck("Estate", "Estate")
+        self.plr.set_deck("Estate", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
@@ -47,7 +47,7 @@ class Test_Patrician(unittest.TestCase):
 
     def test_play_good(self):
         """Play the Patrician"""
-        self.plr.setDeck("Gold", "Estate")
+        self.plr.set_deck("Gold", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)

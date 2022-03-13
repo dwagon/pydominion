@@ -42,7 +42,7 @@ class Test_Venture(unittest.TestCase):
 
     def test_play(self):
         """Play a Venture"""
-        self.plr.setDeck("Gold")
+        self.plr.set_deck("Gold")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:
@@ -54,7 +54,7 @@ class Test_Venture(unittest.TestCase):
 
     def test_discard(self):
         """Make sure we discard non-treasures"""
-        self.plr.setDeck("Gold", "Estate", "Estate")
+        self.plr.set_deck("Gold", "Estate", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)  # Gold
         for c in self.plr.played:

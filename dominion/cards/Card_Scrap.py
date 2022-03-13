@@ -62,7 +62,7 @@ class Test_Scrap(unittest.TestCase):
         """Play a scrap and trash something worth 3"""
         self.plr.set_hand("Silver")
         self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Province")
+        self.plr.set_deck("Province")
         self.plr.test_input = ["trash silver"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
@@ -74,7 +74,7 @@ class Test_Scrap(unittest.TestCase):
         """Play a scrap and trash something worth more than 6"""
         self.plr.set_hand("Province")
         self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Copper")
+        self.plr.set_deck("Copper")
         self.plr.test_input = ["trash province"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))

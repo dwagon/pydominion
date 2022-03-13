@@ -32,7 +32,7 @@ class Test_Museum(unittest.TestCase):
         """Use Museum"""
         self.plr.set_hand("Copper", "Estate")
         self.plr.set_discard("Gold", "Silver", "Copper")
-        self.plr.setDeck("Gold", "Moat", "Moat")
+        self.plr.set_deck("Gold", "Moat", "Moat")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Museum"], 10)
 

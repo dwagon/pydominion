@@ -49,8 +49,8 @@ class Test_ChariotRace(unittest.TestCase):
 
     def test_play_win(self):
         """Play a Chariot Race and win"""
-        self.plr.setDeck("Gold")
-        self.vic.setDeck("Silver")
+        self.plr.set_deck("Gold")
+        self.vic.set_deck("Silver")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -61,8 +61,8 @@ class Test_ChariotRace(unittest.TestCase):
     def test_play_lose(self):
         """Play a Chariot Race and lose"""
         self.plr.score["Chariot Race"] = 0
-        self.plr.setDeck("Silver")
-        self.vic.setDeck("Province")
+        self.plr.set_deck("Silver")
+        self.vic.set_deck("Province")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

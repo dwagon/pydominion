@@ -33,7 +33,7 @@ class Test_Duke(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score(self):
-        self.plr.setDeck("Duchy", "Duchy", "Estate")
+        self.plr.set_deck("Duchy", "Duchy", "Estate")
         self.plr.set_hand("Silver")
         self.plr.set_discard("Duke")
         sc = self.plr.getScore()

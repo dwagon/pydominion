@@ -58,7 +58,7 @@ class Test_Keep(unittest.TestCase):
 
     def test_most(self):
         """Use Keep when we have the most Silver"""
-        self.plr.setDeck("Silver")
+        self.plr.set_deck("Silver")
         self.plr.gameOver()
         try:
             self.assertEqual(self.plr.getScoreDetails()["Keep"], 5)

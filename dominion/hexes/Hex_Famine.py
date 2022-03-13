@@ -38,7 +38,7 @@ class Test_Famine(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.setDeck("Duchy", "Cursed Village", "Gold")
+        self.plr.set_deck("Duchy", "Cursed Village", "Gold")
         self.plr.gainCard("Cursed Village")
         self.assertIsNotNone(self.plr.in_discard("Cursed Village"))
         self.assertIsNotNone(self.plr.in_deck("Gold"))

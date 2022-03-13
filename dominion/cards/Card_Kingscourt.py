@@ -47,7 +47,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.card = self.g["King's Court"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
+        self.plr.set_deck("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
         self.plr.set_hand("Moat", "Estate")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["play moat"]

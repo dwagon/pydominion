@@ -33,7 +33,7 @@ class Test_Warehouse(unittest.TestCase):
     def test_playcard(self):
         """Play a warehouse"""
         self.plr.set_hand("Estate", "Copper", "Silver", "Gold")
-        self.plr.setDeck("Province", "Province", "Province", "Duchy")
+        self.plr.set_deck("Province", "Province", "Province", "Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = [
             "discard estate",

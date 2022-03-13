@@ -90,7 +90,7 @@ class Test_Secretchamber(unittest.TestCase):
     def test_underattack(self):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
-        self.plr.setDeck("Duchy", "Province")
+        self.plr.set_deck("Duchy", "Province")
         self.att.addCard(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["Reveal", "Silver", "Gold", "Finish"]
@@ -105,7 +105,7 @@ class Test_Secretchamber(unittest.TestCase):
     def test_underattack_pass(self):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
-        self.plr.setDeck("Duchy", "Province")
+        self.plr.set_deck("Duchy", "Province")
         self.att.addCard(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["nothing"]

@@ -47,7 +47,7 @@ class Test_Sage(unittest.TestCase):
 
     def test_play(self):
         """Pick a card out of the pile"""
-        self.plr.setDeck("Gold", "Copper", "Copper", "Copper")
+        self.plr.set_deck("Gold", "Copper", "Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -55,7 +55,7 @@ class Test_Sage(unittest.TestCase):
 
     def test_exhaust_deck(self):
         """No good card to pick out of the pile"""
-        self.plr.setDeck("Copper", "Copper", "Copper")
+        self.plr.set_deck("Copper", "Copper", "Copper")
         self.plr.addCard(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

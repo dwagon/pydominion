@@ -56,7 +56,7 @@ class Test_Scavenger(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.setDeck("Province", "Moat", "Witch", "Duchy")
+        self.plr.set_deck("Province", "Moat", "Witch", "Duchy")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["Put", "Moat"]
         self.plr.playCard(self.card)

@@ -33,13 +33,13 @@ class Test_Fairgrounds(unittest.TestCase):
     def test_zero(self):
         """Fairground for 4 types"""
         self.plr.set_hand("Copper", "Estate", "Silver", "Fairgrounds")
-        self.plr.setDeck("Copper", "Estate", "Silver", "Fairgrounds")
+        self.plr.set_deck("Copper", "Estate", "Silver", "Fairgrounds")
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc["Fairgrounds"], 0)
 
     def test_one(self):
         """Fairground for 4 types"""
-        self.plr.setDeck("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
+        self.plr.set_deck("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc["Fairgrounds"], 2)
 

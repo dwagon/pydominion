@@ -52,7 +52,7 @@ class Test_Jester(unittest.TestCase):
 
     def test_victory(self):
         """Play a jester with the victim having a Victory on top of deck"""
-        self.victim.setDeck("Duchy")
+        self.victim.set_deck("Duchy")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.victim.in_discard("Curse"))
@@ -60,7 +60,7 @@ class Test_Jester(unittest.TestCase):
 
     def test_give_card(self):
         """Play a jester and give the duplicate to the victim"""
-        self.victim.setDeck("Gold")
+        self.victim.set_deck("Gold")
         self.plr.test_input = ["gets"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
@@ -74,7 +74,7 @@ class Test_Jester(unittest.TestCase):
 
     def test_take_card(self):
         """Play a jester and take the duplicate from the victim"""
-        self.victim.setDeck("Gold")
+        self.victim.set_deck("Gold")
         self.plr.test_input = ["you"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)

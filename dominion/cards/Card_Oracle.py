@@ -57,8 +57,8 @@ class Test_Oracle(unittest.TestCase):
 
     def test_play_card(self):
         """Play Oracle"""
-        self.vic.setDeck("Estate", "Duchy", "Province")
-        self.plr.setDeck("Copper", "Silver", "Gold")
+        self.vic.set_deck("Estate", "Duchy", "Province")
+        self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["discard", "top"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard("Duchy"))

@@ -40,7 +40,7 @@ class Test_BadOmens(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play(self):
-        self.plr.setDeck("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Silver", "Gold")
         self.plr.gainCard("Cursed Village")
         self.assertEqual(self.plr.deck.size(), 2)
         self.assertEqual(self.plr.deck.count("Copper"), 2)

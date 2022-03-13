@@ -59,7 +59,7 @@ class Test_Masquerade(unittest.TestCase):
         tsize = self.g.trashSize()
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Copper", "Silver", "Gold")
-        self.plr.setDeck("Estate", "Duchy", "Province")
+        self.plr.set_deck("Estate", "Duchy", "Province")
         self.plr.addCard(self.card, "hand")
         self.plr.test_input = ["select silver", "finish"]
         self.other.test_input = ["select gold"]

@@ -45,7 +45,7 @@ class Test_Cardinal(unittest.TestCase):
         self.plr.addCard(self.card, "hand")
 
     def test_play(self):
-        self.oth.setDeck("Silver", "Village")
+        self.oth.set_deck("Silver", "Village")
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.oth.in_discard("Silver"))
         self.assertIsNotNone(self.oth.in_exile("Village"))

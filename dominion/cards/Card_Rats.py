@@ -38,12 +38,12 @@ class Test_Rats(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.rats = self.g["Rats"].remove()
-        self.plr.setDeck("Estate", "Province", "Duchy")
+        self.plr.set_deck("Estate", "Province", "Duchy")
         self.plr.set_hand("Copper", "Gold", "Silver", "Rats")
         self.plr.addCard(self.rats, "hand")
 
     def test_play(self):
-        self.plr.setDeck("Gold")
+        self.plr.set_deck("Gold")
         self.plr.test_input = ["trash copper"]
         self.plr.playCard(self.rats)
         self.plr.addActions(1)

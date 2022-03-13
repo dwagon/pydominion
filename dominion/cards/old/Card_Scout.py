@@ -57,7 +57,7 @@ class Test_Scout(unittest.TestCase):
     def test_deck(self):
         self.plr.set_hand()
         self.plr.addCard(self.scout, "hand")
-        self.plr.setDeck("Copper", "Copper", "Copper", "Duchy")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Duchy")
         self.plr.playCard(self.scout)
         self.assertEqual(self.plr.hand[0].name, "Duchy")
         for c in self.plr.deck:

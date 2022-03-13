@@ -41,14 +41,14 @@ class Test_TriumphalArch(unittest.TestCase):
     def test_play(self):
         """Test Triumphal Arch"""
         self.plr.set_hand("Moat", "Moat", "Moat")
-        self.plr.setDeck("Militia", "Militia", "Militia", "Militia")
+        self.plr.set_deck("Militia", "Militia", "Militia", "Militia")
         self.plr.gameOver()
         self.assertEqual(self.plr.getScoreDetails()["Triumphal Arch"], 3 * 3)
 
     def test_noactions(self):
         """Test Triumphal Arch"""
         self.plr.set_hand("Copper", "Copper", "Copper")
-        self.plr.setDeck("Duchy", "Duchy", "Duchy", "Duchy")
+        self.plr.set_deck("Duchy", "Duchy", "Duchy", "Duchy")
         self.plr.gameOver()
         sd = self.plr.getScoreDetails()
         self.assertNotIn("Triumphal Arch", sd)
