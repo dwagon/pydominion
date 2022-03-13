@@ -576,7 +576,7 @@ class Player:
         return options, index
 
     ###########################################################################
-    def spendable_selection(self):
+    def _spendable_selection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
         totcoin = sum([self.hook_spendValue(c) for c in spendable])
@@ -795,7 +795,7 @@ class Player:
                 options.extend(op)
 
         if self.phase == "buy":
-            op = self.spendable_selection()
+            op = self._spendable_selection()
             options.extend(op)
             op, index = self.buyable_selection(index)
             options.extend(op)

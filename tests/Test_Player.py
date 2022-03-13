@@ -804,7 +804,7 @@ class Test__night_selection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_spendable_selection(unittest.TestCase):
+class Test__spendable_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True,
@@ -823,7 +823,7 @@ class Test_spendable_selection(unittest.TestCase):
         self.plr.add_card(self.moat, "hand")
         self.plr.add_coffer(1)
         self.plr.add_villager(1)
-        opts = self.plr.spendable_selection()
+        opts = self.plr._spendable_selection()
         self.assertEqual(opts[0]["selector"], "1")
         self.assertEqual(opts[0][Card.TYPE_ACTION], "spendall")
         self.assertIn("Spend all treasures", opts[0]["verb"])
@@ -851,7 +851,7 @@ class Test_spendable_selection(unittest.TestCase):
         self.plr.coin = 1
         self.plr.coffer = 0
         try:
-            opts = self.plr.spendable_selection()
+            opts = self.plr._spendable_selection()
             self.assertEqual(opts[1]["selector"], "3")
             self.assertEqual(opts[1][Card.TYPE_ACTION], "payback")
             self.assertEqual(opts[1]["verb"], "Payback Debt")
