@@ -52,7 +52,7 @@ class Test_Feodum(unittest.TestCase):
     def test_trash(self):
         """Trash a Feodum card"""
         card = self.g["Feodum"].remove()
-        self.plr.addCard(card, "hand")
+        self.plr.add_card(card, "hand")
         self.plr.trash_card(card)
         self.assertEqual(self.plr.discardpile.size(), 3)
         for c in self.plr.discardpile:

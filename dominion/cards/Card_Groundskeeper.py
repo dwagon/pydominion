@@ -36,7 +36,7 @@ class Test_Groundskeeper(unittest.TestCase):
 
     def test_play(self):
         """Play a Groundskeeper"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)

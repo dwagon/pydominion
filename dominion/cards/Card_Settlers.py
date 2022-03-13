@@ -20,7 +20,7 @@ class Card_Settlers(Card.Card):
     def special(self, game, player):
         cu = player.in_discard("Copper")
         if cu:
-            player.addCard(cu, "hand")
+            player.add_card(cu, "hand")
             player.discardpile.remove(cu)
             player.reveal_card(cu)
             player.output("Pulled Copper from discard into hand")
@@ -40,7 +40,7 @@ class Test_Settlers(unittest.TestCase):
         """Play a Settlers and pull a copper"""
         self.plr.set_discard("Gold", "Silver", "Copper")
         self.plr.set_hand("Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertIsNone(self.plr.in_discard("Copper"))
@@ -52,7 +52,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.set_deck("Gold", "Silver")
         self.plr.set_discard("Gold", "Silver", "Duchy")
         self.plr.set_hand("Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.hand.size(), 2 + 1)

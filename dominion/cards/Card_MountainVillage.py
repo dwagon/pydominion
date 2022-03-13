@@ -24,7 +24,7 @@ class Card_MountainVillage(Card.Card):
                 prompt="Look through your discard pile and put a card from it into your hand",
             )
             player.discardpile.remove(card[0])
-            player.addCard(card[0], "hand")
+            player.add_card(card[0], "hand")
         else:
             player.output("No cards in discard pile")
             player.pickup_cards(1)
@@ -37,7 +37,7 @@ class Test_MountainVillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mountain Village"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_no_discard(self):
         """Play Mountain Village without a discard card"""

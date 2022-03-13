@@ -34,7 +34,7 @@ class Card_Giant(Card.Card):
                         "%s's Giant discarded your %s and cursed you"
                         % (player.name, c.name)
                     )
-                    victim.addCard(c, "discard")
+                    victim.add_card(c, "discard")
                     victim.gainCard("Curse")
         else:
             player.addCoin(1)
@@ -52,7 +52,7 @@ class Test_Giant(unittest.TestCase):
         """Play a giant - good journey - trashable victim"""
         self.plr.set_hand()
         self.victim.set_deck("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
@@ -62,7 +62,7 @@ class Test_Giant(unittest.TestCase):
         """Play a giant - good journey - untrashable victim"""
         self.plr.set_hand()
         self.victim.set_deck("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
@@ -72,7 +72,7 @@ class Test_Giant(unittest.TestCase):
     def test_play_no_journey(self):
         """Play a giant - bad journey"""
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = True
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)

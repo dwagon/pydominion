@@ -29,7 +29,7 @@ class Card_Miser(Card.Card):
             )
             if deposit:
                 cu = player.in_hand("Copper")
-                player.addCard(cu, Card.TYPE_RESERVE)
+                player.add_card(cu, Card.TYPE_RESERVE)
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)
@@ -47,7 +47,7 @@ class Test_Miser(unittest.TestCase):
     def test_put(self):
         """Play a miser with coppers in hand"""
         self.plr.set_hand("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["put"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_reserve("Copper"))
@@ -57,7 +57,7 @@ class Test_Miser(unittest.TestCase):
     def test_put_none(self):
         """Play a miser with no coppers in hand"""
         self.plr.set_hand("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_reserve("Copper"))
         self.assertEqual(self.plr.reserve.size(), 0)
@@ -66,7 +66,7 @@ class Test_Miser(unittest.TestCase):
         """Play a miser with coppers in reserve"""
         self.plr.set_hand("Copper", "Estate")
         self.plr.set_reserve("Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["coins from mat"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.reserve.size(), 2)

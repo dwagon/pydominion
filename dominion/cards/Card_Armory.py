@@ -27,7 +27,7 @@ class Test_Armory(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.armory = self.g["Armory"].remove()
-        self.plr.addCard(self.armory, "hand")
+        self.plr.add_card(self.armory, "hand")
 
     def test_gainzero(self):
         self.plr.test_input = ["finish"]

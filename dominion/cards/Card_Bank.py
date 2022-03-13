@@ -28,7 +28,7 @@ class Test_Bank(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Bank"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_gainnothing(self):
         self.plr.set_played("Estate", "Estate")

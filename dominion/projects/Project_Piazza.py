@@ -17,7 +17,7 @@ class Project_Piazza(Project.Project):
         c = player.next_card()
         if c.isAction():
             player.output("Piazza playing {}".format(c.name))
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
             player.playCard(c)
         else:
             player.output(
@@ -25,7 +25,7 @@ class Project_Piazza(Project.Project):
                     c.name
                 )
             )
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################

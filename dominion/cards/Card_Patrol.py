@@ -26,13 +26,13 @@ class Card_Patrol(Card.Card):
             if c is None:
                 break
             if c.isVictory() or c.name == "Curse":
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 player.output("Patrol adding {}".format(c.name))
             else:
                 cards.add(c)
         for c in cards:
             player.output("Putting {} back on deck".format(c.name))
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -45,7 +45,7 @@ class Test_Patrol(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_deck(
             "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
         )

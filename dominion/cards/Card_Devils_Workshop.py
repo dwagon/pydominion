@@ -40,7 +40,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Devil's Workshop"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_0(self):
         self.plr.phase = Card.TYPE_NIGHT

@@ -41,7 +41,7 @@ class Test_Dame_Anna(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.set_hand("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Province"))

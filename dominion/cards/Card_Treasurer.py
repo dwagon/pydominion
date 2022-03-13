@@ -38,7 +38,7 @@ class Card_Treasurer(Card.Card):
             )
             if card:
                 game.trashpile.remove(card[0])
-                player.addCard(card[0], "hand")
+                player.add_card(card[0], "hand")
         elif choice == "key":
             player.assign_artifact("Key")
 
@@ -51,7 +51,7 @@ class Test_Treasurer(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.plr.set_hand("Copper", "Silver")
         self.card = self.g["Treasurer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_trash(self):
         self.plr.test_input = ["Trash a treasure", "Silver"]

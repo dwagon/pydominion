@@ -38,7 +38,7 @@ class Test_Horsetraders(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_hand("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)

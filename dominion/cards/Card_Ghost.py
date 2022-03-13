@@ -30,7 +30,7 @@ class Card_Ghost(Card.Card):
             if card.isAction():
                 player._ghost_reserve.add(card)
                 break
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
             count -= 1
         else:
             player.output("No action cards in deck")
@@ -53,7 +53,7 @@ class Test_Ghost(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Ghost"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_with_no_actions(self):
         """Play a Ghost with no actions"""

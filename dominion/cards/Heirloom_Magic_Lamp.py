@@ -41,7 +41,7 @@ class Test_MagicLamp(unittest.TestCase):
 
     def test_play_gain(self):
         """Play a Magic Lamp to gain 3 Wishes"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_played("Copper", "Silver", "Gold", "Duchy", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
@@ -49,7 +49,7 @@ class Test_MagicLamp(unittest.TestCase):
 
     def test_play_fail(self):
         """Play a Magic Lamp but don't gain wishes"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_played("Copper", "Silver", "Gold", "Estate")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)

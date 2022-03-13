@@ -19,7 +19,7 @@ class Test_replace_traveller(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Page"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_replace(self):
         """Replace a traveller"""

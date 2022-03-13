@@ -38,7 +38,7 @@ class Test_Winds_Gift(unittest.TestCase):
 
     def test_winds_gift(self):
         self.plr.set_hand("Duchy", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard Duchy", "Discard Gold", "Finish Selecting"]
         self.plr.playCard(self.card)
         try:

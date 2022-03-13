@@ -28,7 +28,7 @@ class Card_Scepter(Card.Card):
             player.addCoin(2)
         else:
             card = player.cardSel(cardsrc=acts)
-            player.addCard(card[0], "hand")
+            player.add_card(card[0], "hand")
             player.played.remove(card[0])
             player.playCard(card[0], costAction=False)
 
@@ -40,7 +40,7 @@ class Test_Scepter(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Scepter"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]

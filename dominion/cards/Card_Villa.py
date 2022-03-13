@@ -42,7 +42,7 @@ class Test_Villa(unittest.TestCase):
         self.card = self.g["Villa"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 1)

@@ -38,7 +38,7 @@ class Test_Goatherd(unittest.TestCase):
     def test_play_this_turn(self):
         self.plr.set_hand("Copper", "Silver", "Gold", "Province", "Estate")
         self.plr.set_deck("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.other.stats["trashed"] = ["Silver"]
         self.plr.test_input = ["Trash Province"]
         self.plr.playCard(self.card)

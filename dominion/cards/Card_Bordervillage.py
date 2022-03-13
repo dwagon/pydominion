@@ -38,7 +38,7 @@ class Test_Bordervillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.bv = self.g["Border Village"].remove()
-        self.plr.addCard(self.bv, "hand")
+        self.plr.add_card(self.bv, "hand")
 
     def test_play(self):
         self.plr.playCard(self.bv)

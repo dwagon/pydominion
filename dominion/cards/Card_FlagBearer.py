@@ -40,7 +40,7 @@ class Test_FlagBearer(unittest.TestCase):
 
     def test_trash(self):
         card = self.g["Flag Bearer"].remove()
-        self.plr.addCard(card, "hand")
+        self.plr.add_card(card, "hand")
         self.plr.trash_card(card)
         self.assertIsNotNone(self.plr.has_artifact("Flag"))
 

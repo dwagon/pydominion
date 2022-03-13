@@ -40,7 +40,7 @@ class Test_Den_of_Sin(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand("Den of Sin"))
 
     def test_duration(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.plr.end_turn()
         self.plr.start_turn()

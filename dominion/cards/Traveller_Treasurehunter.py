@@ -48,7 +48,7 @@ class Test_Treasurehunter(unittest.TestCase):
         """Play a treasure_hunter"""
         self.other.gainCard("Copper")
         self.other.gainCard("Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard("Silver"))

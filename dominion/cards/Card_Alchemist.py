@@ -40,7 +40,7 @@ class Card_Alchemist(Card.Card):
                 alc = player.in_discard("Alchemist")
                 if alc:
                     player.discardpile.remove(alc)
-            player.addCard(self, "topdeck")
+            player.add_card(self, "topdeck")
 
 
 ###############################################################################
@@ -50,7 +50,7 @@ class Test_Alchemist(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.alchemist = self.g["Alchemist"].remove()
-        self.plr.addCard(self.alchemist, "hand")
+        self.plr.add_card(self.alchemist, "hand")
 
     def test_play(self):
         self.plr.playCard(self.alchemist)

@@ -16,13 +16,13 @@ class Hex_BadOmens(Hex.Hex):
 
     def special(self, game, player):
         for c in player.deck[:]:
-            player.addCard(c, "discard")
+            player.add_card(c, "discard")
             player.deck.remove(c)
         numcu = 0
         for c in player.discardpile[:]:
             if c.name == "Copper":
                 numcu += 1
-                player.addCard(c, "deck")
+                player.add_card(c, "deck")
                 player.discardpile.remove(c)
                 if numcu == 2:
                     break

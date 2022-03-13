@@ -33,10 +33,10 @@ class Card_Wishingwell(Card.Card):
         player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
         else:
             player.output("You chose poorly - it was a %s" % c.name)
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -51,7 +51,7 @@ class Test_Wishingwell(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wishing Well"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """No guess still gets a card and action"""

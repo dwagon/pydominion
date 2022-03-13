@@ -30,7 +30,7 @@ class Card_Pearldiver(Card.Card):
         if top:
             player.output("Putting %s on top of deck" % bcard.name)
             player.deck.remove(bcard)
-            player.addCard(bcard, "topdeck")
+            player.add_card(bcard, "topdeck")
         else:
             pass
 
@@ -42,7 +42,7 @@ class Test_Pearldiver(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.pearldiver = self.g["Pearl Diver"].remove()
-        self.plr.addCard(self.pearldiver, "hand")
+        self.plr.add_card(self.pearldiver, "hand")
 
     def test_play(self):
         self.plr.set_deck("Copper", "Gold", "Province", "Silver", "Duchy")

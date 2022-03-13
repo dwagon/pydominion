@@ -33,7 +33,7 @@ class Test_Followers(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Followers"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.victim.set_hand("Copper", "Copper", "Copper", "Silver", "Gold")

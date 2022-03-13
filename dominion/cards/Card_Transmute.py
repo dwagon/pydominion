@@ -58,7 +58,7 @@ class Test_Transmute(unittest.TestCase):
 
     def test_play(self):
         """Play a transmute - trash nothing"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash nothing"]
         self.plr.playCard(self.card)
         self.assertTrue(self.plr.discardpile.is_empty())
@@ -66,7 +66,7 @@ class Test_Transmute(unittest.TestCase):
     def test_trash_treasure(self):
         """Transmute a treasure card to gain a Transmute"""
         self.plr.set_hand("Gold", "Estate", "Transmute")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Transmute")
@@ -74,7 +74,7 @@ class Test_Transmute(unittest.TestCase):
     def test_trash_action(self):
         """Transmute a action card to gain a Duchy"""
         self.plr.set_hand("Gold", "Estate", "Transmute")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash transmute"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Duchy")
@@ -82,7 +82,7 @@ class Test_Transmute(unittest.TestCase):
     def test_trash_victory(self):
         """Transmute a victory card to gain a Gold"""
         self.plr.set_hand("Gold", "Estate", "Transmute")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash estate"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Gold")

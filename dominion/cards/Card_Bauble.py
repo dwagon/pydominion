@@ -72,7 +72,7 @@ class Test_Bauble(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Bauble"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_buy_cash(self):
         """Play the card and gain a buy and cash"""

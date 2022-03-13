@@ -53,7 +53,7 @@ class Test_SacredGrove(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Sacred Grove"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_no_share(self):
         """Play a Sacred Grove with a gift that shouldn't share"""

@@ -35,7 +35,7 @@ class Card_Island(Card.Card):
     def hook_end_of_game(self, game, player):
         for card in player.island_reserve[:]:
             player.output("Returning %s from Island" % card.name)
-            player.addCard(card)
+            player.add_card(card)
             player.island_reserve.remove(card)
 
 
@@ -50,7 +50,7 @@ class Test_Island(unittest.TestCase):
     def test_play_province(self):
         """Play an island on a province"""
         self.plr.set_hand("Silver", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province"]
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
@@ -68,7 +68,7 @@ class Test_Island(unittest.TestCase):
 
     def test_play_alone(self):
         """Play a island but don't pick another card"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
         self.plr.playCard(self.card)
         self.assertIsNone(self.plr.in_played("Island"))

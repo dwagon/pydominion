@@ -39,7 +39,7 @@ class Test_Sir_Vander(unittest.TestCase):
 
     def test_score(self):
         """Play the Sir"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
 
 

@@ -43,7 +43,7 @@ class Card_Inn(Card.Card):
             if card.name == "Inn":
                 return {"destination": "deck", "shuffle": True}
             player.discardpile.remove(card)
-            player.addCard(card, "deck")
+            player.add_card(card, "deck")
             player.deck.shuffle()
         return {}
 
@@ -59,7 +59,7 @@ class Test_Inn(unittest.TestCase):
     def test_play(self):
         """Play the card"""
         self.plr.set_hand("Duchy", "Province", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Province", "finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)

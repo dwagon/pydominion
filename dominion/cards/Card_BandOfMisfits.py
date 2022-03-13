@@ -35,7 +35,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Band of Misfits"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_market(self):
         """Make the Band of Misfits be a Bureaucrat"""

@@ -47,7 +47,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         """Play an Spice Merchant and select cards"""
         tsize = self.g.trashSize()
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "cards"]
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
@@ -61,7 +61,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         """Play an Spice Merchant and select coins"""
         tsize = self.g.trashSize()
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "coins"]
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)

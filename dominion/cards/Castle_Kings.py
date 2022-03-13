@@ -32,7 +32,7 @@ class Test_KingsCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "King's Castle":  # One before Kings
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.assertEqual(self.plr.getScoreDetails()["King's Castle"], 2)
 
 

@@ -51,7 +51,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_play(self):
         """Play the Pillage"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.victim.set_hand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
         self.plr.playCard(self.card)
@@ -64,7 +64,7 @@ class Test_Pillage(unittest.TestCase):
 
     def test_short_hand(self):
         """Play the Pillage with the victim having a small hand"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.victim.set_hand("Copper", "Estate", "Duchy", "Gold")
         self.plr.playCard(self.card)

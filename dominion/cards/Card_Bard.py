@@ -36,7 +36,7 @@ class Test_Bard(unittest.TestCase):
 
     def test_play_card(self):
         """Play Bard"""
-        self.plr.addCard(self.bard, "hand")
+        self.plr.add_card(self.bard, "hand")
         self.plr.playCard(self.bard)
         self.assertGreaterEqual(self.plr.getCoin(), 2)
         # Check boon happened

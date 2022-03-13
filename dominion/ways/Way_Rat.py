@@ -44,7 +44,7 @@ class Test_Rat(unittest.TestCase):
     def test_play(self):
         """Perform a Rat"""
         self.plr.set_hand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))

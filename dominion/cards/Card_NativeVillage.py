@@ -49,7 +49,7 @@ class Card_NativeVillage(Card.Card):
     def pull_back(self, player):
         for card in player._native_map[:]:
             player.output("Returning %s from Native Map" % card.name)
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player._native_map.remove(card)
             player.secret_count -= 1
 
@@ -64,12 +64,12 @@ class Test_NativeVillage(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_deck("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Set aside"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr._native_map[0].name, "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Put all"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.secret_count, 0)

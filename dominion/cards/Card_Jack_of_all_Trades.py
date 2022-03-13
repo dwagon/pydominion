@@ -28,7 +28,7 @@ class Card_Jack_of_all_Trades(Card.Card):
             ("Keep %s on top of your deck" % card.name, True),
         )
         if topdeck:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
         else:
             player.discardCard(card)
 
@@ -54,7 +54,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
         self.plr.set_hand("Duchy")
         self.plr.test_input = ["keep", "duchy"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
 
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # Gain a Silver

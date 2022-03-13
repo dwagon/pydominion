@@ -32,7 +32,7 @@ class Test_Explorer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Explorer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_province(self):
         self.plr.gainCard("Province", "hand")

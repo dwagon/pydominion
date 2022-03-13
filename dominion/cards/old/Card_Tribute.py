@@ -29,7 +29,7 @@ class Card_Tribute(Card.Card):
         for c in cards:
             player.output("Looking at %s from %s" % (c.name, victim.name))
             victim.output("%s's Tribute discarded %s" % (player.name, c.name))
-            victim.addCard(c, "discard")
+            victim.add_card(c, "discard")
             if c.name == cardname:
                 player.output("Duplicate - no extra")
                 continue
@@ -52,7 +52,7 @@ class Test_Tribute(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Tribute"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a tribute"""

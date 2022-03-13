@@ -35,7 +35,7 @@ class Card_Navigator(Card.Card):
                 player.discardCard(c)
         else:
             for c in cards:
-                player.addCard(c, "topdeck")
+                player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -45,7 +45,7 @@ class Test_Navigator(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.navigator = self.g["Navigator"].remove()
-        self.plr.addCard(self.navigator, "hand")
+        self.plr.add_card(self.navigator, "hand")
 
     def test_discard(self):
         self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")

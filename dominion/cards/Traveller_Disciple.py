@@ -32,7 +32,7 @@ class Card_Disciple(Card.Card):
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, card.name))
             player.playCard(card, discard=False, costAction=False)
-        player.addCard(card, "played")
+        player.add_card(card, "played")
         player.hand.remove(card)
         if card.purchasable:
             c = player.gainCard(card.name)
@@ -55,7 +55,7 @@ class Test_Disciple(unittest.TestCase):
     def test_play_no_actions(self):
         """Play a disciple with no actions available"""
         self.plr.set_hand("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.played.size(), 1)
 
@@ -63,7 +63,7 @@ class Test_Disciple(unittest.TestCase):
         """Play a disciple with an action available"""
         self.plr.set_hand("Copper", "Estate", "Moat")
         self.plr.test_input = ["moat"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.played.size(), 2)
         self.assertEqual(self.plr.hand.size(), 6)

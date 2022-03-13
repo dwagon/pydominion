@@ -44,7 +44,7 @@ class Card_Doctor(Card.Card):
                 player.trash_card(card)
             else:
                 player.output("Putting %s back" % card.name)
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
     def hook_overpay(self, game, player, amount):
         for i in range(amount):
@@ -79,10 +79,10 @@ class Card_Doctor(Card.Card):
                 player.trash_card(card)
                 player.output("Trashing %s" % card.name)
             elif o[Card.TYPE_ACTION] == "discard":
-                player.addCard(card, "discard")
+                player.add_card(card, "discard")
                 player.output("Discarding %s" % card.name)
             elif o[Card.TYPE_ACTION] == "put back":
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
                 player.output("Putting %s back" % card.name)
 
 
@@ -93,7 +93,7 @@ class Test_Doctor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Doctor"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play the Doctor"""

@@ -36,9 +36,9 @@ class Card_Raze(Card.Card):
             )
             for c in cards:
                 if c == ans[0]:
-                    player.addCard(c, "hand")
+                    player.add_card(c, "hand")
                 else:
-                    player.addCard(c, "discard")
+                    player.add_card(c, "discard")
 
 
 ###############################################################################
@@ -51,7 +51,7 @@ class Test_Raze(unittest.TestCase):
 
     def test_play(self):
         """Play a raze - trashing itself"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Raze", "Gold"]
         self.plr.playCard(self.card)
@@ -65,7 +65,7 @@ class Test_Raze(unittest.TestCase):
     def test_copper(self):
         """Play a raze - trashing copper - a zero value card"""
         self.plr.set_hand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Copper", "Gold"]
         self.plr.playCard(self.card)

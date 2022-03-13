@@ -34,7 +34,7 @@ class Card_Huntingparty(Card.Card):
                 discards.append(card)
                 continue
             player.output("Picked up a %s" % card.name)
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             break
         for card in discards:
             player.discardCard(card)
@@ -53,7 +53,7 @@ class Test_Huntingparty(unittest.TestCase):
         """Play a hunting party"""
         self.plr.set_deck("Copper", "Province", "Silver", "Gold", "Duchy")
         self.plr.set_hand("Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Duchy"))

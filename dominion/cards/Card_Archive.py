@@ -38,7 +38,7 @@ class Card_Archive(Card.Card):
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.userInput(options, "What card to bring back from the Archive?")
-        player.addCard(o["card"], "hand")
+        player.add_card(o["card"], "hand")
         player._archive_reserve.remove(o["card"])
         player.secret_count -= 1
         if player._archive_reserve.is_empty():
@@ -56,7 +56,7 @@ class Test_Archive(unittest.TestCase):
     def test_play(self):
         """Play a Archive"""
         self.plr.set_deck("Gold", "Silver", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.end_turn()

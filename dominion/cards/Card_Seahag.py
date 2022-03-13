@@ -35,10 +35,10 @@ class Test_Seahag(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Sea Hag"].remove()
         self.mcard = self.g["Moat"].remove()
-        self.attacker.addCard(self.seahag, "hand")
+        self.attacker.add_card(self.seahag, "hand")
 
     def test_defended(self):
-        self.victim.addCard(self.mcard, "hand")
+        self.victim.add_card(self.mcard, "hand")
         self.attacker.playCard(self.seahag)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertNotEqual(self.victim.deck[0].name, "Curse")

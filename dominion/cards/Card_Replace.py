@@ -29,7 +29,7 @@ class Card_Replace(Card.Card):
         if not gain:
             return
         if gain.isAction() or gain.isTreasure():
-            player.addCard(gain, "topdeck")
+            player.add_card(gain, "topdeck")
             player.discardpile.remove(gain)
         if gain.isVictory():
             for victim in player.attackVictims():
@@ -47,7 +47,7 @@ class Test_Replace(unittest.TestCase):
 
     def test_gain_action(self):
         self.plr.set_hand("Estate", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Moat"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_deck("Moat"))
@@ -58,7 +58,7 @@ class Test_Replace(unittest.TestCase):
             "Estate",
             "Silver",
         )
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Estate"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.vic.in_discard("Curse"))

@@ -47,7 +47,7 @@ class Test_Idol(unittest.TestCase):
     def test_play_even(self):
         """Play an even number of Idol"""
         self.plr.set_played("Idol", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
@@ -56,7 +56,7 @@ class Test_Idol(unittest.TestCase):
     def test_play_odd(self):
         """Play an odd number of Idol"""
         self.plr.set_played("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNone(self.vic.in_discard("Curse"))

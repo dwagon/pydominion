@@ -44,7 +44,7 @@ class Card_Noble_Brigand(Card.Card):
                         "%s's Noble Brigand stole your %s" % (player.name, card.name)
                     )
                     player.output("Stole %s from %s" % (card.name, victim.name))
-                    player.addCard(ans)
+                    player.add_card(ans)
                 else:
                     victim.output(
                         "%s's Noble Brigand discarded your %s"
@@ -63,7 +63,7 @@ class Card_Noble_Brigand(Card.Card):
                 plr.output(
                     "%s's Noble Brigand discarded your %s" % (player.name, c.name)
                 )
-                plr.addCard(c, "discard")
+                plr.add_card(c, "discard")
         return cards
 
 
@@ -77,14 +77,14 @@ class Test_Noble_Brigand(unittest.TestCase):
 
     def test_play(self):
         """Play an Noble Brigand but without anything to steal"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_no_treasure(self):
         """Play an Noble Brigand but with no treasure"""
         self.vic.set_deck("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.vic.discardpile.size(), 3)
@@ -93,7 +93,7 @@ class Test_Noble_Brigand(unittest.TestCase):
     def test_gold(self):
         """Play an Noble Brigand with a gold"""
         self.vic.set_deck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)

@@ -38,7 +38,7 @@ class Test_Shantytown(unittest.TestCase):
     def test_no_actions(self):
         """Test Shany Town with no actions"""
         self.plr.set_hand("Estate", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3 + 2)
@@ -46,7 +46,7 @@ class Test_Shantytown(unittest.TestCase):
     def test_actions(self):
         """Test Shany Town with actions"""
         self.plr.set_hand("Moat", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3)

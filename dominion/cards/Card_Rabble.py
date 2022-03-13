@@ -35,7 +35,7 @@ class Card_Rabble(Card.Card):
         for c in cards:
             victim.output("Putting %s back on deck" % c.name)
             attacker.output("%s keeping %s" % (victim.name, c.name))
-            victim.addCard(c, "deck")
+            victim.add_card(c, "deck")
 
     def special(self, game, player):
         """Each other player reveals the top 3 cards of his deck,
@@ -53,10 +53,10 @@ class Test_Rabble(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.rabble = self.g["Rabble"].remove()
         self.moat = self.g["Moat"].remove()
-        self.attacker.addCard(self.rabble, "hand")
+        self.attacker.add_card(self.rabble, "hand")
 
     def test_defended(self):
-        self.victim.addCard(self.moat, "hand")
+        self.victim.add_card(self.moat, "hand")
         self.attacker.playCard(self.rabble)
         self.assertEqual(self.victim.hand.size(), 6)  # 5 + moat
         self.assertEqual(self.attacker.hand.size(), 5 + 3)

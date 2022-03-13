@@ -34,7 +34,7 @@ class Test_Camel(unittest.TestCase):
 
     def test_play(self):
         """Perform a Camel"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_exile("Gold"))
 

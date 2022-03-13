@@ -34,7 +34,7 @@ class Test_Haggler(unittest.TestCase):
         self.card = self.g["Haggler"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 

@@ -33,7 +33,7 @@ class Card_Ironmonger(Card.Card):
         if ans:
             player.discardCard(card)
         else:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
         if card.isVictory():
             player.output("Picking up card as %s was a victory card" % card.name)
             player.pickup_card()
@@ -52,7 +52,7 @@ class Test_Ironmonger(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.im = self.g["Iron Monger"].remove()
-        self.plr.addCard(self.im, "hand")
+        self.plr.add_card(self.im, "hand")
 
     def test_play(self):
         self.plr.test_input = ["put back"]

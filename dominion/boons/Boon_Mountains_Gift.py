@@ -36,7 +36,7 @@ class Test_Mountains_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_mountains_gift(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 

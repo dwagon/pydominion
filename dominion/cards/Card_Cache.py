@@ -42,7 +42,7 @@ class Test_Cache(unittest.TestCase):
         self.assertEqual(sorted(["Copper", "Copper", "Cache"]), sdp)
 
     def test_play(self):
-        self.plr.addCard(self.cache, "hand")
+        self.plr.add_card(self.cache, "hand")
         self.plr.playCard(self.cache)
         self.assertEqual(self.plr.getCoin(), 3)
 

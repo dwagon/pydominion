@@ -33,7 +33,7 @@ class Test_Treasure_Trove(unittest.TestCase):
 
     def test_play(self):
         """Play a treasure trove"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
         self.assertEqual(self.plr.discardpile[1].name, "Gold")

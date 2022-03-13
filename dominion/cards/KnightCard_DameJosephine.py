@@ -44,7 +44,7 @@ class Test_Dame_Josephine(unittest.TestCase):
 
     def test_score(self):
         """Play the Dame"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc["Dame Josephine"], 2)
 

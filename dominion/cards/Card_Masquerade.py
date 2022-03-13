@@ -26,7 +26,7 @@ class Card_Masquerade(Card.Card):
             newplr = game.playerToLeft(plr)
             newcrd = xfer[plr]
             newplr.output("You gained a %s from %s" % (newcrd.name, plr.name))
-            newplr.addCard(newcrd, "hand")
+            newplr.add_card(newcrd, "hand")
         player.plrTrashCard()
 
     def pickCardToXfer(self, plr, game):
@@ -60,7 +60,7 @@ class Test_Masquerade(unittest.TestCase):
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.set_deck("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["select silver", "finish"]
         self.other.test_input = ["select gold"]
         self.plr.playCard(self.card)
@@ -74,7 +74,7 @@ class Test_Masquerade(unittest.TestCase):
         tsize = self.g.trashSize()
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["select gold", "trash silver"]
         self.other.test_input = ["select gold"]
         self.plr.playCard(self.card)

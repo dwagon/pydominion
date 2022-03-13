@@ -39,7 +39,7 @@ class Test_Embassy(unittest.TestCase):
         self.card = self.g["Embassy"].remove()
         self.plr.set_deck("Estate", "Estate", "Estate", "Estate", "Estate")
         self.plr.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.test_input = [

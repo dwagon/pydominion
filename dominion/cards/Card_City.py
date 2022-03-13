@@ -37,7 +37,7 @@ class Test_City(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.city = self.g["City"].remove()
-        self.plr.addCard(self.city, "hand")
+        self.plr.add_card(self.city, "hand")
 
     def test_nostacks(self):
         """Play a city with no stacks empty"""

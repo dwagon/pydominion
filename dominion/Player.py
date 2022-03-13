@@ -228,7 +228,7 @@ class Player:
         card.hook_call_reserve(game=self.game, player=self)
         self.currcards.pop()
         self.reserve.remove(card)
-        self.addCard(card, "played")
+        self.add_card(card, "played")
         return card
 
     ###########################################################################
@@ -393,7 +393,7 @@ class Player:
     def refill_deck(self):
         self._shuffle_discard()
         while self.discardpile:
-            self.addCard(self.discardpile.topcard(), "deck")
+            self.add_card(self.discardpile.topcard(), "deck")
 
     ###########################################################################
     def pickup_cards(self, num, verbose=True, verb="Picked up"):
@@ -411,7 +411,7 @@ class Player:
                 self.output("No more cards to pickup")
                 return None
         assert isinstance(card, Card.Card)
-        self.addCard(card, "hand")
+        self.add_card(card, "hand")
         if verbose:
             self.output(f"{verb} {card.name}")
         return card
@@ -449,7 +449,7 @@ class Player:
         self.coffer += num
 
     ###########################################################################
-    def addCard(self, card, pile="discard"):
+    def add_card(self, card, pile="discard"):
         if not card:  # pragma: no cover
             return None
         assert isinstance(card, Card.Card)
@@ -483,7 +483,7 @@ class Player:
         assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
-        self.addCard(card, "discard")
+        self.add_card(card, "discard")
         if hook:
             self.hook_discard_this_card(card, source)
             for way, crd in self.played_ways:
@@ -1071,7 +1071,7 @@ class Player:
             card.duration(game=self.game, player=self)
             self.currcards.pop()
             if not card.permanent:
-                self.addCard(card, "played")
+                self.add_card(card, "played")
                 self.durationpile.remove(card)
         for card in self.deferpile:
             self.output("Playing deferred %s" % card.name)
@@ -1215,11 +1215,11 @@ class Player:
         if options["discard"]:
             self.hand.remove(card)
             if card.isDuration():
-                self.addCard(card, "duration")
+                self.add_card(card, "duration")
             elif card.isReserve():
-                self.addCard(card, "reserve")
+                self.add_card(card, "reserve")
             else:
-                self.addCard(card, "played")
+                self.add_card(card, "played")
 
         if not options["skip_card"]:
             self.card_benefits(card)
@@ -1247,7 +1247,7 @@ class Player:
         if isinstance(newopts, dict):
             opts.update(newopts)
         if opts["discard"]:
-            self.addCard(card, "played")
+            self.add_card(card, "played")
         self.played_ways.append((way, card))
         self.currcards.pop()
 
@@ -1331,7 +1331,7 @@ class Player:
             self.trash_card(newcard)
             return newcard
         if not options.get("dontadd", False):
-            self.addCard(newcard, destination)
+            self.add_card(newcard, destination)
         if options.get("shuffle", False):
             self.deck.shuffle()
         return newcard
@@ -1551,7 +1551,7 @@ class Player:
         if available:
             self.output("Gain a prize")
             card = self.cardSel(cardsrc=available)
-            self.addCard(card[0].remove())
+            self.add_card(card[0].remove())
         else:
             self.output("No prizes available")
 

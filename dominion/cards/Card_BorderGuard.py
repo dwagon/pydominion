@@ -30,11 +30,11 @@ class Card_BorderGuard(Card.Card):
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )
-        player.addCard(ch[0], "hand")
+        player.add_card(ch[0], "hand")
         cards.remove(ch[0])
         for card in cards:
             player.output("Putting {} into the discard pile".format(card.name))
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
 
         if nacts == ncards:
             art = player.plrChooseOptions(
@@ -53,7 +53,7 @@ class Card_BorderGuard(Card.Card):
             ("Keep in discard", False),
         )
         if ch:
-            player.addCard(self, "topdeck")
+            player.add_card(self, "topdeck")
             player.discardpile.remove(self)
 
 
@@ -69,7 +69,7 @@ class Test_BorderGuard(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_deck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -78,7 +78,7 @@ class Test_BorderGuard(unittest.TestCase):
 
     def test_play_actions(self):
         self.plr.set_deck("Moat", "Guide")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_hand("Moat"))

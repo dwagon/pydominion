@@ -39,7 +39,7 @@ class Test_Distantlands(unittest.TestCase):
     def test_play(self):
         """Play a distant lands"""
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.reserve.size(), 1)
         self.assertIsNotNone(self.plr.in_reserve("Distant Lands"))

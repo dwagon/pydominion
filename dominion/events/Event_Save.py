@@ -30,7 +30,7 @@ class Event_Save(Event.Event):
 
     def hook_end_turn(self, game, player):
         card = player._save_reserve[0]
-        player.addCard(card, "hand")
+        player.add_card(card, "hand")
         player.secret_count -= 1
         del player._save_reserve
 

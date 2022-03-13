@@ -25,7 +25,7 @@ class Card_Library(Card.Card):
             c = player.next_card()
             if c.isAction():
                 if self.discardChoice(player, c):
-                    player.addCard(c, "discard")
+                    player.add_card(c, "discard")
                     continue
             player.pickup_card(c)
 
@@ -45,7 +45,7 @@ class Test_Library(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Library"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_noactions(self):
         """Play a library where no actions are drawn"""

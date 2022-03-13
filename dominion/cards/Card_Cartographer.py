@@ -31,7 +31,7 @@ class Card_Cartographer(Card.Card):
         )
         for card in cards:
             if card not in todisc:
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -41,7 +41,7 @@ class Test_Cartographer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Cartographer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")

@@ -30,7 +30,7 @@ class Boon_Moons_Gift(Boon.Boon):
         card = player.cardSel(
             cardsrc=cards, prompt="Pull card from discard and add to top of your deck"
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.discardpile.remove(card[0])
 
 
@@ -51,7 +51,7 @@ class Test_Moons_Gift(unittest.TestCase):
 
     def test_moons_gift(self):
         self.plr.set_discard("Province", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")

@@ -44,7 +44,7 @@ class Card_Crypt(Card.Card):
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.userInput(options, "What card to bring back from the crypt?")
-        player.addCard(o["card"], "hand")
+        player.add_card(o["card"], "hand")
         player._crypt_reserve.remove(o["card"])
         player.secret_count -= 1
         if player._crypt_reserve.is_empty():
@@ -60,7 +60,7 @@ class Test_Crypt(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Crypt"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT

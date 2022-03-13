@@ -22,10 +22,10 @@ class Card_Patrician(Card.Card):
         topcard = player.next_card()
         player.reveal_card(topcard)
         if topcard.cost >= 5:
-            player.addCard(topcard, "hand")
+            player.add_card(topcard, "hand")
             player.output("Adding %s to hand" % topcard.name)
         else:
-            player.addCard(topcard, "topdeck")
+            player.add_card(topcard, "topdeck")
             player.output("%s too cheap to bother with" % topcard.name)
 
 
@@ -40,7 +40,7 @@ class Test_Patrician(unittest.TestCase):
     def test_play_cheap(self):
         """Play the Patrician"""
         self.plr.set_deck("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -48,7 +48,7 @@ class Test_Patrician(unittest.TestCase):
     def test_play_good(self):
         """Play the Patrician"""
         self.plr.set_deck("Gold", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.get_actions(), 1)

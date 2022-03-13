@@ -46,7 +46,7 @@ class Test_Amulet(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.card = self.g["Amulet"].remove()
         self.plr.set_hand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_coin(self):
         """Play an amulet with coin"""

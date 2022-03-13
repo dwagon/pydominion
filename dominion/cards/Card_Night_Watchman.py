@@ -32,7 +32,7 @@ class Card_NightWatchman(Card.Card):
             if discard:
                 player.discardCard(c)
             else:
-                player.addCard(c, "topdeck")
+                player.add_card(c, "topdeck")
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}
@@ -49,7 +49,7 @@ class Test_NightWatchman(unittest.TestCase):
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_deck("Gold", "Province", "Gold", "Duchy", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Return Silver",
             "Discard Duchy",

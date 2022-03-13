@@ -34,7 +34,7 @@ class Test_NomadCamp(unittest.TestCase):
         self.card = self.g["Nomad Camp"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.get_buys(), 2)

@@ -51,7 +51,7 @@ class Test_SilkMerchant(unittest.TestCase):
         self.assertEqual(self.plr.getCoffer(), 1)
 
     def test_play_card(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.setCoffer(0)
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2)

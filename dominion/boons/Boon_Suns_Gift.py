@@ -29,7 +29,7 @@ class Boon_Suns_Gift(Boon.Boon):
         )
         for card in cards:
             if card not in todisc:
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -46,7 +46,7 @@ class Test_Suns_Gift(unittest.TestCase):
                 break
         self.g.boons = [myboon]
         self.card = self.g["Bard"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_suns_gift(self):
         self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")

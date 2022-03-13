@@ -22,7 +22,7 @@ class Project_StarChart(Project.Project):
             "Pick a card to put on top of your deck", *choices
         )
         card = player.in_discard(opt)
-        player.addCard(card, "topdeck")
+        player.add_card(card, "topdeck")
         player.discardpile.remove(card)
 
 

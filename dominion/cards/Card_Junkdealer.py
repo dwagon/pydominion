@@ -31,7 +31,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.jd = self.g["Junk Dealer"].remove()
         self.plr.set_hand("Copper", "Silver", "Silver", "Gold")
         self.plr.set_deck("Estate", "Province", "Duchy")
-        self.plr.addCard(self.jd, "hand")
+        self.plr.add_card(self.jd, "hand")
 
     def test_trash(self):
         tsize = self.g.trashSize()

@@ -38,7 +38,7 @@ class Test_CityQuarter(unittest.TestCase):
     def test_play(self):
         """Play a City Quarter"""
         self.plr.set_hand("Moat", "Moat", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3 + 2)

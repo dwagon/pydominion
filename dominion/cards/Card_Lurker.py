@@ -33,7 +33,7 @@ class Card_Lurker(Card.Card):
                 cardsrc=acts, prompt="Select Action from Supply to Trash"
             )
             card = game[cards[0].name].remove()
-            player.addCard(card, "played")  # In order to trash
+            player.add_card(card, "played")  # In order to trash
             player.trash_card(card)
         if ch == "from":
             acts = [_ for _ in game.trashpile if _.isAction()]
@@ -42,7 +42,7 @@ class Card_Lurker(Card.Card):
                 return
             card = player.cardSel(cardsrc=acts, prompt="Select Action from the Trash")
             game.trashpile.remove(card[0])
-            player.addCard(card[0], "discard")
+            player.add_card(card[0], "discard")
 
 
 ###############################################################################
@@ -52,7 +52,7 @@ class Test_Lurker(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Lurker"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_trash(self):
         self.plr.test_input = ["Trash an Action", "Moat"]

@@ -34,7 +34,7 @@ class Test_Councilroom(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.ccard = self.g["Council Room"].remove()
-        self.plr.addCard(self.ccard, "hand")
+        self.plr.add_card(self.ccard, "hand")
 
     def test_play(self):
         self.assertEqual(self.other.hand.size(), 5)

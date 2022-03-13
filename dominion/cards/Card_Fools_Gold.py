@@ -47,7 +47,7 @@ class Test_Fools_Gold(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Fool's Gold"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_once(self):
         """Play the Fools_Gold"""

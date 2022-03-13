@@ -40,7 +40,7 @@ class Card_Oracle(Card.Card):
             victim.output("%s's Oracle discarded your %s" % (player.name, cardnames))
         else:
             for card in cards:
-                victim.addCard(card, "topdeck")
+                victim.add_card(card, "topdeck")
             victim.output(
                 "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
             )
@@ -53,7 +53,7 @@ class Test_Oracle(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Oracle"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play Oracle"""

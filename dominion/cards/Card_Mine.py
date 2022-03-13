@@ -53,7 +53,7 @@ class Test_Mine(unittest.TestCase):
 
     def test_convcopper(self):
         self.plr.set_hand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, "Silver")
@@ -65,7 +65,7 @@ class Test_Mine(unittest.TestCase):
 
     def test_convnothing(self):
         self.plr.set_hand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand[0].name, "Copper")

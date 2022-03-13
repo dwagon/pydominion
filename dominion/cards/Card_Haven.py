@@ -23,13 +23,13 @@ class Card_Haven(Card.Card):
         c = player.plrPickCard(
             force=True, prompt="Pick card to put into hand next turn"
         )
-        player.addCard(c, Card.TYPE_DURATION)
+        player.add_card(c, Card.TYPE_DURATION)
         player.hand.remove(c)
         self.savedHavenCard = c
 
     def duration(self, game, player):
         c = self.savedHavenCard
-        player.addCard(c, "hand")
+        player.add_card(c, "hand")
         # Can't guarantee the order so it may be in played
         # or still in durationpile
         if c in player.played:
@@ -49,7 +49,7 @@ class Test_Haven(unittest.TestCase):
         self.card = self.g["Haven"].remove()
         self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.set_deck("Estate", "Estate", "Estate", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a haven"""

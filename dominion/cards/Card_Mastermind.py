@@ -35,7 +35,7 @@ class Card_Mastermind(Card.Card):
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o["card"].name))
             player.playCard(o["card"], discard=False, costAction=False)
-        player.addCard(o["card"], "played")
+        player.add_card(o["card"], "played")
         player.hand.remove(o["card"])
 
 
@@ -46,7 +46,7 @@ class Test_Mastermind(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mastermind"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a card"""

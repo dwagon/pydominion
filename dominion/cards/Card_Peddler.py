@@ -36,7 +36,7 @@ class Test_Peddler(unittest.TestCase):
         self.card = self.g["Peddler"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.getCoin(), 1)

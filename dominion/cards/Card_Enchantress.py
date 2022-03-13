@@ -18,7 +18,7 @@ class Card_Enchantress(Card.Card):
         self.cost = 3
 
     def duration(self, game, player):
-        player.addCards(2)
+        player.add_cards(2)
 
     def hook_allPlayers_preAction(self, game, player, owner, card):
         if len(player.played) == 0:
@@ -45,13 +45,13 @@ class Test_Enchantress(unittest.TestCase):
 
     def test_play(self):
         """Play an Enchantress"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
-        self.vic.addCard(self.r1, "hand")
+        self.vic.add_card(self.r1, "hand")
         self.vic.playCard(self.r1)
         self.assertEqual(self.vic.hand.size(), 5 + 1)  # Hand + Ench
         self.assertEqual(self.vic.get_actions(), 1)
-        self.vic.addCard(self.m1, "hand")
+        self.vic.add_card(self.m1, "hand")
         self.vic.playCard(self.m1)
         self.g.print_state()
         self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Ench + Moat

@@ -42,7 +42,7 @@ class Card_Warrior(Card.Card):
                     victim.output(
                         "Discarding %s due to %s's Warrior" % (c.name, player.name)
                     )
-                    victim.addCard(c, "discard")
+                    victim.add_card(c, "discard")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""
@@ -58,7 +58,7 @@ class Test_Warrior(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Warrior"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_warrior(self):
         """Play a warrior nothing to trash"""

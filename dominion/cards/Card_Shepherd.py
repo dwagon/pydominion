@@ -37,7 +37,7 @@ class Test_Shepherd(unittest.TestCase):
     def test_play(self):
         """Play a Shepherd"""
         self.plr.set_hand("Estate", "Province", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

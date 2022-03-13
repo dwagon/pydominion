@@ -39,7 +39,7 @@ class Test_Upgrade(unittest.TestCase):
     def test_play(self):
         """Play the Upgrade"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
@@ -50,7 +50,7 @@ class Test_Upgrade(unittest.TestCase):
         """Trash an upgrade"""
         tsize = self.g.trashSize()
         self.plr.set_hand("Duchy", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Get Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2)

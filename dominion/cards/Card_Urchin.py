@@ -58,7 +58,7 @@ class Test_Urchin(unittest.TestCase):
 
     def test_play(self):
         """Play an Urchin"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.victim.test_input = ["1", "0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)

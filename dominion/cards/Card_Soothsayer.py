@@ -33,7 +33,7 @@ class Test_Soothsayer(unittest.TestCase):
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Soothsayer"].remove()
-        self.attacker.addCard(self.wcard, "hand")
+        self.attacker.add_card(self.wcard, "hand")
 
     def test_play(self):
         self.attacker.playCard(self.wcard)

@@ -70,7 +70,7 @@ class Test_Bishop(unittest.TestCase):
         self.bishop = self.g["Bishop"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["finish"]
         self.other.test_input = ["finish"]
         self.plr.playCard(self.bishop)
@@ -78,7 +78,7 @@ class Test_Bishop(unittest.TestCase):
 
     def test_trash(self):
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["finish"]
         self.plr.playCard(self.bishop)
@@ -90,7 +90,7 @@ class Test_Bishop(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.set_hand("Gold")
         self.other.set_hand("Province")
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["trash province"]
         self.plr.playCard(self.bishop)

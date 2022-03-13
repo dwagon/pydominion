@@ -32,7 +32,7 @@ class Card_Treasury(Card.Card):
                 ("Put on top of your deck", True),
             )
             if topdeck:
-                player.addCard(self, "topdeck")
+                player.add_card(self, "topdeck")
                 player.discardpile.remove(self)
 
 
@@ -45,7 +45,7 @@ class Test_Treasury(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Treasury"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a trader - trashing an estate"""

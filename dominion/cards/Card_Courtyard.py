@@ -24,7 +24,7 @@ class Card_Courtyard(Card.Card):
         if not cards:
             return
         card = cards[0]
-        player.addCard(card, "topdeck")
+        player.add_card(card, "topdeck")
         player.hand.remove(card)
         player.output("Put %s on top of deck" % card.name)
 
@@ -39,7 +39,7 @@ class Test_Courtyard(unittest.TestCase):
 
     def test_play(self):
         """Play courtyard"""
-        self.plr.addCard(self.cy, "hand")
+        self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["finish"]
         self.plr.playCard(self.cy)
         self.assertEqual(self.plr.hand.size(), 8)
@@ -47,7 +47,7 @@ class Test_Courtyard(unittest.TestCase):
     def test_putcard(self):
         """Use courtyard to put a card to the top of the deck"""
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.cy, "hand")
+        self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["put gold"]
         self.plr.playCard(self.cy)
         card = self.plr.next_card()

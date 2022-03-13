@@ -33,7 +33,7 @@ class Card_Scryingpool(Card.Card):
                 break
             revealed.append(topcard)
         for card in revealed:
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
 
     def discardOrPutBack(self, victim, player):
         if player == victim:
@@ -49,10 +49,10 @@ class Card_Scryingpool(Card.Card):
         )
         if putback:
             victim.output("Put %s back on %s deck" % (topcard.name, name[1]))
-            victim.addCard(topcard, "deck")
+            victim.add_card(topcard, "deck")
         else:
             victim.output("Discarded %s" % topcard.name)
-            victim.addCard(topcard, "discard")
+            victim.add_card(topcard, "discard")
 
 
 ###############################################################################
@@ -62,7 +62,7 @@ class Test_ScryingPool(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Scrying Pool"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a scrying pool"""

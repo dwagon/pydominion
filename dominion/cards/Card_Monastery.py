@@ -35,7 +35,7 @@ class Test_Monastery(unittest.TestCase):
         """Play Monastery"""
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_hand("Duchy")
-        self.plr.addCard(self.monastery, "hand")
+        self.plr.add_card(self.monastery, "hand")
         self.plr.gainCard("Silver")
         self.plr.test_input = ["Duchy"]
         self.plr.playCard(self.monastery)
@@ -45,7 +45,7 @@ class Test_Monastery(unittest.TestCase):
         """Play Monastery when you didn't gain a card"""
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_hand("Duchy")
-        self.plr.addCard(self.monastery, "hand")
+        self.plr.add_card(self.monastery, "hand")
         self.plr.playCard(self.monastery)
 
     def test_play_copper(self):
@@ -53,7 +53,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_hand("Duchy")
         self.plr.set_played("Copper")
-        self.plr.addCard(self.monastery, "hand")
+        self.plr.add_card(self.monastery, "hand")
         self.plr.gainCard("Silver")
         self.plr.test_input = ["Copper"]
         self.plr.playCard(self.monastery)

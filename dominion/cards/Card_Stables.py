@@ -36,7 +36,7 @@ class Test_Stables(unittest.TestCase):
     def test_play(self):
         """Play duchess - keep on deck"""
         self.plr.set_hand("Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["silver"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))

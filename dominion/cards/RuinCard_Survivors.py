@@ -30,8 +30,8 @@ class Card_Survivors(Card.Card):
             player.discardCard(crds[0])
             player.discardCard(crds[1])
         else:
-            player.addCard(crds[0], "deck")
-            player.addCard(crds[1], "deck")
+            player.add_card(crds[0], "deck")
+            player.add_card(crds[1], "deck")
 
 
 ###############################################################################
@@ -44,7 +44,7 @@ class Test_Survivors(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Survivors":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_discard(self):
         """Play a survivor and discard cards"""

@@ -43,7 +43,7 @@ class Test_Steward(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Steward"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_cards(self):
         self.plr.test_input = ["0"]
@@ -69,7 +69,7 @@ class Test_Steward(unittest.TestCase):
         """Trash two when there are less than two to trash"""
         tsize = self.g.trashSize()
         self.plr.set_hand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["2", "1", "0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 0)

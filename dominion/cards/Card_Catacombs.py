@@ -28,10 +28,10 @@ class Card_Catacombs(Card.Card):
         )
         if ans:
             for c in cards:
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
         else:
             for c in cards:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
             player.pickup_cards(3)
 
     def hook_trashThisCard(self, game, player):
@@ -46,7 +46,7 @@ class Test_Catacombs(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.cat = self.g["Catacombs"].remove()
-        self.plr.addCard(self.cat, "hand")
+        self.plr.add_card(self.cat, "hand")
 
     def test_keep(self):
         self.plr.set_deck("Province", "Gold", "Gold", "Gold")

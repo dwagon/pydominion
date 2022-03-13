@@ -37,12 +37,12 @@ class Test_HumbleCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_score(self):
-        self.plr.addCard(self.card, "discard")
+        self.plr.add_card(self.card, "discard")
         score = self.plr.getScoreDetails()
         self.assertEqual(score["Humble Castle"], 1)
 

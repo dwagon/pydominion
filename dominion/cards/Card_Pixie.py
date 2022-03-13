@@ -48,7 +48,7 @@ class Test_Pixie(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Pixie"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard The"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -60,7 +60,7 @@ class Test_Pixie(unittest.TestCase):
             if b.name == "The Mountain's Gift":
                 self.g.boons = [b]
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash"]
         self.plr.playCard(self.card)
         try:

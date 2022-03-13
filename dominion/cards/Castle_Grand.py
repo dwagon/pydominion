@@ -45,7 +45,7 @@ class Test_GrandCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Grand Castle":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 5)
 
     def test_gain(self):

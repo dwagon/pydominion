@@ -47,7 +47,7 @@ class Test_Tournament(unittest.TestCase):
 
     def test_play(self):
         """Play a tournament - no provinces"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
@@ -55,7 +55,7 @@ class Test_Tournament(unittest.TestCase):
         """Play a tournament - self provinces"""
         self.plr.test_input = ["Bag"]
         self.plr.set_hand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
@@ -67,7 +67,7 @@ class Test_Tournament(unittest.TestCase):
         self.other.set_hand("Province")
         self.plr.test_input = ["Bag"]
         self.plr.set_hand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)

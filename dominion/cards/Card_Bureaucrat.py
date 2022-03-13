@@ -24,7 +24,7 @@ class Card_Bureaucrat(Card.Card):
             for c in pl.hand:
                 if c.isVictory():
                     pl.reveal_card(c)
-                    pl.addCard(c, "topdeck")
+                    pl.add_card(c, "topdeck")
                     pl.hand.remove(c)
                     pl.output(
                         "Moved %s to deck due to Bureaucrat played by %s"
@@ -43,7 +43,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.bcard = self.g["Bureaucrat"].remove()
-        self.plr.addCard(self.bcard, "hand")
+        self.plr.add_card(self.bcard, "hand")
 
     def test_hasvictory(self):
         self.victim.set_hand("Estate", "Copper", "Copper")

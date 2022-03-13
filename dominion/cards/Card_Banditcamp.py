@@ -33,7 +33,7 @@ class Test_Banditcamp(unittest.TestCase):
 
     def test_play(self):
         bc = self.g["Bandit Camp"].remove()
-        self.plr.addCard(bc, "hand")
+        self.plr.add_card(bc, "hand")
         self.plr.playCard(bc)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)

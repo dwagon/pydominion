@@ -29,7 +29,7 @@ class Card_Duchess(Card.Card):
                 ("Discard %s" % card.name, False),
             )
             if keep:
-                plr.addCard(card, "topdeck")
+                plr.add_card(card, "topdeck")
             else:
                 plr.output("Discarding %s" % card.name)
                 plr.discardCard(card)
@@ -53,7 +53,7 @@ class Test_Duchess(unittest.TestCase):
     def test_play(self):
         """Play duchess - keep on deck"""
         self.plr.set_deck("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["keep"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
@@ -63,7 +63,7 @@ class Test_Duchess(unittest.TestCase):
     def test_disacrd(self):
         """Play duchess - discard"""
         self.plr.set_deck("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["discard"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)

@@ -22,7 +22,7 @@ class Card_Artisan(Card.Card):
             cardsrc="hand",
             prompt="Put a card from your hand on top of your deck",
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.hand.remove(card[0])
 
 
@@ -36,7 +36,7 @@ class Test_Artisan(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_hand("Copper", "Estate", "Silver", "Gold", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Festival", "Select Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)

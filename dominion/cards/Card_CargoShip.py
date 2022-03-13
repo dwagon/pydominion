@@ -43,7 +43,7 @@ class Card_CargoShip(Card.Card):
     ###########################################################################
     def duration(self, game, player):
         for card in player._cargo_ship:
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player._cargo_ship.remove(card)
             player.secret_count -= 1
 
@@ -58,7 +58,7 @@ class Test_CargoShip(unittest.TestCase):
     def test_playCard_yes(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["Yes"]
@@ -71,7 +71,7 @@ class Test_CargoShip(unittest.TestCase):
     def test_playCard_no(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["No"]

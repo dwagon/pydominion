@@ -25,7 +25,7 @@ class Card_Fortuneteller(Card.Card):
                 if not card:
                     break
                 if card.isVictory() or card.name == "Curse":
-                    plr.addCard(card, "topdeck")
+                    plr.add_card(card, "topdeck")
                     plr.output(
                         "%s's Fortune Teller put %s on top of your deck"
                         % (player.name, card.name)
@@ -44,7 +44,7 @@ class Test_Fortuneteller(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Fortune Teller"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Fortune Teller"""

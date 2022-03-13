@@ -65,7 +65,7 @@ class Test_YoungWitch(unittest.TestCase):
         """Play the young witch without a bane"""
         self.victim.set_hand("Copper", "Silver")
         self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
-        self.attacker.addCard(self.card, "hand")
+        self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.playCard(self.card)
         try:
@@ -81,7 +81,7 @@ class Test_YoungWitch(unittest.TestCase):
         """Play the young witch with a bane"""
         self.victim.set_hand("Copper", "Silver", self.g._bane)
         self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
-        self.attacker.addCard(self.card, "hand")
+        self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.playCard(self.card)
         try:

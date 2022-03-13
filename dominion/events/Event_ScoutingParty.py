@@ -24,9 +24,9 @@ class Event_ScoutingParty(Event.Event):
         # TODO - Put cards back in specific order
         for card in cards:
             if card not in discards:
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
             else:
-                player.addCard(card, "discard")
+                player.add_card(card, "discard")
 
 
 ###############################################################################

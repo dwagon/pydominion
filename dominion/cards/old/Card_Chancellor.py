@@ -22,7 +22,7 @@ class Card_Chancellor(Card.Card):
         )
         if ans:
             for c in player.deck[:]:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
                 player.deck.remove(c)
 
 
@@ -34,7 +34,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chancellor"].remove()
         self.plr.set_hand("Estate")
-        self.plr.addCard(self.ccard, "hand")
+        self.plr.add_card(self.ccard, "hand")
 
     def test_nodiscard(self):
         self.plr.set_deck("Copper", "Silver", "Gold")

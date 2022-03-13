@@ -53,7 +53,7 @@ class Test_Torturer(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Torturer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_opt_curse(self):
         """Play the torturer - victim opts for a curse"""

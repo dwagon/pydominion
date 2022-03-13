@@ -51,14 +51,14 @@ class Test_Watchtower(unittest.TestCase):
     def test_play(self):
         """Play a watch tower"""
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_react_nothing(self):
         """React to gaining a card - but do nothing"""
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["nothing"]
         self.plr.gainCard("Copper")
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
@@ -71,7 +71,7 @@ class Test_Watchtower(unittest.TestCase):
         try:
             self.plr.test_input = ["trash"]
             self.plr.set_hand("Gold")
-            self.plr.addCard(self.card, "hand")
+            self.plr.add_card(self.card, "hand")
             self.plr.gainCard("Copper")
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, "Copper")
@@ -86,7 +86,7 @@ class Test_Watchtower(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ["top"]
         self.plr.set_hand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.gainCard("Silver")
         try:
             self.assertEqual(self.g.trashSize(), tsize)

@@ -56,7 +56,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.card = self.g["Courtier"].remove()
         self.plr.set_hand("Copper", "Moat", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_action(self):
         self.plr.test_input = ["Copper", "+1 Action"]
@@ -67,7 +67,7 @@ class Test_Courtier(unittest.TestCase):
         self.assertIsNone(self.plr.in_discard("Gold"))
 
     def test_play_buy(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat", "+1 Buy", "+3 Coin"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
@@ -76,7 +76,7 @@ class Test_Courtier(unittest.TestCase):
         self.assertIsNone(self.plr.in_discard("Gold"))
 
     def test_play_gold(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Gain Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 0)

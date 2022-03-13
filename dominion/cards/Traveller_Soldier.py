@@ -52,7 +52,7 @@ class Test_Soldier(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Soldier"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_soldier(self):
         """Play a soldier with no extra attacks"""
@@ -64,7 +64,7 @@ class Test_Soldier(unittest.TestCase):
         """Play a soldier with no extra attacks"""
         self.vic.set_hand("Copper")
         mil = self.g["Militia"].remove()
-        self.plr.addCard(mil, "played")
+        self.plr.add_card(mil, "played")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
 

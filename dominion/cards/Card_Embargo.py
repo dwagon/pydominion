@@ -43,7 +43,7 @@ class Test_Embargo(unittest.TestCase):
         self.card = self.g["Embargo"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash", "Select Silver"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)

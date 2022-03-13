@@ -31,7 +31,7 @@ class Card_Bandit(Card.Card):
             if c.isTreasure() and c.name != "Copper":
                 treasures.append(c)
             else:
-                victim.addCard(c, "discard")
+                victim.add_card(c, "discard")
         if not treasures:
             bandit.output("Player %s has no suitable treasures" % victim.name)
             return
@@ -47,7 +47,7 @@ class Card_Bandit(Card.Card):
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
-                victim.addCard(tc, "discard")
+                victim.add_card(tc, "discard")
             else:
                 victim.trash_card(o["card"])
                 bandit.output("Trashed %s from %s" % (o["card"].name, victim.name))
@@ -65,7 +65,7 @@ class Test_Bandit(unittest.TestCase):
         self.thief.name = "MrBandit"
         self.vic.name = "MrVic"
         self.card = self.g["Bandit"].remove()
-        self.thief.addCard(self.card, "hand")
+        self.thief.add_card(self.card, "hand")
 
     def test_do_nothing(self):
         self.vic.set_hand("Copper", "Copper")

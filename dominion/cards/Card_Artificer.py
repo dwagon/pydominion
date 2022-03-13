@@ -46,7 +46,7 @@ class Test_Artificer(unittest.TestCase):
         """Play an artificer - discard none and pick up a copper"""
         self.plr.set_deck("Province")
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish", "copper"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
@@ -58,7 +58,7 @@ class Test_Artificer(unittest.TestCase):
         """Play an artificer - discard three and pick up a silver"""
         self.plr.set_deck("Gold")
         self.plr.set_hand("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "discard estate",
             "discard duchy",

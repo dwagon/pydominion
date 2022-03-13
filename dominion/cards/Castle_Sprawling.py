@@ -44,7 +44,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.assertEqual(self.plr.getScoreDetails()["Sprawling Castle"], 4)
 
     def test_gain_duchy(self):

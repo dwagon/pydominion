@@ -49,7 +49,7 @@ class Test_SecretCave(unittest.TestCase):
             "Discard Province",
             "Finish",
         ]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.get_actions(), 1)

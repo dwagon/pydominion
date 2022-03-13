@@ -32,7 +32,7 @@ class Card_Sentry(Card.Card):
             return
         player.output("Discard any/all of {}".format(self.names(cards)))
         to_discard = player.plrDiscardCards(cardsrc=cards, num=2)
-        to_deck = [player.addCard(_, "topdeck") for _ in cards if _ not in to_discard]
+        to_deck = [player.add_card(_, "topdeck") for _ in cards if _ not in to_discard]
         if to_deck:
             player.output("Moving {} to the deck".format(self.names(to_deck)))
 
@@ -47,7 +47,7 @@ class Test_Sentry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentry"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_trash_discard(self):
         self.plr.set_deck("Copper", "Province", "Duchy")

@@ -40,7 +40,7 @@ class Test_Sanctuary(unittest.TestCase):
         """Play a card"""
         self.plr.set_deck("Estate", "Duchy", "Province")
         self.plr.set_hand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Copper"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 3)

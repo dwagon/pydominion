@@ -24,7 +24,7 @@ class Card_Winemerchant(Card.Card):
         if player.coin >= 2:
             player.output("Discarding Wine Merchant")
             player.reserve.remove(self)
-            player.addCard(self, "discard")
+            player.add_card(self, "discard")
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Test_Winemerchant(unittest.TestCase):
 
     def test_play(self):
         """Play a Wine Merchant"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 4)

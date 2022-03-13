@@ -38,7 +38,7 @@ class Card_Journeyman(Card.Card):
             else:
                 cards.append(card)
         for card in cards:
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.output("Pulling %s into hand" % card.name)
 
 
@@ -49,7 +49,7 @@ class Test_Journeyman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Journeyman"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play the pawn - select card and action"""

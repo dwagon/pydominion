@@ -49,7 +49,7 @@ class Test_Seal(unittest.TestCase):
 
     def test_play(self):
         """Perform a Seal"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["top of deck"]
         self.plr.perform_way(self.way, self.card)
         self.plr.gainCard("Gold")

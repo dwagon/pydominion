@@ -29,7 +29,7 @@ class Card_Sage(Card.Card):
             player.reveal_card(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
-                player.addCard(card, "hand")
+                player.add_card(card, "hand")
                 break
             player.output("Discarding %s" % card.name)
             todiscard.append(card)
@@ -48,7 +48,7 @@ class Test_Sage(unittest.TestCase):
     def test_play(self):
         """Pick a card out of the pile"""
         self.plr.set_deck("Gold", "Copper", "Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
@@ -56,7 +56,7 @@ class Test_Sage(unittest.TestCase):
     def test_exhaust_deck(self):
         """No good card to pick out of the pile"""
         self.plr.set_deck("Copper", "Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.deck.size(), 0)

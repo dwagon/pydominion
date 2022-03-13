@@ -55,7 +55,7 @@ class Test_Minion(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Minion"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_gold(self):
         """Play a minion and gain two gold"""

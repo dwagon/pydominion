@@ -24,10 +24,10 @@ class Card_Vagrant(Card.Card):
         c = player.next_card()
         player.reveal_card(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == "Ruins":
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
             player.output("Adding %s to hand" % c.name)
         else:
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
             player.output("Top card %s still on deck" % c.name)
 
 
@@ -38,7 +38,7 @@ class Test_Vagrant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Vagrant"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the vagrant with unexciting next card"""

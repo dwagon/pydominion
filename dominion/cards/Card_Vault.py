@@ -52,7 +52,7 @@ class Test_Vault(unittest.TestCase):
     def test_play(self):
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Duchy", "Province", "Gold", "Silver", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.other.test_input = ["Copper", "Silver", "Finish"]
         self.plr.test_input = ["Duchy", "Province", "Finish"]
         self.plr.playCard(self.card)

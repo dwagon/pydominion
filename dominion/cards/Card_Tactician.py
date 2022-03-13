@@ -40,7 +40,7 @@ class Test_Tactician(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tactician"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_discard(self):
         """Play a tactician and discard hand"""

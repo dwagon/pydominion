@@ -36,7 +36,7 @@ class Test_Swamphag(unittest.TestCase):
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Swamp Hag"].remove()
-        self.attacker.addCard(self.seahag, "hand")
+        self.attacker.add_card(self.seahag, "hand")
 
     def test_play(self):
         self.attacker.playCard(self.seahag)

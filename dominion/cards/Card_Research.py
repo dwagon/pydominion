@@ -45,7 +45,7 @@ class Card_Research(Card.Card):
             cards.append(card)
         for card in cards:
             player.output("Bringing {} out from research".format(card.name))
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player._research.remove(card)
             player.secret_count -= 1
 
@@ -58,9 +58,9 @@ class Test_Research(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.card = self.g["Research"].remove()
         self.plr.set_hand("Gold", "Silver", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.moat = self.g["Moat"].remove()
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
 
     def test_playCard(self):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]

@@ -55,7 +55,7 @@ class Card_PirateShip(Card.Card):
                 victim.output(
                     "%s's Pirate Ship discarded your %s" % (player.name, card.name)
                 )
-                victim.addCard(card, "discard")
+                victim.add_card(card, "discard")
         if cards:
             to_trash = player.plrTrashCard(
                 prompt="Trash a card from %s" % victim.name, cardsrc=cards
@@ -63,7 +63,7 @@ class Card_PirateShip(Card.Card):
             trashed = True
             for card in cards:
                 if card not in to_trash:
-                    victim.addCard(card, "discard")
+                    victim.add_card(card, "discard")
                     victim.output("Discarded %s" % card.name)
                 else:
                     victim.output("Trashed %s" % card.name)

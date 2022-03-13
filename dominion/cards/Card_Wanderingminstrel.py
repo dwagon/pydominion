@@ -27,11 +27,11 @@ class Card_Wanderingminstrel(Card.Card):
                 cards.append(c)
                 player.output("Revealed a %s and put on top of deck" % c.name)
             else:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
                 player.output("Discarded %s" % c.name)
 
         for card in cards:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -43,7 +43,7 @@ class Test_Wanderingminstrel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wandering Minstrel"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Wandering Minstrel"""

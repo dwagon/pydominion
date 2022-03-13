@@ -27,14 +27,14 @@ class Card_Mandarin(Card.Card):
             cardsrc="hand",
             prompt="Put a card from your hand on top of your deck",
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.hand.remove(card[0])
 
     def hook_gain_this_card(self, game, player):
         for card in player.played[:]:
             if card.isTreasure():
                 player.output("Putting %s on to deck" % card.name)
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
                 player.played.remove(card)
         return {}
 
@@ -50,7 +50,7 @@ class Test_Mandarin(unittest.TestCase):
     def test_play(self):
         """Play the card"""
         self.plr.set_hand("Gold", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)

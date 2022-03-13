@@ -31,10 +31,10 @@ class Card_Zombie_Spy(Card.Card):
             ("Discard %s" % c.name, True),
         )
         if discard:
-            player.addCard(c, "discard")
+            player.add_card(c, "discard")
             player.output("Zombie Spy discarded your %s" % c.name)
         else:
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################

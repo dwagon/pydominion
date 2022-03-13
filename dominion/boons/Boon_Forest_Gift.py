@@ -38,7 +38,7 @@ class Test_Forest_Gift(unittest.TestCase):
     def test_fields_gift(self):
         self.plr.coin = 0
         self.plr.buys = 0
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 1 + 2)  # Boon + Bard
         self.assertEqual(self.plr.get_buys(), 1)

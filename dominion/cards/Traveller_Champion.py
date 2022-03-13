@@ -33,10 +33,10 @@ class Test_Champion(unittest.TestCase):
 
     def test_champion(self):
         """Play a champion"""
-        self.plr.addCard(self.card, Card.TYPE_DURATION)
+        self.plr.add_card(self.card, Card.TYPE_DURATION)
         self.assertEqual(self.plr.get_actions(), 1)
         moat = self.g["Moat"].remove()
-        self.plr.addCard(moat, "hand")
+        self.plr.add_card(moat, "hand")
         self.plr.playCard(moat)
         self.assertEqual(self.plr.get_actions(), 1)
 

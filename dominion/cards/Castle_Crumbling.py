@@ -38,7 +38,7 @@ class Test_CrumblingCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getScoreDetails()["Crumbling Castle"], 1)
 

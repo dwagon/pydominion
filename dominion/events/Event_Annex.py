@@ -25,11 +25,11 @@ class Event_Annex(Event.Event):
             if card in cards:
                 keep.append(card)
             else:
-                player.addCard(card, "deck")
+                player.add_card(card, "deck")
         player.deck.shuffle()
         player.set_discard()
         for card in keep:
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
         if player.gainCard("Duchy"):
             player.output("Gained a Duchy")
 

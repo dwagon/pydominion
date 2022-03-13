@@ -39,7 +39,7 @@ class Card_Secretchamber(Card.Card):
             verbs=("Put", "Unput"),
         )
         for card in cards:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
             player.hand.remove(card)
 
     def doRevealCard(self, player):
@@ -67,7 +67,7 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_play_none(self):
         """Play the Secret Chamber - discard none"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
@@ -76,7 +76,7 @@ class Test_Secretchamber(unittest.TestCase):
     def test_play_three(self):
         """Play the Secret Chamber - discard three"""
         self.plr.set_hand("Copper", "Silver", "Gold", "Province", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "discard copper",
             "discard silver",
@@ -91,7 +91,7 @@ class Test_Secretchamber(unittest.TestCase):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
         self.plr.set_deck("Duchy", "Province")
-        self.att.addCard(mil, "hand")
+        self.att.add_card(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["Reveal", "Silver", "Gold", "Finish"]
         self.att.playCard(mil)
@@ -106,7 +106,7 @@ class Test_Secretchamber(unittest.TestCase):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
         self.plr.set_deck("Duchy", "Province")
-        self.att.addCard(mil, "hand")
+        self.att.add_card(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["nothing"]
         self.att.playCard(mil)

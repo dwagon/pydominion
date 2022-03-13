@@ -28,7 +28,7 @@ class Test_AbandonedMine(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Abandoned Mine":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play an abandoned mine"""

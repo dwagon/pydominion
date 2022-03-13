@@ -31,7 +31,7 @@ class Card_Messenger(Card.Card):
         )
         if o:
             for c in player.deck[:]:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
                 player.deck.remove(c)
 
     def hook_buy_this_card(self, game, player):
@@ -52,7 +52,7 @@ class Test_Messenger(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Messenger"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Messenger - do nothing"""

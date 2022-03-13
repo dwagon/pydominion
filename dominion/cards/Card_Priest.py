@@ -37,11 +37,11 @@ class Test_Priest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Priest"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.moat = self.g["Moat"].remove()
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
         self.gold = self.g["Gold"].remove()
-        self.plr.addCard(self.gold, "hand")
+        self.plr.add_card(self.gold, "hand")
 
     def test_playCard(self):
         self.plr.test_input = ["Trash Moat"]

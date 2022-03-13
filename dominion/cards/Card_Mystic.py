@@ -34,10 +34,10 @@ class Card_Mystic(Card.Card):
         player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
         else:
             player.output("You chose poorly - it was a %s" % c.name)
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -55,7 +55,7 @@ class Test_Mystic(unittest.TestCase):
 
     def test_play(self):
         """No guess should still get results"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -63,7 +63,7 @@ class Test_Mystic(unittest.TestCase):
 
     def test_good(self):
         """When the guess is good the card should move to the hand"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Province")
         self.plr.test_input = ["Province"]
         self.plr.playCard(self.card)
@@ -74,7 +74,7 @@ class Test_Mystic(unittest.TestCase):
 
     def test_bad(self):
         """When the guess is bad the card should stay on the deck"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Province")
         self.plr.test_input = ["Gold"]
         self.plr.playCard(self.card)

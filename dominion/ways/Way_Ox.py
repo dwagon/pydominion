@@ -32,7 +32,7 @@ class Test_Ox(unittest.TestCase):
 
     def test_play(self):
         """Perform a Ox"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 2)
 

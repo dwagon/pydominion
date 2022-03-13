@@ -43,7 +43,7 @@ class Test_Cavalry(unittest.TestCase):
         self.card = self.g["Cavalry"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertIsNotNone(self.plr.in_discard("Horse"))

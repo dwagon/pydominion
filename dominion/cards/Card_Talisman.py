@@ -21,7 +21,7 @@ class Card_Talisman(Card.Card):
         or less that is not a victory card, gain a copy of it."""
         if card.cost <= 4 and not card.isVictory():
             player.output("Gained another %s from Talisman" % card.name)
-            player.addCard(game[card.name].remove())
+            player.add_card(game[card.name].remove())
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Test_Talisman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Talisman"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)

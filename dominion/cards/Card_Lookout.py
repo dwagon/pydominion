@@ -35,7 +35,7 @@ class Card_Lookout(Card.Card):
         cd = self.discard(player, cards)
         cards.remove(cd)
         player.output("Putting %s on top of deck" % cards[0].name)
-        player.addCard(cards[0], "topdeck")
+        player.add_card(cards[0], "topdeck")
 
     def trash(self, player, cards):
         index = 1
@@ -70,7 +70,7 @@ class Test_Lookout(unittest.TestCase):
 
     def test_actions(self):
         self.plr.set_deck("Copper", "Estate", "Gold", "Province")
-        self.plr.addCard(self.lookout, "hand")
+        self.plr.add_card(self.lookout, "hand")
         self.plr.test_input = ["Province", "Gold"]
         self.plr.playCard(self.lookout)
         self.assertIsNotNone(self.g.in_trash("Province"))
@@ -82,7 +82,7 @@ class Test_Lookout(unittest.TestCase):
         """Play a lookout when there are no cards available"""
         tsize = self.g.trashSize()
         self.plr.set_deck()
-        self.plr.addCard(self.lookout, "hand")
+        self.plr.add_card(self.lookout, "hand")
         self.plr.playCard(self.lookout)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.plr.discardpile.size(), 0)

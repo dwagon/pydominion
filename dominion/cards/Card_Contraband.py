@@ -45,7 +45,7 @@ class Test_Contraband(unittest.TestCase):
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()
         self.card = self.g["Contraband"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.nbr.test_input = ["Gold"]

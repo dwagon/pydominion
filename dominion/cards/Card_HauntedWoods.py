@@ -27,7 +27,7 @@ class Card_HauntedWoods(Card.Card):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
         for crd in player.hand[:]:
-            player.addCard(crd, "topdeck")
+            player.add_card(crd, "topdeck")
             player.hand.remove(crd)
             player.output("Moving %s to deck" % crd.name)
 
@@ -39,7 +39,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Haunted Woods"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_buy(self):
         """Play a Haunted Woods"""

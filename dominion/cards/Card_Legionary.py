@@ -47,7 +47,7 @@ class Test_Legionary(unittest.TestCase):
         """Play a Legionary"""
         self.plr.set_hand("Gold")
         self.victim.test_input = ["1", "2", "3", "0"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.victim.hand.size(), 3)

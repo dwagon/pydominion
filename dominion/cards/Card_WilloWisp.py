@@ -23,10 +23,10 @@ class Card_WilloWisp(Card.Card):
         c = player.next_card()
         player.reveal_card(c)
         if c.cost <= 2 and not c.potcost and not c.debtcost:
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
             player.output("Moving {} from your deck to your hand".format(c.name))
         else:
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
             player.output("Keep {} on top of your deck".format(c.name))
 
 
@@ -41,7 +41,7 @@ class Test_WilloWisp(unittest.TestCase):
     def test_special_cheap(self):
         self.plr.set_hand()
         self.plr.set_deck("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -51,7 +51,7 @@ class Test_WilloWisp(unittest.TestCase):
     def test_special_expensive(self):
         self.plr.set_hand()
         self.plr.set_deck("Gold", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 1)

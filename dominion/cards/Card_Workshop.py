@@ -32,7 +32,7 @@ class Test_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.wcard = self.g["Workshop"].remove()
-        self.plr.addCard(self.wcard, "hand")
+        self.plr.add_card(self.wcard, "hand")
 
     def test_gainzero(self):
         self.plr.test_input = ["Finish"]

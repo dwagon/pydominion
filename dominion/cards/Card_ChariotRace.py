@@ -36,7 +36,7 @@ class Card_ChariotRace(Card.Card):
                 "Your %s costs less than %s's %s - Getting nothing"
                 % (card.name, other.name, othercard.name)
             )
-        other.addCard(othercard, "topdeck")
+        other.add_card(othercard, "topdeck")
 
 
 ###############################################################################
@@ -51,7 +51,7 @@ class Test_ChariotRace(unittest.TestCase):
         """Play a Chariot Race and win"""
         self.plr.set_deck("Gold")
         self.vic.set_deck("Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)
@@ -63,7 +63,7 @@ class Test_ChariotRace(unittest.TestCase):
         self.plr.score["Chariot Race"] = 0
         self.plr.set_deck("Silver")
         self.vic.set_deck("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 0)

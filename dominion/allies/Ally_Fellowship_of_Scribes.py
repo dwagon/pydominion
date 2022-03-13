@@ -49,7 +49,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         """Play and gain a card"""
         self.card = self.g["Festival"].remove()
         self.plr.set_hand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.setFavor(2)
         self.plr.test_input = ["Gain"]
         self.plr.playCard(self.card)
@@ -60,7 +60,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         """Play and don't gain a card"""
         self.card = self.g["Festival"].remove()
         self.plr.set_hand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.setFavor(2)
         self.plr.test_input = ["No"]
         self.plr.playCard(self.card)

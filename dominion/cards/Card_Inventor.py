@@ -37,7 +37,7 @@ class Test_Inventor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.inventor = self.g["Inventor"].remove()
-        self.plr.addCard(self.inventor, "hand")
+        self.plr.add_card(self.inventor, "hand")
 
     def test_play(self):
         self.plr.test_input = ["Get Gardens"]

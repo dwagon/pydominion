@@ -48,7 +48,7 @@ class Test_Jester(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Jester"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_victory(self):
         """Play a jester with the victim having a Victory on top of deck"""

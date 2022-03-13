@@ -41,7 +41,7 @@ class Test_Forager(unittest.TestCase):
         self.plr.trash_card(self.g["Copper"].remove())
         self.plr.trash_card(self.g["Silver"].remove())
         self.plr.set_hand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

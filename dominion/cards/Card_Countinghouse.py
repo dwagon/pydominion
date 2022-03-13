@@ -20,7 +20,7 @@ class Card_Countinghouse(Card.Card):
         count = 0
         for c in player.discardpile:
             if c.name == "Copper":
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 player.discardpile.remove(c)
                 count += 1
         player.output("Picked up %d coppers" % count)
@@ -34,7 +34,7 @@ class Test_Countinghouse(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()
         self.plr.set_hand()
-        self.plr.addCard(self.ch, "hand")
+        self.plr.add_card(self.ch, "hand")
 
     def test_pullcoppers(self):
         self.plr.set_discard("Copper", "Gold", "Duchy", "Copper")

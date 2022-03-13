@@ -22,7 +22,7 @@ class Hex_Famine(Hex.Hex):
                 player.discardCard(c)
             else:
                 player.output("Putting {} back in deck".format(c))
-                player.addCard(c, "topdeck")
+                player.add_card(c, "topdeck")
         player.deck.shuffle()
 
 

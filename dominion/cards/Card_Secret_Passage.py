@@ -27,7 +27,7 @@ class Card_SecretPassage(Card.Card):
                 ("Top of deck", "topdeck"),
                 ("Bottom of deck", "deck"),
             )
-            player.addCard(card[0], dest)
+            player.add_card(card[0], dest)
             player.hand.remove(card[0])
 
 
@@ -44,7 +44,7 @@ class Test_SecretPassage(unittest.TestCase):
     def test_play(self):
         """Play an Secret Passage"""
         self.plr.set_hand("Gold", "Province", "Duchy", "Copper", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Province", "Bottom"]
         self.plr.playCard(self.card)
         try:

@@ -35,7 +35,7 @@ class Test_Ranger(unittest.TestCase):
         """Play a ranger"""
         self.plr.journey_token = True
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.hand.size(), 0)
@@ -45,7 +45,7 @@ class Test_Ranger(unittest.TestCase):
         """Play a ranger the second time"""
         self.plr.journey_token = False
         self.plr.set_hand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.hand.size(), 5)

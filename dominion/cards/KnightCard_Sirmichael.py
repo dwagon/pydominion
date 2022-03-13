@@ -40,7 +40,7 @@ class Test_Sir_Michael(unittest.TestCase):
     def test_score(self):
         """Play the Sir"""
         self.vic.test_input = ["1", "2", "0"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
 

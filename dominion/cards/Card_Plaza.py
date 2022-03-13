@@ -41,7 +41,7 @@ class Test_Plaza(unittest.TestCase):
             self.plr.coffer = 0
             self.plr.set_hand("Gold")
             self.plr.test_input = ["discard gold"]
-            self.plr.addCard(self.card, "hand")
+            self.plr.add_card(self.card, "hand")
             self.plr.playCard(self.card)
             self.assertEqual(self.plr.getCoffer(), 1)
             self.assertEqual(self.plr.get_actions(), 2)

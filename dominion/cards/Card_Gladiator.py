@@ -50,7 +50,7 @@ class Test_Gladiator(unittest.TestCase):
     def test_play_nothave(self):
         """Play a Gladiator - something the other player doesn't have"""
         self.plr.set_hand("Moat", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Gladiator"))
@@ -60,7 +60,7 @@ class Test_Gladiator(unittest.TestCase):
         """Play a Gladiator - something the other player has"""
         self.plr.set_hand("Moat", "Copper", "Estate")
         self.vic.set_hand("Moat", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.playCard(self.card)
         self.assertIsNone(self.g.in_trash("Gladiator"))

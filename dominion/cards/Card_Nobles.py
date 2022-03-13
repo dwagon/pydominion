@@ -34,7 +34,7 @@ class Test_Nobles(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Nobles"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_cards(self):
         """Play the Nobles - chosing cards"""

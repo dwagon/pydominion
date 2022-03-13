@@ -44,7 +44,7 @@ class Card_Graverobber(Card.Card):
             if cards:
                 card = cards[0]
                 game.trashpile.remove(card)
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -59,12 +59,12 @@ class Test_Graverobber(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Graverobber"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_trash(self):
         """Play a grave robber - trash a militia and gain a gold"""
         militia = self.g["Militia"].remove()
-        self.plr.addCard(militia, "hand")
+        self.plr.add_card(militia, "hand")
         self.plr.test_input = ["1", "militia", "get gold"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

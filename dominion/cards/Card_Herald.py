@@ -29,7 +29,7 @@ class Card_Herald(Card.Card):
         card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.playCard(card, costAction=False)
 
     def hook_overpay(self, game, player, amount):
@@ -40,7 +40,7 @@ class Card_Herald(Card.Card):
                 cardsrc="discard",
                 prompt="Look through your discard pile and put a card from it on top of your deck",
             )
-            player.addCard(card[0], "topdeck")
+            player.add_card(card[0], "topdeck")
             player.discardpile.remove(card[0])
 
 
@@ -55,7 +55,7 @@ class Test_Herald(unittest.TestCase):
     def test_play(self):
         """Play a Herald"""
         self.plr.set_deck("Moat", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1 + 1)

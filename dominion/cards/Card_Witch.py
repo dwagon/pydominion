@@ -33,10 +33,10 @@ class Test_Witch(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Witch"].remove()
         self.mcard = self.g["Moat"].remove()
-        self.attacker.addCard(self.wcard, "hand")
+        self.attacker.add_card(self.wcard, "hand")
 
     def test_defended(self):
-        self.victim.addCard(self.mcard, "hand")
+        self.victim.add_card(self.mcard, "hand")
         self.attacker.playCard(self.wcard)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertEqual(self.attacker.hand.size(), 7)

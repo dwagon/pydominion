@@ -39,14 +39,14 @@ class Test_Fool(unittest.TestCase):
         """Play a Fool with Lost in the Woods"""
         self.plr.assign_state("Lost in the Woods")
         self.plr._fool_dont_boon = False
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertFalse(self.plr._fool_dont_boon)
 
     def test_play_without(self):
         """Play a Fool without Lost in the Woods"""
         self.plr._fool_dont_boon = False
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertTrue(self.plr._fool_dont_boon)
 

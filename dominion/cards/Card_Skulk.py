@@ -43,7 +43,7 @@ class Test_Skulk(unittest.TestCase):
 
     def test_play_card(self):
         """Play Skulk"""
-        self.plr.addCard(self.Skulk, "hand")
+        self.plr.add_card(self.Skulk, "hand")
         self.plr.playCard(self.Skulk)
         self.assertTrue(self.vic.has_state("Deluded"))
 

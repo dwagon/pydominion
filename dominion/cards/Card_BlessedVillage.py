@@ -42,7 +42,7 @@ class Test_BlessedVillage(unittest.TestCase):
 
     def test_play_card(self):
         """Play Blessed Village"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertGreaterEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)

@@ -113,7 +113,7 @@ class Test_Knight(unittest.TestCase):
             self.card = self.g["Knight"].remove()
 
         self.plr.set_hand("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard_nosuitable(self):
         """Play a knight woth no suitable cards"""

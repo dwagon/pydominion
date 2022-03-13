@@ -28,7 +28,7 @@ class Card_CaravanGuard(Card.Card):
         player.output("Under attack from %s" % attacker.name)
         player.addActions(1)
         player.pickup_cards(1)
-        player.addCard(self, Card.TYPE_DURATION)
+        player.add_card(self, Card.TYPE_DURATION)
         player.hand.remove(player.in_hand("Caravan Guard"))
 
 
@@ -42,7 +42,7 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr, self.attacker = self.g.player_list()
         self.card = self.g["Caravan Guard"].remove()
         self.militia = self.g["Militia"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.playCard(self.card)
@@ -55,7 +55,7 @@ class Test_CaravanGuard(unittest.TestCase):
 
     def test_attack(self):
         self.plr.set_hand("Caravan Guard", "Moat")
-        self.attacker.addCard(self.militia, "hand")
+        self.attacker.add_card(self.militia, "hand")
         self.attacker.playCard(self.militia)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.durationpile.size(), 1)

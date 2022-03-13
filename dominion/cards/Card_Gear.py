@@ -38,7 +38,7 @@ class Card_Gear(Card.Card):
         """... At the start of your next turn, put them into your hand"""
         for card in player.gear_reserve[:]:
             player.output("Pulling %s reserved by Gear" % card.name)
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.gear_reserve.remove(card)
             player.secret_count -= 1
 
@@ -54,7 +54,7 @@ class Test_Gear(unittest.TestCase):
     def test_playcard(self):
         """Play a gear"""
         self.plr.set_hand("Duchy", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["set silver", "set gold", "finish"]
         self.plr.playCard(self.card)
         try:

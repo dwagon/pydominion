@@ -47,7 +47,7 @@ class Test_Storyteller(unittest.TestCase):
         """Play a Storyteller"""
         self.plr.set_hand("Copper", "Copper", "Silver", "Gold")
         self.plr.test_input = ["1", "2", "silver", "finish"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         # 1 from existing, 1 + story, 2 for two coppers and 2 for a silver

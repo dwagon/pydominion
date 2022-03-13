@@ -34,11 +34,11 @@ class Test_Curse(unittest.TestCase):
         self.card = self.g["Curse"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
 
     def test_have(self):
-        self.plr.addCard(self.card)
+        self.plr.add_card(self.card)
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc["Curse"], -1)
 

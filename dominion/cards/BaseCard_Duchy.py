@@ -47,7 +47,7 @@ class Test_Duchy(unittest.TestCase):
         self.card = self.g["Duchy"].remove()
 
     def test_have(self):
-        self.plr.addCard(self.card)
+        self.plr.add_card(self.card)
         sc = self.plr.getScoreDetails()
         self.assertEqual(sc["Duchy"], 3)
 

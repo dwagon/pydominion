@@ -51,7 +51,7 @@ class Test_Mercenary(unittest.TestCase):
 
     def test_play(self):
         """Trash nothing with mercenary - should do nothing"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
@@ -60,9 +60,9 @@ class Test_Mercenary(unittest.TestCase):
     def test_defense(self):
         """Make sure moats work against mercenaries"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
-        self.victim.addCard(moat, "hand")
+        self.victim.add_card(moat, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
@@ -74,7 +74,7 @@ class Test_Mercenary(unittest.TestCase):
     def test_attack(self):
         """Attack with a mercenary"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
         self.victim.test_input = ["1", "2", "0"]
         self.plr.playCard(self.card)

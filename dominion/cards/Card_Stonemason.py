@@ -67,7 +67,7 @@ class Test_Stonemason(unittest.TestCase):
     def test_play(self):
         """Play a stonemason"""
         self.plr.set_hand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))

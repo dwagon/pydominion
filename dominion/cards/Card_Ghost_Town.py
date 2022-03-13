@@ -38,7 +38,7 @@ class Test_Ghost_Town(unittest.TestCase):
 
     def test_play_card(self):
         """Play Ghost Town"""
-        self.plr.addCard(self.gtown, "hand")
+        self.plr.add_card(self.gtown, "hand")
         self.plr.playCard(self.gtown)
         self.plr.end_turn()
         self.plr.start_turn()

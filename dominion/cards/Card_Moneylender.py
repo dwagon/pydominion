@@ -41,7 +41,7 @@ class Test_Moneylender(unittest.TestCase):
     def test_nocopper(self):
         tsize = self.g.trashSize()
         self.plr.set_hand("Estate", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.plr.getCoin(), 0)
@@ -50,7 +50,7 @@ class Test_Moneylender(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.test_input = ["1"]
         self.plr.set_hand("Copper", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertEqual(self.g.trashSize(), tsize + 1)
@@ -59,7 +59,7 @@ class Test_Moneylender(unittest.TestCase):
     def test_dont_trash_copper(self):
         tsize = self.g.trashSize()
         self.plr.set_hand("Copper", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.g.trashSize(), tsize)

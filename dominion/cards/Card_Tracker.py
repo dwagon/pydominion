@@ -48,7 +48,7 @@ class Test_Tracker(unittest.TestCase):
 
     def test_play(self):
         """Play a Tracker"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 1)

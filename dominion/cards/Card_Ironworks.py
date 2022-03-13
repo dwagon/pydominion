@@ -47,7 +47,7 @@ class Test_Ironworks(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Iron Works"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_great_hall(self):
         """Use Ironworks to gain a Great Hall"""

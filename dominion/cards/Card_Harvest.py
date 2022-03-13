@@ -22,7 +22,7 @@ class Card_Harvest(Card.Card):
             player.reveal_card(c)
             cards.add(c.name)
             player.output("Revealed a %s" % c.name)
-            player.addCard(c, "discard")
+            player.add_card(c, "discard")
         player.output("Gaining %d coins" % len(cards))
         player.addCoin(len(cards))
 
@@ -34,7 +34,7 @@ class Test_Harvest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Harvest"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Harvest"""

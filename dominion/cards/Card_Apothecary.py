@@ -29,12 +29,12 @@ class Card_Apothecary(Card.Card):
             player.reveal_card(c)
             if c.name in ("Copper", "Potion"):
                 player.output("Putting %s in hand" % c.name)
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
             else:
                 unput.append(c)
         for c in unput:
             player.output("Putting %s back in deck" % c.name)
-            player.addCard(c, "deck")
+            player.add_card(c, "deck")
 
 
 ###############################################################################

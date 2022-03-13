@@ -34,7 +34,7 @@ class Card_Thief(Card.Card):
             if c.isTreasure():
                 treasures.append(c)
             else:
-                victim.addCard(c, "discard")
+                victim.add_card(c, "discard")
         if not treasures:
             thief.output("Player %s has no treasures" % victim.name)
             return
@@ -60,10 +60,10 @@ class Card_Thief(Card.Card):
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
-                victim.addCard(tc, "discard")
+                victim.add_card(tc, "discard")
         if o["card"]:
             if o["steal"]:
-                thief.addCard(o["card"])
+                thief.add_card(o["card"])
                 thief.output("Stealing %s from %s" % (o["card"].name, victim.name))
                 victim.output("%s stole your %s" % (thief.name, o["card"].name))
             else:
@@ -81,7 +81,7 @@ class Test_Thief(unittest.TestCase):
         self.thief, self.victim = self.g.player_list()
         self.thief.name = "thief"
         self.victim.name = "victim"
-        self.thief.addCard(self.thiefcard, "hand")
+        self.thief.add_card(self.thiefcard, "hand")
 
     def test_no_treasure(self):
         self.victim.set_deck("Estate", "Estate", "Estate")

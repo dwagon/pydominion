@@ -35,7 +35,7 @@ class Card_Kingscourt(Card.Card):
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o["card"].name))
             player.card_benefits(o["card"])
-        player.addCard(o["card"], "played")
+        player.add_card(o["card"], "played")
 
 
 ###############################################################################
@@ -49,7 +49,7 @@ class Test_Kingscourt(unittest.TestCase):
     def test_play(self):
         self.plr.set_deck("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
         self.plr.set_hand("Moat", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["play moat"]
         self.plr.playCard(self.card)
         # (moat + 2) * 3 + estate
@@ -68,7 +68,7 @@ class Test_Kingscourt(unittest.TestCase):
 
     def test_noactions(self):
         self.plr.set_hand("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.played.size(), 1)
@@ -76,7 +76,7 @@ class Test_Kingscourt(unittest.TestCase):
     def test_picked_nothing(self):
         """Selected no actions with Kings court"""
         self.plr.set_hand("Estate", "Estate", "Moat")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["don't play"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)

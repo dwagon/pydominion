@@ -33,10 +33,10 @@ class Card_Spy(Card.Card):
             ("Discard %s %s" % (vicname, c.name), True),
         )
         if discard:
-            victim.addCard(c, "discard")
+            victim.add_card(c, "discard")
             victim.output("%s's Spy discarded your %s" % (attacker.name, c.name))
         else:
-            victim.addCard(c, "topdeck")
+            victim.add_card(c, "topdeck")
 
 
 ###############################################################################

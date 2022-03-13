@@ -30,7 +30,7 @@ class Card_HauntedCastle(CastleCard):
                     % player.name,
                 )
                 for card in cards:
-                    plr.addCard(card, "topdeck")
+                    plr.add_card(card, "topdeck")
                     plr.hand.remove(card)
 
 
@@ -52,7 +52,7 @@ class Test_HauntedCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getScoreDetails()["Haunted Castle"], 2)
 

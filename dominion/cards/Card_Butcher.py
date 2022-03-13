@@ -43,7 +43,7 @@ class Test_Butcher(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Butcher"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a butcher"""
@@ -55,7 +55,7 @@ class Test_Butcher(unittest.TestCase):
     def test_trash_gold(self):
         """Trash a gold"""
         self.plr.set_hand("Copper", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.coffer = 0
         # Trash a card
         # Trash card 3

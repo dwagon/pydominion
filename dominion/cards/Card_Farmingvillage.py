@@ -27,7 +27,7 @@ class Card_Farmingvillage(Card.Card):
             player.reveal_card(c)
             if c.isTreasure() or c.isAction():
                 player.output("Added %s to hand" % c.name)
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 break
             player.output("Picked up and discarded %s" % c.name)
             player.discardCard(c)
@@ -40,7 +40,7 @@ class Test_Farmingvillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Farming Village"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_treasure(self):
         """Play farming village with a treasure in deck"""

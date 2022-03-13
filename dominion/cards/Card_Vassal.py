@@ -20,10 +20,10 @@ class Card_Vassal(Card.Card):
         card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.playCard(card, costAction=False)
         else:
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Test_Vassal(unittest.TestCase):
     def test_play_action(self):
         """Play a Vassal with action next"""
         self.plr.set_deck("Silver", "Gold", "Moat")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_played("Moat"))
@@ -46,7 +46,7 @@ class Test_Vassal(unittest.TestCase):
     def test_play_non_action(self):
         """Play a Vassal with non-action next"""
         self.plr.set_deck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

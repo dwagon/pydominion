@@ -36,7 +36,7 @@ class Test_Hideout(unittest.TestCase):
         self.plr.set_deck("Silver")
         self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
@@ -46,7 +46,7 @@ class Test_Hideout(unittest.TestCase):
         self.plr.set_deck("Silver")
         self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_actions(), 2)

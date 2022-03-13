@@ -50,8 +50,8 @@ class TestPlayer(unittest.TestCase):
         self.plr.deck.empty()
         estate = self.g["Estate"].remove()
         gold = self.g["Gold"].remove()
-        self.plr.addCard(estate, "deck")
-        self.plr.addCard(gold, "topdeck")
+        self.plr.add_card(estate, "deck")
+        self.plr.add_card(gold, "topdeck")
         c = self.plr.next_card()
         self.assertEqual(c.name, "Gold")
 
@@ -688,7 +688,7 @@ class Test_playable_selection(unittest.TestCase):
         self.moat = self.g["Moat"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
         opts, ind = self.plr.playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "b")
@@ -700,7 +700,7 @@ class Test_playable_selection(unittest.TestCase):
 
     def test_token(self):
         self.plr.place_token("+1 Card", "Moat")
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
         opts, ind = self.plr.playable_selection(1)
         self.assertEqual(len(opts), 1)
         self.assertEqual(opts[0]["selector"], "b")
@@ -819,8 +819,8 @@ class Test_spendable_selection(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_hand("Copper", "Estate")
-        self.plr.addCard(self.potion, "hand")
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.potion, "hand")
+        self.plr.add_card(self.moat, "hand")
         self.plr.add_coffer(1)
         self.plr.add_villager(1)
         opts = self.plr.spendable_selection()

@@ -32,7 +32,7 @@ class Card_Ghostship(Card.Card):
                 for card in discard:
                     vic.output("Putting %s back on deck" % card.name)
                     vic.hand.remove(card)
-                    vic.addCard(card, "topdeck")
+                    vic.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -49,7 +49,7 @@ class Test_Ghostship(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Ghost Ship"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a wharf"""

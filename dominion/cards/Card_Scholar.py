@@ -30,7 +30,7 @@ class Test_Scholar(unittest.TestCase):
         self.card = self.g["Scholar"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 

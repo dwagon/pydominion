@@ -36,7 +36,7 @@ class Test_Spices(unittest.TestCase):
 
     def test_playCard(self):
         self.card = self.g["Spices"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.setCoffer(0)
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)

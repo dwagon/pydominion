@@ -48,7 +48,7 @@ class Test_Cultist(unittest.TestCase):
 
     def test_play(self):
         """Play a cultists - should give 2 cards"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 1)
@@ -56,9 +56,9 @@ class Test_Cultist(unittest.TestCase):
 
     def test_defense(self):
         """Make sure moats work against cultists"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
-        self.victim.addCard(moat, "hand")
+        self.victim.add_card(moat, "hand")
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertTrue(self.victim.discardpile.is_empty())
@@ -66,7 +66,7 @@ class Test_Cultist(unittest.TestCase):
     def test_noother(self):
         """Don't ask to play another cultist if it doesn't exist"""
         self.plr.set_hand("Estate", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
@@ -74,7 +74,7 @@ class Test_Cultist(unittest.TestCase):
     def test_anothercultist_no(self):
         """Don't play the other cultist"""
         self.plr.set_hand("Cultist", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.played.size(), 1)
@@ -82,7 +82,7 @@ class Test_Cultist(unittest.TestCase):
     def test_anothercultist_yes(self):
         """Another cultist can be played for free"""
         self.plr.set_hand("Cultist", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.played.size(), 2)
@@ -95,7 +95,7 @@ class Test_Cultist(unittest.TestCase):
 
     def test_trash(self):
         """Trashing a cultist should give 3 more cards"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.trash_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Cultist"))
         self.assertEqual(self.plr.hand.size(), 8)
