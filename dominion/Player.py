@@ -74,7 +74,7 @@ class Player:
             ("Exile", self.exilepile),
             ("Defer", self.deferpile),
         )
-        game.output("Player %s is at the table" % name)
+        game.output(f"Player {name} is at the table")
 
     ###########################################################################
     def initial_Deck(self, heirlooms=None):
@@ -128,13 +128,13 @@ class Player:
         dstcp = self.find_cardpile(dst)
 
         if src not in self.played:
-            self.output("Not activating %s traveller as not played" % src.name)
+            self.output(f"Not activating {src.name} traveller as not played")
             return
 
         choice = self.plrChooseOptions(
             "Replace Traveller",
-            ("Keep %s" % src, "keep"),
-            ("Replace with a %s?" % dstcp.name, "replace"),
+            (f"Keep {src}", "keep"),
+            (f"Replace with a {dstcp.name}?", "replace"),
         )
         if choice == "keep":
             return
@@ -165,8 +165,8 @@ class Player:
     def receive_hex(self, hx=None):
         if hx is None:
             hx = self.game.receive_hex()
-        self.output("Received {} as a hex".format(hx))
-        self.output("{}".format(hx.description(self)))
+        self.output(f"Received {hx} as a hex")
+        self.output(hx.description(self))
         for _ in range(hx.cards):
             self.pickupCard()
         self.addActions(hx.actions)
@@ -179,8 +179,8 @@ class Player:
     def receive_boon(self, boon=None, discard=True):
         if boon is None:
             boon = self.game.receive_boon()
-        self.output("Received {} as a boon".format(boon))
-        self.output("{}".format(boon.description(self)))
+        self.output(f"Received {boon} as a boon")
+        self.output(boon.description(self))
         for _ in range(boon.cards):
             self.pickupCard()
         self.addActions(boon.actions)
@@ -222,7 +222,7 @@ class Player:
             if not card:
                 return None
         assert isinstance(card, Card.Card)
-        self.output("Calling %s from Reserve" % card.name)
+        self.output(f"Calling {card.name} from Reserve")
         self.currcards.append(card)
         card.hook_call_reserve(game=self.game, player=self)
         self.currcards.pop()
@@ -412,12 +412,12 @@ class Player:
         assert isinstance(card, Card.Card)
         self.addCard(card, "hand")
         if verbose:
-            self.output("%s %s" % (verb, card.name))
+            self.output(f"{verb} {card.name}")
         return card
 
     ###########################################################################
     def shuffleDiscard(self):
-        self.output("Shuffling Pile of %d cards" % len(self.discardpile))
+        self.output(f"Shuffling Pile of {len(self.discardpile)} cards")
         for card in self.projects:
             if hasattr(card, "hook_preShuffle"):
                 card.hook_preShuffle(game=self.game, player=self)
@@ -544,7 +544,7 @@ class Player:
                     verb="Play",
                     selector=sel,
                     name=way.name,
-                    desc="{}: {}".format(p.name, way.description(self)),
+                    desc=f"{p.name}: {way.description(self)}",
                     action="way",
                     card=p,
                     way=way,
@@ -992,7 +992,7 @@ class Player:
         self.output(
             "| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile])
         )  # Debug
-        self.output("| {} cards in discard pile".format(self.discardpile.size()))
+        self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
 
     ###########################################################################
@@ -1194,7 +1194,7 @@ class Player:
     def playCard(self, card, discard=True, costAction=True, postActionHook=True):
         options = {"skip_card": False, "discard": discard}
         if card not in self.hand and options["discard"]:
-            self.output("{} is no longer available".format(card.name))
+            self.output(f"{card.name} is no longer available")
             return
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
@@ -1240,7 +1240,7 @@ class Player:
             self.output("Not enough actions")
             return
         self.hand.remove(card)
-        self.output("Playing {} through {}".format(card.name, way.name))
+        self.output(f"Playing {card.name} through {way.name}")
         self.card_benefits(way)
         newopts = way.special_way(game=self.game, player=self, card=card)
         if isinstance(newopts, dict):
@@ -1301,9 +1301,9 @@ class Player:
             else:
                 newcard = cardpile.remove()
         if not newcard:
-            self.output("No more %s" % cardpile)
+            self.output(f"No more {cardpile}")
             return None
-        self.output("Gained a {}".format(newcard.name))
+        self.output(f"Gained a {newcard.name}")
         if callhook:
             rc = self.hook_gain_card(newcard)
             if rc:

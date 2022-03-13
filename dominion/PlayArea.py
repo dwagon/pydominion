@@ -71,7 +71,9 @@ class PlayArea:
 
     def __add__(self, a):
         x = self.cards[:]
-        if hasattr(a, "values"):
+        if a is None:
+            pass
+        elif hasattr(a, "values"):
             x.extend(a.values())
         elif isinstance(a, PlayArea):
             x.extend(a.cards[:])
