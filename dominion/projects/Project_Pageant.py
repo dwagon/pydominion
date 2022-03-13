@@ -13,7 +13,7 @@ class Project_Pageant(Project.Project):
         self.name = "Pageant"
         self.cost = 3
 
-    def hook_endBuyPhase(self, game, player):
+    def hook_end_buy_phase(self, game, player):
         options = []
         if player.coin == 0:
             return

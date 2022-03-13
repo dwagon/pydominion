@@ -13,7 +13,7 @@ class Project_Exploration(Project.Project):
         self.name = "Exploration"
         self.cost = 4
 
-    def hook_endBuyPhase(self, game, player):
+    def hook_end_buy_phase(self, game, player):
         if player.stats["bought"]:
             return
         player.add_coffer(1)

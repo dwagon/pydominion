@@ -882,12 +882,12 @@ class Player:
             self.perform_action(opt)
             if opt["action"] == "quit":
                 break
-        self.hook_endBuyPhase()
+        self.hook_end_buy_phase()
 
     ###########################################################################
-    def hook_endBuyPhase(self):
+    def hook_end_buy_phase(self):
         for card in self.projects:
-            card.hook_endBuyPhase(game=self.game, player=self)
+            card.hook_end_buy_phase(game=self.game, player=self)
 
     ###########################################################################
     def cleanup_phase(self):

@@ -54,7 +54,7 @@ hook_preBuy
 -----------
 Fires off before the buy phase
 
-hook_endBuyPhase
+hook_end_buy_phase
 -----------
 Fires off at the end of the buy phase
 
