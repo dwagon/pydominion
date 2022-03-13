@@ -621,7 +621,7 @@ class Player:
         return options
 
     ###########################################################################
-    def getWhens(self):
+    def _get_whens(self):
         """Return when we are for calling reserve cards"""
         whens = ["any"]
         for c in self.played:
@@ -633,7 +633,7 @@ class Player:
 
     ###########################################################################
     def reserve_selection(self, index):
-        whens = self.getWhens()
+        whens = self._get_whens()
         options = []
         for card in self.reserve:
             if not card.callable:

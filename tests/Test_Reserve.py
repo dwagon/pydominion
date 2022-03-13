@@ -5,7 +5,7 @@ from dominion import Game
 
 
 ###############################################################################
-class Test_getWhens(unittest.TestCase):
+class Test__get_whens(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, initcards=["Moat"], badcards=["Pixie"]
@@ -15,32 +15,32 @@ class Test_getWhens(unittest.TestCase):
 
     def test_start(self):
         self.plr.start_turn()
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertEqual(whens, ["any", "start"])
 
     def test_not_start(self):
         self.plr.start_turn()
         self.plr.perform_action({"action": "spendall"})
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertNotIn("start", whens)
 
     def test_any(self):
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertIn("any", whens)
 
     def test_postaction(self):
         self.plr.set_played("Moat")
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertIn("postaction", whens)
         self.plr.set_played("Copper")
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
 
     def test_not_postaction(self):
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
         self.plr.perform_action({"action": "spendall"})
-        whens = self.plr.getWhens()
+        whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
 
 
