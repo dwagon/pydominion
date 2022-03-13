@@ -51,7 +51,7 @@ class Player:
         self.played_events = PlayArea([])
         self.played_ways = []
         self._initial_deck(heirlooms)
-        self.initial_tokens()
+        self._initial_tokens()
         self.once = {}
         self.turn_number = 0
         self.stats = {"gained": [], "bought": [], "trashed": []}
@@ -94,7 +94,7 @@ class Player:
         self.deck.shuffle()
 
     ###########################################################################
-    def initial_tokens(self):
+    def _initial_tokens(self):
         self.tokens = {
             "Trashing": None,
             "Estate": None,
@@ -109,14 +109,15 @@ class Player:
         }
 
     ###########################################################################
-    def find_cardpile(self, cname):
+    def _find_cardpile(self, cname):
+        """ Return the cardpile that has cards called {cname}"""
         dstcp = None
         for cp in self.game.cardpiles.values():
             if cp.name == cname:
                 dstcp = cp
                 break
         else:  # pragma: no cover
-            assert dstcp is not None, "Couldn't find cardpile %s" % cname
+            assert dstcp is not None, f"Couldn't find cardpile {cname}"
         return dstcp
 
     ###########################################################################
@@ -125,7 +126,7 @@ class Player:
         dst card"""
         assert isinstance(src, Card.Card)
         assert isinstance(dst, str)
-        dstcp = self.find_cardpile(dst)
+        dstcp = self._find_cardpile(dst)
 
         if src not in self.played:
             self.output(f"Not activating {src.name} traveller as not played")
@@ -146,7 +147,7 @@ class Player:
         # New card goes into hand as it is about to be discarded
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
-        dstcp = self.find_cardpile(dst)
+        dstcp = self._find_cardpile(dst)
         newcard = self.gainCard(cardpile=dstcp, destination=destination, callhook=False)
         if newcard:
             cardpile = self.game.cardpiles[src.name]
