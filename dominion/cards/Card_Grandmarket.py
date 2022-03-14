@@ -19,7 +19,7 @@ class Card_Grandmarket(Card.Card):
         self.buys = 1
         self.coin = 2
 
-    def hook_allowedToBuy(self, game, player):
+    def hook_allowed_to_buy(self, game, player):
         """You can't buy this if you have any copper in play"""
         for c in player.hand + player.played:
             if c.name == "Copper":

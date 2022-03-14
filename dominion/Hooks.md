@@ -12,7 +12,7 @@ night(game, player)
 In night cards only - called when the card is active during the night phase
 * player - current player
 
-hook_allowedToBuy
+hook_allowed_to_buy
 ----------------
 This is called before any card is available to purchase.
 It should return True if the card is available to be purchased, or False otherwise.

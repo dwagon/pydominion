@@ -745,7 +745,7 @@ class Player:
         all_cards = self._get_all_purchasable()
         buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
         for card in all_cards:
-            if not self.hook_allowedToBuy(card):
+            if not self.hook_allowed_to_buy(card):
                 if card in buyable:
                     buyable.remove(card)
             sel = chr(ord("a") + index)
@@ -1042,9 +1042,9 @@ class Player:
             card.hook_pre_buy(game=self.game, player=self)
 
     ###########################################################################
-    def hook_allowedToBuy(self, card):
+    def hook_allowed_to_buy(self, card):
         """Hook to check if you are allowed to buy a card"""
-        return card.hook_allowedToBuy(game=self.game, player=self)
+        return card.hook_allowed_to_buy(game=self.game, player=self)
 
     ###########################################################################
     def hook_buyCard(self, card):

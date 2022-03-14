@@ -304,7 +304,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_allowedToBuy(self, game, player):
+    def hook_allowed_to_buy(self, game, player):
         return True  # pragma: no cover
 
     ##########################################################################
