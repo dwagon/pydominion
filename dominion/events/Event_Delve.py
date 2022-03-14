@@ -16,7 +16,7 @@ class Event_Delve(Event.Event):
 
     def special(self, game, player):
         player.gain_card("Silver")
-        player.addBuys()
+        player.add_buys()
 
 
 ###############################################################################

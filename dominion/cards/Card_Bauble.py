@@ -54,7 +54,7 @@ class Card_Bauble(Card.Card):
             chosen.append(choice)
         for choice in chosen:
             if choice == "buy":
-                player.addBuys(1)
+                player.add_buys(1)
             elif choice == "cash":
                 player.addCoin(1)
             elif choice == "favor":

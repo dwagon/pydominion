@@ -20,7 +20,7 @@ class Card_Wharf(Card.Card):
     def duration(self, game, player):
         """+2 card, +1 buy"""
         player.pickup_cards(2)
-        player.addBuys(1)
+        player.add_buys(1)
 
 
 ###############################################################################

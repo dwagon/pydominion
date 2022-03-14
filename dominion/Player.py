@@ -1535,7 +1535,7 @@ class Player:
         return self.buys
 
     ###########################################################################
-    def addBuys(self, num=1):
+    def add_buys(self, num=1):
         assert isinstance(num, int)
         self.buys += num
 

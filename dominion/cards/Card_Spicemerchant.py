@@ -32,7 +32,7 @@ class Card_SpiceMerchant(Card.Card):
                 player.addActions(1)
             else:
                 player.addCoin(2)
-                player.addBuys(1)
+                player.add_buys(1)
 
 
 ###############################################################################

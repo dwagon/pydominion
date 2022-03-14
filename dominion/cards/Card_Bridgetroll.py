@@ -32,7 +32,7 @@ class Card_Bridgetroll(Card.Card):
 
     def duration(self, game, player):
         self._played = False
-        player.addBuys(1)
+        player.add_buys(1)
 
 
 ###############################################################################

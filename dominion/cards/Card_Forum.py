@@ -25,7 +25,7 @@ class Card_Forum(Card.Card):
         player.plrDiscardCards(num=2, force=True)
 
     def hook_buy_this_card(self, game, player):
-        player.addBuys(1)
+        player.add_buys(1)
 
 
 ###############################################################################

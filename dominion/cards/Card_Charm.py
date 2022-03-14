@@ -28,7 +28,7 @@ class Card_Charm(Card.Card):
             ),
         )
         if ans:
-            player.addBuys(1)
+            player.add_buys(1)
             player.addCoin(2)
         else:
             self.buytrigger = True

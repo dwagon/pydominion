@@ -23,7 +23,7 @@ class Card_Hamlet(Card.Card):
             player.addActions(1)
         c = player.plrDiscardCards(prompt="Discard card to gain a buy")
         if c:
-            player.addBuys(1)
+            player.add_buys(1)
 
 
 ###############################################################################

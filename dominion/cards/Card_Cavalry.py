@@ -29,7 +29,7 @@ class Card_Cavalry(Card.Card):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
         player.pickup_cards(2)
-        player.addBuys(1)
+        player.add_buys(1)
 
 
 ###############################################################################

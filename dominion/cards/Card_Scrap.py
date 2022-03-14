@@ -31,7 +31,7 @@ class Card_Scrap(Card.Card):
         if cost >= 2:
             player.addActions(1)
         if cost >= 3:
-            player.addBuys(1)
+            player.add_buys(1)
         if cost >= 4:
             player.addCoin(1)
         if cost >= 5:

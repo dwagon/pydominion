@@ -27,7 +27,7 @@ class Card_Squire(Card.Card):
         if choice == "actions":
             player.addActions(2)
         elif choice == "buys":
-            player.addBuys(2)
+            player.add_buys(2)
         elif choice == "silver":
             player.gain_card("Silver")
 

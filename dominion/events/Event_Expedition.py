@@ -36,7 +36,7 @@ class Test_Expedition(unittest.TestCase):
     def test_playtwice(self):
         """Use Expedition twice"""
         self.plr.coin = 7
-        self.plr.addBuys(1)
+        self.plr.add_buys(1)
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.get_coins(), 4)
         self.plr.performEvent(self.card)

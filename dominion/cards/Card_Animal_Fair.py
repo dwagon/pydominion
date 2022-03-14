@@ -22,7 +22,7 @@ class Card_Animal_Fair(Card.Card):
 
     def special(self, game, player):
         empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
-        player.addBuys(empties)
+        player.add_buys(empties)
 
     def todo_hook_buy_this_card(self, game, player):
         actions = [_ for _ in player.hand if _.isAction()]
