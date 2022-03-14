@@ -19,7 +19,7 @@ class Card_PirateShip(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Pick one",
             (
                 "Each other player reveals the top 2 cards of his deck, trashes a "

@@ -17,7 +17,7 @@ class Card_Chancellor(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Discard deck?", ("Don't Discard", False), ("Discard Deck", True)
         )
         if ans:

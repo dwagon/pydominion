@@ -19,7 +19,7 @@ class Card_Miningvillage(Card.Card):
 
     def special(self, game, player):
         """You may trash this card immediately. If you do +2 coin"""
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Choose one",
             ("Do nothing", False),
             ("Trash mining village for +2 coin", True),

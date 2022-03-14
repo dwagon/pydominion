@@ -25,7 +25,7 @@ class Card_Duchy(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         if "Duchess" in game:
-            duchess = player.plrChooseOptions(
+            duchess = player.plr_choose_options(
                 "Gain a Duchess as well?", ("No thanks", False), ("Gain Duchess", True)
             )
             if duchess:

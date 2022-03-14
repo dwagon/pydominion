@@ -19,7 +19,7 @@ class Card_Tunnel(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if player.phase == "cleanup":
             return
-        gain = player.plrChooseOptions(
+        gain = player.plr_choose_options(
             "Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)
         )
         if gain:

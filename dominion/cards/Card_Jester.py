@@ -29,7 +29,7 @@ class Card_Jester(Card.Card):
                 player.output("Cursed %s" % plr.name)
                 plr.gain_card("Curse")
                 continue
-            getcard = player.plrChooseOptions(
+            getcard = player.plr_choose_options(
                 "Who should get a copy of %s's %s" % (plr.name, card.name),
                 ("You get a %s" % card.name, True),
                 ("%s gets a %s" % (plr.name, card.name), False),

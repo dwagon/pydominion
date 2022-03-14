@@ -19,7 +19,7 @@ class Project_Pageant(Project.Project):
             return
         for num in range(player.coin + 1):
             options.append(("Buy {} Coffers for {} Coin".format(num, num), num))
-        pick = player.plrChooseOptions("Exchange coin for coffers", *options)
+        pick = player.plr_choose_options("Exchange coin for coffers", *options)
         player.add_coffer(pick)
         player.coin -= pick
 

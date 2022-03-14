@@ -42,7 +42,7 @@ class Card_Hermit(Card.Card):
         # When you discard this from play, if you did not buy any cards this turn,
         # trash this and gain a Madman from the Madman pile
         if not player.stats["bought"]:
-            trash = player.plrChooseOptions(
+            trash = player.plr_choose_options(
                 "Trash this to gain a madman",
                 ("Keep Hermit", False),
                 ("Gain Madman", True),

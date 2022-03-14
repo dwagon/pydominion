@@ -26,7 +26,7 @@ class Card_Treasury(Card.Card):
             if card.isVictory():
                 vict = True
         if vict:
-            topdeck = player.plrChooseOptions(
+            topdeck = player.plr_choose_options(
                 "Put Treasury back on top of your deck?",
                 ("Discard as normal", False),
                 ("Put on top of your deck", True),

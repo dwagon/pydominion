@@ -23,7 +23,7 @@ class Card_Contraband(Card.Card):
         options = []
         for cp in cps:
             options.append((cp, cp))
-        forbid = plr.plrChooseOptions(
+        forbid = plr.plr_choose_options(
             "Contraband: Pick a stack that %s can't buy this turn" % player.name,
             *options
         )

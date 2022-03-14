@@ -19,7 +19,7 @@ class Card_Scavenger(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        dumpdeck = player.plrChooseOptions(
+        dumpdeck = player.plr_choose_options(
             "Put your deck into your discard pile?",
             ("Keep it where it is", False),
             ("Put deck into discard?", True),

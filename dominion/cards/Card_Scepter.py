@@ -18,7 +18,7 @@ class Card_Scepter(Card.Card):
     def special(self, game, player):
         acts = [_ for _ in player.played if _.isAction()]
         if acts:
-            get_coin = player.plrChooseOptions(
+            get_coin = player.plr_choose_options(
                 "Pick one? ", ("2 Coin", True), ("Replay an action card", False)
             )
         else:

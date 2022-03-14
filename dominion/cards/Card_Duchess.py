@@ -23,7 +23,7 @@ class Card_Duchess(Card.Card):
                 name = "your"
             else:
                 name = "%s's" % player.name
-            keep = plr.plrChooseOptions(
+            keep = plr.plr_choose_options(
                 "Due to %s Duchess you can keep or discard the top card" % name,
                 ("Keep %s on top of deck" % card.name, True),
                 ("Discard %s" % card.name, False),

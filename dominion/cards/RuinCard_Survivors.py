@@ -21,7 +21,7 @@ class Card_Survivors(Card.Card):
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
         crds = player.pickup_cards(2)
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "What to do with survivors?",
             ("Discard {} and {}".format(crds[0].name, crds[1].name), "discard"),
             ("Return {} and {} to deck".format(crds[0].name, crds[1].name), "return"),

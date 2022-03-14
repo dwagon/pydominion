@@ -19,7 +19,7 @@ class Card_Charm(Card.Card):
         self.buytrigger = False
 
     def special(self, game, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Pick One",
             ("+1 Buy and +2 Coin", True),
             (

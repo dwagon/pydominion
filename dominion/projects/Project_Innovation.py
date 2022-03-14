@@ -18,7 +18,7 @@ class Project_Innovation(Project.Project):
             return {}
         if not card.isAction():
             return {}
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Play {} through Innovation?".format(card.name),
             ("Play card", True),
             ("Don't play", False),

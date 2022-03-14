@@ -17,7 +17,7 @@ class Card_Tactician(Card.Card):
 
     def special(self, game, player):
         self.discarded = False
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "Discard hand for good stuff next turn?", ("Keep", False), ("Discard", True)
         )
         if discard and player.hand.size():

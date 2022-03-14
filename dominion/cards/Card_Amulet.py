@@ -24,7 +24,7 @@ class Card_Amulet(Card.Card):
     def amulet_special(self, game, player):
         """Now and at the start of your next turn, choose one: +1 Coin;
         or trash a card from your hand; or gain a Silver"""
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Pick one",
             ("Gain a coin", "coin"),
             ("Trash a card", "trash"),

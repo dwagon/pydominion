@@ -15,7 +15,7 @@ class Card_Town(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose One:",
             ("+1 Card and +2 Actions", "card"),
             ("+1 Buy and +$2 Coin", "buy"),

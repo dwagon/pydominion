@@ -26,7 +26,7 @@ class Card_Torturer(Card.Card):
 
     def choiceOfDoom(self, victim, player):
         victim.output("Your hand is: %s" % ", ".join([c.name for c in victim.hand]))
-        discard = victim.plrChooseOptions(
+        discard = victim.plr_choose_options(
             "Discard or curse", ("Discard 2 cards", True), ("Gain a curse card", False)
         )
         if discard:

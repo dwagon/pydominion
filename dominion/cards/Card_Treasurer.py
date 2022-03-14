@@ -20,7 +20,7 @@ class Card_Treasurer(Card.Card):
     ###########################################################################
     def special(self, game, player):
         gain_treas = [_ for _ in game.trashpile if _.isTreasure()]
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose one?",
             ("Trash a treasure from your hand", "trash"),
             (

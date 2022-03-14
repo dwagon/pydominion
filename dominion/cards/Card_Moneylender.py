@@ -22,7 +22,7 @@ class Card_Moneylender(Card.Card):
             player.output("No coppers in hand")
             return
         player.output("Trash a copper to gain +3 coin")
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash a copper?", ("Don't trash a copper", False), ("Trash a copper", True)
         )
         if trash:

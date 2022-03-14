@@ -19,7 +19,7 @@ class Card_Engineer(Card.Card):
 
     def special(self, game, player):
         player.plr_gain_card(4)
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash the Engineer?",
             ("Keep the enginner", False),
             ("Trash to gain a card costing up to 4", True),

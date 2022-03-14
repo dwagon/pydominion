@@ -17,7 +17,7 @@ class Card_Huntinggrounds(Card.Card):
         self.cost = 6
 
     def hook_trashThisCard(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "What to gain?", ("Gain a duchy", "duchy"), ("Gain 3 Estates", "estates")
         )
         if choice == "duchy":

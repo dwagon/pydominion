@@ -21,7 +21,7 @@ class Event_Banish(Event.Event):
             options.append(
                 ("Exile {} ({} in hand)".format(cname, player.hand.count(cname)), cname)
             )
-        card = player.plrChooseOptions("Pick a card to exile", *options)
+        card = player.plr_choose_options("Pick a card to exile", *options)
         if card is None:
             return
         if player.hand.count(card) == 1:
@@ -34,7 +34,7 @@ class Event_Banish(Event.Event):
             options = []
             for i in range(player.hand.count(card) + 1):
                 options.append(("Exile {} {}".format(i, card), i))
-            count = player.plrChooseOptions("How many to exile", *options)
+            count = player.plr_choose_options("How many to exile", *options)
             for _ in range(count):
                 for crd in player.hand:
                     if crd.name == card:

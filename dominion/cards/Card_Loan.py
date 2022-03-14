@@ -29,7 +29,7 @@ class Card_Loan(Card.Card):
                 break
             player.output("Revealed and discarded %s" % c.name)
             player.discard_card(c)
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "What to do?", ("Discard %s" % c.name, True), ("Trash %s" % c.name, False)
         )
         if discard:

@@ -29,7 +29,7 @@ class Card_Oracle(Card.Card):
             victim.reveal_card(card)
             cards.append(card)
         cardnames = ", ".join([c.name for c in cards])
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "What to do with %s cards: %s" % (name, cardnames),
             ("Discard %s" % cardnames, True),
             ("Put %s on top of deck" % cardnames, False),

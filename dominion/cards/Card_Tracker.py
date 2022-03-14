@@ -26,7 +26,7 @@ class Card_Tracker(Card.Card):
         """While this is in play, when you gain a card, you may
         put that card on top of your deck"""
         mod = {}
-        deck = player.plrChooseOptions(
+        deck = player.plr_choose_options(
             "Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True),

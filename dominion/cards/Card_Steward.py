@@ -17,7 +17,7 @@ class Card_Steward(Card.Card):
 
     def special(self, game, player):
         """Choose one: +2 Cards; or +2 coin, or trash 2 cards from your hand"""
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose one?",
             ("+2 cards", "cards"),
             ("+2 coin", "coin"),

@@ -225,7 +225,7 @@ class TextPlayer(Player):
         return selected
 
     ###########################################################################
-    def plrChooseOptions(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices):
         index = 0
         options = []
         for prnt, ans in choices:

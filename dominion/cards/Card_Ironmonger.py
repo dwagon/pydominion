@@ -25,7 +25,7 @@ class Card_Ironmonger(Card.Card):
         Card, +1 coin; Victory Card, +1 card"""
         card = player.next_card()
         player.reveal_card(card)
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "What to do with %s" % card.name,
             ("Put back %s" % card.name, False),
             ("Discard %s" % card.name, True),

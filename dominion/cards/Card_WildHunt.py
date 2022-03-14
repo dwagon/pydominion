@@ -17,7 +17,7 @@ class Card_WildHunt(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        give = player.plrChooseOptions(
+        give = player.plr_choose_options(
             "Choose one:",
             ("+3 Cards and add 1 VP to the Wild Hunt Supply pile", True),
             (

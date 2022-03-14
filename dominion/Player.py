@@ -132,7 +132,7 @@ class Player:
             self.output(f"Not activating {src.name} traveller as not played")
             return
 
-        choice = self.plrChooseOptions(
+        choice = self.plr_choose_options(
             "Replace Traveller",
             (f"Keep {src}", "keep"),
             (f"Replace with a {dstcp.name}?", "replace"),
@@ -1344,7 +1344,7 @@ class Player:
             ("Un-exile {} x {}".format(num, cardname), True),
             ("Don't un-exile {}".format(cardname), False),
         ]
-        unex = self.plrChooseOptions("Un-exile {}".format(cardname), *choices)
+        unex = self.plr_choose_options("Un-exile {}".format(cardname), *choices)
         if unex:
             self.unexile(cardname)
 
@@ -1369,7 +1369,7 @@ class Player:
         options = []
         for i in range(self.coin + 1):
             options.append(("Spend %d more" % i, i))
-        ans = self.plrChooseOptions("How much do you wish to overpay?", *options)
+        ans = self.plr_choose_options("How much do you wish to overpay?", *options)
         card.hook_overpay(game=self.game, player=self, amount=ans)
         self.coin -= ans
 
@@ -1903,7 +1903,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def plrChooseOptions(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices):
         raise NotImplementedError
 
     ###########################################################################

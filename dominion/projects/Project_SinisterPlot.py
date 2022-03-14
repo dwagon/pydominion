@@ -16,7 +16,7 @@ class Project_SinisterPlot(Project.Project):
         self._token = defaultdict(int)
 
     def hook_start_turn(self, game, player):
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Sinister Plot Action? ",
             ("Add a token here?", True),
             (

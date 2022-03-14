@@ -32,7 +32,7 @@ class Card_Urchin(Card.Card):
                 attacks += 1
         # Urchin and one more
         if attacks >= 2:
-            trash = player.plrChooseOptions(
+            trash = player.plr_choose_options(
                 "Trash the urchin?",
                 ("Keep the Urchin", False),
                 ("Trash and gain a Mercenary", True),

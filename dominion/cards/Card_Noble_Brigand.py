@@ -37,7 +37,7 @@ class Card_Noble_Brigand(Card.Card):
                 if card.name in ("Silver", "Gold"):
                     choices.append(("Steal %s" % card.name, card))
             if choices:
-                ans = player.plrChooseOptions("Pick a card to steal", *choices)
+                ans = player.plr_choose_options("Pick a card to steal", *choices)
             for card in cards:
                 if card == ans:
                     victim.output(

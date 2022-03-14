@@ -25,7 +25,7 @@ class Card_Zombie_Spy(Card.Card):
 
     def special(self, game, player):
         c = player.next_card()
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "Discard your card?",
             ("Keep %s on your deck" % c.name, False),
             ("Discard %s" % c.name, True),

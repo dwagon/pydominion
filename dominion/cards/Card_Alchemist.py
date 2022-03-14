@@ -27,7 +27,7 @@ class Card_Alchemist(Card.Card):
             return
         if not player.in_played("Potion") and not player.in_discard("Potion"):
             return
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "What to do with the alchemist?",
             ("Discard alchemist", False),
             ("Put on top of deck", True),

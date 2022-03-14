@@ -30,7 +30,7 @@ class Card_Fools_Gold(Card.Card):
             return
         if owner == player:
             return
-        trash = owner.plrChooseOptions(
+        trash = owner.plr_choose_options(
             "%s gained a Province. Trash this card to gain a gold?" % player.name,
             ("Keep Fool's Gold", False),
             ("Trash and gain a Gold?", True),

@@ -18,7 +18,7 @@ class Card_Butcher(Card.Card):
 
     def special(self, game, player):
         player.add_coffer(2)
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash a card to buy a card?",
             ("Don't trash cards", False),
             ("Trash a card", True),

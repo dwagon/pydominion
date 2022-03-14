@@ -17,7 +17,7 @@ class Card_Graverobber(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Pick one",
             (
                 "Gain a card from the trash costing from 3 to 6 putting it on top of your deck",

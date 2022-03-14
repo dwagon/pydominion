@@ -37,7 +37,7 @@ class Card_Feast(Card.Card):
             player.output("Took %s" % o["card"].name)
 
     def trash_card(self, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Trash this card?", ("Keep this card", False), ("Trash this card", True)
         )
         if ans:

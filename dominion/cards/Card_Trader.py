@@ -28,7 +28,7 @@ class Card_Trader(Card.Card):
     def hook_gain_card(self, game, player, card):
         if card.name == "Silver":
             return {}
-        silver = player.plrChooseOptions(
+        silver = player.plr_choose_options(
             "From your Trader gain %s or gain a Silver instead?" % card.name,
             ("Still gain %s" % card.name, False),
             ("Instead gain Silver", True),

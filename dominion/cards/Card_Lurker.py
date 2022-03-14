@@ -17,7 +17,7 @@ class Card_Lurker(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Choose one? ",
             ("Trash an Action from the Supply", "to"),
             ("Gain an Action card from the Trash", "from"),

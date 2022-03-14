@@ -21,7 +21,7 @@ class Way_Seal(Way.Way):
 
     def gain_card(self, game, player, card):
         mod = {}
-        deck = player.plrChooseOptions(
+        deck = player.plr_choose_options(
             "Seal: Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True),

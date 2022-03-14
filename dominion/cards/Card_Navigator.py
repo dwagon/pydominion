@@ -25,7 +25,7 @@ class Card_Navigator(Card.Card):
         player.output(
             "Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards])
         )
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "What do you want to do?",
             ("Discard cards", True),
             ("Return them to the deck", False),

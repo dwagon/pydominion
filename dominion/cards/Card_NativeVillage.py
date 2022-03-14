@@ -27,7 +27,7 @@ class Card_NativeVillage(Card.Card):
             "Native Village contains: %s"
             % ", ".join(c.name for c in player._native_map)
         )
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose One",
             (
                 "Set aside the top card of your deck face down on your Native Village mat",

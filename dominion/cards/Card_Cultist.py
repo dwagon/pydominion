@@ -25,7 +25,7 @@ class Card_Cultist(Card.Card):
             plr.gain_card("Ruins")
         cultist = player.in_hand("Cultist")
         if cultist:
-            ans = player.plrChooseOptions(
+            ans = player.plr_choose_options(
                 "Play another cultist?",
                 ("Don't play cultist", False),
                 ("Play another cultist", True),

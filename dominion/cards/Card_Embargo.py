@@ -20,7 +20,7 @@ class Card_Embargo(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash this card?",
             ("Keep this card", False),
             ("Trash this card to embargo", True),

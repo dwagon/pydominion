@@ -20,7 +20,7 @@ class Card_Pixie(Card.Card):
 
     def special(self, game, player):
         topboon = game.receive_boon()
-        opt = player.plrChooseOptions(
+        opt = player.plr_choose_options(
             "Either:",
             ("Discard {}".format(topboon.name), False),
             (

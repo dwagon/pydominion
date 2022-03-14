@@ -20,7 +20,7 @@ class Card_Baron(Card.Card):
         gain an estate card"""
         hasEstate = player.in_hand("Estate")
         if hasEstate:
-            ans = player.plrChooseOptions(
+            ans = player.plr_choose_options(
                 "Discard Estate?",
                 ("Keep Estate - Gain another", False),
                 ("Discard an Estate - Gain +4 Gold", True),

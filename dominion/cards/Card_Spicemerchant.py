@@ -22,7 +22,7 @@ class Card_SpiceMerchant(Card.Card):
             cardsrc=treasures,
         )
         if tr:
-            rew = player.plrChooseOptions(
+            rew = player.plr_choose_options(
                 "Select your reward",
                 ("+2 Cards, +1 Action", "cards"),
                 ("+2 Coins, +1 Buy", "coins"),

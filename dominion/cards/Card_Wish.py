@@ -20,7 +20,7 @@ class Card_Wish(Card.Card):
         self.numcards = 12
 
     def special(self, game, player):
-        dc = player.plrChooseOptions(
+        dc = player.plr_choose_options(
             "Return this to gain a card to you hand costing up to 6",
             ("Return", True),
             ("Keep", False),

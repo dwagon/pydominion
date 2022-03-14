@@ -19,7 +19,7 @@ class Card_Hunting_Lodge(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        disc = player.plrChooseOptions(
+        disc = player.plr_choose_options(
             "Discard hand?", ("Nope", False), ("Discard hand and draw 5 cards", True)
         )
         if disc:

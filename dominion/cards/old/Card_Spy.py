@@ -27,7 +27,7 @@ class Card_Spy(Card.Card):
         c = victim.next_card()
         victim.reveal_card(c)
         vicname = "your" if attacker == victim else "%s's" % victim.name
-        discard = attacker.plrChooseOptions(
+        discard = attacker.plr_choose_options(
             "Discard %s card?" % vicname,
             ("Keep %s on %s deck" % (c.name, vicname), False),
             ("Discard %s %s" % (vicname, c.name), True),

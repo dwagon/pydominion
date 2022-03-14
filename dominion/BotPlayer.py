@@ -97,7 +97,7 @@ class BotPlayer(Player):
         return None
 
     ###########################################################################
-    def plrChooseOptions(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)

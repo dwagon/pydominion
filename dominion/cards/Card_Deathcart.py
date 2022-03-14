@@ -26,7 +26,7 @@ class Card_Deathcart(Card.Card):
         else:
             choices.append(("No action cards to trash", "nothing"))
         choices.append(("Do nothing", "nothing"))
-        ans = player.plrChooseOptions("What to do with Death Cart?", *choices)
+        ans = player.plr_choose_options("What to do with Death Cart?", *choices)
         trash = None
         if ans == "nothing":
             return

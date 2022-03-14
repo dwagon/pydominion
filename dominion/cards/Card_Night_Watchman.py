@@ -24,7 +24,7 @@ class Card_NightWatchman(Card.Card):
             "Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards])
         )
         for c in cards:
-            discard = player.plrChooseOptions(
+            discard = player.plr_choose_options(
                 "What do you want to do?",
                 ("Discard {}".format(c.name), True),
                 ("Return {} to the deck".format(c.name), False),

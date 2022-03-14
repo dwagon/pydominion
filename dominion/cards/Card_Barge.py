@@ -18,7 +18,7 @@ class Card_Barge(Card.Card):
         self._choice = "undef"
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Pick One",
             ("Now: +3 Cards and +1 Buy", "now"),
             ("Next Turn: +3 Cards and +1 Buy", "then"),

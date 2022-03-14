@@ -18,7 +18,7 @@ class Card_Squire(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose one.",
             ("+2 Actions", "actions"),
             ("+2 Buys", "buys"),

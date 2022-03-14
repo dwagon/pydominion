@@ -24,7 +24,7 @@ class Card_Sleigh(Card.Card):
 
     def hook_gain_card(self, game, player, card):
         # Discard self if choice == hand or deck
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "What to do with {}?".format(card.name),
             ("Discard by default", "discard"),
             ("Put {} into hand and discard Sleigh".format(card.name), "hand"),

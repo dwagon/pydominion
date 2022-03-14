@@ -24,7 +24,7 @@ class Card_Messenger(Card.Card):
         return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
     def special(self, game, player):
-        o = player.plrChooseOptions(
+        o = player.plr_choose_options(
             "Put entire deck into discard pile?",
             ("No - keep it as it is", False),
             ("Yes - dump it", True),

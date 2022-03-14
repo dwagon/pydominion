@@ -18,7 +18,7 @@ class Event_TravellingFair(Event.Event):
         self.buys = 2
 
     def hook_gain_card(self, game, player, card):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Do you want to put {} on the top of your deck?".format(card.name),
             ("Put {} on deck".format(card.name), "topdeck"),
             ("Discard {}".format(card.name), "discard"),

@@ -21,7 +21,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
             return None
         if game["Changeling"].is_empty():
             return None
-        swap = player.plrChooseOptions(
+        swap = player.plr_choose_options(
             "Swap {} for a Changeling?".format(card.name),
             ("Swap {}".format(card.name), True),
             ("Keep {}".format(card.name), False),

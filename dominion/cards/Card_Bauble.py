@@ -21,7 +21,7 @@ class Card_Bauble(Card.Card):
         if not self._gain_hook:
             return {}
         mod = {}
-        deck = player.plrChooseOptions(
+        deck = player.plr_choose_options(
             "Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True),
@@ -50,7 +50,7 @@ class Card_Bauble(Card.Card):
                         "deck",
                     )
                 )
-            choice = player.plrChooseOptions("Choose an option.", *options)
+            choice = player.plr_choose_options("Choose an option.", *options)
             chosen.append(choice)
         for choice in chosen:
             if choice == "buy":

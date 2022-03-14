@@ -17,7 +17,7 @@ class Event_Desperation(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        opt = player.plrChooseOptions(
+        opt = player.plr_choose_options(
             "Gain a curse to get +1 Buy and +2 Coin",
             ("Nope", False),
             ("Gain a curse", True),

@@ -22,7 +22,7 @@ class Card_Jack_of_all_Trades(Card.Card):
         player.gain_card("Silver")
 
         card = player.next_card()
-        topdeck = player.plrChooseOptions(
+        topdeck = player.plr_choose_options(
             "Put %s back on top of your deck?" % card.name,
             ("Discard %s" % card.name, False),
             ("Keep %s on top of your deck" % card.name, True),

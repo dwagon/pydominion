@@ -22,7 +22,7 @@ class Card_SecretPassage(Card.Card):
             prompt="Take a card from your hand and put into your deck", cardsrc="hand"
         )
         if card:
-            dest = player.plrChooseOptions(
+            dest = player.plr_choose_options(
                 "Put {} into top or bottom of deck".format(card[0].name),
                 ("Top of deck", "topdeck"),
                 ("Bottom of deck", "deck"),

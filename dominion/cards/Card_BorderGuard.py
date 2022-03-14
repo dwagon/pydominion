@@ -37,7 +37,7 @@ class Card_BorderGuard(Card.Card):
             player.add_card(card, "discard")
 
         if nacts == ncards:
-            art = player.plrChooseOptions(
+            art = player.plr_choose_options(
                 "Pick an artifact to take",
                 ("Take Lantern (Border Guard reveals 3 cards)", "Lantern"),
                 ("Take Horn (May put discarded Border Guard into hand)", "Horn"),
@@ -47,7 +47,7 @@ class Card_BorderGuard(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if not player.has_artifact("Horn"):
             return
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Use Horn and put Border Guard into hand?",
             ("Put into hand", True),
             ("Keep in discard", False),

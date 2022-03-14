@@ -36,7 +36,7 @@ class Card_Courtier(Card.Card):
                 choices.append(("+3 Coin", "coin"))
             if "gold" not in chosen:
                 choices.append(("Gain Gold", "gold"))
-            opt = player.plrChooseOptions("Select one", *choices)
+            opt = player.plr_choose_options("Select one", *choices)
             chosen.append(opt)
             if opt == Card.TYPE_ACTION:
                 player.add_actions(1)

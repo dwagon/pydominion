@@ -23,7 +23,7 @@ class Card_Mercenary(Card.Card):
         cards, +2 coin, and each other player discards down to 3
         cards in hand"""
 
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Trash cards?", ("Trash nothing", False), ("Trash 2 cards", True)
         )
         if not ans:

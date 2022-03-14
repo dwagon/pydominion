@@ -24,7 +24,7 @@ class Card_Count(Card.Card):
 
         Choose one: +3 coin, or trash your hand or gain a Duchy"""
 
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "What do you want to do?",
             ("Discard 2 cards", "discard"),
             ("Put a card from you hand on top of your deck", "putcard"),
@@ -38,7 +38,7 @@ class Card_Count(Card.Card):
         else:
             player.plr_discard_cards(2)
 
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "What do you want to do now?",
             ("+3 coin", "coin"),
             ("Trash hand", "trash"),

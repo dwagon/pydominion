@@ -42,7 +42,7 @@ class Card_Scryingpool(Card.Card):
             name = (victim.name, "%s's" % victim.name)
         topcard = victim.next_card()
         victim.reveal_card(topcard)
-        putback = player.plrChooseOptions(
+        putback = player.plr_choose_options(
             "For %s which one?" % name[0],
             ("Discard %s" % topcard.name, False),
             ("Putback %s" % topcard.name, True),

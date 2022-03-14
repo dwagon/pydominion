@@ -27,7 +27,7 @@ class Landmark_MountainPass(Landmark.Landmark):
             while True:
                 plr = game.playerToRight(plr)
                 opts = self.generate_bids(curbid)
-                bid = plr.plrChooseOptions("What to bid for 8VP?", *opts)
+                bid = plr.plr_choose_options("What to bid for 8VP?", *opts)
                 if bid > curbid:
                     curbid = bid
                     winning_plr = plr

@@ -22,7 +22,7 @@ class Card_Pearldiver(Card.Card):
         if player.deck.size() == 0:
             player.refill_deck()
         bcard = player.deck[0]
-        top = player.plrChooseOptions(
+        top = player.plr_choose_options(
             "What to do with bottom card?",
             ("Keep %s on bottom of deck" % bcard.name, False),
             ("Put %s on top of deck" % bcard.name, True),

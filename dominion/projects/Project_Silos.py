@@ -19,7 +19,7 @@ class Project_Silos(Project.Project):
             choices = []
             for num in range(len(cus) + 1):
                 choices.append(("Silo: Discard {} Coppers".format(num), num))
-            ans = player.plrChooseOptions("Discard how many coppers? ", *choices)
+            ans = player.plr_choose_options("Discard how many coppers? ", *choices)
             for _ in range(ans):
                 cu = player.in_hand("Copper")
                 player.discard_card(cu)

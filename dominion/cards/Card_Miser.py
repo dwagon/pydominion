@@ -22,7 +22,7 @@ class Card_Miser(Card.Card):
         coins = sum([1 for c in player.reserve if c.name == "Copper"])
         deposit = False
         if inhand:
-            deposit = player.plrChooseOptions(
+            deposit = player.plr_choose_options(
                 "Which to do?",
                 ("Put a copper onto tavern mat?", True),
                 ("%d coins from mat" % coins, False),

@@ -23,7 +23,7 @@ class Card_Minion(Card.Card):
         discard your hand, +4 cards and each other player with
         at least 5 card in hand discards his hand and draws 4
         cards"""
-        attack = player.plrChooseOptions(
+        attack = player.plr_choose_options(
             "What do you want to do?",
             ("+2 coin", False),
             (

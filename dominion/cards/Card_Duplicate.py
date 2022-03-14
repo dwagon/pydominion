@@ -25,7 +25,7 @@ class Card_Duplicate(Card.Card):
             return {}
         if card.potcost:
             return {}
-        o = player.plrChooseOptions(
+        o = player.plr_choose_options(
             "Call Duplicate on %s" % card.name,
             ("Save for later", False),
             ("Duplicate %s" % card.name, True),
