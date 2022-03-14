@@ -22,7 +22,7 @@ class Card_Treasuremap(Card.Card):
         tmaps = [c for c in player.hand if c.name == "Treasure Map"][:1]
         if not tmaps:
             return
-        t = player.plrTrashCard(
+        t = player.plr_trash_card(
             prompt="If you trash another treasure map you can get 4 golds",
             cardsrc=tmaps,
         )

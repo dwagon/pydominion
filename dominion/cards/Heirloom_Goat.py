@@ -19,7 +19,7 @@ class Card_Goat(Card.Card):
 
     def special(self, game, player):
         if player.hand.size():
-            player.plrTrashCard()
+            player.plr_trash_card()
 
 
 ###############################################################################

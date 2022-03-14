@@ -30,7 +30,7 @@ class Card_Bishop(Card.Card):
                 self.trashOtherCard(game, player, plr)
 
     def trashOwnCard(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True, prompt="Gain VP worth half the cost of the card you trash"
         )
         if not tc:
@@ -42,7 +42,7 @@ class Card_Bishop(Card.Card):
 
     def trashOtherCard(self, game, player, victim):
         victim.output("%s's bishop lets you trash a card" % player.name)
-        tc = victim.plrTrashCard()
+        tc = victim.plr_trash_card()
         if tc:
             victim.output("Trashing %s" % tc[0].name)
         else:

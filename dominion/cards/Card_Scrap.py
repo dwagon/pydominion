@@ -20,7 +20,7 @@ class Card_Scrap(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        trc = player.plrTrashCard(
+        trc = player.plr_trash_card(
             printcost=True, prompt="Trash a card from your hand for benefits"
         )
         if not trc:

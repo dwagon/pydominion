@@ -30,7 +30,7 @@ class Card_Temple(Card.Card):
         player.add_score("Temple", 1)
         cardnames = {_.name for _ in player.hand}
         cards = [player.in_hand(_) for _ in cardnames]
-        trash = player.plrTrashCard(
+        trash = player.plr_trash_card(
             cardsrc=cards, prompt="Trash up to 3 different cards", num=3
         )
         if not trash:

@@ -32,7 +32,7 @@ class Card_Steward(Card.Card):
         if choice == "trash":
             player.output("Trash two cards")
             num = min(2, player.hand.size())
-            player.plrTrashCard(num=num, force=True)
+            player.plr_trash_card(num=num, force=True)
             return
 
 

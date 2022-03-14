@@ -31,7 +31,7 @@ class Card_Treasurer(Card.Card):
         )
         if choice == "trash":
             treas = [_ for _ in player.hand if _.isTreasure()]
-            player.plrTrashCard(cardsrc=treas)
+            player.plr_trash_card(cardsrc=treas)
         elif choice == "gain":
             card = player.cardSel(
                 cardsrc=gain_treas, prompt="Select Treasure from the Trash"

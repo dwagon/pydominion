@@ -17,7 +17,7 @@ class Event_Ritual(Event.Event):
     def special(self, game, player):
         card = player.gain_card("Curse")
         if card:
-            tc = player.plrTrashCard(prompt="Trash a card, +1 VP per coin it costs")
+            tc = player.plr_trash_card(prompt="Trash a card, +1 VP per coin it costs")
             if tc:
                 player.add_score("Ritual", tc[0].cost)
 

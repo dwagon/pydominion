@@ -18,7 +18,7 @@ class Card_Broker(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        tr = player.plrTrashCard(printcost=True)
+        tr = player.plr_trash_card(printcost=True)
         cost = tr[0].cost
         if cost == 0:
             return

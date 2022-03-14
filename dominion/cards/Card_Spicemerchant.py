@@ -17,7 +17,7 @@ class Card_SpiceMerchant(Card.Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash a treasure from your hand for +2 Cards, +1 Action / +2 Coins, +1 Buy",
             cardsrc=treasures,
         )

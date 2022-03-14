@@ -19,7 +19,7 @@ class Card_Forager(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plr_trash_card()
         treas = set()
         for card in game.trashpile:
             if card.isTreasure():

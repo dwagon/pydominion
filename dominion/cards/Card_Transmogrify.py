@@ -20,7 +20,7 @@ class Card_Transmogrify(Card.Card):
         self.cost = 4
 
     def hook_call_reserve(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from you hand. Gain a card costing up to 1 more",
         )

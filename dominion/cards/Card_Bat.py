@@ -18,7 +18,7 @@ class Card_Bat(Card.Card):
         self.purchasable = False
 
     def night(self, game, player):
-        tr = player.plrTrashCard(num=2)
+        tr = player.plr_trash_card(num=2)
         if tr:
             player.replace_card(self, "Vampire")
 

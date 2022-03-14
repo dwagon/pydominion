@@ -19,7 +19,7 @@ class Card_Goatherd(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plr_trash_card()
         ptr = game.playerToRight(player)
         ctr = len(ptr.stats["trashed"])
         if ctr:

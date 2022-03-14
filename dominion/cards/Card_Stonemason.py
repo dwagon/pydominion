@@ -23,7 +23,7 @@ class Card_Stonemason(Card.Card):
         return "Trash a card from your hand. Gain 2 cards each costing less than it."
 
     def special(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain 2 cards each costing less than it.",
         )

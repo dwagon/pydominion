@@ -37,7 +37,7 @@ class Card_Jack_of_all_Trades(Card.Card):
 
         cards = [c for c in player.hand if not c.isTreasure()]
         if cards:
-            player.plrTrashCard(cardsrc=cards, prompt="Trash a non-Treasure")
+            player.plr_trash_card(cardsrc=cards, prompt="Trash a non-Treasure")
 
 
 ###############################################################################

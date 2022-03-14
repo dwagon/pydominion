@@ -18,7 +18,7 @@ class Ally_Peaceful_Cult(Ally.Ally):
         if not player.get_favors():
             return
         player.output("Use Peaceful Cult to trash a card per favor")
-        trshed = player.plrTrashCard(num=player.get_favors())
+        trshed = player.plr_trash_card(num=player.get_favors())
         player.add_favors(-1 * len(trshed))
 
 

@@ -15,7 +15,7 @@ class Event_Advance(Event.Event):
 
     def special(self, game, player):
         actions = [c for c in player.hand if c.isAction()]
-        trash = player.plrTrashCard(
+        trash = player.plr_trash_card(
             prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
         )
         if trash:

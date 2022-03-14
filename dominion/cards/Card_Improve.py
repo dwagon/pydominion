@@ -22,7 +22,7 @@ class Card_Improve(Card.Card):
         acts = [_ for _ in player.hand + player.discardpile if _.isAction()]
         if not acts:
             return
-        tt = player.plrTrashCard(cardsrc=acts, prompt="Trash a card through Improve")
+        tt = player.plr_trash_card(cardsrc=acts, prompt="Trash a card through Improve")
         if not tt:
             return
         cost = tt[0].cost

@@ -20,7 +20,7 @@ class Card_Catapult(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        cards = player.plrTrashCard(force=True)
+        cards = player.plr_trash_card(force=True)
         if not cards:
             return
         card = cards[0]

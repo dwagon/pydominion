@@ -17,7 +17,7 @@ class Card_Develop(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        cards = player.plrTrashCard()
+        cards = player.plr_trash_card()
         if not cards:
             return
         card = cards[0]

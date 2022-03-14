@@ -18,7 +18,7 @@ class Card_Cemetery(Card.Card):
         self.heirloom = "Haunted Mirror"
 
     def hook_gain_this_card(self, game, player):
-        player.plrTrashCard(num=4)
+        player.plr_trash_card(num=4)
 
 
 ###############################################################################

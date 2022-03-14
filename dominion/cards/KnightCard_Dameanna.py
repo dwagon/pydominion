@@ -21,7 +21,7 @@ class Card_Dame_Anna(KnightCard):
 
     def special(self, game, player):
         for _ in range(2):
-            player.plrTrashCard()
+            player.plr_trash_card()
         self.knight_special(game, player)
 
 

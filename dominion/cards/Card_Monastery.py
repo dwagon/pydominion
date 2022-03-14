@@ -20,7 +20,7 @@ class Card_Monastery(Card.Card):
         if not numgained:
             return
         selectfrom = player.hand + [_ for _ in player.played if _.name == "Copper"]
-        player.plrTrashCard(num=numgained, cardsrc=selectfrom)
+        player.plr_trash_card(num=numgained, cardsrc=selectfrom)
 
 
 ###############################################################################

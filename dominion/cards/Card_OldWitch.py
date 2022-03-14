@@ -25,7 +25,7 @@ class Card_OldWitch(Card.Card):
             pl.gain_card("Curse")
             tr = pl.in_hand("Curse")
             if tr:
-                c = pl.plrTrashCard(cardsrc=[tr], prompt="You may trash a Curse")
+                c = pl.plr_trash_card(cardsrc=[tr], prompt="You may trash a Curse")
                 if c:
                     player.output("{} trashed a Curse".format(pl.name))
 

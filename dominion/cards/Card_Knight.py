@@ -76,7 +76,7 @@ class KnightCard(Card.Card):
             return
         player.output("Looking at %s" % ", ".join([x.name for x in cards]))
 
-        trash = victim.plrTrashCard(
+        trash = victim.plr_trash_card(
             cardsrc=cards,
             force=True,
             prompt="%s's %s trashes one of your cards" % (player.name, self.name),

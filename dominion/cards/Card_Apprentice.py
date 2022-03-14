@@ -18,7 +18,7 @@ class Card_Apprentice(Card.Card):
     def special(self, game, player):
         """Trash a card from your hand. +1 Card per coin it costs.
         +2 Cards if it has potion it its cost"""
-        tc = player.plrTrashCard()
+        tc = player.plr_trash_card()
         if not tc:
             return
         c = tc[0]

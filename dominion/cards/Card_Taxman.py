@@ -19,7 +19,7 @@ class Card_Taxman(Card.Card):
 
     def special(self, game, player):
         treas = [c for c in player.hand if c.isTreasure()]
-        cards = player.plrTrashCard(
+        cards = player.plr_trash_card(
             cardsrc=treas,
             prompt="Pick card to trash. Others discard that. You gain a treasure costing 3 more",
         )

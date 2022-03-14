@@ -21,7 +21,7 @@ class Card_SmallCastle(CastleCard):
 
     def special(self, game, player):
         cards = [c for c in player.hand if c.isCastle()] + [self]
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash a Castle to gain another Castle", cardsrc=cards
         )
         if tr:

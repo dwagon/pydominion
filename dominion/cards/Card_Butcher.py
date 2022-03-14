@@ -25,7 +25,7 @@ class Card_Butcher(Card.Card):
         )
         if not trash:
             return
-        card = player.plrTrashCard(force=True)[0]
+        card = player.plr_trash_card(force=True)[0]
         options = []
         for i in range(player.get_coffers() + 1):
             sel = "%d" % i

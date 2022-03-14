@@ -16,7 +16,7 @@ class Card_Dismantle(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             force=True,
             printcost=True,
             prompt="Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold.",

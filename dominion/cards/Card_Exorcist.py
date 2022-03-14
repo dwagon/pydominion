@@ -24,7 +24,7 @@ class Card_Exorcist(Card.Card):
         if player.hand.is_empty():
             player.output("No cards to trash")
             return
-        trashed = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")
+        trashed = player.plr_trash_card(prompt="Trash a card and gain a cheaper spirit")
         if not trashed:
             return
         cost = trashed[0].cost

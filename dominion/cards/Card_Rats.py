@@ -24,7 +24,7 @@ class Card_Rats(Card.Card):
         """Gain a Rats. Trash a card from your hand other than a Rats."""
         player.output("Gained a Rays")
         player.gain_card("Rats")
-        player.plrTrashCard(force=True, exclude=["Rats"])
+        player.plr_trash_card(force=True, exclude=["Rats"])
 
     def hook_trashThisCard(self, game, player):
         """When you trash this +1 Card"""

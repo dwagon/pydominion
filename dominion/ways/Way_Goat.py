@@ -14,7 +14,7 @@ class Way_Goat(Way.Way):
         self.name = "Way of the Goat"
 
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plr_trash_card()
 
 
 ###############################################################################

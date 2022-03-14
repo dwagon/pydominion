@@ -19,7 +19,7 @@ class Card_Junkdealer(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        player.plrTrashCard(force=True)
+        player.plr_trash_card(force=True)
 
 
 ###############################################################################

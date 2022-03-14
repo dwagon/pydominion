@@ -21,7 +21,7 @@ class Card_Ratcatcher(Card.Card):
     def hook_call_reserve(self, game, player):
         """At the start of your turn, you may call this, to trash a
         card from your hand"""
-        player.plrTrashCard()
+        player.plr_trash_card()
 
 
 ###############################################################################

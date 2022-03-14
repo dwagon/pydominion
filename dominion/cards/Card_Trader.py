@@ -17,7 +17,7 @@ class Card_Trader(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        card = player.plrTrashCard(
+        card = player.plr_trash_card(
             prompt="Trash a card from your hand. Gain a number of Silvers equal to its cost in coins."
         )
         if card:

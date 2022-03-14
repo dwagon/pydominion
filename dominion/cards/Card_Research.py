@@ -23,7 +23,7 @@ class Card_Research(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "_research"):
             player._research = PlayArea.PlayArea([])
-        tc = player.plrTrashCard(num=1, force=True, printcost=True)
+        tc = player.plr_trash_card(num=1, force=True, printcost=True)
         cost = tc[0].cost
         if cost == 0:
             return

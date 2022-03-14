@@ -27,7 +27,7 @@ class Card_Forge(Card.Card):
             availcosts.add("%s" % cp.cost)
         player.output("Gain a card costing exactly the sum of the trashed cards")
         player.output("Costs = %s" % ", ".join(sorted(list(availcosts))))
-        tc = player.plrTrashCard(anynum=True, num=0, printcost=True)
+        tc = player.plr_trash_card(anynum=True, num=0, printcost=True)
         cost = sum([c.cost for c in tc])
         player.plr_gain_card(
             cost=cost, modifier="equal", prompt="Gain card worth %s" % cost

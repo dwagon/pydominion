@@ -27,7 +27,7 @@ class Card_Masquerade(Card.Card):
             newcrd = xfer[plr]
             newplr.output("You gained a %s from %s" % (newcrd.name, plr.name))
             newplr.add_card(newcrd, "hand")
-        player.plrTrashCard()
+        player.plr_trash_card()
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.playerToLeft(plr).name

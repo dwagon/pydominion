@@ -17,7 +17,7 @@ class Boon_Flames_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plr_trash_card()
 
 
 ###############################################################################

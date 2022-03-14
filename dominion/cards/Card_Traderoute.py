@@ -39,7 +39,7 @@ class Card_Traderoute(Card.Card):
         from your hand. Setup: Put a token on each victory card
         supply pile. When a card is gained from that pile move the
         token to the trade route map"""
-        player.plrTrashCard()
+        player.plr_trash_card()
         player.add_coins(self.isWorth())
 
 

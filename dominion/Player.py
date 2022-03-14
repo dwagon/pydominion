@@ -1400,7 +1400,7 @@ class Player:
         self.output("Bought %s for %d coin" % (newcard.name, cost))
         if "Trashing" in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
-            self.plrTrashCard()
+            self.plr_trash_card()
         self.hook_buy_card(newcard)
         newcard.hook_buy_this_card(game=self.game, player=self)
         self.hook_all_players_buy_card(newcard)
@@ -1731,7 +1731,7 @@ class Player:
         return cststr.strip()
 
     ###########################################################################
-    def plrTrashCard(self, num=1, anynum=False, cardsrc="hand", **kwargs):
+    def plr_trash_card(self, num=1, anynum=False, cardsrc="hand", **kwargs):
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             if anynum:

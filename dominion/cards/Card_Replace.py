@@ -19,7 +19,7 @@ class Card_Replace(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        tr = player.plrTrashCard()
+        tr = player.plr_trash_card()
         if not tr:
             return
         cost = tr[0].cost

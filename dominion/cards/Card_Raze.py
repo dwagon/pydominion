@@ -25,7 +25,7 @@ class Card_Raze(Card.Card):
         cards_to_trash = [self]
         for c in player.hand:
             cards_to_trash.append(c)
-        trash = player.plrTrashCard(cardsrc=cards_to_trash, force=True)
+        trash = player.plr_trash_card(cardsrc=cards_to_trash, force=True)
         cost = trash[0].cost
         if cost:
             cards = []

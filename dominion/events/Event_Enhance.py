@@ -19,7 +19,7 @@ class Event_Enhance(Event.Event):
         if not crds:
             player.output("No non-Victory cards available")
             return
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             prompt="Trash to gain a card costing 2 more than",
             printcost=True,
             cardsrc=crds,

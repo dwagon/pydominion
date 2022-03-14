@@ -15,7 +15,7 @@ class Event_Bonfire(Event.Event):
 
     def special(self, game, player):
         """Trash up to two cards you have in play"""
-        player.plrTrashCard(num=2, cardsrc="played")
+        player.plr_trash_card(num=2, cardsrc="played")
 
 
 ###############################################################################

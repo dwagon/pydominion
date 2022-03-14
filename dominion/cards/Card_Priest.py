@@ -20,7 +20,7 @@ class Card_Priest(Card.Card):
     ###########################################################################
     def special(self, game, player):
         self.in_special = True
-        player.plrTrashCard(force=True)
+        player.plr_trash_card(force=True)
         self.in_special = False
 
     ###########################################################################

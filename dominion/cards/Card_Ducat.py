@@ -29,7 +29,7 @@ class Card_Ducat(Card.Card):
     def hook_gain_this_card(self, game, player):
         cu = player.in_hand("Copper")
         if cu:
-            player.plrTrashCard(cardsrc=[cu], num=1)
+            player.plr_trash_card(cardsrc=[cu], num=1)
         else:
             player.output("No Coppers")
 

@@ -28,7 +28,7 @@ class Card_Zombie_Apprentice(Card.Card):
         if not actions:
             player.output("No actions to trash")
             return
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash an action from your hand for +3 Cards and +1 Action",
             cardsrc=actions,
         )
