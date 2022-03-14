@@ -22,10 +22,10 @@ class Card_Margrave(Card.Card):
 
     def special(self, game, player):
         """Each other player draws a card, then discards down to 3 cards in hand"""
-        for plr in player.attackVictims():
-            plr.pickupCard()
+        for plr in player.attack_victims():
+            plr.pickup_card()
             plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################
@@ -43,17 +43,17 @@ class Test_Margrave(unittest.TestCase):
         self.card = self.g["Margrave"].remove()
 
     def test_defense(self):
-        self.attacker.addCard(self.card, "hand")
-        self.defender.addCard(self.g["Moat"].remove(), "hand")
-        self.attacker.playCard(self.card)
+        self.attacker.add_card(self.card, "hand")
+        self.defender.add_card(self.g["Moat"].remove(), "hand")
+        self.attacker.play_card(self.card)
         self.assertEqual(self.defender.hand.size(), 5 + 1)  # Moat
         self.assertEqual(self.attacker.hand.size(), 5 + 3)
         self.assertEqual(self.attacker.get_buys(), 1 + 1)
 
     def test_attack(self):
-        self.attacker.addCard(self.card, "hand")
+        self.attacker.add_card(self.card, "hand")
         self.defender.test_input = ["1", "2", "3", "0"]
-        self.attacker.playCard(self.card)
+        self.attacker.play_card(self.card)
         self.assertEqual(self.defender.hand.size(), 3)
         self.assertEqual(self.defender.discardpile.size(), 3)
         self.assertEqual(self.attacker.hand.size(), 5 + 3)

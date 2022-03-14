@@ -18,16 +18,16 @@ class Card_HauntedWoods(Card.Card):
         self.cost = 5
 
     def duration(self, game, player):
-        player.pickupCards(3)
+        player.pickup_cards(3)
 
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card):
         if player == owner:
             return
-        if player.hasDefense(owner):
+        if player.has_defense(owner):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
         for crd in player.hand[:]:
-            player.addCard(crd, "topdeck")
+            player.add_card(crd, "topdeck")
             player.hand.remove(crd)
             player.output("Moving %s to deck" % crd.name)
 
@@ -39,15 +39,15 @@ class Test_HauntedWoods(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Haunted Woods"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_buy(self):
         """Play a Haunted Woods"""
-        self.vic.setHand("Silver", "Duchy", "Province")
-        self.plr.playCard(self.card)
+        self.vic.set_hand("Silver", "Duchy", "Province")
+        self.plr.play_card(self.card)
         self.plr.end_turn()
-        self.vic.setCoin(6)
-        self.vic.buyCard(self.g["Gold"])
+        self.vic.set_coins(6)
+        self.vic.buy_card(self.g["Gold"])
         self.assertIsNotNone(self.vic.in_deck("Silver"))
         self.assertIsNotNone(self.vic.in_deck("Duchy"))
         self.assertIsNotNone(self.vic.in_deck("Province"))

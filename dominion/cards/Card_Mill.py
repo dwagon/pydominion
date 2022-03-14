@@ -19,9 +19,9 @@ class Card_Mill(Card.Card):
         self.cards = 1
 
     def special(self, game, player):
-        dc = player.plrDiscardCards(num=2)
+        dc = player.plr_discard_cards(num=2)
         if len(dc) == 2:
-            player.addCoin(2)
+            player.add_coins(2)
 
 
 ###############################################################################
@@ -35,22 +35,22 @@ class Test_Mill(unittest.TestCase):
         self.card = self.g["Mill"].remove()
 
     def test_play(self):
-        self.plr.setHand("Gold", "Silver")
+        self.plr.set_hand("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Finish"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getScoreDetails()["Mill"], 1)
+        self.assertEqual(self.plr.get_score_details()["Mill"], 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
     def test_discard(self):
-        self.plr.setHand("Gold", "Silver")
+        self.plr.set_hand("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Discard Silver", "Finish"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

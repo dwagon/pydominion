@@ -19,7 +19,7 @@ class Card_Groundskeeper(Card.Card):
 
     def hook_gain_card(self, game, player, card):
         if card.isVictory():
-            player.addScore("Groundskeeper", 1)
+            player.add_score("Groundskeeper", 1)
             player.output("Scored 1 from Groundskeeper")
         return {}
 
@@ -36,12 +36,12 @@ class Test_Groundskeeper(unittest.TestCase):
 
     def test_play(self):
         """Play a Groundskeeper"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Duchy"])
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Duchy"])
         self.assertEqual(self.plr.score["Groundskeeper"], 1)
 
 

@@ -20,13 +20,13 @@ class Card_Adventurer(Card.Card):
         Add those to your hand and discard the other revealed cards"""
         treasures = []
         while len(treasures) < 2:
-            c = player.pickupCard(verbose=False)
-            player.revealCard(c)
+            c = player.pickup_card(verbose=False)
+            player.reveal_card(c)
             if c.isTreasure():
                 treasures.append(c)
                 player.output("Adding %s" % c.name)
             else:
-                player.discardCard(c)
+                player.discard_card(c)
                 player.output("Discarding %s as not treasure" % c.name)
 
 
@@ -38,9 +38,9 @@ class Test_Adventurer(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_treasures(self):
-        self.plr.setDeck("Copper", "Silver", "Gold", "Estate")
-        self.plr.setHand("Adventurer")
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.set_deck("Copper", "Silver", "Gold", "Estate")
+        self.plr.set_hand("Adventurer")
+        self.plr.play_card(self.plr.hand[0])
         self.assertEqual(
             sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.hand])
         )

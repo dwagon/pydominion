@@ -23,7 +23,7 @@ class Card_Gear(Card.Card):
         """Set aside up to 2 cards from your hand face down..."""
         if not hasattr(player, "gear_reserve"):
             player.gear_reserve = PlayArea.PlayArea([])
-        cards = player.cardSel(
+        cards = player.card_sel(
             num=2,
             cardsrc="hand",
             prompt="Set aside up to 2 cards from your hand to be put back next turn",
@@ -38,7 +38,7 @@ class Card_Gear(Card.Card):
         """... At the start of your next turn, put them into your hand"""
         for card in player.gear_reserve[:]:
             player.output("Pulling %s reserved by Gear" % card.name)
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.gear_reserve.remove(card)
             player.secret_count -= 1
 
@@ -53,10 +53,10 @@ class Test_Gear(unittest.TestCase):
 
     def test_playcard(self):
         """Play a gear"""
-        self.plr.setHand("Duchy", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["set silver", "set gold", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.hand.size(), 1 + 2)  # Duchy + 2 picked up
             self.assertIsNotNone(self.plr.in_hand("Duchy"))

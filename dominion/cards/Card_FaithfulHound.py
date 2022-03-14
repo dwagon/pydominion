@@ -19,7 +19,7 @@ class Card_FaithfulHound(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         if player.phase != "cleanup":
-            player.addCard(self, "hand")
+            player.add_card(self, "hand")
 
 
 ###############################################################################
@@ -33,8 +33,8 @@ class Test_FaithfulHound(unittest.TestCase):
 
     def test_play(self):
         """Play a Faithful Hound"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_discard(self):

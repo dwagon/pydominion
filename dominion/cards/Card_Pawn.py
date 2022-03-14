@@ -34,18 +34,18 @@ class Card_Pawn(Card.Card):
                     continue
                 options.append({"selector": "%d" % index, "print": v, "opt": k})
                 index += 1
-            o = player.userInput(options, "What do you want to do?")
+            o = player.user_input(options, "What do you want to do?")
             chosen.append(o["opt"])
 
         for choice in chosen:
             if choice == "card":
-                player.pickupCard()
+                player.pickup_card()
             elif choice == Card.TYPE_ACTION:
-                player.addActions(1)
+                player.add_actions(1)
             elif choice == "buy":
-                player.addBuys(1)
+                player.add_buys(1)
             elif choice == "coin":
-                player.addCoin(1)
+                player.add_coins(1)
 
 
 ###############################################################################
@@ -55,25 +55,25 @@ class Test_Pawn(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Pawn"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
         self.plr.test_input = ["+1 card", "+1 action"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_play_buy(self):
         """Play the pawn - select buy and coin"""
         self.plr.test_input = ["+1 buy", "+1 coin"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

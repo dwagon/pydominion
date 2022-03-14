@@ -28,10 +28,10 @@ class Test_Pouch(unittest.TestCase):
         self.card = self.g["Pouch"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.buys = 0
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_buys(), 1)
 
 

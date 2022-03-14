@@ -14,7 +14,7 @@ class Landmark_Tomb(Landmark.Landmark):
 
     def hook_trash_card(self, game, player, card):
         player.output("Gained 1 VP from Tomb")
-        player.addScore("Tomb", 1)
+        player.add_score("Tomb", 1)
 
 
 ###############################################################################
@@ -27,8 +27,8 @@ class Test_Tomb(unittest.TestCase):
     def test_trash(self):
         """Test Tomb"""
         cu = self.plr.in_hand("Copper")
-        self.plr.trashCard(cu)
-        self.assertEqual(self.plr.getScoreDetails()["Tomb"], 1)
+        self.plr.trash_card(cu)
+        self.assertEqual(self.plr.get_score_details()["Tomb"], 1)
 
 
 ###############################################################################

@@ -21,7 +21,7 @@ class Card_Vineyard(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP for every 3 action cards in your deck rounded down"""
         score = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.isAction():
                 score += 1
         return int(score / 3)
@@ -35,16 +35,16 @@ class Test_Vineyard(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.setHand("Vineyard")
-        self.plr.setDeck("Copper")
-        self.plr.setDiscard("Moat", "Moat", "Moat", "Moat")
-        self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 1)
+        self.plr.set_hand("Vineyard")
+        self.plr.set_deck("Copper")
+        self.plr.set_discard("Moat", "Moat", "Moat", "Moat")
+        self.assertEqual(self.plr.get_score_details()["Vineyard"], 1)
 
     def test_scoreTwo(self):
-        self.plr.setHand("Vineyard")
-        self.plr.setDeck("Vineyard")
-        self.plr.setDiscard("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
-        self.assertEqual(self.plr.getScoreDetails()["Vineyard"], 4)
+        self.plr.set_hand("Vineyard")
+        self.plr.set_deck("Vineyard")
+        self.plr.set_discard("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
+        self.assertEqual(self.plr.get_score_details()["Vineyard"], 4)
 
 
 ###############################################################################

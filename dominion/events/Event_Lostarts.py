@@ -16,7 +16,7 @@ class Event_Lostarts(Event.Event):
     def special(self, game, player):
         """Move your +1 Action token to an Action Supply Pile"""
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(
+        stacks = player.card_sel(
             num=1,
             prompt="What stack to add the +1 Action Token to?",
             cardsrc=actionpiles,
@@ -37,11 +37,11 @@ class Test_Lostarts(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Lost Arts"""
-        self.plr.addCoin(6)
+        self.plr.add_coins(6)
         self.plr.test_input = ["moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["+1 Action"], "Moat")
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

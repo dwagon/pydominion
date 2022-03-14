@@ -19,10 +19,10 @@ class Card_Witch(Card.Card):
 
     def special(self, game, player):
         """All other players gain a curse"""
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             player.output("%s got cursed" % pl.name)
             pl.output("%s's witch cursed you" % player.name)
-            pl.gainCard("Curse")
+            pl.gain_card("Curse")
 
 
 ###############################################################################
@@ -33,17 +33,17 @@ class Test_Witch(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Witch"].remove()
         self.mcard = self.g["Moat"].remove()
-        self.attacker.addCard(self.wcard, "hand")
+        self.attacker.add_card(self.wcard, "hand")
 
     def test_defended(self):
-        self.victim.addCard(self.mcard, "hand")
-        self.attacker.playCard(self.wcard)
+        self.victim.add_card(self.mcard, "hand")
+        self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertEqual(self.attacker.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_nodefense(self):
-        self.attacker.playCard(self.wcard)
+        self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.hand.size(), 5)
         self.assertEqual(self.attacker.hand.size(), 7)
         self.assertEqual(self.victim.discardpile[0].name, "Curse")

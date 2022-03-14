@@ -19,7 +19,7 @@ class Event_Enhance(Event.Event):
         if not crds:
             player.output("No non-Victory cards available")
             return
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             prompt="Trash to gain a card costing 2 more than",
             printcost=True,
             cardsrc=crds,
@@ -27,7 +27,7 @@ class Event_Enhance(Event.Event):
         if not tc:
             return
         new_cost = tc[0].cost + 2
-        player.plrGainCard(cost=new_cost, force=True)
+        player.plr_gain_card(cost=new_cost, force=True)
 
 
 ###############################################################################
@@ -46,10 +46,10 @@ class Test_Enhance(unittest.TestCase):
 
     def test_play(self):
         """Perform a Enhance"""
-        self.plr.addCoin(3)
-        self.plr.setHand("Copper", "Silver", "Estate")
+        self.plr.add_coins(3)
+        self.plr.set_hand("Copper", "Silver", "Estate")
         self.plr.test_input = ["Trash Silver", "Get Festival"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Festival"))
 

@@ -18,13 +18,13 @@ class Card_Harvest(Card.Card):
     def special(self, game, player):
         cards = set()
         for _ in range(4):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             cards.add(c.name)
             player.output("Revealed a %s" % c.name)
-            player.addCard(c, "discard")
+            player.add_card(c, "discard")
         player.output("Gaining %d coins" % len(cards))
-        player.addCoin(len(cards))
+        player.add_coins(len(cards))
 
 
 ###############################################################################
@@ -34,13 +34,13 @@ class Test_Harvest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Harvest"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Harvest"""
-        self.plr.setDeck("Duchy", "Duchy", "Silver", "Copper")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.set_deck("Duchy", "Duchy", "Silver", "Copper")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Copper"))
         self.assertIsNone(self.plr.in_deck("Duchy"))

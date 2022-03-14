@@ -22,7 +22,7 @@ class Card_Procession(Card.Card):
         if not actcards:
             player.output("No suitable action cards")
             return
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Select a card to play twice, then trash", cardsrc=actcards
         )
         if not cards:
@@ -31,10 +31,10 @@ class Card_Procession(Card.Card):
 
         for i in range(1, 3):
             player.output("Play %d of %s" % (i, card.name))
-            player.playCard(card, discard=False, costAction=False)
-        player.trashCard(card)
-        cost = player.cardCost(card) + 1
-        player.plrGainCard(cost, modifier="equal", types={Card.TYPE_ACTION: True})
+            player.play_card(card, discard=False, costAction=False)
+        player.trash_card(card)
+        cost = player.card_cost(card) + 1
+        player.plr_gain_card(cost, modifier="equal", types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################
@@ -49,10 +49,10 @@ class Test_Procession(unittest.TestCase):
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
-        self.plr.setHand("Moat")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Moat")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat", "Witch"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.hand.size(), 4)
         self.assertIsNotNone(self.plr.in_discard("Witch"))

@@ -19,7 +19,7 @@ class Card_Caravan(Card.Card):
 
     def duration(self, game, player):
         """+1 card next turn"""
-        player.pickupCards(1, verb="Picked up from Caravan:")
+        player.pickup_cards(1, verb="Picked up from Caravan:")
 
 
 ###############################################################################
@@ -29,11 +29,11 @@ class Test_Caravan(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Caravan"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a caravan"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.durationpile.size(), 1)

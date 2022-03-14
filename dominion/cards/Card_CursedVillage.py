@@ -18,9 +18,9 @@ class Card_CursedVillage(Card.Card):
 
     def special(self, game, player):
         while player.hand.size() < 6:
-            c = player.nextCard()
-            player.addCard(c, "discard")
-            player.pickupCard(c)
+            c = player.next_card()
+            player.add_card(c, "discard")
+            player.pickup_card(c)
 
     def hook_gain_this_card(self, game, player):
         player.receive_hex()
@@ -40,13 +40,13 @@ class Test_CursedVillage(unittest.TestCase):
 
     def test_play_card(self):
         """Play Cursed Village"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 
 

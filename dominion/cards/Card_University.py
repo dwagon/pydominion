@@ -18,7 +18,7 @@ class Card_University(Card.Card):
 
     def special(self, game, player):
         """Gain an action card costing up to 5"""
-        c = player.plrGainCard(5, types={Card.TYPE_ACTION: True})
+        c = player.plr_gain_card(5, types={Card.TYPE_ACTION: True})
         if c:
             player.output("Gained %s from university" % c.name)
 
@@ -43,11 +43,11 @@ class Test_University(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.university = self.g["University"].remove()
-        self.plr.addCard(self.university, "hand")
+        self.plr.add_card(self.university, "hand")
 
     def test_gain(self):
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.university)
+        self.plr.play_card(self.university)
         try:
             self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
@@ -58,7 +58,7 @@ class Test_University(unittest.TestCase):
 
     def test_none(self):
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.university)
+        self.plr.play_card(self.university)
         self.assertTrue(self.plr.discardpile.is_empty())
 
 

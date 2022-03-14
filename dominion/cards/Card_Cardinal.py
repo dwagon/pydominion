@@ -17,11 +17,11 @@ class Card_Cardinal(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             exilecount = 0
             for _ in range(2):
-                crd = plr.pickupCard()
-                plr.revealCard(crd)
+                crd = plr.pickup_card()
+                plr.reveal_card(crd)
                 if 3 <= crd.cost <= 6 and not exilecount:
                     plr.exile_card(crd)
                     plr.output(
@@ -32,7 +32,7 @@ class Card_Cardinal(Card.Card):
                     plr.output(
                         "{}'s Cardinal discarded your {}".format(player.name, crd.name)
                     )
-                    plr.discardCard(crd)
+                    plr.discard_card(crd)
 
 
 ###############################################################################
@@ -42,11 +42,11 @@ class Test_Cardinal(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Cardinal"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.oth.setDeck("Silver", "Village")
-        self.plr.playCard(self.card)
+        self.oth.set_deck("Silver", "Village")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.oth.in_discard("Silver"))
         self.assertIsNotNone(self.oth.in_exile("Village"))
 

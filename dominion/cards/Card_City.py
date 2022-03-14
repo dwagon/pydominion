@@ -22,10 +22,10 @@ class Card_City(Card.Card):
     def special(self, game, player):
         empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
         if empties >= 1:
-            player.pickupCard()
+            player.pickup_card()
         if empties >= 2:
-            player.addCoin(1)
-            player.addBuys(1)
+            player.add_coins(1)
+            player.add_buys(1)
 
 
 ###############################################################################
@@ -37,11 +37,11 @@ class Test_City(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.city = self.g["City"].remove()
-        self.plr.addCard(self.city, "hand")
+        self.plr.add_card(self.city, "hand")
 
     def test_nostacks(self):
         """Play a city with no stacks empty"""
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
@@ -51,7 +51,7 @@ class Test_City(unittest.TestCase):
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
 
@@ -65,9 +65,9 @@ class Test_City(unittest.TestCase):
             c = self.g["Cellar"].remove()
             if not c:
                 break
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         # 1 default + 1 for city
         self.assertEqual(self.plr.get_buys(), 2)
         # 5 for hand, 1 for city, 1 for one stack

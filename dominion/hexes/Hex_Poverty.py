@@ -15,7 +15,7 @@ class Hex_Poverty(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        player.plrDiscardDownTo(3)
+        player.plr_discard_down_to(3)
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Test_Poverty(unittest.TestCase):
 
     def test_normal(self):
         self.plr.test_input = ["1", "2", "0"]
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.hand.size(), 3)
 
 

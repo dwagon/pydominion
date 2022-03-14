@@ -22,16 +22,16 @@ class Card_Storyteller(Card.Card):
         for card in player.hand:
             if card.isTreasure():
                 treasures.append(card)
-        toplay = player.cardSel(
+        toplay = player.card_sel(
             num=3,
             cardsrc=treasures,
             prompt="Play 3 treasures to convert coin to cards",
             verbs=("Play", "Unplay"),
         )
         for card in toplay:
-            player.playCard(card)
+            player.play_card(card)
         player.output("Converting %d coin to cards" % player.coin)
-        player.pickupCards(player.coin)
+        player.pickup_cards(player.coin)
         player.coin = 0
 
 
@@ -45,10 +45,10 @@ class Test_Storyteller(unittest.TestCase):
 
     def test_play(self):
         """Play a Storyteller"""
-        self.plr.setHand("Copper", "Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Copper", "Silver", "Gold")
         self.plr.test_input = ["1", "2", "silver", "finish"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         # 1 from existing, 1 + story, 2 for two coppers and 2 for a silver
         self.assertEqual(self.plr.hand.size(), 1 + 1 + 2 + 2)

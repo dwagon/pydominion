@@ -18,7 +18,7 @@ class Boon_Winds_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2)
+        player.plr_discard_cards(num=2)
 
 
 ###############################################################################
@@ -37,10 +37,10 @@ class Test_Winds_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.setHand("Duchy", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Gold", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard Duchy", "Discard Gold", "Finish Selecting"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.hand.size(), 3)
             self.assertIsNotNone(self.plr.in_discard("Duchy"))

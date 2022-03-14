@@ -22,7 +22,7 @@ class Card_Madman(Card.Card):
         handsize = player.hand.size()
         player.output("Gaining %d cards from madman" % handsize)
         for _ in range(handsize):
-            player.pickupCard()
+            player.pickup_card()
         game["Madman"].add()
         player.played.remove(self)
 
@@ -37,8 +37,8 @@ class Test_Madman(unittest.TestCase):
 
     def test_play(self):
         """Play a Madman"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 5 * 2)
 

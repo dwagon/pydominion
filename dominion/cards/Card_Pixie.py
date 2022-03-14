@@ -20,7 +20,7 @@ class Card_Pixie(Card.Card):
 
     def special(self, game, player):
         topboon = game.receive_boon()
-        opt = player.plrChooseOptions(
+        opt = player.plr_choose_options(
             "Either:",
             ("Discard {}".format(topboon.name), False),
             (
@@ -31,7 +31,7 @@ class Card_Pixie(Card.Card):
             ),
         )
         if opt:
-            player.trashCard(self)
+            player.trash_card(self)
             player.receive_boon(boon=topboon, discard=False)
             player.receive_boon(boon=topboon)
 
@@ -48,9 +48,9 @@ class Test_Pixie(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Pixie"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard The"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
@@ -60,9 +60,9 @@ class Test_Pixie(unittest.TestCase):
             if b.name == "The Mountain's Gift":
                 self.g.boons = [b]
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.discardpile.size(), 2)
             for c in self.plr.discardpile:

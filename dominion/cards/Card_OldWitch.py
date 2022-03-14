@@ -19,13 +19,13 @@ class Card_OldWitch(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             player.output("{} got cursed".format(pl.name))
             pl.output("{}'s Old Witch cursed you".format(player.name))
-            pl.gainCard("Curse")
+            pl.gain_card("Curse")
             tr = pl.in_hand("Curse")
             if tr:
-                c = pl.plrTrashCard(cardsrc=[tr], prompt="You may trash a Curse")
+                c = pl.plr_trash_card(cardsrc=[tr], prompt="You may trash a Curse")
                 if c:
                     player.output("{} trashed a Curse".format(pl.name))
 
@@ -44,17 +44,17 @@ class Test_OldWitch(unittest.TestCase):
         self.card = self.g["Old Witch"].remove()
 
     def test_play(self):
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
 
     def test_has_curse(self):
-        self.vic.setHand("Curse")
-        self.plr.addCard(self.card, "hand")
+        self.vic.set_hand("Curse")
+        self.plr.add_card(self.card, "hand")
         self.vic.test_input = ["Trash Curse"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.vic.in_hand("Curse"))
         self.assertIsNotNone(self.g.in_trash("Curse"))
 

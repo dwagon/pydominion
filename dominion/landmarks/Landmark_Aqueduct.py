@@ -41,7 +41,7 @@ class Landmark_Aqueduct(Landmark.Landmark):
                 )
         if self._vp and card.isVictory():
             player.output("Gained %d VP from Aqueduct" % self._vp)
-            player.addScore("Aqueduct", self._vp)
+            player.add_score("Aqueduct", self._vp)
             self._vp = 0
 
 
@@ -56,24 +56,24 @@ class Test_Aqueduct(unittest.TestCase):
 
     def test_gain_silver(self):
         """Use Aqueduct gaining Silver"""
-        self.plr.addBuys(2)
-        self.plr.setCoin(20)
-        self.plr.buyCard(self.g["Silver"])
+        self.plr.add_buys(2)
+        self.plr.set_coins(20)
+        self.plr.buy_card(self.g["Silver"])
         self.assertEqual(self.g.landmarks["Aqueduct"]._vp, 1)
         self.assertEqual(self.g.landmarks["Aqueduct"]._silvervp, 7)
-        self.plr.buyCard(self.g["Duchy"])
-        self.assertEqual(self.plr.getScoreDetails()["Aqueduct"], 1)
+        self.plr.buy_card(self.g["Duchy"])
+        self.assertEqual(self.plr.get_score_details()["Aqueduct"], 1)
 
     def test_gain_gold(self):
         """Use Aqueduct gaining Gold"""
-        self.plr.addBuys(2)
-        self.plr.setCoin(20)
-        self.plr.buyCard(self.g["Gold"])
+        self.plr.add_buys(2)
+        self.plr.set_coins(20)
+        self.plr.buy_card(self.g["Gold"])
         self.assertEqual(self.g.landmarks["Aqueduct"]._vp, 1)
         self.assertEqual(self.g.landmarks["Aqueduct"]._goldvp, 7)
         self.assertEqual(self.g.landmarks["Aqueduct"]._silvervp, 8)
-        self.plr.buyCard(self.g["Duchy"])
-        self.assertEqual(self.plr.getScoreDetails()["Aqueduct"], 1)
+        self.plr.buy_card(self.g["Duchy"])
+        self.assertEqual(self.plr.get_score_details()["Aqueduct"], 1)
 
 
 ###############################################################################

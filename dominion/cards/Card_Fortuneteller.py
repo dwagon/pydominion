@@ -18,14 +18,14 @@ class Card_Fortuneteller(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             while True:
-                card = plr.nextCard()
-                plr.revealCard(card)
+                card = plr.next_card()
+                plr.reveal_card(card)
                 if not card:
                     break
                 if card.isVictory() or card.name == "Curse":
-                    plr.addCard(card, "topdeck")
+                    plr.add_card(card, "topdeck")
                     plr.output(
                         "%s's Fortune Teller put %s on top of your deck"
                         % (player.name, card.name)
@@ -34,7 +34,7 @@ class Card_Fortuneteller(Card.Card):
                 plr.output(
                     "%s's Fortune Teller discarded your %s" % (player.name, card.name)
                 )
-                plr.discardCard(card)
+                plr.discard_card(card)
 
 
 ###############################################################################
@@ -44,13 +44,13 @@ class Test_Fortuneteller(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Fortune Teller"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Fortune Teller"""
-        self.vic.setDeck("Duchy", "Silver", "Copper")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.vic.set_deck("Duchy", "Silver", "Copper")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.vic.in_discard("Silver"))
         self.assertIsNotNone(self.vic.in_discard("Copper"))
         self.assertEqual(self.vic.deck[-1].name, "Duchy")

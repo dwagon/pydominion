@@ -19,13 +19,13 @@ class Card_Watchtower(Card.Card):
 
     def special(self, game, player):
         """Draw until you have 6 cards in hand."""
-        player.pickUpHand(6)
+        player.pick_up_hand(6)
 
     def hook_gain_card(self, game, player, card):
         """When you gain a card, you may reveal this from your
         hand. If you do, either trash that card, or put it on top
         of your deck"""
-        act = player.plrChooseOptions(
+        act = player.plr_choose_options(
             "What to do with Watchtower?",
             ("Do nothing", "nothing"),
             ("Trash %s" % card.name, "trash"),
@@ -50,17 +50,17 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_play(self):
         """Play a watch tower"""
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_react_nothing(self):
         """React to gaining a card - but do nothing"""
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["nothing"]
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.hand.size(), 2)
@@ -70,9 +70,9 @@ class Test_Watchtower(unittest.TestCase):
         tsize = self.g.trashSize()
         try:
             self.plr.test_input = ["trash"]
-            self.plr.setHand("Gold")
-            self.plr.addCard(self.card, "hand")
-            self.plr.gainCard("Copper")
+            self.plr.set_hand("Gold")
+            self.plr.add_card(self.card, "hand")
+            self.plr.gain_card("Copper")
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, "Copper")
             self.assertEqual(self.plr.hand.size(), 2)
@@ -85,14 +85,14 @@ class Test_Watchtower(unittest.TestCase):
         """React to gaining a card - put card on deck"""
         tsize = self.g.trashSize()
         self.plr.test_input = ["top"]
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.gainCard("Silver")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.gain_card("Silver")
         try:
             self.assertEqual(self.g.trashSize(), tsize)
             self.assertEqual(self.plr.hand.size(), 2)
             self.assertEqual(self.plr.in_hand("Silver"), None)
-            c = self.plr.nextCard()
+            c = self.plr.next_card()
             self.assertEqual(c.name, "Silver")
         except AssertionError:  # pragma: no cover
             self.g.print_state()

@@ -28,11 +28,11 @@ class Test_RuinedLibrary(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Ruined Library":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a ruined library"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
 

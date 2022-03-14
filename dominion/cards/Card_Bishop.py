@@ -30,19 +30,19 @@ class Card_Bishop(Card.Card):
                 self.trashOtherCard(game, player, plr)
 
     def trashOwnCard(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True, prompt="Gain VP worth half the cost of the card you trash"
         )
         if not tc:
             return
         card = tc[0]
         points = int(card.cost / 2)
-        player.addScore("bishop", points)
+        player.add_score("bishop", points)
         player.output("Trashing %s for %d points" % (card.name, points))
 
     def trashOtherCard(self, game, player, victim):
         victim.output("%s's bishop lets you trash a card" % player.name)
-        tc = victim.plrTrashCard()
+        tc = victim.plr_trash_card()
         if tc:
             victim.output("Trashing %s" % tc[0].name)
         else:
@@ -70,30 +70,30 @@ class Test_Bishop(unittest.TestCase):
         self.bishop = self.g["Bishop"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["finish"]
         self.other.test_input = ["finish"]
-        self.plr.playCard(self.bishop)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.bishop)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash(self):
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["finish"]
-        self.plr.playCard(self.bishop)
+        self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.hand.is_empty())
         self.assertIsNotNone(self.g.in_trash("Gold"))
 
     def test_bothtrash(self):
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold")
-        self.other.setHand("Province")
-        self.plr.addCard(self.bishop, "hand")
+        self.plr.set_hand("Gold")
+        self.other.set_hand("Province")
+        self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["trash province"]
-        self.plr.playCard(self.bishop)
+        self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.hand.is_empty())
         self.assertTrue(self.other.hand.is_empty())

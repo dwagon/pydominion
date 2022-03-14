@@ -18,26 +18,26 @@ class Card_Squire(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose one.",
             ("+2 Actions", "actions"),
             ("+2 Buys", "buys"),
             ("Gain a Silver", "silver"),
         )
         if choice == "actions":
-            player.addActions(2)
+            player.add_actions(2)
         elif choice == "buys":
-            player.addBuys(2)
+            player.add_buys(2)
         elif choice == "silver":
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
     def hook_trashThisCard(self, game, player):
         attacks = []
         for cp in game.cardpiles.values():
             if cp.isAttack() and cp.purchasable:
                 attacks.append(cp)
-        cards = player.cardSel(prompt="Gain an attack card", cardsrc=attacks)
-        player.gainCard(cards[0])
+        cards = player.card_sel(prompt="Gain an attack card", cardsrc=attacks)
+        player.gain_card(cards[0])
 
 
 ###############################################################################
@@ -51,9 +51,9 @@ class Test_Squire(unittest.TestCase):
     def test_play_actions(self):
         """Play a Squire - gain actions"""
         self.plr.test_input = [Card.TYPE_ACTION]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertIsNone(self.plr.in_discard("Silver"))
@@ -61,8 +61,8 @@ class Test_Squire(unittest.TestCase):
     def test_play_buys(self):
         """Play a Squire - gain buys"""
         self.plr.test_input = ["buys"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 3)
         self.assertIsNone(self.plr.in_discard("Silver"))
@@ -70,8 +70,8 @@ class Test_Squire(unittest.TestCase):
     def test_play_silver(self):
         """Play a Squire - gain Silver"""
         self.plr.test_input = ["silver"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
@@ -79,7 +79,7 @@ class Test_Squire(unittest.TestCase):
     def test_trash(self):
         """Trash a Squire"""
         self.plr.test_input = ["militia"]
-        self.plr.trashCard(self.card)
+        self.plr.trash_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Militia"))
 
 

@@ -17,7 +17,7 @@ class Card_Lurker(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Choose one? ",
             ("Trash an Action from the Supply", "to"),
             ("Gain an Action card from the Trash", "from"),
@@ -29,20 +29,20 @@ class Card_Lurker(Card.Card):
             if not acts:
                 player.output("No suitable cards found")
                 return
-            cards = player.cardSel(
+            cards = player.card_sel(
                 cardsrc=acts, prompt="Select Action from Supply to Trash"
             )
             card = game[cards[0].name].remove()
-            player.addCard(card, "played")  # In order to trash
-            player.trashCard(card)
+            player.add_card(card, "played")  # In order to trash
+            player.trash_card(card)
         if ch == "from":
             acts = [_ for _ in game.trashpile if _.isAction()]
             if not acts:
                 player.output("No suitable cards found")
                 return
-            card = player.cardSel(cardsrc=acts, prompt="Select Action from the Trash")
+            card = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
             game.trashpile.remove(card[0])
-            player.addCard(card[0], "discard")
+            player.add_card(card[0], "discard")
 
 
 ###############################################################################
@@ -52,18 +52,18 @@ class Test_Lurker(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Lurker"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_trash(self):
         self.plr.test_input = ["Trash an Action", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.get_actions(), 0 + 1)
 
     def test_recover(self):
         self.plr.test_input = ["Gain an Action", "Moat"]
         self.g.set_trash("Moat")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.g.in_trash("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))
 

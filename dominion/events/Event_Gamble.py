@@ -19,13 +19,13 @@ class Event_Gamble(Event.Event):
     def special(self, game, player):
         """Reveal the top card of your deck. If it's a Treasure
         or Action, you may play it. Otherwise, discard it."""
-        nxt = player.nextCard()
+        nxt = player.next_card()
         player.output("Next card is {}".format(nxt.name))
         if nxt.isAction() or nxt.isTreasure():
             player.card_benefits(nxt)
         else:
             player.output("Card isn't a Treasure or Action - discarding")
-        player.discardCard(nxt)
+        player.discard_card(nxt)
 
 
 ###############################################################################
@@ -40,21 +40,21 @@ class Test_Gamble(unittest.TestCase):
 
     def test_play_treasure(self):
         """Perform a Gamble with a treasure"""
-        self.plr.addCoin(2)
-        self.plr.setDeck("Gold")
+        self.plr.add_coins(2)
+        self.plr.set_deck("Gold")
         self.assertEqual(self.plr.get_buys(), 1)
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertEqual(self.plr.get_buys(), 1)
 
     def test_play_action(self):
         """Perform a Gamble with an action"""
-        self.plr.addCoin(2)
-        self.plr.setDeck("Estate", "Estate", "Copper", "Moat")
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(2)
+        self.plr.set_deck("Estate", "Estate", "Copper", "Moat")
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.get_buys(), 1)
 

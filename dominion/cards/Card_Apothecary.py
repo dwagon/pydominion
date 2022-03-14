@@ -25,16 +25,16 @@ class Card_Apothecary(Card.Card):
         back on top of your deck in any order"""
         unput = []
         for _ in range(4):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c.name in ("Copper", "Potion"):
                 player.output("Putting %s in hand" % c.name)
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
             else:
                 unput.append(c)
         for c in unput:
             player.output("Putting %s back in deck" % c.name)
-            player.addCard(c, "deck")
+            player.add_card(c, "deck")
 
 
 ###############################################################################
@@ -45,18 +45,18 @@ class Test_Apothecary(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_none(self):
-        self.plr.setHand("Apothecary")
+        self.plr.set_hand("Apothecary")
         apoth = self.plr.hand[0]
-        self.plr.setDeck("Duchy", "Estate", "Estate", "Estate", "Province")
-        self.plr.playCard(apoth)
+        self.plr.set_deck("Duchy", "Estate", "Estate", "Estate", "Province")
+        self.plr.play_card(apoth)
         self.assertEqual(self.plr.hand.size(), 1)  # P
         self.assertEqual(self.plr.deck.size(), 4)  # D + E + E + E
 
     def test_some(self):
-        self.plr.setHand("Apothecary")
+        self.plr.set_hand("Apothecary")
         apoth = self.plr.hand[0]
-        self.plr.setDeck("Duchy", "Potion", "Copper", "Estate", "Province")
-        self.plr.playCard(apoth)
+        self.plr.set_deck("Duchy", "Potion", "Copper", "Estate", "Province")
+        self.plr.play_card(apoth)
         self.assertEqual(self.plr.hand.size(), 3)  # P + C + Pot
         self.assertEqual(self.plr.deck.size(), 2)  # E + D
 

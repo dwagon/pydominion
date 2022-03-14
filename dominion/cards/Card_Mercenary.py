@@ -23,16 +23,16 @@ class Card_Mercenary(Card.Card):
         cards, +2 coin, and each other player discards down to 3
         cards in hand"""
 
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Trash cards?", ("Trash nothing", False), ("Trash 2 cards", True)
         )
         if not ans:
             return
-        player.plrTrashCard(2, force=True)
-        player.pickupCards(2)
-        player.addCoin(2)
-        for plr in player.attackVictims():
-            plr.plrDiscardDownTo(3)
+        player.plr_trash_card(2, force=True)
+        player.pickup_cards(2)
+        player.add_coins(2)
+        for plr in player.attack_victims():
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################
@@ -51,20 +51,20 @@ class Test_Mercenary(unittest.TestCase):
 
     def test_play(self):
         """Trash nothing with mercenary - should do nothing"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_defense(self):
         """Make sure moats work against mercenaries"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
-        self.victim.addCard(moat, "hand")
+        self.victim.add_card(moat, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
         # 5 for hand + moat
@@ -74,13 +74,13 @@ class Test_Mercenary(unittest.TestCase):
     def test_attack(self):
         """Attack with a mercenary"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.victim.hand.size(), 3)
 
 

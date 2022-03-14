@@ -18,14 +18,14 @@ class Card_Apprentice(Card.Card):
     def special(self, game, player):
         """Trash a card from your hand. +1 Card per coin it costs.
         +2 Cards if it has potion it its cost"""
-        tc = player.plrTrashCard()
+        tc = player.plr_trash_card()
         if not tc:
             return
         c = tc[0]
         numcards = c.cost
         if c.potcost:
             numcards += 2
-        player.pickupCards(numcards)
+        player.pickup_cards(numcards)
 
 
 ###############################################################################
@@ -40,24 +40,24 @@ class Test_Apprentice(unittest.TestCase):
 
     def test_trashNone(self):
         tsize = self.g.trashSize()
-        self.plr.addCard(self.apprentice, "hand")
+        self.plr.add_card(self.apprentice, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.apprentice)
+        self.plr.play_card(self.apprentice)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.g.trashSize(), tsize)
 
-    def test_trashCard(self):
-        self.plr.setHand("Silver")
-        self.plr.addCard(self.apprentice, "hand")
+    def test_trash_card(self):
+        self.plr.set_hand("Silver")
+        self.plr.add_card(self.apprentice, "hand")
         self.plr.test_input = ["silver"]
-        self.plr.playCard(self.apprentice)
+        self.plr.play_card(self.apprentice)
         self.assertEqual(self.plr.hand.size(), self.g.trashpile[-1].cost)
 
     def test_trashPotion(self):
-        self.plr.setHand("Familiar")
-        self.plr.addCard(self.apprentice, "hand")
+        self.plr.set_hand("Familiar")
+        self.plr.add_card(self.apprentice, "hand")
         self.plr.test_input = ["Familiar"]
-        self.plr.playCard(self.apprentice)
+        self.plr.play_card(self.apprentice)
         self.assertEqual(self.plr.hand.size(), self.g.trashpile[-1].cost + 2)
 
 

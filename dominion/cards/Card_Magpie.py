@@ -22,16 +22,16 @@ class Card_Magpie(Card.Card):
     def special(self, game, player):
         """Reveal the top card of your deck. If it's a treasure, put it into your
         hand. If it's an Action or Victory card, gain a Magpie"""
-        c = player.nextCard()
-        player.revealCard(c)
+        c = player.next_card()
+        player.reveal_card(c)
         if c.isTreasure():
             player.output("Putting revealed %s into hand" % c.name)
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
         else:
-            player.addCard(c, "deck")
+            player.add_card(c, "deck")
             if c.isAction() or c.isVictory():
                 player.output("Revealed %s so gaining magpie" % c.name)
-                player.gainCard("Magpie")
+                player.gain_card("Magpie")
 
 
 ###############################################################################
@@ -44,18 +44,18 @@ class Test_Magpie(unittest.TestCase):
 
     def test_treasure(self):
         """Play a magpie with treasure"""
-        self.plr.setDeck("Gold", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Gold", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         # Hand of 5, the card gained and the treasure
         self.assertEqual(self.plr.hand.size(), 5 + 1 + 1)
         self.assertTrue(self.plr.in_hand("Gold"))
 
     def test_victory(self):
         """Play a magpie with treasure"""
-        self.plr.setDeck("Duchy", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Duchy", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         # Hand of 5, the card gained
         self.assertEqual(self.plr.hand.size(), 5 + 1)

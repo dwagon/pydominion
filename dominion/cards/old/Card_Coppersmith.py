@@ -15,7 +15,7 @@ class Card_Coppersmith(Card.Card):
         self.name = "Coppersmith"
         self.cost = 4
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         """Copper produces an extra 1 this turn"""
         if card.name == "Copper":
             player.output("Copper worth 1 more")
@@ -33,19 +33,19 @@ class Test_Coppersmith(unittest.TestCase):
 
     def test_copper(self):
         """Copper should be worth two"""
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.plr.play_card(self.plr.hand[0])
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_silver(self):
         """Silver should be unchanged and worth two"""
-        self.plr.setHand("Silver")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_hand("Silver")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.plr.play_card(self.plr.hand[0])
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

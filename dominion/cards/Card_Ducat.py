@@ -23,13 +23,13 @@ class Card_Ducat(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.gainCoffer()
+        player.add_coffer()
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
         cu = player.in_hand("Copper")
         if cu:
-            player.plrTrashCard(cardsrc=[cu], num=1)
+            player.plr_trash_card(cardsrc=[cu], num=1)
         else:
             player.output("No Coppers")
 
@@ -43,20 +43,20 @@ class Test_Ducat(unittest.TestCase):
 
     def test_play(self):
         card = self.g["Ducat"].remove()
-        self.plr.setCoffer(0)
-        self.plr.addCard(card, "hand")
-        self.plr.playCard(card)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.plr.set_coffers(0)
+        self.plr.add_card(card, "hand")
+        self.plr.play_card(card)
+        self.assertEqual(self.plr.get_coffers(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
     def test_gain_trash(self):
         self.plr.test_input = ["Copper"]
-        self.plr.setHand("Copper")
-        self.plr.gainCard("Ducat")
+        self.plr.set_hand("Copper")
+        self.plr.gain_card("Ducat")
 
     def test_gain_nothing(self):
-        self.plr.setHand("Silver")
-        self.plr.gainCard("Ducat")
+        self.plr.set_hand("Silver")
+        self.plr.gain_card("Ducat")
 
 
 ###############################################################################

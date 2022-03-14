@@ -20,25 +20,25 @@ class Card_Scrap(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        trc = player.plrTrashCard(
+        trc = player.plr_trash_card(
             printcost=True, prompt="Trash a card from your hand for benefits"
         )
         if not trc:
             return
-        cost = player.cardCost(trc[0])
+        cost = player.card_cost(trc[0])
         if cost >= 1:
-            player.pickupCard()
+            player.pickup_card()
         if cost >= 2:
-            player.addActions(1)
+            player.add_actions(1)
         if cost >= 3:
-            player.addBuys(1)
+            player.add_buys(1)
         if cost >= 4:
-            player.addCoin(1)
+            player.add_coins(1)
         if cost >= 5:
-            player.gainCard("Silver")
+            player.gain_card("Silver")
             player.output("Gained a Silver")
         if cost >= 6:
-            player.gainCard("Horse")
+            player.gain_card("Horse")
             player.output("Gained a Horse")
 
 
@@ -52,19 +52,19 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost0(self):
         """Play a scrap and trash something worth 0"""
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
 
     def test_playcard_cost3(self):
         """Play a scrap and trash something worth 3"""
-        self.plr.setHand("Silver")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Province")
+        self.plr.set_hand("Silver")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_deck("Province")
         self.plr.test_input = ["trash silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertEqual(self.plr.get_buys(), 2)
@@ -72,15 +72,15 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost6(self):
         """Play a scrap and trash something worth more than 6"""
-        self.plr.setHand("Province")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Copper")
+        self.plr.set_hand("Province")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_deck("Copper")
         self.plr.test_input = ["trash province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Horse"))

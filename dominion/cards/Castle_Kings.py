@@ -16,7 +16,7 @@ class Card_KingsCastle(CastleCard):
         self.name = "King's Castle"
 
     def special_score(self, game, player):
-        return sum([2 for card in player.allCards() if card.isCastle()])
+        return sum([2 for card in player.all_cards() if card.isCastle()])
 
 
 ###############################################################################
@@ -32,8 +32,8 @@ class Test_KingsCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "King's Castle":  # One before Kings
                 break
-        self.plr.addCard(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["King's Castle"], 2)
+        self.plr.add_card(self.card, "hand")
+        self.assertEqual(self.plr.get_score_details()["King's Castle"], 2)
 
 
 ###############################################################################

@@ -22,13 +22,13 @@ class Card_Fortress(Card.Card):
     def hook_trashThisCard(self, game, player):
         player.output("Putting Fortress back in hand")
         if self in player.played:
-            player.addCard(self, "hand")
+            player.add_card(self, "hand")
             player.played.remove(self)
         if self in player.hand:
-            player.addCard(self, "hand")
+            player.add_card(self, "hand")
             player.hand.remove(self)
         if self in game.trashpile:
-            player.addCard(self, "hand")
+            player.add_card(self, "hand")
             game.trashpile.remove(self)
         return {"trash": False}
 
@@ -40,16 +40,16 @@ class Test_Fortress(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Fortress"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the card"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_trash(self):
-        self.plr.trashCard(self.card)
+        self.plr.trash_card(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.plr.in_hand("Fortress"))
         self.assertIsNone(self.g.in_trash("Fortress"))

@@ -33,10 +33,10 @@ class Test_Mule(unittest.TestCase):
 
     def test_play(self):
         """Perform a Mule"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

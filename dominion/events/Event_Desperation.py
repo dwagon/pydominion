@@ -17,17 +17,17 @@ class Event_Desperation(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        opt = player.plrChooseOptions(
+        opt = player.plr_choose_options(
             "Gain a curse to get +1 Buy and +2 Coin",
             ("Nope", False),
             ("Gain a curse", True),
         )
         if opt:
             if player.do_once("Desperation"):
-                curse = player.gainCard("Curse")
+                curse = player.gain_card("Curse")
                 if curse:
-                    player.addBuys(1)
-                    player.addCoin(2)
+                    player.add_buys(1)
+                    player.add_coins(2)
                 else:
                     player.output("Didn't get a Curse so no benefits")
             else:
@@ -50,12 +50,12 @@ class Test_Desperation(unittest.TestCase):
 
     def test_Desperation(self):
         """Use Desperation"""
-        self.plr.addCoin(0)
+        self.plr.add_coins(0)
         self.plr.test_input = ["Gain a curse"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

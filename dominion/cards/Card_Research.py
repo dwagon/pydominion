@@ -23,11 +23,11 @@ class Card_Research(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "_research"):
             player._research = PlayArea.PlayArea([])
-        tc = player.plrTrashCard(num=1, force=True, printcost=True)
+        tc = player.plr_trash_card(num=1, force=True, printcost=True)
         cost = tc[0].cost
         if cost == 0:
             return
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Set aside {} cards for next turn".format(cost),
             verbs=("Set", "Unset"),
             num=cost,
@@ -45,7 +45,7 @@ class Card_Research(Card.Card):
             cards.append(card)
         for card in cards:
             player.output("Bringing {} out from research".format(card.name))
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player._research.remove(card)
             player.secret_count -= 1
 
@@ -57,14 +57,14 @@ class Test_Research(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Research"].remove()
-        self.plr.setHand("Gold", "Silver", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold", "Silver", "Copper")
+        self.plr.add_card(self.card, "hand")
         self.moat = self.g["Moat"].remove()
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.plr.end_turn()

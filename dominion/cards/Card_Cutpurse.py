@@ -19,15 +19,15 @@ class Card_Cutpurse(Card.Card):
     def special(self, game, player):
         """Each other player discard a Copper card (or reveals a
         hand with no copper)."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             c = victim.in_hand("Copper")
             if c:
                 player.output("%s discarded a copper" % victim.name)
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
-                victim.discardCard(c)
+                victim.discard_card(c)
             else:
                 for card in victim.hand:
-                    victim.revealCard(card)
+                    victim.reveal_card(card)
                 player.output("%s had no coppers" % victim.name)
 
 
@@ -38,17 +38,17 @@ class Test_Cutpurse(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Cutpurse"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_coppers(self):
-        self.victim.setHand("Copper", "Copper", "Estate")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Copper", "Copper", "Estate")
+        self.plr.play_card(self.card)
         self.assertEqual(self.victim.discardpile[-1].name, "Copper")
         self.assertEqual(self.victim.hand.size(), 2)
 
     def test_play_none(self):
-        self.victim.setHand("Estate", "Estate", "Estate")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Estate", "Estate", "Estate")
+        self.plr.play_card(self.card)
         self.assertTrue(self.victim.discardpile.is_empty())
         self.assertEqual(self.victim.hand.size(), 3)
 

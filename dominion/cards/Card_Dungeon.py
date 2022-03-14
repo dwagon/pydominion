@@ -24,8 +24,8 @@ class Card_Dungeon(Card.Card):
 
     def sifter(self, game, player):
         """+2 Cards, then discard 2 cards."""
-        player.pickupCards(2)
-        player.plrDiscardCards(num=2, force=True)
+        player.pickup_cards(2)
+        player.plr_discard_cards(num=2, force=True)
 
 
 ###############################################################################
@@ -38,13 +38,13 @@ class Test_Dungeon(unittest.TestCase):
 
     def test_playcard(self):
         """Play a dungeon"""
-        self.plr.setDeck(
+        self.plr.set_deck(
             "Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold"
         )
-        self.plr.setHand("Province", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Province", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province", "duchy", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)  # 2 picked up from dungeon -2 discard
         self.assertIsNone(self.plr.in_hand("duchy"))
         self.assertEqual(self.plr.durationpile.size(), 1)

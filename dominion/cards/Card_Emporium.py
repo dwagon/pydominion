@@ -27,7 +27,7 @@ class Card_Emporium(Card.Card):
     def hook_gain_this_card(self, game, player):
         count = sum([1 for c in player.played if c.isAction()])
         if count >= 5:
-            player.addScore("Emporium", 2)
+            player.add_score("Emporium", 2)
             player.output("Gained 2VP from Emporium")
         else:
             player.output("No VP as only have {} action cards in play".format(count))
@@ -43,17 +43,17 @@ class Test_Emporium(unittest.TestCase):
 
     def test_play(self):
         """Play the Emporium"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_gain_with_actions(self):
         """Play the Emporium having played lots of actions"""
-        self.plr.setPlayed("Moat", "Moat", "Moat", "Moat", "Moat")
-        self.plr.gainCard("Emporium")
-        self.assertEqual(self.plr.getScoreDetails()["Emporium"], 2)
+        self.plr.set_played("Moat", "Moat", "Moat", "Moat", "Moat")
+        self.plr.gain_card("Emporium")
+        self.assertEqual(self.plr.get_score_details()["Emporium"], 2)
 
 
 ###############################################################################

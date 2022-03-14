@@ -15,13 +15,13 @@ class Event_Conquest(Event.Event):
 
     def special(self, game, player):
         for _ in range(2):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
         sc = 0
         for card in player.stats["gained"]:
             if card.name == "Silver":
                 sc += 1
         player.output("Gained %d VP from Conquest" % sc)
-        player.addScore("Conquest", sc)
+        player.add_score("Conquest", sc)
 
 
 ###############################################################################
@@ -34,11 +34,11 @@ class Test_Conquest(unittest.TestCase):
 
     def test_event(self):
         """Use Conquest"""
-        self.plr.addCoin(6)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(6)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertEqual(self.plr.getScoreDetails()["Conquest"], 2)
+        self.assertEqual(self.plr.get_score_details()["Conquest"], 2)
 
 
 ###############################################################################

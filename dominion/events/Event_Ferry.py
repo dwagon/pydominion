@@ -15,7 +15,7 @@ class Event_Ferry(Event.Event):
 
     def special(self, game, player):
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(
+        stacks = player.card_sel(
             num=1, prompt="What stack to add the -2 Coin Token to?", cardsrc=actionpiles
         )
         if stacks:
@@ -33,11 +33,11 @@ class Test_Ferry(unittest.TestCase):
         self.card = self.g.events["Ferry"]
 
     def test_play(self):
-        self.plr.addCoin(3)
+        self.plr.add_coins(3)
         self.plr.test_input = ["moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["-2 Cost"], "Moat")
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

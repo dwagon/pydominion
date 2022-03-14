@@ -24,8 +24,8 @@ class Card_Ghost_Town(Card.Card):
         return {"destination": "hand"}
 
     def duration(self, game, player):
-        player.pickupCard()
-        player.addActions(1)
+        player.pickup_card()
+        player.add_actions(1)
 
 
 ###############################################################################
@@ -38,15 +38,15 @@ class Test_Ghost_Town(unittest.TestCase):
 
     def test_play_card(self):
         """Play Ghost Town"""
-        self.plr.addCard(self.gtown, "hand")
-        self.plr.playCard(self.gtown)
+        self.plr.add_card(self.gtown, "hand")
+        self.plr.play_card(self.gtown)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.gainCard("Ghost Town")
+        self.plr.gain_card("Ghost Town")
         self.assertIsNone(self.plr.in_discard("Ghost Town"))
         self.assertIsNotNone(self.plr.in_hand("Ghost Town"))
 

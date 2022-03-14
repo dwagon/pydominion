@@ -24,7 +24,7 @@ class Card_Port(Card.Card):
 
     def hook_buy_this_card(self, game, player):
         """Gain another Port"""
-        c = player.gainCard("Port")
+        c = player.gain_card("Port")
         if c:
             player.output("Gained a port")
         else:
@@ -41,17 +41,17 @@ class Test_Port(unittest.TestCase):
 
     def test_play(self):
         """Play a port"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_buy(self):
         """Buy a port"""
-        self.plr.setDiscard()
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Port"])
+        self.plr.set_discard()
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Port"])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Port")
         self.assertEqual(self.plr.discardpile.size(), 2)

@@ -22,11 +22,11 @@ class Card_Artificer(Card.Card):
     def special(self, game, player):
         """Discard any number of cards. You may gain a card costing
         exactly 1 per card discarded, putting it on top of your deck"""
-        todiscard = player.plrDiscardCards(
+        todiscard = player.plr_discard_cards(
             anynum=True, prompt="Select which card(s) to discard"
         )
         cost = len(todiscard)
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=cost,
             modifier="equal",
             destination="topdeck",
@@ -44,21 +44,21 @@ class Test_Artificer(unittest.TestCase):
 
     def test_play(self):
         """Play an artificer - discard none and pick up a copper"""
-        self.plr.setDeck("Province")
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Province")
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish", "copper"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.deck[0].name, "Copper")
 
     def test_play_more(self):
         """Play an artificer - discard three and pick up a silver"""
-        self.plr.setDeck("Gold")
-        self.plr.setHand("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Gold")
+        self.plr.set_hand("Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "discard estate",
             "discard duchy",
@@ -66,8 +66,8 @@ class Test_Artificer(unittest.TestCase):
             "finish",
             "get silver",
         ]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))

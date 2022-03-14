@@ -14,9 +14,9 @@ class Landmark_Museum(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         c = set()
-        for card in player.allCards():
+        for card in player.all_cards():
             c.add(card.name)
-        player.addScore("Museum", len(c) * 2)
+        player.add_score("Museum", len(c) * 2)
 
 
 ###############################################################################
@@ -30,11 +30,11 @@ class Test_Museum(unittest.TestCase):
 
     def test_gain(self):
         """Use Museum"""
-        self.plr.setHand("Copper", "Estate")
-        self.plr.setDiscard("Gold", "Silver", "Copper")
-        self.plr.setDeck("Gold", "Moat", "Moat")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Museum"], 10)
+        self.plr.set_hand("Copper", "Estate")
+        self.plr.set_discard("Gold", "Silver", "Copper")
+        self.plr.set_deck("Gold", "Moat", "Moat")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Museum"], 10)
 
 
 ###############################################################################

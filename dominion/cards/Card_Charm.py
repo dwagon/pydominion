@@ -19,7 +19,7 @@ class Card_Charm(Card.Card):
         self.buytrigger = False
 
     def special(self, game, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Pick One",
             ("+1 Buy and +2 Coin", True),
             (
@@ -28,17 +28,17 @@ class Card_Charm(Card.Card):
             ),
         )
         if ans:
-            player.addBuys(1)
-            player.addCoin(2)
+            player.add_buys(1)
+            player.add_coins(2)
         else:
             self.buytrigger = True
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if not self.buytrigger:
             return
         self.buytrigger = False
         cost = card.cost
-        player.plrGainCard(cost=cost, modifier="equal", exclude=[card.name])
+        player.plr_gain_card(cost=cost, modifier="equal", exclude=[card.name])
 
 
 ###############################################################################
@@ -50,22 +50,22 @@ class Test_Charm(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Charm"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_choose_one(self):
         self.plr.test_input = ["+1 Buy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_choose_two(self):
         self.plr.test_input = ["next time"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.test_input = ["Get Duchy"]
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Charm"])
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Charm"])
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
 
 

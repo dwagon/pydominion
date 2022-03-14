@@ -16,12 +16,12 @@ class Event_Alliance(Event.Event):
         self.cost = 10
 
     def special(self, game, player):
-        player.gainCard("Province")
-        player.gainCard("Duchy")
-        player.gainCard("Estate")
-        player.gainCard("Gold")
-        player.gainCard("Silver")
-        player.gainCard("Copper")
+        player.gain_card("Province")
+        player.gain_card("Duchy")
+        player.gain_card("Estate")
+        player.gain_card("Gold")
+        player.gain_card("Silver")
+        player.gain_card("Copper")
 
 
 ###############################################################################
@@ -36,8 +36,8 @@ class Test_Alliance(unittest.TestCase):
 
     def test_play(self):
         """Perform a Alliance"""
-        self.plr.addCoin(10)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(10)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Province"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Copper"))

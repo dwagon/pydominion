@@ -28,17 +28,17 @@ class Test_Greathall(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Great Hall"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Great Hall"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_score(self):
         """Have a victory point just for existing"""
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Great Hall"], 1)
 
 

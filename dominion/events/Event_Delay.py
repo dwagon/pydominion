@@ -22,7 +22,7 @@ class Event_Delay(Event.Event):
         if not actions:
             player.output("No actions to delay")
             return
-        delay = player.cardSel(
+        delay = player.card_sel(
             prompt="Set aside an action card to play next turn", cardsrc=actions
         )
         player.defer_card(delay[0])
@@ -46,8 +46,8 @@ class Test_Delay(unittest.TestCase):
     def test_play(self):
         """Perform a Delay"""
         self.plr.test_input = ["Select Moat"]
-        self.plr.setHand("Moat", "Copper", "Estate")
-        self.plr.performEvent(self.card)
+        self.plr.set_hand("Moat", "Copper", "Estate")
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_defer("Moat"))
 
 

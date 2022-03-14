@@ -22,7 +22,7 @@ class Card_Camel_Train(Card.Card):
 
     def special(self, game, player):
         cards = [_ for _ in game.cardpiles.values() if not _.isVictory()]
-        toex = player.cardSel(prompt="Pick a card to Exile", cardsrc=cards)
+        toex = player.card_sel(prompt="Pick a card to Exile", cardsrc=cards)
         if toex:
             player.exile_card(toex[0].name)
 
@@ -37,15 +37,15 @@ class Test_Camel_Train(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Camel Train"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.test_input = ["Select Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_exile("Silver"))
 
     def test_gain(self):
-        self.plr.gainCard("Camel Train")
+        self.plr.gain_card("Camel Train")
         self.assertIsNotNone(self.plr.in_exile("Gold"))
 
 

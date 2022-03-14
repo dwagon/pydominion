@@ -22,14 +22,14 @@ class Card_Cavalry(Card.Card):
             and if it's your Buy phase return to your Action phase."""
 
     def special(self, game, player):
-        player.gainCard("Horse")
-        player.gainCard("Horse")
+        player.gain_card("Horse")
+        player.gain_card("Horse")
 
     def hook_gain_this_card(self, game, player):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
-        player.pickupCards(2)
-        player.addBuys(1)
+        player.pickup_cards(2)
+        player.add_buys(1)
 
 
 ###############################################################################
@@ -43,14 +43,14 @@ class Test_Cavalry(unittest.TestCase):
         self.card = self.g["Cavalry"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
 
     def test_gain(self):
         self.plr.phase = "buy"
-        self.plr.gainCard("Cavalry")
+        self.plr.gain_card("Cavalry")
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)

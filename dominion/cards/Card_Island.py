@@ -20,7 +20,7 @@ class Card_Island(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "island_reserve"):
             player.island_reserve = PlayArea.PlayArea([])
-        c = player.cardSel(prompt="Select a card to set aside for the rest of the game")
+        c = player.card_sel(prompt="Select a card to set aside for the rest of the game")
         if c:
             card = c[0]
             player.island_reserve.add(card)
@@ -35,7 +35,7 @@ class Card_Island(Card.Card):
     def hook_end_of_game(self, game, player):
         for card in player.island_reserve[:]:
             player.output("Returning %s from Island" % card.name)
-            player.addCard(card)
+            player.add_card(card)
             player.island_reserve.remove(card)
 
 
@@ -49,35 +49,35 @@ class Test_Island(unittest.TestCase):
 
     def test_play_province(self):
         """Play an island on a province"""
-        self.plr.setHand("Silver", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver", "Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
         self.assertIsNone(self.plr.in_discard("Island"))
         self.assertIsNone(self.plr.in_hand("Province"))
         self.assertIsNone(self.plr.in_discard("Province"))
         self.assertEqual(self.plr.secret_count, 2)
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertIsNotNone(self.plr.in_discard("Island"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
         self.assertEqual(score["Province"], 6)
 
     def test_play_alone(self):
         """Play a island but don't pick another card"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
         self.assertIsNone(self.plr.in_discard("Island"))
         self.assertEqual(self.plr.secret_count, 1)
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertIsNotNone(self.plr.in_discard("Island"))
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
 
 

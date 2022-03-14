@@ -17,16 +17,16 @@ class Card_SprawlingCastle(CastleCard):
         self.name = "Sprawling Castle"
 
     def hook_gain_this_card(self, game, player):
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Gain a Duchy or 3 Estates",
             ("Gain a Duchy", "duchy"),
             ("Gain 3 Estates", "estates"),
         )
         if ch == "duchy":
-            player.gainCard("Duchy")
+            player.gain_card("Duchy")
         else:
             for _ in range(3):
-                player.gainCard("Estate")
+                player.gain_card("Estate")
 
 
 ###############################################################################
@@ -44,8 +44,8 @@ class Test_SprawlingCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":
                 break
-        self.plr.addCard(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["Sprawling Castle"], 4)
+        self.plr.add_card(self.card, "hand")
+        self.assertEqual(self.plr.get_score_details()["Sprawling Castle"], 4)
 
     def test_gain_duchy(self):
         """Gain duchy through Sprawling Castle"""
@@ -54,7 +54,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["duchy"]
-        self.plr.gainCard("Castles")
+        self.plr.gain_card("Castles")
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 1 + 1)
@@ -66,7 +66,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["estates"]
-        self.plr.gainCard("Castles")
+        self.plr.gain_card("Castles")
         self.assertIsNone(self.plr.in_discard("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 3 + 1)

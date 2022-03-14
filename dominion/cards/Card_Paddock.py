@@ -19,10 +19,10 @@ class Card_Paddock(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse")
-        player.gainCard("Horse")
+        player.gain_card("Horse")
+        player.gain_card("Horse")
         empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
-        player.addActions(empties)
+        player.add_actions(empties)
 
 
 ###############################################################################
@@ -32,14 +32,14 @@ class Test_Paddock(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Paddock"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard_one_stack(self):
         while True:
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
 

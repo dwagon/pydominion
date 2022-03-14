@@ -19,10 +19,10 @@ class Card_Patron(Card.Card):
         self.coin = 2
 
     def special(self, game, player):
-        player.gainVillager(1)
+        player.add_villager(1)
 
     def hook_revealThisCard(self, game, player):
-        player.gainCoffer()
+        player.add_coffer()
 
 
 ###############################################################################
@@ -32,17 +32,17 @@ class Test_Patron(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Patron"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getVillager(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.get_villagers(), 1)
 
     def test_reveal(self):
-        num = self.plr.getCoffer()
-        self.plr.revealCard(self.card)
-        self.assertEqual(self.plr.getCoffer(), num + 1)
+        num = self.plr.get_coffers()
+        self.plr.reveal_card(self.card)
+        self.assertEqual(self.plr.get_coffers(), num + 1)
 
 
 ###############################################################################

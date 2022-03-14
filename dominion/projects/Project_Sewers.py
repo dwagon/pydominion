@@ -14,7 +14,7 @@ class Project_Sewers(Project.Project):
         self.cost = 3
 
     def hook_trash_card(self, game, player, card):
-        player.plrTrashCard(prompt="Trash a card via Sewer", exclude_hook="Sewers")
+        player.plr_trash_card(prompt="Trash a card via Sewer", exclude_hook="Sewers")
 
 
 ###############################################################################
@@ -28,11 +28,11 @@ class Test_Sewers(unittest.TestCase):
         self.card = self.g["Chapel"].remove()
 
     def test_play(self):
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Silver"))

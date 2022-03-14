@@ -18,19 +18,19 @@ class Card_HauntedCastle(CastleCard):
         self.name = "Haunted Castle"
 
     def hook_gain_this_card(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
         for plr in list(game.players.values()):
             if plr == player:
                 continue
             if plr.hand.size() >= 5:
-                cards = plr.cardSel(
+                cards = plr.card_sel(
                     num=2,
                     force=True,
                     prompt="%s's Haunted Castle: Select 2 cards to put onto your deck"
                     % player.name,
                 )
                 for card in cards:
-                    plr.addCard(card, "topdeck")
+                    plr.add_card(card, "topdeck")
                     plr.hand.remove(card)
 
 
@@ -52,14 +52,14 @@ class Test_HauntedCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Haunted Castle"], 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Haunted Castle"], 2)
 
     def test_gain(self):
-        self.vic.setHand("Copper", "Silver", "Gold", "Estate", "Province")
+        self.vic.set_hand("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]
-        self.plr.gainCard(newcard=self.card)
+        self.plr.gain_card(newcard=self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.vic.in_deck("Silver"))
         self.assertIsNone(self.vic.in_hand("Silver"))

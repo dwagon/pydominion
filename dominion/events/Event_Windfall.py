@@ -16,7 +16,7 @@ class Event_Windfall(Event.Event):
     def special(self, game, player):
         if player.deck.is_empty() and player.discardpile.is_empty():
             for _ in range(3):
-                player.gainCard("Gold")
+                player.gain_card("Gold")
 
 
 ###############################################################################
@@ -29,10 +29,10 @@ class Test_Windfall(unittest.TestCase):
 
     def test_play(self):
         """Perform a Windfall"""
-        self.plr.addCoin(5)
-        self.plr.setDiscard()
-        self.plr.setDeck()
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(5)
+        self.plr.set_discard()
+        self.plr.set_deck()
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Gold")

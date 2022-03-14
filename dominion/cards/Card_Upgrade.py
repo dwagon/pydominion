@@ -19,13 +19,13 @@ class Card_Upgrade(Card.Card):
 
     def special(self, game, player):
         """Trash a card from your hand. Gain a card costing up to 1 more than it"""
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain a card costing exactly 1 more than it",
         )
         if tc:
-            cost = player.cardCost(tc[0])
-            player.plrGainCard(cost + 1, "equal")
+            cost = player.card_cost(tc[0])
+            player.plr_gain_card(cost + 1, "equal")
 
 
 ###############################################################################
@@ -39,9 +39,9 @@ class Test_Upgrade(unittest.TestCase):
     def test_play(self):
         """Play the Upgrade"""
         tsize = self.g.trashSize()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize)
@@ -49,10 +49,10 @@ class Test_Upgrade(unittest.TestCase):
     def test_trash(self):
         """Trash an upgrade"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Duchy", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Get Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)

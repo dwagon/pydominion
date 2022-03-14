@@ -16,13 +16,13 @@ class Card_Artisan(Card.Card):
         self.cost = 6
 
     def special(self, game, player):
-        player.plrGainCard(5, destination="hand")
-        card = player.cardSel(
+        player.plr_gain_card(5, destination="hand")
+        card = player.card_sel(
             force=True,
             cardsrc="hand",
             prompt="Put a card from your hand on top of your deck",
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.hand.remove(card[0])
 
 
@@ -35,10 +35,10 @@ class Test_Artisan(unittest.TestCase):
         self.card = self.g["Artisan"].remove()
 
     def test_play(self):
-        self.plr.setHand("Copper", "Estate", "Silver", "Gold", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate", "Silver", "Gold", "Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Festival", "Select Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.deck[-1].name, "Gold")

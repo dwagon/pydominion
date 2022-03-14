@@ -20,7 +20,7 @@ class Card_Hireling(Card.Card):
         pass
 
     def duration(self, game, player):
-        player.pickupCard()
+        player.pickup_card()
 
 
 ###############################################################################
@@ -30,11 +30,11 @@ class Test_Hireling(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hireling"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_hireling(self):
         """Play a hireling"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 6)

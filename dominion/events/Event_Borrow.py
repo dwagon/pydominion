@@ -23,7 +23,7 @@ class Event_Borrow(Event.Event):
             player.output("-1 Card token already in play")
             return
         player.card_token = True
-        player.addCoin(1)
+        player.add_coins(1)
 
 
 ###############################################################################
@@ -37,17 +37,17 @@ class Test_Borrow(unittest.TestCase):
     def test_play(self):
         """Perform a Borrow"""
         self.plr.coin = 0
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertTrue(self.plr.card_token)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_alreadyset(self):
         """Perform a Borrow"""
         self.plr.card_token = True
         self.plr.coin = 0
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertTrue(self.plr.card_token)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

@@ -19,22 +19,22 @@ class Card_Replace(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        tr = player.plrTrashCard()
+        tr = player.plr_trash_card()
         if not tr:
             return
         cost = tr[0].cost
-        gain = player.plrGainCard(
+        gain = player.plr_gain_card(
             cost, prompt="Gain a card costing up to {}".format(cost)
         )
         if not gain:
             return
         if gain.isAction() or gain.isTreasure():
-            player.addCard(gain, "topdeck")
+            player.add_card(gain, "topdeck")
             player.discardpile.remove(gain)
         if gain.isVictory():
-            for victim in player.attackVictims():
+            for victim in player.attack_victims():
                 victim.output("Gained a Curse due to {}'s Replace".format(player))
-                victim.gainCard("Curse")
+                victim.gain_card("Curse")
 
 
 ###############################################################################
@@ -46,21 +46,21 @@ class Test_Replace(unittest.TestCase):
         self.card = self.g["Replace"].remove()
 
     def test_gain_action(self):
-        self.plr.setHand("Estate", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_deck("Moat"))
         self.assertIsNone(self.plr.in_discard("Moat"))
 
     def test_gain_victory(self):
-        self.plr.setHand(
+        self.plr.set_hand(
             "Estate",
             "Silver",
         )
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Estate"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
 
 

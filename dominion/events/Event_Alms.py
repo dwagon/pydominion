@@ -31,7 +31,7 @@ class Event_Alms(Event.Event):
             return
 
         if self.treasures(player) == 0:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
 
 
 ###############################################################################
@@ -46,24 +46,24 @@ class Test_Alms(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Alms with treasures"""
-        self.plr.setHand("Copper")
-        self.plr.performEvent(self.card)
+        self.plr.set_hand("Copper")
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_without_treasure(self):
         """Use Alms with no treasures"""
-        self.plr.setHand("Estate")
+        self.plr.set_hand("Estate")
         self.plr.test_input = ["Lurker"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Lurker")
 
     def test_twice(self):
         """Use Alms twice"""
-        self.plr.setHand("Estate")
+        self.plr.set_hand("Estate")
         self.plr.test_input = ["Lurker"]
-        self.plr.performEvent(self.card)
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Lurker")
 

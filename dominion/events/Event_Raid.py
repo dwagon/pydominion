@@ -16,13 +16,13 @@ class Event_Raid(Event.Event):
     def special(self, game, player):
         """Gain a Silver per Silver that you have in play. Each other player
         puts his -1 Card token on his deck"""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             victim.card_token = True
             victim.output("-1 Card token active due to Raid event by %s" % player.name)
         count = 0
         for c in player.hand + player.played:
             if c.name == "Silver":
-                player.gainCard("Silver")
+                player.gain_card("Silver")
                 count += 1
         player.output("Gained %d Silvers from Raid" % count)
 
@@ -39,10 +39,10 @@ class Test_Raid(unittest.TestCase):
 
     def test_play(self):
         """Perform a Raid"""
-        self.plr.addCoin(5)
-        self.plr.setHand("Silver", "Silver")
-        self.plr.performEvent(self.card)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.add_coins(5)
+        self.plr.set_hand("Silver", "Silver")
+        self.plr.perform_event(self.card)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.buys, 0)
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:

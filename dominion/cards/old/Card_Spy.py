@@ -20,23 +20,23 @@ class Card_Spy(Card.Card):
     def special(self, game, player):
         """Each player (including you) reveals the top of his deck and either discards it or puts it back, your choice"""
         self.spyOn(player, player)
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.spyOn(player, pl)
 
     def spyOn(self, attacker, victim):
-        c = victim.nextCard()
-        victim.revealCard(c)
+        c = victim.next_card()
+        victim.reveal_card(c)
         vicname = "your" if attacker == victim else "%s's" % victim.name
-        discard = attacker.plrChooseOptions(
+        discard = attacker.plr_choose_options(
             "Discard %s card?" % vicname,
             ("Keep %s on %s deck" % (c.name, vicname), False),
             ("Discard %s %s" % (vicname, c.name), True),
         )
         if discard:
-            victim.addCard(c, "discard")
+            victim.add_card(c, "discard")
             victim.output("%s's Spy discarded your %s" % (attacker.name, c.name))
         else:
-            victim.addCard(c, "topdeck")
+            victim.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -45,28 +45,28 @@ class Test_Spy(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=2, initcards=["Spy", "Moat"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.attacker.setDeck("Estate", "Province", "Duchy")
-        self.defender.setDeck("Estate", "Gold")
+        self.attacker.set_deck("Estate", "Province", "Duchy")
+        self.defender.set_deck("Estate", "Gold")
 
     def test_moat(self):
-        self.defender.setHand("Moat")
-        scard = self.attacker.gainCard("Spy", "hand")
+        self.defender.set_hand("Moat")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["0"]
-        self.attacker.playCard(scard)
+        self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Province")
         self.assertEqual(self.defender.deck[-1].name, "Gold")
 
     def test_undefended(self):
-        scard = self.attacker.gainCard("Spy", "hand")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["0", "0"]
-        self.attacker.playCard(scard)
+        self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Province")
         self.assertEqual(self.defender.deck[-1].name, "Gold")
 
     def test_discards(self):
-        scard = self.attacker.gainCard("Spy", "hand")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["1", "1"]
-        self.attacker.playCard(scard)
+        self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Estate")
         self.assertEqual(self.defender.deck[-1].name, "Estate")
 

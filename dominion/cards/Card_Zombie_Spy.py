@@ -24,17 +24,17 @@ class Card_Zombie_Spy(Card.Card):
         game.trashpile.add(self)
 
     def special(self, game, player):
-        c = player.nextCard()
-        discard = player.plrChooseOptions(
+        c = player.next_card()
+        discard = player.plr_choose_options(
             "Discard your card?",
             ("Keep %s on your deck" % c.name, False),
             ("Discard %s" % c.name, True),
         )
         if discard:
-            player.addCard(c, "discard")
+            player.add_card(c, "discard")
             player.output("Zombie Spy discarded your %s" % c.name)
         else:
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -47,16 +47,16 @@ class Test_Zombie_Spy(unittest.TestCase):
 
     def test_play_keep(self):
         self.plr.test_input = ["Keep"]
-        self.plr.setDeck("Province", "Estate")
-        self.plr.playCard(self.card, discard=False, costAction=False)
+        self.plr.set_deck("Province", "Estate")
+        self.plr.play_card(self.card, discard=False, costAction=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertIsNotNone(self.plr.in_deck("Province"))
 
     def test_play_discard(self):
         self.plr.test_input = ["Discard"]
-        self.plr.setDeck("Province", "Estate")
-        self.plr.playCard(self.card, discard=False, costAction=False)
+        self.plr.set_deck("Province", "Estate")
+        self.plr.play_card(self.card, discard=False, costAction=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertIsNone(self.plr.in_deck("Province"))

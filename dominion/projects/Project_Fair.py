@@ -14,7 +14,7 @@ class Project_Fair(Project.Project):
         self.cost = 4
 
     def hook_start_turn(self, game, player):
-        player.addBuys(1)
+        player.add_buys(1)
 
 
 ###############################################################################

@@ -14,10 +14,10 @@ class Landmark_BanditFort(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         score = 0
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.name in ("Silver", "Gold"):
                 score -= 2
-        player.addScore("Bandit Fort", score)
+        player.add_score("Bandit Fort", score)
 
 
 ###############################################################################
@@ -29,9 +29,9 @@ class Test_BanditFort(unittest.TestCase):
 
     def test_gain(self):
         """Use Bandit Fort"""
-        self.plr.setHand("Gold", "Silver")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Bandit Fort"], -4)
+        self.plr.set_hand("Gold", "Silver")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Bandit Fort"], -4)
 
 
 ###############################################################################

@@ -22,11 +22,11 @@ class Card_Improve(Card.Card):
         acts = [_ for _ in player.hand + player.discardpile if _.isAction()]
         if not acts:
             return
-        tt = player.plrTrashCard(cardsrc=acts, prompt="Trash a card through Improve")
+        tt = player.plr_trash_card(cardsrc=acts, prompt="Trash a card through Improve")
         if not tt:
             return
         cost = tt[0].cost
-        player.plrGainCard(cost + 1, modifier="equal")
+        player.plr_gain_card(cost + 1, modifier="equal")
 
 
 ###############################################################################
@@ -40,9 +40,9 @@ class Test_Improve(unittest.TestCase):
         self.card = self.g["Improve"].remove()
 
     def test_play(self):
-        self.plr.setHand("Moat")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Moat")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
         self.assertIsNotNone(self.g.in_trash("Moat"))

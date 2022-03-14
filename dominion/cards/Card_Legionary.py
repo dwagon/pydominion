@@ -20,13 +20,13 @@ class Card_Legionary(Card.Card):
     def special(self, game, player):
         au = player.in_hand("Gold")
         if au:
-            player.revealCard(au)
-            for plr in player.attackVictims():
+            player.reveal_card(au)
+            for plr in player.attack_victims():
                 plr.output(
                     "%s's Legionary forces you to discard down to 2" % player.name
                 )
-                plr.plrDiscardDownTo(2)
-                plr.pickupCard()
+                plr.plr_discard_down_to(2)
+                plr.pickup_card()
 
 
 ###############################################################################
@@ -45,11 +45,11 @@ class Test_Legionary(unittest.TestCase):
 
     def test_play(self):
         """Play a Legionary"""
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.victim.test_input = ["1", "2", "3", "0"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertEqual(self.victim.hand.size(), 3)
         self.assertEqual(self.victim.discardpile.size(), 3)
 

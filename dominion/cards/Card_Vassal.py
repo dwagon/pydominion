@@ -17,13 +17,13 @@ class Card_Vassal(Card.Card):
         self.desc = "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
 
     def special(self, game, player):
-        card = player.nextCard()
-        player.revealCard(card)
+        card = player.next_card()
+        player.reveal_card(card)
         if card.isAction():
-            player.addCard(card, "hand")
-            player.playCard(card, costAction=False)
+            player.add_card(card, "hand")
+            player.play_card(card, costAction=False)
         else:
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
 
 
 ###############################################################################
@@ -36,19 +36,19 @@ class Test_Vassal(unittest.TestCase):
 
     def test_play_action(self):
         """Play a Vassal with action next"""
-        self.plr.setDeck("Silver", "Gold", "Moat")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_deck("Silver", "Gold", "Moat")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_played("Moat"))
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_play_non_action(self):
         """Play a Vassal with non-action next"""
-        self.plr.setDeck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_deck("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.hand.size(), 5)
 

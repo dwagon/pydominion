@@ -16,7 +16,7 @@ class Project_SinisterPlot(Project.Project):
         self._token = defaultdict(int)
 
     def hook_start_turn(self, game, player):
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Sinister Plot Action? ",
             ("Add a token here?", True),
             (
@@ -29,7 +29,7 @@ class Project_SinisterPlot(Project.Project):
         if ch:
             self._token[player.name] += 1
         else:
-            player.pickupCards(self._token[player.name])
+            player.pickup_cards(self._token[player.name])
             self._token[player.name] = 0
 
 

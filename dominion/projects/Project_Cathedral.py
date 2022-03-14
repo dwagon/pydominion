@@ -14,7 +14,7 @@ class Project_Cathedral(Project.Project):
         self.cost = 3
 
     def hook_start_turn(self, game, player):
-        player.plrTrashCard(
+        player.plr_trash_card(
             num=1, force=True, prompt="Cathedral forces you to trash a card"
         )
 
@@ -28,7 +28,7 @@ class Test_Cathedral(unittest.TestCase):
 
     def test_flag(self):
         self.plr.assign_project("Cathedral")
-        self.plr.setHand("Copper", "Estate", "Province")
+        self.plr.set_hand("Copper", "Estate", "Province")
         self.plr.test_input = ["Copper"]
         self.plr.start_turn()
         self.assertIsNotNone(self.g.in_trash("Copper"))

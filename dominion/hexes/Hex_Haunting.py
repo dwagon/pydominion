@@ -18,8 +18,8 @@ class Hex_Haunting(Hex.Hex):
 
     def special(self, game, player):
         if player.hand.size() >= 4:
-            card = player.cardSel(force=True)
-            player.addCard(card[0], "topdeck")
+            card = player.card_sel(force=True)
+            player.add_card(card[0], "topdeck")
             player.hand.remove(card[0])
 
 
@@ -40,13 +40,13 @@ class Test_Haunting(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_none(self):
-        self.plr.setHand("Duchy", "Gold", "Silver")
-        self.plr.gainCard("Cursed Village")
+        self.plr.set_hand("Duchy", "Gold", "Silver")
+        self.plr.gain_card("Cursed Village")
 
     def test_activate(self):
-        self.plr.setHand("Duchy", "Gold", "Silver", "Province")
+        self.plr.set_hand("Duchy", "Gold", "Silver", "Province")
         self.plr.test_input = ["Gold"]
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
 
 

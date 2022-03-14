@@ -41,7 +41,7 @@ class Test_performEvent(unittest.TestCase):
 
 
 ###############################################################################
-class Test_event_selection(unittest.TestCase):
+class Test__event_selection(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, eventcards=["Alms", "Expedition", "Raid"]
@@ -51,7 +51,7 @@ class Test_event_selection(unittest.TestCase):
 
     def test_events(self):
         self.plr.coin = 4
-        output, index = self.plr.event_selection(3)
+        output, index = self.plr._event_selection(3)
         self.assertEqual(index, 6)
         self.assertEqual(len(output), 3)
         num_affordable = 0

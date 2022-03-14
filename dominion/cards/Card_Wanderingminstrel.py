@@ -21,17 +21,17 @@ class Card_Wanderingminstrel(Card.Card):
     def special(self, game, player):
         cards = []
         for _ in range(3):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c.isAction():
                 cards.append(c)
                 player.output("Revealed a %s and put on top of deck" % c.name)
             else:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
                 player.output("Discarded %s" % c.name)
 
         for card in cards:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -43,12 +43,12 @@ class Test_Wanderingminstrel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wandering Minstrel"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Wandering Minstrel"""
-        self.plr.setDeck("Duchy", "Moat", "Silver", "Gold")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Duchy", "Moat", "Silver", "Gold")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertIsNotNone(self.plr.in_deck("Moat"))

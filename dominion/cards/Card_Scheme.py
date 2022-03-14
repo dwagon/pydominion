@@ -21,11 +21,11 @@ class Card_Scheme(Card.Card):
 
     def hook_cleanup(self, game, player):
         actions = [c for c in player.played if c.isAction()]
-        card = player.cardSel(
+        card = player.card_sel(
             cardsrc=actions, prompt="Select an action to put back on your deck"
         )
         if card:
-            player.addCard(card[0], "topdeck")
+            player.add_card(card[0], "topdeck")
             player.played.remove(card[0])
 
 
@@ -39,9 +39,9 @@ class Test_Scheme(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.setPlayed("Moat")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_played("Moat")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.test_input = ["moat"]

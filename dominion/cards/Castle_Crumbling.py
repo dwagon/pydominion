@@ -17,12 +17,12 @@ class Card_CrumblingCastle(CastleCard):
         self.name = "Crumbling Castle"
 
     def hook_gain_this_card(self, game, player):
-        player.addScore("Crumbling Castle", 1)
-        player.gainCard("Silver")
+        player.add_score("Crumbling Castle", 1)
+        player.gain_card("Silver")
 
     def hook_trashThisCard(self, game, player):
-        player.addScore("Crumbling Castle", 1)
-        player.gainCard("Silver")
+        player.add_score("Crumbling Castle", 1)
+        player.gain_card("Silver")
 
 
 ###############################################################################
@@ -38,13 +38,13 @@ class Test_CrumblingCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Crumbling Castle"], 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Crumbling Castle"], 1)
 
     def test_trash(self):
-        self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Crumbling Castle"], 1)
+        self.plr.trash_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Crumbling Castle"], 1)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 

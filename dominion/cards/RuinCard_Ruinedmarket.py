@@ -28,11 +28,11 @@ class Test_RuinedMarket(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Ruined Market":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a ruined market"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
 

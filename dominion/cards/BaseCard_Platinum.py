@@ -27,12 +27,12 @@ class Test_Platinum(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Platinum"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a platinum"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 5)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 5)
 
 
 ###############################################################################

@@ -29,13 +29,13 @@ class Card_Mastermind(Card.Card):
         if index == 1:
             player.output("No action cards to repeat")
             return
-        o = player.userInput(options, "Play which action card three times?")
+        o = player.user_input(options, "Play which action card three times?")
         if not o["card"]:
             return
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o["card"].name))
-            player.playCard(o["card"], discard=False, costAction=False)
-        player.addCard(o["card"], "played")
+            player.play_card(o["card"], discard=False, costAction=False)
+        player.add_card(o["card"], "played")
         player.hand.remove(o["card"])
 
 
@@ -46,14 +46,14 @@ class Test_Mastermind(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mastermind"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setDiscard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
-        self.plr.playCard(self.card)
+        self.plr.set_discard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.play_card(self.card)
         self.plr.end_turn()
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.test_input = ["Play Moat"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 6)

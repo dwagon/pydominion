@@ -19,7 +19,7 @@ class Card_Warehouse(Card.Card):
 
     def special(self, game, player):
         """Discard 3 cards"""
-        player.plrDiscardCards(3, force=True)
+        player.plr_discard_cards(3, force=True)
 
 
 ###############################################################################
@@ -32,16 +32,16 @@ class Test_Warehouse(unittest.TestCase):
 
     def test_playcard(self):
         """Play a warehouse"""
-        self.plr.setHand("Estate", "Copper", "Silver", "Gold")
-        self.plr.setDeck("Province", "Province", "Province", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate", "Copper", "Silver", "Gold")
+        self.plr.set_deck("Province", "Province", "Province", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "discard estate",
             "discard copper",
             "discard duchy",
             "finish",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         # Initial hand size - 3 discards + 3 pickups - 1 played
         self.assertEqual(self.plr.hand.size(), 5 - 3 + 3 - 1)
         self.assertEqual(self.plr.get_actions(), 1)

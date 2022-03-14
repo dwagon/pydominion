@@ -18,7 +18,7 @@ class Card_Cemetery(Card.Card):
         self.heirloom = "Haunted Mirror"
 
     def hook_gain_this_card(self, game, player):
-        player.plrTrashCard(num=4)
+        player.plr_trash_card(num=4)
 
 
 ###############################################################################
@@ -31,13 +31,13 @@ class Test_Cemetery(unittest.TestCase):
 
     def test_gain(self):
         """Gain a Cemetery"""
-        self.plr.setHand("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
-        self.plr.gainCard("Cemetery")
+        self.plr.gain_card("Cemetery")
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNone(self.g.in_trash("Duchy"))
-        self.assertEqual(self.plr.getScoreDetails()["Cemetery"], 2)
+        self.assertEqual(self.plr.get_score_details()["Cemetery"], 2)
 
 
 ###############################################################################

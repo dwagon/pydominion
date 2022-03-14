@@ -23,17 +23,17 @@ class Card_Crossroads(Card.Card):
         +3 Actions"""
         vict = 0
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.isVictory():
                 vict += 1
         if vict:
             player.output("Picking up %d cards" % vict)
-            player.pickupCards(vict)
+            player.pickup_cards(vict)
         else:
             player.output("No victory cards")
         numcross = sum([1 for c in player.played if c.name == "Crossroads"])
         if numcross == 1:
-            player.addActions(3)
+            player.add_actions(3)
 
 
 ###############################################################################
@@ -46,18 +46,18 @@ class Test_Crossroads(unittest.TestCase):
 
     def test_play(self):
         """Play crossroads once"""
-        self.plr.setHand("Silver", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Silver", "Estate", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 3)
 
     def test_play_twice(self):
         """Play crossroads again"""
-        self.plr.setHand("Silver", "Copper", "Crossroads")
-        self.plr.setPlayed("Crossroads")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Silver", "Copper", "Crossroads")
+        self.plr.set_played("Crossroads")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 0)
 

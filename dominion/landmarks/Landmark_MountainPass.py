@@ -27,7 +27,7 @@ class Landmark_MountainPass(Landmark.Landmark):
             while True:
                 plr = game.playerToRight(plr)
                 opts = self.generate_bids(curbid)
-                bid = plr.plrChooseOptions("What to bid for 8VP?", *opts)
+                bid = plr.plr_choose_options("What to bid for 8VP?", *opts)
                 if bid > curbid:
                     curbid = bid
                     winning_plr = plr
@@ -36,7 +36,7 @@ class Landmark_MountainPass(Landmark.Landmark):
 
             if winning_plr:
                 winning_plr.debt += curbid
-                winning_plr.addScore("Mountain Pass", 8)
+                winning_plr.add_score("Mountain Pass", 8)
                 game.output(
                     "%s won with a bid of %d for 8VP" % (winning_plr.name, curbid)
                 )
@@ -74,15 +74,15 @@ class Test_MountainPass(unittest.TestCase):
     def test_play(self):
         """Test Mountain Pass"""
         self.assertEqual(self.mp._state, "un")
-        self.plr.gainCard("Province")
+        self.plr.gain_card("Province")
         self.assertEqual(self.mp._state, "do")
         self.other.test_input = ["24"]
         self.plr.test_input = ["25"]
         self.plr.end_turn()
         self.assertEqual(self.plr.debt, 25)
         self.assertEqual(self.other.debt, 0)
-        self.assertEqual(self.plr.getScoreDetails()["Mountain Pass"], 8)
-        self.assertNotIn("Mountain Pass", self.other.getScoreDetails())
+        self.assertEqual(self.plr.get_score_details()["Mountain Pass"], 8)
+        self.assertNotIn("Mountain Pass", self.other.get_score_details())
         self.assertEqual(self.mp._state, "done")
 
 

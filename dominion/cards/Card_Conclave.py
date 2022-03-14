@@ -32,10 +32,10 @@ class Card_Conclave(Card.Card):
             toprint = "Play {}".format(p.name)
             options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
-        o = player.userInput(options, "What card do you want to play?")
+        o = player.user_input(options, "What card do you want to play?")
         if o["card"]:
-            player.playCard(o["card"], costAction=False)
-            player.addActions(1)
+            player.play_card(o["card"], costAction=False)
+            player.add_actions(1)
 
 
 ###############################################################################
@@ -47,17 +47,17 @@ class Test_Conclave(unittest.TestCase):
         self.card = self.g["Conclave"].remove()
 
     def test_played(self):
-        self.plr.setHand("Moat", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setPlayed("Moat")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_hand("Moat", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_played("Moat")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_not_played(self):
-        self.plr.setHand("Moat", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Moat", "Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

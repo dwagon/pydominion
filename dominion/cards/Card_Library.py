@@ -22,15 +22,15 @@ class Card_Library(Card.Card):
         aside action cards drawn this way, as you draw them; discard
         the set aside cards after you finish drawing"""
         while player.hand.size() < 7:
-            c = player.nextCard()
+            c = player.next_card()
             if c.isAction():
                 if self.discardChoice(player, c):
-                    player.addCard(c, "discard")
+                    player.add_card(c, "discard")
                     continue
-            player.pickupCard(c)
+            player.pickup_card(c)
 
     def discardChoice(self, plr, card):
-        ans = plr.plrChooseOptions(
+        ans = plr.plr_choose_options(
             "Picked up %s. Discard from library?" % card.name,
             ("Discard %s" % card.name, True),
             ("Keep %s" % card.name, False),
@@ -45,27 +45,27 @@ class Test_Library(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Library"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_noactions(self):
         """Play a library where no actions are drawn"""
-        self.plr.setDeck("Duchy", "Copper", "Gold")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Duchy", "Copper", "Gold")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_actions_discard(self):
         """Play a library where actions are drawn and discarded"""
-        self.plr.setDeck("Duchy", "Moat", "Gold")
+        self.plr.set_deck("Duchy", "Moat", "Gold")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Moat")
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_actions_keep(self):
         """Play a library where actions are drawn and kept"""
-        self.plr.setDeck("Duchy", "Moat", "Gold")
+        self.plr.set_deck("Duchy", "Moat", "Gold")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.deck[-1].name, "Duchy")
         self.assertEqual(self.plr.hand.size(), 7)

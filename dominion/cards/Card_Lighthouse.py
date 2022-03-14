@@ -19,10 +19,10 @@ class Card_Lighthouse(Card.Card):
         self.cost = 2
 
     def duration(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
     def special(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
 
 ###############################################################################
@@ -32,15 +32,15 @@ class Test_Lighthouse(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Lighthouse"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

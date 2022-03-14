@@ -17,15 +17,15 @@ class Hex_War(Hex.Hex):
     def special(self, game, player):
         count = player.discardpile.size() + player.deck.size()
         while count:
-            c = player.nextCard()
+            c = player.next_card()
             if not c:
                 break
             if c.cost in (3, 4):
                 player.output("Trashing {}".format(c.name))
-                player.trashCard(c)
+                player.trash_card(c)
                 break
             player.output("Discarding {}".format(c.name))
-            player.discardCard(c)
+            player.discard_card(c)
             count -= 1
         else:
             player.output("No cards costing 3 or 4 in deck")
@@ -44,8 +44,8 @@ class Test_War(unittest.TestCase):
 
     def test_war(self):
         tsize = self.g.trashSize()
-        self.plr.setDeck("Duchy", "Cursed Village", "Silver")
-        self.plr.gainCard("Cursed Village")
+        self.plr.set_deck("Duchy", "Cursed Village", "Silver")
+        self.plr.gain_card("Cursed Village")
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 

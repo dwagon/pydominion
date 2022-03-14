@@ -17,23 +17,23 @@ class Card_Butcher(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        player.gainCoffer(2)
-        trash = player.plrChooseOptions(
+        player.add_coffer(2)
+        trash = player.plr_choose_options(
             "Trash a card to buy a card?",
             ("Don't trash cards", False),
             ("Trash a card", True),
         )
         if not trash:
             return
-        card = player.plrTrashCard(force=True)[0]
+        card = player.plr_trash_card(force=True)[0]
         options = []
-        for i in range(player.getCoffer() + 1):
+        for i in range(player.get_coffers() + 1):
             sel = "%d" % i
             options.append({"selector": sel, "print": "Add %d coins" % i, "coins": i})
-        o = player.userInput(options, "Spend extra coins?")
+        o = player.user_input(options, "Spend extra coins?")
         cost = card.cost + o["coins"]
         player.coffer -= o["coins"]
-        player.plrGainCard(cost=cost)
+        player.plr_gain_card(cost=cost)
 
 
 ###############################################################################
@@ -43,27 +43,27 @@ class Test_Butcher(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Butcher"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a butcher"""
         self.plr.coffer = 0
         self.plr.test_input = ["Don't trash"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoffer(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coffers(), 2)
 
     def test_trash_gold(self):
         """Trash a gold"""
-        self.plr.setHand("Copper", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Gold", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.coffer = 0
         # Trash a card
         # Trash card 3
         # Spend 2 coin
         # Buy card 1
         self.plr.test_input = ["trash a card", "trash gold", "add 2", "get silver"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoffer(), 0)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coffers(), 0)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))

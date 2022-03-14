@@ -24,7 +24,7 @@ class Card_Councilroom(Card.Card):
                 pl.output(
                     "Picking up card due to %s playing a Council Room" % player.name
                 )
-                pl.pickupCard()
+                pl.pickup_card()
 
 
 ###############################################################################
@@ -34,11 +34,11 @@ class Test_Councilroom(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.ccard = self.g["Council Room"].remove()
-        self.plr.addCard(self.ccard, "hand")
+        self.plr.add_card(self.ccard, "hand")
 
     def test_play(self):
         self.assertEqual(self.other.hand.size(), 5)
-        self.plr.playCard(self.ccard)
+        self.plr.play_card(self.ccard)
         self.assertEqual(self.other.hand.size(), 6)
         self.assertEqual(self.plr.hand.size(), 9)
         self.assertEqual(self.plr.get_buys(), 2)

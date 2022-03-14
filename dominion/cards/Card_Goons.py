@@ -19,14 +19,14 @@ class Card_Goons(Card.Card):
 
     def special(self, game, player):
         """Each other player discards down to three cards"""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Discard down to 3 cards")
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         """While this card is in play, when you buy a card +1 VP"""
         player.output("Scored 1 more from goons")
-        player.addScore("Goons", 1)
+        player.add_score("Goons", 1)
 
 
 ###############################################################################
@@ -42,25 +42,25 @@ class Test_Goons(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Goons"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.victim.hand.size(), 3)
 
     def test_defended(self):
-        self.victim.setHand("Moat", "Estate", "Gold", "Copper")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Moat", "Estate", "Gold", "Copper")
+        self.plr.play_card(self.card)
         self.assertEqual(self.victim.hand.size(), 4)
 
     def test_buy(self):
-        self.victim.setHand("Moat", "Estate", "Gold", "Copper")
-        self.plr.playCard(self.card)
-        self.plr.buyCard(self.g["Copper"])
-        sc = self.plr.getScoreDetails()
+        self.victim.set_hand("Moat", "Estate", "Gold", "Copper")
+        self.plr.play_card(self.card)
+        self.plr.buy_card(self.g["Copper"])
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Goons"], 1)
 
 

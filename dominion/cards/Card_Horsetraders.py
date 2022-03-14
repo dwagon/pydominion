@@ -20,7 +20,7 @@ class Card_Horsetraders(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2)
+        player.plr_discard_cards(num=2)
 
     def todo(self):  # TODO
         """When another player plays an Attack card, you may set
@@ -37,12 +37,12 @@ class Test_Horsetraders(unittest.TestCase):
         self.card = self.g["Horse Traders"].remove()
 
     def test_play(self):
-        self.plr.setHand("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertEqual(self.plr.discardpile.size(), 2)
 
 

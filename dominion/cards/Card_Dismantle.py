@@ -16,16 +16,16 @@ class Card_Dismantle(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             force=True,
             printcost=True,
             prompt="Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold.",
         )
         cost = tc[0].cost
         if cost:
-            player.plrGainCard(cost=cost - 1)
+            player.plr_gain_card(cost=cost - 1)
             player.output("Gained a Gold")
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################
@@ -37,19 +37,19 @@ class Test_Dismantle(unittest.TestCase):
         self.rcard = self.g["Dismantle"].remove()
 
     def test_free(self):
-        self.plr.setHand("Copper", "Estate", "Silver", "Province")
-        self.plr.addCard(self.rcard, "hand")
+        self.plr.set_hand("Copper", "Estate", "Silver", "Province")
+        self.plr.add_card(self.rcard, "hand")
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rcard)
+        self.plr.play_card(self.rcard)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.hand.size(), 3)
 
     def test_non_free(self):
-        self.plr.setHand("Estate", "Silver", "Province")
-        self.plr.addCard(self.rcard, "hand")
+        self.plr.set_hand("Estate", "Silver", "Province")
+        self.plr.add_card(self.rcard, "hand")
         self.plr.test_input = ["trash estate", "get copper"]
-        self.plr.playCard(self.rcard)
+        self.plr.play_card(self.rcard)
         self.assertIsNotNone(self.g.in_trash("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

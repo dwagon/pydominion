@@ -20,9 +20,9 @@ class Card_Hideout(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        card = player.plrTrashCard(num=1, force=True)
+        card = player.plr_trash_card(num=1, force=True)
         if card[0].isVictory():
-            player.gainCard("Curse")
+            player.gain_card("Curse")
 
 
 ###############################################################################
@@ -32,23 +32,23 @@ class Test_Hideout(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
-        self.plr.setDeck("Silver")
-        self.plr.setHand("Copper", "Estate")
+    def test_play_card(self):
+        self.plr.set_deck("Silver")
+        self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 2)
 
     def test_trashVictory(self):
-        self.plr.setDeck("Silver")
-        self.plr.setHand("Copper", "Estate")
+        self.plr.set_deck("Silver")
+        self.plr.set_hand("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertIsNotNone(self.plr.in_discard("Curse"))

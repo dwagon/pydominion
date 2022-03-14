@@ -31,25 +31,25 @@ class Card_Doctor(Card.Card):
             sel = "%s" % index
             options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
             index += 1
-        o = player.userInput(
+        o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
         )
         cards = []
         for _ in range(3):
-            cards.append(player.nextCard())
+            cards.append(player.next_card())
         for card in cards:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.name == o["card"].name:
                 player.output("Trashing %s" % card.name)
-                player.trashCard(card)
+                player.trash_card(card)
             else:
                 player.output("Putting %s back" % card.name)
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
     def hook_overpay(self, game, player, amount):
         for i in range(amount):
             player.output("Doctoring %d/%d" % (i + 1, amount))
-            card = player.nextCard()
+            card = player.next_card()
             options = []
             options.append(
                 {
@@ -72,17 +72,17 @@ class Card_Doctor(Card.Card):
                     Card.TYPE_ACTION: "discard",
                 }
             )
-            o = player.userInput(
+            o = player.user_input(
                 options, "What to do with the top card %s?" % card.name
             )
             if o[Card.TYPE_ACTION] == "trash":
-                player.trashCard(card)
+                player.trash_card(card)
                 player.output("Trashing %s" % card.name)
             elif o[Card.TYPE_ACTION] == "discard":
-                player.addCard(card, "discard")
+                player.add_card(card, "discard")
                 player.output("Discarding %s" % card.name)
             elif o[Card.TYPE_ACTION] == "put back":
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
                 player.output("Putting %s back" % card.name)
 
 
@@ -93,13 +93,13 @@ class Test_Doctor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Doctor"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play the Doctor"""
-        self.plr.setDeck("Silver", "Province", "Duchy")
+        self.plr.set_deck("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_deck("Silver"))
         self.assertIsNotNone(self.plr.in_deck("Duchy"))
@@ -108,8 +108,8 @@ class Test_Doctor(unittest.TestCase):
         """Buy a Doctor"""
         self.plr.coin = 6
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
-        self.plr.setDeck("Silver", "Province", "Duchy")
-        self.plr.buyCard(self.g["Doctor"])
+        self.plr.set_deck("Silver", "Province", "Duchy")
+        self.plr.buy_card(self.g["Doctor"])
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
         self.assertEqual(self.plr.deck[-1].name, "Silver")

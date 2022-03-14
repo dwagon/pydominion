@@ -22,16 +22,16 @@ class Card_Seer(Card.Card):
     def special(self, game, player):
         drawn = []
         for _ in range(3):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
                 player.output("Putting {} into your hand".format(c))
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
             else:
                 drawn.append(c)
         for card in drawn:
             player.output("Putting {} back on deck".format(card))
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -43,10 +43,10 @@ class Test_Seer(unittest.TestCase):
         self.card = self.g["Seer"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Copper", "Silver", "Estate", "Province")
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Copper", "Silver", "Estate", "Province")
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_deck("Copper"))

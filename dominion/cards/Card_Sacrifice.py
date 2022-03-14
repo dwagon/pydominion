@@ -19,17 +19,17 @@ class Card_Sacrifice(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        cards = player.plrTrashCard()
+        cards = player.plr_trash_card()
         if not cards:
             return
         card = cards[0]
         if card.isAction():
-            player.pickupCards(2)
-            player.addActions(2)
+            player.pickup_cards(2)
+            player.add_actions(2)
         if card.isTreasure():
-            player.addCoin(2)
+            player.add_coins(2)
         if card.isVictory():
-            player.addScore("Sacrifice", 2)
+            player.add_score("Sacrifice", 2)
 
 
 ###############################################################################
@@ -42,29 +42,29 @@ class Test_Sacrifice(unittest.TestCase):
 
     def test_play_action(self):
         """Sacrifice an Action"""
-        self.plr.setHand("Moat")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Moat")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertIsNotNone(self.g.in_trash("Moat"))
 
     def test_play_treasure(self):
         """Sacrifice a Treasure"""
-        self.plr.setHand("Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["silver"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_victory(self):
         """Sacrifice a Victory"""
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy"]
-        self.plr.playCard(self.card)
-        sc = self.plr.getScoreDetails()
+        self.plr.play_card(self.card)
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Sacrifice"], 2)
 
 

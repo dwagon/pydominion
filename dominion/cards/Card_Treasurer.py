@@ -20,7 +20,7 @@ class Card_Treasurer(Card.Card):
     ###########################################################################
     def special(self, game, player):
         gain_treas = [_ for _ in game.trashpile if _.isTreasure()]
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Choose one?",
             ("Trash a treasure from your hand", "trash"),
             (
@@ -31,14 +31,14 @@ class Card_Treasurer(Card.Card):
         )
         if choice == "trash":
             treas = [_ for _ in player.hand if _.isTreasure()]
-            player.plrTrashCard(cardsrc=treas)
+            player.plr_trash_card(cardsrc=treas)
         elif choice == "gain":
-            card = player.cardSel(
+            card = player.card_sel(
                 cardsrc=gain_treas, prompt="Select Treasure from the Trash"
             )
             if card:
                 game.trashpile.remove(card[0])
-                player.addCard(card[0], "hand")
+                player.add_card(card[0], "hand")
         elif choice == "key":
             player.assign_artifact("Key")
 
@@ -49,28 +49,28 @@ class Test_Treasurer(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Treasurer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.plr.setHand("Copper", "Silver")
+        self.plr.set_hand("Copper", "Silver")
         self.card = self.g["Treasurer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_trash(self):
         self.plr.test_input = ["Trash a treasure", "Silver"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_play_recover(self):
         self.g.set_trash("Gold", "Estate")
         self.plr.test_input = ["Gain a treasure", "Gold"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_play_key(self):
         self.plr.test_input = ["Take the key"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.plr.has_artifact("Key"))
 
 

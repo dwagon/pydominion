@@ -19,9 +19,9 @@ class Card_Smugglers(Card.Card):
         plr = game.playerToRight(player)
         cards = [c for c in plr.stats["bought"] if c.cost <= 6]
         if cards:
-            card = player.cardSel(cardsrc=cards)
+            card = player.card_sel(cardsrc=cards)
             if card:
-                player.addCard(card[0])
+                player.add_card(card[0])
         else:
             player.output("%s didn't buy any suitable cards" % plr.name)
 
@@ -38,8 +38,8 @@ class Test_Smugglers(unittest.TestCase):
         """Play a smugglers"""
         self.other.stats["bought"] = [self.g["Gold"].remove()]
         self.plr.test_input = ["gold"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
 

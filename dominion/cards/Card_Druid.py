@@ -31,7 +31,7 @@ class Card_Druid(Card.Card):
             bn = list(game._druid_area)[i]
             toprint = "Receive {}: {}".format(bn.name, bn.description(player))
             options.append({"selector": sel, "print": toprint, Card.TYPE_BOON: bn})
-        b = player.userInput(options, "Which boon? ")
+        b = player.user_input(options, "Which boon? ")
         player.receive_boon(boon=b[Card.TYPE_BOON], discard=False)
 
 
@@ -42,12 +42,12 @@ class Test_Druid(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Druid"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Druid"""
         self.plr.test_input = ["0", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.get_buys(), 2)
 
     def test_setaside(self):

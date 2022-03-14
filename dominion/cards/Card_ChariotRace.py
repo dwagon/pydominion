@@ -20,23 +20,23 @@ class Card_ChariotRace(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        card = player.pickupCard()
-        player.revealCard(card)
+        card = player.pickup_card()
+        player.reveal_card(card)
         other = game.playerToLeft(player)
-        othercard = other.nextCard()
+        othercard = other.next_card()
         if card.cost > othercard.cost:
             player.output(
                 "Your %s costs more than %s's %s"
                 % (card.name, other.name, othercard.name)
             )
-            player.addCoin()
-            player.addScore("Chariot Race")
+            player.add_coins()
+            player.add_score("Chariot Race")
         else:
             player.output(
                 "Your %s costs less than %s's %s - Getting nothing"
                 % (card.name, other.name, othercard.name)
             )
-        other.addCard(othercard, "topdeck")
+        other.add_card(othercard, "topdeck")
 
 
 ###############################################################################
@@ -49,24 +49,24 @@ class Test_ChariotRace(unittest.TestCase):
 
     def test_play_win(self):
         """Play a Chariot Race and win"""
-        self.plr.setDeck("Gold")
-        self.vic.setDeck("Silver")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Gold")
+        self.vic.set_deck("Silver")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertEqual(self.plr.score["Chariot Race"], 1)
 
     def test_play_lose(self):
         """Play a Chariot Race and lose"""
         self.plr.score["Chariot Race"] = 0
-        self.plr.setDeck("Silver")
-        self.vic.setDeck("Province")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Silver")
+        self.vic.set_deck("Province")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNotNone(self.plr.in_hand("Silver"))
         self.assertEqual(self.plr.score["Chariot Race"], 0)
 

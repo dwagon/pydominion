@@ -21,18 +21,18 @@ class Card_Patrol(Card.Card):
     def special(self, game, player):
         cards = set()
         for _ in range(4):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c is None:
                 break
             if c.isVictory() or c.name == "Curse":
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 player.output("Patrol adding {}".format(c.name))
             else:
                 cards.add(c)
         for c in cards:
             player.output("Putting {} back on deck".format(c.name))
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
 
 
 ###############################################################################
@@ -44,12 +44,12 @@ class Test_Patrol(unittest.TestCase):
         self.card = self.g["Patrol"].remove()
 
     def test_play(self):
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.setDeck(
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_deck(
             "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
         )
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Duchy"))

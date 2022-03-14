@@ -21,7 +21,7 @@ class Card_Dame_Anna(KnightCard):
 
     def special(self, game, player):
         for _ in range(2):
-            player.plrTrashCard()
+            player.plr_trash_card()
         self.knight_special(game, player)
 
 
@@ -39,10 +39,10 @@ class Test_Dame_Anna(unittest.TestCase):
     def test_score(self):
         """Play the Dame"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Duchy", "Province")
+        self.plr.set_hand("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Province"))
 

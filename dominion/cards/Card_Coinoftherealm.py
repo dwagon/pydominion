@@ -19,7 +19,7 @@ class Card_Coinoftherealm(Card.Card):
 
     def hook_call_reserve(self, game, player):
         """Directly after resolving an action you may call this for +2 Actions"""
-        player.addActions(2)
+        player.add_actions(2)
 
 
 ###############################################################################
@@ -32,10 +32,10 @@ class Test_Coinoftherealm(unittest.TestCase):
 
     def test_play(self):
         """Play a coin of the realm"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.reserve.size(), 1)
         c = self.plr.in_reserve("Coin of the Realm")
         self.assertEqual(c.name, "Coin of the Realm")
@@ -43,8 +43,8 @@ class Test_Coinoftherealm(unittest.TestCase):
     def test_call(self):
         """Call from Reserve"""
         self.plr.actions = 0
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         c = self.plr.call_reserve("Coin of the Realm")
         self.assertEqual(c.name, "Coin of the Realm")
         self.assertEqual(self.plr.get_actions(), 2)

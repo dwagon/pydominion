@@ -20,14 +20,14 @@ class Card_MarketSquare(Card.Card):
         self.cost = 3
 
     def hook_trash_card(self, game, player, card):
-        gold = player.plrChooseOptions(
+        gold = player.plr_choose_options(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),
             ("Discard and gain a Gold", True),
         )
         if gold:
-            player.discardCard(self)
-            player.gainCard("Gold")
+            player.discard_card(self)
+            player.gain_card("Gold")
 
 
 ###############################################################################
@@ -40,24 +40,24 @@ class Test_MarketSquare(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_trash_and_keep(self):
         """Choose to keep MS after a trash"""
-        self.plr.setHand("Copper", "Market Square")
+        self.plr.set_hand("Copper", "Market Square")
         self.plr.test_input = ["keep"]
-        self.plr.trashCard(self.plr.in_hand("Copper"))
+        self.plr.trash_card(self.plr.in_hand("Copper"))
         self.assertIsNotNone(self.plr.in_hand("Market Square"))
 
     def test_trash_and_discard(self):
         """Choose to keep MS after a trash"""
-        self.plr.setHand("Copper", "Market Square")
+        self.plr.set_hand("Copper", "Market Square")
         self.plr.test_input = ["discard"]
-        self.plr.trashCard(self.plr.in_hand("Copper"))
+        self.plr.trash_card(self.plr.in_hand("Copper"))
         self.assertIsNone(self.plr.in_hand("Market Square"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 

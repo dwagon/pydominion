@@ -17,10 +17,10 @@ class Card_Altar(Card.Card):
 
     def special(self, game, player):
         # Trash a card from your hand
-        player.plrTrashCard(prompt="Trash a card from your hand", force=True)
+        player.plr_trash_card(prompt="Trash a card from your hand", force=True)
 
         # Gain a card costing up to 5 Coin
-        player.plrGainCard(5)
+        player.plr_gain_card(5)
 
 
 ###############################################################################
@@ -33,10 +33,10 @@ class Test_Altar(unittest.TestCase):
 
     def test_play(self):
         """Play an Altar"""
-        self.plr.setHand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Province", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.g.in_trash("Province"))
 

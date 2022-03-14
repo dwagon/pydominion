@@ -23,8 +23,8 @@ class Card_Swashbuckler(Card.Card):
     def special(self, game, player):
         if player.discardpile.size() >= 1:
             player.output("Gained a coffer")
-            player.gainCoffer(1)
-            if player.getCoffer() >= 4:
+            player.add_coffer(1)
+            if player.get_coffers() >= 4:
                 if not player.has_artifact("Treasure Chest"):
                     player.output("Gained the Treasure Chest")
                     player.assign_artifact("Treasure Chest")
@@ -39,37 +39,37 @@ class Test_Swashbuckler(unittest.TestCase):
         self.card = self.g["Swashbuckler"].remove()
 
     def test_play_no_discard(self):
-        self.plr.setCoffer(0)
-        self.plr.setDiscard()
+        self.plr.set_coffers(0)
+        self.plr.set_discard()
         card = self.g["Swashbuckler"].remove()
-        self.plr.addCard(card, "hand")
-        self.plr.playCard(card)
-        self.assertEqual(self.plr.getCoffer(), 0)
+        self.plr.add_card(card, "hand")
+        self.plr.play_card(card)
+        self.assertEqual(self.plr.get_coffers(), 0)
 
     def test_play_no_discard_coffers(self):
         """Player shouldn't get the Treasure Chest if they have no discards"""
-        self.plr.setCoffer(4)
-        self.plr.setDiscard()
+        self.plr.set_coffers(4)
+        self.plr.set_discard()
         card = self.g["Swashbuckler"].remove()
-        self.plr.addCard(card, "hand")
-        self.plr.playCard(card)
-        self.assertEqual(self.plr.getCoffer(), 4)
+        self.plr.add_card(card, "hand")
+        self.plr.play_card(card)
+        self.assertEqual(self.plr.get_coffers(), 4)
         self.assertFalse(self.plr.has_artifact("Treasure Chest"))
 
     def test_play_discard(self):
-        self.plr.setCoffer(0)
-        self.plr.setDiscard("Copper")
+        self.plr.set_coffers(0)
+        self.plr.set_discard("Copper")
         card = self.g["Swashbuckler"].remove()
-        self.plr.addCard(card, "hand")
-        self.plr.playCard(card)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.plr.add_card(card, "hand")
+        self.plr.play_card(card)
+        self.assertEqual(self.plr.get_coffers(), 1)
 
     def test_play_coffers(self):
-        self.plr.setCoffer(3)
-        self.plr.setDiscard("Copper")
+        self.plr.set_coffers(3)
+        self.plr.set_discard("Copper")
         card = self.g["Swashbuckler"].remove()
-        self.plr.addCard(card, "hand")
-        self.plr.playCard(card)
+        self.plr.add_card(card, "hand")
+        self.plr.play_card(card)
         self.assertIsNotNone(self.plr.has_artifact("Treasure Chest"))
 
 

@@ -18,16 +18,16 @@ class Card_MountainVillage(Card.Card):
 
     def special(self, game, player):
         if player.discardpile.size():
-            card = player.cardSel(
+            card = player.card_sel(
                 cardsrc="discard",
                 force=True,
                 prompt="Look through your discard pile and put a card from it into your hand",
             )
             player.discardpile.remove(card[0])
-            player.addCard(card[0], "hand")
+            player.add_card(card[0], "hand")
         else:
             player.output("No cards in discard pile")
-            player.pickupCards(1)
+            player.pickup_cards(1)
 
 
 ###############################################################################
@@ -37,20 +37,20 @@ class Test_MountainVillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mountain Village"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_no_discard(self):
         """Play Mountain Village without a discard card"""
-        self.plr.setDiscard()
-        self.plr.playCard(self.card)
+        self.plr.set_discard()
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_discard(self):
         """Play Mountain Village with a discard card"""
-        self.plr.setDiscard("Gold", "Silver")
+        self.plr.set_discard("Gold", "Silver")
         self.plr.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNone(self.plr.in_discard("Gold"))

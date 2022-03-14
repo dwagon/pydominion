@@ -20,17 +20,17 @@ class Card_Embargo(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash this card?",
             ("Keep this card", False),
             ("Trash this card to embargo", True),
         )
         if not trash:
             return
-        player.trashCard(self)
+        player.trash_card(self)
         piles = list(game.cardpiles.values())
         piles.sort()
-        card = player.cardSel(cardsrc=piles, prompt="Which stack to embargo")
+        card = player.card_sel(cardsrc=piles, prompt="Which stack to embargo")
         game[card[0].name].embargo()
 
 
@@ -43,10 +43,10 @@ class Test_Embargo(unittest.TestCase):
         self.card = self.g["Embargo"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash", "Select Silver"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.g["Silver"].embargo_level, 1)
         self.assertIsNotNone(self.g.in_trash("Embargo"))
 

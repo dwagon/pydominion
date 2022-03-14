@@ -20,7 +20,7 @@ class Card_SecretCave(Card.Card):
         self._discarded = False
 
     def special(self, game, player):
-        dcs = player.plrDiscardCards(
+        dcs = player.plr_discard_cards(
             num=3, prompt="If you discard 3 cards next turn gain 3 Coin"
         )
         if dcs:
@@ -29,7 +29,7 @@ class Card_SecretCave(Card.Card):
     def duration(self, game, player):
         if self._discarded:
             player.output("Gained 3 Coin from Secret Cave")
-            player.addCoin(3)
+            player.add_coins(3)
 
 
 ###############################################################################
@@ -42,22 +42,22 @@ class Test_SecretCave(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Secret Cave"""
-        self.plr.setHand("Silver", "Estate", "Duchy", "Province", "Copper")
+        self.plr.set_hand("Silver", "Estate", "Duchy", "Province", "Copper")
         self.plr.test_input = [
             "Discard Silver",
             "Discard Duchy",
             "Discard Province",
             "Finish",
         ]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.get_actions(), 1)
             self.assertEqual(self.plr.discardpile.size(), 3)
             self.assertEqual(self.plr.hand.size(), 5 + 1 - 3)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.getCoin(), 3)
+            self.assertEqual(self.plr.get_coins(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

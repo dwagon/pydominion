@@ -22,22 +22,22 @@ class Card_BorderGuard(Card.Card):
         ncards = 3 if player.has_artifact("Lantern") else 2
         cards = []
         for _ in range(ncards):
-            card = player.nextCard()
-            player.revealCard(card)
+            card = player.next_card()
+            player.reveal_card(card)
             cards.append(card)
         nacts = sum([1 for _ in cards if _.isAction()])
-        ch = player.cardSel(
+        ch = player.card_sel(
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )
-        player.addCard(ch[0], "hand")
+        player.add_card(ch[0], "hand")
         cards.remove(ch[0])
         for card in cards:
             player.output("Putting {} into the discard pile".format(card.name))
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
 
         if nacts == ncards:
-            art = player.plrChooseOptions(
+            art = player.plr_choose_options(
                 "Pick an artifact to take",
                 ("Take Lantern (Border Guard reveals 3 cards)", "Lantern"),
                 ("Take Horn (May put discarded Border Guard into hand)", "Horn"),
@@ -47,13 +47,13 @@ class Card_BorderGuard(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if not player.has_artifact("Horn"):
             return
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Use Horn and put Border Guard into hand?",
             ("Put into hand", True),
             ("Keep in discard", False),
         )
         if ch:
-            player.addCard(self, "topdeck")
+            player.add_card(self, "topdeck")
             player.discardpile.remove(self)
 
 
@@ -68,19 +68,19 @@ class Test_BorderGuard(unittest.TestCase):
         self.card = self.g["Border Guard"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_play_actions(self):
-        self.plr.setDeck("Moat", "Guide")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Moat", "Guide")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Guide"))
         self.assertTrue(self.plr.has_artifact("Horn"))

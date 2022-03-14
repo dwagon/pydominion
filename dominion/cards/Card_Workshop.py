@@ -17,7 +17,7 @@ class Card_Workshop(Card.Card):
 
     def special(self, game, player):
         """Gain a card costing up to 4"""
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
 
 ###############################################################################
@@ -32,17 +32,17 @@ class Test_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.wcard = self.g["Workshop"].remove()
-        self.plr.addCard(self.wcard, "hand")
+        self.plr.add_card(self.wcard, "hand")
 
     def test_gainzero(self):
         self.plr.test_input = ["Finish"]
-        self.plr.playCard(self.wcard)
+        self.plr.play_card(self.wcard)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ["Get Gardens"]
-        self.plr.playCard(self.wcard)
+        self.plr.play_card(self.wcard)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertLessEqual(self.plr.discardpile[0].cost, 4)

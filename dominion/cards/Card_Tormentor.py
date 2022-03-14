@@ -20,10 +20,10 @@ class Card_Tormentor(Card.Card):
 
     def special(self, game, player):
         if player.played.size() == 1:  # Include this card
-            player.gainCard("Imp")
+            player.gain_card("Imp")
             player.output("Gained an Imp")
         else:
-            for pl in player.attackVictims():
+            for pl in player.attack_victims():
                 player.output("Hexed {}".format(pl.name))
                 pl.output("Received a hex from {}'s Tormentor".format(player.name))
                 pl.receive_hex()
@@ -43,16 +43,16 @@ class Test_Tormentor(unittest.TestCase):
 
     def test_play_imp(self):
         """Play tormentor with no other cards being played"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_discard("Imp"))
 
     def test_play_hex(self):
         """Play tormentor with other cards already being played"""
-        self.plr.setPlayed("Tormentor")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_played("Tormentor")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Imp"))
         self.assertTrue(self.vic.has_state("Deluded"))
 

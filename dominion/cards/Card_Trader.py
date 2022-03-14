@@ -17,18 +17,18 @@ class Card_Trader(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        card = player.plrTrashCard(
+        card = player.plr_trash_card(
             prompt="Trash a card from your hand. Gain a number of Silvers equal to its cost in coins."
         )
         if card:
             player.output("Gaining %d Silvers" % card[0].cost)
             for _ in range(card[0].cost):
-                player.gainCard("Silver")
+                player.gain_card("Silver")
 
     def hook_gain_card(self, game, player, card):
         if card.name == "Silver":
             return {}
-        silver = player.plrChooseOptions(
+        silver = player.plr_choose_options(
             "From your Trader gain %s or gain a Silver instead?" % card.name,
             ("Still gain %s" % card.name, False),
             ("Instead gain Silver", True),
@@ -49,10 +49,10 @@ class Test_Trader(unittest.TestCase):
     def test_play(self):
         """Play a trader - trashing an estate"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["estate", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, "Silver")
@@ -61,9 +61,9 @@ class Test_Trader(unittest.TestCase):
 
     def test_gain(self):
         self.plr.test_input = ["Instead"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.setCoin(6)
-        self.plr.buyCard(self.g["Gold"])
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_coins(6)
+        self.plr.buy_card(self.g["Gold"])
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNone(self.plr.in_discard("Gold"))
 

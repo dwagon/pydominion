@@ -19,8 +19,8 @@ class Card_Sirmichael(KnightCard):
         self.cost = 5
 
     def special(self, game, player):
-        for plr in player.attackVictims():
-            plr.plrDiscardDownTo(3)
+        for plr in player.attack_victims():
+            plr.plr_discard_down_to(3)
         self.knight_special(game, player)
 
 
@@ -40,8 +40,8 @@ class Test_Sir_Michael(unittest.TestCase):
     def test_score(self):
         """Play the Sir"""
         self.vic.test_input = ["1", "2", "0"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
 
 

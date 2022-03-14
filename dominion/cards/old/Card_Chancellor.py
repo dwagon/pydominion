@@ -17,12 +17,12 @@ class Card_Chancellor(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Discard deck?", ("Don't Discard", False), ("Discard Deck", True)
         )
         if ans:
             for c in player.deck[:]:
-                player.addCard(c, "discard")
+                player.add_card(c, "discard")
                 player.deck.remove(c)
 
 
@@ -33,24 +33,24 @@ class Test_Chancellor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chancellor"].remove()
-        self.plr.setHand("Estate")
-        self.plr.addCard(self.ccard, "hand")
+        self.plr.set_hand("Estate")
+        self.plr.add_card(self.ccard, "hand")
 
     def test_nodiscard(self):
-        self.plr.setDeck("Copper", "Silver", "Gold")
-        self.plr.setDiscard("Estate", "Duchy", "Province")
+        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.set_discard("Estate", "Duchy", "Province")
         self.plr.test_input = ["Don't discard"]
-        self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.ccard)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.deck.size(), 3)
         self.assertEqual(self.plr.discardpile.size(), 3)
 
     def test_discard(self):
-        self.plr.setDeck("Copper", "Silver", "Gold")
-        self.plr.setDiscard("Estate", "Duchy", "Province")
+        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.set_discard("Estate", "Duchy", "Province")
         self.plr.test_input = ["discard deck"]
-        self.plr.playCard(self.ccard)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.ccard)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.discardpile.size(), 6)
 

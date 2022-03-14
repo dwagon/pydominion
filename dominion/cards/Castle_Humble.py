@@ -18,7 +18,7 @@ class Card_HumbleCastle(CastleCard):
 
     def special_score(self, game, player):
         score = 0
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isCastle():
                 score += 1
         return score
@@ -37,13 +37,13 @@ class Test_HumbleCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_score(self):
-        self.plr.addCard(self.card, "discard")
-        score = self.plr.getScoreDetails()
+        self.plr.add_card(self.card, "discard")
+        score = self.plr.get_score_details()
         self.assertEqual(score["Humble Castle"], 1)
 
 

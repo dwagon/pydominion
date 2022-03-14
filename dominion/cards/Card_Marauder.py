@@ -18,10 +18,10 @@ class Card_Marauder(Card.Card):
         self.required_cards = ["Spoils"]
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Gained a ruin from %s's Marauder" % player.name)
-            plr.gainCard("Ruins")
-        player.gainCard("Spoils")
+            plr.gain_card("Ruins")
+        player.gain_card("Spoils")
 
 
 ###############################################################################
@@ -34,8 +34,8 @@ class Test_Marauder(unittest.TestCase):
 
     def test_play(self):
         """Play a marauder"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Spoils"))
         self.assertTrue(self.victim.discardpile[0].isRuin())
 

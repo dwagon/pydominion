@@ -15,16 +15,16 @@ class Landmark_Tower(Landmark.Landmark):
         self.name = "Tower"
 
     def hook_end_of_game(self, game, player):
-        player.addScore("Tower", 0)
+        player.add_score("Tower", 0)
         empties = [
             st
             for st in game.cardpiles
             if game[st].is_empty() and not game[st].isVictory()
         ]
         for emp in empties:
-            for card in player.allCards():
+            for card in player.all_cards():
                 if card.name == emp:
-                    player.addScore("Tower", 1)
+                    player.add_score("Tower", 1)
 
 
 ###############################################################################
@@ -38,18 +38,18 @@ class Test_Tower(unittest.TestCase):
 
     def test_none(self):
         """Use Tower"""
-        self.plr.setHand("Moat", "Moat")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Tower"], 0)
+        self.plr.set_hand("Moat", "Moat")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Tower"], 0)
 
     def test_one(self):
-        self.plr.setHand("Moat", "Moat")
+        self.plr.set_hand("Moat", "Moat")
         while True:
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Tower"], 2)
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Tower"], 2)
 
 
 ###############################################################################

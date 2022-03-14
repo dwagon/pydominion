@@ -17,9 +17,9 @@ class Card_Remake(Card.Card):
 
     def special(self, game, player):
         for _ in range(2):
-            c = player.plrTrashCard(prompt="Trash a card and gain one costing 1 more")
+            c = player.plr_trash_card(prompt="Trash a card and gain one costing 1 more")
             if c:
-                player.plrGainCard(cost=c[0].cost + 1, modifier="equal")
+                player.plr_gain_card(cost=c[0].cost + 1, modifier="equal")
 
 
 ###############################################################################
@@ -32,15 +32,15 @@ class Test_Remake(unittest.TestCase):
 
     def test_playcard(self):
         """Play a remake"""
-        self.plr.setHand("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Trash Estate",
             "Get Silver",
             "Trash Copper",
             "Finish Selecting",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 

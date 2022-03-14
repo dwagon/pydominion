@@ -19,12 +19,12 @@ class Card_Goatherd(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        player.plrTrashCard()
+        player.plr_trash_card()
         ptr = game.playerToRight(player)
         ctr = len(ptr.stats["trashed"])
         if ctr:
             player.output("Picking up {} cards".format(ctr))
-            player.pickupCards(ctr)
+            player.pickup_cards(ctr)
 
 
 ###############################################################################
@@ -36,12 +36,12 @@ class Test_Goatherd(unittest.TestCase):
         self.card = self.g["Goatherd"].remove()
 
     def test_play_this_turn(self):
-        self.plr.setHand("Copper", "Silver", "Gold", "Province", "Estate")
-        self.plr.setDeck("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Gold", "Province", "Estate")
+        self.plr.set_deck("Duchy")
+        self.plr.add_card(self.card, "hand")
         self.other.stats["trashed"] = ["Silver"]
         self.plr.test_input = ["Trash Province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Duchy"))

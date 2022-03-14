@@ -20,11 +20,11 @@ class Card_Pooka(Card.Card):
         treasures = [
             _ for _ in player.hand if _.isTreasure() and _.name != "Cursed Gold"
         ]
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures
         )
         if tr:
-            player.pickupCards(4)
+            player.pickup_cards(4)
 
 
 ###############################################################################
@@ -37,10 +37,10 @@ class Test_Pooka(unittest.TestCase):
 
     def test_play(self):
         """Play a Pooka"""
-        self.plr.setHand("Copper", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNone(self.g.in_trash("Gold"))

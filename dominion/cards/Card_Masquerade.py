@@ -26,12 +26,12 @@ class Card_Masquerade(Card.Card):
             newplr = game.playerToLeft(plr)
             newcrd = xfer[plr]
             newplr.output("You gained a %s from %s" % (newcrd.name, plr.name))
-            newplr.addCard(newcrd, "hand")
-        player.plrTrashCard()
+            newplr.add_card(newcrd, "hand")
+        player.plr_trash_card()
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.playerToLeft(plr).name
-        cards = plr.cardSel(
+        cards = plr.card_sel(
             prompt="Which card to give to %s?" % leftplr, num=1, force=True
         )
         card = cards[0]
@@ -57,13 +57,13 @@ class Test_Masquerade(unittest.TestCase):
     def test_play(self):
         """Play a masquerade"""
         tsize = self.g.trashSize()
-        self.other.setHand("Copper", "Silver", "Gold")
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.setDeck("Estate", "Duchy", "Province")
-        self.plr.addCard(self.card, "hand")
+        self.other.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_deck("Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["select silver", "finish"]
         self.other.test_input = ["select gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.plr.in_hand("Gold"))
         self.assertTrue(self.other.in_hand("Silver"))
@@ -72,12 +72,12 @@ class Test_Masquerade(unittest.TestCase):
     def test_play_with_trash(self):
         """Play a masquerade and trash after"""
         tsize = self.g.trashSize()
-        self.other.setHand("Copper", "Silver", "Gold")
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.other.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["select gold", "trash silver"]
         self.other.test_input = ["select gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 - 1)
         self.assertEqual(self.g.trashSize(), tsize + 1)
 

@@ -28,7 +28,7 @@ class Card_Lost_City(Card.Card):
         """When you gain this, each other player draws a card"""
         for pl in game.player_list():
             if pl != player:
-                c = pl.pickupCard()
+                c = pl.pickup_card()
                 pl.output(
                     "Picking up a %s due to %s playing a Lost City"
                     % (c.name, player.name)
@@ -46,8 +46,8 @@ class Test_Lost_City(unittest.TestCase):
 
     def test_play(self):
         """Play a lost_city"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertTrue(self.other.hand.size(), 6)
 

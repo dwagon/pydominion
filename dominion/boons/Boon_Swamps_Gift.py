@@ -18,7 +18,7 @@ class Boon_Swamps_Gift(Boon.Boon):
         self.required_cards = [("Card", "Will-o'-Wisp")]
 
     def special(self, game, player):
-        player.gainCard("Will-o'-Wisp")
+        player.gain_card("Will-o'-Wisp")
 
 
 ###############################################################################
@@ -37,9 +37,9 @@ class Test_Swamps_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.g.print_state()
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Will-o'-Wisp"))
 
 

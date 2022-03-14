@@ -20,14 +20,14 @@ class Card_Priest(Card.Card):
     ###########################################################################
     def special(self, game, player):
         self.in_special = True
-        player.plrTrashCard(force=True)
+        player.plr_trash_card(force=True)
         self.in_special = False
 
     ###########################################################################
     def hook_trash_card(self, game, player, card):
         if not self.in_special:
             player.output("Adding 2 from Priest")
-            player.addCoin(2)
+            player.add_coins(2)
 
 
 ###############################################################################
@@ -37,19 +37,19 @@ class Test_Priest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Priest"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.moat = self.g["Moat"].remove()
-        self.plr.addCard(self.moat, "hand")
+        self.plr.add_card(self.moat, "hand")
         self.gold = self.g["Gold"].remove()
-        self.plr.addCard(self.gold, "hand")
+        self.plr.add_card(self.gold, "hand")
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.plr.test_input = ["Trash Moat"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.g.in_trash("Moat"))
-        self.plr.trashCard(self.gold)
-        self.assertEqual(self.plr.getCoin(), 4)
+        self.plr.trash_card(self.gold)
+        self.assertEqual(self.plr.get_coins(), 4)
 
 
 ###############################################################################

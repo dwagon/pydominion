@@ -22,12 +22,12 @@ class Card_Moneylender(Card.Card):
             player.output("No coppers in hand")
             return
         player.output("Trash a copper to gain +3 coin")
-        trash = player.plrChooseOptions(
+        trash = player.plr_choose_options(
             "Trash a copper?", ("Don't trash a copper", False), ("Trash a copper", True)
         )
         if trash:
-            player.trashCard(copper)
-            player.addCoin(3)
+            player.trash_card(copper)
+            player.add_coins(3)
 
 
 ###############################################################################
@@ -40,30 +40,30 @@ class Test_Moneylender(unittest.TestCase):
 
     def test_nocopper(self):
         tsize = self.g.trashSize()
-        self.plr.setHand("Estate", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Estate", "Estate", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_trash_copper(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["1"]
-        self.plr.setHand("Copper", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Copper", "Copper", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertEqual(self.g.trashSize(), tsize + 1)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
     def test_dont_trash_copper(self):
         tsize = self.g.trashSize()
-        self.plr.setHand("Copper", "Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Copper", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

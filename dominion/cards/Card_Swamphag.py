@@ -19,12 +19,12 @@ class Card_Swamphag(Card.Card):
         pass
 
     def duration(self, game, player):
-        player.addCoin(3)
+        player.add_coins(3)
 
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card):
         if player == owner:
             return
-        player.gainCard("Curse")
+        player.gain_card("Curse")
         player.output("Gained a curse from %s's Swamp Hag" % owner.name)
         owner.output("Cursed %s when they bought a %s" % (player.name, card.name))
 
@@ -36,17 +36,17 @@ class Test_Swamphag(unittest.TestCase):
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Swamp Hag"].remove()
-        self.attacker.addCard(self.seahag, "hand")
+        self.attacker.add_card(self.seahag, "hand")
 
     def test_play(self):
-        self.attacker.playCard(self.seahag)
+        self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
-        self.victim.buyCard(self.g["Copper"])
+        self.victim.buy_card(self.g["Copper"])
         self.assertEqual(self.attacker.durationpile[0].name, "Swamp Hag")
         self.assertIsNotNone(self.victim.in_discard("Curse"))
         self.attacker.start_turn()
         self.assertIsNotNone(self.attacker.in_played("Swamp Hag"))
-        self.assertEqual(self.attacker.getCoin(), 3)
+        self.assertEqual(self.attacker.get_coins(), 3)
 
 
 ###############################################################################

@@ -21,11 +21,11 @@ class Card_SmallCastle(CastleCard):
 
     def special(self, game, player):
         cards = [c for c in player.hand if c.isCastle()] + [self]
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash a Castle to gain another Castle", cardsrc=cards
         )
         if tr:
-            newcast = player.gainCard("Castles")
+            newcast = player.gain_card("Castles")
             player.output("Gained %s" % newcast.name)
 
 
@@ -43,15 +43,15 @@ class Test_SmallCastle(unittest.TestCase):
     def test_play(self):
         """Play a castle - trash nothing"""
         self.plr.test_input = ["Finish"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Small Castle"], 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Small Castle"], 2)
 
     def test_trash(self):
         """Play a castle - trash self"""
         self.plr.test_input = ["small"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

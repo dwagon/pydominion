@@ -25,20 +25,20 @@ class Card_Mint(Card.Card):
         if not treasures:
             player.output("No treasures to reveal")
             return
-        toget = player.cardSel(
+        toget = player.card_sel(
             num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"
         )
-        player.revealCard(toget[0])
+        player.reveal_card(toget[0])
         if toget:
             player.output("Gained a %s from the Mint" % toget[0].name)
-            player.gainCard(toget[0].name)
+            player.gain_card(toget[0].name)
 
     def hook_buy_this_card(self, game, player):
         """Trash all Treasures you have in play"""
         totrash = [c for c in player.played if c.isTreasure()]
         for c in totrash:
             player.output("Mint trashing %s" % c.name)
-            player.trashCard(c)
+            player.trash_card(c)
 
 
 ###############################################################################
@@ -50,10 +50,10 @@ class Test_Mint(unittest.TestCase):
         self.card = self.g["Mint"].remove()
 
     def test_play(self):
-        self.plr.setHand("Duchy", "Gold", "Silver", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Gold", "Silver", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
@@ -61,9 +61,9 @@ class Test_Mint(unittest.TestCase):
     def test_buy(self):
         tsize = self.g.trashSize()
         self.plr.coin = 5
-        self.plr.setHand("Gold", "Estate")
-        self.plr.setPlayed("Copper", "Silver", "Estate", "Moat")
-        self.plr.buyCard(self.g["Mint"])
+        self.plr.set_hand("Gold", "Estate")
+        self.plr.set_played("Copper", "Silver", "Estate", "Moat")
+        self.plr.buy_card(self.g["Mint"])
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Silver"))

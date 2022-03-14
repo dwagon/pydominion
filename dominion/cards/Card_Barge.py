@@ -18,22 +18,22 @@ class Card_Barge(Card.Card):
         self._choice = "undef"
 
     def special(self, game, player):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Pick One",
             ("Now: +3 Cards and +1 Buy", "now"),
             ("Next Turn: +3 Cards and +1 Buy", "then"),
         )
         if choice == "now":
-            player.pickupCards(3)
-            player.addBuys(1)
+            player.pickup_cards(3)
+            player.add_buys(1)
             self._choice = "now"
         else:
             self._choice = "then"
 
     def duration(self, game, player):
         if self._choice == "then":
-            player.pickupCards(3)
-            player.addBuys(1)
+            player.pickup_cards(3)
+            player.add_buys(1)
         self._choice = "undef"
 
 
@@ -44,17 +44,17 @@ class Test_Barge(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Barge"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_this_turn(self):
         self.plr.test_input = ["now"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
     def test_play_next_turn(self):
         self.plr.test_input = ["next"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()

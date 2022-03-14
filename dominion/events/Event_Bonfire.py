@@ -15,7 +15,7 @@ class Event_Bonfire(Event.Event):
 
     def special(self, game, player):
         """Trash up to two cards you have in play"""
-        player.plrTrashCard(num=2, cardsrc="played")
+        player.plr_trash_card(num=2, cardsrc="played")
 
 
 ###############################################################################
@@ -32,14 +32,14 @@ class Test_Bonfire(unittest.TestCase):
     def test_bonfire(self):
         """Use Bonfire"""
         tsize = self.g.trashSize()
-        self.plr.addCoin(3)
-        self.plr.setHand("Estate")
-        self.plr.addCard(self.copper, "hand")
-        self.plr.playCard(self.copper)
-        self.plr.addCard(self.gold, "hand")
-        self.plr.playCard(self.gold)
+        self.plr.add_coins(3)
+        self.plr.set_hand("Estate")
+        self.plr.add_card(self.copper, "hand")
+        self.plr.play_card(self.copper)
+        self.plr.add_card(self.gold, "hand")
+        self.plr.play_card(self.gold)
         self.plr.test_input = ["Copper", "Gold", "Finish"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
 

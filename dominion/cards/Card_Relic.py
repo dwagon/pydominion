@@ -19,7 +19,7 @@ class Card_Relic(Card.Card):
     def special(self, game, player):
         """When you play this, each other player puts his -1 Card token
         on his deck."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             victim.card_token = True
             victim.output("-1 Card token active due to Relic by %s" % player.name)
 
@@ -34,10 +34,10 @@ class Test_Relic(unittest.TestCase):
 
     def test_play(self):
         """Play a relic"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertTrue(self.victim.card_token)
 
 

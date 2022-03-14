@@ -14,13 +14,13 @@ class Project_CityGate(Project.Project):
         self.cost = 3
 
     def hook_start_turn(self, game, player):
-        player.pickupCard()
-        card = player.cardSel(
+        player.pickup_card()
+        card = player.card_sel(
             force=True,
             cardsrc="hand",
             prompt="Put a card from your hand onto your deck",
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.hand.remove(card[0])
 
 
@@ -33,8 +33,8 @@ class Test_CityGate(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("City Gate")
-        self.plr.setDeck("Gold")
-        self.plr.setHand("Copper", "Estate", "Province", "Silver", "Duchy")
+        self.plr.set_deck("Gold")
+        self.plr.set_hand("Copper", "Estate", "Province", "Silver", "Duchy")
         self.plr.test_input = ["Select Province"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5)

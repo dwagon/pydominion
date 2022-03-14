@@ -23,7 +23,7 @@ class Card_Lackeys(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainVillager(2)
+        player.add_villager(2)
 
 
 ###############################################################################
@@ -33,16 +33,16 @@ class Test_Lackeys(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Lackeys"].remove()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertLessEqual(self.plr.getVillager(), 0)
+        self.assertLessEqual(self.plr.get_villagers(), 0)
 
-    def test_gainCard(self):
-        self.plr.gainCard("Lackeys")
-        self.assertLessEqual(self.plr.getVillager(), 2)
+    def test_gain_card(self):
+        self.plr.gain_card("Lackeys")
+        self.assertLessEqual(self.plr.get_villagers(), 2)
 
 
 ###############################################################################

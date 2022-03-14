@@ -16,7 +16,7 @@ class Event_Commerce(Event.Event):
     def special(self, game, player):
         gains = {_.name for _ in player.stats["gained"]}
         for _ in gains:
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################
@@ -31,9 +31,9 @@ class Test_Commerce(unittest.TestCase):
 
     def test_Commerce(self):
         """Use Commerce"""
-        self.plr.addCoin(5)
-        self.plr.gainCard("Moat")
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(5)
+        self.plr.gain_card("Moat")
+        self.plr.perform_event(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 

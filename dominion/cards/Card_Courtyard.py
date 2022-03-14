@@ -18,13 +18,13 @@ class Card_Courtyard(Card.Card):
 
     def special(self, game, player):
         """Put a card from your hand on top of your deck"""
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Put which card on top of deck?", num=1, verbs=("Put", "Unput")
         )
         if not cards:
             return
         card = cards[0]
-        player.addCard(card, "topdeck")
+        player.add_card(card, "topdeck")
         player.hand.remove(card)
         player.output("Put %s on top of deck" % card.name)
 
@@ -39,18 +39,18 @@ class Test_Courtyard(unittest.TestCase):
 
     def test_play(self):
         """Play courtyard"""
-        self.plr.addCard(self.cy, "hand")
+        self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.cy)
+        self.plr.play_card(self.cy)
         self.assertEqual(self.plr.hand.size(), 8)
 
     def test_putcard(self):
         """Use courtyard to put a card to the top of the deck"""
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.cy, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["put gold"]
-        self.plr.playCard(self.cy)
-        card = self.plr.nextCard()
+        self.plr.play_card(self.cy)
+        card = self.plr.next_card()
         self.assertEqual(card.name, "Gold")
         for c in self.plr.hand:
             self.assertNotEqual(c.name, "Gold")

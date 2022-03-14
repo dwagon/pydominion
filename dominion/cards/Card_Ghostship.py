@@ -19,20 +19,20 @@ class Card_Ghostship(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        for vic in player.attackVictims():
+        for vic in player.attack_victims():
             if vic.hand.size() >= 4:
                 todisc = vic.hand.size() - 3
                 vic.output(
                     "Select %d cards to put on top of your deck because of %s's Ghost Ship"
                     % (todisc, player.name)
                 )
-                discard = vic.cardSel(
+                discard = vic.card_sel(
                     num=todisc, prompt="Select cards to put on top of deck"
                 )
                 for card in discard:
                     vic.output("Putting %s back on deck" % card.name)
                     vic.hand.remove(card)
-                    vic.addCard(card, "topdeck")
+                    vic.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -49,14 +49,14 @@ class Test_Ghostship(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Ghost Ship"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a wharf"""
-        self.vic.setDeck("Estate")
-        self.vic.setHand("Duchy", "Province", "Copper", "Silver", "Gold")
+        self.vic.set_deck("Estate")
+        self.vic.set_hand("Duchy", "Province", "Copper", "Silver", "Gold")
         self.vic.test_input = ["Silver", "Gold", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
         self.assertEqual(self.vic.deck.size(), 3)
         self.assertIn(self.vic.deck[-1].name, ("Silver", "Gold"))

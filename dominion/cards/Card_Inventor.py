@@ -17,9 +17,9 @@ class Card_Inventor(Card.Card):
 
     def special(self, game, player):
         """Gain a card costing up to 4"""
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         if self in player.played:
             return -1
         return 0
@@ -37,13 +37,13 @@ class Test_Inventor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.inventor = self.g["Inventor"].remove()
-        self.plr.addCard(self.inventor, "hand")
+        self.plr.add_card(self.inventor, "hand")
 
     def test_play(self):
         self.plr.test_input = ["Get Gardens"]
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
-        self.plr.playCard(self.inventor)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        self.plr.play_card(self.inventor)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
 
 
 ###############################################################################

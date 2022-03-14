@@ -23,7 +23,7 @@ class Card_Archive(Card.Card):
         if not hasattr(player, "_archive_reserve"):
             player._archive_reserve = PlayArea.PlayArea([])
         for _ in range(3):
-            card = player.nextCard()
+            card = player.next_card()
             player.output("Putting {} in the archive".format(card.name))
             player._archive_reserve.add(card)
             player.secret_count += 1
@@ -37,8 +37,8 @@ class Card_Archive(Card.Card):
             toprint = "Bring back {}".format(card.name)
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
-        o = player.userInput(options, "What card to bring back from the Archive?")
-        player.addCard(o["card"], "hand")
+        o = player.user_input(options, "What card to bring back from the Archive?")
+        player.add_card(o["card"], "hand")
         player._archive_reserve.remove(o["card"])
         player.secret_count -= 1
         if player._archive_reserve.is_empty():
@@ -55,9 +55,9 @@ class Test_Archive(unittest.TestCase):
 
     def test_play(self):
         """Play a Archive"""
-        self.plr.setDeck("Gold", "Silver", "Province")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Gold", "Silver", "Province")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]

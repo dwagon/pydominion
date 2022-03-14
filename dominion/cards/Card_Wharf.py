@@ -19,8 +19,8 @@ class Card_Wharf(Card.Card):
 
     def duration(self, game, player):
         """+2 card, +1 buy"""
-        player.pickupCards(2)
-        player.addBuys(1)
+        player.pickup_cards(2)
+        player.add_buys(1)
 
 
 ###############################################################################
@@ -30,11 +30,11 @@ class Test_Wharf(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wharf"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a wharf"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.durationpile.size(), 1)

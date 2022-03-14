@@ -37,10 +37,10 @@ class Card_Harbinger(Card.Card):
         player.output(
             "Look through your discard pile. You may put a card from it onto your deck."
         )
-        o = player.userInput(options, "Which Card? ")
+        o = player.user_input(options, "Which Card? ")
         if not o["card"]:
             return
-        player.addCard(o["card"], "topdeck")
+        player.add_card(o["card"], "topdeck")
         player.discardpile.remove(o["card"])
 
 
@@ -54,10 +54,10 @@ class Test_Harbinger(unittest.TestCase):
 
     def test_play(self):
         """Play a harbinger"""
-        self.plr.setDiscard("Gold", "Silver", "Province")
+        self.plr.set_discard("Gold", "Silver", "Province")
         self.plr.test_input = ["Put Gold"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertIsNone(self.plr.in_discard("Gold"))

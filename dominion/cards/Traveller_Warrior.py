@@ -29,20 +29,20 @@ class Card_Warrior(Card.Card):
         for c in player.hand + player.played:
             if c.isTraveller():
                 count += 1
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             for _ in range(count):
-                c = victim.nextCard()
+                c = victim.next_card()
                 if c.cost in (3, 4) and not c.potcost:
                     victim.output(
                         "Trashing %s due to %s's Warrior" % (c.name, player.name)
                     )
                     player.output("Trashing %s from %s" % (c.name, victim.name))
-                    victim.trashCard(c)
+                    victim.trash_card(c)
                 else:
                     victim.output(
                         "Discarding %s due to %s's Warrior" % (c.name, player.name)
                     )
-                    victim.addCard(c, "discard")
+                    victim.add_card(c, "discard")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""
@@ -58,11 +58,11 @@ class Test_Warrior(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Warrior"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_warrior(self):
         """Play a warrior nothing to trash"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.victim.discardpile.size(), 1)
         except AssertionError:  # pragma: no cover
@@ -72,15 +72,15 @@ class Test_Warrior(unittest.TestCase):
     def test_with_trash(self):
         """Play a warrior with something to trash"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Silver", "Silver")
-        self.plr.setPlayed("Page")
-        self.plr.playCard(self.card)
+        self.victim.set_deck("Silver", "Silver")
+        self.plr.set_played("Page")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_end_turn(self):
         """End the turn with a played warrior"""
         self.plr.test_input = ["keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
 
 

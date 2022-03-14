@@ -19,11 +19,11 @@ class Card_Hoard(Card.Card):
         self.coin = 2
         self.cost = 6
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         """When this is in play, when you buy a Victory card, gain a Gold"""
         if card.isVictory():
             player.output("Gaining Gold from Hoard")
-            player.addCard(game["Gold"].remove())
+            player.add_card(game["Gold"].remove())
 
 
 ###############################################################################
@@ -33,16 +33,16 @@ class Test_Hoard(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hoard"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertTrue(self.plr.discardpile.is_empty())
 
     def test_buy_victory(self):
-        self.plr.playCard(self.card)
-        self.plr.buyCard(self.g["Estate"])
+        self.plr.play_card(self.card)
+        self.plr.buy_card(self.g["Estate"])
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             if c.name == "Gold":
@@ -51,8 +51,8 @@ class Test_Hoard(unittest.TestCase):
             self.fail("Didn't pickup gold")
 
     def test_buy_nonvictory(self):
-        self.plr.playCard(self.card)
-        self.plr.buyCard(self.g["Copper"])
+        self.plr.play_card(self.card)
+        self.plr.buy_card(self.g["Copper"])
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile[-1].name, "Copper")
 

@@ -20,7 +20,7 @@ class Landmark_Baths(Landmark.Landmark):
     def hook_end_turn(self, game, player):
         if not player.stats["gained"]:
             player.output("Gaining 2 from Baths as no cards gained")
-            player.addScore("Baths", 2)
+            player.add_score("Baths", 2)
             self._vp -= 2
 
     def setup(self, game):
@@ -38,7 +38,7 @@ class Test_Baths(unittest.TestCase):
         """Use Baths"""
         self.plr.coin = 4
         self.plr.end_turn()
-        self.assertEqual(self.plr.getScoreDetails()["Baths"], 2)
+        self.assertEqual(self.plr.get_score_details()["Baths"], 2)
 
 
 ###############################################################################

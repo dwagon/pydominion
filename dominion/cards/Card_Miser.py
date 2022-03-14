@@ -22,18 +22,18 @@ class Card_Miser(Card.Card):
         coins = sum([1 for c in player.reserve if c.name == "Copper"])
         deposit = False
         if inhand:
-            deposit = player.plrChooseOptions(
+            deposit = player.plr_choose_options(
                 "Which to do?",
                 ("Put a copper onto tavern mat?", True),
                 ("%d coins from mat" % coins, False),
             )
             if deposit:
                 cu = player.in_hand("Copper")
-                player.addCard(cu, Card.TYPE_RESERVE)
+                player.add_card(cu, Card.TYPE_RESERVE)
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)
-            player.addCoin(coins)
+            player.add_coins(coins)
 
 
 ###############################################################################
@@ -46,31 +46,31 @@ class Test_Miser(unittest.TestCase):
 
     def test_put(self):
         """Play a miser with coppers in hand"""
-        self.plr.setHand("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["put"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_reserve("Copper"))
         self.assertEqual(self.plr.reserve.size(), 1)
         self.assertIsNone(self.plr.in_hand("Copper"))
 
     def test_put_none(self):
         """Play a miser with no coppers in hand"""
-        self.plr.setHand("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Estate", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_reserve("Copper"))
         self.assertEqual(self.plr.reserve.size(), 0)
 
     def test_add(self):
         """Play a miser with coppers in reserve"""
-        self.plr.setHand("Copper", "Estate")
-        self.plr.setReserve("Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate")
+        self.plr.set_reserve("Copper", "Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["coins from mat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.reserve.size(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

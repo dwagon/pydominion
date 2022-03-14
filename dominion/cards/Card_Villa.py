@@ -27,7 +27,7 @@ class Card_Villa(Card.Card):
     def hook_gain_this_card(self, game, player):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
-        player.addActions(1)
+        player.add_actions(1)
         return {"destination": "hand"}
 
 
@@ -42,15 +42,15 @@ class Test_Villa(unittest.TestCase):
         self.card = self.g["Villa"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         self.plr.phase = "buy"
-        self.plr.gainCard("Villa")
+        self.plr.gain_card("Villa")
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
         self.assertIsNotNone(self.plr.in_hand("Villa"))

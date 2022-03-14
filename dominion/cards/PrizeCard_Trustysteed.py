@@ -32,19 +32,19 @@ class Card_Trustysteed(Card.Card):
                     continue
                 options.append({"selector": "%d" % index, "print": p, "opt": o})
                 index += 1
-            choice = player.userInput(options, "What do you want to do?")
+            choice = player.user_input(options, "What do you want to do?")
             chosen.append(choice["opt"])
 
         for choice in chosen:
             if choice == "cards":
-                player.pickupCards(2)
+                player.pickup_cards(2)
             elif choice == "actions":
-                player.addActions(2)
+                player.add_actions(2)
             elif choice == "coins":
-                player.addCoin(2)
+                player.add_coins(2)
             elif choice == "silvers":
                 for _ in range(4):
-                    player.gainCard("Silver")
+                    player.gain_card("Silver")
 
 
 ###############################################################################
@@ -54,17 +54,17 @@ class Test_Trustysteed(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Trusty Steed"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_a(self):
         self.plr.test_input = ["cards", "coin"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_b(self):
         self.plr.test_input = [Card.TYPE_ACTION, "silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.discardpile.size(), 4)
         for c in self.plr.discardpile:

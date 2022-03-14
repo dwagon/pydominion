@@ -19,11 +19,11 @@ class Card_Vault(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        discards = player.plrDiscardCards(
+        discards = player.plr_discard_cards(
             anynum=True,
             prompt="Discard any number of cards. +1 Coin per card discarded",
         )
-        player.addCoin(len(discards))
+        player.add_coins(len(discards))
         player.output("Gaining %d coins" % len(discards))
         for plr in game.player_list():
             if plr != player:
@@ -31,9 +31,9 @@ class Card_Vault(Card.Card):
                     "Due to %s's Vault you may discard two cards. If you do, draw one"
                     % player.name
                 )
-                plrdiscards = plr.plrDiscardCards(num=2)
+                plrdiscards = plr.plr_discard_cards(num=2)
                 if len(plrdiscards) == 2:
-                    plr.pickupCard()
+                    plr.pickup_card()
 
 
 ###############################################################################
@@ -50,14 +50,14 @@ class Test_Vault(unittest.TestCase):
         self.card = self.g["Vault"].remove()
 
     def test_play(self):
-        self.other.setHand("Copper", "Silver", "Gold")
-        self.plr.setHand("Duchy", "Province", "Gold", "Silver", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.other.set_hand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Duchy", "Province", "Gold", "Silver", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.other.test_input = ["Copper", "Silver", "Finish"]
         self.plr.test_input = ["Duchy", "Province", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.other.hand.size(), 3 - 2 + 1)
 
 

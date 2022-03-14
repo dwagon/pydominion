@@ -18,7 +18,7 @@ class Card_Broker(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        tr = player.plrTrashCard(printcost=True)
+        tr = player.plr_trash_card(printcost=True)
         cost = tr[0].cost
         if cost == 0:
             return
@@ -27,15 +27,15 @@ class Card_Broker(Card.Card):
         options.append((f"+{cost} actions", "action"))
         options.append((f"+${cost} coins", "cash"))
         options.append((f"+{cost} favors", "favor"))
-        dc = player.plrChooseOptions("Pick one:", *options)
+        dc = player.plr_choose_options("Pick one:", *options)
         if dc == "card":
-            player.pickupCards(cost)
+            player.pickup_cards(cost)
         elif dc == "action":
-            player.addActions(cost)
+            player.add_actions(cost)
         elif dc == "cash":
-            player.addCoin(cost)
+            player.add_coins(cost)
         elif dc == "favor":
-            player.addFavor(cost)
+            player.add_favors(cost)
 
 
 ###############################################################################
@@ -48,36 +48,36 @@ class Test_Broker(unittest.TestCase):
 
     def test_play_cards(self):
         """Play the card - gain cards"""
-        self.plr.setHand("Copper", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "cards"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_play_action(self):
         """Play the card - gain action"""
-        self.plr.setHand("Copper", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "actions"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_play_cash(self):
         """Play the card - gain cash"""
-        self.plr.setHand("Copper", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "coins"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_favor(self):
         """Play the card - gain favor"""
-        fav = self.plr.getFavor()
-        self.plr.setHand("Copper", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        fav = self.plr.get_favors()
+        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "favor"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), fav + 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), fav + 2)
 
 
 ###############################################################################

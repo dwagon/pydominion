@@ -14,7 +14,7 @@ class Way_Owl(Way.Way):
         self.name = "Way of the Owl"
 
     def special(self, game, player):
-        player.pickUpHand(6)
+        player.pick_up_hand(6)
 
 
 ###############################################################################
@@ -34,8 +34,8 @@ class Test_Owl(unittest.TestCase):
 
     def test_play(self):
         """Perform a Owl"""
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.hand.size(), 6)
 

@@ -26,22 +26,22 @@ class Card_Rogue(Card.Card):
 
     ###########################################################################
     def rifflePlayers(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             self.riffleVictim(plr, player)
 
     ###########################################################################
     def riffleVictim(self, victim, player):
         cards = []
         for _ in range(2):
-            c = victim.nextCard()
-            victim.revealCard(c)
+            c = victim.next_card()
+            victim.reveal_card(c)
             if 3 <= c.cost <= 6:
                 cards.append(c)
             else:
                 victim.output(
                     "{}'s Rogue discarded {} as unsuitable".format(player.name, c.name)
                 )
-                victim.addCard(c, "discard")
+                victim.add_card(c, "discard")
         if not cards:
             player.output("No suitable cards from %s" % victim.name)
             return
@@ -51,14 +51,14 @@ class Card_Rogue(Card.Card):
             sel = "%d" % index
             index += 1
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
-        o = player.userInput(options, "Trash which card from %s?" % victim.name)
+        o = player.user_input(options, "Trash which card from %s?" % victim.name)
         victim.output("%s's rogue trashed your %s" % (player.name, o["card"].name))
-        victim.trashCard(o["card"])
+        victim.trash_card(o["card"])
         # Discard what the rogue didn't trash
         for c in cards:
             if c != o["card"]:
                 victim.output("Rogue discarding %s as leftovers" % c.name)
-                victim.discardCard(c)
+                victim.discard_card(c)
 
     ###########################################################################
     def riffleTrash(self, game, player):
@@ -79,9 +79,9 @@ class Card_Rogue(Card.Card):
                 )
         if index == 1:
             return False
-        o = player.userInput(options, "Pick a card from the trash")
+        o = player.user_input(options, "Pick a card from the trash")
         game.trashpile.remove(o["card"])
-        player.addCard(o["card"])
+        player.add_card(o["card"])
         player.output("Took a %s from the trash" % o["card"].name)
         return True
 
@@ -102,9 +102,9 @@ class Test_Rogue(unittest.TestCase):
     def test_play(self):
         """Nothing should happen"""
         try:
-            self.plr.addCard(self.card, "hand")
-            self.plr.playCard(self.card)
-            self.assertEqual(self.plr.getCoin(), 2)
+            self.plr.add_card(self.card, "hand")
+            self.plr.play_card(self.card)
+            self.assertEqual(self.plr.get_coins(), 2)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -112,20 +112,20 @@ class Test_Rogue(unittest.TestCase):
     def test_defended(self):
         """Victim has a defense"""
         self.plr.hand.empty()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
-        self.victim.addCard(moat, "hand")
-        self.plr.playCard(self.card)
+        self.victim.add_card(moat, "hand")
+        self.plr.play_card(self.card)
 
     def test_good_trash(self):
         """Rogue to get something juicy from the trash"""
         tsize = self.g.trashSize()
         for _ in range(2):
             gold = self.g["Gold"].remove()
-            self.plr.trashCard(gold)
+            self.plr.trash_card(gold)
         self.plr.test_input = ["1"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.discardpile.size(), 1)
@@ -137,10 +137,10 @@ class Test_Rogue(unittest.TestCase):
     def test_good_player(self):
         """Rogue to trash something from another player"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Gold", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.victim.set_deck("Gold", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertEqual(self.victim.discardpile.size(), 1)
@@ -149,9 +149,9 @@ class Test_Rogue(unittest.TestCase):
     def test_bad_player(self):
         """Rogue to trash nothing from another player"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Gold", "Province", "Province")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.victim.set_deck("Gold", "Province", "Province")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.victim.discardpile.size(), 2)
 

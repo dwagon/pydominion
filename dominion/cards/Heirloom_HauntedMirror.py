@@ -23,9 +23,9 @@ class Card_Haunted_Mirror(Card.Card):
         if not ac:
             player.output("No action cards in hand, no effect")
             return
-        td = player.plrDiscardCards(cardsrc=ac)
+        td = player.plr_discard_cards(cardsrc=ac)
         if td:
-            player.gainCard("Ghost")
+            player.gain_card("Ghost")
 
 
 ###############################################################################
@@ -37,19 +37,19 @@ class Test_Haunted_Mirror(unittest.TestCase):
         self.card = self.g["Haunted Mirror"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash_nothing(self):
-        self.plr.setHand("Copper")
-        self.plr.trashCard(self.card)
+        self.plr.set_hand("Copper")
+        self.plr.trash_card(self.card)
         self.assertIsNone(self.plr.in_discard("Ghost"))
 
     def test_trash(self):
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.test_input = ["Moat"]
-        self.plr.trashCard(self.card)
+        self.plr.trash_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Ghost"))
 
 

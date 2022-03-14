@@ -18,11 +18,11 @@ class Card_Swindler(Card.Card):
         self.coin = 2
 
     def special(self, game, player):
-        for victim in player.attackVictims():
-            card = victim.pickupCard()
-            victim.trashCard(card)
+        for victim in player.attack_victims():
+            card = victim.pickup_card()
+            victim.trash_card(card)
             victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
-            c = player.plrGainCard(
+            c = player.plr_gain_card(
                 card.cost,
                 modifier="equal",
                 recipient=victim,
@@ -42,27 +42,27 @@ class Test_Swindler(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Swindler"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the Swindler"""
-        self.victim.setHand("Moat")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.victim.set_hand("Moat")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_defended(self):
         """Swindle a defended player"""
         tsize = self.g.trashSize()
-        self.victim.setHand("Moat")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Moat")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_attack(self):
         """Swindle an undefended player"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Gold")
+        self.victim.set_deck("Gold")
         self.plr.test_input = ["Get Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 

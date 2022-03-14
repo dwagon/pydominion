@@ -25,7 +25,7 @@ class Card_SacredGrove(Card.Card):
         for pl in game.player_list():
             if pl == player:
                 continue
-            ch = pl.plrChooseOptions(
+            ch = pl.plr_choose_options(
                 "Accept a boon of {} from {}'s Sacred Grove?".format(
                     b.name, player.name
                 ),
@@ -53,7 +53,7 @@ class Test_SacredGrove(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Sacred Grove"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_no_share(self):
         """Play a Sacred Grove with a gift that shouldn't share"""
@@ -62,9 +62,9 @@ class Test_SacredGrove(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 3 + 1)
+            self.assertEqual(self.plr.get_coins(), 3 + 1)
             self.assertEqual(self.plr.get_buys(), 1 + 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
@@ -77,9 +77,9 @@ class Test_SacredGrove(unittest.TestCase):
                 self.g.boons = [b]
                 break
         self.vic.test_input = ["Accept"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 3)
+            self.assertEqual(self.plr.get_coins(), 3)
             self.assertEqual(self.plr.get_buys(), 1 + 1)
             self.assertEqual(self.vic.hand.size(), 5 + 1)
         except AssertionError:  # pragma: no cover

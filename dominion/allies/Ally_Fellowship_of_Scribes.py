@@ -14,18 +14,18 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
         self.name = "Fellowship of Scribes"
 
     def hook_postAction(self, game, player, card):
-        if not player.getFavor():
+        if not player.get_favors():
             return
         if player.hand.size() > 4:
             return
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Use Fellowship of Scribes to spend a favor to gain a card?",
             ("Gain a card", "gain"),
             ("No thanks", "no"),
         )
         if choice == "gain":
-            player.pickupCard()
-            player.addFavor(-1)
+            player.pickup_card()
+            player.add_favors(-1)
 
 
 ###############################################################################
@@ -48,23 +48,23 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
     def test_play(self):
         """Play and gain a card"""
         self.card = self.g["Festival"].remove()
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setFavor(2)
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_favors(2)
         self.plr.test_input = ["Gain"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), 1)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
 
     def test_play_no_gain(self):
         """Play and don't gain a card"""
         self.card = self.g["Festival"].remove()
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setFavor(2)
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_favors(2)
         self.plr.test_input = ["No"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), 2)
         self.assertEqual(self.plr.hand.size(), 1)
 
 

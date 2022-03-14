@@ -23,27 +23,27 @@ class Card_Stonemason(Card.Card):
         return "Trash a card from your hand. Gain 2 cards each costing less than it."
 
     def special(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain 2 cards each costing less than it.",
         )
         if tc:
-            cost = player.cardCost(tc[0]) - 1
+            cost = player.card_cost(tc[0]) - 1
             if cost < 0:
                 player.output("No suitable cards")
                 return
             for _ in range(2):
-                player.plrGainCard(cost, "less")
+                player.plr_gain_card(cost, "less")
 
     def hook_overpay(self, game, player, amount):
         if amount:
-            player.plrGainCard(
+            player.plr_gain_card(
                 amount,
                 "less",
                 types={Card.TYPE_ACTION: True},
                 prompt="Gain a card costing up to %s" % amount,
             )
-            player.plrGainCard(
+            player.plr_gain_card(
                 amount,
                 "less",
                 types={Card.TYPE_ACTION: True},
@@ -66,10 +66,10 @@ class Test_Stonemason(unittest.TestCase):
 
     def test_play(self):
         """Play a stonemason"""
-        self.plr.setHand("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash province", "get gold", "get silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
@@ -77,7 +77,7 @@ class Test_Stonemason(unittest.TestCase):
     def test_buy(self):
         self.plr.coin = 5
         self.plr.test_input = ["3", "Moat", "Stonemason"]
-        self.plr.buyCard(self.g["Stonemason"])
+        self.plr.buy_card(self.g["Stonemason"])
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Stonemason"))
 

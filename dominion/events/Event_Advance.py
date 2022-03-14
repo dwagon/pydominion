@@ -15,11 +15,11 @@ class Event_Advance(Event.Event):
 
     def special(self, game, player):
         actions = [c for c in player.hand if c.isAction()]
-        trash = player.plrTrashCard(
+        trash = player.plr_trash_card(
             prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
         )
         if trash:
-            player.plrGainCard(6, types={Card.TYPE_ACTION: True})
+            player.plr_gain_card(6, types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################
@@ -37,9 +37,9 @@ class Test_Advance(unittest.TestCase):
 
     def test_advance(self):
         """Use Advance twice"""
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.test_input = ["Trash moat", "Get Lurker"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNone(self.plr.in_hand("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Lurker"))
 

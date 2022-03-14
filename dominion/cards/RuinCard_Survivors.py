@@ -20,18 +20,18 @@ class Card_Survivors(Card.Card):
     def special(self, game, player):
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
-        crds = player.pickupCards(2)
-        ans = player.plrChooseOptions(
+        crds = player.pickup_cards(2)
+        ans = player.plr_choose_options(
             "What to do with survivors?",
             ("Discard {} and {}".format(crds[0].name, crds[1].name), "discard"),
             ("Return {} and {} to deck".format(crds[0].name, crds[1].name), "return"),
         )
         if ans == "discard":
-            player.discardCard(crds[0])
-            player.discardCard(crds[1])
+            player.discard_card(crds[0])
+            player.discard_card(crds[1])
         else:
-            player.addCard(crds[0], "deck")
-            player.addCard(crds[1], "deck")
+            player.add_card(crds[0], "deck")
+            player.add_card(crds[1], "deck")
 
 
 ###############################################################################
@@ -44,13 +44,13 @@ class Test_Survivors(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Survivors":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_discard(self):
         """Play a survivor and discard cards"""
-        self.plr.setDeck("Copper", "Silver", "Gold")
+        self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNone(self.plr.in_hand("Gold"))
@@ -58,9 +58,9 @@ class Test_Survivors(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a survivor and keep cards"""
-        self.plr.setDeck("Copper", "Silver", "Gold")
+        self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["Return"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Gold"))
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))

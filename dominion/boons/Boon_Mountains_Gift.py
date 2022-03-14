@@ -17,7 +17,7 @@ class Boon_Mountains_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
 
 ###############################################################################
@@ -36,8 +36,8 @@ class Test_Mountains_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_mountains_gift(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 

@@ -17,14 +17,14 @@ class Card_Displace(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        crd = player.cardSel(
+        crd = player.card_sel(
             prompt="Exile a card to gain a different one costing 2 more",
             verbs=("Exile", "Unexile"),
         )
         if crd:
             player.hand.remove(crd[0])
             player.exile_card(crd[0])
-            player.plrGainCard(cost=crd[0].cost + 2, exclude=[crd[0].name])
+            player.plr_gain_card(cost=crd[0].cost + 2, exclude=[crd[0].name])
 
 
 ###############################################################################
@@ -37,10 +37,10 @@ class Test_Displace(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setHand("Copper", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Copper", "Get Estate"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_exile("Copper"))
         self.assertIsNotNone(self.plr.in_discard("Estate"))
 

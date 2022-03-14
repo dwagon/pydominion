@@ -21,7 +21,7 @@ class Landmark_Labyrinth(Landmark.Landmark):
 
     def hook_gain_card(self, game, player, card):
         if len(player.stats["gained"]) == 1:  # not including the current one
-            player.addScore("Labyrinth", 2)
+            player.add_score("Labyrinth", 2)
             player.output("Gained 2VP from Labyrinth")
             self._vp -= 2
 
@@ -35,13 +35,13 @@ class Test_Labyrinth(unittest.TestCase):
 
     def test_play(self):
         """Use Labyrinth"""
-        self.assertNotIn("Labyrinth", self.plr.getScoreDetails())
-        self.plr.gainCard("Copper")
-        self.assertNotIn("Labyrinth", self.plr.getScoreDetails())
-        self.plr.gainCard("Estate")
-        self.assertEqual(self.plr.getScoreDetails()["Labyrinth"], 2)
-        self.plr.gainCard("Gold")
-        self.assertEqual(self.plr.getScoreDetails()["Labyrinth"], 2)
+        self.assertNotIn("Labyrinth", self.plr.get_score_details())
+        self.plr.gain_card("Copper")
+        self.assertNotIn("Labyrinth", self.plr.get_score_details())
+        self.plr.gain_card("Estate")
+        self.assertEqual(self.plr.get_score_details()["Labyrinth"], 2)
+        self.plr.gain_card("Gold")
+        self.assertEqual(self.plr.get_score_details()["Labyrinth"], 2)
 
 
 ###############################################################################

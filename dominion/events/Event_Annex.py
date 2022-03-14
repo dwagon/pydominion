@@ -17,7 +17,7 @@ class Event_Annex(Event.Event):
         if player.discardpile.size() <= 5:
             player.output("Not enough cards to choose")
             return
-        cards = player.cardSel(
+        cards = player.card_sel(
             num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile"
         )
         keep = []
@@ -25,12 +25,12 @@ class Event_Annex(Event.Event):
             if card in cards:
                 keep.append(card)
             else:
-                player.addCard(card, "deck")
+                player.add_card(card, "deck")
         player.deck.shuffle()
-        player.setDiscard()
+        player.set_discard()
         for card in keep:
-            player.addCard(card, "discard")
-        if player.gainCard("Duchy"):
+            player.add_card(card, "discard")
+        if player.gain_card("Duchy"):
             player.output("Gained a Duchy")
 
 
@@ -50,7 +50,7 @@ class Test_Annex(unittest.TestCase):
 
     def test_play(self):
         """Perform Annex"""
-        self.plr.setDiscard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
+        self.plr.set_discard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
         self.plr.test_input = [
             "Silver",
             "Copper",
@@ -59,7 +59,7 @@ class Test_Annex(unittest.TestCase):
             "Estate",
             "Finish",
         ]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Gold"))

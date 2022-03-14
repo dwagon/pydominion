@@ -20,12 +20,12 @@ class Card_Beggar(Card.Card):
     def special(self, game, player):
         player.output("Gaining 3 coppers")
         for _ in range(3):
-            player.gainCard("Copper", "hand")
+            player.gain_card("Copper", "hand")
 
     def hook_underAttack(self, game, player, attacker):
         player.output("Gaining silvers as under attack from %s" % attacker.name)
-        player.gainCard("Silver", "topdeck")
-        player.gainCard("Silver")
+        player.gain_card("Silver", "topdeck")
+        player.gain_card("Silver")
 
 
 ###############################################################################
@@ -38,19 +38,19 @@ class Test_Beggar(unittest.TestCase):
 
     def test_play(self):
         """Play a beggar"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
 
     def test_attack(self):
         """React to an attack as a beggar"""
-        self.plr.setHand("Beggar", "Estate", "Duchy", "Province", "Gold")
+        self.plr.set_hand("Beggar", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         militia = self.g["Militia"].remove()
-        self.attacker.addCard(militia, "hand")
-        self.attacker.playCard(militia)
+        self.attacker.add_card(militia, "hand")
+        self.attacker.play_card(militia)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 

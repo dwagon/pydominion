@@ -15,11 +15,11 @@ class Event_Ritual(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        card = player.gainCard("Curse")
+        card = player.gain_card("Curse")
         if card:
-            tc = player.plrTrashCard(prompt="Trash a card, +1 VP per coin it costs")
+            tc = player.plr_trash_card(prompt="Trash a card, +1 VP per coin it costs")
             if tc:
-                player.addScore("Ritual", tc[0].cost)
+                player.add_score("Ritual", tc[0].cost)
 
 
 ###############################################################################
@@ -32,11 +32,11 @@ class Test_Ritual(unittest.TestCase):
 
     def test_ritual(self):
         """Use Ritual"""
-        self.plr.addCoin(4)
-        self.plr.setHand("Gold")
+        self.plr.add_coins(4)
+        self.plr.set_hand("Gold")
         self.plr.test_input = ["Gold"]
-        self.plr.performEvent(self.event)
-        self.assertEqual(self.plr.getScoreDetails()["Ritual"], 6)
+        self.plr.perform_event(self.event)
+        self.assertEqual(self.plr.get_score_details()["Ritual"], 6)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Curse"))
 

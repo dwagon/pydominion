@@ -20,7 +20,7 @@ class Card_Fugitive(Card.Card):
         self.numcards = 5
 
     def special(self, game, player):
-        player.plrDiscardCards(num=1)
+        player.plr_discard_cards(num=1)
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Warrior"""
@@ -37,10 +37,10 @@ class Test_Fugitive(unittest.TestCase):
 
     def test_fugitive(self):
         """Play a fugitive"""
-        self.plr.setHand("Province")
+        self.plr.set_hand("Province")
         self.plr.test_input = ["province"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Province"))

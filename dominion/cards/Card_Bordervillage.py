@@ -24,7 +24,7 @@ class Card_Bordervillage(Card.Card):
     def hook_gain_this_card(self, game, player):
         """When you gain this, gain a card costing less than this"""
         newcost = self.cost - 1
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=newcost,
             prompt="Gain a card costing %d due to Border Village" % newcost,
         )
@@ -38,16 +38,16 @@ class Test_Bordervillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.bv = self.g["Border Village"].remove()
-        self.plr.addCard(self.bv, "hand")
+        self.plr.add_card(self.bv, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.bv)
+        self.plr.play_card(self.bv)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
         self.plr.test_input = ["get estate"]
-        self.plr.gainCard("Border Village")
+        self.plr.gain_card("Border Village")
         self.assertEqual(self.plr.discardpile.size(), 2)
 
 

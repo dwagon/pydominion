@@ -13,9 +13,9 @@ class Landmark_Fountain(Landmark.Landmark):
         self.name = "Fountain"
 
     def hook_end_of_game(self, game, player):
-        numcu = sum([1 for c in player.allCards() if c.name == "Copper"])
+        numcu = sum([1 for c in player.all_cards() if c.name == "Copper"])
         if numcu >= 10:
-            player.addScore("Fountain", 15)
+            player.add_score("Fountain", 15)
             player.output("Gained 15VP from Fountain")
 
 
@@ -28,10 +28,10 @@ class Test_Fountain(unittest.TestCase):
 
     def test_gain(self):
         """Use Fountain"""
-        self.plr.setDiscard("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Fountain"], 15)
+        self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Fountain"], 15)
 
 
 ###############################################################################

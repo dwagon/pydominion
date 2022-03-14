@@ -19,7 +19,7 @@ class Card_Guardian(Card.Card):
         self.cost = 2
 
     def duration(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}
@@ -34,15 +34,15 @@ class Test_Guardian(unittest.TestCase):
         self.card = self.g["Guardian"].remove()
 
     def test_gain(self):
-        self.plr.gainCard("Guardian")
+        self.plr.gain_card("Guardian")
         self.assertIsNotNone(self.plr.in_hand("Guardian"))
 
     def test_duration(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

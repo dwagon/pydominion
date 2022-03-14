@@ -26,13 +26,13 @@ class Test_Underling(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Underling"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the card"""
-        favs = self.plr.getFavor()
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), favs + 1)
+        favs = self.plr.get_favors()
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), favs + 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 

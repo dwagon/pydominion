@@ -27,10 +27,10 @@ class Boon_Moons_Gift(Boon.Boon):
             if c.name not in cardnames:
                 cards.append(c)
                 cardnames.add(c.name)
-        card = player.cardSel(
+        card = player.card_sel(
             cardsrc=cards, prompt="Pull card from discard and add to top of your deck"
         )
-        player.addCard(card[0], "topdeck")
+        player.add_card(card[0], "topdeck")
         player.discardpile.remove(card[0])
 
 
@@ -50,10 +50,10 @@ class Test_Moons_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_moons_gift(self):
-        self.plr.setDiscard("Province", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_discard("Province", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertIsNone(self.plr.in_discard("Gold"))
 

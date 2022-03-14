@@ -21,7 +21,7 @@ class Card_Banditcamp(Card.Card):
     def special(self, game, player):
         """Gain a spoils"""
         player.output("Gained a Spoils")
-        player.gainCard("Spoils")
+        player.gain_card("Spoils")
 
 
 ###############################################################################
@@ -33,8 +33,8 @@ class Test_Banditcamp(unittest.TestCase):
 
     def test_play(self):
         bc = self.g["Bandit Camp"].remove()
-        self.plr.addCard(bc, "hand")
-        self.plr.playCard(bc)
+        self.plr.add_card(bc, "hand")
+        self.plr.play_card(bc)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.discardpile[0].name, "Spoils")

@@ -18,14 +18,14 @@ class Project_Innovation(Project.Project):
             return {}
         if not card.isAction():
             return {}
-        ch = player.plrChooseOptions(
+        ch = player.plr_choose_options(
             "Play {} through Innovation?".format(card.name),
             ("Play card", True),
             ("Don't play", False),
         )
         if ch:
-            player.addCard(card, "hand")
-            player.playCard(card, discard=False, costAction=False)
+            player.add_card(card, "hand")
+            player.play_card(card, discard=False, costAction=False)
             # There are circumstances where playing the card can lead
             # to its removal from the player hand
             if card in player.hand:
@@ -47,7 +47,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.assign_project("Innovation")
         self.plr.test_input = ["Play card"]
         self.plr.start_turn()
-        self.plr.gainCard("Moat")
+        self.plr.gain_card("Moat")
         self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)
         self.assertIsNotNone(self.plr.in_hand("Moat"))
         self.assertIsNone(self.plr.in_discard("Moat"))
@@ -56,7 +56,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.assign_project("Innovation")
         self.plr.test_input = ["Don't play"]
         self.plr.start_turn()
-        self.plr.gainCard("Moat")
+        self.plr.gain_card("Moat")
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNone(self.plr.in_hand("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))

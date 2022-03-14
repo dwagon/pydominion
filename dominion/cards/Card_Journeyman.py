@@ -24,21 +24,21 @@ class Card_Journeyman(Card.Card):
             sel = "%s" % index
             options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
             index += 1
-        o = player.userInput(
+        o = player.user_input(
             options,
             "Name a card. Reveal cards from your deck until you have 3 that aren't the named card",
         )
         cards = []
         while len(cards) < 3:
-            card = player.nextCard()
-            player.revealCard(card)
+            card = player.next_card()
+            player.reveal_card(card)
             if card.name == o["card"].name:
                 player.output("Discarding %s" % card.name)
-                player.discardCard(card)
+                player.discard_card(card)
             else:
                 cards.append(card)
         for card in cards:
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player.output("Pulling %s into hand" % card.name)
 
 
@@ -49,13 +49,13 @@ class Test_Journeyman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Journeyman"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
-        self.plr.setDeck("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.set_deck("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Province"))

@@ -19,17 +19,17 @@ class Boon_Suns_Gift(Boon.Boon):
     def special(self, game, player):
         cards = []
         for _ in range(4):
-            c = player.nextCard()
+            c = player.next_card()
             if c:
                 cards.append(c)
-        todisc = player.plrDiscardCards(
+        todisc = player.plr_discard_cards(
             prompt="Discard any number and the rest go back on the top of the deck",
             anynum=True,
             cardsrc=cards,
         )
         for card in cards:
             if card not in todisc:
-                player.addCard(card, "topdeck")
+                player.add_card(card, "topdeck")
 
 
 ###############################################################################
@@ -46,12 +46,12 @@ class Test_Suns_Gift(unittest.TestCase):
                 break
         self.g.boons = [myboon]
         self.card = self.g["Bard"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_suns_gift(self):
-        self.plr.setDeck("Silver", "Gold", "Province", "Duchy", "Copper")
+        self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_deck("Silver"))
             self.assertIsNotNone(self.plr.in_deck("Gold"))

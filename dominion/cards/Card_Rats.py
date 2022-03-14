@@ -23,12 +23,12 @@ class Card_Rats(Card.Card):
     def special(self, game, player):
         """Gain a Rats. Trash a card from your hand other than a Rats."""
         player.output("Gained a Rays")
-        player.gainCard("Rats")
-        player.plrTrashCard(force=True, exclude=["Rats"])
+        player.gain_card("Rats")
+        player.plr_trash_card(force=True, exclude=["Rats"])
 
     def hook_trashThisCard(self, game, player):
         """When you trash this +1 Card"""
-        player.pickupCard(verb="Due to trashing Rats picked up")
+        player.pickup_card(verb="Due to trashing Rats picked up")
 
 
 ###############################################################################
@@ -38,33 +38,33 @@ class Test_Rats(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.rats = self.g["Rats"].remove()
-        self.plr.setDeck("Estate", "Province", "Duchy")
-        self.plr.setHand("Copper", "Gold", "Silver", "Rats")
-        self.plr.addCard(self.rats, "hand")
+        self.plr.set_deck("Estate", "Province", "Duchy")
+        self.plr.set_hand("Copper", "Gold", "Silver", "Rats")
+        self.plr.add_card(self.rats, "hand")
 
     def test_play(self):
-        self.plr.setDeck("Gold")
+        self.plr.set_deck("Gold")
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
-        self.plr.addActions(1)
+        self.plr.play_card(self.rats)
+        self.plr.add_actions(1)
         self.assertEqual(self.plr.hand[-1].name, "Gold")
 
     def test_trashcard(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
+        self.plr.play_card(self.rats)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertNotEqual(self.g.trashpile[0].name, "Rats")
 
     def test_gainrats(self):
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
+        self.plr.play_card(self.rats)
         self.assertEqual(self.plr.discardpile[0].name, "Rats")
 
     def test_trashrats(self):
         """Trashing Rats - gain another card"""
         handsize = self.plr.hand.size()
-        self.plr.trashCard(self.rats)
+        self.plr.trash_card(self.rats)
         # Lose rats, gain another card
         self.assertEqual(self.plr.hand.size(), handsize)
 

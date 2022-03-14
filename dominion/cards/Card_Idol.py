@@ -24,9 +24,9 @@ class Card_Idol(Card.Card):
         if idols % 2 == 1:  # Odd
             player.receive_boon()
         else:  # Even
-            for pl in player.attackVictims():
+            for pl in player.attack_victims():
                 pl.output("{}'s Idol cursed you".format(player.name))
-                pl.gainCard("Curse")
+                pl.gain_card("Curse")
 
 
 ###############################################################################
@@ -46,19 +46,19 @@ class Test_Idol(unittest.TestCase):
 
     def test_play_even(self):
         """Play an even number of Idol"""
-        self.plr.setPlayed("Idol", "Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_played("Idol", "Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
         self.assertIsNone(self.plr.in_discard("Silver"))
 
     def test_play_odd(self):
         """Play an odd number of Idol"""
-        self.plr.setPlayed("Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_played("Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNone(self.vic.in_discard("Curse"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # From Mountain boon
 

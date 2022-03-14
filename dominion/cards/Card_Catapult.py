@@ -20,19 +20,19 @@ class Card_Catapult(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        cards = player.plrTrashCard(force=True)
+        cards = player.plr_trash_card(force=True)
         if not cards:
             return
         card = cards[0]
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             if card.cost >= 3:
                 plr.output("%s's Catapult Curses you" % player.name)
-                plr.gainCard("Curse")
+                plr.gain_card("Curse")
             if card.isTreasure():
                 plr.output(
                     "%s's Catapult forces you to discard down to 3 cards" % player.name
                 )
-                plr.plrDiscardDownTo(3)
+                plr.plr_discard_down_to(3)
 
 
 ###############################################################################
@@ -51,21 +51,21 @@ class Test_Catapult(unittest.TestCase):
 
     def test_play(self):
         """Play a Catapult with a non-treasure"""
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertIsNotNone(self.victim.in_discard("Curse"))
 
     def test_play_treasure(self):
         """Play a Catapult with a treasure"""
-        self.plr.setHand("Copper")
+        self.plr.set_hand("Copper")
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertEqual(self.victim.hand.size(), 3)
 

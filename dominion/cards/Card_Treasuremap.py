@@ -18,18 +18,18 @@ class Card_Treasuremap(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.trashCard(self)
+        player.trash_card(self)
         tmaps = [c for c in player.hand if c.name == "Treasure Map"][:1]
         if not tmaps:
             return
-        t = player.plrTrashCard(
+        t = player.plr_trash_card(
             prompt="If you trash another treasure map you can get 4 golds",
             cardsrc=tmaps,
         )
         if t:
             player.output("Gaining 4 Gold")
             for _ in range(4):
-                player.gainCard("Gold", destination="topdeck")
+                player.gain_card("Gold", destination="topdeck")
         else:
             player.output("Didn't trash two so no Gold")
 
@@ -45,10 +45,10 @@ class Test_Treasuremap(unittest.TestCase):
     def test_trash(self):
         """Trash a TM"""
         tsize = self.g.trashSize()
-        self.plr.setDeck()
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck()
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0", "1", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Treasure Map"))
         self.assertEqual(self.plr.deck.size(), 0)
@@ -56,11 +56,11 @@ class Test_Treasuremap(unittest.TestCase):
     def test_trash_two(self):
         """Trash 2 TM"""
         tsize = self.g.trashSize()
-        self.plr.setDeck()
-        self.plr.setHand("Treasure Map")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck()
+        self.plr.set_hand("Treasure Map")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Treasure Map"))
         self.assertEqual(self.plr.deck.size(), 4)

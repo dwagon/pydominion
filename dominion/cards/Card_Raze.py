@@ -25,20 +25,20 @@ class Card_Raze(Card.Card):
         cards_to_trash = [self]
         for c in player.hand:
             cards_to_trash.append(c)
-        trash = player.plrTrashCard(cardsrc=cards_to_trash, force=True)
+        trash = player.plr_trash_card(cardsrc=cards_to_trash, force=True)
         cost = trash[0].cost
         if cost:
             cards = []
             for c in range(cost):
-                cards.append(player.nextCard())
-            ans = player.cardSel(
+                cards.append(player.next_card())
+            ans = player.card_sel(
                 force=True, prompt="Pick a card to put into your hand", cardsrc=cards
             )
             for c in cards:
                 if c == ans[0]:
-                    player.addCard(c, "hand")
+                    player.add_card(c, "hand")
                 else:
-                    player.addCard(c, "discard")
+                    player.add_card(c, "discard")
 
 
 ###############################################################################
@@ -51,10 +51,10 @@ class Test_Raze(unittest.TestCase):
 
     def test_play(self):
         """Play a raze - trashing itself"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Silver", "Gold", "Province")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Raze", "Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Province"))
@@ -64,11 +64,11 @@ class Test_Raze(unittest.TestCase):
 
     def test_copper(self):
         """Play a raze - trashing copper - a zero value card"""
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.setDeck("Silver", "Gold", "Province")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Copper", "Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash("Copper"))
 

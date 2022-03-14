@@ -33,10 +33,10 @@ class Card_Herbalist(Card.Card):
                     index += 1
             print("index=%d" % index)
             if index != 1:
-                o = player.userInput(options, "Put a card on the top of your deck?")
+                o = player.user_input(options, "Put a card on the top of your deck?")
                 if o["card"]:
                     player.played.remove(o["card"])
-                    player.addCard(o["card"], "topdeck")
+                    player.add_card(o["card"], "topdeck")
             else:
                 player.output(
                     "No suitable treasures = %s"
@@ -53,20 +53,20 @@ class Test_Herbalist(unittest.TestCase):
         self.hcard = self.g["Herbalist"].remove()
 
     def test_putnothing(self):
-        self.plr.setPlayed("Gold", "Estate")
-        self.plr.addCard(self.hcard, "hand")
+        self.plr.set_played("Gold", "Estate")
+        self.plr.add_card(self.hcard, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.hcard)
-        self.plr.discardHand()
+        self.plr.play_card(self.hcard)
+        self.plr.discard_hand()
         self.assertEqual(self.plr.deck.size(), 5)
 
     def test_putgold(self):
-        self.plr.setPlayed("Gold", "Estate")
+        self.plr.set_played("Gold", "Estate")
         self.plr.hand.empty()
-        self.plr.addCard(self.hcard, "hand")
+        self.plr.add_card(self.hcard, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.hcard)
-        self.plr.discardHand()
+        self.plr.play_card(self.hcard)
+        self.plr.discard_hand()
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertEqual(self.plr.discardpile[-1].name, "Estate")
         self.assertEqual(self.plr.discardpile.size(), 2)

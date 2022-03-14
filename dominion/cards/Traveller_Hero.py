@@ -20,7 +20,7 @@ class Card_Hero(Card.Card):
 
     def special(self, game, player):
         """Gain a treasure"""
-        player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
+        player.plr_gain_card(cost=None, types={Card.TYPE_TREASURE: True})
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Champion"""
@@ -36,14 +36,14 @@ class Test_Hero(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hero"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_hero(self):
         """Play a hero"""
         self.plr.test_input = ["get gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 2)
+            self.assertEqual(self.plr.get_coins(), 2)
             self.assertIsNotNone(self.plr.in_discard("Gold"))
         except AssertionError:  # pragma: no cover
             self.g.print_state()

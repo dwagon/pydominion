@@ -28,16 +28,16 @@ class Card_Hostelry(Card.Card):
         if not treas:
             player.output("No suitable cards for Hostelry")
             return
-        discards = player.cardSel(
+        discards = player.card_sel(
             prompt="Discard number of cards to gain that number of horses",
             verbs=("Discard", "Undiscard"),
             anynum=True,
             cardsrc=treas,
         )
         for crd in discards:
-            player.discardCard(crd)
-            player.revealCard(crd)
-            player.gainCard("Horse")
+            player.discard_card(crd)
+            player.reveal_card(crd)
+            player.gain_card("Horse")
 
 
 ###############################################################################
@@ -47,19 +47,19 @@ class Test_Hostelry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hostelry"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
         """Gain the card"""
-        self.plr.setHand("Copper", "Silver", "Gold")
+        self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.test_input = ["Copper", "Silver", "Finish"]
-        self.plr.gainCard("Hostelry")
+        self.plr.gain_card("Hostelry")
         self.assertIsNotNone(self.plr.in_discard("Horse"))
         self.assertIsNone(self.plr.in_hand("Silver"))
 

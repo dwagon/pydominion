@@ -20,21 +20,21 @@ class Card_Torturer(Card.Card):
     def special(self, game, player):
         """Each other player chooses one: he discards 2 cards; or
         he gains a Curse card, putting it in his hand"""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Choose:")
             self.choiceOfDoom(plr, player)
 
     def choiceOfDoom(self, victim, player):
         victim.output("Your hand is: %s" % ", ".join([c.name for c in victim.hand]))
-        discard = victim.plrChooseOptions(
+        discard = victim.plr_choose_options(
             "Discard or curse", ("Discard 2 cards", True), ("Gain a curse card", False)
         )
         if discard:
             player.output("%s discarded" % victim.name)
-            victim.plrDiscardCards(2)
+            victim.plr_discard_cards(2)
         else:
             player.output("%s opted for a curse" % victim.name)
-            victim.gainCard("Curse", "hand")
+            victim.gain_card("Curse", "hand")
 
 
 ###############################################################################
@@ -53,27 +53,27 @@ class Test_Torturer(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Torturer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_opt_curse(self):
         """Play the torturer - victim opts for a curse"""
         self.victim.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
         self.assertTrue(self.victim.in_hand("Curse"))
 
     def test_opt_discard(self):
         """Play the torturer - victim opts for discarding"""
         self.victim.test_input = ["0", "1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
         self.assertEqual(self.victim.hand.size(), 3)
         self.assertFalse(self.victim.in_hand("Curse"))
 
     def test_defended(self):
         """Defending against a torturer"""
-        self.victim.setHand("Moat")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Moat")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
         self.assertEqual(self.victim.hand.size(), 1)
         self.assertFalse(self.victim.in_hand("Curse"))

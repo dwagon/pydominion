@@ -18,8 +18,8 @@ class Card_Treasure_Trove(Card.Card):
 
     def special(self, game, player):
         """When you play this, gain a Gold and a Copper"""
-        player.gainCard("Copper")
-        player.gainCard("Gold")
+        player.gain_card("Copper")
+        player.gain_card("Gold")
         player.output("Gained a Copper and a Gold")
 
 
@@ -33,8 +33,8 @@ class Test_Treasure_Trove(unittest.TestCase):
 
     def test_play(self):
         """Play a treasure trove"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
         self.assertEqual(self.plr.discardpile[1].name, "Gold")
         self.assertEqual(self.plr.discardpile.size(), 2)

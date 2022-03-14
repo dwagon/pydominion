@@ -14,15 +14,15 @@ class Event_SaltEarth(Event.Event):
         self.cost = 4
 
     def special(self, game, player):
-        player.addScore("Salt the Earth", 1)
+        player.add_score("Salt the Earth", 1)
         stacks = game.getVictoryPiles()
-        cp = player.cardSel(
+        cp = player.card_sel(
             cardsrc=stacks, prompt="Trash a Victory card from the Supply"
         )
         if not cp:
             return
         cd = cp[0].remove()
-        player.trashCard(cd)
+        player.trash_card(cd)
 
 
 ###############################################################################
@@ -35,10 +35,10 @@ class Test_SaltEarth(unittest.TestCase):
 
     def test_event(self):
         """Use Salt the Earth"""
-        self.plr.addCoin(4)
+        self.plr.add_coins(4)
         self.plr.test_input = ["Province"]
-        self.plr.performEvent(self.event)
-        self.assertEqual(self.plr.getScoreDetails()["Salt the Earth"], 1)
+        self.plr.perform_event(self.event)
+        self.assertEqual(self.plr.get_score_details()["Salt the Earth"], 1)
         self.assertIsNotNone(self.g.in_trash("Province"))
 
 

@@ -22,17 +22,17 @@ class Card_Advisor(Card.Card):
         cards = []
         choser = game.playerToLeft(player)
         for _ in range(3):
-            card = player.pickupCard()
-            player.revealCard(card)
+            card = player.pickup_card()
+            player.reveal_card(card)
             cards.append(card)
-        to_discard = choser.cardSel(
+        to_discard = choser.card_sel(
             force=True,
             prompt=f"Pick a card of {player.name} to discard from Advisor",
             cardsrc=cards,
             verbs=("Discard", "Undiscard"),
         )[0]
         player.output(f"{choser.name} discarded {to_discard.name}")
-        player.discardCard(to_discard)
+        player.discard_card(to_discard)
 
 
 ###############################################################################
@@ -60,13 +60,13 @@ class Test_Advisor(unittest.TestCase):
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
         self.acard = self.g["Advisor"].remove()
-        self.plr.addCard(self.acard, "hand")
+        self.plr.add_card(self.acard, "hand")
 
     def test_play(self):
         """ " Play an advisor"""
-        self.plr.setDeck("Duchy", "Silver", "Gold")
+        self.plr.set_deck("Duchy", "Silver", "Gold")
         self.plr2.test_input = ["discard gold"]
-        self.plr.playCard(self.acard)
+        self.plr.play_card(self.acard)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

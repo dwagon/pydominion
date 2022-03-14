@@ -22,14 +22,14 @@ class Landmark_Colonnade(Landmark.Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if not card.isAction():
             return
         if not self._vp:
             return
         if player.in_played(card.name):
             self._vp -= 2
-            player.addScore("Colonnade", 2)
+            player.add_score("Colonnade", 2)
             player.output("Gained 2VP from Colonnade")
 
 
@@ -44,10 +44,10 @@ class Test_Colonnade(unittest.TestCase):
 
     def test_play(self):
         """Test Colonnade"""
-        self.plr.setPlayed("Moat")
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Moat"])
-        self.assertEqual(self.plr.getScoreDetails()["Colonnade"], 2)
+        self.plr.set_played("Moat")
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Moat"])
+        self.assertEqual(self.plr.get_score_details()["Colonnade"], 2)
 
 
 ###############################################################################

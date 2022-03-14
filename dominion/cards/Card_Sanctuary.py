@@ -22,7 +22,7 @@ class Card_Sanctuary(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        crd = player.cardSel(prompt="Exile a card", verbs=("Exile", "Unexile"))
+        crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
             player.hand.remove(crd[0])
             player.exile_card(crd[0])
@@ -38,11 +38,11 @@ class Test_Sanctuary(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.setDeck("Estate", "Duchy", "Province")
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Estate", "Duchy", "Province")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)

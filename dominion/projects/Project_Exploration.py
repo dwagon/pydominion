@@ -13,11 +13,11 @@ class Project_Exploration(Project.Project):
         self.name = "Exploration"
         self.cost = 4
 
-    def hook_endBuyPhase(self, game, player):
+    def hook_end_buy_phase(self, game, player):
         if player.stats["bought"]:
             return
-        player.gainCoffer(1)
-        player.gainVillager(1)
+        player.add_coffer(1)
+        player.add_villager(1)
 
 
 ###############################################################################
@@ -28,12 +28,12 @@ class Test_Exploration(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.getCoffer()
+        numc = self.plr.get_coffers()
         self.plr.assign_project("Exploration")
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getCoffer(), numc + 1)
-        self.assertEqual(self.plr.getVillager(), 1)
+        self.assertEqual(self.plr.get_coffers(), numc + 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
 
 
 ###############################################################################

@@ -21,12 +21,12 @@ class Card_Giant(Card.Card):
 
     def special(self, game, player):
         if player.flip_journey_token():
-            player.addCoin(5)
-            for victim in player.attackVictims():
-                c = victim.nextCard()
-                victim.revealCard(c)
+            player.add_coins(5)
+            for victim in player.attack_victims():
+                c = victim.next_card()
+                victim.reveal_card(c)
                 if c.cost >= 3 and c.cost <= 6:
-                    victim.trashCard(c)
+                    victim.trash_card(c)
                     victim.output("%s's Giant trashed your %s" % (player.name, c.name))
                     player.output("Trashed %s's %s" % (victim.name, c.name))
                 else:
@@ -34,10 +34,10 @@ class Card_Giant(Card.Card):
                         "%s's Giant discarded your %s and cursed you"
                         % (player.name, c.name)
                     )
-                    victim.addCard(c, "discard")
-                    victim.gainCard("Curse")
+                    victim.add_card(c, "discard")
+                    victim.gain_card("Curse")
         else:
-            player.addCoin(1)
+            player.add_coins(1)
 
 
 ###############################################################################
@@ -50,32 +50,32 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_journey_trashed(self):
         """Play a giant - good journey - trashable victim"""
-        self.plr.setHand()
-        self.victim.setDeck("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand()
+        self.victim.set_deck("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 5)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 5)
         self.assertIsNotNone(self.g.in_trash("Gold"))
 
     def test_play_journey_untrashed(self):
         """Play a giant - good journey - untrashable victim"""
-        self.plr.setHand()
-        self.victim.setDeck("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand()
+        self.victim.set_deck("Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 5)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 5)
         self.assertIsNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.victim.in_discard("Curse"))
 
     def test_play_no_journey(self):
         """Play a giant - bad journey"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
         self.plr.journey_token = True
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

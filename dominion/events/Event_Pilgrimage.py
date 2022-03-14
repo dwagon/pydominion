@@ -29,7 +29,7 @@ class Event_Pilgrimage(Event.Event):
             for cn in cardnames:
                 options.append({"selector": "%d" % index, "print": cn, "opt": cn})
                 index += 1
-            choice = player.userInput(options, "Select a card to gain - up to 3!")
+            choice = player.user_input(options, "Select a card to gain - up to 3!")
             if choice["opt"]:
                 selected.append(choice["opt"])
                 cardnames.remove(choice["opt"])
@@ -38,7 +38,7 @@ class Event_Pilgrimage(Event.Event):
             if len(selected) == 3:
                 break
         for card in selected:
-            player.gainCard(card)
+            player.gain_card(card)
             player.output("Gained a %s" % card)
 
 
@@ -54,11 +54,11 @@ class Test_Pilgrimage(unittest.TestCase):
 
     def test_play(self):
         """Perform a Pilgrimage"""
-        self.plr.setPlayed("Moat", "Silver", "Gold", "Copper", "Duchy")
+        self.plr.set_played("Moat", "Silver", "Gold", "Copper", "Duchy")
         self.plr.test_input = ["moat", "silver", "finish"]
         self.plr.journey_token = False
-        self.plr.addCoin(4)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(4)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertTrue(self.plr.journey_token)

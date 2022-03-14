@@ -25,13 +25,13 @@ class Test_Plunder(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Plunder"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a rebuild"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getScoreDetails()["Plunder"], 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.get_score_details()["Plunder"], 1)
 
 
 ###############################################################################

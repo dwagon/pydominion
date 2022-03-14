@@ -20,7 +20,7 @@ class Landmark_Arena(Landmark.Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         if self._vp <= 0:
             return
         actions = []
@@ -29,13 +29,13 @@ class Landmark_Arena(Landmark.Landmark):
                 actions.append(card)
         if not actions:
             return
-        disc = player.plrDiscardCards(
+        disc = player.plr_discard_cards(
             prompt="Arena: Discard an action to gain 2VP", cardsrc=actions
         )
         if disc:
             player.output("Gained 2 VP from Arena")
             self._vp -= 2
-            player.addScore("Arena", 2)
+            player.add_score("Arena", 2)
 
 
 ###############################################################################
@@ -49,10 +49,10 @@ class Test_Arena(unittest.TestCase):
 
     def test_gain(self):
         """Use Arena"""
-        self.plr.setHand("Moat")
+        self.plr.set_hand("Moat")
         self.plr.test_input = ["Discard Moat", "End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getScoreDetails()["Arena"], 2)
+        self.assertEqual(self.plr.get_score_details()["Arena"], 2)
 
 
 ###############################################################################

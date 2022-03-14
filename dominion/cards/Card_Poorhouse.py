@@ -18,11 +18,11 @@ class Card_Poorhouse(Card.Card):
     def special(self, game, player):
         coins = 4
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.isTreasure():
                 coins -= 1
         player.output("Gaining %d coins" % max(coins, 0))
-        player.addCoin(max(coins, 0))
+        player.add_coins(max(coins, 0))
 
 
 ###############################################################################
@@ -35,10 +35,10 @@ class Test_Poorhouse(unittest.TestCase):
 
     def test_play(self):
         """Play an Poor House"""
-        self.plr.setHand("Estate", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 4 - 1)
+        self.plr.set_hand("Estate", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 4 - 1)
 
 
 ###############################################################################

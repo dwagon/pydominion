@@ -17,13 +17,13 @@ class Card_Feast(Card.Card):
 
     def special(self, game, player):
         """Trash this card. Gain a card costing up to 5"""
-        if self.trashCard(player):
+        if self.trash_card(player):
             self.selectNewCard(game, player)
 
     def selectNewCard(self, game, player):
         player.output("Gain a card costing up to 5")
         options = [{"selector": "0", "print": "Nothing", "card": None}]
-        buyable = player.cardsUnder(5)
+        buyable = player.cards_under(5)
         index = 1
         for p in buyable:
             selector = "%d" % index
@@ -31,17 +31,17 @@ class Card_Feast(Card.Card):
             options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
 
-        o = player.userInput(options, "What card do you wish?")
+        o = player.user_input(options, "What card do you wish?")
         if o["card"]:
-            player.gainCard(o["card"])
+            player.gain_card(o["card"])
             player.output("Took %s" % o["card"].name)
 
-    def trashCard(self, player):
-        ans = player.plrChooseOptions(
+    def trash_card(self, player):
+        ans = player.plr_choose_options(
             "Trash this card?", ("Keep this card", False), ("Trash this card", True)
         )
         if ans:
-            player.trashCard(self)
+            player.trash_card(self)
             return True
         return False
 
@@ -58,12 +58,12 @@ class Test_Feast(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Feast"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_dontTrash(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["keep this"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         try:
             self.assertEqual(self.plr.played[0].name, "Feast")
@@ -75,7 +75,7 @@ class Test_Feast(unittest.TestCase):
         tsize = self.g.trashSize()
         try:
             self.plr.test_input = ["trash", "nothing"]
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))
             self.assertTrue(self.plr.played.is_empty())
@@ -86,7 +86,7 @@ class Test_Feast(unittest.TestCase):
     def test_trashForSomething(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash", "Get Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))

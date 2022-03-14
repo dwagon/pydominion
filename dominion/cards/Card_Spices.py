@@ -24,7 +24,7 @@ class Card_Spices(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainCoffer(2)
+        player.add_coffer(2)
 
 
 ###############################################################################
@@ -34,21 +34,21 @@ class Test_Spices(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Spices"].remove()
-        self.plr.addCard(self.card, "hand")
-        self.plr.setCoffer(0)
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_coffers(0)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
-        self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getCoffer(), 0)
+        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.get_coffers(), 0)
 
-    def test_gainCard(self):
-        self.plr.setCoffer(0)
-        self.plr.gainCard("Spices")
+    def test_gain_card(self):
+        self.plr.set_coffers(0)
+        self.plr.gain_card("Spices")
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
-        self.assertEqual(self.plr.getCoffer(), 2)
+        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.get_coffers(), 2)
 
 
 ###############################################################################

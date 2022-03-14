@@ -21,18 +21,18 @@ class Card_Sentry(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        cards = [player.nextCard() for _ in range(2)]
+        cards = [player.next_card() for _ in range(2)]
         player.output(
             "Look at the top two cards of your deck. Trash, discard or move to deck"
         )
         player.output("Trash any/all of {}".format(self.names(cards)))
-        to_trash = player.plrTrashCard(cardsrc=cards, num=2)
+        to_trash = player.plr_trash_card(cardsrc=cards, num=2)
         cards = [_ for _ in cards if _ not in to_trash]
         if not cards:
             return
         player.output("Discard any/all of {}".format(self.names(cards)))
-        to_discard = player.plrDiscardCards(cardsrc=cards, num=2)
-        to_deck = [player.addCard(_, "topdeck") for _ in cards if _ not in to_discard]
+        to_discard = player.plr_discard_cards(cardsrc=cards, num=2)
+        to_deck = [player.add_card(_, "topdeck") for _ in cards if _ not in to_discard]
         if to_deck:
             player.output("Moving {} to the deck".format(self.names(to_deck)))
 
@@ -47,19 +47,19 @@ class Test_Sentry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentry"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_trash_discard(self):
-        self.plr.setDeck("Copper", "Province", "Duchy")
+        self.plr.set_deck("Copper", "Province", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish", "Discard Province", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
 
     def test_discard_keep(self):
-        self.plr.setDeck("Gold", "Province", "Duchy")
+        self.plr.set_deck("Gold", "Province", "Duchy")
         self.plr.test_input = ["Finish", "Discard Province", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Province"))
         self.assertIsNotNone(self.plr.in_deck("Gold"))
 

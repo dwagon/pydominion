@@ -19,11 +19,11 @@ class Card_Tunnel(Card.Card):
     def hook_discard_this_card(self, game, player, source):
         if player.phase == "cleanup":
             return
-        gain = player.plrChooseOptions(
+        gain = player.plr_choose_options(
             "Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)
         )
         if gain:
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################
@@ -33,17 +33,17 @@ class Test_Tunnel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tunnel"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the Tunnel"""
         self.plr.test_input = ["gold"]
-        self.plr.discardCard(self.card)
+        self.plr.discard_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
     def test_score(self):
         """Score from a Tunnel"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Tunnel"], 2)
 
 

@@ -58,8 +58,8 @@ class Test_Castle(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Castles"].remove()
-        self.plr.setHand("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
 
     def test_castles(self):
         pass

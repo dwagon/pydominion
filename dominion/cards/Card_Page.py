@@ -33,9 +33,9 @@ class Test_Page(unittest.TestCase):
 
     def test_page(self):
         """Play a page"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 

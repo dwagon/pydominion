@@ -16,7 +16,7 @@ class Card_Chapel(Card.Card):
 
     def special(self, game, player):
         """Trash up to 4 cards from your hand"""
-        player.plrTrashCard(num=4, prompt="Trash up to four cards")
+        player.plr_trash_card(num=4, prompt="Trash up to four cards")
 
 
 ###############################################################################
@@ -26,20 +26,20 @@ class Test_Chapel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chapel"].remove()
-        self.plr.setHand("Copper", "Silver", "Estate")
-        self.plr.addCard(self.ccard, "hand")
+        self.plr.set_hand("Copper", "Silver", "Estate")
+        self.plr.add_card(self.ccard, "hand")
 
     def test_trashnone(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.ccard)
+        self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.g.trashSize(), tsize)
 
     def test_trashtwo(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash copper", "trash silver", "finish"]
-        self.plr.playCard(self.ccard)
+        self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 

@@ -13,10 +13,10 @@ class State_Envious(State.State):
         self.desc = "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
         self.name = "Envious"
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         player.remove_state(self)
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         # Silver and Gold make 1
         if card.name == "Silver":
             return -1
@@ -40,11 +40,11 @@ class Test_Envious(unittest.TestCase):
 
     def test_envious(self):
         self.plr.assign_state("Envious")
-        self.plr.setHand("Silver", "Gold")
-        self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getCoin(), 1)
-        self.plr.playCard(self.plr.hand[0])
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.set_hand("Silver", "Gold")
+        self.plr.play_card(self.plr.hand[0])
+        self.assertEqual(self.plr.get_coins(), 1)
+        self.plr.play_card(self.plr.hand[0])
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

@@ -19,7 +19,7 @@ class Card_Merchant(Card.Card):
         self.cards = 1
         self.cost = 3
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         if card.name != "Silver":
             return 0
         ag_count = player.played.count("Silver")
@@ -39,16 +39,16 @@ class Test_Merchant(unittest.TestCase):
         self.s2 = self.g["Silver"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.plr.addCard(self.s1, "hand")
-        self.plr.playCard(self.s1)
-        self.assertEqual(self.plr.getCoin(), 3)
-        self.plr.addCard(self.s2, "hand")
-        self.plr.playCard(self.s2)
-        self.assertEqual(self.plr.getCoin(), 5)
+        self.plr.add_card(self.s1, "hand")
+        self.plr.play_card(self.s1)
+        self.assertEqual(self.plr.get_coins(), 3)
+        self.plr.add_card(self.s2, "hand")
+        self.plr.play_card(self.s2)
+        self.assertEqual(self.plr.get_coins(), 5)
 
 
 ###############################################################################

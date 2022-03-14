@@ -18,13 +18,13 @@ class Card_SilkMerchant(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainVillager()
-        player.gainCoffer()
+        player.add_villager()
+        player.add_coffer()
 
     ###########################################################################
     def hook_trashThisCard(self, game, player):
-        player.gainVillager()
-        player.gainCoffer()
+        player.add_villager()
+        player.add_coffer()
 
 
 ###############################################################################
@@ -34,29 +34,29 @@ class Test_SilkMerchant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Silk Merchant"].remove()
-        self.plr.setHand()
+        self.plr.set_hand()
 
     def test_gain_card(self):
-        self.plr.setCoffer(0)
-        self.plr.gainCard("Silk Merchant")
+        self.plr.set_coffers(0)
+        self.plr.gain_card("Silk Merchant")
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertEqual(self.plr.getVillager(), 1)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
 
     def test_trash_card(self):
-        self.plr.setCoffer(0)
-        self.plr.trashCard(self.card)
+        self.plr.set_coffers(0)
+        self.plr.trash_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertEqual(self.plr.getVillager(), 1)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
 
     def test_play_card(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.setCoffer(0)
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.set_coffers(0)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.getVillager(), 0)
-        self.assertEqual(self.plr.getCoffer(), 0)
+        self.assertEqual(self.plr.get_villagers(), 0)
+        self.assertEqual(self.plr.get_coffers(), 0)
 
 
 ###############################################################################

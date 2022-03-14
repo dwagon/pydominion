@@ -21,7 +21,7 @@ class Card_Bauble(Card.Card):
         if not self._gain_hook:
             return {}
         mod = {}
-        deck = player.plrChooseOptions(
+        deck = player.plr_choose_options(
             "Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True),
@@ -50,15 +50,15 @@ class Card_Bauble(Card.Card):
                         "deck",
                     )
                 )
-            choice = player.plrChooseOptions("Choose an option.", *options)
+            choice = player.plr_choose_options("Choose an option.", *options)
             chosen.append(choice)
         for choice in chosen:
             if choice == "buy":
-                player.addBuys(1)
+                player.add_buys(1)
             elif choice == "cash":
-                player.addCoin(1)
+                player.add_coins(1)
             elif choice == "favor":
-                player.addFavor(1)
+                player.add_favors(1)
             elif choice == "deck":
                 self._gain_hook = True
             else:
@@ -72,37 +72,37 @@ class Test_Bauble(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Bauble"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_buy_cash(self):
         """Play the card and gain a buy and cash"""
         self.plr.test_input = ["buy", "cash"]
-        self.plr.setBuys(0)
-        self.plr.playCard(self.card)
+        self.plr.set_buys(0)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_cash_favor(self):
         """Play the card and gain a cash and favor"""
         self.plr.test_input = ["favor", "cash"]
-        self.plr.setFavor(0)
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.set_favors(0)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_deck_deck(self):
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "deck"]
-        self.plr.playCard(self.card)
-        self.plr.gainCard("Gold")
+        self.plr.play_card(self.card)
+        self.plr.gain_card("Gold")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertFalse(self.plr.in_discard("Gold"))
 
     def test_play_deck_discard(self):
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "discard"]
-        self.plr.playCard(self.card)
-        self.plr.gainCard("Gold")
+        self.plr.play_card(self.card)
+        self.plr.gain_card("Gold")
         self.assertNotEqual(self.plr.deck[-1].name, "Gold")
         self.assertTrue(self.plr.in_discard("Gold"))
 

@@ -24,7 +24,7 @@ class Card_Exorcist(Card.Card):
         if player.hand.is_empty():
             player.output("No cards to trash")
             return
-        trashed = player.plrTrashCard(prompt="Trash a card and gain a cheaper spirit")
+        trashed = player.plr_trash_card(prompt="Trash a card and gain a cheaper spirit")
         if not trashed:
             return
         cost = trashed[0].cost
@@ -37,8 +37,8 @@ class Card_Exorcist(Card.Card):
                 options.append({"selector": sel, "print": toprint, "card": card})
                 idx += 1
         if idx:
-            o = player.userInput(options, "Gain a spirit")
-            player.gainCard(o["card"])
+            o = player.user_input(options, "Gain a spirit")
+            player.gain_card(o["card"])
         else:
             player.output("No spirits available at that price")
 
@@ -53,10 +53,10 @@ class Test_Exorcist(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setHand("Silver", "Gold", "Province")
+        self.plr.set_hand("Silver", "Gold", "Province")
         self.plr.test_input = ["Silver", "Imp"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Imp"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.g.print_state()

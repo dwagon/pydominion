@@ -17,19 +17,19 @@ class Card_Tactician(Card.Card):
 
     def special(self, game, player):
         self.discarded = False
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "Discard hand for good stuff next turn?", ("Keep", False), ("Discard", True)
         )
         if discard and player.hand.size():
             self.discarded = True
-            player.discardHand()
+            player.discard_hand()
 
     def duration(self, game, player):
         """+5 Cards, +1 Buy, +1 Action"""
         if self.discarded:
-            player.pickupCards(5)
-            player.addBuys(1)
-            player.addActions(1)
+            player.pickup_cards(5)
+            player.add_buys(1)
+            player.add_actions(1)
             self.discarded = False
 
 
@@ -40,12 +40,12 @@ class Test_Tactician(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tactician"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_discard(self):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["discard"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
@@ -56,7 +56,7 @@ class Test_Tactician(unittest.TestCase):
     def test_play_keep(self):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()

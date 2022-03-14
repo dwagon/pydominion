@@ -18,7 +18,7 @@ class Card_Pasture(Card.Card):
         self.purchasable = False
 
     def special_score(self, game, player):
-        estates = sum([1 for _ in player.allCards() if _.name == "Estate"])
+        estates = sum([1 for _ in player.all_cards() if _.name == "Estate"])
         return estates
 
 
@@ -31,14 +31,14 @@ class Test_Pasture(unittest.TestCase):
         self.card = self.g["Pasture"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_score(self):
-        self.plr.setHand("Estate", "Pasture")
-        self.plr.setDeck("Estate")
-        score = self.plr.getScoreDetails()
+        self.plr.set_hand("Estate", "Pasture")
+        self.plr.set_deck("Estate")
+        score = self.plr.get_score_details()
         self.assertEqual(score["Pasture"], 2)
 
 

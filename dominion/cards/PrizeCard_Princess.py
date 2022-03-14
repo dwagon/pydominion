@@ -19,7 +19,7 @@ class Card_Princess(Card.Card):
         )
         self.buys = 1
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         return -2
 
 
@@ -30,12 +30,12 @@ class Test_Princess(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Princess"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 4)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 4)
 
 
 ###############################################################################

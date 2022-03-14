@@ -19,11 +19,11 @@ class Way_Rat(Way.Way):
         if not treas:
             player.output("No treasures to discard")
             return
-        t_to_disc = player.cardSel(prompt="Select Treasure to discard", cardsrc=treas)
+        t_to_disc = player.card_sel(prompt="Select Treasure to discard", cardsrc=treas)
         if not t_to_disc:
             return
-        player.discardCard(t_to_disc[0])
-        player.gainCard(card.name)
+        player.discard_card(t_to_disc[0])
+        player.gain_card(card.name)
 
 
 ###############################################################################
@@ -43,8 +43,8 @@ class Test_Rat(unittest.TestCase):
 
     def test_play(self):
         """Perform a Rat"""
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))

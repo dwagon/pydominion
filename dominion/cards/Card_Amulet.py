@@ -24,18 +24,18 @@ class Card_Amulet(Card.Card):
     def amulet_special(self, game, player):
         """Now and at the start of your next turn, choose one: +1 Coin;
         or trash a card from your hand; or gain a Silver"""
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Pick one",
             ("Gain a coin", "coin"),
             ("Trash a card", "trash"),
             ("Gain a silver", "silver"),
         )
         if choice == "coin":
-            player.addCoin(1)
+            player.add_coins(1)
         if choice == "trash":
-            player.plrTrashCard(num=1)
+            player.plr_trash_card(num=1)
         if choice == "silver":
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
 
 ###############################################################################
@@ -45,42 +45,42 @@ class Test_Amulet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Amulet"].remove()
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_coin(self):
         """Play an amulet with coin"""
         self.plr.test_input = ["coin", "coin"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNone(self.plr.in_discard("Silver"))
 
     def test_play_silver(self):
         """Play an amulet with coin"""
         self.plr.test_input = ["silver", "silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_play_trash(self):
         """Play an amulet with trash"""
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash", "duchy", "finish", "trash", "1", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 

@@ -24,7 +24,7 @@ class Card_Cache(Card.Card):
         """When you gain this, gain two Coppers"""
         player.output("Gained 2 copper from cache")
         for _ in range(2):
-            player.gainCard("Copper")
+            player.gain_card("Copper")
         return {}
 
 
@@ -37,14 +37,14 @@ class Test_Cache(unittest.TestCase):
         self.cache = self.g["Cache"].remove()
 
     def test_gain(self):
-        self.plr.gainCard("Cache")
+        self.plr.gain_card("Cache")
         sdp = sorted([c.name for c in self.plr.discardpile])
         self.assertEqual(sorted(["Copper", "Copper", "Cache"]), sdp)
 
     def test_play(self):
-        self.plr.addCard(self.cache, "hand")
-        self.plr.playCard(self.cache)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.add_card(self.cache, "hand")
+        self.plr.play_card(self.cache)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################

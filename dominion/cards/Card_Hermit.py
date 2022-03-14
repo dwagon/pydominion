@@ -26,7 +26,7 @@ class Card_Hermit(Card.Card):
         for card in player.discardpile + player.hand:
             if not card.isTreasure():
                 to_trash.append(card)
-        choice = player.cardSel(
+        choice = player.card_sel(
             prompt="Trash one of these?", cardsrc=to_trash, verbs=("Trash", "Untrash")
         )
         if choice:
@@ -34,22 +34,22 @@ class Card_Hermit(Card.Card):
                 player.discardpile.remove(choice[0])
             else:
                 player.hand.remove(choice[0])
-            player.trashCard(choice[0])
+            player.trash_card(choice[0])
         # Gain a card costing up to 3.
-        player.plrGainCard(3)
+        player.plr_gain_card(3)
 
     def hook_discard_this_card(self, game, player, source):
         # When you discard this from play, if you did not buy any cards this turn,
         # trash this and gain a Madman from the Madman pile
         if not player.stats["bought"]:
-            trash = player.plrChooseOptions(
+            trash = player.plr_choose_options(
                 "Trash this to gain a madman",
                 ("Keep Hermit", False),
                 ("Gain Madman", True),
             )
             if trash:
-                player.trashCard(self)
-                player.gainCard("Madman")
+                player.trash_card(self)
+                player.gain_card("Madman")
 
 
 ###############################################################################
@@ -62,20 +62,20 @@ class Test_Hermit(unittest.TestCase):
 
     def test_play_discard(self):
         """Play a Hermit trashing card from discard"""
-        self.plr.setDiscard("Province", "Gold")
+        self.plr.set_discard("Province", "Gold")
         self.plr.test_input = ["trash province", "get silver"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNone(self.plr.in_discard("Province"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_play_hand(self):
         """Play a Hermit trashing card from hand"""
-        self.plr.setHand("Province")
+        self.plr.set_hand("Province")
         self.plr.test_input = ["trash province", "get silver"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
@@ -83,8 +83,8 @@ class Test_Hermit(unittest.TestCase):
     def test_discard(self):
         """Discard a Hermit and gain a Madman"""
         self.plr.test_input = ["madman"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.discardHand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.discard_hand()
         self.assertIsNotNone(self.plr.in_discard("Madman"))
         self.assertIsNone(self.plr.in_hand("Hermit"))
 

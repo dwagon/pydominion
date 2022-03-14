@@ -13,9 +13,9 @@ class Landmark_Wall(Landmark.Landmark):
         self.name = "Wall"
 
     def hook_end_of_game(self, game, player):
-        ncards = len(player.allCards())
+        ncards = len(player.all_cards())
         score = -(ncards - 15)
-        player.addScore("Wall", score)
+        player.add_score("Wall", score)
 
 
 ###############################################################################
@@ -27,11 +27,11 @@ class Test_Wall(unittest.TestCase):
 
     def test_gain(self):
         """Use Wall"""
-        self.plr.setDiscard("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.setDeck("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.setHand("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Wall"], -3)
+        self.plr.set_discard("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.set_deck("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.set_hand("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Wall"], -3)
 
 
 ###############################################################################

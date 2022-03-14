@@ -16,12 +16,12 @@ class Way_Seal(Way.Way):
         self.name = "Way of the Seal"
 
     def special(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
         player.add_hook("gain_card", self.gain_card)
 
     def gain_card(self, game, player, card):
         mod = {}
-        deck = player.plrChooseOptions(
+        deck = player.plr_choose_options(
             "Seal: Where to put %s?" % card.name,
             ("Put %s on discard" % card.name, False),
             ("Put %s on top of deck" % card.name, True),
@@ -49,10 +49,10 @@ class Test_Seal(unittest.TestCase):
 
     def test_play(self):
         """Perform a Seal"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["top of deck"]
         self.plr.perform_way(self.way, self.card)
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
 
 

@@ -57,26 +57,26 @@ class KnightCard(Card.Card):
         """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6 and discards the
         rest. If a knight is trashed by this, trash this card"""
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.knight_attack(game, player, pl)
 
     def knight_attack(self, game, player, victim):
         cards = []
         for _ in range(2):
-            crd = victim.nextCard()
-            victim.revealCard(crd)
+            crd = victim.next_card()
+            victim.reveal_card(crd)
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)
             else:
                 victim.output(
                     "%s's %s discarded your %s" % (player.name, self.name, crd.name)
                 )
-                victim.discardCard(crd)
+                victim.discard_card(crd)
         if not cards:
             return
         player.output("Looking at %s" % ", ".join([x.name for x in cards]))
 
-        trash = victim.plrTrashCard(
+        trash = victim.plr_trash_card(
             cardsrc=cards,
             force=True,
             prompt="%s's %s trashes one of your cards" % (player.name, self.name),
@@ -89,14 +89,14 @@ class KnightCard(Card.Card):
                 "%s trashed a knight: %s - trashing your %s"
                 % (victim.name, to_trash.name, self.name)
             )
-            player.trashCard(self)
+            player.trash_card(self)
 
         for crd in cards:
             if crd != to_trash:
                 victim.output(
                     "%s's %s discarded your %s" % (player.name, self.name, crd.name)
                 )
-                victim.discardCard(crd)
+                victim.discard_card(crd)
 
 
 ###############################################################################
@@ -112,20 +112,20 @@ class Test_Knight(unittest.TestCase):
         while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
             self.card = self.g["Knight"].remove()
 
-        self.plr.setHand("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard_nosuitable(self):
         """Play a knight woth no suitable cards"""
-        self.vic.setDeck("Copper", "Copper")
-        self.plr.playCard(self.card)
+        self.vic.set_deck("Copper", "Copper")
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_playcard_one_suitable(self):
         """Play a knight with one suitable card"""
-        self.vic.setDeck("Copper", "Duchy")
+        self.vic.set_deck("Copper", "Duchy")
         self.vic.test_input = ["Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)
 
 

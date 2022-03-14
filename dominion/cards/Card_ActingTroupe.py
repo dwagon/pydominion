@@ -17,8 +17,8 @@ class Card_ActingTroupe(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.gainVillager(4)
-        player.trashCard(self)
+        player.add_villager(4)
+        player.trash_card(self)
 
 
 ###############################################################################
@@ -28,11 +28,11 @@ class Test_ActingTroupe(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Acting Troupe"].remove()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertLessEqual(self.plr.getVillager(), 4)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertLessEqual(self.plr.get_villagers(), 4)
         self.assertIsNotNone(self.g.in_trash("Acting Troupe"))
 
 

@@ -21,7 +21,7 @@ class Card_Coven(Card.Card):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.exile_card("Curse")
             if game["Curse"].is_empty():
                 num = plr.unexile("Curse")
@@ -39,12 +39,12 @@ class Test_Coven(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Coven"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.vic.in_exile("Curse"))
 
 

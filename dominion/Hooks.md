@@ -12,12 +12,12 @@ night(game, player)
 In night cards only - called when the card is active during the night phase
 * player - current player
 
-hook_allowedToBuy
+hook_allowed_to_buy
 ----------------
 This is called before any card is available to purchase.
 It should return True if the card is available to be purchased, or False otherwise.
 
-hook_buyCard
+hook_buy_card
 ------------
 This is called after a card has been purchased, and is invoked for
 every card in the players hand.
@@ -26,7 +26,7 @@ hook_buy_this_card
 ------------------
 This is called after this card has been purchased.
 
-hook_allPlayers_buyCard
+hook_all_players_buy_card
 ---------------
 If any player buys a card call this for any card in everyone's duration pile
 
@@ -39,7 +39,7 @@ hook_way_discard_this_card
 --------------------------
 This is called when a card that was played through a way
 
-hook_spendValue(game, player, card)
+hook_spend_value(game, player, card)
 -----------------------------------
 This modifies how much coin value you get for spending the card and
 is invoked for every card that has been played this turn.
@@ -50,11 +50,11 @@ hook_allplayers_gain_card
 ---------------
 If any player gains a card call this for any card in everyone's hand
 
-hook_preBuy
+hook_pre_buy
 -----------
 Fires off before the buy phase
 
-hook_endBuyPhase
+hook_end_buy_phase
 -----------
 Fires off at the end of the buy phase
 
@@ -92,7 +92,7 @@ hook_call_reserve
 --------------
 Called when a card is pulled from the Reserve
 
-hook_allPlayers_preAction(game, player, owner, card)
+hook_all_players_pre_action(game, player, owner, card)
 ----------------------------------------------------
 Called before action cards are played.
 * player - current player

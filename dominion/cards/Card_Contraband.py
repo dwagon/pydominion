@@ -23,7 +23,7 @@ class Card_Contraband(Card.Card):
         options = []
         for cp in cps:
             options.append((cp, cp))
-        forbid = plr.plrChooseOptions(
+        forbid = plr.plr_choose_options(
             "Contraband: Pick a stack that %s can't buy this turn" % player.name,
             *options
         )
@@ -45,18 +45,18 @@ class Test_Contraband(unittest.TestCase):
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()
         self.card = self.g["Contraband"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.nbr.test_input = ["Gold"]
         self.plr.coins = 6
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for msg in options:
             if "Buy Gold" in msg["line"]:
                 self.fail("Allowed to buy Gold")
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertEqual(self.plr.get_buys(), 2)
 
 

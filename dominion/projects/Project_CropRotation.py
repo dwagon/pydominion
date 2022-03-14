@@ -19,11 +19,11 @@ class Project_CropRotation(Project.Project):
         vics = [_ for _ in player.hand if _.isVictory()]
         if not vics:
             return
-        card = player.plrDiscardCards(
+        card = player.plr_discard_cards(
             prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics
         )
         if card:
-            player.pickupCards(2)
+            player.pickup_cards(2)
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_CropRotation(unittest.TestCase):
 
     def test_cost(self):
         self.plr.assign_project("Crop Rotation")
-        self.plr.setHand("Copper", "Silver", "Estate")
+        self.plr.set_hand("Copper", "Silver", "Estate")
         self.plr.test_input = ["Discard Estate"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 3 + 2 - 1)

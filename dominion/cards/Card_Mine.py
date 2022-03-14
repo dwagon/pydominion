@@ -28,16 +28,16 @@ class Card_Mine(Card.Card):
                 )
                 index += 1
         player.output("Trash a treasure to gain a better one")
-        o = player.userInput(options, "Trash which treasure?")
+        o = player.user_input(options, "Trash which treasure?")
         if o["card"]:
             val = o["card"].cost
             # Make an assumption and pick the best treasure card
             # TODO - let user pick
             for tc in game.base_cards:
                 if game[tc].cost == val + 3:
-                    c = player.gainCard(tc, "hand")
+                    c = player.gain_card(tc, "hand")
                     player.output("Converted to %s" % c.name)
-                    player.trashCard(o["card"])
+                    player.trash_card(o["card"])
                     break
             else:  # pragma: no cover
                 player.output("No appropriate treasure card exists")
@@ -52,22 +52,22 @@ class Test_Mine(unittest.TestCase):
         self.card = self.g["Mine"].remove()
 
     def test_convcopper(self):
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand[0].name, "Silver")
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.get_actions(), 0)
 
     def test_convnothing(self):
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand[0].name, "Copper")
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand.size(), 1)

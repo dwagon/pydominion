@@ -18,15 +18,15 @@ class Card_Engineer(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        player.plrGainCard(4)
-        trash = player.plrChooseOptions(
+        player.plr_gain_card(4)
+        trash = player.plr_choose_options(
             "Trash the Engineer?",
             ("Keep the enginner", False),
             ("Trash to gain a card costing up to 4", True),
         )
         if trash:
-            player.trashCard(self)
-            player.plrGainCard(4)
+            player.trash_card(self)
+            player.plr_gain_card(4)
 
 
 ###############################################################################
@@ -39,18 +39,18 @@ class Test_Engineer(unittest.TestCase):
 
     def test_play_trash(self):
         """Play an Engineer and trash it"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Trash", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.g.in_trash("Engineer"))
 
     def test_play_keep(self):
         """Play an Engineer and keep it"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_played("Engineer"))
         self.assertIsNone(self.g.in_trash("Engineer"))

@@ -23,14 +23,14 @@ class Card_Farmingvillage(Card.Card):
         an Action or Treasure card. Put that card into your hand
         and discard the other cards."""
         while True:
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c.isTreasure() or c.isAction():
                 player.output("Added %s to hand" % c.name)
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 break
             player.output("Picked up and discarded %s" % c.name)
-            player.discardCard(c)
+            player.discard_card(c)
 
 
 ###############################################################################
@@ -40,12 +40,12 @@ class Test_Farmingvillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Farming Village"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_treasure(self):
         """Play farming village with a treasure in deck"""
-        self.plr.setDeck("Estate", "Estate", "Silver", "Estate", "Estate")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Estate", "Estate", "Silver", "Estate", "Estate")
+        self.plr.play_card(self.card)
         self.assertTrue(self.plr.in_hand("Silver"))
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
@@ -53,8 +53,8 @@ class Test_Farmingvillage(unittest.TestCase):
 
     def test_play_action(self):
         """Play farming village with an action in deck"""
-        self.plr.setDeck("Estate", "Estate", "Farming Village", "Estate", "Estate")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Estate", "Estate", "Farming Village", "Estate", "Estate")
+        self.plr.play_card(self.card)
         self.assertTrue(self.plr.in_hand("Farming Village"))
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:

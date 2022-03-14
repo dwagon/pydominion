@@ -19,25 +19,25 @@ class Card_Jack_of_all_Trades(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
-        card = player.nextCard()
-        topdeck = player.plrChooseOptions(
+        card = player.next_card()
+        topdeck = player.plr_choose_options(
             "Put %s back on top of your deck?" % card.name,
             ("Discard %s" % card.name, False),
             ("Keep %s on top of your deck" % card.name, True),
         )
         if topdeck:
-            player.addCard(card, "topdeck")
+            player.add_card(card, "topdeck")
         else:
-            player.discardCard(card)
+            player.discard_card(card)
 
         while player.hand.size() < 5:
-            player.pickupCard()
+            player.pickup_card()
 
         cards = [c for c in player.hand if not c.isTreasure()]
         if cards:
-            player.plrTrashCard(cardsrc=cards, prompt="Trash a non-Treasure")
+            player.plr_trash_card(cardsrc=cards, prompt="Trash a non-Treasure")
 
 
 ###############################################################################
@@ -51,11 +51,11 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
     def test_play(self):
         """Play a Jack of all Trades"""
         tsize = self.g.trashSize()
-        self.plr.setDeck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
-        self.plr.setHand("Duchy")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
+        self.plr.set_hand("Duchy")
         self.plr.test_input = ["keep", "duchy"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
 
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # Gain a Silver
 

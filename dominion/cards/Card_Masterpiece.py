@@ -25,7 +25,7 @@ class Card_Masterpiece(Card.Card):
     def hook_overpay(self, game, player, amount):
         player.output("Gained %d Silvers" % amount)
         for _ in range(amount):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
 
 ###############################################################################
@@ -38,15 +38,15 @@ class Test_Masterpiece(unittest.TestCase):
 
     def test_play(self):
         """Play a Masterpiece"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_buy(self):
         """Buy a Masterpiece"""
         self.plr.coin = 5
         self.plr.test_input = ["1"]
-        self.plr.buyCard(self.g["Masterpiece"])
+        self.plr.buy_card(self.g["Masterpiece"])
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 

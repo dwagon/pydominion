@@ -16,9 +16,9 @@ class Card_Haggler(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         cost = card.cost - 1
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=cost,
             types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True},
             prompt="Gain a non-Victory card costing under %s" % cost,
@@ -34,16 +34,16 @@ class Test_Haggler(unittest.TestCase):
         self.card = self.g["Haggler"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_buy(self):
         """Buy a Gold and haggle a silver"""
-        self.plr.setPlayed("Haggler")
+        self.plr.set_played("Haggler")
         self.plr.test_input = ["Get Silver"]
-        self.plr.setCoin(6)
-        self.plr.buyCard(self.g["Gold"])
+        self.plr.set_coins(6)
+        self.plr.buy_card(self.g["Gold"])
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 

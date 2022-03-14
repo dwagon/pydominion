@@ -18,21 +18,21 @@ class Card_NightWatchman(Card.Card):
     def night(self, game, player):
         cards = []
         for _ in range(5):
-            c = player.nextCard()
+            c = player.next_card()
             cards.append(c)
         player.output(
             "Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards])
         )
         for c in cards:
-            discard = player.plrChooseOptions(
+            discard = player.plr_choose_options(
                 "What do you want to do?",
                 ("Discard {}".format(c.name), True),
                 ("Return {} to the deck".format(c.name), False),
             )
             if discard:
-                player.discardCard(c)
+                player.discard_card(c)
             else:
-                player.addCard(c, "topdeck")
+                player.add_card(c, "topdeck")
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}
@@ -48,8 +48,8 @@ class Test_NightWatchman(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setDeck("Gold", "Province", "Gold", "Duchy", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Gold", "Province", "Gold", "Duchy", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Return Silver",
             "Discard Duchy",
@@ -57,7 +57,7 @@ class Test_NightWatchman(unittest.TestCase):
             "Discard Province",
             "Return Gold",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Duchy"))
             self.assertIsNotNone(self.plr.in_discard("Province"))

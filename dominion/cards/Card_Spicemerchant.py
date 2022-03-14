@@ -17,22 +17,22 @@ class Card_SpiceMerchant(Card.Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        tr = player.plrTrashCard(
+        tr = player.plr_trash_card(
             prompt="Trash a treasure from your hand for +2 Cards, +1 Action / +2 Coins, +1 Buy",
             cardsrc=treasures,
         )
         if tr:
-            rew = player.plrChooseOptions(
+            rew = player.plr_choose_options(
                 "Select your reward",
                 ("+2 Cards, +1 Action", "cards"),
                 ("+2 Coins, +1 Buy", "coins"),
             )
             if rew == "cards":
-                player.pickupCards(2)
-                player.addActions(1)
+                player.pickup_cards(2)
+                player.add_actions(1)
             else:
-                player.addCoin(2)
-                player.addBuys(1)
+                player.add_coins(2)
+                player.add_buys(1)
 
 
 ###############################################################################
@@ -46,30 +46,30 @@ class Test_SpiceMerchant(unittest.TestCase):
     def test_play_card(self):
         """Play an Spice Merchant and select cards"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "cards"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_play_coins(self):
         """Play an Spice Merchant and select coins"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "coins"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

@@ -21,7 +21,7 @@ class Card_Crypt(Card.Card):
     def night(self, game, player):
         if not hasattr(player, "_crypt_reserve"):
             player._crypt_reserve = PlayArea.PlayArea([])
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Set aside any number of Treasures you have in play",
             verbs=("Set", "Unset"),
             anynum=True,
@@ -43,8 +43,8 @@ class Card_Crypt(Card.Card):
             toprint = "Bring back {}".format(card.name)
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
-        o = player.userInput(options, "What card to bring back from the crypt?")
-        player.addCard(o["card"], "hand")
+        o = player.user_input(options, "What card to bring back from the crypt?")
+        player.add_card(o["card"], "hand")
         player._crypt_reserve.remove(o["card"])
         player.secret_count -= 1
         if player._crypt_reserve.is_empty():
@@ -60,13 +60,13 @@ class Test_Crypt(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Crypt"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setPlayed("Silver", "Gold", "Estate")
+        self.plr.set_played("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()

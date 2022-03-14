@@ -14,7 +14,7 @@ class Way_Sheep(Way.Way):
         self.name = "Way of the Sheep"
 
     def special(self, game, player):
-        player.addCoin(2)
+        player.add_coins(2)
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Sheep(unittest.TestCase):
 
     def test_play(self):
         """Perform a Sheep"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

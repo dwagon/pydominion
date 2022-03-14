@@ -54,13 +54,13 @@ class BotPlayer(Player):
             raise
 
     ###########################################################################
-    def userInput(self, options, prompt):  # pylint: disable=too-many-return-statements
+    def user_input(self, options, prompt):  # pylint: disable=too-many-return-statements
         opts = self.getOptions(options)
         if "spendall" in opts:
             return opts["spendall"]
         if self.get_buys() == 0:
             return opts["quit"]
-        coin = self.getCoin()
+        coin = self.get_coins()
         self.output("Have %d coins" % coin)
         if coin >= 11 and "colony" in opts:
             return opts["colony"]
@@ -89,7 +89,7 @@ class BotPlayer(Player):
         return None
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def card_sel(self, num=1, **kwargs):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)
@@ -97,7 +97,7 @@ class BotPlayer(Player):
         return None
 
     ###########################################################################
-    def plrChooseOptions(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)

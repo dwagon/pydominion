@@ -19,12 +19,12 @@ class Card_Sleigh(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse")
-        player.gainCard("Horse")
+        player.gain_card("Horse")
+        player.gain_card("Horse")
 
     def hook_gain_card(self, game, player, card):
         # Discard self if choice == hand or deck
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "What to do with {}?".format(card.name),
             ("Discard by default", "discard"),
             ("Put {} into hand and discard Sleigh".format(card.name), "hand"),
@@ -35,7 +35,7 @@ class Card_Sleigh(Card.Card):
                 player.played.remove(self)
             if self in player.hand:
                 player.hand.remove(self)
-            player.discardCard(self)
+            player.discard_card(self)
         return {"destination": choice}
 
 
@@ -46,19 +46,19 @@ class Test_Sleigh(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sleigh"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a sleigh"""
         self.plr.test_input = ["Discard by default", "Put Horse into hand"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
         self.assertIsNotNone(self.plr.in_hand("Horse"))
 
     def test_gaincard(self):
         """Gain a card while Sleigh in hand"""
         self.plr.test_input = ["Put Estate onto your deck"]
-        self.plr.gainCard("Estate")
+        self.plr.gain_card("Estate")
         self.assertIsNotNone(self.plr.in_deck("Estate"))
         self.assertIsNotNone(self.plr.in_discard("Sleigh"))
 

@@ -18,7 +18,7 @@ class Card_Ambassador(Card.Card):
 
     def pick_card(self, player):
         while True:
-            choice = player.cardSel(
+            choice = player.card_sel(
                 num=2,
                 cardsrc="hand",
                 prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it",
@@ -36,14 +36,14 @@ class Card_Ambassador(Card.Card):
         if not choice:
             return
         cardname = choice[0].name
-        player.revealCard(choice[0])
+        player.reveal_card(choice[0])
         player.output("Putting %s back" % cardname)
         for card in choice:
             player.hand.remove(card)
             game[cardname].add()
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Gained a %s from %s's Ambassador" % (cardname, player.name))
-            plr.gainCard(cardname)
+            plr.gain_card(cardname)
 
 
 ###############################################################################
@@ -58,19 +58,19 @@ class Test_Ambassador(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.setHand("Gold", "Duchy", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold", "Duchy", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_hand("Duchy"))
 
     def test_discard_two(self):
         """Play the card  and discard two"""
-        self.plr.setHand("Duchy", "Duchy", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Duchy", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "2", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_hand("Duchy"))
 

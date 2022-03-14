@@ -23,14 +23,14 @@ class Card_Ghost(Card.Card):
     def night(self, game, player):
         if not hasattr(player, "_ghost_reserve"):
             player._ghost_reserve = PlayArea.PlayArea([])
-        count = len(player.allCards())
+        count = len(player.all_cards())
         while count:
-            card = player.nextCard()
-            player.revealCard(card)
+            card = player.next_card()
+            player.reveal_card(card)
             if card.isAction():
                 player._ghost_reserve.add(card)
                 break
-            player.addCard(card, "discard")
+            player.add_card(card, "discard")
             count -= 1
         else:
             player.output("No action cards in deck")
@@ -42,7 +42,7 @@ class Card_Ghost(Card.Card):
         for card in player._ghost_reserve[:]:
             player.output("Ghost playing {}".format(card.name))
             for _ in range(2):
-                player.playCard(card, discard=False, costAction=False)
+                player.play_card(card, discard=False, costAction=False)
             player._ghost_reserve.remove(card)
 
 
@@ -53,20 +53,20 @@ class Test_Ghost(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Ghost"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_with_no_actions(self):
         """Play a Ghost with no actions"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
     def test_duration(self):
         try:
-            self.plr.setDeck("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.setDiscard("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.set_deck("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.set_discard("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Card.TYPE_NIGHT
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
             self.assertEqual(self.plr.hand.size(), 5 + 2 * 2)  # Hand + Moat *2

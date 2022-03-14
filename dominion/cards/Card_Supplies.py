@@ -19,7 +19,7 @@ class Card_Supplies(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse", "topdeck")
+        player.gain_card("Horse", "topdeck")
 
 
 ###############################################################################
@@ -29,12 +29,12 @@ class Test_Supplies(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Supplies"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a supplies"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.deck[-1].name, "Horse")
 
 

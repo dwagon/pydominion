@@ -36,15 +36,15 @@ class Test_Peddler(unittest.TestCase):
         self.card = self.g["Peddler"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_buy(self):
-        self.plr.setPlayed("Moat")
-        cost = self.plr.cardCost(self.card)
+        self.plr.set_played("Moat")
+        cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)
 
 

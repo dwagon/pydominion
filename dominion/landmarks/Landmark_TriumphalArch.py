@@ -16,12 +16,12 @@ class Landmark_TriumphalArch(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         cards = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isAction():
                 cards[card.name] += 1
         nums = sorted(cards.values())
         try:
-            player.addScore("Triumphal Arch", nums[-2] * 3)
+            player.add_score("Triumphal Arch", nums[-2] * 3)
         except IndexError:
             player.output("No score from Triumphal Arch as insufficient action cards")
 
@@ -40,17 +40,17 @@ class Test_TriumphalArch(unittest.TestCase):
 
     def test_play(self):
         """Test Triumphal Arch"""
-        self.plr.setHand("Moat", "Moat", "Moat")
-        self.plr.setDeck("Militia", "Militia", "Militia", "Militia")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Triumphal Arch"], 3 * 3)
+        self.plr.set_hand("Moat", "Moat", "Moat")
+        self.plr.set_deck("Militia", "Militia", "Militia", "Militia")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Triumphal Arch"], 3 * 3)
 
     def test_noactions(self):
         """Test Triumphal Arch"""
-        self.plr.setHand("Copper", "Copper", "Copper")
-        self.plr.setDeck("Duchy", "Duchy", "Duchy", "Duchy")
-        self.plr.gameOver()
-        sd = self.plr.getScoreDetails()
+        self.plr.set_hand("Copper", "Copper", "Copper")
+        self.plr.set_deck("Duchy", "Duchy", "Duchy", "Duchy")
+        self.plr.game_over()
+        sd = self.plr.get_score_details()
         self.assertNotIn("Triumphal Arch", sd)
 
 

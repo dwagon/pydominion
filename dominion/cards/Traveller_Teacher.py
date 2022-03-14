@@ -28,7 +28,7 @@ class Card_Teacher(Card.Card):
             prompt = "Which stack do you want to add the %s token to?" % tkn
             if player.tokens[tkn]:
                 prompt += " Currently on %s" % player.tokens[tkn]
-            stacks = player.cardSel(num=1, prompt=prompt, cardsrc=actionpiles)
+            stacks = player.card_sel(num=1, prompt=prompt, cardsrc=actionpiles)
             if stacks:
                 player.place_token(tkn, stacks[0].name)
 
@@ -55,11 +55,11 @@ class Test_Teacher(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Teacher"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.test_input = ["Cellar", "Chapel", "Moat", "Vassal"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Cellar")
         self.assertEqual(self.plr.tokens["+1 Action"], "Chapel")
         self.assertEqual(self.plr.tokens["+1 Buy"], "Moat")

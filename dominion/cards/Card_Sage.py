@@ -22,19 +22,19 @@ class Card_Sage(Card.Card):
     def special(self, game, player):
         todiscard = []
         while True:
-            card = player.nextCard()
+            card = player.next_card()
             if not card:
                 player.output("No card costing 3 or more found")
                 break
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
-                player.addCard(card, "hand")
+                player.add_card(card, "hand")
                 break
             player.output("Discarding %s" % card.name)
             todiscard.append(card)
         for card in todiscard:
-            player.discardCard(card)
+            player.discard_card(card)
 
 
 ###############################################################################
@@ -47,17 +47,17 @@ class Test_Sage(unittest.TestCase):
 
     def test_play(self):
         """Pick a card out of the pile"""
-        self.plr.setDeck("Gold", "Copper", "Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Gold", "Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_exhaust_deck(self):
         """No good card to pick out of the pile"""
-        self.plr.setDeck("Copper", "Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.deck.size(), 0)
 

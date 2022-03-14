@@ -16,8 +16,8 @@ class Way_Butterfly(Way.Way):
 
     def special_way(self, game, player, card):
         game[card.name].add()
-        cst = player.cardCost(card)
-        player.plrGainCard(cst + 1, "equal")
+        cst = player.card_cost(card)
+        player.plr_gain_card(cst + 1, "equal")
         return {"discard": False}
 
 
@@ -38,7 +38,7 @@ class Test_Butterfly(unittest.TestCase):
 
     def test_play(self):
         """Perform a Butterfly"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_discard("Witch"))

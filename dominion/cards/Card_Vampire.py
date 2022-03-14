@@ -17,10 +17,10 @@ class Card_Vampire(Card.Card):
         self.required_cards = [("Card", "Bat")]
 
     def night(self, game, player):
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             pl.output("{}'s Vampire hexed you".format(player.name))
             pl.receive_hex()
-        player.plrGainCard(5, exclude=["Vampire"])
+        player.plr_gain_card(5, exclude=["Vampire"])
         player.replace_card(self, "Bat")
 
 
@@ -33,7 +33,7 @@ class Test_Vampire(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Vampire"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)
@@ -42,7 +42,7 @@ class Test_Vampire(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["Get Duchy"]
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertTrue(self.vic.has_state("Deluded"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Vampire"))

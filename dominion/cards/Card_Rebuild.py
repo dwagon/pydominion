@@ -25,7 +25,7 @@ class Card_Rebuild(Card.Card):
         Discard the other cards. Trash the Victory card and gain a
         Victory card cost up to 3 more than it"""
         stacks = game.getVictoryPiles()
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Guess a victory card - the next victory card that is not that will be upgraded",
             cardsrc=stacks,
         )
@@ -35,21 +35,21 @@ class Card_Rebuild(Card.Card):
             return
         discards = []
         while True:
-            card = player.nextCard()
-            player.revealCard(card)
+            card = player.next_card()
+            player.reveal_card(card)
             if not card:
                 break
             if card.isVictory() and guess.name != card.name:
                 player.output("Found and trashing a %s" % card.name)
-                player.trashCard(card)
-                player.plrGainCard(
+                player.trash_card(card)
+                player.plr_gain_card(
                     card.cost + 3, modifier="less", types={Card.TYPE_VICTORY: True}
                 )
                 break
             player.output("Drew and discarded %s" % card.name)
             discards.append(card)
         for c in discards:
-            player.discardCard(c)
+            player.discard_card(c)
 
 
 ###############################################################################
@@ -61,14 +61,14 @@ class Test_Rebuild(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Rebuild"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a rebuild"""
         tsize = self.g.trashSize()
-        self.plr.setDeck("Copper", "Copper", "Estate", "Province", "Gold")
+        self.plr.set_deck("Copper", "Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["Select Province", "Get Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 3)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

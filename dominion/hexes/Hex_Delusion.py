@@ -33,11 +33,11 @@ class Test_Delusion(unittest.TestCase):
 
     def test_preexisting(self):
         self.plr.assign_state("Envious")
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Envious"))
 
     def test_normal(self):
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 
 

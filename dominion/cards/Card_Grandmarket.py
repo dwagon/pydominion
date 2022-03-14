@@ -19,7 +19,7 @@ class Card_Grandmarket(Card.Card):
         self.buys = 1
         self.coin = 2
 
-    def hook_allowedToBuy(self, game, player):
+    def hook_allowed_to_buy(self, game, player):
         """You can't buy this if you have any copper in play"""
         for c in player.hand + player.played:
             if c.name == "Copper":
@@ -36,19 +36,19 @@ class Test_Grandmarket(unittest.TestCase):
         self.gm = self.g["Grand Market"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.gm, "hand")
-        self.plr.playCard(self.gm)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.add_card(self.gm, "hand")
+        self.plr.play_card(self.gm)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_nobuy(self):
-        self.plr.setHand("Copper", "Gold", "Gold")
-        self.plr.addCoin(6)
+        self.plr.set_hand("Copper", "Gold", "Gold")
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"
@@ -56,12 +56,12 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
-        self.plr.setHand("Gold", "Gold", "Gold")
-        self.plr.setPlayed("Copper")
-        self.plr.addCoin(6)
+        self.plr.set_hand("Gold", "Gold", "Gold")
+        self.plr.set_played("Copper")
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"
@@ -69,11 +69,11 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
-        self.plr.setHand("Gold", "Gold", "Gold")
-        self.plr.addCoin(6)
+        self.plr.set_hand("Gold", "Gold", "Gold")
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
-        options, _ = self.plr.choice_selection()
+        options, _ = self.plr._choice_selection()
         for opt in options:
             if (
                 opt["name"] == "Grand Market" and opt["verb"] == "Buy"

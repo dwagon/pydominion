@@ -15,7 +15,7 @@ class Event_Enclave(Event.Event):
         self.cost = 8
 
     def special(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
         player.exile_card("Duchy")
 
 
@@ -33,8 +33,8 @@ class Test_Enclave(unittest.TestCase):
 
     def test_Enclave(self):
         """Use Enclave"""
-        self.plr.addCoin(8)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(8)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_exile("Duchy"))
 

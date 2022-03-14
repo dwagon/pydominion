@@ -24,15 +24,15 @@ class Card_IGG(Card.Card):
         return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
 
     def special(self, game, player):
-        ans = player.plrChooseOptions(
+        ans = player.plr_choose_options(
             "Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True)
         )
         if ans:
-            player.gainCard("Copper", destination="hand")
+            player.gain_card("Copper", destination="hand")
 
     def hook_gain_this_card(self, game, player):
-        for plr in player.attackVictims():
-            plr.gainCard("Curse")
+        for plr in player.attack_victims():
+            plr.gain_card("Curse")
             plr.output("Cursed because %s gained an Ill-Gotten Gains" % player.name)
         return {}
 
@@ -47,17 +47,17 @@ class Test_IGG(unittest.TestCase):
 
     def test_play(self):
         """Play an Ill-Gotten Gains"""
-        self.plr.setHand("Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""
-        self.plr.setHand("Estate")
-        self.plr.gainCard("Ill-Gotten Gains")
+        self.plr.set_hand("Estate")
+        self.plr.gain_card("Ill-Gotten Gains")
         self.assertIsNotNone(self.vic.in_discard("Curse"))
 
 

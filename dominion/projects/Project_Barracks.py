@@ -14,7 +14,7 @@ class Project_Barracks(Project.Project):
         self.cost = 6
 
     def hook_start_turn(self, game, player):
-        player.addActions(1)
+        player.add_actions(1)
 
 
 ###############################################################################

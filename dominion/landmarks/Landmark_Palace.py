@@ -14,7 +14,7 @@ class Landmark_Palace(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         num = {"Copper": 0, "Silver": 0, "Gold": 0}
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.name in num:
                 num[card.name] += 1
         score = min(num.values()) * 3
@@ -22,7 +22,7 @@ class Landmark_Palace(Landmark.Landmark):
             "Palace scored %d VP (%d Copper, %d Silver, %d Gold)"
             % (score, num["Copper"], num["Silver"], num["Gold"])
         )
-        player.addScore("Palace", score)
+        player.add_score("Palace", score)
 
 
 ###############################################################################
@@ -34,11 +34,11 @@ class Test_Palace(unittest.TestCase):
 
     def test_gain(self):
         """Use Palace"""
-        self.plr.setDiscard("Gold", "Silver", "Silver", "Copper", "Duchy")
-        self.plr.setDeck("Gold", "Silver", "Copper", "Copper", "Duchy")
-        self.plr.setHand("Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Palace"], 2 * 3)
+        self.plr.set_discard("Gold", "Silver", "Silver", "Copper", "Duchy")
+        self.plr.set_deck("Gold", "Silver", "Copper", "Copper", "Duchy")
+        self.plr.set_hand("Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Palace"], 2 * 3)
 
 
 ###############################################################################

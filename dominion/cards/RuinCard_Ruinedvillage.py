@@ -28,11 +28,11 @@ class Test_RuinedVillage(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Ruined Village":
                 break
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a ruined village"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

@@ -19,14 +19,14 @@ class Card_Scavenger(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        dumpdeck = player.plrChooseOptions(
+        dumpdeck = player.plr_choose_options(
             "Put your deck into your discard pile?",
             ("Keep it where it is", False),
             ("Put deck into discard?", True),
         )
         if dumpdeck:
             for card in player.deck[:]:
-                player.addCard(card, "discard")
+                player.add_card(card, "discard")
                 player.deck.remove(card)
         if player.discardpile.size():
             cards = []
@@ -35,12 +35,12 @@ class Card_Scavenger(Card.Card):
                 if c.name not in cardnames:
                     cards.append(c)
                     cardnames.add(c.name)
-            card = player.cardSel(
+            card = player.card_sel(
                 force=True,
                 cardsrc=cards,
                 prompt="Pull card from discard and add to top of your deck",
             )
-            player.addCard(card[0], "topdeck")
+            player.add_card(card[0], "topdeck")
             player.discardpile.remove(card[0])
 
 
@@ -56,11 +56,11 @@ class Test_Scavenger(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.setDeck("Province", "Moat", "Witch", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Province", "Moat", "Witch", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Put", "Moat"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.deck[-1].name, "Moat")
         self.assertIsNotNone(self.plr.in_discard("Witch"))
 

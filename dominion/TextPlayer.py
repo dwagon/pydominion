@@ -95,7 +95,7 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def userInput(self, options, prompt):
+    def user_input(self, options, prompt):
         for o in options:
             line = self.selectorLine(o)
             o["line"] = line
@@ -123,7 +123,7 @@ class TextPlayer(Player):
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
-    def cardSelSource(self, **kwargs):
+    def card_selSource(self, **kwargs):
         """Understand the various places to select cards from - either a
         text desctiption of the source, a list of cards, or by default
         the players hand"""
@@ -141,7 +141,7 @@ class TextPlayer(Player):
         return selectfrom
 
     ###########################################################################
-    def cardSel(
+    def card_sel(
         self, num=1, **kwargs
     ):  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
@@ -167,7 +167,7 @@ class TextPlayer(Player):
         * anynum
             True - Any number of cards can be selected
         """
-        selectfrom = self.cardSelSource(**kwargs)
+        selectfrom = self.card_selSource(**kwargs)
         force = kwargs["force"] if "force" in kwargs else False
         showdesc = kwargs["showdesc"] if "showdesc" in kwargs else True
         verbs = kwargs.get("verbs", ("Select", "Unselect"))
@@ -183,7 +183,7 @@ class TextPlayer(Player):
 
         selected = []
         types = kwargs["types"] if "types" in kwargs else {}
-        types = self.typeSelector(types)
+        types = self._type_selector(types)
         while True:
             options = []
             if (
@@ -209,11 +209,11 @@ class TextPlayer(Player):
                 if showdesc:
                     o["desc"] = c.description(self)
                 if kwargs.get("printcost"):
-                    o["details"] = str(self.cardCost(c))
+                    o["details"] = str(self.card_cost(c))
                 if kwargs.get("printtypes"):
                     o["details"] = c.get_cardtype_repr()
                 options.append(o)
-            ui = self.userInput(options, "Select which card?")
+            ui = self.user_input(options, "Select which card?")
             if not ui["card"]:
                 break
             if ui["card"] in selected:
@@ -225,13 +225,13 @@ class TextPlayer(Player):
         return selected
 
     ###########################################################################
-    def plrChooseOptions(self, prompt, *choices):
+    def plr_choose_options(self, prompt, *choices):
         index = 0
         options = []
         for prnt, ans in choices:
             options.append(Option(selector="%s" % index, verb=prnt, answer=ans))
             index += 1
-        o = self.userInput(options, prompt)
+        o = self.user_input(options, prompt)
         return o["answer"]
 
 

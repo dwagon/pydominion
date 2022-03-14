@@ -18,13 +18,13 @@ class Card_Expand(Card.Card):
     def special(self, game, player):
         """Trash a card from your hand. Gain a card costing up to
         3 more than the trashed card"""
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain another costing up to 3 more than the one you trashed",
         )
         if tc:
             cost = tc[0].cost
-            player.plrGainCard(cost + 3)
+            player.plr_gain_card(cost + 3)
 
 
 ###############################################################################
@@ -36,10 +36,10 @@ class Test_Expand(unittest.TestCase):
         self.expand = self.g["Expand"].remove()
 
     def test_play(self):
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.expand, "hand")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.expand, "hand")
         self.plr.test_input = ["Trash Copper", "Get Estate"]
-        self.plr.playCard(self.expand)
+        self.plr.play_card(self.expand)
         self.g.print_state()
         self.assertTrue(self.plr.hand.is_empty())
         self.assertEqual(self.plr.discardpile.size(), 1)

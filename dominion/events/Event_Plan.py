@@ -16,7 +16,7 @@ class Event_Plan(Event.Event):
     def special(self, game, player):
         """Move your Trashing token to an Action Supply pile"""
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(
+        stacks = player.card_sel(
             num=1,
             prompt="What stack to add the Trashing Token to?",
             cardsrc=actionpiles,
@@ -37,11 +37,11 @@ class Test_Plan(unittest.TestCase):
 
     def test_play(self):
         """Perform a Plan"""
-        self.plr.addCoin(3)
+        self.plr.add_coins(3)
         self.plr.test_input = ["Moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["Trashing"], "Moat")
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

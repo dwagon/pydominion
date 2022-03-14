@@ -24,7 +24,7 @@ class Card_CargoShip(Card.Card):
         if not player.in_duration("Cargo Ship"):
             return None
         if not player._cargo_ship:
-            choice = player.plrChooseOptions(
+            choice = player.plr_choose_options(
                 "Do you want to set {} aside to play next turn?".format(card.name),
                 ("Yes", True),
                 ("No", False),
@@ -43,7 +43,7 @@ class Card_CargoShip(Card.Card):
     ###########################################################################
     def duration(self, game, player):
         for card in player._cargo_ship:
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             player._cargo_ship.remove(card)
             player.secret_count -= 1
 
@@ -55,27 +55,27 @@ class Test_CargoShip(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard_yes(self):
+    def test_play_card_yes(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.plr.test_input = ["Yes"]
-        self.plr.buyCard(self.g["Moat"])
+        self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.plr._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertTrue(self.plr.in_hand("Moat"))
 
-    def test_playCard_no(self):
+    def test_play_card_no(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.plr.test_input = ["No"]
-        self.plr.buyCard(self.g["Moat"])
+        self.plr.buy_card(self.g["Moat"])
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()

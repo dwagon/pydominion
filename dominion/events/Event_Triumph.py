@@ -14,10 +14,10 @@ class Event_Triumph(Event.Event):
         self.debtcost = 5
 
     def special(self, game, player):
-        new = player.gainCard("Estate")
+        new = player.gain_card("Estate")
         if new:
             vps = len(player.stats["gained"])
-            player.addScore("Triumph", vps)
+            player.add_score("Triumph", vps)
 
 
 ###############################################################################
@@ -30,10 +30,10 @@ class Test_Triumph(unittest.TestCase):
 
     def test_triumph(self):
         """Use Triumph"""
-        self.plr.gainCard("Copper")
-        self.plr.performEvent(self.event)
+        self.plr.gain_card("Copper")
+        self.plr.perform_event(self.event)
         self.assertIsNotNone(self.plr.in_discard("Estate"))
-        scores = self.plr.getScoreDetails()
+        scores = self.plr.get_score_details()
         self.assertEqual(scores["Triumph"], 2)
         self.assertEqual(self.plr.debt, 5)
 

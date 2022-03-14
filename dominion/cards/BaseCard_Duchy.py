@@ -25,11 +25,11 @@ class Card_Duchy(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         if "Duchess" in game:
-            duchess = player.plrChooseOptions(
+            duchess = player.plr_choose_options(
                 "Gain a Duchess as well?", ("No thanks", False), ("Gain Duchess", True)
             )
             if duchess:
-                player.gainCard("Duchess")
+                player.gain_card("Duchess")
         return {}
 
 
@@ -47,8 +47,8 @@ class Test_Duchy(unittest.TestCase):
         self.card = self.g["Duchy"].remove()
 
     def test_have(self):
-        self.plr.addCard(self.card)
-        sc = self.plr.getScoreDetails()
+        self.plr.add_card(self.card)
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Duchy"], 3)
 
 

@@ -22,7 +22,7 @@ class Card_Pearldiver(Card.Card):
         if player.deck.size() == 0:
             player.refill_deck()
         bcard = player.deck[0]
-        top = player.plrChooseOptions(
+        top = player.plr_choose_options(
             "What to do with bottom card?",
             ("Keep %s on bottom of deck" % bcard.name, False),
             ("Put %s on top of deck" % bcard.name, True),
@@ -30,7 +30,7 @@ class Card_Pearldiver(Card.Card):
         if top:
             player.output("Putting %s on top of deck" % bcard.name)
             player.deck.remove(bcard)
-            player.addCard(bcard, "topdeck")
+            player.add_card(bcard, "topdeck")
         else:
             pass
 
@@ -42,26 +42,26 @@ class Test_Pearldiver(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.pearldiver = self.g["Pearl Diver"].remove()
-        self.plr.addCard(self.pearldiver, "hand")
+        self.plr.add_card(self.pearldiver, "hand")
 
     def test_play(self):
-        self.plr.setDeck("Copper", "Gold", "Province", "Silver", "Duchy")
+        self.plr.set_deck("Copper", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_donothing(self):
-        self.plr.setDeck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertEqual(self.plr.deck[0].name, "Copper")
 
     def test_putontop(self):
-        self.plr.setDeck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         # Duchy gets pulled due to +1 card
         self.assertEqual(self.plr.deck[-1].name, "Copper")
         self.assertEqual(self.plr.deck[0].name, "Estate")

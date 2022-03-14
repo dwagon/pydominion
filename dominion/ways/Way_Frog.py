@@ -16,7 +16,7 @@ class Way_Frog(Way.Way):
         self.name = "Way of the Frog"
 
     def hook_way_discard_this_card(self, game, player, card):
-        player.addCard(card, "topdeck")
+        player.add_card(card, "topdeck")
         player.played.remove(card)
 
 
@@ -37,11 +37,11 @@ class Test_Frog(unittest.TestCase):
 
     def test_play(self):
         """Perform a Frog"""
-        self.plr.setHand("Copper", "Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.plr.discardHand()
+        self.plr.discard_hand()
         self.assertIsNotNone(self.plr.in_deck("Moat"))
 
 

@@ -16,7 +16,7 @@ class Event_Pathfinding(Event.Event):
     def special(self, game, player):
         """Move your +1 Card token to an Action Supply Pile"""
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(
+        stacks = player.card_sel(
             num=1, prompt="What stack to add the +1 Card Token to?", cardsrc=actionpiles
         )
         if stacks:
@@ -35,11 +35,11 @@ class Test_Pathfinding(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Pathfinding"""
-        self.plr.addCoin(8)
+        self.plr.add_coins(8)
         self.plr.test_input = ["moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Moat")
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

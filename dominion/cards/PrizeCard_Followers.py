@@ -19,11 +19,11 @@ class Card_Followers(Card.Card):
         self.cards = 2
 
     def special(self, game, player):
-        player.gainCard("Estate")
-        for plr in player.attackVictims():
+        player.gain_card("Estate")
+        for plr in player.attack_victims():
             plr.output("%s's Followers cursed you" % player.name)
-            plr.gainCard("Curse")
-            plr.plrDiscardDownTo(3)
+            plr.gain_card("Curse")
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################
@@ -33,12 +33,12 @@ class Test_Followers(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Followers"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.victim.setHand("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.victim.set_hand("Copper", "Copper", "Copper", "Silver", "Gold")
         self.victim.test_input = ["silver", "gold", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.victim.hand.size(), 3)
         self.assertIsNotNone(self.plr.in_discard("Estate"))

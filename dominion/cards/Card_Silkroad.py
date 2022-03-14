@@ -19,7 +19,7 @@ class Card_Silkroad(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP for every 4 victory cards in your deck rounded down"""
         score = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.isVictory():
                 score += 1
         return int(score / 4)
@@ -33,17 +33,17 @@ class Test_Silkroad(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.setHand("Silk Road")
-        self.plr.setDeck("Copper")
-        self.plr.setDiscard("Estate", "Estate", "Estate", "Estate")
-        self.assertEqual(self.plr.getScoreDetails()["Silk Road"], 1)
+        self.plr.set_hand("Silk Road")
+        self.plr.set_deck("Copper")
+        self.plr.set_discard("Estate", "Estate", "Estate", "Estate")
+        self.assertEqual(self.plr.get_score_details()["Silk Road"], 1)
 
     def test_scoreTwo(self):
         """Score for having two silk roads worth two each"""
-        self.plr.setHand("Silk Road", "Estate")
-        self.plr.setDeck("Estate", "Estate", "Silk Road")
-        self.plr.setDiscard("Estate", "Estate", "Estate", "Estate", "Estate")
-        self.assertEqual(self.plr.getScoreDetails()["Silk Road"], 2 + 2)
+        self.plr.set_hand("Silk Road", "Estate")
+        self.plr.set_deck("Estate", "Estate", "Silk Road")
+        self.plr.set_discard("Estate", "Estate", "Estate", "Estate", "Estate")
+        self.assertEqual(self.plr.get_score_details()["Silk Road"], 2 + 2)
 
 
 ###############################################################################

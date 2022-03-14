@@ -20,13 +20,13 @@ class Card_Transmogrify(Card.Card):
         self.cost = 4
 
     def hook_call_reserve(self, game, player):
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from you hand. Gain a card costing up to 1 more",
         )
         if tc:
-            cost = player.cardCost(tc[0])
-            player.plrGainCard(cost + 1, modifier="less", destination="hand")
+            cost = player.card_cost(tc[0])
+            player.plr_gain_card(cost + 1, modifier="less", destination="hand")
 
 
 ###############################################################################
@@ -41,16 +41,16 @@ class Test_Transmogrify(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.trans = self.g["Transmogrify"].remove()
-        self.plr.addCard(self.trans, "hand")
+        self.plr.add_card(self.trans, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.trans)
+        self.plr.play_card(self.trans)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_reserve("Transmogrify"))
 
     def test_call(self):
-        self.plr.setHand("Duchy", "Estate")
-        self.plr.setReserve("Transmogrify")
+        self.plr.set_hand("Duchy", "Estate")
+        self.plr.set_reserve("Transmogrify")
         self.plr.test_input = ["trash duchy", "get gold"]
         self.plr.call_reserve("Transmogrify")
         self.assertIsNotNone(self.g.in_trash("Duchy"))

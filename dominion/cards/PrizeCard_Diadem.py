@@ -19,7 +19,7 @@ class Card_Diadem(Card.Card):
 
     def special(self, game, player):
         player.output("Gaining %d coins from unused actions" % player.actions)
-        player.addCoin(player.actions)
+        player.add_coins(player.actions)
 
 
 ###############################################################################
@@ -29,12 +29,12 @@ class Test_Diadem(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Diadem"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.actions = 1
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################

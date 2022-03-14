@@ -21,7 +21,7 @@ class Card_Ratcatcher(Card.Card):
     def hook_call_reserve(self, game, player):
         """At the start of your turn, you may call this, to trash a
         card from your hand"""
-        player.plrTrashCard()
+        player.plr_trash_card()
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_play(self):
         """Play a ratcatcher"""
-        self.plr.setHand()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.reserve.size(), 1)
@@ -46,10 +46,10 @@ class Test_Ratcatcher(unittest.TestCase):
     def test_call(self):
         """Call from Reserve"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         c = self.plr.call_reserve("Ratcatcher")
         self.assertEqual(c.name, "Ratcatcher")
         self.assertEqual(self.g.trashSize(), tsize + 1)

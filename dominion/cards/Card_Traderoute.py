@@ -39,8 +39,8 @@ class Card_Traderoute(Card.Card):
         from your hand. Setup: Put a token on each victory card
         supply pile. When a card is gained from that pile move the
         token to the trade route map"""
-        player.plrTrashCard()
-        player.addCoin(self.isWorth())
+        player.plr_trash_card()
+        player.add_coins(self.isWorth())
 
 
 ###############################################################################
@@ -50,26 +50,26 @@ class Test_Traderoute(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.traderoute = self.g["Trade Route"].remove()
-        self.plr.addCard(self.traderoute, "hand")
+        self.plr.add_card(self.traderoute, "hand")
 
     def test_playZero(self):
         self.plr.test_input = ["finish selecting"]
-        self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.play_card(self.traderoute)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_playOne(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
-        self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.traderoute)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
         self.g["Province"].remove()
-        self.plr.playCard(self.traderoute)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.traderoute)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

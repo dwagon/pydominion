@@ -163,11 +163,11 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
-        self.total_cards = self.countCards()
+        self.total_cards = self._count_cards()
         self.current_player = self.player_list(0)
         if self.ally:
             for plr in self.player_list():
-                plr.addFavor(1)
+                plr.add_favors(1)
 
     ###########################################################################
     def player_list(self, num=None):
@@ -202,14 +202,14 @@ class Game(object):  # pylint: disable=too-many-public-methods
             lm.setup(game=self)
 
     ###########################################################################
-    def countCards(self):
+    def _count_cards(self):
         """TODO"""
         count = {}
         count["trash"] = self.trashSize()
         for cpile in list(self.cardpiles.values()):
             count["pile_%s" % cpile.name] = cpile.pilesize
         for pl in self.player_list():
-            count["player_%s" % pl.name] = pl.countCards()
+            count["player_%s" % pl.name] = pl._count_cards()
         total = sum(count.values())
         return total
 
@@ -773,7 +773,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
             print("  %s's messages: %s" % (plr.name, plr.messages))
             print(
                 "  %s's score: %s %s"
-                % (plr.name, plr.getScore(), plr.getScoreDetails())
+                % (plr.name, plr.get_score(), plr.get_score_details())
             )
             print("  %s's tokens: %s" % (plr.name, plr.tokens))
             print(
@@ -805,12 +805,12 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.output("")
         self.output("Scores:")
         for plr in self.player_list():
-            scores[plr.name] = plr.getScore(verbose=True)
+            scores[plr.name] = plr.get_score(verbose=True)
         self.output(scores)
         self.output("")
         for plr in self.player_list():
             self.output("Cards of %s:" % plr.name)
-            for k, v in plr.getCards().items():
+            for k, v in plr.get_cards().items():
                 self.output("%s: %s=%s" % (plr.name, k, v))
         self.output("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
         return scores
@@ -845,10 +845,10 @@ class Game(object):  # pylint: disable=too-many-public-methods
     def turn(self):
         """TODO"""
         try:
-            assert self.countCards() == self.total_cards
+            assert self._count_cards() == self.total_cards
         except AssertionError:
             self.count_all_cards()
-            sys.stderr.write("current = %s\n" % self.countCards())
+            sys.stderr.write("current = %s\n" % self._count_cards())
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
         self.current_player = self.playerToLeft(self.current_player)
@@ -858,7 +858,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         if self.isGameOver():
             self.gameover = True
             for plr in self.player_list():
-                plr.gameOver()
+                plr.game_over()
 
 
 ###############################################################################

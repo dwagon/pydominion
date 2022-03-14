@@ -22,13 +22,13 @@ class Landmark_Basilica(Landmark.Landmark):
             % self._vp
         )
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if self._vp <= 0:
             return
         if player.coin >= 2:
             player.output("Gained 2 VP from Basilica")
             self._vp -= 2
-            player.addScore("Basilica", 2)
+            player.add_score("Basilica", 2)
 
 
 ###############################################################################
@@ -41,8 +41,8 @@ class Test_Basilica(unittest.TestCase):
     def test_gain(self):
         """Use Basilica"""
         self.plr.coin = 4
-        self.plr.buyCard(self.g["Copper"])
-        self.assertEqual(self.plr.getScoreDetails()["Basilica"], 2)
+        self.plr.buy_card(self.g["Copper"])
+        self.assertEqual(self.plr.get_score_details()["Basilica"], 2)
 
 
 ###############################################################################

@@ -27,9 +27,9 @@ class Card_Forge(Card.Card):
             availcosts.add("%s" % cp.cost)
         player.output("Gain a card costing exactly the sum of the trashed cards")
         player.output("Costs = %s" % ", ".join(sorted(list(availcosts))))
-        tc = player.plrTrashCard(anynum=True, num=0, printcost=True)
+        tc = player.plr_trash_card(anynum=True, num=0, printcost=True)
         cost = sum([c.cost for c in tc])
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=cost, modifier="equal", prompt="Gain card worth %s" % cost
         )
 
@@ -45,11 +45,11 @@ class Test_Forge(unittest.TestCase):
     def test_play(self):
         """Play the Forge"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Estate", "Estate", "Estate")
-        self.plr.addCard(self.forge, "hand")
+        self.plr.set_hand("Estate", "Estate", "Estate")
+        self.plr.add_card(self.forge, "hand")
         # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ["1", "2", "finish", "Bureaucrat"]
-        self.plr.playCard(self.forge)
+        self.plr.play_card(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertIsNotNone(self.g.in_trash("Estate"))
         self.assertEqual(self.g.trashSize(), tsize + 2)

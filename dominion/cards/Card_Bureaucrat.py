@@ -17,14 +17,14 @@ class Card_Bureaucrat(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.gainCard("Silver", "topdeck")
+        player.gain_card("Silver", "topdeck")
         player.output("Added silver to deck")
 
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             for c in pl.hand:
                 if c.isVictory():
-                    pl.revealCard(c)
-                    pl.addCard(c, "topdeck")
+                    pl.reveal_card(c)
+                    pl.add_card(c, "topdeck")
                     pl.hand.remove(c)
                     pl.output(
                         "Moved %s to deck due to Bureaucrat played by %s"
@@ -43,28 +43,28 @@ class Test_Bureaucrat(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.bcard = self.g["Bureaucrat"].remove()
-        self.plr.addCard(self.bcard, "hand")
+        self.plr.add_card(self.bcard, "hand")
 
     def test_hasvictory(self):
-        self.victim.setHand("Estate", "Copper", "Copper")
-        self.victim.setDeck("Silver")
-        self.plr.playCard(self.bcard)
+        self.victim.set_hand("Estate", "Copper", "Copper")
+        self.victim.set_deck("Silver")
+        self.plr.play_card(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, "Estate")
         self.assertIsNone(self.victim.in_hand("Estate"))
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
     def test_novictory(self):
-        self.victim.setHand("Copper", "Copper", "Copper")
-        self.victim.setDeck("Province")
-        self.plr.setDeck("Province")
-        self.plr.playCard(self.bcard)
+        self.victim.set_hand("Copper", "Copper", "Copper")
+        self.victim.set_deck("Province")
+        self.plr.set_deck("Province")
+        self.plr.play_card(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, "Province")
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
     def test_defense(self):
-        self.victim.setDeck("Province")
-        self.victim.setHand("Estate", "Duchy", "Moat")
-        self.plr.playCard(self.bcard)
+        self.victim.set_deck("Province")
+        self.victim.set_hand("Estate", "Duchy", "Moat")
+        self.plr.play_card(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertEqual(self.victim.deck[-1].name, "Province")
         self.assertIsNotNone(self.victim.in_hand("Estate"))

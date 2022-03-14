@@ -19,7 +19,7 @@ class Card_Merchantship(Card.Card):
     def duration(self, game, player):
         """Now and at the start of your next turn +2 coins"""
         player.output("2 more coins from Merchant Ship")
-        player.addCoin(2)
+        player.add_coins(2)
 
 
 ###############################################################################
@@ -29,17 +29,17 @@ class Test_Merchantship(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Merchant Ship"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a merchant ship"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.durationpile.size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, "Merchant Ship")
 

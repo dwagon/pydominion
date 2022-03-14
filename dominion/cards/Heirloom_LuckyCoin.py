@@ -18,7 +18,7 @@ class Card_LuckyCoin(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
 
 ###############################################################################
@@ -30,9 +30,9 @@ class Test_LuckyCoin(unittest.TestCase):
         self.card = self.g["Lucky Coin"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Silver")
 
 

@@ -18,19 +18,19 @@ class Card_Scepter(Card.Card):
     def special(self, game, player):
         acts = [_ for _ in player.played if _.isAction()]
         if acts:
-            get_coin = player.plrChooseOptions(
+            get_coin = player.plr_choose_options(
                 "Pick one? ", ("2 Coin", True), ("Replay an action card", False)
             )
         else:
             get_coin = True
             player.output("No suitable cards - gaining coin")
         if get_coin:
-            player.addCoin(2)
+            player.add_coins(2)
         else:
-            card = player.cardSel(cardsrc=acts)
-            player.addCard(card[0], "hand")
+            card = player.card_sel(cardsrc=acts)
+            player.add_card(card[0], "hand")
             player.played.remove(card[0])
-            player.playCard(card[0], costAction=False)
+            player.play_card(card[0], costAction=False)
 
 
 ###############################################################################
@@ -40,18 +40,18 @@ class Test_Scepter(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Scepter"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_replay(self):
-        self.plr.setPlayed("Moat")
+        self.plr.set_played("Moat")
         self.plr.test_input = ["Replay", "Moat"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 

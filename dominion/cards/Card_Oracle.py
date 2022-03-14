@@ -17,30 +17,30 @@ class Card_Oracle(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             self.attack(player, plr, "%s's" % plr.name)
         self.attack(player, player, "your")
-        player.pickupCards(2)
+        player.pickup_cards(2)
 
     def attack(self, player, victim, name):
         cards = []
         for _ in range(2):
-            card = victim.nextCard()
-            victim.revealCard(card)
+            card = victim.next_card()
+            victim.reveal_card(card)
             cards.append(card)
         cardnames = ", ".join([c.name for c in cards])
-        discard = player.plrChooseOptions(
+        discard = player.plr_choose_options(
             "What to do with %s cards: %s" % (name, cardnames),
             ("Discard %s" % cardnames, True),
             ("Put %s on top of deck" % cardnames, False),
         )
         if discard:
             for card in cards:
-                victim.discardCard(card)
+                victim.discard_card(card)
             victim.output("%s's Oracle discarded your %s" % (player.name, cardnames))
         else:
             for card in cards:
-                victim.addCard(card, "topdeck")
+                victim.add_card(card, "topdeck")
             victim.output(
                 "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
             )
@@ -53,14 +53,14 @@ class Test_Oracle(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Oracle"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
         """Play Oracle"""
-        self.vic.setDeck("Estate", "Duchy", "Province")
-        self.plr.setDeck("Copper", "Silver", "Gold")
+        self.vic.set_deck("Estate", "Duchy", "Province")
+        self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["discard", "top"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Duchy"))
         self.assertIsNotNone(self.vic.in_discard("Province"))
         self.assertIsNotNone(self.plr.in_hand("Silver"))

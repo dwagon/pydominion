@@ -31,12 +31,12 @@ class Card_Counterfeit(Card.Card):
                 )
         if index == 1:
             return
-        o = player.userInput(options, "What to do?")
+        o = player.user_input(options, "What to do?")
         if not o["card"]:
             return
         for _ in range(2):
-            player.playCard(o["card"], costAction=False, discard=False)
-        player.trashCard(o["card"])
+            player.play_card(o["card"], costAction=False, discard=False)
+        player.trash_card(o["card"])
 
 
 ###############################################################################
@@ -46,30 +46,30 @@ class Test_Counterfiet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Counterfeit"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_notreasures(self):
-        self.plr.setHand("Estate", "Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate", "Estate", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
     def test_twice(self):
-        self.plr.setHand("Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertTrue(self.plr.hand.is_empty())
         self.assertIsNotNone(self.g.in_trash("Gold"))
         # CF + 2 * Gold
-        self.assertEqual(self.plr.getCoin(), 7)
+        self.assertEqual(self.plr.get_coins(), 7)
 
 
 ###############################################################################

@@ -18,20 +18,20 @@ class Card_Mountebank(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             for c in plr.hand:
                 if c.name == "Curse":
                     player.output("Player %s discarded a curse" % plr.name)
                     plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
-                    plr.discardCard(c)
+                    plr.discard_card(c)
                     break
             else:
                 player.output("Player %s gained a curse and a copper" % plr.name)
                 plr.output(
                     "Gained a Curse and Copper due to %s's Mountebank" % player.name
                 )
-                plr.addCard(game["Curse"].remove())
-                plr.addCard(game["Copper"].remove())
+                plr.add_card(game["Curse"].remove())
+                plr.add_card(game["Copper"].remove())
 
 
 ###############################################################################
@@ -44,14 +44,14 @@ class Test_Mountebank(unittest.TestCase):
         self.curse = self.g["Curse"].remove()
 
     def test_hascurse(self):
-        self.attacker.addCard(self.mountebank, "hand")
-        self.victim.addCard(self.curse, "hand")
-        self.attacker.playCard(self.mountebank)
+        self.attacker.add_card(self.mountebank, "hand")
+        self.victim.add_card(self.curse, "hand")
+        self.attacker.play_card(self.mountebank)
         self.assertEqual(self.victim.discardpile[0].name, "Curse")
 
     def test_nocurse(self):
-        self.attacker.addCard(self.mountebank, "hand")
-        self.attacker.playCard(self.mountebank)
+        self.attacker.add_card(self.mountebank, "hand")
+        self.attacker.play_card(self.mountebank)
         discards = [c.name for c in self.victim.discardpile]
         self.assertEqual(sorted(discards), sorted(["Curse", "Copper"]))
 

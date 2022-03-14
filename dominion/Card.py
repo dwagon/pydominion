@@ -151,7 +151,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hasDefense(self):
+    def has_defense(self):
         return self.defense
 
     ##########################################################################
@@ -284,15 +284,15 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_allPlayers_preAction(self, game, player, owner, card):
+    def hook_all_players_pre_action(self, game, player, owner, card):
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card):
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         pass  # pragma: no cover
 
     ##########################################################################
@@ -304,7 +304,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_allowedToBuy(self, game, player):
+    def hook_allowed_to_buy(self, game, player):
         return True  # pragma: no cover
 
     ##########################################################################
@@ -316,7 +316,7 @@ class Card:
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         return 0  # pragma: no cover
 
     ##########################################################################
@@ -329,7 +329,7 @@ class Card:
         return self.coin  # pragma: no cover
 
     ##########################################################################
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         """Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 
@@ -362,11 +362,11 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_endBuyPhase(self, game, player):
+    def hook_end_buy_phase(self, game, player):
         pass  # pragma: no cover
 
     ##########################################################################

@@ -28,17 +28,17 @@ class Test_Bank(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Bank"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_gainnothing(self):
-        self.plr.setPlayed("Estate", "Estate")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.set_played("Estate", "Estate")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gainsomething(self):
-        self.plr.setPlayed("Copper", "Silver", "Estate")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.set_played("Copper", "Silver", "Estate")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################

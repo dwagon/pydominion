@@ -29,16 +29,16 @@ class Test_Harem(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Harem"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Harem"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_score(self):
         """Score the harem"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Harem"], 2)
 
 

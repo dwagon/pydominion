@@ -16,7 +16,7 @@ class Event_Ball(Event.Event):
     def special(self, game, player):
         player.coin_token = True
         for _ in range(2):
-            player.plrGainCard(cost=4)
+            player.plr_gain_card(cost=4)
 
 
 ###############################################################################
@@ -31,9 +31,9 @@ class Test_Ball(unittest.TestCase):
 
     def test_ball(self):
         """Use Ball"""
-        self.plr.addCoin(5)
+        self.plr.add_coins(5)
         self.plr.test_input = ["militia", "moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertTrue(self.plr.coin_token)
         self.assertIsNotNone(self.plr.in_discard("Militia"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))

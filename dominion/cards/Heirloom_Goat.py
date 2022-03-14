@@ -19,7 +19,7 @@ class Card_Goat(Card.Card):
 
     def special(self, game, player):
         if player.hand.size():
-            player.plrTrashCard()
+            player.plr_trash_card()
 
 
 ###############################################################################
@@ -36,11 +36,11 @@ class Test_Goat(unittest.TestCase):
         self.card = self.g["Goat"].remove()
 
     def test_play(self):
-        self.plr.setHand("Province", "Estate")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Province", "Estate")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Province"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.g.in_trash("Province"))
 
 

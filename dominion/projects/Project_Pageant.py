@@ -13,14 +13,14 @@ class Project_Pageant(Project.Project):
         self.name = "Pageant"
         self.cost = 3
 
-    def hook_endBuyPhase(self, game, player):
+    def hook_end_buy_phase(self, game, player):
         options = []
         if player.coin == 0:
             return
         for num in range(player.coin + 1):
             options.append(("Buy {} Coffers for {} Coin".format(num, num), num))
-        pick = player.plrChooseOptions("Exchange coin for coffers", *options)
-        player.gainCoffer(pick)
+        pick = player.plr_choose_options("Exchange coin for coffers", *options)
+        player.add_coffer(pick)
         player.coin -= pick
 
 
@@ -32,13 +32,13 @@ class Test_Pageant(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.getCoffer()
+        numc = self.plr.get_coffers()
         self.plr.assign_project("Pageant")
-        self.plr.setCoin(5)
+        self.plr.set_coins(5)
         self.plr.test_input = ["End Phase", "4"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getCoffer(), numc + 4)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coffers(), numc + 4)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

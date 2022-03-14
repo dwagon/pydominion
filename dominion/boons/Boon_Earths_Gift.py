@@ -21,12 +21,12 @@ class Boon_Earths_Gift(Boon.Boon):
         treasures = [c for c in player.hand if c.isTreasure()]
         if not treasures:
             return
-        tr = player.plrDiscardCards(
+        tr = player.plr_discard_cards(
             cardsrc=treasures,
             prompt="Discard a Treasure to gain a card costing up to 4",
         )
         if tr:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
 
 
 ###############################################################################
@@ -46,12 +46,12 @@ class Test_Earths_Gift(unittest.TestCase):
 
     def test_earths_gift(self):
         self.coins = 0
-        self.plr.setHand("Copper")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard Copper", "Get Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 2 + 2)  # Boon + Bard
+            self.assertEqual(self.plr.get_coins(), 2 + 2)  # Boon + Bard
             self.assertIsNotNone(self.plr.in_discard("Silver"))
             self.assertIsNotNone(self.plr.in_discard("Copper"))
         except AssertionError:  # pragma: no cover

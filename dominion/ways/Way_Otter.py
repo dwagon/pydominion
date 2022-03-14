@@ -32,7 +32,7 @@ class Test_Otter(unittest.TestCase):
 
     def test_play(self):
         """Perform a Otter"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 

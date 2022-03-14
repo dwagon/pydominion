@@ -18,7 +18,7 @@ class Event_TravellingFair(Event.Event):
         self.buys = 2
 
     def hook_gain_card(self, game, player, card):
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Do you want to put {} on the top of your deck?".format(card.name),
             ("Put {} on deck".format(card.name), "topdeck"),
             ("Discard {}".format(card.name), "discard"),
@@ -36,20 +36,20 @@ class Test_TravellingFair(unittest.TestCase):
 
     def test_play_discard(self):
         """Perform a Travelling Fair"""
-        self.plr.addCoin(2)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(2)
+        self.plr.perform_event(self.card)
         self.plr.test_input = ["Discard"]
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNone(self.plr.in_deck("Gold"))
 
     def test_play_deck(self):
         """Perform a Travelling Fair and deck the card"""
-        self.plr.addCoin(2)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(2)
+        self.plr.perform_event(self.card)
         self.plr.test_input = ["Put"]
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.g.print_state()
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNone(self.plr.in_discard("Gold"))

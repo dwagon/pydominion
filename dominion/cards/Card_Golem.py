@@ -22,25 +22,25 @@ class Card_Golem(Card.Card):
         cards other than Golem cards. Discard the other cards, then
         play the Action cards in either order"""
         actions = []
-        maxnum = len(player.allCards())
+        maxnum = len(player.all_cards())
         count = 0
         while len(actions) != 2:
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             count += 1
             if count > maxnum:
                 player.output("Not enough action cards in deck")
                 break
             if c.isAction() and c.name != "Golem":
-                player.pickupCard(card=c)
+                player.pickup_card(card=c)
                 actions.append(c)
             else:
                 player.output("Drew and discarded %s" % c.name)
-                player.discardCard(c)
+                player.discard_card(c)
         # TODO - let the player choose the order
         for card in actions:
             player.output("Golem playing %s" % card.name)
-            player.playCard(card, costAction=False)
+            player.play_card(card, costAction=False)
 
 
 ###############################################################################
@@ -55,10 +55,10 @@ class Test_Golem(unittest.TestCase):
 
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
-        self.plr.setHand()
-        self.plr.setDeck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand()
+        self.plr.set_deck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(
             ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
         )
@@ -66,12 +66,12 @@ class Test_Golem(unittest.TestCase):
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
-        self.plr.setHand()
-        self.plr.setDeck(
+        self.plr.set_hand()
+        self.plr.set_deck(
             "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
         )
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(
             ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
         )
@@ -80,10 +80,10 @@ class Test_Golem(unittest.TestCase):
         )
 
     def test_nocards(self):
-        self.plr.setHand("Copper", "Copper", "Copper")
-        self.plr.setDeck("Copper", "Copper", "Copper")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Copper", "Copper", "Copper")
+        self.plr.set_deck("Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

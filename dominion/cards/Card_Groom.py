@@ -21,14 +21,14 @@ class Card_Groom(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        card = player.plrGainCard(4)
+        card = player.plr_gain_card(4)
         if card.isAction():
-            player.gainCard("Horse")
+            player.gain_card("Horse")
         if card.isTreasure():
-            player.gainCard("Silver")
+            player.gain_card("Silver")
         if card.isVictory():
-            player.pickupCard()
-            player.addActions(1)
+            player.pickup_card()
+            player.add_actions(1)
 
 
 ###############################################################################
@@ -38,18 +38,18 @@ class Test_Groom(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Groom"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard_action(self):
         """Play Card"""
         self.plr.test_input = ["Get Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
 
     def test_playcard_victory(self):
         """Play Card"""
         self.plr.test_input = ["Get Estate"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Horse"))
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)

@@ -38,10 +38,10 @@ class Test_Fields_Gift(unittest.TestCase):
     def test_fields_gift(self):
         self.plr.coin = 0
         self.plr.action = 0
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 1 + 2)  # Boon + Bard
+            self.assertEqual(self.plr.get_coins(), 1 + 2)  # Boon + Bard
             self.assertEqual(self.plr.get_actions(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

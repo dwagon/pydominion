@@ -19,7 +19,7 @@ class Landmark_Battlefield(Landmark.Landmark):
         if card.isVictory() and self._vp >= 0:
             self._vp -= 2
             player.output("Gained 2VP from Battlefield")
-            player.addScore("Battlefield", 2)
+            player.add_score("Battlefield", 2)
 
     def setup(self, game):
         self._vp = 6 * game.numplayers
@@ -39,9 +39,9 @@ class Test_Battlefield(unittest.TestCase):
 
     def test_gain(self):
         """Use Battlefield"""
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Duchy"])
-        self.assertEqual(self.plr.getScoreDetails()["Battlefield"], 2)
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Duchy"])
+        self.assertEqual(self.plr.get_score_details()["Battlefield"], 2)
 
 
 ###############################################################################

@@ -26,13 +26,13 @@ class Card_Treasury(Card.Card):
             if card.isVictory():
                 vict = True
         if vict:
-            topdeck = player.plrChooseOptions(
+            topdeck = player.plr_choose_options(
                 "Put Treasury back on top of your deck?",
                 ("Discard as normal", False),
                 ("Put on top of your deck", True),
             )
             if topdeck:
-                player.addCard(self, "topdeck")
+                player.add_card(self, "topdeck")
                 player.discardpile.remove(self)
 
 
@@ -45,20 +45,20 @@ class Test_Treasury(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Treasury"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a trader - trashing an estate"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_buy_topdeck(self):
         self.plr.test_input = ["put on top"]
-        self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Duchy"])
-        self.plr.discardCard(self.card)
+        self.plr.set_coins(5)
+        self.plr.buy_card(self.g["Duchy"])
+        self.plr.discard_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Treasury")
 
 

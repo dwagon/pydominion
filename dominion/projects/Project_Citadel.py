@@ -16,7 +16,7 @@ class Project_Citadel(Project.Project):
     def hook_postAction(self, game, player, card):
         if player.played.size() == 1:
             player.output("Citadel plays {} again".format(card.name))
-            player.playCard(card, discard=False, costAction=False, postActionHook=False)
+            player.play_card(card, discard=False, costAction=False, postActionHook=False)
 
 
 ###############################################################################
@@ -28,11 +28,11 @@ class Test_Citadel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Moat"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.assign_project("Citadel")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 + 2)
 
 

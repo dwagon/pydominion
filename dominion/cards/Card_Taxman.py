@@ -19,14 +19,14 @@ class Card_Taxman(Card.Card):
 
     def special(self, game, player):
         treas = [c for c in player.hand if c.isTreasure()]
-        cards = player.plrTrashCard(
+        cards = player.plr_trash_card(
             cardsrc=treas,
             prompt="Pick card to trash. Others discard that. You gain a treasure costing 3 more",
         )
         if not cards:
             return
         card = cards[0]
-        for vic in player.attackVictims():
+        for vic in player.attack_victims():
             if vic.hand.size() >= 5:
                 viccard = vic.in_hand(card.name)
                 if viccard:
@@ -34,13 +34,13 @@ class Card_Taxman(Card.Card):
                         "Discarding %s due to %s's Taxman" % (viccard.name, player.name)
                     )
                     player.output("%s discarded a %s" % (vic.name, viccard.name))
-                    vic.discardCard(viccard)
+                    vic.discard_card(viccard)
                 else:
                     player.output("%s doesn't have a %s" % (vic.name, card.name))
                     for c in vic.hand:
-                        vic.revealCard(c)
-        cardcost = player.cardCost(card) + 3
-        player.plrGainCard(cost=cardcost, types={Card.TYPE_TREASURE: True})
+                        vic.reveal_card(c)
+        cardcost = player.card_cost(card) + 3
+        player.plr_gain_card(cost=cardcost, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################
@@ -55,11 +55,11 @@ class Test_Taxman(unittest.TestCase):
 
     def test_play(self):
         """Play a Taxman"""
-        self.plr.setHand("Silver")
-        self.victim.setHand("Copper", "Copper", "Estate", "Duchy", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver")
+        self.victim.set_hand("Copper", "Copper", "Estate", "Duchy", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver", "Get Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.victim.in_discard("Silver"))

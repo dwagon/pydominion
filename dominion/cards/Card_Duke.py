@@ -19,7 +19,7 @@ class Card_Duke(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP per Duchy you have"""
         vp = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.name == "Duchy":
                 vp += 1
         return vp
@@ -33,10 +33,10 @@ class Test_Duke(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score(self):
-        self.plr.setDeck("Duchy", "Duchy", "Estate")
-        self.plr.setHand("Silver")
-        self.plr.setDiscard("Duke")
-        sc = self.plr.getScore()
+        self.plr.set_deck("Duchy", "Duchy", "Estate")
+        self.plr.set_hand("Silver")
+        self.plr.set_discard("Duke")
+        sc = self.plr.get_score()
         self.assertEqual(sc, 9)  # 3 per duchy, 1 per estate, 2 from duke
 
 

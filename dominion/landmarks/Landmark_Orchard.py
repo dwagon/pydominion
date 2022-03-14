@@ -15,11 +15,11 @@ class Landmark_Orchard(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         actions = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isAction():
                 actions[card.name] += 1
         score = sum([4 for x in actions.values() if x > 3])
-        player.addScore("Orchard", score)
+        player.add_score("Orchard", score)
 
 
 ###############################################################################
@@ -36,11 +36,11 @@ class Test_Orchard(unittest.TestCase):
 
     def test_gain(self):
         """Use Orchard"""
-        self.plr.setDiscard("Moat", "Moat", "Militia", "Duchy")
-        self.plr.setDeck("Moat", "Moat", "Copper", "Duchy")
-        self.plr.setHand("Moat", "Militia", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Orchard"], 4)
+        self.plr.set_discard("Moat", "Moat", "Militia", "Duchy")
+        self.plr.set_deck("Moat", "Moat", "Copper", "Duchy")
+        self.plr.set_hand("Moat", "Militia", "Copper", "Copper", "Duchy")
+        self.plr.game_over()
+        self.assertEqual(self.plr.get_score_details()["Orchard"], 4)
 
 
 ###############################################################################

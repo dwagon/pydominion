@@ -16,13 +16,13 @@ class Landmark_WolfDen(Landmark.Landmark):
     def hook_end_of_game(self, game, player):
         score = 0
         cards = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             cards[card.name] += 1
         for card, num in cards.items():
             if num == 1:
                 score -= 3
                 player.output("Wolf Den: -3 due to only one %s" % card)
-        player.addScore("Wolf Den", score)
+        player.add_score("Wolf Den", score)
 
 
 ###############################################################################
@@ -47,10 +47,10 @@ class Test_WolfDen(unittest.TestCase):
 
     def test_gain(self):
         """Use Wolf Den"""
-        self.plr.setDiscard("Gold", "Silver")
-        self.plr.gameOver()
+        self.plr.set_discard("Gold", "Silver")
+        self.plr.game_over()
         try:
-            self.assertEqual(self.plr.getScoreDetails()["Wolf Den"], -6)
+            self.assertEqual(self.plr.get_score_details()["Wolf Den"], -6)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

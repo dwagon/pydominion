@@ -18,7 +18,7 @@ class Card_Sheepdog(Card.Card):
         self.cost = 3
 
     def hook_gain_card(self, game, player, card):
-        player.playCard(self, costAction=False)
+        player.play_card(self, costAction=False)
 
 
 ###############################################################################
@@ -28,16 +28,16 @@ class Test_Sheepdog(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sheepdog"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play card"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_gain(self):
         """Gain a card"""
-        self.plr.gainCard("Estate")
+        self.plr.gain_card("Estate")
         self.g.print_state()
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 

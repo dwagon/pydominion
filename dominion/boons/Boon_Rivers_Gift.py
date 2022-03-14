@@ -36,8 +36,8 @@ class Test_Rivers_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.assertEqual(self.plr.hand.size(), 6)
 

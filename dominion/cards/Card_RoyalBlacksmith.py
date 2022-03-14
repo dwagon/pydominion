@@ -19,9 +19,9 @@ class Card_RoyalBlacksmith(Card.Card):
     def special(self, game, player):
         count = 0
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
             if card.name == "Copper":
-                player.discardCard(card)
+                player.discard_card(card)
                 count += 1
         player.output("Discarding %d coppers" % count)
 
@@ -36,10 +36,10 @@ class Test_RoyalBlacksmith(unittest.TestCase):
 
     def test_play(self):
         """Play an Royal Blacksmith"""
-        self.plr.setDeck("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
-        self.plr.setHand("Copper", "Silver", "Duchy")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
+        self.plr.set_hand("Copper", "Silver", "Duchy")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3 - 2 + 5)
         self.assertIsNotNone(self.plr.in_discard("Copper"))
         self.assertIsNone(self.plr.in_hand("Copper"))

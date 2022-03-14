@@ -20,8 +20,8 @@ class Card_Recruiter(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        cards = player.plrTrashCard(force=True, num=1)
-        player.gainVillager(cards[0].cost)
+        cards = player.plr_trash_card(force=True, num=1)
+        player.add_villager(cards[0].cost)
 
 
 ###############################################################################
@@ -33,12 +33,12 @@ class Test_Recruiter(unittest.TestCase):
         self.card = self.g["Recruiter"].remove()
 
     def test_play(self):
-        self.plr.setHand("Copper", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
-        self.assertEqual(self.plr.getVillager(), 3)
+        self.assertEqual(self.plr.get_villagers(), 3)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
 

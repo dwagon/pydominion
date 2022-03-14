@@ -20,12 +20,12 @@ class Card_OpulentCastle(CastleCard):
 
     def special(self, game, player):
         victcards = [c for c in player.hand if c.isVictory()]
-        cards = player.plrDiscardCards(
+        cards = player.plr_discard_cards(
             anynum=True,
             cardsrc=victcards,
             prompt="Discard any number of Victory cards. +2 Coin per card discarded",
         )
-        player.addCoin(len(cards) * 2)
+        player.add_coins(len(cards) * 2)
 
 
 ###############################################################################
@@ -41,12 +41,12 @@ class Test_OpulentCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.setHand("Estate", "Duchy", "Province", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Opulent Castle"], 3)
-        self.assertEqual(self.plr.getCoin(), 6)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Opulent Castle"], 3)
+        self.assertEqual(self.plr.get_coins(), 6)
 
 
 ###############################################################################

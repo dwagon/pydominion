@@ -18,21 +18,21 @@ class Card_Duchess(Card.Card):
 
     def special(self, game, player):
         for plr in game.player_list():
-            card = plr.nextCard()
+            card = plr.next_card()
             if plr == player:
                 name = "your"
             else:
                 name = "%s's" % player.name
-            keep = plr.plrChooseOptions(
+            keep = plr.plr_choose_options(
                 "Due to %s Duchess you can keep or discard the top card" % name,
                 ("Keep %s on top of deck" % card.name, True),
                 ("Discard %s" % card.name, False),
             )
             if keep:
-                plr.addCard(card, "topdeck")
+                plr.add_card(card, "topdeck")
             else:
                 plr.output("Discarding %s" % card.name)
-                plr.discardCard(card)
+                plr.discard_card(card)
 
 
 ###############################################################################
@@ -52,33 +52,33 @@ class Test_Duchess(unittest.TestCase):
 
     def test_play(self):
         """Play duchess - keep on deck"""
-        self.plr.setDeck("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["keep"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_deck("Province"))
         self.assertIsNone(self.plr.in_discard("Province"))
 
     def test_disacrd(self):
         """Play duchess - discard"""
-        self.plr.setDeck("Province")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Province")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["discard"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNone(self.plr.in_deck("Province"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
 
     def test_buy_duchess(self):
         self.plr.test_input = ["Duchess"]
-        self.plr.gainCard("Duchy")
+        self.plr.gain_card("Duchy")
         self.assertIsNotNone(self.plr.in_discard("Duchess"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
 
     def test_buy_duchy(self):
         self.plr.test_input = ["No"]
-        self.plr.gainCard("Duchy")
+        self.plr.gain_card("Duchy")
         self.assertIsNone(self.plr.in_discard("Duchess"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
 

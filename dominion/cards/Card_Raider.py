@@ -18,11 +18,11 @@ class Card_Raider(Card.Card):
         self.cost = 6
 
     def duration(self, game, player):
-        player.addCoin(3)
+        player.add_coins(3)
 
     def night(self, game, player):
         inplay = {_.name for _ in player.played}
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             if pl.hand.size() >= 5:
                 player.output("Raiding {}".format(pl.name))
                 todiscard = []
@@ -37,9 +37,9 @@ class Card_Raider(Card.Card):
                         todiscard.append(c)
                 if not todiscard:
                     for card in pl.hand:
-                        pl.revealCard(card)
+                        pl.reveal_card(card)
                 for c in todiscard[:]:
-                    pl.discardCard(c)
+                    pl.discard_card(c)
 
 
 ###############################################################################
@@ -49,14 +49,14 @@ class Test_Raider(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Raider"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Raider"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.setPlayed("Gold", "Silver")
-        self.vic.setHand("Silver", "Gold", "Estate", "Copper", "Copper")
-        self.plr.playCard(self.card)
+        self.plr.set_played("Gold", "Silver")
+        self.vic.set_hand("Silver", "Gold", "Estate", "Copper", "Copper")
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.vic.in_discard("Gold"))
             self.assertIsNotNone(self.vic.in_discard("Silver"))
@@ -68,7 +68,7 @@ class Test_Raider(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         try:
-            self.assertEqual(self.plr.getCoin(), 3)
+            self.assertEqual(self.plr.get_coins(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

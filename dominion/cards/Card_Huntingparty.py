@@ -22,10 +22,10 @@ class Card_Huntingparty(Card.Card):
     def special(self, game, player):
         discards = []
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
         while True:
-            card = player.nextCard()
-            player.revealCard(card)
+            card = player.next_card()
+            player.reveal_card(card)
             if not card:
                 player.output("No more cards")
                 break
@@ -34,10 +34,10 @@ class Card_Huntingparty(Card.Card):
                 discards.append(card)
                 continue
             player.output("Picked up a %s" % card.name)
-            player.addCard(card, "hand")
+            player.add_card(card, "hand")
             break
         for card in discards:
-            player.discardCard(card)
+            player.discard_card(card)
 
 
 ###############################################################################
@@ -47,14 +47,14 @@ class Test_Huntingparty(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hunting Party"].remove()
-        self.plr.setHand("Silver", "Gold")
+        self.plr.set_hand("Silver", "Gold")
 
     def test_playcard(self):
         """Play a hunting party"""
-        self.plr.setDeck("Copper", "Province", "Silver", "Gold", "Duchy")
-        self.plr.setHand("Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Copper", "Province", "Silver", "Gold", "Duchy")
+        self.plr.set_hand("Gold", "Silver")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Duchy"))
         self.assertIsNotNone(self.plr.in_hand("Province"))

@@ -32,21 +32,21 @@ class Test_Fisherman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Fisherman"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play the card"""
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_buycard(self):
         """Buy the card"""
-        self.plr.setDiscard("Copper")
-        self.assertEqual(self.plr.cardCost(self.card), 5)
-        self.plr.setDiscard()
-        self.assertEqual(self.plr.cardCost(self.card), 2)
+        self.plr.set_discard("Copper")
+        self.assertEqual(self.plr.card_cost(self.card), 5)
+        self.plr.set_discard()
+        self.assertEqual(self.plr.card_cost(self.card), 2)
 
 
 ###############################################################################

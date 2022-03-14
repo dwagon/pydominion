@@ -22,14 +22,14 @@ class Card_GrandCastle(CastleCard):
 
     def hook_gain_this_card(self, game, player):
         for card in player.hand:
-            player.revealCard(card)
+            player.reveal_card(card)
         vics = sum([1 for _ in player.hand if _.isVictory()])
         player.output("Gaining %d VPs from your Victory Cards" % vics)
-        player.addScore("Grand Castle", vics)
+        player.add_score("Grand Castle", vics)
         for plr in list(game.players.values()):
             vics = sum([1 for card in plr.durationpile if card.isVictory()])
             player.output("Gaining %d VPs from %s's Victory Cards" % (vics, plr.name))
-            player.addScore("Grand Castle", vics)
+            player.add_score("Grand Castle", vics)
 
 
 ###############################################################################
@@ -45,18 +45,18 @@ class Test_GrandCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Grand Castle":
                 break
-        self.plr.addCard(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 5)
+        self.plr.add_card(self.card, "hand")
+        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
 
     def test_gain(self):
         """Gain Grand Castle"""
-        self.plr.setHand("Duchy", "Province")
+        self.plr.set_hand("Duchy", "Province")
         while True:
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":  # One before Grand
                 break
-        self.plr.gainCard("Castles")
-        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 2)
+        self.plr.gain_card("Castles")
+        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)
 
 
 ###############################################################################

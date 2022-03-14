@@ -16,13 +16,13 @@ class Hex_Famine(Hex.Hex):
 
     def special(self, game, player):
         for _ in range(3):
-            c = player.nextCard()
+            c = player.next_card()
             if c.isAction():
                 player.output("Discarding {}".format(c))
-                player.discardCard(c)
+                player.discard_card(c)
             else:
                 player.output("Putting {} back in deck".format(c))
-                player.addCard(c, "topdeck")
+                player.add_card(c, "topdeck")
         player.deck.shuffle()
 
 
@@ -38,8 +38,8 @@ class Test_Famine(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.setDeck("Duchy", "Cursed Village", "Gold")
-        self.plr.gainCard("Cursed Village")
+        self.plr.set_deck("Duchy", "Cursed Village", "Gold")
+        self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.in_discard("Cursed Village"))
         self.assertIsNotNone(self.plr.in_deck("Gold"))
         self.assertIsNone(self.plr.in_discard("Gold"))

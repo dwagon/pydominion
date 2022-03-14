@@ -23,22 +23,22 @@ class Card_Saboteur(Card.Card):
         deck until revealing one costing 3 or more. He trashes that
         card and may gain a card costing at most 2 less than it.
         He discards the other revealed cards."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             card = self.pickCard(victim, player)
             if not card:
                 continue
             victim.output("%s's saboteur trashed %s" % (player.name, card.name))
-            victim.trashCard(card)
-            victim.plrGainCard(card.cost - 2)
+            victim.trash_card(card)
+            victim.plr_gain_card(card.cost - 2)
 
     def pickCard(self, victim, player):
-        for _ in range(len(victim.allCards())):
-            c = victim.nextCard()
-            victim.revealCard(c)
+        for _ in range(len(victim.all_cards())):
+            c = victim.next_card()
+            victim.reveal_card(c)
             if c.cost >= 3:
                 return c
             victim.output("Saboteur checking and discarding %s" % c.name)
-            victim.discardCard(c)
+            victim.discard_card(c)
         victim.output("Don't have any suitable cards")
         player.output("%s doesn't have any suitable cards")
         return None
@@ -67,15 +67,15 @@ class Test_Saboteur(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Saboteur"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a saboteur"""
         tsize = self.g.trashSize()
         try:
             self.victim.test_input = ["Get Estate"]
-            self.victim.setDeck("Gold", "Copper", "Estate")
-            self.plr.playCard(self.card)
+            self.victim.set_deck("Gold", "Copper", "Estate")
+            self.plr.play_card(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             trashed = self.g.trashpile[0]
             self.assertTrue(trashed.cost >= 3)
@@ -89,8 +89,8 @@ class Test_Saboteur(unittest.TestCase):
     def test_nomatching(self):
         """Play a saboteur where the victim doesn't have a suitable card"""
         tsize = self.g.trashSize()
-        self.victim.setDeck("Copper", "Copper", "Estate")
-        self.plr.playCard(self.card)
+        self.victim.set_deck("Copper", "Copper", "Estate")
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.discardpile:
             self.assertTrue(c.cost < 3)

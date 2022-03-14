@@ -18,7 +18,7 @@ class Card_Cobbler(Card.Card):
         self.cost = 5
 
     def duration(self, game, player):
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
 
 ###############################################################################
@@ -36,8 +36,8 @@ class Test_Cobbler(unittest.TestCase):
 
     def test_duration(self):
         try:
-            self.plr.addCard(self.card, "hand")
-            self.plr.playCard(self.card)
+            self.plr.add_card(self.card, "hand")
+            self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.test_input = ["1"]
             self.plr.start_turn()

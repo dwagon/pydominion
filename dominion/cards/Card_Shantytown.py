@@ -19,12 +19,12 @@ class Card_Shantytown(Card.Card):
     def special(self, game, player):
         """Reveal your hand. If you have no Action cards in hand, +2 cards"""
         for c in player.hand:
-            player.revealCard(c)
+            player.reveal_card(c)
             if c.isAction():
                 break
         else:
             player.output("No actions - picking up 2 cards")
-            player.pickupCards(2)
+            player.pickup_cards(2)
 
 
 ###############################################################################
@@ -37,17 +37,17 @@ class Test_Shantytown(unittest.TestCase):
 
     def test_no_actions(self):
         """Test Shany Town with no actions"""
-        self.plr.setHand("Estate", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Estate", "Estate", "Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3 + 2)
 
     def test_actions(self):
         """Test Shany Town with actions"""
-        self.plr.setHand("Moat", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Moat", "Estate", "Gold")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 3)
 

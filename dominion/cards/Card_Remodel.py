@@ -18,13 +18,13 @@ class Card_Remodel(Card.Card):
     def special(self, game, player):
         """Trash a card from your hand. Gain a card costing up to
         2 more than the trashed card"""
-        tc = player.plrTrashCard(
+        tc = player.plr_trash_card(
             printcost=True,
             prompt="Trash a card from your hand. Gain another costing up to 2 more than the one you trashed",
         )
         if tc:
             cost = tc[0].cost
-            player.plrGainCard(cost + 2)
+            player.plr_gain_card(cost + 2)
 
 
 ###############################################################################
@@ -37,27 +37,27 @@ class Test_Remodel(unittest.TestCase):
 
     def test_nothing(self):
         tsize = self.g.trashSize()
-        self.plr.addCard(self.rcard, "hand")
+        self.plr.add_card(self.rcard, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.rcard)
+        self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_trash_gainnothing(self):
         tsize = self.g.trashSize()
-        self.plr.addCard(self.rcard, "hand")
+        self.plr.add_card(self.rcard, "hand")
         self.plr.test_input = ["1", "0"]
-        self.plr.playCard(self.rcard)
+        self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.hand.size(), 4)
 
     def test_trash_gainsomething(self):
         tsize = self.g.trashSize()
-        self.plr.addCard(self.rcard, "hand")
+        self.plr.add_card(self.rcard, "hand")
         self.plr.test_input = ["1", "1"]
-        self.plr.playCard(self.rcard)
+        self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.hand.size(), 4)

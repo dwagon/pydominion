@@ -17,15 +17,15 @@ class Card_Villain(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.gainCoffer(2)
-        for vic in player.attackVictims():
+        player.add_coffer(2)
+        for vic in player.attack_victims():
             if vic.hand.size() >= 5:
                 from_cards = []
                 for card in vic.hand:
                     if card.cost >= 2:
                         from_cards.append(card)
                 if from_cards:
-                    disc = vic.plrDiscardCards(
+                    disc = vic.plr_discard_cards(
                         prompt="{}'s Villain forcing you to discard one card".format(
                             player.name
                         ),
@@ -36,7 +36,7 @@ class Card_Villain(Card.Card):
                 else:
                     player.output("{} had no appropriate cards".format(vic.name))
                     for card in vic.hand:
-                        vic.revealCard(card)
+                        vic.reveal_card(card)
             else:
                 player.output("{}'s hand size is too small".format(vic.name))
 
@@ -59,14 +59,14 @@ class Test_Villain(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Villain"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
-    def test_playCard(self):
-        sc = self.plr.getCoffer()
-        self.vic.setHand("Gold", "Province", "Copper", "Copper", "Copper")
+    def test_play_card(self):
+        sc = self.plr.get_coffers()
+        self.vic.set_hand("Gold", "Province", "Copper", "Copper", "Copper")
         self.vic.test_input = ["Province"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoffer(), sc + 2)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coffers(), sc + 2)
         self.assertIsNotNone(self.vic.in_discard("Province"))
 
 

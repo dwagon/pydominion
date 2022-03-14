@@ -19,11 +19,11 @@ class Event_Donate(Event.Event):
     def hook_end_turn(self, game, player):
         for area in (player.hand, player.deck, player.played, player.discardpile):
             for card in area[:]:
-                player.addCard(card, "hand")
+                player.add_card(card, "hand")
                 area.remove(card)
-        player.plrTrashCard(anynum=True, prompt="Donate allows you to trash any cards")
-        player.discardHand()
-        player.pickupCards(5)
+        player.plr_trash_card(anynum=True, prompt="Donate allows you to trash any cards")
+        player.discard_hand()
+        player.pickup_cards(5)
 
 
 ###############################################################################
@@ -37,10 +37,10 @@ class Test_Donate(unittest.TestCase):
     def test_with_treasure(self):
         """Use Donate"""
         tsize = self.g.trashSize()
-        self.plr.setHand("Gold", "Estate", "Copper", "Copper")
-        self.plr.setDiscard("Province", "Estate", "Copper", "Copper")
-        self.plr.setDeck("Silver", "Estate", "Copper", "Copper")
-        self.plr.performEvent(self.card)
+        self.plr.set_hand("Gold", "Estate", "Copper", "Copper")
+        self.plr.set_discard("Province", "Estate", "Copper", "Copper")
+        self.plr.set_deck("Silver", "Estate", "Copper", "Copper")
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
         self.plr.test_input = ["Gold", "Province", "Silver", "finish"]
         self.plr.end_turn()

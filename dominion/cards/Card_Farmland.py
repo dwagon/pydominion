@@ -18,8 +18,8 @@ class Card_Farmland(Card.Card):
         self.victory = 2
 
     def hook_gain_this_card(self, game, player):
-        c = player.plrTrashCard(force=True)
-        player.plrGainCard(cost=c[0].cost + 2, modifier="equal")
+        c = player.plr_trash_card(force=True)
+        player.plr_gain_card(cost=c[0].cost + 2, modifier="equal")
         return {}
 
 
@@ -40,9 +40,9 @@ class Test_Farmland(unittest.TestCase):
         """Gain a farmland"""
         try:
             tsize = self.g.trashSize()
-            self.plr.setHand("Estate", "Duchy")
+            self.plr.set_hand("Estate", "Duchy")
             self.plr.test_input = ["Trash Estate", "Get Militia"]
-            self.plr.gainCard("Farmland")
+            self.plr.gain_card("Farmland")
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.hand.size(), 1)
             # 1 for farmland, 1 for gained card
@@ -52,8 +52,8 @@ class Test_Farmland(unittest.TestCase):
             raise
 
     def test_score(self):
-        self.plr.setDeck("Farmland")
-        sd = self.plr.getScoreDetails()
+        self.plr.set_deck("Farmland")
+        sd = self.plr.get_score_details()
         self.assertEqual(sd["Farmland"], 2)
 
 

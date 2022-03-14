@@ -22,10 +22,10 @@ class Card_Zombie_Mason(Card.Card):
         game.trashpile.add(self)
 
     def special(self, game, player):
-        topdeck = player.nextCard()
-        player.trashCard(topdeck)
+        topdeck = player.next_card()
+        player.trash_card(topdeck)
         player.output("Trashed {} from the top of your deck".format(topdeck.name))
-        player.plrGainCard(topdeck.cost + 1)
+        player.plr_gain_card(topdeck.cost + 1)
 
 
 ###############################################################################
@@ -39,9 +39,9 @@ class Test_Zombie_Mason(unittest.TestCase):
         self.card = self.g["Zombie Mason"].remove()
 
     def test_play(self):
-        self.plr.setDeck("Estate")
+        self.plr.set_deck("Estate")
         self.plr.test_input = ["Guide"]
-        self.plr.playCard(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, costAction=False)
         self.assertIsNotNone(self.g.in_trash("Estate"))
         self.assertIsNotNone(self.plr.in_discard("Guide"))
 

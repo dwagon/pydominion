@@ -28,12 +28,12 @@ class Card_Soldier(Card.Card):
                 continue
             if c.isAttack():
                 count += 1
-        player.addCoin(count)
+        player.add_coins(count)
         player.output("Gained %d extra coins" % count)
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             if plr.hand.size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
-                plr.plrDiscardCards(force=True)
+                plr.plr_discard_cards(force=True)
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""
@@ -52,27 +52,27 @@ class Test_Soldier(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Soldier"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_soldier(self):
         """Play a soldier with no extra attacks"""
-        self.vic.setHand("Copper")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.vic.set_hand("Copper")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_soldier_more(self):
         """Play a soldier with no extra attacks"""
-        self.vic.setHand("Copper")
+        self.vic.set_hand("Copper")
         mil = self.g["Militia"].remove()
-        self.plr.addCard(mil, "played")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.plr.add_card(mil, "played")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 3)
 
     def test_soldier_attack(self):
         """Play a soldier with more than 4 cards"""
-        self.vic.setHand("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.vic.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vic.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Gold"))
         self.assertIsNone(self.vic.in_hand("Gold"))
         self.assertEqual(self.vic.hand.size(), 4)

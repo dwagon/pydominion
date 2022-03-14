@@ -20,7 +20,7 @@ class Card_Experiment(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.gainCard("Experiment", callhook=False)
+        player.gain_card("Experiment", callhook=False)
         player.output("Gained a new experiment")
 
     ###########################################################################
@@ -37,15 +37,15 @@ class Test_Experiment(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Experiment"].remove()
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
-    def test_gainCard(self):
-        self.plr.gainCard("Experiment")
+    def test_gain_card(self):
+        self.plr.gain_card("Experiment")
         count = 0
         for card in self.plr.discardpile:
             if card.name == "Experiment":

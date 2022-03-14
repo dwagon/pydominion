@@ -18,7 +18,7 @@ class Landmark_Keep(Landmark.Landmark):
         # For each type of treasure card work out who has how many
         for pl in game.player_list():
             plname = pl.name
-            for card in pl.allCards():
+            for card in pl.all_cards():
                 if card.isTreasure():
                     if card.name not in cards:
                         cards[card.name] = {}
@@ -33,7 +33,7 @@ class Landmark_Keep(Landmark.Landmark):
                 player.output(
                     "Gaining 5 from Landmark as you have the most %s (%d)" % (card, m)
                 )
-                player.addScore("Keep", 5)
+                player.add_score("Keep", 5)
 
 
 ###############################################################################
@@ -58,10 +58,10 @@ class Test_Keep(unittest.TestCase):
 
     def test_most(self):
         """Use Keep when we have the most Silver"""
-        self.plr.setDeck("Silver")
-        self.plr.gameOver()
+        self.plr.set_deck("Silver")
+        self.plr.game_over()
         try:
-            self.assertEqual(self.plr.getScoreDetails()["Keep"], 5)
+            self.assertEqual(self.plr.get_score_details()["Keep"], 5)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

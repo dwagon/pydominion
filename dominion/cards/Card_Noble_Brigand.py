@@ -25,11 +25,11 @@ class Card_Noble_Brigand(Card.Card):
         self.attack(game, player)
 
     def attack(self, game, player):
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             cards = self.getTreasureCards(victim, player)
             if not cards:
                 victim.output("%s's Noble Brigand gave you a copper" % player.name)
-                victim.gainCard("Copper")
+                victim.gain_card("Copper")
                 return
             ans = None
             choices = []
@@ -37,33 +37,33 @@ class Card_Noble_Brigand(Card.Card):
                 if card.name in ("Silver", "Gold"):
                     choices.append(("Steal %s" % card.name, card))
             if choices:
-                ans = player.plrChooseOptions("Pick a card to steal", *choices)
+                ans = player.plr_choose_options("Pick a card to steal", *choices)
             for card in cards:
                 if card == ans:
                     victim.output(
                         "%s's Noble Brigand stole your %s" % (player.name, card.name)
                     )
                     player.output("Stole %s from %s" % (card.name, victim.name))
-                    player.addCard(ans)
+                    player.add_card(ans)
                 else:
                     victim.output(
                         "%s's Noble Brigand discarded your %s"
                         % (player.name, card.name)
                     )
-                    victim.discardCard(card)
+                    victim.discard_card(card)
 
     def getTreasureCards(self, plr, player):
         cards = []
         for _ in range(2):
-            c = plr.nextCard()
-            plr.revealCard(c)
+            c = plr.next_card()
+            plr.reveal_card(c)
             if c.isTreasure():
                 cards.append(c)
             else:
                 plr.output(
                     "%s's Noble Brigand discarded your %s" % (player.name, c.name)
                 )
-                plr.addCard(c, "discard")
+                plr.add_card(c, "discard")
         return cards
 
 
@@ -77,25 +77,25 @@ class Test_Noble_Brigand(unittest.TestCase):
 
     def test_play(self):
         """Play an Noble Brigand but without anything to steal"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_no_treasure(self):
         """Play an Noble Brigand but with no treasure"""
-        self.vic.setDeck("Estate", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.vic.set_deck("Estate", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.vic.discardpile.size(), 3)
         self.assertIsNotNone(self.vic.in_discard("Copper"))
 
     def test_gold(self):
         """Play an Noble Brigand with a gold"""
-        self.vic.setDeck("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.vic.set_deck("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)
         self.assertIsNotNone(self.vic.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))

@@ -20,24 +20,24 @@ class Card_Pillage(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.trashCard(self)
-        for plr in player.attackVictims():
+        player.trash_card(self)
+        for plr in player.attack_victims():
             if plr.hand.size() < 5:
                 player.output("Player %s has too small a hand size" % plr.name)
                 continue
             self.pickACard(plr, player)
         for _ in range(2):
-            player.gainCard("Spoils")
+            player.gain_card("Spoils")
 
     ###########################################################################
     def pickACard(self, victim, player):
         for card in victim.hand:
-            victim.revealCard(card)
-        cards = player.cardSel(
+            victim.reveal_card(card)
+        cards = player.card_sel(
             cardsrc=victim.hand, prompt="Which card to discard from %s" % victim.name
         )
         card = cards[0]
-        victim.discardCard(card)
+        victim.discard_card(card)
         victim.output("%s pillaged your %s" % (player.name, card.name))
 
 
@@ -51,10 +51,10 @@ class Test_Pillage(unittest.TestCase):
 
     def test_play(self):
         """Play the Pillage"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.victim.setHand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Spoils")
@@ -64,10 +64,10 @@ class Test_Pillage(unittest.TestCase):
 
     def test_short_hand(self):
         """Play the Pillage with the victim having a small hand"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.victim.setHand("Copper", "Estate", "Duchy", "Gold")
-        self.plr.playCard(self.card)
+        self.victim.set_hand("Copper", "Estate", "Duchy", "Gold")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Spoils")

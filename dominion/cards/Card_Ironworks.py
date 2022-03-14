@@ -18,13 +18,13 @@ class Card_Ironworks(Card.Card):
     def special(self, game, player):
         """Gain a card costing up to 4. If it is an action card:
         +1 action; treasure card +1 coin; victory card, +1 card"""
-        c = player.plrGainCard(4, force=True)
+        c = player.plr_gain_card(4, force=True)
         if c.isVictory():
-            player.pickupCard()
+            player.pickup_card()
         if c.isAction():
-            player.addActions(1)
+            player.add_actions(1)
         if c.isTreasure():
-            player.addCoin(1)
+            player.add_coins(1)
 
 
 ###############################################################################
@@ -47,33 +47,33 @@ class Test_Ironworks(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Iron Works"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_great_hall(self):
         """Use Ironworks to gain a Great Hall"""
         self.plr.test_input = ["Mill"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Mill")
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_silver(self):
         """Use Ironworks to gain a Silver"""
         self.plr.test_input = ["Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Silver")
         self.assertEqual(self.plr.get_actions(), 0)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_ironworks(self):
         """Use Ironworks to gain an Ironworks"""
         self.plr.test_input = ["iron"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Iron Works")
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
 

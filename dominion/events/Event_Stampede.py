@@ -19,7 +19,7 @@ class Event_Stampede(Event.Event):
     def special(self, game, player):
         if player.played.size() <= 5:
             for _ in range(5):
-                player.gainCard("Horse")
+                player.gain_card("Horse")
         else:
             player.output("You have played too many cards this turn")
 
@@ -40,16 +40,16 @@ class Test_Stampede(unittest.TestCase):
 
     def test_Stampede(self):
         """Use Stampede"""
-        self.plr.addCoin(5)
-        self.plr.performEvent(self.card)
+        self.plr.add_coins(5)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
         self.assertEqual(self.plr.discardpile.size(), 5)
 
     def test_no_Stampede(self):
         """Use Stampede with played lots"""
-        self.plr.setPlayed("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
-        self.plr.addCoin(5)
-        self.plr.performEvent(self.card)
+        self.plr.set_played("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
+        self.plr.add_coins(5)
+        self.plr.perform_event(self.card)
         self.assertIsNone(self.plr.in_discard("Horse"))
         self.assertEqual(self.plr.discardpile.size(), 0)
 

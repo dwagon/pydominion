@@ -20,16 +20,16 @@ class Card_Haven(Card.Card):
     def special(self, game, player):
         """Set aside a card from your hand face down. At the start of
         your next turn, put it into your hand."""
-        c = player.plrPickCard(
+        c = player.plr_pick_card(
             force=True, prompt="Pick card to put into hand next turn"
         )
-        player.addCard(c, Card.TYPE_DURATION)
+        player.add_card(c, Card.TYPE_DURATION)
         player.hand.remove(c)
         self.savedHavenCard = c
 
     def duration(self, game, player):
         c = self.savedHavenCard
-        player.addCard(c, "hand")
+        player.add_card(c, "hand")
         # Can't guarantee the order so it may be in played
         # or still in durationpile
         if c in player.played:
@@ -47,14 +47,14 @@ class Test_Haven(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haven"].remove()
-        self.plr.setDiscard("Copper", "Copper", "Copper", "Copper", "Copper")
-        self.plr.setDeck("Estate", "Estate", "Estate", "Estate", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.set_deck("Estate", "Estate", "Estate", "Estate", "Gold")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a haven"""
         self.plr.test_input = ["select gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.durationpile.size(), 2)

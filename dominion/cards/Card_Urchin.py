@@ -21,9 +21,9 @@ class Card_Urchin(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Discard down to 4 cards from %s's Urchin" % player.name)
-            plr.plrDiscardDownTo(4)
+            plr.plr_discard_down_to(4)
 
     def hook_cleanup(self, game, player):
         attacks = 0
@@ -32,14 +32,14 @@ class Card_Urchin(Card.Card):
                 attacks += 1
         # Urchin and one more
         if attacks >= 2:
-            trash = player.plrChooseOptions(
+            trash = player.plr_choose_options(
                 "Trash the urchin?",
                 ("Keep the Urchin", False),
                 ("Trash and gain a Mercenary", True),
             )
             if trash:
-                player.trashCard(self)
-                player.gainCard("Mercenary")
+                player.trash_card(self)
+                player.gain_card("Mercenary")
 
 
 ###############################################################################
@@ -58,16 +58,16 @@ class Test_Urchin(unittest.TestCase):
 
     def test_play(self):
         """Play an Urchin"""
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
         self.victim.test_input = ["1", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.victim.hand.size(), 4)
 
     def test_merc(self):
         """Play an Urchin and get a mercenary"""
-        self.plr.setPlayed("Urchin", "Militia")
+        self.plr.set_played("Urchin", "Militia")
         self.plr.test_input = ["end phase", "end phase", "mercenary"]
         self.plr.turn()
         self.assertIsNotNone(self.plr.in_discard("Mercenary"))

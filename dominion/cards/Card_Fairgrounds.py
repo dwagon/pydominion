@@ -18,7 +18,7 @@ class Card_Fairgrounds(Card.Card):
 
     def special_score(self, game, player):
         """Worth 2VP for every 5 differently named cards in your deck (round down)"""
-        numtypes = {c.name for c in player.allCards()}
+        numtypes = {c.name for c in player.all_cards()}
         return 2 * int(len(numtypes) / 5)
 
 
@@ -32,15 +32,15 @@ class Test_Fairgrounds(unittest.TestCase):
 
     def test_zero(self):
         """Fairground for 4 types"""
-        self.plr.setHand("Copper", "Estate", "Silver", "Fairgrounds")
-        self.plr.setDeck("Copper", "Estate", "Silver", "Fairgrounds")
-        sc = self.plr.getScoreDetails()
+        self.plr.set_hand("Copper", "Estate", "Silver", "Fairgrounds")
+        self.plr.set_deck("Copper", "Estate", "Silver", "Fairgrounds")
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Fairgrounds"], 0)
 
     def test_one(self):
         """Fairground for 4 types"""
-        self.plr.setDeck("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
-        sc = self.plr.getScoreDetails()
+        self.plr.set_deck("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Fairgrounds"], 2)
 
 

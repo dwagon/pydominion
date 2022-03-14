@@ -22,12 +22,12 @@ class Card_Devils_Workshop(Card.Card):
         nc = len(player.stats["gained"])
         player.output("You gained {} cards this turn".format(nc))
         if nc >= 2:
-            player.gainCard("Imp")
+            player.gain_card("Imp")
             player.output("Gained an Imp")
         elif nc == 1:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
         else:
-            player.gainCard("Gold")
+            player.gain_card("Gold")
             player.output("Gained a Gold")
 
 
@@ -40,11 +40,11 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Devil's Workshop"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play_0(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Gold"))
         except AssertionError:  # pragma: no cover
@@ -53,9 +53,9 @@ class Test_Devils_Workshop(unittest.TestCase):
 
     def test_play_1(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.plr.test_input = ["Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertLessEqual(self.plr.discardpile[0].name, "Moat")
         except AssertionError:  # pragma: no cover
@@ -64,9 +64,9 @@ class Test_Devils_Workshop(unittest.TestCase):
 
     def test_play_2(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.gainCard("Copper")
-        self.plr.gainCard("Estate")
-        self.plr.playCard(self.card)
+        self.plr.gain_card("Copper")
+        self.plr.gain_card("Estate")
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Imp"))
         except AssertionError:  # pragma: no cover

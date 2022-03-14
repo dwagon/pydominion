@@ -27,9 +27,9 @@ class Card_Necromancer(Card.Card):
             for _ in game.trashpile
             if _.isAction() and not _.isDuration() and _ not in game._necromancer
         ]
-        card = player.cardSel(cardsrc=act, prompt="Select Action card from Trash")
+        card = player.card_sel(cardsrc=act, prompt="Select Action card from Trash")
         game._necromancer.add(card[0])
-        player.playCard(card[0], discard=False, costAction=False)
+        player.play_card(card[0], discard=False, costAction=False)
 
     def setup(self, game):
         game._necromancer = PlayArea.PlayArea()
@@ -46,13 +46,13 @@ class Test_Necromancer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Necromancer"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play a Necromancer"""
-        self.plr.setDeck("Gold", "Silver")
+        self.plr.set_deck("Gold", "Silver")
         self.plr.test_input = ["Zombie Spy", "Keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Silver"))  # From Zombie Spy
 
 

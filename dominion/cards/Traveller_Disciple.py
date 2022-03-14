@@ -25,17 +25,17 @@ class Card_Disciple(Card.Card):
         if not actions:
             player.output("No suitable actions to perform")
             return
-        cards = player.cardSel(cardsrc=actions)
+        cards = player.card_sel(cardsrc=actions)
         if not cards:
             return
         card = cards[0]
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, card.name))
-            player.playCard(card, discard=False, costAction=False)
-        player.addCard(card, "played")
+            player.play_card(card, discard=False, costAction=False)
+        player.add_card(card, "played")
         player.hand.remove(card)
         if card.purchasable:
-            c = player.gainCard(card.name)
+            c = player.gain_card(card.name)
             if c:
                 player.output("Gained a %s from Disciple" % c.name)
 
@@ -54,17 +54,17 @@ class Test_Disciple(unittest.TestCase):
 
     def test_play_no_actions(self):
         """Play a disciple with no actions available"""
-        self.plr.setHand("Copper", "Estate")
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.set_hand("Copper", "Estate")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 1)
 
     def test_play_actions(self):
         """Play a disciple with an action available"""
-        self.plr.setHand("Copper", "Estate", "Moat")
+        self.plr.set_hand("Copper", "Estate", "Moat")
         self.plr.test_input = ["moat"]
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertIsNotNone(self.plr.in_discard("Moat"))

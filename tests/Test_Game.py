@@ -106,8 +106,8 @@ class Test_in_trash(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.plr.setHand("Copper")
-        self.plr.trashCard(self.plr.hand[0])
+        self.plr.set_hand("Copper")
+        self.plr.trash_card(self.plr.hand[0])
 
     def test_intrash(self):
         """Test card is in trash"""

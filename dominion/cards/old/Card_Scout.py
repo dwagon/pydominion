@@ -22,16 +22,16 @@ class Card_Scout(Card.Card):
         # TODO: Currently you can't order the cards you return
         cards = []
         for _ in range(4):
-            c = player.nextCard()
-            player.revealCard(c)
+            c = player.next_card()
+            player.reveal_card(c)
             if c.isVictory():
-                player.addCard(c, "hand")
+                player.add_card(c, "hand")
                 player.output("Adding %s to hand" % c.name)
             else:
                 cards.append(c)
         for c in cards:
             player.output("Putting %s back on deck" % c.name)
-            player.addCard(c, "deck")
+            player.add_card(c, "deck")
 
 
 ###############################################################################
@@ -43,22 +43,22 @@ class Test_Scout(unittest.TestCase):
         self.scout = self.g["Scout"].remove()
 
     def test_play(self):
-        self.plr.addCard(self.scout, "hand")
-        self.plr.playCard(self.scout)
+        self.plr.add_card(self.scout, "hand")
+        self.plr.play_card(self.scout)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
-        self.plr.setHand()
-        self.plr.addCard(self.scout, "hand")
-        self.plr.playCard(self.scout)
+        self.plr.set_hand()
+        self.plr.add_card(self.scout, "hand")
+        self.plr.play_card(self.scout)
         for c in self.plr.hand:
             self.assertTrue(c.isVictory())
 
     def test_deck(self):
-        self.plr.setHand()
-        self.plr.addCard(self.scout, "hand")
-        self.plr.setDeck("Copper", "Copper", "Copper", "Duchy")
-        self.plr.playCard(self.scout)
+        self.plr.set_hand()
+        self.plr.add_card(self.scout, "hand")
+        self.plr.set_deck("Copper", "Copper", "Copper", "Duchy")
+        self.plr.play_card(self.scout)
         self.assertEqual(self.plr.hand[0].name, "Duchy")
         for c in self.plr.deck:
             self.assertEqual(c.name, "Copper")

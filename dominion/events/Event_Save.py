@@ -18,7 +18,7 @@ class Event_Save(Event.Event):
             player.output("Already used save this turn")
             return
         player._save_reserve = PlayArea.PlayArea([])
-        card = player.cardSel(
+        card = player.card_sel(
             num=1,
             cardsrc="hand",
             verbs=("Set", "Unset"),
@@ -30,7 +30,7 @@ class Event_Save(Event.Event):
 
     def hook_end_turn(self, game, player):
         card = player._save_reserve[0]
-        player.addCard(card, "hand")
+        player.add_card(card, "hand")
         player.secret_count -= 1
         del player._save_reserve
 
@@ -48,9 +48,9 @@ class Test_Save(unittest.TestCase):
     def test_play(self):
         """Use Save"""
         self.plr.coin = 1
-        self.plr.setHand("Gold")
+        self.plr.set_hand("Gold")
         self.plr.test_input = ["Gold"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr._save_reserve[0].name, "Gold")
         self.plr.end_turn()
         self.assertIsNotNone(self.plr.in_hand("Gold"))

@@ -21,13 +21,13 @@ class Card_Vagrant(Card.Card):
     def special(self, game, player):
         """ " Reveal the top card of your deck. If it's a Curse,
         Ruins, Shelter or Victory card, put it into your hand"""
-        c = player.nextCard()
-        player.revealCard(c)
+        c = player.next_card()
+        player.reveal_card(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == "Ruins":
-            player.addCard(c, "hand")
+            player.add_card(c, "hand")
             player.output("Adding %s to hand" % c.name)
         else:
-            player.addCard(c, "topdeck")
+            player.add_card(c, "topdeck")
             player.output("Top card %s still on deck" % c.name)
 
 
@@ -38,20 +38,20 @@ class Test_Vagrant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Vagrant"].remove()
-        self.plr.addCard(self.card, "hand")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play the vagrant with unexciting next card"""
-        self.plr.setDeck("Gold", "Silver", "Copper")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Gold", "Silver", "Copper")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.nextCard().name, "Silver")
+        self.assertEqual(self.plr.next_card().name, "Silver")
 
     def test_play_exciting(self):
         """Play the vagrant with an exciting next card"""
-        self.plr.setDeck("Estate", "Province", "Duchy")
-        self.plr.playCard(self.card)
+        self.plr.set_deck("Estate", "Province", "Duchy")
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertTrue(self.plr.in_hand("Province"))

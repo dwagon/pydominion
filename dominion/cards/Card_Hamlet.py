@@ -18,12 +18,12 @@ class Card_Hamlet(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        c = player.plrDiscardCards(prompt="Discard a card to gain an action")
+        c = player.plr_discard_cards(prompt="Discard a card to gain an action")
         if c:
-            player.addActions(1)
-        c = player.plrDiscardCards(prompt="Discard card to gain a buy")
+            player.add_actions(1)
+        c = player.plr_discard_cards(prompt="Discard card to gain a buy")
         if c:
-            player.addBuys(1)
+            player.add_buys(1)
 
 
 ###############################################################################
@@ -33,20 +33,20 @@ class Test_Hamlet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hamlet"].remove()
-        self.plr.setHand("Silver", "Gold")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Silver", "Gold")
+        self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
         """Play a hamlet"""
         self.plr.test_input = ["finish selecting", "finish selecting"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_discard_action(self):
         """Play a hamlet and discard to gain an action"""
         self.plr.test_input = ["discard silver", "finish selecting"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 1)
@@ -55,7 +55,7 @@ class Test_Hamlet(unittest.TestCase):
     def test_discard_buy(self):
         """Play a hamlet and discard to gain a buy"""
         self.plr.test_input = ["finish selecting", "discard gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)

@@ -27,10 +27,10 @@ class Card_Temple(Card.Card):
         )
 
     def special(self, game, player):
-        player.addScore("Temple", 1)
+        player.add_score("Temple", 1)
         cardnames = {_.name for _ in player.hand}
         cards = [player.in_hand(_) for _ in cardnames]
-        trash = player.plrTrashCard(
+        trash = player.plr_trash_card(
             cardsrc=cards, prompt="Trash up to 3 different cards", num=3
         )
         if not trash:
@@ -40,7 +40,7 @@ class Card_Temple(Card.Card):
     def hook_gain_this_card(self, game, player):
         score = game["Temple"].drainVP()
         player.output("Gaining %d VP from Temple" % score)
-        player.addScore("Temple", score)
+        player.add_score("Temple", score)
 
 
 ###############################################################################
@@ -53,19 +53,19 @@ class Test_Temple(unittest.TestCase):
 
     def test_play(self):
         """Play a Temple"""
-        self.plr.setHand("Copper", "Silver", "Silver", "Gold", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Copper", "Silver", "Silver", "Gold", "Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper", "Silver", "finish"]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Temple"], 1)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_score_details()["Temple"], 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_gain(self):
         """Gain a Temple"""
         self.g["Temple"].addVP(5)
-        self.plr.setCoin(4)
-        self.plr.buyCard(self.g["Temple"])
-        self.assertEqual(self.plr.getScoreDetails()["Temple"], 5)
+        self.plr.set_coins(4)
+        self.plr.buy_card(self.g["Temple"])
+        self.assertEqual(self.plr.get_score_details()["Temple"], 5)
 
 
 ###############################################################################

@@ -17,18 +17,18 @@ class Card_Develop(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        cards = player.plrTrashCard()
+        cards = player.plr_trash_card()
         if not cards:
             return
         card = cards[0]
-        if player.cardsWorth(card.cost + 1):
-            player.plrGainCard(
+        if player.cards_worth(card.cost + 1):
+            player.plr_gain_card(
                 cost=card.cost + 1, modifier="equal", destination="topdeck"
             )
         else:
             player.output("No cards worth %s" % (card.cost + 1))
-        if player.cardsWorth(card.cost - 1):
-            player.plrGainCard(
+        if player.cards_worth(card.cost - 1):
+            player.plr_gain_card(
                 cost=card.cost - 1, modifier="equal", destination="topdeck"
             )
         else:
@@ -44,10 +44,10 @@ class Test_Develop(unittest.TestCase):
         self.card = self.g["Develop"].remove()
 
     def test_play(self):
-        self.plr.setHand("Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertIsNotNone(self.plr.in_deck("Gold"))
         self.assertIsNotNone(self.plr.in_deck("Smithy"))

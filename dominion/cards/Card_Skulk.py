@@ -21,10 +21,10 @@ class Card_Skulk(Card.Card):
         return "+1 Buy; Each other player receives the next Hex."
 
     def hook_gain_this_card(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("{}'s Skulk hexed you".format(player.name))
             plr.receive_hex()
 
@@ -43,12 +43,12 @@ class Test_Skulk(unittest.TestCase):
 
     def test_play_card(self):
         """Play Skulk"""
-        self.plr.addCard(self.Skulk, "hand")
-        self.plr.playCard(self.Skulk)
+        self.plr.add_card(self.Skulk, "hand")
+        self.plr.play_card(self.Skulk)
         self.assertTrue(self.vic.has_state("Deluded"))
 
     def test_gain(self):
-        self.plr.gainCard("Skulk")
+        self.plr.gain_card("Skulk")
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
 

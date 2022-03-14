@@ -17,7 +17,7 @@ class Card_Embassy(Card.Card):
         self.cards = 5
 
     def special(self, game, player):
-        player.plrDiscardCards(3, force=True)
+        player.plr_discard_cards(3, force=True)
 
     def hook_gain_this_card(self, game, player):
         """When you gain this, each other player gains a Silver"""
@@ -26,7 +26,7 @@ class Card_Embassy(Card.Card):
                 plr.output(
                     "Gained a silver from %s's purchase of Embassy" % player.name
                 )
-                plr.gainCard("Silver")
+                plr.gain_card("Silver")
         return {}
 
 
@@ -37,9 +37,9 @@ class Test_Embassy(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Embassy"].remove()
-        self.plr.setDeck("Estate", "Estate", "Estate", "Estate", "Estate")
-        self.plr.setHand("Copper", "Silver", "Gold", "Estate", "Duchy")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_deck("Estate", "Estate", "Estate", "Estate", "Estate")
+        self.plr.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         self.plr.test_input = [
@@ -48,11 +48,11 @@ class Test_Embassy(unittest.TestCase):
             "discard gold",
             "finish",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 5 - 3)
 
     def test_gain(self):
-        self.plr.gainCard("Embassy")
+        self.plr.gain_card("Embassy")
         self.assertEqual(self.other.discardpile[-1].name, "Silver")
 
 

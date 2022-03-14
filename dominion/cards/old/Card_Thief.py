@@ -23,18 +23,18 @@ class Card_Thief(Card.Card):
         that you choose. You may gain any or all of these trashed
         Cards. They discard the other revealed cards."""
 
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):
         treasures = []
         for _ in range(2):
-            c = victim.nextCard()
-            victim.revealCard(c)
+            c = victim.next_card()
+            victim.reveal_card(c)
             if c.isTreasure():
                 treasures.append(c)
             else:
-                victim.addCard(c, "discard")
+                victim.add_card(c, "discard")
         if not treasures:
             thief.output("Player %s has no treasures" % victim.name)
             return
@@ -56,18 +56,18 @@ class Card_Thief(Card.Card):
             pr = "Steal %s from %s" % (c.name, victim.name)
             options.append({"selector": sel, "print": pr, "card": c, "steal": True})
             index += 1
-        o = thief.userInput(options, "What to do to %s's cards?" % victim.name)
+        o = thief.user_input(options, "What to do to %s's cards?" % victim.name)
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
-                victim.addCard(tc, "discard")
+                victim.add_card(tc, "discard")
         if o["card"]:
             if o["steal"]:
-                thief.addCard(o["card"])
+                thief.add_card(o["card"])
                 thief.output("Stealing %s from %s" % (o["card"].name, victim.name))
                 victim.output("%s stole your %s" % (thief.name, o["card"].name))
             else:
-                victim.trashCard(o["card"])
+                victim.trash_card(o["card"])
                 thief.output("Trashed %s from %s" % (o["card"].name, victim.name))
                 victim.output("%s trashed your %s" % (thief.name, o["card"].name))
 
@@ -81,35 +81,35 @@ class Test_Thief(unittest.TestCase):
         self.thief, self.victim = self.g.player_list()
         self.thief.name = "thief"
         self.victim.name = "victim"
-        self.thief.addCard(self.thiefcard, "hand")
+        self.thief.add_card(self.thiefcard, "hand")
 
     def test_no_treasure(self):
-        self.victim.setDeck("Estate", "Estate", "Estate")
-        self.thief.playCard(self.thiefcard)
+        self.victim.set_deck("Estate", "Estate", "Estate")
+        self.thief.play_card(self.thiefcard)
         self.assertIn("Player victim has no treasures", self.thief.messages)
 
     def test_moat_defense(self):
-        self.victim.setHand("Moat", "Copper", "Copper")
-        self.victim.setDeck("Copper", "Silver", "Gold")
-        self.thief.playCard(self.thiefcard)
+        self.victim.set_hand("Moat", "Copper", "Copper")
+        self.victim.set_deck("Copper", "Silver", "Gold")
+        self.thief.play_card(self.thiefcard)
         self.assertIn("Player victim is defended", self.thief.messages)
         self.assertEqual(self.victim.deck.size(), 3)
         self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_do_nothing(self):
-        self.victim.setHand("Copper", "Copper")
-        self.victim.setDeck("Copper", "Silver", "Gold")
+        self.victim.set_hand("Copper", "Copper")
+        self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertEqual(self.victim.deck.size(), 1)
         self.assertEqual(self.victim.discardpile.size(), 2)
         self.assertEqual(self.thief.discardpile.size(), 0)
 
     def test_trash_treasure(self):
-        self.victim.setHand("Copper", "Copper")
-        self.victim.setDeck("Copper", "Silver", "Gold")
+        self.victim.set_hand("Copper", "Copper")
+        self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertIsNotNone(self.g.in_trash("Gold"))
         for c in self.victim.deck:
@@ -118,10 +118,10 @@ class Test_Thief(unittest.TestCase):
 
     def test_steal_treasure(self):
         tsize = self.g.trashSize()
-        self.victim.setHand("Copper", "Copper")
-        self.victim.setDeck("Copper", "Silver", "Gold")
+        self.victim.set_hand("Copper", "Copper")
+        self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["steal gold"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.deck:
             self.assertNotEqual(c.name, "Gold")

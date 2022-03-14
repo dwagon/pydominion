@@ -25,16 +25,16 @@ class Card_Inn(Card.Card):
         return "+2 Cards, +2 Actions, Discard 2 cards"
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2, force=True)
+        player.plr_discard_cards(num=2, force=True)
 
     def hook_gain_this_card(self, game, player):
         cards = []
         for card in player.discardpile[:]:
             if card.isAction():
-                player.revealCard(card)
+                player.reveal_card(card)
                 cards.append(card)
         cards.append(self)
-        back = player.cardSel(
+        back = player.card_sel(
             anynum=True,
             prompt="Select cards to shuffle back into your deck",
             cardsrc=cards,
@@ -43,7 +43,7 @@ class Card_Inn(Card.Card):
             if card.name == "Inn":
                 return {"destination": "deck", "shuffle": True}
             player.discardpile.remove(card)
-            player.addCard(card, "deck")
+            player.add_card(card, "deck")
             player.deck.shuffle()
         return {}
 
@@ -58,23 +58,23 @@ class Test_Inn(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.setHand("Duchy", "Province", "Gold", "Silver")
-        self.plr.addCard(self.card, "hand")
+        self.plr.set_hand("Duchy", "Province", "Gold", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Province", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.setDiscard("Moat", "Gold")
+        self.plr.set_discard("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
-        self.plr.gainCard("Inn")
+        self.plr.gain_card("Inn")
         self.assertIsNotNone(self.plr.in_deck("Moat"))
 
     def test_gain_self(self):
-        self.plr.setDiscard()
+        self.plr.set_discard()
         self.plr.test_input = ["Inn", "finish"]
-        self.plr.gainCard("Inn")
+        self.plr.gain_card("Inn")
         self.assertIsNotNone(self.plr.in_deck("Inn"))
 
 

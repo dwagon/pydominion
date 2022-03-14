@@ -29,7 +29,7 @@ class Card_Fortune(Card.Card):
         if num_gladiators:
             player.output("Gaining %d Gold" % num_gladiators)
             for _ in range(num_gladiators):
-                player.gainCard("Gold")
+                player.gain_card("Gold")
 
 
 ###############################################################################
@@ -42,8 +42,8 @@ class Test_Fortune(unittest.TestCase):
 
     def test_play(self):
         """Play a Fortune"""
-        self.plr.addCard(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
 
 
 ###############################################################################
