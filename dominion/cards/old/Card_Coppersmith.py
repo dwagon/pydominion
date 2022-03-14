@@ -15,7 +15,7 @@ class Card_Coppersmith(Card.Card):
         self.name = "Coppersmith"
         self.cost = 4
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         """Copper produces an extra 1 this turn"""
         if card.name == "Copper":
             player.output("Copper worth 1 more")

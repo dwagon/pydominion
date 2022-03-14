@@ -39,7 +39,7 @@ hook_way_discard_this_card
 --------------------------
 This is called when a card that was played through a way
 
-hook_spendValue(game, player, card)
+hook_spend_value(game, player, card)
 -----------------------------------
 This modifies how much coin value you get for spending the card and
 is invoked for every card that has been played this turn.

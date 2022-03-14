@@ -16,7 +16,7 @@ class State_Envious(State.State):
     def hook_pre_buy(self, game, player):
         player.remove_state(self)
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         # Silver and Gold make 1
         if card.name == "Silver":
             return -1

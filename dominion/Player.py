@@ -172,7 +172,7 @@ class Player:
             self.pickup_card()
         self.addActions(hx.actions)
         self.buys += hx.buys
-        self.coin += self.hook_spendValue(hx, actual=True)
+        self.coin += self.hook_spend_value(hx, actual=True)
         hx.special(game=self.game, player=self)
         self.game.discard_hex(hx)
 
@@ -186,7 +186,7 @@ class Player:
             self.pickup_card()
         self.addActions(boon.actions)
         self.buys += boon.buys
-        self.coin += self.hook_spendValue(boon, actual=True)
+        self.coin += self.hook_spend_value(boon, actual=True)
         boon.special(game=self.game, player=self)
         if discard:
             self.game.discard_boon(boon)
@@ -579,7 +579,7 @@ class Player:
     def _spendable_selection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
-        totcoin = sum([self.hook_spendValue(c) for c in spendable])
+        totcoin = sum([self.hook_spend_value(c) for c in spendable])
         numpots = sum([1 for c in spendable if c.name == "Potion"])
         potstr = ", %d potions" % numpots if numpots else ""
         details = "%d coin%s" % (totcoin, potstr)
@@ -605,7 +605,7 @@ class Player:
 
         index = 4
         for s in spendable:
-            tp = "%d coin; %s" % (self.hook_spendValue(s), s.get_cardtype_repr())
+            tp = "%d coin; %s" % (self.hook_spend_value(s), s.get_cardtype_repr())
             o = Option(
                 selector=str(index),
                 name=s.name,
@@ -1134,16 +1134,16 @@ class Player:
         self.currcards.pop()
 
     ###########################################################################
-    def hook_spendValue(self, card, actual=False):
+    def hook_spend_value(self, card, actual=False):
         """How much do you get for spending the card
         If actual is True then we are spending the coin rather than
         just working out what we would get for spending it
         """
         val = card.hook_coinvalue(game=self.game, player=self)
         for c in self.played:
-            val += c.hook_spendValue(game=self.game, player=self, card=card)
+            val += c.hook_spend_value(game=self.game, player=self, card=card)
         for s in self.states:
-            val += s.hook_spendValue(game=self.game, player=self, card=card)
+            val += s.hook_spend_value(game=self.game, player=self, card=card)
         if val and self.coin_token:
             val -= 1
             if actual:
@@ -1254,7 +1254,7 @@ class Player:
     ###########################################################################
     def card_benefits(self, card):
         self.addActions(card.actions)
-        self.coin += self.hook_spendValue(card, actual=True)
+        self.coin += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
         self.favors += card.favors
         self.potions += card.potion

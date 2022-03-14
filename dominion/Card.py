@@ -329,7 +329,7 @@ class Card:
         return self.coin  # pragma: no cover
 
     ##########################################################################
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         """Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 

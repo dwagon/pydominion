@@ -19,7 +19,7 @@ class Card_Merchant(Card.Card):
         self.cards = 1
         self.cost = 3
 
-    def hook_spendValue(self, game, player, card):
+    def hook_spend_value(self, game, player, card):
         if card.name != "Silver":
             return 0
         ag_count = player.played.count("Silver")
