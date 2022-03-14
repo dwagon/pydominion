@@ -1653,7 +1653,7 @@ class Player:
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
-        types = self.typeSelector(types)
+        types = self._type_selector(types)
         return self.cards_affordable(operator.le, coin, potions, types)
 
     ###########################################################################
@@ -1661,7 +1661,7 @@ class Player:
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
-        types = self.typeSelector(types)
+        types = self._type_selector(types)
         return self.cards_affordable(operator.eq, coin, potions, types)
 
     ###########################################################################
@@ -1683,7 +1683,7 @@ class Player:
         return total
 
     ###########################################################################
-    def typeSelector(self, types=None):
+    def _type_selector(self, types=None):
         if types is None:
             types = {}
         assert set(types.keys()) <= set(
@@ -1770,7 +1770,7 @@ class Player:
         if recipient is None:
             recipient = self
         prompt = "Gain a card "
-        types = self.typeSelector(types)
+        types = self._type_selector(types)
         if modifier == "less":
             if cost:
                 prompt += "costing up to %d" % cost

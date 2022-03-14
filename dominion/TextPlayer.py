@@ -183,7 +183,7 @@ class TextPlayer(Player):
 
         selected = []
         types = kwargs["types"] if "types" in kwargs else {}
-        types = self.typeSelector(types)
+        types = self._type_selector(types)
         while True:
             options = []
             if (
