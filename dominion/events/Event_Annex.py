@@ -30,7 +30,7 @@ class Event_Annex(Event.Event):
         player.set_discard()
         for card in keep:
             player.add_card(card, "discard")
-        if player.gainCard("Duchy"):
+        if player.gain_card("Duchy"):
             player.output("Gained a Duchy")
 
 

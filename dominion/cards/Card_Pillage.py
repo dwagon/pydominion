@@ -27,7 +27,7 @@ class Card_Pillage(Card.Card):
                 continue
             self.pickACard(plr, player)
         for _ in range(2):
-            player.gainCard("Spoils")
+            player.gain_card("Spoils")
 
     ###########################################################################
     def pickACard(self, victim, player):

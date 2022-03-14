@@ -38,7 +38,7 @@ class Card_Exorcist(Card.Card):
                 idx += 1
         if idx:
             o = player.userInput(options, "Gain a spirit")
-            player.gainCard(o["card"])
+            player.gain_card(o["card"])
         else:
             player.output("No spirits available at that price")
 

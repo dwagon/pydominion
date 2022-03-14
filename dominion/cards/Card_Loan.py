@@ -44,7 +44,7 @@ class Test_Loan(unittest.TestCase):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Loan"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.loan = self.plr.gainCard("Loan", "hand")
+        self.loan = self.plr.gain_card("Loan", "hand")
 
     def test_play(self):
         self.plr.test_input = ["0"]

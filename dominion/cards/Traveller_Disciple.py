@@ -35,7 +35,7 @@ class Card_Disciple(Card.Card):
         player.add_card(card, "played")
         player.hand.remove(card)
         if card.purchasable:
-            c = player.gainCard(card.name)
+            c = player.gain_card(card.name)
             if c:
                 player.output("Gained a %s from Disciple" % c.name)
 

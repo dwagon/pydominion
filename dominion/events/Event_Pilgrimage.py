@@ -38,7 +38,7 @@ class Event_Pilgrimage(Event.Event):
             if len(selected) == 3:
                 break
         for card in selected:
-            player.gainCard(card)
+            player.gain_card(card)
             player.output("Gained a %s" % card)
 
 

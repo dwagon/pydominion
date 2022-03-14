@@ -28,7 +28,7 @@ class Test_Guildhall(unittest.TestCase):
     def test_play(self):
         numc = self.plr.getCoffer()
         self.plr.assign_project("Guildhall")
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         self.assertEqual(self.plr.getCoffer(), numc + 1)
 
 

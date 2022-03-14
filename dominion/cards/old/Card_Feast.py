@@ -33,7 +33,7 @@ class Card_Feast(Card.Card):
 
         o = player.userInput(options, "What card do you wish?")
         if o["card"]:
-            player.gainCard(o["card"])
+            player.gain_card(o["card"])
             player.output("Took %s" % o["card"].name)
 
     def trash_card(self, player):

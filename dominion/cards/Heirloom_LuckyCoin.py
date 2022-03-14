@@ -18,7 +18,7 @@ class Card_LuckyCoin(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
 
 ###############################################################################

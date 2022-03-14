@@ -52,11 +52,11 @@ class Test_Ducat(unittest.TestCase):
     def test_gain_trash(self):
         self.plr.test_input = ["Copper"]
         self.plr.set_hand("Copper")
-        self.plr.gainCard("Ducat")
+        self.plr.gain_card("Ducat")
 
     def test_gain_nothing(self):
         self.plr.set_hand("Silver")
-        self.plr.gainCard("Ducat")
+        self.plr.gain_card("Ducat")
 
 
 ###############################################################################

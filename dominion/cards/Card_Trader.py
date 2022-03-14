@@ -23,7 +23,7 @@ class Card_Trader(Card.Card):
         if card:
             player.output("Gaining %d Silvers" % card[0].cost)
             for _ in range(card[0].cost):
-                player.gainCard("Silver")
+                player.gain_card("Silver")
 
     def hook_gain_card(self, game, player, card):
         if card.name == "Silver":

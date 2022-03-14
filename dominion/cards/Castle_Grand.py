@@ -55,7 +55,7 @@ class Test_GrandCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":  # One before Grand
                 break
-        self.plr.gainCard("Castles")
+        self.plr.gain_card("Castles")
         self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)
 
 

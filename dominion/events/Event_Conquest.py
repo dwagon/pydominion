@@ -15,7 +15,7 @@ class Event_Conquest(Event.Event):
 
     def special(self, game, player):
         for _ in range(2):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
         sc = 0
         for card in player.stats["gained"]:
             if card.name == "Silver":

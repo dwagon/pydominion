@@ -35,7 +35,7 @@ class Test_FlagBearer(unittest.TestCase):
         self.card = self.g["Flag Bearer"].remove()
 
     def test_gain(self):
-        self.plr.gainCard("Flag Bearer")
+        self.plr.gain_card("Flag Bearer")
         self.assertIsNotNone(self.plr.has_artifact("Flag"))
 
     def test_trash(self):

@@ -18,7 +18,7 @@ class Boon_Swamps_Gift(Boon.Boon):
         self.required_cards = [("Card", "Will-o'-Wisp")]
 
     def special(self, game, player):
-        player.gainCard("Will-o'-Wisp")
+        player.gain_card("Will-o'-Wisp")
 
 
 ###############################################################################

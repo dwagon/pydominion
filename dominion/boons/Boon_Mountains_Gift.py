@@ -17,7 +17,7 @@ class Boon_Mountains_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
 
 ###############################################################################

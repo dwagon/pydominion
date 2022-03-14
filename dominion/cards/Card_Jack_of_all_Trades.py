@@ -19,7 +19,7 @@ class Card_Jack_of_all_Trades(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
         card = player.next_card()
         topdeck = player.plrChooseOptions(

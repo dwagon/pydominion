@@ -23,10 +23,10 @@ class Card_SprawlingCastle(CastleCard):
             ("Gain 3 Estates", "estates"),
         )
         if ch == "duchy":
-            player.gainCard("Duchy")
+            player.gain_card("Duchy")
         else:
             for _ in range(3):
-                player.gainCard("Estate")
+                player.gain_card("Estate")
 
 
 ###############################################################################
@@ -54,7 +54,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["duchy"]
-        self.plr.gainCard("Castles")
+        self.plr.gain_card("Castles")
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 1 + 1)
@@ -66,7 +66,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             if self.card.name == "Opulent Castle":  # One before Sprawling
                 break
         self.plr.test_input = ["estates"]
-        self.plr.gainCard("Castles")
+        self.plr.gain_card("Castles")
         self.assertIsNone(self.plr.in_discard("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 3 + 1)

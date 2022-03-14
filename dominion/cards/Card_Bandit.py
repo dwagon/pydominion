@@ -18,7 +18,7 @@ class Card_Bandit(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
         player.output("Gained a Gold")
         for pl in player.attackVictims():
             self.thieveOn(pl, player)

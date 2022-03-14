@@ -17,7 +17,7 @@ class Event_Populate(Event.Event):
         for cp in game.cardpiles.values():
             if cp.isAction() and cp.insupply:
                 player.output("Gained {} from Populate".format(cp.name))
-                player.gainCard(cp)
+                player.gain_card(cp)
 
 
 ###############################################################################

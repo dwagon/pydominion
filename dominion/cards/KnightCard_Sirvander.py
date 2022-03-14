@@ -23,7 +23,7 @@ class Card_Sirvander(KnightCard):
         self.knight_special(game, player)
 
     def hook_trashcard(self, game, player):
-        player.gainCard("gold")
+        player.gain_card("gold")
 
 
 ###############################################################################

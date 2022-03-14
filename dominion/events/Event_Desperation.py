@@ -24,7 +24,7 @@ class Event_Desperation(Event.Event):
         )
         if opt:
             if player.do_once("Desperation"):
-                curse = player.gainCard("Curse")
+                curse = player.gain_card("Curse")
                 if curse:
                     player.addBuys(1)
                     player.addCoin(2)

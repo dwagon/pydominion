@@ -29,7 +29,7 @@ class Card_Fortune(Card.Card):
         if num_gladiators:
             player.output("Gaining %d Gold" % num_gladiators)
             for _ in range(num_gladiators):
-                player.gainCard("Gold")
+                player.gain_card("Gold")
 
 
 ###############################################################################

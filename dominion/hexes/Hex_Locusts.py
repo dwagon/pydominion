@@ -22,7 +22,7 @@ class Hex_Locusts(Hex.Hex):
             player.output(
                 "Gaining a curse because your next card is {}".format(nxt.name)
             )
-            player.gainCard("Curse")
+            player.gain_card("Curse")
         else:
             player.output(
                 "Gain a card costing {} because your next card is {}".format(
@@ -65,7 +65,7 @@ class Test_Locusts(unittest.TestCase):
     def test_curse(self):
         """Locusts to gain a Curse"""
         self.plr.set_deck("Estate")
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertIsNotNone(self.g.in_trash("Estate"))
 
@@ -73,7 +73,7 @@ class Test_Locusts(unittest.TestCase):
         """Locusts to gain a cheaper card"""
         self.plr.set_deck("Duchy")
         self.plr.test_input = ["Get Estate"]
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertIsNone(self.plr.in_discard("Curse"))
         self.assertIsNotNone(self.plr.in_discard("Estate"))
         self.assertIsNotNone(self.g.in_trash("Duchy"))

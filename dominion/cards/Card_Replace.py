@@ -34,7 +34,7 @@ class Card_Replace(Card.Card):
         if gain.isVictory():
             for victim in player.attackVictims():
                 victim.output("Gained a Curse due to {}'s Replace".format(player))
-                victim.gainCard("Curse")
+                victim.gain_card("Curse")
 
 
 ###############################################################################

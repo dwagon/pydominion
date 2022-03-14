@@ -22,7 +22,7 @@ class Event_Raid(Event.Event):
         count = 0
         for c in player.hand + player.played:
             if c.name == "Silver":
-                player.gainCard("Silver")
+                player.gain_card("Silver")
                 count += 1
         player.output("Gained %d Silvers from Raid" % count)
 

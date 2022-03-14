@@ -38,7 +38,7 @@ class Card_Duplicate(Card.Card):
     def hook_call_reserve(self, game, player):
         card = self._duplicate
         player.output("Gaining a %s from Duplicate" % card.name)
-        player.gainCard(card.name, callhook=False)
+        player.gain_card(card.name, callhook=False)
 
 
 ###############################################################################

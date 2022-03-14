@@ -39,7 +39,7 @@ class Card_Urchin(Card.Card):
             )
             if trash:
                 player.trash_card(self)
-                player.gainCard("Mercenary")
+                player.gain_card("Mercenary")
 
 
 ###############################################################################

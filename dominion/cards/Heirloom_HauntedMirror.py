@@ -25,7 +25,7 @@ class Card_Haunted_Mirror(Card.Card):
             return
         td = player.plrDiscardCards(cardsrc=ac)
         if td:
-            player.gainCard("Ghost")
+            player.gain_card("Ghost")
 
 
 ###############################################################################

@@ -20,7 +20,7 @@ class Card_Tradingpost(Card.Card):
         num = min(2, player.hand.size())
         trash = player.plrTrashCard(num=num, prompt="Trash two cards to gain a silver")
         if len(trash) == 2:
-            player.gainCard("Silver", "hand")
+            player.gain_card("Silver", "hand")
             player.addCoin(2)
         else:
             player.output("Not enough cards trashed")

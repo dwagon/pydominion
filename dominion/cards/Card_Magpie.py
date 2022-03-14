@@ -31,7 +31,7 @@ class Card_Magpie(Card.Card):
             player.add_card(c, "deck")
             if c.isAction() or c.isVictory():
                 player.output("Revealed %s so gaining magpie" % c.name)
-                player.gainCard("Magpie")
+                player.gain_card("Magpie")
 
 
 ###############################################################################

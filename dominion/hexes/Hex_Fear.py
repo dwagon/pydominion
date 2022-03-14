@@ -43,13 +43,13 @@ class Test_Fear(unittest.TestCase):
 
     def test_empty_war(self):
         self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.discardpile.size(), 1)  # The Cursed Village
 
     def test_war(self):
         self.plr.set_hand("Estate", "Duchy", "Estate", "Duchy", "Copper")
         self.plr.test_input = ["Copper"]
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard("Copper"))
 

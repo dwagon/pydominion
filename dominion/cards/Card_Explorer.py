@@ -20,9 +20,9 @@ class Card_Explorer(Card.Card):
         prov = player.in_hand("Province")
         if prov:
             player.reveal_card(prov)
-            player.gainCard("Gold", destination="hand")
+            player.gain_card("Gold", destination="hand")
         else:
-            player.gainCard("Silver", destination="hand")
+            player.gain_card("Silver", destination="hand")
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_Explorer(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_province(self):
-        self.plr.gainCard("Province", "hand")
+        self.plr.gain_card("Province", "hand")
         self.plr.play_card(self.card)
         self.assertTrue(self.plr.in_hand("Gold"))
         # 5 + province + gold

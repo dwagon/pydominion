@@ -30,7 +30,7 @@ class Card_Baron(Card.Card):
                 player.addCoin(4)
                 return
         player.output("Gained an Estate")
-        player.gainCard("Estate")
+        player.gain_card("Estate")
 
 
 ###############################################################################

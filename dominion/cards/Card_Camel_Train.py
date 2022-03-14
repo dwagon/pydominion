@@ -45,7 +45,7 @@ class Test_Camel_Train(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_exile("Silver"))
 
     def test_gain(self):
-        self.plr.gainCard("Camel Train")
+        self.plr.gain_card("Camel Train")
         self.assertIsNotNone(self.plr.in_exile("Gold"))
 
 

@@ -29,7 +29,7 @@ class Card_Treasurehunter(Card.Card):
             % (numsilver, righty.name, numsilver)
         )
         for _ in range(numsilver):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Warrior"""
@@ -46,8 +46,8 @@ class Test_Treasurehunter(unittest.TestCase):
 
     def test_treasure_hunter(self):
         """Play a treasure_hunter"""
-        self.other.gainCard("Copper")
-        self.other.gainCard("Estate")
+        self.other.gain_card("Copper")
+        self.other.gain_card("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)

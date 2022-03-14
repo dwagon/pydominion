@@ -29,7 +29,7 @@ class Card_Squire(Card.Card):
         elif choice == "buys":
             player.addBuys(2)
         elif choice == "silver":
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
     def hook_trashThisCard(self, game, player):
         attacks = []
@@ -37,7 +37,7 @@ class Card_Squire(Card.Card):
             if cp.isAttack() and cp.purchasable:
                 attacks.append(cp)
         cards = player.cardSel(prompt="Gain an attack card", cardsrc=attacks)
-        player.gainCard(cards[0])
+        player.gain_card(cards[0])
 
 
 ###############################################################################

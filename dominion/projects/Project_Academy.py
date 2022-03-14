@@ -31,7 +31,7 @@ class Test_Academy(unittest.TestCase):
     def test_have(self):
         self.assertEqual(self.plr.getVillager(), 0)
         self.plr.assign_project("Academy")
-        self.plr.gainCard("Moat")
+        self.plr.gain_card("Moat")
         self.assertEqual(self.plr.getVillager(), 1)
 
 

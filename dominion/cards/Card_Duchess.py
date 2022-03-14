@@ -72,13 +72,13 @@ class Test_Duchess(unittest.TestCase):
 
     def test_buy_duchess(self):
         self.plr.test_input = ["Duchess"]
-        self.plr.gainCard("Duchy")
+        self.plr.gain_card("Duchy")
         self.assertIsNotNone(self.plr.in_discard("Duchess"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
 
     def test_buy_duchy(self):
         self.plr.test_input = ["No"]
-        self.plr.gainCard("Duchy")
+        self.plr.gain_card("Duchy")
         self.assertIsNone(self.plr.in_discard("Duchess"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
 

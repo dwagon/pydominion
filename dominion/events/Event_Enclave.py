@@ -15,7 +15,7 @@ class Event_Enclave(Event.Event):
         self.cost = 8
 
     def special(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
         player.exile_card("Duchy")
 
 

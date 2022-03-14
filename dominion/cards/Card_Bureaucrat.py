@@ -17,7 +17,7 @@ class Card_Bureaucrat(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.gainCard("Silver", "topdeck")
+        player.gain_card("Silver", "topdeck")
         player.output("Added silver to deck")
 
         for pl in player.attackVictims():

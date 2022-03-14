@@ -32,7 +32,7 @@ class Card_Count(Card.Card):
         )
         if ans == "copper":
             player.output("Gained a copper")
-            player.gainCard("Copper")
+            player.gain_card("Copper")
         elif ans == "putcard":
             self.putCard(game, player)
         else:
@@ -46,7 +46,7 @@ class Card_Count(Card.Card):
         )
         if ans == "duchy":
             player.output("Gained a duchy")
-            player.gainCard("Duchy")
+            player.gain_card("Duchy")
         elif ans == "trash":
             for c in player.hand[:]:
                 player.output("Trashing %s" % c.name)

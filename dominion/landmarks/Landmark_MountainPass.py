@@ -74,7 +74,7 @@ class Test_MountainPass(unittest.TestCase):
     def test_play(self):
         """Test Mountain Pass"""
         self.assertEqual(self.mp._state, "un")
-        self.plr.gainCard("Province")
+        self.plr.gain_card("Province")
         self.assertEqual(self.mp._state, "do")
         self.other.test_input = ["24"]
         self.plr.test_input = ["25"]

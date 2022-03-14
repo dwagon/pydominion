@@ -15,7 +15,7 @@ class Event_Ride(Event.Event):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse")
+        player.gain_card("Horse")
 
 
 ###############################################################################

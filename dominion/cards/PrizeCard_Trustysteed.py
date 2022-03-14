@@ -44,7 +44,7 @@ class Card_Trustysteed(Card.Card):
                 player.addCoin(2)
             elif choice == "silvers":
                 for _ in range(4):
-                    player.gainCard("Silver")
+                    player.gain_card("Silver")
 
 
 ###############################################################################

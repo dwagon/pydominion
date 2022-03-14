@@ -23,7 +23,7 @@ class Card_Tunnel(Card.Card):
             "Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)
         )
         if gain:
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################

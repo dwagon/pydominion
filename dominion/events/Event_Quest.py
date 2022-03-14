@@ -28,7 +28,7 @@ class Event_Quest(Event.Event):
             if c.name == "Curse":
                 curses += 1
         if len(discards) >= 6 or attack_flag or curses >= 2:
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################

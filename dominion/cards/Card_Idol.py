@@ -26,7 +26,7 @@ class Card_Idol(Card.Card):
         else:  # Even
             for pl in player.attackVictims():
                 pl.output("{}'s Idol cursed you".format(player.name))
-                pl.gainCard("Curse")
+                pl.gain_card("Curse")
 
 
 ###############################################################################

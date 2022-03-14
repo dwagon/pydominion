@@ -19,7 +19,7 @@ class Card_CursedGold(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gainCard("Curse")
+        player.gain_card("Curse")
 
 
 ###############################################################################

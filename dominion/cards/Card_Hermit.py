@@ -49,7 +49,7 @@ class Card_Hermit(Card.Card):
             )
             if trash:
                 player.trash_card(self)
-                player.gainCard("Madman")
+                player.gain_card("Madman")
 
 
 ###############################################################################

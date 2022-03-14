@@ -48,7 +48,7 @@ class Test_BlessedVillage(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
-        self.plr.gainCard("Blessed Village")
+        self.plr.gain_card("Blessed Village")
         self.assertEqual(self.plr.hand.size(), 5 + 1)  # 1 from boon
 
 

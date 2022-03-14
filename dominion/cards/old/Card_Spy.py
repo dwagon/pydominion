@@ -50,21 +50,21 @@ class Test_Spy(unittest.TestCase):
 
     def test_moat(self):
         self.defender.set_hand("Moat")
-        scard = self.attacker.gainCard("Spy", "hand")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["0"]
         self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Province")
         self.assertEqual(self.defender.deck[-1].name, "Gold")
 
     def test_undefended(self):
-        scard = self.attacker.gainCard("Spy", "hand")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["0", "0"]
         self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Province")
         self.assertEqual(self.defender.deck[-1].name, "Gold")
 
     def test_discards(self):
-        scard = self.attacker.gainCard("Spy", "hand")
+        scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["1", "1"]
         self.attacker.play_card(scard)
         self.assertEqual(self.attacker.deck[-1].name, "Estate")

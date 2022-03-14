@@ -20,8 +20,8 @@ class Card_Marauder(Card.Card):
     def special(self, game, player):
         for plr in player.attackVictims():
             plr.output("Gained a ruin from %s's Marauder" % player.name)
-            plr.gainCard("Ruins")
-        player.gainCard("Spoils")
+            plr.gain_card("Ruins")
+        player.gain_card("Spoils")
 
 
 ###############################################################################

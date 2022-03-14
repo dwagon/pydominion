@@ -23,7 +23,7 @@ class Way_Rat(Way.Way):
         if not t_to_disc:
             return
         player.discard_card(t_to_disc[0])
-        player.gainCard(card.name)
+        player.gain_card(card.name)
 
 
 ###############################################################################

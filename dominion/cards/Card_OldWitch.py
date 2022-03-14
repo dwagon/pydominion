@@ -22,7 +22,7 @@ class Card_OldWitch(Card.Card):
         for pl in player.attackVictims():
             player.output("{} got cursed".format(pl.name))
             pl.output("{}'s Old Witch cursed you".format(player.name))
-            pl.gainCard("Curse")
+            pl.gain_card("Curse")
             tr = pl.in_hand("Curse")
             if tr:
                 c = pl.plrTrashCard(cardsrc=[tr], prompt="You may trash a Curse")

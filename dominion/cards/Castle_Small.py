@@ -25,7 +25,7 @@ class Card_SmallCastle(CastleCard):
             prompt="Trash a Castle to gain another Castle", cardsrc=cards
         )
         if tr:
-            newcast = player.gainCard("Castles")
+            newcast = player.gain_card("Castles")
             player.output("Gained %s" % newcast.name)
 
 

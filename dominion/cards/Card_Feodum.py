@@ -27,7 +27,7 @@ class Card_Feodum(Card.Card):
     def hook_trashThisCard(self, game, player):
         """When you trash this gain 3 silvers"""
         for _ in range(3):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
 
 ###############################################################################

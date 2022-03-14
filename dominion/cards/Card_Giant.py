@@ -35,7 +35,7 @@ class Card_Giant(Card.Card):
                         % (player.name, c.name)
                     )
                     victim.add_card(c, "discard")
-                    victim.gainCard("Curse")
+                    victim.gain_card("Curse")
         else:
             player.addCoin(1)
 

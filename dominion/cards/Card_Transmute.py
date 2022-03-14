@@ -43,7 +43,7 @@ class Card_Transmute(Card.Card):
             return
         player.trash_card(o["card"])
         if o["gain"] != "Nothing":
-            player.gainCard(o["gain"])
+            player.gain_card(o["gain"])
 
 
 ###############################################################################

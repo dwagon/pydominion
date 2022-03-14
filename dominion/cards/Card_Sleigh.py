@@ -19,8 +19,8 @@ class Card_Sleigh(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse")
-        player.gainCard("Horse")
+        player.gain_card("Horse")
+        player.gain_card("Horse")
 
     def hook_gain_card(self, game, player, card):
         # Discard self if choice == hand or deck
@@ -58,7 +58,7 @@ class Test_Sleigh(unittest.TestCase):
     def test_gaincard(self):
         """Gain a card while Sleigh in hand"""
         self.plr.test_input = ["Put Estate onto your deck"]
-        self.plr.gainCard("Estate")
+        self.plr.gain_card("Estate")
         self.assertIsNotNone(self.plr.in_deck("Estate"))
         self.assertIsNotNone(self.plr.in_discard("Sleigh"))
 

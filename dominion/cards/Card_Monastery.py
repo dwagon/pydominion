@@ -36,7 +36,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_hand("Duchy")
         self.plr.add_card(self.monastery, "hand")
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.monastery)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
@@ -54,7 +54,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.set_hand("Duchy")
         self.plr.set_played("Copper")
         self.plr.add_card(self.monastery, "hand")
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.monastery)
 

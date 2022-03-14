@@ -46,7 +46,7 @@ class Test_Ghost_Town(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.gainCard("Ghost Town")
+        self.plr.gain_card("Ghost Town")
         self.assertIsNone(self.plr.in_discard("Ghost Town"))
         self.assertIsNotNone(self.plr.in_hand("Ghost Town"))
 

@@ -24,7 +24,7 @@ class Card_Swamphag(Card.Card):
     def hook_allPlayers_buyCard(self, game, player, owner, card):
         if player == owner:
             return
-        player.gainCard("Curse")
+        player.gain_card("Curse")
         player.output("Gained a curse from %s's Swamp Hag" % owner.name)
         owner.output("Cursed %s when they bought a %s" % (player.name, card.name))
 

@@ -41,7 +41,7 @@ class Card_Deathcart(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         for _ in range(2):
-            c = player.gainCard("Ruins")
+            c = player.gain_card("Ruins")
             player.output("Gained %s" % c.name)
         return {}
 

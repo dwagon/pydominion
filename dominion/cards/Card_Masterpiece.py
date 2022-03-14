@@ -25,7 +25,7 @@ class Card_Masterpiece(Card.Card):
     def hook_overpay(self, game, player, amount):
         player.output("Gained %d Silvers" % amount)
         for _ in range(amount):
-            player.gainCard("Silver")
+            player.gain_card("Silver")
 
 
 ###############################################################################

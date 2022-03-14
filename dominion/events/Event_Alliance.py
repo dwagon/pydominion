@@ -16,12 +16,12 @@ class Event_Alliance(Event.Event):
         self.cost = 10
 
     def special(self, game, player):
-        player.gainCard("Province")
-        player.gainCard("Duchy")
-        player.gainCard("Estate")
-        player.gainCard("Gold")
-        player.gainCard("Silver")
-        player.gainCard("Copper")
+        player.gain_card("Province")
+        player.gain_card("Duchy")
+        player.gain_card("Estate")
+        player.gain_card("Gold")
+        player.gain_card("Silver")
+        player.gain_card("Copper")
 
 
 ###############################################################################

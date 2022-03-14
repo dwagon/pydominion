@@ -18,7 +18,7 @@ class Card_HauntedCastle(CastleCard):
         self.name = "Haunted Castle"
 
     def hook_gain_this_card(self, game, player):
-        player.gainCard("Gold")
+        player.gain_card("Gold")
         for plr in list(game.players.values()):
             if plr == player:
                 continue
@@ -59,7 +59,7 @@ class Test_HauntedCastle(unittest.TestCase):
     def test_gain(self):
         self.vic.set_hand("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]
-        self.plr.gainCard(newcard=self.card)
+        self.plr.gain_card(newcard=self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.vic.in_deck("Silver"))
         self.assertIsNone(self.vic.in_hand("Silver"))

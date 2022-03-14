@@ -27,7 +27,7 @@ class Card_Jester(Card.Card):
             if card.isVictory():
                 plr.output("%s's Jester cursed you" % player.name)
                 player.output("Cursed %s" % plr.name)
-                plr.gainCard("Curse")
+                plr.gain_card("Curse")
                 continue
             getcard = player.plrChooseOptions(
                 "Who should get a copy of %s's %s" % (plr.name, card.name),
@@ -35,10 +35,10 @@ class Card_Jester(Card.Card):
                 ("%s gets a %s" % (plr.name, card.name), False),
             )
             if getcard:
-                player.gainCard(card.name)
+                player.gain_card(card.name)
             else:
                 plr.output("%s's Jester gave you a %s" % (player.name, card.name))
-                plr.gainCard(card.name)
+                plr.gain_card(card.name)
 
 
 ###############################################################################

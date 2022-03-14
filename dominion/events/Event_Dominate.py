@@ -14,7 +14,7 @@ class Event_Dominate(Event.Event):
         self.cost = 14
 
     def special(self, game, player):
-        c = player.gainCard("Province")
+        c = player.gain_card("Province")
         if c:
             player.add_score("Dominate", 9)
 

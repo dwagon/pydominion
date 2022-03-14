@@ -25,7 +25,7 @@ class Card_Dismantle(Card.Card):
         if cost:
             player.plrGainCard(cost=cost - 1)
             player.output("Gained a Gold")
-            player.gainCard("Gold")
+            player.gain_card("Gold")
 
 
 ###############################################################################

@@ -46,7 +46,7 @@ class Test_CursedVillage(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_gain(self):
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 
 

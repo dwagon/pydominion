@@ -68,13 +68,13 @@ class Test_Inn(unittest.TestCase):
     def test_gain(self):
         self.plr.set_discard("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
-        self.plr.gainCard("Inn")
+        self.plr.gain_card("Inn")
         self.assertIsNotNone(self.plr.in_deck("Moat"))
 
     def test_gain_self(self):
         self.plr.set_discard()
         self.plr.test_input = ["Inn", "finish"]
-        self.plr.gainCard("Inn")
+        self.plr.gain_card("Inn")
         self.assertIsNotNone(self.plr.in_deck("Inn"))
 
 

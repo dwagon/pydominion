@@ -35,7 +35,7 @@ class Card_Mine(Card.Card):
             # TODO - let user pick
             for tc in game.base_cards:
                 if game[tc].cost == val + 3:
-                    c = player.gainCard(tc, "hand")
+                    c = player.gain_card(tc, "hand")
                     player.output("Converted to %s" % c.name)
                     player.trash_card(o["card"])
                     break

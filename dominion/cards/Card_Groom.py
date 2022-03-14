@@ -23,9 +23,9 @@ class Card_Groom(Card.Card):
     def special(self, game, player):
         card = player.plrGainCard(4)
         if card.isAction():
-            player.gainCard("Horse")
+            player.gain_card("Horse")
         if card.isTreasure():
-            player.gainCard("Silver")
+            player.gain_card("Silver")
         if card.isVictory():
             player.pickup_card()
             player.addActions(1)

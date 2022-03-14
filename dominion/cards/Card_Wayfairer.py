@@ -18,7 +18,7 @@ class Card_Wayfarer(Card.Card):
         self.cost = 6
 
     def special(self, game, player):
-        player.gainCard("Silver")
+        player.gain_card("Silver")
         player.output("Gained a Silver")
 
     def hook_this_card_cost(self, game, player):
@@ -48,7 +48,7 @@ class Test_Wayfarer(unittest.TestCase):
         """Buy a wayfairer"""
         cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)
-        self.plr.gainCard("Estate")
+        self.plr.gain_card("Estate")
         cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 2)
 

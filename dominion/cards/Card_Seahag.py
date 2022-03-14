@@ -22,7 +22,7 @@ class Card_Seahag(Card.Card):
             c = pl.next_card()
             pl.discard_card(c)
             pl.output("Discarded your %s" % c.name)
-            pl.gainCard("Curse", destination="topdeck")
+            pl.gain_card("Curse", destination="topdeck")
             pl.output("Got cursed by %s's Sea Hag" % player.name)
             player.output("%s got cursed" % pl.name)
 

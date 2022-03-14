@@ -33,11 +33,11 @@ class Test_Envy(unittest.TestCase):
 
     def test_preexisting(self):
         self.plr.assign_state("Deluded")
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Deluded"))
 
     def test_normal(self):
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Envious"))
 
 

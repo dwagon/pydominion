@@ -16,7 +16,7 @@ class Hex_Plague(Hex.Hex):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        player.gainCard("Curse", destination="hand")
+        player.gain_card("Curse", destination="hand")
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Test_Plague(unittest.TestCase):
 
     def test_plague(self):
         self.plr.set_deck("Duchy", "Cursed Village", "Gold")
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.in_hand("Curse"))
 
 

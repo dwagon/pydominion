@@ -28,11 +28,11 @@ class Card_IGG(Card.Card):
             "Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True)
         )
         if ans:
-            player.gainCard("Copper", destination="hand")
+            player.gain_card("Copper", destination="hand")
 
     def hook_gain_this_card(self, game, player):
         for plr in player.attackVictims():
-            plr.gainCard("Curse")
+            plr.gain_card("Curse")
             plr.output("Cursed because %s gained an Ill-Gotten Gains" % player.name)
         return {}
 
@@ -57,7 +57,7 @@ class Test_IGG(unittest.TestCase):
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""
         self.plr.set_hand("Estate")
-        self.plr.gainCard("Ill-Gotten Gains")
+        self.plr.gain_card("Ill-Gotten Gains")
         self.assertIsNotNone(self.vic.in_discard("Curse"))
 
 

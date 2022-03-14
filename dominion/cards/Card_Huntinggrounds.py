@@ -21,10 +21,10 @@ class Card_Huntinggrounds(Card.Card):
             "What to gain?", ("Gain a duchy", "duchy"), ("Gain 3 Estates", "estates")
         )
         if choice == "duchy":
-            player.gainCard("Duchy")
+            player.gain_card("Duchy")
         if choice == "estates":
             for _ in range(3):
-                player.gainCard("Estate")
+                player.gain_card("Estate")
 
 
 ###############################################################################

@@ -21,7 +21,7 @@ class Card_Banditcamp(Card.Card):
     def special(self, game, player):
         """Gain a spoils"""
         player.output("Gained a Spoils")
-        player.gainCard("Spoils")
+        player.gain_card("Spoils")
 
 
 ###############################################################################

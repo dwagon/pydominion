@@ -18,11 +18,11 @@ class Card_CrumblingCastle(CastleCard):
 
     def hook_gain_this_card(self, game, player):
         player.add_score("Crumbling Castle", 1)
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
     def hook_trashThisCard(self, game, player):
         player.add_score("Crumbling Castle", 1)
-        player.gainCard("Silver")
+        player.gain_card("Silver")
 
 
 ###############################################################################

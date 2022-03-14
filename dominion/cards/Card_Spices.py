@@ -43,9 +43,9 @@ class Test_Spices(unittest.TestCase):
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getCoffer(), 0)
 
-    def test_gainCard(self):
+    def test_gain_card(self):
         self.plr.setCoffer(0)
-        self.plr.gainCard("Spices")
+        self.plr.gain_card("Spices")
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.getCoffer(), 2)

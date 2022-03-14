@@ -20,7 +20,7 @@ class Card_Tormentor(Card.Card):
 
     def special(self, game, player):
         if player.played.size() == 1:  # Include this card
-            player.gainCard("Imp")
+            player.gain_card("Imp")
             player.output("Gained an Imp")
         else:
             for pl in player.attackVictims():

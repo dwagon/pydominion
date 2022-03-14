@@ -19,7 +19,7 @@ class Card_Supplies(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        player.gainCard("Horse", "topdeck")
+        player.gain_card("Horse", "topdeck")
 
 
 ###############################################################################

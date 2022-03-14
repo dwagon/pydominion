@@ -35,9 +35,9 @@ class Test_Misery(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_normal(self):
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Miserable"))
-        self.plr.gainCard("Cursed Village")
+        self.plr.gain_card("Cursed Village")
         self.assertTrue(self.plr.has_state("Twice Miserable"))
 
 

@@ -18,7 +18,7 @@ class Card_Bagofgold(Card.Card):
         self.actions = 1
 
     def special(self, game, player):
-        player.gainCard("Gold", "topdeck")
+        player.gain_card("Gold", "topdeck")
 
 
 ###############################################################################

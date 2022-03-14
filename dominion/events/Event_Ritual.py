@@ -15,7 +15,7 @@ class Event_Ritual(Event.Event):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        card = player.gainCard("Curse")
+        card = player.gain_card("Curse")
         if card:
             tc = player.plrTrashCard(prompt="Trash a card, +1 VP per coin it costs")
             if tc:

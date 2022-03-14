@@ -84,7 +84,7 @@ class Test_PirateShip(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Pirate Ship"].remove()
-        self.plr.gainCard(newcard=self.card, destination="hand")
+        self.plr.gain_card(newcard=self.card, destination="hand")
 
     def test_play_attack(self):
         tsize = self.g.trashSize()

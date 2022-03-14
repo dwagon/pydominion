@@ -33,7 +33,7 @@ class Test_Cemetery(unittest.TestCase):
         """Gain a Cemetery"""
         self.plr.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
-        self.plr.gainCard("Cemetery")
+        self.plr.gain_card("Cemetery")
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNone(self.g.in_trash("Duchy"))

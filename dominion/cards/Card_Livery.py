@@ -22,7 +22,7 @@ class Card_Livery(Card.Card):
         for card in player.stats["gained"]:
             if card.cost > 4:
                 player.output("Gained a Horse from Livery")
-                player.gainCard("Horse")
+                player.gain_card("Horse")
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Test_Livery(unittest.TestCase):
     def test_playcard_cost0(self):
         """Play a livery and gain something worth 0"""
         self.plr.play_card(self.card)
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
         self.assertIsNone(self.plr.in_discard("Horse"))
@@ -45,7 +45,7 @@ class Test_Livery(unittest.TestCase):
     def test_playcard_cost6(self):
         """Play a livery and gain something worth 6"""
         self.plr.play_card(self.card)
-        self.plr.gainCard("Province")
+        self.plr.gain_card("Province")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
         self.assertIsNotNone(self.plr.in_discard("Horse"))

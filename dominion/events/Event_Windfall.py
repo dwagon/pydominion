@@ -16,7 +16,7 @@ class Event_Windfall(Event.Event):
     def special(self, game, player):
         if player.deck.is_empty() and player.discardpile.is_empty():
             for _ in range(3):
-                player.gainCard("Gold")
+                player.gain_card("Gold")
 
 
 ###############################################################################

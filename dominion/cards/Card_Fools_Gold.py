@@ -37,7 +37,7 @@ class Card_Fools_Gold(Card.Card):
         )
         if trash:
             owner.trash_card(self)
-            owner.gainCard("Gold", destination="topdeck")
+            owner.gain_card("Gold", destination="topdeck")
 
 
 ###############################################################################
@@ -63,14 +63,14 @@ class Test_Fools_Gold(unittest.TestCase):
     def test_gain_province(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash"]
-        self.other.gainCard("Province")
+        self.other.gain_card("Province")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Fool's Gold"))
 
     def test_self_gain_province(self):
         tsize = self.g.trashSize()
-        self.plr.gainCard("Province")
+        self.plr.gain_card("Province")
         self.assertNotEqual(self.plr.deck[-1].name, "Gold")
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertIsNone(self.g.in_trash("Fool's Gold"))

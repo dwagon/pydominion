@@ -36,11 +36,11 @@ class Test_Labyrinth(unittest.TestCase):
     def test_play(self):
         """Use Labyrinth"""
         self.assertNotIn("Labyrinth", self.plr.get_score_details())
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.assertNotIn("Labyrinth", self.plr.get_score_details())
-        self.plr.gainCard("Estate")
+        self.plr.gain_card("Estate")
         self.assertEqual(self.plr.get_score_details()["Labyrinth"], 2)
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.assertEqual(self.plr.get_score_details()["Labyrinth"], 2)
 
 

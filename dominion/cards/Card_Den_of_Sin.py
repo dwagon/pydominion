@@ -36,7 +36,7 @@ class Test_Den_of_Sin(unittest.TestCase):
         self.card = self.g["Den of Sin"].remove()
 
     def test_gain(self):
-        self.plr.gainCard("Den of Sin")
+        self.plr.gain_card("Den of Sin")
         self.assertIsNotNone(self.plr.in_hand("Den of Sin"))
 
     def test_duration(self):

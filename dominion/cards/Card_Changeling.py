@@ -41,7 +41,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         o = player.userInput(options, "Trash Changeling to gain a card")
         if o["card"]:
             player.trash_card(self)
-            player.gainCard(o["card"].name)
+            player.gain_card(o["card"].name)
 
 
 ###############################################################################
@@ -69,12 +69,12 @@ class Test_Changeling(unittest.TestCase):
 
     def test_gain_keep(self):
         self.plr.test_input = ["Keep Silver"]
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_gain_swap(self):
         self.plr.test_input = ["Swap Silver"]
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Changeling"))
 

@@ -26,7 +26,7 @@ class Card_Black_Cat(Card.Card):
         if card.isVictory():
             for plr in owner.attackVictims():
                 plr.output("{}'s Black Cat Cursed you".format(owner.name))
-                plr.gainCard("Curse", callhook=False)
+                plr.gain_card("Curse", callhook=False)
 
 
 ###############################################################################
@@ -40,7 +40,7 @@ class Test_Black_Cat(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.oth.gainCard("Estate")
+        self.oth.gain_card("Estate")
         self.g.print_state()
         self.assertIsNotNone(self.oth.in_discard("Curse"))
 

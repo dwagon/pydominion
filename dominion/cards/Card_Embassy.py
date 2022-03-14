@@ -26,7 +26,7 @@ class Card_Embassy(Card.Card):
                 plr.output(
                     "Gained a silver from %s's purchase of Embassy" % player.name
                 )
-                plr.gainCard("Silver")
+                plr.gain_card("Silver")
         return {}
 
 
@@ -52,7 +52,7 @@ class Test_Embassy(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5 + 5 - 3)
 
     def test_gain(self):
-        self.plr.gainCard("Embassy")
+        self.plr.gain_card("Embassy")
         self.assertEqual(self.other.discardpile[-1].name, "Silver")
 
 

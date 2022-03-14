@@ -40,7 +40,7 @@ class Test_NomadCamp(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_gain(self):
-        self.plr.gainCard("Nomad Camp")
+        self.plr.gain_card("Nomad Camp")
         self.assertEqual(self.plr.deck[-1].name, "Nomad Camp")
 
 

@@ -29,7 +29,7 @@ class Card_Noble_Brigand(Card.Card):
             cards = self.getTreasureCards(victim, player)
             if not cards:
                 victim.output("%s's Noble Brigand gave you a copper" % player.name)
-                victim.gainCard("Copper")
+                victim.gain_card("Copper")
                 return
             ans = None
             choices = []

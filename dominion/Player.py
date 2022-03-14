@@ -148,7 +148,7 @@ class Player:
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
         dstcp = self._find_cardpile(dst)
-        newcard = self.gainCard(cardpile=dstcp, destination=destination, callhook=False)
+        newcard = self.gain_card(cardpile=dstcp, destination=destination, callhook=False)
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add()
@@ -1285,7 +1285,7 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
-    def gainCard(
+    def gain_card(
         self, cardpile=None, destination="discard", newcard=None, callhook=True
     ):
         """Add a new card to the players set of cards from a cardpile"""
@@ -1391,10 +1391,10 @@ class Player:
         self.coin -= cost
         if card.overpay and self.coin:
             self.overpay(card)
-        newcard = self.gainCard(card)
+        newcard = self.gain_card(card)
         if card.embargo_level:
             for _ in range(card.embargo_level):
-                self.gainCard("Curse")
+                self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(newcard)
         self.output("Bought %s for %d coin" % (newcard.name, cost))
@@ -1793,7 +1793,7 @@ class Player:
         )
         if cards:
             cardpile = cards[0]
-            newcard = recipient.gainCard(cardpile, destination)
+            newcard = recipient.gain_card(cardpile, destination)
             recipient.output("Got a %s" % newcard.name)
             return newcard
         return None

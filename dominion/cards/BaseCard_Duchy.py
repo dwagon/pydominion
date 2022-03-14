@@ -29,7 +29,7 @@ class Card_Duchy(Card.Card):
                 "Gain a Duchess as well?", ("No thanks", False), ("Gain Duchess", True)
             )
             if duchess:
-                player.gainCard("Duchess")
+                player.gain_card("Duchess")
         return {}
 
 

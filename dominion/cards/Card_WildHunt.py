@@ -30,7 +30,7 @@ class Card_WildHunt(Card.Card):
             player.pickup_cards(3)
             game["Wild Hunt"].addVP()
         else:
-            player.gainCard("Estate")
+            player.gain_card("Estate")
             score = game["Wild Hunt"].drainVP()
             player.output("Gaining %d VP from Wild Hunt" % score)
             player.add_score("Wild Hunt", score)

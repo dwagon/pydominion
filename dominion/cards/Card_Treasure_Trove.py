@@ -18,8 +18,8 @@ class Card_Treasure_Trove(Card.Card):
 
     def special(self, game, player):
         """When you play this, gain a Gold and a Copper"""
-        player.gainCard("Copper")
-        player.gainCard("Gold")
+        player.gain_card("Copper")
+        player.gain_card("Gold")
         player.output("Gained a Copper and a Gold")
 
 

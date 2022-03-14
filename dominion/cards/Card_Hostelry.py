@@ -37,7 +37,7 @@ class Card_Hostelry(Card.Card):
         for crd in discards:
             player.discard_card(crd)
             player.reveal_card(crd)
-            player.gainCard("Horse")
+            player.gain_card("Horse")
 
 
 ###############################################################################
@@ -59,7 +59,7 @@ class Test_Hostelry(unittest.TestCase):
         """Gain the card"""
         self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.test_input = ["Copper", "Silver", "Finish"]
-        self.plr.gainCard("Hostelry")
+        self.plr.gain_card("Hostelry")
         self.assertIsNotNone(self.plr.in_discard("Horse"))
         self.assertIsNone(self.plr.in_hand("Silver"))
 

@@ -16,7 +16,7 @@ class Event_Wedding(Event.Event):
 
     def special(self, game, player):
         player.add_score("Wedding", 1)
-        player.gainCard("Gold")
+        player.gain_card("Gold")
 
 
 ###############################################################################

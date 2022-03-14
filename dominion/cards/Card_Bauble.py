@@ -94,7 +94,7 @@ class Test_Bauble(unittest.TestCase):
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "deck"]
         self.plr.play_card(self.card)
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertFalse(self.plr.in_discard("Gold"))
 
@@ -102,7 +102,7 @@ class Test_Bauble(unittest.TestCase):
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "discard"]
         self.plr.play_card(self.card)
-        self.plr.gainCard("Gold")
+        self.plr.gain_card("Gold")
         self.assertNotEqual(self.plr.deck[-1].name, "Gold")
         self.assertTrue(self.plr.in_discard("Gold"))
 

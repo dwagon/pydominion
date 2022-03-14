@@ -47,7 +47,7 @@ class Test_Throneroom(unittest.TestCase):
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
         self.plr.set_hand("Copper", "Mine")
-        card = self.plr.gainCard("Throne Room", "hand")
+        card = self.plr.gain_card("Throne Room", "hand")
         self.plr.test_input = ["1", "1", "1"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.hand[0].name, "Gold")
@@ -58,13 +58,13 @@ class Test_Throneroom(unittest.TestCase):
 
     def test_donothing(self):
         self.plr.set_hand("Copper", "Mine")
-        card = self.plr.gainCard("Throne Room", "hand")
+        card = self.plr.gain_card("Throne Room", "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(card)
 
     def test_noaction(self):
         self.plr.set_hand("Copper", "Copper")
-        card = self.plr.gainCard("Throne Room", "hand")
+        card = self.plr.gain_card("Throne Room", "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.test_input, ["0"])

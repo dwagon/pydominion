@@ -47,7 +47,7 @@ class Test_Bordervillage(unittest.TestCase):
 
     def test_gain(self):
         self.plr.test_input = ["get estate"]
-        self.plr.gainCard("Border Village")
+        self.plr.gain_card("Border Village")
         self.assertEqual(self.plr.discardpile.size(), 2)
 
 

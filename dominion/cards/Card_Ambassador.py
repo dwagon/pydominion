@@ -43,7 +43,7 @@ class Card_Ambassador(Card.Card):
             game[cardname].add()
         for plr in player.attackVictims():
             plr.output("Gained a %s from %s's Ambassador" % (cardname, player.name))
-            plr.gainCard(cardname)
+            plr.gain_card(cardname)
 
 
 ###############################################################################

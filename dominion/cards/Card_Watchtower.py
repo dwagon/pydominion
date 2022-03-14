@@ -60,7 +60,7 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.set_hand("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["nothing"]
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.hand.size(), 2)
@@ -72,7 +72,7 @@ class Test_Watchtower(unittest.TestCase):
             self.plr.test_input = ["trash"]
             self.plr.set_hand("Gold")
             self.plr.add_card(self.card, "hand")
-            self.plr.gainCard("Copper")
+            self.plr.gain_card("Copper")
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, "Copper")
             self.assertEqual(self.plr.hand.size(), 2)
@@ -87,7 +87,7 @@ class Test_Watchtower(unittest.TestCase):
         self.plr.test_input = ["top"]
         self.plr.set_hand("Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.gainCard("Silver")
+        self.plr.gain_card("Silver")
         try:
             self.assertEqual(self.g.trashSize(), tsize)
             self.assertEqual(self.plr.hand.size(), 2)

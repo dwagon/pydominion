@@ -19,7 +19,7 @@ class Event_Stampede(Event.Event):
     def special(self, game, player):
         if player.played.size() <= 5:
             for _ in range(5):
-                player.gainCard("Horse")
+                player.gain_card("Horse")
         else:
             player.output("You have played too many cards this turn")
 
