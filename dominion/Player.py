@@ -743,7 +743,7 @@ class Player:
     def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
-        buyable = self.cardsUnder(coin=self.coin, potions=self.potions)
+        buyable = self.cards_under(coin=self.coin, potions=self.potions)
         for card in all_cards:
             if not self.hook_allowed_to_buy(card):
                 if card in buyable:
@@ -1649,7 +1649,7 @@ class Player:
         return affordable
 
     ###########################################################################
-    def cardsUnder(self, coin, potions=0, types=None):
+    def cards_under(self, coin, potions=0, types=None):
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
@@ -1774,7 +1774,7 @@ class Player:
         if modifier == "less":
             if cost:
                 prompt += "costing up to %d" % cost
-            buyable = self.cardsUnder(cost, types=types)
+            buyable = self.cards_under(cost, types=types)
         elif modifier == "equal":
             if cost:
                 prompt += "costing exactly %d" % cost
