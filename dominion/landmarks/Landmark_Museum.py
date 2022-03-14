@@ -34,7 +34,7 @@ class Test_Museum(unittest.TestCase):
         self.plr.set_discard("Gold", "Silver", "Copper")
         self.plr.set_deck("Gold", "Moat", "Moat")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Museum"], 10)
+        self.assertEqual(self.plr.get_score_details()["Museum"], 10)
 
 
 ###############################################################################

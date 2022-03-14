@@ -1017,7 +1017,7 @@ class Player:
         return x
 
     ###########################################################################
-    def getScoreDetails(self, verbose=False):
+    def get_score_details(self, verbose=False):
         scr = {}
         for c in self.all_cards():
             scr[c.name] = scr.get(c.name, 0) + c.victory
@@ -1029,7 +1029,7 @@ class Player:
 
     ###########################################################################
     def getScore(self, verbose=False):
-        scr = self.getScoreDetails(verbose)
+        scr = self.get_score_details(verbose)
         vp = sum(scr.values())
         if verbose:
             self.game.output("%s: %s" % (self.name, scr))

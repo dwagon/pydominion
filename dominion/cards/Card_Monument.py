@@ -32,7 +32,7 @@ class Test_Monument(unittest.TestCase):
     def test_play(self):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Monument"], 1)
 
 

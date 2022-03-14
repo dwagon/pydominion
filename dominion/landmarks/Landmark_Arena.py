@@ -52,7 +52,7 @@ class Test_Arena(unittest.TestCase):
         self.plr.set_hand("Moat")
         self.plr.test_input = ["Discard Moat", "End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getScoreDetails()["Arena"], 2)
+        self.assertEqual(self.plr.get_score_details()["Arena"], 2)
 
 
 ###############################################################################

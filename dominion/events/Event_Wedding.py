@@ -33,7 +33,7 @@ class Test_Wedding(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.debt, 3)
-        self.assertEqual(self.plr.getScoreDetails()["Wedding"], 1)
+        self.assertEqual(self.plr.get_score_details()["Wedding"], 1)
 
 
 ###############################################################################

@@ -28,7 +28,7 @@ class Test_Tomb(unittest.TestCase):
         """Test Tomb"""
         cu = self.plr.in_hand("Copper")
         self.plr.trash_card(cu)
-        self.assertEqual(self.plr.getScoreDetails()["Tomb"], 1)
+        self.assertEqual(self.plr.get_score_details()["Tomb"], 1)
 
 
 ###############################################################################

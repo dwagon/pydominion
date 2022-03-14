@@ -31,7 +31,7 @@ class Test_Plunder(unittest.TestCase):
         """Play a rebuild"""
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
-        self.assertEqual(self.plr.getScoreDetails()["Plunder"], 1)
+        self.assertEqual(self.plr.get_score_details()["Plunder"], 1)
 
 
 ###############################################################################

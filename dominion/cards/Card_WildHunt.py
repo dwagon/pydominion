@@ -59,7 +59,7 @@ class Test_WildHunt(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNotNone(self.plr.in_discard("Estate"))
-        self.assertEqual(self.plr.getScoreDetails()["Wild Hunt"], 3)
+        self.assertEqual(self.plr.get_score_details()["Wild Hunt"], 3)
 
 
 ###############################################################################

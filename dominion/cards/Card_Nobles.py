@@ -52,7 +52,7 @@ class Test_Nobles(unittest.TestCase):
 
     def test_score(self):
         """Score the nobles"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Nobles"], 2)
 
 

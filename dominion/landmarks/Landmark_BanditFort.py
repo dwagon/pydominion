@@ -31,7 +31,7 @@ class Test_BanditFort(unittest.TestCase):
         """Use Bandit Fort"""
         self.plr.set_hand("Gold", "Silver")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Bandit Fort"], -4)
+        self.assertEqual(self.plr.get_score_details()["Bandit Fort"], -4)
 
 
 ###############################################################################

@@ -36,14 +36,14 @@ class Test_Silkroad(unittest.TestCase):
         self.plr.set_hand("Silk Road")
         self.plr.set_deck("Copper")
         self.plr.set_discard("Estate", "Estate", "Estate", "Estate")
-        self.assertEqual(self.plr.getScoreDetails()["Silk Road"], 1)
+        self.assertEqual(self.plr.get_score_details()["Silk Road"], 1)
 
     def test_scoreTwo(self):
         """Score for having two silk roads worth two each"""
         self.plr.set_hand("Silk Road", "Estate")
         self.plr.set_deck("Estate", "Estate", "Silk Road")
         self.plr.set_discard("Estate", "Estate", "Estate", "Estate", "Estate")
-        self.assertEqual(self.plr.getScoreDetails()["Silk Road"], 2 + 2)
+        self.assertEqual(self.plr.get_score_details()["Silk Road"], 2 + 2)
 
 
 ###############################################################################

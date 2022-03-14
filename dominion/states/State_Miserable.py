@@ -25,7 +25,7 @@ class Test_Miserable(unittest.TestCase):
 
     def test_have(self):
         self.plr.assign_state("Miserable")
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Miserable"], -2)
 
 

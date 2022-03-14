@@ -64,7 +64,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy"]
         self.plr.playCard(self.card)
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Sacrifice"], 2)
 
 

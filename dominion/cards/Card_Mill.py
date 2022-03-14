@@ -41,7 +41,7 @@ class Test_Mill(unittest.TestCase):
         self.plr.playCard(self.card)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getScoreDetails()["Mill"], 1)
+        self.assertEqual(self.plr.get_score_details()["Mill"], 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
     def test_discard(self):

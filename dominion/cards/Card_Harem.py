@@ -38,7 +38,7 @@ class Test_Harem(unittest.TestCase):
 
     def test_score(self):
         """Score the harem"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Harem"], 2)
 
 

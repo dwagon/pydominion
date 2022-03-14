@@ -62,7 +62,7 @@ class Test_Island(unittest.TestCase):
         self.plr.gameOver()
         self.assertIsNotNone(self.plr.in_discard("Island"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
         self.assertEqual(score["Province"], 6)
 
@@ -77,7 +77,7 @@ class Test_Island(unittest.TestCase):
         self.assertEqual(self.plr.secret_count, 1)
         self.plr.gameOver()
         self.assertIsNotNone(self.plr.in_discard("Island"))
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
 
 

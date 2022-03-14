@@ -43,7 +43,7 @@ class Test_HumbleCastle(unittest.TestCase):
 
     def test_score(self):
         self.plr.add_card(self.card, "discard")
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Humble Castle"], 1)
 
 

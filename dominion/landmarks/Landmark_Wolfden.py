@@ -50,7 +50,7 @@ class Test_WolfDen(unittest.TestCase):
         self.plr.set_discard("Gold", "Silver")
         self.plr.gameOver()
         try:
-            self.assertEqual(self.plr.getScoreDetails()["Wolf Den"], -6)
+            self.assertEqual(self.plr.get_score_details()["Wolf Den"], -6)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

@@ -35,7 +35,7 @@ class Test_Colony(unittest.TestCase):
 
     def test_score(self):
         """Score a colony"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Colony"], 10)
 
 

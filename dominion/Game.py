@@ -773,7 +773,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
             print("  %s's messages: %s" % (plr.name, plr.messages))
             print(
                 "  %s's score: %s %s"
-                % (plr.name, plr.getScore(), plr.getScoreDetails())
+                % (plr.name, plr.getScore(), plr.get_score_details())
             )
             print("  %s's tokens: %s" % (plr.name, plr.tokens))
             print(

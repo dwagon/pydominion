@@ -57,7 +57,7 @@ class Test_Temple(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper", "Silver", "finish"]
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Temple"], 1)
+        self.assertEqual(self.plr.get_score_details()["Temple"], 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_gain(self):
@@ -65,7 +65,7 @@ class Test_Temple(unittest.TestCase):
         self.g["Temple"].addVP(5)
         self.plr.setCoin(4)
         self.plr.buyCard(self.g["Temple"])
-        self.assertEqual(self.plr.getScoreDetails()["Temple"], 5)
+        self.assertEqual(self.plr.get_score_details()["Temple"], 5)
 
 
 ###############################################################################

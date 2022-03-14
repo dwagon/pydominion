@@ -61,7 +61,7 @@ class Test_Keep(unittest.TestCase):
         self.plr.set_deck("Silver")
         self.plr.gameOver()
         try:
-            self.assertEqual(self.plr.getScoreDetails()["Keep"], 5)
+            self.assertEqual(self.plr.get_score_details()["Keep"], 5)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

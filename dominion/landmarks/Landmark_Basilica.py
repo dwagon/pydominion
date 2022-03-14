@@ -42,7 +42,7 @@ class Test_Basilica(unittest.TestCase):
         """Use Basilica"""
         self.plr.coin = 4
         self.plr.buyCard(self.g["Copper"])
-        self.assertEqual(self.plr.getScoreDetails()["Basilica"], 2)
+        self.assertEqual(self.plr.get_score_details()["Basilica"], 2)
 
 
 ###############################################################################

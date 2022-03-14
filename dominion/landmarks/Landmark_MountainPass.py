@@ -81,8 +81,8 @@ class Test_MountainPass(unittest.TestCase):
         self.plr.end_turn()
         self.assertEqual(self.plr.debt, 25)
         self.assertEqual(self.other.debt, 0)
-        self.assertEqual(self.plr.getScoreDetails()["Mountain Pass"], 8)
-        self.assertNotIn("Mountain Pass", self.other.getScoreDetails())
+        self.assertEqual(self.plr.get_score_details()["Mountain Pass"], 8)
+        self.assertNotIn("Mountain Pass", self.other.get_score_details())
         self.assertEqual(self.mp._state, "done")
 
 

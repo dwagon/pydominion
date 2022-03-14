@@ -40,7 +40,7 @@ class Test_Orchard(unittest.TestCase):
         self.plr.set_deck("Moat", "Moat", "Copper", "Duchy")
         self.plr.set_hand("Moat", "Militia", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Orchard"], 4)
+        self.assertEqual(self.plr.get_score_details()["Orchard"], 4)
 
 
 ###############################################################################

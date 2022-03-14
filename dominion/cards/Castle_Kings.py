@@ -33,7 +33,7 @@ class Test_KingsCastle(unittest.TestCase):
             if self.card.name == "King's Castle":  # One before Kings
                 break
         self.plr.add_card(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["King's Castle"], 2)
+        self.assertEqual(self.plr.get_score_details()["King's Castle"], 2)
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Test_Cemetery(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNone(self.g.in_trash("Duchy"))
-        self.assertEqual(self.plr.getScoreDetails()["Cemetery"], 2)
+        self.assertEqual(self.plr.get_score_details()["Cemetery"], 2)
 
 
 ###############################################################################

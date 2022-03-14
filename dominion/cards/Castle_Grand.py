@@ -46,7 +46,7 @@ class Test_GrandCastle(unittest.TestCase):
             if self.card.name == "Grand Castle":
                 break
         self.plr.add_card(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 5)
+        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
 
     def test_gain(self):
         """Gain Grand Castle"""
@@ -56,7 +56,7 @@ class Test_GrandCastle(unittest.TestCase):
             if self.card.name == "Sprawling Castle":  # One before Grand
                 break
         self.plr.gainCard("Castles")
-        self.assertEqual(self.plr.getScoreDetails()["Grand Castle"], 2)
+        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)
 
 
 ###############################################################################

@@ -38,7 +38,7 @@ class Test_Baths(unittest.TestCase):
         """Use Baths"""
         self.plr.coin = 4
         self.plr.end_turn()
-        self.assertEqual(self.plr.getScoreDetails()["Baths"], 2)
+        self.assertEqual(self.plr.get_score_details()["Baths"], 2)
 
 
 ###############################################################################

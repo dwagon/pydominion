@@ -54,7 +54,7 @@ class Test_HauntedCastle(unittest.TestCase):
         """Play a castle"""
         self.plr.add_card(self.card, "hand")
         self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getScoreDetails()["Haunted Castle"], 2)
+        self.assertEqual(self.plr.get_score_details()["Haunted Castle"], 2)
 
     def test_gain(self):
         self.vic.set_hand("Copper", "Silver", "Gold", "Estate", "Province")

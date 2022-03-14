@@ -43,7 +43,7 @@ class Test_Tunnel(unittest.TestCase):
 
     def test_score(self):
         """Score from a Tunnel"""
-        sc = self.plr.getScoreDetails()
+        sc = self.plr.get_score_details()
         self.assertEqual(sc["Tunnel"], 2)
 
 

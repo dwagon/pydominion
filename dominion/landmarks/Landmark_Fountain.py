@@ -31,7 +31,7 @@ class Test_Fountain(unittest.TestCase):
         self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
         self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Duchy")
         self.plr.gameOver()
-        self.assertEqual(self.plr.getScoreDetails()["Fountain"], 15)
+        self.assertEqual(self.plr.get_score_details()["Fountain"], 15)
 
 
 ###############################################################################

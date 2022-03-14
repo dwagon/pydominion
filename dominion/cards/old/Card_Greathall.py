@@ -38,7 +38,7 @@ class Test_Greathall(unittest.TestCase):
 
     def test_score(self):
         """Have a victory point just for existing"""
-        score = self.plr.getScoreDetails()
+        score = self.plr.get_score_details()
         self.assertEqual(score["Great Hall"], 1)
 
 

@@ -45,7 +45,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             if self.card.name == "Sprawling Castle":
                 break
         self.plr.add_card(self.card, "hand")
-        self.assertEqual(self.plr.getScoreDetails()["Sprawling Castle"], 4)
+        self.assertEqual(self.plr.get_score_details()["Sprawling Castle"], 4)
 
     def test_gain_duchy(self):
         """Gain duchy through Sprawling Castle"""
