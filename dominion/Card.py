@@ -362,7 +362,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         pass  # pragma: no cover
 
     ##########################################################################

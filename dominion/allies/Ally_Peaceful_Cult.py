@@ -14,7 +14,7 @@ class Ally_Peaceful_Cult(Ally.Ally):
             any number of Favors to trash that many cards from your hand."""
         self.name = "Peaceful Cult"
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         if not player.getFavor():
             return
         player.output("Use Peaceful Cult to trash a card per favor")

@@ -13,7 +13,7 @@ class State_Deluded(State.State):
         self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         player.remove_state(self)
 
     def hook_cardCost(self, game, player, card):

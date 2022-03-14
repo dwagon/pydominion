@@ -20,7 +20,7 @@ class Landmark_Arena(Landmark.Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         if self._vp <= 0:
             return
         actions = []

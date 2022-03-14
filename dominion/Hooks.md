@@ -50,7 +50,7 @@ hook_allplayers_gain_card
 ---------------
 If any player gains a card call this for any card in everyone's hand
 
-hook_preBuy
+hook_pre_buy
 -----------
 Fires off before the buy phase
 

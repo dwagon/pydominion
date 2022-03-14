@@ -874,7 +874,7 @@ class Player:
     def buy_phase(self):
         self.output("************ Buy Phase ************")
         self.phase = "buy"
-        self.hook_preBuy()
+        self.hook_pre_buy()
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
@@ -1036,10 +1036,10 @@ class Player:
         return vp
 
     ###########################################################################
-    def hook_preBuy(self):
+    def hook_pre_buy(self):
         """Hook that fires off before the buy phase"""
         for card in self.relevant_cards():
-            card.hook_preBuy(game=self.game, player=self)
+            card.hook_pre_buy(game=self.game, player=self)
 
     ###########################################################################
     def hook_allowedToBuy(self, card):

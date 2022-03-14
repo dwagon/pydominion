@@ -13,7 +13,7 @@ class Artifact_TreasureChest(Artifact.Artifact):
         self.desc = "At the start of your Buy phase, gain a Gold."
         self.name = "Treasure Chest"
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         player.gainCard("Gold")
         player.output("Gained a Gold from Treasure Chest")
 

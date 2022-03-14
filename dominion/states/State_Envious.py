@@ -13,7 +13,7 @@ class State_Envious(State.State):
         self.desc = "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
         self.name = "Envious"
 
-    def hook_preBuy(self, game, player):
+    def hook_pre_buy(self, game, player):
         player.remove_state(self)
 
     def hook_spendValue(self, game, player, card):
