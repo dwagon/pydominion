@@ -33,7 +33,7 @@ class Test_Exploration(unittest.TestCase):
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_coffers(), numc + 1)
-        self.assertEqual(self.plr.getVillager(), 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
 
 
 ###############################################################################

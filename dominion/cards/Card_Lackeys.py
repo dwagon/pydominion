@@ -38,11 +38,11 @@ class Test_Lackeys(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertLessEqual(self.plr.getVillager(), 0)
+        self.assertLessEqual(self.plr.get_villagers(), 0)
 
     def test_gain_card(self):
         self.plr.gain_card("Lackeys")
-        self.assertLessEqual(self.plr.getVillager(), 2)
+        self.assertLessEqual(self.plr.get_villagers(), 2)
 
 
 ###############################################################################

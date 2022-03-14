@@ -14,7 +14,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
         self.name = "Fellowship of Scribes"
 
     def hook_postAction(self, game, player, card):
-        if not player.getFavor():
+        if not player.get_favors():
             return
         if player.hand.size() > 4:
             return
@@ -53,7 +53,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.plr.setFavor(2)
         self.plr.test_input = ["Gain"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getFavor(), 1)
+        self.assertEqual(self.plr.get_favors(), 1)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
 
     def test_play_no_gain(self):
@@ -64,7 +64,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.plr.setFavor(2)
         self.plr.test_input = ["No"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getFavor(), 2)
+        self.assertEqual(self.plr.get_favors(), 2)
         self.assertEqual(self.plr.hand.size(), 1)
 
 

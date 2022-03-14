@@ -87,7 +87,7 @@ class Test_Bauble(unittest.TestCase):
         self.plr.test_input = ["favor", "cash"]
         self.plr.setFavor(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getFavor(), 1)
+        self.assertEqual(self.plr.get_favors(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_deck_deck(self):

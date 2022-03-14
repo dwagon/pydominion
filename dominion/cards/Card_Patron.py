@@ -37,7 +37,7 @@ class Test_Patron(unittest.TestCase):
     def test_play(self):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertEqual(self.plr.getVillager(), 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
 
     def test_reveal(self):
         num = self.plr.get_coffers()

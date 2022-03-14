@@ -32,7 +32,7 @@ class Test_ActingTroupe(unittest.TestCase):
         self.card = self.g["Acting Troupe"].remove()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertLessEqual(self.plr.getVillager(), 4)
+        self.assertLessEqual(self.plr.get_villagers(), 4)
         self.assertIsNotNone(self.g.in_trash("Acting Troupe"))
 
 

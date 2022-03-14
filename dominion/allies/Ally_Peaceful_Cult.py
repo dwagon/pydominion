@@ -15,10 +15,10 @@ class Ally_Peaceful_Cult(Ally.Ally):
         self.name = "Peaceful Cult"
 
     def hook_pre_buy(self, game, player):
-        if not player.getFavor():
+        if not player.get_favors():
             return
         player.output("Use Peaceful Cult to trash a card per favor")
-        trshed = player.plrTrashCard(num=player.getFavor())
+        trshed = player.plrTrashCard(num=player.get_favors())
         player.addFavor(-1 * len(trshed))
 
 
@@ -41,7 +41,7 @@ class Test_Peaceful_Cult(unittest.TestCase):
         self.plr.setFavor(2)
         self.plr.test_input = ["Trash Copper", "Finish", "End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.getFavor(), 1)
+        self.assertEqual(self.plr.get_favors(), 1)
         self.assertTrue(self.g.in_trash("Copper"))
 
 

@@ -29,10 +29,10 @@ class Test_Academy(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_have(self):
-        self.assertEqual(self.plr.getVillager(), 0)
+        self.assertEqual(self.plr.get_villagers(), 0)
         self.plr.assign_project("Academy")
         self.plr.gain_card("Moat")
-        self.assertEqual(self.plr.getVillager(), 1)
+        self.assertEqual(self.plr.get_villagers(), 1)
 
 
 ###############################################################################
