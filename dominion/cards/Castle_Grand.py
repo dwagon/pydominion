@@ -25,11 +25,11 @@ class Card_GrandCastle(CastleCard):
             player.reveal_card(card)
         vics = sum([1 for _ in player.hand if _.isVictory()])
         player.output("Gaining %d VPs from your Victory Cards" % vics)
-        player._add_score("Grand Castle", vics)
+        player.add_score("Grand Castle", vics)
         for plr in list(game.players.values()):
             vics = sum([1 for card in plr.durationpile if card.isVictory()])
             player.output("Gaining %d VPs from %s's Victory Cards" % (vics, plr.name))
-            player._add_score("Grand Castle", vics)
+            player.add_score("Grand Castle", vics)
 
 
 ###############################################################################

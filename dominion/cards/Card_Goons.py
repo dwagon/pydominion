@@ -26,7 +26,7 @@ class Card_Goons(Card.Card):
     def hook_buyCard(self, game, player, card):
         """While this card is in play, when you buy a card +1 VP"""
         player.output("Scored 1 more from goons")
-        player._add_score("Goons", 1)
+        player.add_score("Goons", 1)
 
 
 ###############################################################################

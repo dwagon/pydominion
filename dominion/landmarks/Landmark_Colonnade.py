@@ -29,7 +29,7 @@ class Landmark_Colonnade(Landmark.Landmark):
             return
         if player.in_played(card.name):
             self._vp -= 2
-            player._add_score("Colonnade", 2)
+            player.add_score("Colonnade", 2)
             player.output("Gained 2VP from Colonnade")
 
 

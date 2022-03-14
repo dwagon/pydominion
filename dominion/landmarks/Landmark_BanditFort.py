@@ -17,7 +17,7 @@ class Landmark_BanditFort(Landmark.Landmark):
         for card in player.allCards():
             if card.name in ("Silver", "Gold"):
                 score -= 2
-        player._add_score("Bandit Fort", score)
+        player.add_score("Bandit Fort", score)
 
 
 ###############################################################################

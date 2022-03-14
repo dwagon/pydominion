@@ -15,7 +15,7 @@ class Landmark_Fountain(Landmark.Landmark):
     def hook_end_of_game(self, game, player):
         numcu = sum([1 for c in player.allCards() if c.name == "Copper"])
         if numcu >= 10:
-            player._add_score("Fountain", 15)
+            player.add_score("Fountain", 15)
             player.output("Gained 15VP from Fountain")
 
 

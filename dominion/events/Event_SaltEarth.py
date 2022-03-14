@@ -14,7 +14,7 @@ class Event_SaltEarth(Event.Event):
         self.cost = 4
 
     def special(self, game, player):
-        player._add_score("Salt the Earth", 1)
+        player.add_score("Salt the Earth", 1)
         stacks = game.getVictoryPiles()
         cp = player.cardSel(
             cardsrc=stacks, prompt="Trash a Victory card from the Supply"

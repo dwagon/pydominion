@@ -21,7 +21,7 @@ class Landmark_TriumphalArch(Landmark.Landmark):
                 cards[card.name] += 1
         nums = sorted(cards.values())
         try:
-            player._add_score("Triumphal Arch", nums[-2] * 3)
+            player.add_score("Triumphal Arch", nums[-2] * 3)
         except IndexError:
             player.output("No score from Triumphal Arch as insufficient action cards")
 

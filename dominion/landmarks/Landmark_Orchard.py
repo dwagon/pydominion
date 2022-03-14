@@ -19,7 +19,7 @@ class Landmark_Orchard(Landmark.Landmark):
             if card.isAction():
                 actions[card.name] += 1
         score = sum([4 for x in actions.values() if x > 3])
-        player._add_score("Orchard", score)
+        player.add_score("Orchard", score)
 
 
 ###############################################################################

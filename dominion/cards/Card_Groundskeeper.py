@@ -19,7 +19,7 @@ class Card_Groundskeeper(Card.Card):
 
     def hook_gain_card(self, game, player, card):
         if card.isVictory():
-            player._add_score("Groundskeeper", 1)
+            player.add_score("Groundskeeper", 1)
             player.output("Scored 1 from Groundskeeper")
         return {}
 

@@ -28,7 +28,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
 
     def hook_buyCard(self, game, player, card):
         if card.name == "Curse":
-            player._add_score("Defiled Shrine", self.stored_vp)
+            player.add_score("Defiled Shrine", self.stored_vp)
             self.stored_vp = 0
 
 

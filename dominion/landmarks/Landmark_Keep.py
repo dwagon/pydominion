@@ -33,7 +33,7 @@ class Landmark_Keep(Landmark.Landmark):
                 player.output(
                     "Gaining 5 from Landmark as you have the most %s (%d)" % (card, m)
                 )
-                player._add_score("Keep", 5)
+                player.add_score("Keep", 5)
 
 
 ###############################################################################

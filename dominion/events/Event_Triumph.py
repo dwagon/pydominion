@@ -17,7 +17,7 @@ class Event_Triumph(Event.Event):
         new = player.gainCard("Estate")
         if new:
             vps = len(player.stats["gained"])
-            player._add_score("Triumph", vps)
+            player.add_score("Triumph", vps)
 
 
 ###############################################################################

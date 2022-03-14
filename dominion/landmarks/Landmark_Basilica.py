@@ -28,7 +28,7 @@ class Landmark_Basilica(Landmark.Landmark):
         if player.coin >= 2:
             player.output("Gained 2 VP from Basilica")
             self._vp -= 2
-            player._add_score("Basilica", 2)
+            player.add_score("Basilica", 2)
 
 
 ###############################################################################

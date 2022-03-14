@@ -14,7 +14,7 @@ class Landmark_Tomb(Landmark.Landmark):
 
     def hook_trash_card(self, game, player, card):
         player.output("Gained 1 VP from Tomb")
-        player._add_score("Tomb", 1)
+        player.add_score("Tomb", 1)
 
 
 ###############################################################################

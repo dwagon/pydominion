@@ -21,7 +21,7 @@ class Landmark_Labyrinth(Landmark.Landmark):
 
     def hook_gain_card(self, game, player, card):
         if len(player.stats["gained"]) == 1:  # not including the current one
-            player._add_score("Labyrinth", 2)
+            player.add_score("Labyrinth", 2)
             player.output("Gained 2VP from Labyrinth")
             self._vp -= 2
 

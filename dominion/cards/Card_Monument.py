@@ -17,7 +17,7 @@ class Card_Monument(Card.Card):
         self.coin = 2
 
     def special(self, game, player):
-        player._add_score("Monument", 1)
+        player.add_score("Monument", 1)
 
 
 ###############################################################################
