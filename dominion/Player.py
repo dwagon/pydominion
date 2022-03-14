@@ -854,7 +854,7 @@ class Player:
             self.displayOverview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
-            self.perform_action(opt)
+            self._perform_action(opt)
             if opt["action"] == "quit":
                 return
 
@@ -866,7 +866,7 @@ class Player:
             self.displayOverview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
-            self.perform_action(opt)
+            self._perform_action(opt)
             if opt["action"] == "quit":
                 return
 
@@ -879,7 +879,7 @@ class Player:
             self.displayOverview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
-            self.perform_action(opt)
+            self._perform_action(opt)
             if opt["action"] == "quit":
                 break
         self.hook_end_buy_phase()
@@ -916,7 +916,7 @@ class Player:
         self.debt -= pb
 
     ###########################################################################
-    def perform_action(self, opt):
+    def _perform_action(self, opt):
         if opt["action"] == "buy":
             self.buyCard(opt["card"])
         elif opt["action"] == "event":
