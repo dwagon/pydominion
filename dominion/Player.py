@@ -1157,7 +1157,7 @@ class Player:
                 self.playCard(card)
 
     ###########################################################################
-    def playCard_Tokens(self, card):
+    def _play_card_tokens(self, card):
         tkns = self.which_token(card.name)
         if "+1 Action" in tkns:
             self.output("Gaining action from +1 Action token")
@@ -1202,7 +1202,7 @@ class Player:
         if card.isAction():
             options.update(self.hook_allPlayers_preAction(card))
 
-        self.playCard_Tokens(card)
+        self._play_card_tokens(card)
 
         if card.isAction() and costAction and self.phase != "night":
             self.actions -= 1
