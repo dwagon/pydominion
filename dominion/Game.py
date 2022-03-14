@@ -163,7 +163,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
-        self.total_cards = self.countCards()
+        self.total_cards = self._count_cards()
         self.current_player = self.player_list(0)
         if self.ally:
             for plr in self.player_list():
@@ -202,14 +202,14 @@ class Game(object):  # pylint: disable=too-many-public-methods
             lm.setup(game=self)
 
     ###########################################################################
-    def countCards(self):
+    def _count_cards(self):
         """TODO"""
         count = {}
         count["trash"] = self.trashSize()
         for cpile in list(self.cardpiles.values()):
             count["pile_%s" % cpile.name] = cpile.pilesize
         for pl in self.player_list():
-            count["player_%s" % pl.name] = pl.countCards()
+            count["player_%s" % pl.name] = pl._count_cards()
         total = sum(count.values())
         return total
 
@@ -845,10 +845,10 @@ class Game(object):  # pylint: disable=too-many-public-methods
     def turn(self):
         """TODO"""
         try:
-            assert self.countCards() == self.total_cards
+            assert self._count_cards() == self.total_cards
         except AssertionError:
             self.count_all_cards()
-            sys.stderr.write("current = %s\n" % self.countCards())
+            sys.stderr.write("current = %s\n" % self._count_cards())
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
         self.current_player = self.playerToLeft(self.current_player)
