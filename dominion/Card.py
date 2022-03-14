@@ -284,7 +284,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_allPlayers_preAction(self, game, player, owner, card):
+    def hook_all_players_pre_action(self, game, player, owner, card):
         pass  # pragma: no cover
 
     ##########################################################################

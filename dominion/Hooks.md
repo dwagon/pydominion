@@ -92,7 +92,7 @@ hook_call_reserve
 --------------
 Called when a card is pulled from the Reserve
 
-hook_allPlayers_preAction(game, player, owner, card)
+hook_all_players_pre_action(game, player, owner, card)
 ----------------------------------------------------
 Called before action cards are played.
 * player - current player

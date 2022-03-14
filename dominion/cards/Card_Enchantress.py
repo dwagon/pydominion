@@ -20,7 +20,7 @@ class Card_Enchantress(Card.Card):
     def duration(self, game, player):
         player.add_cards(2)
 
-    def hook_allPlayers_preAction(self, game, player, owner, card):
+    def hook_all_players_pre_action(self, game, player, owner, card):
         if len(player.played) == 0:
             player.output(
                 "{}'s Enchantress gazump'd your {}".format(owner.name, card.name)

@@ -1173,11 +1173,11 @@ class Player:
             self.buys += 1
 
     ###########################################################################
-    def hook_allPlayers_preAction(self, card):
+    def hook_all_players_pre_action(self, card):
         options = {}
         for player in self.game.player_list():
             for crd in player.durationpile:
-                ans = crd.hook_allPlayers_preAction(
+                ans = crd.hook_all_players_pre_action(
                     game=self.game, player=self, owner=player, card=card
                 )
                 if ans:
@@ -1200,7 +1200,7 @@ class Player:
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction():
-            options.update(self.hook_allPlayers_preAction(card))
+            options.update(self.hook_all_players_pre_action(card))
 
         self._play_card_tokens(card)
 
