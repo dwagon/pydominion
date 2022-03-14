@@ -48,7 +48,7 @@ class Test_Swindler(unittest.TestCase):
         """Play the Swindler"""
         self.victim.set_hand("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_defended(self):
         """Swindle a defended player"""

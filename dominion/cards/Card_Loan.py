@@ -49,7 +49,7 @@ class Test_Loan(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.loan)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_discard(self):
         tsize = self.g.trashSize()

@@ -39,7 +39,7 @@ class Test_Borrow(unittest.TestCase):
         self.plr.coin = 0
         self.plr.performEvent(self.card)
         self.assertTrue(self.plr.card_token)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_alreadyset(self):
         """Perform a Borrow"""
@@ -47,7 +47,7 @@ class Test_Borrow(unittest.TestCase):
         self.plr.coin = 0
         self.plr.performEvent(self.card)
         self.assertTrue(self.plr.card_token)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

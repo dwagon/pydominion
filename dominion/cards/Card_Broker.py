@@ -68,7 +68,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "coins"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_favor(self):
         """Play the card - gain favor"""

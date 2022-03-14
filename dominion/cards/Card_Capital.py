@@ -36,7 +36,7 @@ class Test_Capital(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 6)
+        self.assertEqual(self.plr.get_coins(), 6)
         self.plr.coin = 3
         self.plr.discard_card(self.card, "played")
         self.assertEqual(self.plr.debt, 3)
@@ -46,7 +46,7 @@ class Test_Capital(unittest.TestCase):
         """Dont play a Capital"""
         self.plr.add_card(self.card, "hand")
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.debt, 0)
         self.assertEqual(self.plr.coin, 0)

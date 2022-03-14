@@ -80,7 +80,7 @@ class Test_Scrap(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Horse"))

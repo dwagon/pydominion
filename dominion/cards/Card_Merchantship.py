@@ -34,12 +34,12 @@ class Test_Merchantship(unittest.TestCase):
     def test_playcard(self):
         """Play a merchant ship"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.durationpile.size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, "Merchant Ship")
 

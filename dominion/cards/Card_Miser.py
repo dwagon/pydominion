@@ -70,7 +70,7 @@ class Test_Miser(unittest.TestCase):
         self.plr.test_input = ["coins from mat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.reserve.size(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

@@ -32,7 +32,7 @@ class Test_Festival(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

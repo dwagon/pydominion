@@ -38,7 +38,7 @@ class Test_Poorhouse(unittest.TestCase):
         self.plr.set_hand("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 4 - 1)
+        self.assertEqual(self.plr.get_coins(), 4 - 1)
 
 
 ###############################################################################

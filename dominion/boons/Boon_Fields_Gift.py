@@ -41,7 +41,7 @@ class Test_Fields_Gift(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.getCoin(), 1 + 2)  # Boon + Bard
+            self.assertEqual(self.plr.get_coins(), 1 + 2)  # Boon + Bard
             self.assertEqual(self.plr.get_actions(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

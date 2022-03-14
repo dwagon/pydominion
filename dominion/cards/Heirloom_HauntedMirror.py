@@ -39,7 +39,7 @@ class Test_Haunted_Mirror(unittest.TestCase):
     def test_play(self):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash_nothing(self):
         self.plr.set_hand("Copper")

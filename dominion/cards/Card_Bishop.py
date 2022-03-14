@@ -74,7 +74,7 @@ class Test_Bishop(unittest.TestCase):
         self.plr.test_input = ["finish"]
         self.other.test_input = ["finish"]
         self.plr.play_card(self.bishop)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash(self):
         self.plr.set_hand("Gold")

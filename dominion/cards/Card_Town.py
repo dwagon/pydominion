@@ -48,7 +48,7 @@ class Test_Town(unittest.TestCase):
         """Play the card and buy + coin"""
         self.plr.test_input = ["buy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
 

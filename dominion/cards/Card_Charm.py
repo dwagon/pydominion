@@ -56,13 +56,13 @@ class Test_Charm(unittest.TestCase):
         self.plr.test_input = ["+1 Buy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_choose_two(self):
         self.plr.test_input = ["next time"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.test_input = ["Get Duchy"]
         self.plr.setCoin(5)
         self.plr.buy_card(self.g["Charm"])

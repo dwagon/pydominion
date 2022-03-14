@@ -71,7 +71,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_play_three(self):
         """Play the Secret Chamber - discard three"""
@@ -85,7 +85,7 @@ class Test_Secretchamber(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
     def test_underattack(self):
         """Secret chamber is under attack - use it"""

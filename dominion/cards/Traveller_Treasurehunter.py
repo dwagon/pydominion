@@ -53,7 +53,7 @@ class Test_Treasurehunter(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

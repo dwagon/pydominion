@@ -36,7 +36,7 @@ class Test_Haggler(unittest.TestCase):
     def test_play(self):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_buy(self):
         """Buy a Gold and haggle a silver"""

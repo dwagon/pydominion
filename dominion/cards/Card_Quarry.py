@@ -34,7 +34,7 @@ class Test_Quarry(unittest.TestCase):
     def test_playcard(self):
         """Play a quarry"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
         self.assertEqual(self.plr.card_cost(self.g["Moat"]), 0)
 

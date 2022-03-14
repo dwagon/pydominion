@@ -52,11 +52,11 @@ class Test_Amulet(unittest.TestCase):
         """Play an amulet with coin"""
         self.plr.test_input = ["coin", "coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNone(self.plr.in_discard("Silver"))
 
     def test_play_silver(self):
@@ -64,10 +64,10 @@ class Test_Amulet(unittest.TestCase):
         self.plr.test_input = ["silver", "silver"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
     def test_play_trash(self):
@@ -77,10 +77,10 @@ class Test_Amulet(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNone(self.plr.in_discard("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 

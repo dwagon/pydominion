@@ -34,7 +34,7 @@ class Test_Diadem(unittest.TestCase):
     def test_play(self):
         self.plr.play_card(self.card)
         self.plr.actions = 1
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################

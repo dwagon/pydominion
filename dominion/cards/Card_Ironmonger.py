@@ -72,7 +72,7 @@ class Test_Ironmonger(unittest.TestCase):
         self.plr.set_deck("Copper", "Gold")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_action(self):
         self.plr.test_input = ["put back"]

@@ -67,7 +67,7 @@ class Test_Storeroom(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5 - 1)
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

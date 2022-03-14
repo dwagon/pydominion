@@ -52,7 +52,7 @@ class Test_IGG(unittest.TestCase):
         self.plr.test_input = ["copper"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""

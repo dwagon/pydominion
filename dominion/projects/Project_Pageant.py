@@ -38,7 +38,7 @@ class Test_Pageant(unittest.TestCase):
         self.plr.test_input = ["End Phase", "4"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.getCoffer(), numc + 4)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

@@ -54,7 +54,7 @@ class Test_ChariotRace(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertEqual(self.plr.score["Chariot Race"], 1)
 
@@ -66,7 +66,7 @@ class Test_ChariotRace(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertIsNotNone(self.plr.in_hand("Silver"))
         self.assertEqual(self.plr.score["Chariot Race"], 0)
 

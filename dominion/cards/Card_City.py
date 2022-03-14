@@ -67,7 +67,7 @@ class Test_City(unittest.TestCase):
                 break
         self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         # 1 default + 1 for city
         self.assertEqual(self.plr.get_buys(), 2)
         # 5 for hand, 1 for city, 1 for one stack

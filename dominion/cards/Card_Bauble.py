@@ -80,7 +80,7 @@ class Test_Bauble(unittest.TestCase):
         self.plr.setBuys(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_cash_favor(self):
         """Play the card and gain a cash and favor"""
@@ -88,7 +88,7 @@ class Test_Bauble(unittest.TestCase):
         self.plr.setFavor(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.getFavor(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_play_deck_deck(self):
         """Play the card and put next card on to deck"""

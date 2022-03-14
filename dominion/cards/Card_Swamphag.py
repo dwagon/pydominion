@@ -46,7 +46,7 @@ class Test_Swamphag(unittest.TestCase):
         self.assertIsNotNone(self.victim.in_discard("Curse"))
         self.attacker.start_turn()
         self.assertIsNotNone(self.attacker.in_played("Swamp Hag"))
-        self.assertEqual(self.attacker.getCoin(), 3)
+        self.assertEqual(self.attacker.get_coins(), 3)
 
 
 ###############################################################################

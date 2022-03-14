@@ -45,13 +45,13 @@ class Test_Scepter(unittest.TestCase):
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_replay(self):
         self.plr.set_played("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 

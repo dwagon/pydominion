@@ -75,7 +75,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.phase = "buy"
         self.plr.test_input = ["gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3 * 2)
+        self.assertEqual(self.plr.get_coins(), 3 * 2)
 
 
 ###############################################################################

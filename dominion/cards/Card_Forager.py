@@ -47,7 +47,7 @@ class Test_Forager(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNotNone(self.g.in_trash("Province"))
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

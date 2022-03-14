@@ -59,7 +59,7 @@ class Test_Messenger(unittest.TestCase):
         self.plr.test_input = ["No"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_discard(self):
         """Play a messenger and discard the deck"""
@@ -67,7 +67,7 @@ class Test_Messenger(unittest.TestCase):
         self.plr.test_input = ["Yes"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.discardpile.size(), decksize)
 

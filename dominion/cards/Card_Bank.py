@@ -33,12 +33,12 @@ class Test_Bank(unittest.TestCase):
     def test_gainnothing(self):
         self.plr.set_played("Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gainsomething(self):
         self.plr.set_played("Copper", "Silver", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################

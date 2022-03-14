@@ -40,7 +40,7 @@ class Test_Harvest(unittest.TestCase):
         """Harvest"""
         self.plr.set_deck("Duchy", "Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Copper"))
         self.assertIsNone(self.plr.in_deck("Duchy"))

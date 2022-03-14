@@ -28,7 +28,7 @@ class Test_Key(unittest.TestCase):
     def test_flag(self):
         self.plr.assign_artifact("Key")
         self.plr.start_turn()
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

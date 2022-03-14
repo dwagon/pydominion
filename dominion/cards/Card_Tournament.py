@@ -58,7 +58,7 @@ class Test_Tournament(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
 
@@ -70,7 +70,7 @@ class Test_Tournament(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
 

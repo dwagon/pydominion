@@ -64,7 +64,7 @@ class Test_Pawn(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_play_buy(self):
         """Play the pawn - select buy and coin"""
@@ -73,7 +73,7 @@ class Test_Pawn(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
 
 
 ###############################################################################

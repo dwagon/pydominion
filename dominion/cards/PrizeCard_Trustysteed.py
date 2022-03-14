@@ -60,7 +60,7 @@ class Test_Trustysteed(unittest.TestCase):
         self.plr.test_input = ["cards", "coin"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_play_b(self):
         self.plr.test_input = [Card.TYPE_ACTION, "silver"]

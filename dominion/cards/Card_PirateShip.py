@@ -110,7 +110,7 @@ class Test_PirateShip(unittest.TestCase):
         self.plr._pirate_ship = 2
         self.plr.test_input = ["per treasure"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

@@ -39,7 +39,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.set_deck("Silver", "Gold", "Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_played("Moat"))
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
@@ -48,7 +48,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.set_deck("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.hand.size(), 5)
 

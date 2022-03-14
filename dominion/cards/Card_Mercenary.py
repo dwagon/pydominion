@@ -80,7 +80,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.victim.hand.size(), 3)
 
 

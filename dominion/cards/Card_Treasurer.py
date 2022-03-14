@@ -56,21 +56,21 @@ class Test_Treasurer(unittest.TestCase):
     def test_play_trash(self):
         self.plr.test_input = ["Trash a treasure", "Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_play_recover(self):
         self.g.set_trash("Gold", "Estate")
         self.plr.test_input = ["Gain a treasure", "Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_play_key(self):
         self.plr.test_input = ["Take the key"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNotNone(self.plr.has_artifact("Key"))
 
 

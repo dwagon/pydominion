@@ -55,7 +55,7 @@ class Test_Desperation(unittest.TestCase):
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

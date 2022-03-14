@@ -39,7 +39,7 @@ class Test_Pathfinding(unittest.TestCase):
         self.plr.test_input = ["moat"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Moat")
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################

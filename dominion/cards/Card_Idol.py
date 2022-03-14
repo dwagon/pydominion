@@ -49,7 +49,7 @@ class Test_Idol(unittest.TestCase):
         self.plr.set_played("Idol", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
         self.assertIsNone(self.plr.in_discard("Silver"))
 
@@ -58,7 +58,7 @@ class Test_Idol(unittest.TestCase):
         self.plr.set_played("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
         self.assertIsNone(self.vic.in_discard("Curse"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # From Mountain boon
 

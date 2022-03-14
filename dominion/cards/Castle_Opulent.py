@@ -46,7 +46,7 @@ class Test_OpulentCastle(unittest.TestCase):
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Opulent Castle"], 3)
-        self.assertEqual(self.plr.getCoin(), 6)
+        self.assertEqual(self.plr.get_coins(), 6)
 
 
 ###############################################################################

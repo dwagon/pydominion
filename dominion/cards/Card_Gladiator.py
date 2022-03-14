@@ -54,7 +54,7 @@ class Test_Gladiator(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Gladiator"))
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
     def test_play_has(self):
         """Play a Gladiator - something the other player has"""
@@ -64,7 +64,7 @@ class Test_Gladiator(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertIsNone(self.g.in_trash("Gladiator"))
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

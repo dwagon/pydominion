@@ -49,7 +49,7 @@ class Test_Artificer(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish", "copper"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.deck[0].name, "Copper")
@@ -67,7 +67,7 @@ class Test_Artificer(unittest.TestCase):
             "get silver",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))

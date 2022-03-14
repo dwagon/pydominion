@@ -36,7 +36,7 @@ class Test_Stockpile(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_exile("Stockpile"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.getCoin(), 3)
+        self.assertEqual(self.plr.get_coins(), 3)
 
 
 ###############################################################################
