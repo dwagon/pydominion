@@ -20,7 +20,7 @@ class Card_Tragic_Hero(Card.Card):
     def special(self, game, player):
         if player.hand.size() >= 8:
             player.trash_card(self)
-            player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
+            player.plr_gain_card(cost=None, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################

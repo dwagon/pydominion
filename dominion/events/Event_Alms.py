@@ -31,7 +31,7 @@ class Event_Alms(Event.Event):
             return
 
         if self.treasures(player) == 0:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
 
 
 ###############################################################################

@@ -33,17 +33,17 @@ class Card_Stonemason(Card.Card):
                 player.output("No suitable cards")
                 return
             for _ in range(2):
-                player.plrGainCard(cost, "less")
+                player.plr_gain_card(cost, "less")
 
     def hook_overpay(self, game, player, amount):
         if amount:
-            player.plrGainCard(
+            player.plr_gain_card(
                 amount,
                 "less",
                 types={Card.TYPE_ACTION: True},
                 prompt="Gain a card costing up to %s" % amount,
             )
-            player.plrGainCard(
+            player.plr_gain_card(
                 amount,
                 "less",
                 types={Card.TYPE_ACTION: True},

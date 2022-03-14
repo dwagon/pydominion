@@ -29,7 +29,7 @@ class Card_Wish(Card.Card):
             player.discard_card(self)
             game["Wish"].add()
             player.played.remove(self)
-            player.plrGainCard(cost=6)
+            player.plr_gain_card(cost=6)
 
 
 ###############################################################################

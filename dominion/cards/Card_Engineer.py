@@ -18,7 +18,7 @@ class Card_Engineer(Card.Card):
         self.coin = 1
 
     def special(self, game, player):
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
         trash = player.plrChooseOptions(
             "Trash the Engineer?",
             ("Keep the enginner", False),
@@ -26,7 +26,7 @@ class Card_Engineer(Card.Card):
         )
         if trash:
             player.trash_card(self)
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
 
 
 ###############################################################################

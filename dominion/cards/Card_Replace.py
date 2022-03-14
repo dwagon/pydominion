@@ -23,7 +23,7 @@ class Card_Replace(Card.Card):
         if not tr:
             return
         cost = tr[0].cost
-        gain = player.plrGainCard(
+        gain = player.plr_gain_card(
             cost, prompt="Gain a card costing up to {}".format(cost)
         )
         if not gain:

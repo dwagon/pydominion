@@ -19,7 +19,7 @@ class Event_Advance(Event.Event):
             prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
         )
         if trash:
-            player.plrGainCard(6, types={Card.TYPE_ACTION: True})
+            player.plr_gain_card(6, types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################

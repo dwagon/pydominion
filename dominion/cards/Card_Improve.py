@@ -26,7 +26,7 @@ class Card_Improve(Card.Card):
         if not tt:
             return
         cost = tt[0].cost
-        player.plrGainCard(cost + 1, modifier="equal")
+        player.plr_gain_card(cost + 1, modifier="equal")
 
 
 ###############################################################################

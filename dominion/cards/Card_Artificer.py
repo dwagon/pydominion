@@ -26,7 +26,7 @@ class Card_Artificer(Card.Card):
             anynum=True, prompt="Select which card(s) to discard"
         )
         cost = len(todiscard)
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=cost,
             modifier="equal",
             destination="topdeck",

@@ -16,7 +16,7 @@ class Card_Artisan(Card.Card):
         self.cost = 6
 
     def special(self, game, player):
-        player.plrGainCard(5, destination="hand")
+        player.plr_gain_card(5, destination="hand")
         card = player.cardSel(
             force=True,
             cardsrc="hand",

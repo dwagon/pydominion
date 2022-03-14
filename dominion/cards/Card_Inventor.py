@@ -17,7 +17,7 @@ class Card_Inventor(Card.Card):
 
     def special(self, game, player):
         """Gain a card costing up to 4"""
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
     def hook_card_cost(self, game, player, card):
         if self in player.played:

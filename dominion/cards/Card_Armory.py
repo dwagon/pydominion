@@ -17,7 +17,7 @@ class Card_Armory(Card.Card):
 
     def special(self, game, player):
         """Gain a card costing up to 4"""
-        player.plrGainCard(4, destination="deck")
+        player.plr_gain_card(4, destination="deck")
 
 
 ###############################################################################

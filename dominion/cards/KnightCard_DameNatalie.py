@@ -20,7 +20,7 @@ class Card_Dame_Natalie(KnightCard):
         self.cost = 5
 
     def special(self, game, player):
-        player.plrGainCard(3)
+        player.plr_gain_card(3)
         self.knight_special(game, player)
 
 

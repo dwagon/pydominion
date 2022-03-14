@@ -25,7 +25,7 @@ class Card_Devils_Workshop(Card.Card):
             player.gain_card("Imp")
             player.output("Gained an Imp")
         elif nc == 1:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
         else:
             player.gain_card("Gold")
             player.output("Gained a Gold")

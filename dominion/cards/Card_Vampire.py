@@ -20,7 +20,7 @@ class Card_Vampire(Card.Card):
         for pl in player.attack_victims():
             pl.output("{}'s Vampire hexed you".format(player.name))
             pl.receive_hex()
-        player.plrGainCard(5, exclude=["Vampire"])
+        player.plr_gain_card(5, exclude=["Vampire"])
         player.replace_card(self, "Bat")
 
 

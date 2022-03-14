@@ -17,7 +17,7 @@ class Event_Summon(Event.Event):
 
     def special(self, game, player):
         """Gain an Action card costing up to 4"""
-        player.plrGainCard(4, types={Card.TYPE_ACTION: True}, destination="duration")
+        player.plr_gain_card(4, types={Card.TYPE_ACTION: True}, destination="duration")
         print("Unimplemented")
 
 

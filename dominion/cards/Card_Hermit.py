@@ -36,7 +36,7 @@ class Card_Hermit(Card.Card):
                 player.hand.remove(choice[0])
             player.trash_card(choice[0])
         # Gain a card costing up to 3.
-        player.plrGainCard(3)
+        player.plr_gain_card(3)
 
     def hook_discard_this_card(self, game, player, source):
         # When you discard this from play, if you did not buy any cards this turn,

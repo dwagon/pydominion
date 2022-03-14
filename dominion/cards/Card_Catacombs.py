@@ -36,7 +36,7 @@ class Card_Catacombs(Card.Card):
 
     def hook_trashThisCard(self, game, player):
         """When you trash this, gain a cheaper card"""
-        player.plrGainCard(cost=self.cost - 1)
+        player.plr_gain_card(cost=self.cost - 1)
 
 
 ###############################################################################

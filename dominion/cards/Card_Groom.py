@@ -21,7 +21,7 @@ class Card_Groom(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        card = player.plrGainCard(4)
+        card = player.plr_gain_card(4)
         if card.isAction():
             player.gain_card("Horse")
         if card.isTreasure():

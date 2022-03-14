@@ -21,7 +21,7 @@ class Card_Hornofplenty(Card.Card):
         for c in player.played:
             cards.add(c.name)
 
-        card = player.plrGainCard(
+        card = player.plr_gain_card(
             len(cards),
             prompt="Gain a card costing up to %d. If it is a victory then this card will be trashed"
             % len(cards),

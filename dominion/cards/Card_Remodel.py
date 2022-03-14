@@ -24,7 +24,7 @@ class Card_Remodel(Card.Card):
         )
         if tc:
             cost = tc[0].cost
-            player.plrGainCard(cost + 2)
+            player.plr_gain_card(cost + 2)
 
 
 ###############################################################################

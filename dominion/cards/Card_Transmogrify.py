@@ -26,7 +26,7 @@ class Card_Transmogrify(Card.Card):
         )
         if tc:
             cost = player.card_cost(tc[0])
-            player.plrGainCard(cost + 1, modifier="less", destination="hand")
+            player.plr_gain_card(cost + 1, modifier="less", destination="hand")
 
 
 ###############################################################################

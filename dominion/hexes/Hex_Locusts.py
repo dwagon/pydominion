@@ -34,7 +34,7 @@ class Hex_Locusts(Hex.Hex):
                 Card.TYPE_TREASURE: nxt.isTreasure(),
                 Card.TYPE_ACTION: nxt.isAction(),
             }
-            player.plrGainCard(cost=nxt.cost - 1, types=types)
+            player.plr_gain_card(cost=nxt.cost - 1, types=types)
         player.output("Trashing your {}".format(nxt.name))
         player.trash_card(nxt)
 

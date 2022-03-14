@@ -29,7 +29,7 @@ class Card_Forge(Card.Card):
         player.output("Costs = %s" % ", ".join(sorted(list(availcosts))))
         tc = player.plrTrashCard(anynum=True, num=0, printcost=True)
         cost = sum([c.cost for c in tc])
-        player.plrGainCard(
+        player.plr_gain_card(
             cost=cost, modifier="equal", prompt="Gain card worth %s" % cost
         )
 

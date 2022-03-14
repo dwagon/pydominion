@@ -16,7 +16,7 @@ class Event_Banquet(Event.Event):
     def special(self, game, player):
         for _ in range(2):
             player.gain_card("Copper")
-        player.plrGainCard(
+        player.plr_gain_card(
             5,
             types={
                 Card.TYPE_ACTION: True,

@@ -27,7 +27,7 @@ class Event_Enhance(Event.Event):
         if not tc:
             return
         new_cost = tc[0].cost + 2
-        player.plrGainCard(cost=new_cost, force=True)
+        player.plr_gain_card(cost=new_cost, force=True)
 
 
 ###############################################################################

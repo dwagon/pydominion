@@ -20,7 +20,7 @@ class Card_Hero(Card.Card):
 
     def special(self, game, player):
         """Gain a treasure"""
-        player.plrGainCard(cost=None, types={Card.TYPE_TREASURE: True})
+        player.plr_gain_card(cost=None, types={Card.TYPE_TREASURE: True})
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Champion"""

@@ -26,7 +26,7 @@ class Boon_Earths_Gift(Boon.Boon):
             prompt="Discard a Treasure to gain a card costing up to 4",
         )
         if tr:
-            player.plrGainCard(4)
+            player.plr_gain_card(4)
 
 
 ###############################################################################

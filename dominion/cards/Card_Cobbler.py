@@ -18,7 +18,7 @@ class Card_Cobbler(Card.Card):
         self.cost = 5
 
     def duration(self, game, player):
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
 
 ###############################################################################

@@ -38,7 +38,7 @@ class Card_Charm(Card.Card):
             return
         self.buytrigger = False
         cost = card.cost
-        player.plrGainCard(cost=cost, modifier="equal", exclude=[card.name])
+        player.plr_gain_card(cost=cost, modifier="equal", exclude=[card.name])
 
 
 ###############################################################################

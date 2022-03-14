@@ -40,7 +40,7 @@ class Card_Taxman(Card.Card):
                     for c in vic.hand:
                         vic.reveal_card(c)
         cardcost = player.card_cost(card) + 3
-        player.plrGainCard(cost=cardcost, types={Card.TYPE_TREASURE: True})
+        player.plr_gain_card(cost=cardcost, types={Card.TYPE_TREASURE: True})
 
 
 ###############################################################################

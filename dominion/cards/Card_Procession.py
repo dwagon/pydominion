@@ -34,7 +34,7 @@ class Card_Procession(Card.Card):
             player.play_card(card, discard=False, costAction=False)
         player.trash_card(card)
         cost = player.card_cost(card) + 1
-        player.plrGainCard(cost, modifier="equal", types={Card.TYPE_ACTION: True})
+        player.plr_gain_card(cost, modifier="equal", types={Card.TYPE_ACTION: True})
 
 
 ###############################################################################

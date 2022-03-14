@@ -34,7 +34,7 @@ class Card_Graverobber(Card.Card):
                 player.output("No suitable action cards")
                 return
             card = player.plrTrashCard(cardsrc=actions)
-            player.plrGainCard(cost=card[0].cost + 3)
+            player.plr_gain_card(cost=card[0].cost + 3)
         else:
             trash_cards = [c for c in game.trashpile if 3 <= c.cost <= 6]
             if not trash_cards:

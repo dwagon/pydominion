@@ -17,7 +17,7 @@ class Way_Butterfly(Way.Way):
     def special_way(self, game, player, card):
         game[card.name].add()
         cst = player.card_cost(card)
-        player.plrGainCard(cst + 1, "equal")
+        player.plr_gain_card(cst + 1, "equal")
         return {"discard": False}
 
 

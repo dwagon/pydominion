@@ -17,7 +17,7 @@ class Card_Workshop(Card.Card):
 
     def special(self, game, player):
         """Gain a card costing up to 4"""
-        player.plrGainCard(4)
+        player.plr_gain_card(4)
 
 
 ###############################################################################

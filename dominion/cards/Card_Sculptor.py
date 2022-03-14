@@ -17,7 +17,7 @@ class Card_Sculptor(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        card = player.plrGainCard(4, destination="hand", force=True)
+        card = player.plr_gain_card(4, destination="hand", force=True)
         if card.isTreasure():
             player.output("Gained  villager")
             player.add_villager()

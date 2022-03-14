@@ -20,7 +20,7 @@ class Card_Altar(Card.Card):
         player.plrTrashCard(prompt="Trash a card from your hand", force=True)
 
         # Gain a card costing up to 5 Coin
-        player.plrGainCard(5)
+        player.plr_gain_card(5)
 
 
 ###############################################################################

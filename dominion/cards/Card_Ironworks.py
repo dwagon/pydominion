@@ -18,7 +18,7 @@ class Card_Ironworks(Card.Card):
     def special(self, game, player):
         """Gain a card costing up to 4. If it is an action card:
         +1 action; treasure card +1 coin; victory card, +1 card"""
-        c = player.plrGainCard(4, force=True)
+        c = player.plr_gain_card(4, force=True)
         if c.isVictory():
             player.pickup_card()
         if c.isAction():

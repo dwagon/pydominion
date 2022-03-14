@@ -22,13 +22,13 @@ class Card_Develop(Card.Card):
             return
         card = cards[0]
         if player.cardsWorth(card.cost + 1):
-            player.plrGainCard(
+            player.plr_gain_card(
                 cost=card.cost + 1, modifier="equal", destination="topdeck"
             )
         else:
             player.output("No cards worth %s" % (card.cost + 1))
         if player.cardsWorth(card.cost - 1):
-            player.plrGainCard(
+            player.plr_gain_card(
                 cost=card.cost - 1, modifier="equal", destination="topdeck"
             )
         else:

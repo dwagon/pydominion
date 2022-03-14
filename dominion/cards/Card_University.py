@@ -18,7 +18,7 @@ class Card_University(Card.Card):
 
     def special(self, game, player):
         """Gain an action card costing up to 5"""
-        c = player.plrGainCard(5, types={Card.TYPE_ACTION: True})
+        c = player.plr_gain_card(5, types={Card.TYPE_ACTION: True})
         if c:
             player.output("Gained %s from university" % c.name)
 

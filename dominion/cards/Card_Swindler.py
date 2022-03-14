@@ -22,7 +22,7 @@ class Card_Swindler(Card.Card):
             card = victim.pickup_card()
             victim.trash_card(card)
             victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
-            c = player.plrGainCard(
+            c = player.plr_gain_card(
                 card.cost,
                 modifier="equal",
                 recipient=victim,

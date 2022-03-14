@@ -24,7 +24,7 @@ class Card_Expand(Card.Card):
         )
         if tc:
             cost = tc[0].cost
-            player.plrGainCard(cost + 3)
+            player.plr_gain_card(cost + 3)
 
 
 ###############################################################################

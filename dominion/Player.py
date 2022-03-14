@@ -1752,7 +1752,7 @@ class Player:
         return trash
 
     ###########################################################################
-    def plrGainCard(
+    def plr_gain_card(
         self,
         cost,
         modifier="less",

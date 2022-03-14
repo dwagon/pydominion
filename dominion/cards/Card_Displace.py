@@ -24,7 +24,7 @@ class Card_Displace(Card.Card):
         if crd:
             player.hand.remove(crd[0])
             player.exile_card(crd[0])
-            player.plrGainCard(cost=crd[0].cost + 2, exclude=[crd[0].name])
+            player.plr_gain_card(cost=crd[0].cost + 2, exclude=[crd[0].name])
 
 
 ###############################################################################

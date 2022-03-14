@@ -16,7 +16,7 @@ class Event_Ball(Event.Event):
     def special(self, game, player):
         player.coin_token = True
         for _ in range(2):
-            player.plrGainCard(cost=4)
+            player.plr_gain_card(cost=4)
 
 
 ###############################################################################

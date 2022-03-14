@@ -29,7 +29,7 @@ class Card_Saboteur(Card.Card):
                 continue
             victim.output("%s's saboteur trashed %s" % (player.name, card.name))
             victim.trash_card(card)
-            victim.plrGainCard(card.cost - 2)
+            victim.plr_gain_card(card.cost - 2)
 
     def pickCard(self, victim, player):
         for _ in range(len(victim.all_cards())):

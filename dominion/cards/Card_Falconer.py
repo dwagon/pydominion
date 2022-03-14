@@ -19,12 +19,12 @@ class Card_Falconer(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        player.plrGainCard(5)
+        player.plr_gain_card(5)
 
     def hook_gain_card(self, game, player, card):
         if len(card.get_cardtype_repr().split(",")) >= 2:
             player.output("Falconer lets you gain a card")
-            player.plrGainCard(5)
+            player.plr_gain_card(5)
 
 
 ###############################################################################
