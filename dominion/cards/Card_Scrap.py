@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Scrap """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -25,21 +24,38 @@ class Card_Scrap(Card.Card):
         )
         if not trc:
             return
-        cost = player.card_cost(trc[0])
-        if cost >= 1:
-            player.pickup_card()
-        if cost >= 2:
-            player.add_actions(1)
-        if cost >= 3:
-            player.add_buys(1)
-        if cost >= 4:
-            player.add_coins(1)
-        if cost >= 5:
-            player.gain_card("Silver")
-            player.output("Gained a Silver")
-        if cost >= 6:
-            player.gain_card("Horse")
-            player.output("Gained a Horse")
+        cost = min(6, player.card_cost(trc[0]))
+        if not cost:
+            return
+        chosen = []
+        for _ in range(cost):
+            choices = []
+            if "card" not in chosen:
+                choices.append(("+1 Card", "card"))
+            if "action" not in chosen:
+                choices.append(("+1 Action", "action"))
+            if "buy" not in chosen:
+                choices.append(("+1 Buy", "buy"))
+            if "coin" not in chosen:
+                choices.append(("+$1 Coin", "coin"))
+            if "silver" not in chosen:
+                choices.append(("Gain a Silver", "silver"))
+            if "horse" not in chosen:
+                choices.append(("Gain a Horse", "horse"))
+            opt = player.plr_choose_options("Select one", *choices)
+            if opt == "card":
+                player.pickup_card()
+            if opt == "action":
+                player.add_actions(1)
+            if opt == "buy":
+                player.add_buys(1)
+            if opt == "coin":
+                player.add_coins(1)
+            if opt == "silver":
+                player.gain_card("Silver")
+            if opt == "horse":
+                player.gain_card("Horse")
+            choices.append(opt)
 
 
 ###############################################################################
@@ -54,7 +70,7 @@ class Test_Scrap(unittest.TestCase):
         """Play a scrap and trash something worth 0"""
         self.plr.set_hand("Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["trash copper"]
+        self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
 
@@ -63,24 +79,46 @@ class Test_Scrap(unittest.TestCase):
         self.plr.set_hand("Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Province")
-        self.plr.test_input = ["trash silver"]
+        self.plr.test_input = [
+            "trash silver",
+            "card",
+            "finish",
+            "action",
+            "finish",
+            "coin",
+            "finish",
+        ]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_playcard_cost6(self):
-        """Play a scrap and trash something worth more than 6"""
+        """Play a scrap and trash something worth more than 4"""
         self.plr.set_hand("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Copper")
-        self.plr.test_input = ["trash province"]
+        self.plr.test_input = [
+            "trash province",
+            "card",
+            "finish",
+            "action",
+            "finish",
+            "coin",
+            "finish",
+            "buy",
+            "finish",
+            "silver",
+            "finish",
+            "horse",
+            "finish",
+        ]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Horse"))
