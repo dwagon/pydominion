@@ -17,7 +17,7 @@ class Card_MerchantGuild(Card.Card):
         self.buys = 1
         self.cost = 5
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         player.output("Gaining Coin token from Merchant Guild")
         player.add_coffer()
 

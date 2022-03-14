@@ -33,7 +33,7 @@ class Card_Charm(Card.Card):
         else:
             self.buytrigger = True
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if not self.buytrigger:
             return
         self.buytrigger = False

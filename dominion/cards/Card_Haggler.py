@@ -16,7 +16,7 @@ class Card_Haggler(Card.Card):
         self.coin = 2
         self.cost = 5
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         cost = card.cost - 1
         player.plrGainCard(
             cost=cost,

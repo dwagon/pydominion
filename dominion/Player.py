@@ -1047,10 +1047,10 @@ class Player:
         return card.hook_allowed_to_buy(game=self.game, player=self)
 
     ###########################################################################
-    def hook_buyCard(self, card):
+    def hook_buy_card(self, card):
         """Hook for after purchasing a card"""
         for c in self.relevant_cards():
-            c.hook_buyCard(game=self.game, player=self, card=card)
+            c.hook_buy_card(game=self.game, player=self, card=card)
 
     ###########################################################################
     def start_turn(self):
@@ -1401,7 +1401,7 @@ class Player:
         if "Trashing" in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plrTrashCard()
-        self.hook_buyCard(newcard)
+        self.hook_buy_card(newcard)
         newcard.hook_buy_this_card(game=self.game, player=self)
         self.hook_allPlayers_buyCard(newcard)
 

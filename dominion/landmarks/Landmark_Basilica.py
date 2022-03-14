@@ -22,7 +22,7 @@ class Landmark_Basilica(Landmark.Landmark):
             % self._vp
         )
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if self._vp <= 0:
             return
         if player.coin >= 2:

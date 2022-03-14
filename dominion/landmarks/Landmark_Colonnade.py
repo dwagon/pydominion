@@ -22,7 +22,7 @@ class Landmark_Colonnade(Landmark.Landmark):
     def setup(self, game):
         self._vp = 6 * game.numplayers
 
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         if not card.isAction():
             return
         if not self._vp:

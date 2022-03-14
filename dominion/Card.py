@@ -292,7 +292,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hook_buyCard(self, game, player, card):
+    def hook_buy_card(self, game, player, card):
         pass  # pragma: no cover
 
     ##########################################################################

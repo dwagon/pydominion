@@ -17,7 +17,7 @@ hook_allowed_to_buy
 This is called before any card is available to purchase.
 It should return True if the card is available to be purchased, or False otherwise.
 
-hook_buyCard
+hook_buy_card
 ------------
 This is called after a card has been purchased, and is invoked for
 every card in the players hand.
