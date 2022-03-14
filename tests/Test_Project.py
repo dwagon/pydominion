@@ -55,7 +55,7 @@ class Test_assignProject(unittest.TestCase):
 
 
 ###############################################################################
-class Test_buyProject(unittest.TestCase):
+class Test_buy_project(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True,
@@ -73,12 +73,12 @@ class Test_buyProject(unittest.TestCase):
 
     def test_buy(self):
         PA = self.g.projects["ProjectA"]
-        self.plr.setBuys(1)
-        self.plr.setCoin(3)
-        rc = self.plr.buyProject(PA)
+        self.plr.set_buys(1)
+        self.plr.set_coins(3)
+        rc = self.plr.buy_project(PA)
         self.assertEqual(rc, True)
         self.assertEqual(self.plr.get_buys(), 0)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.projects[0].name, "ProjectA")
 
 

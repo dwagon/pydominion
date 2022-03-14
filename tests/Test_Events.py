@@ -5,7 +5,7 @@ from dominion import Game
 
 
 ###############################################################################
-class Test_performEvent(unittest.TestCase):
+class Test_perform_event(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Raid"])
         self.g.start_game()
@@ -16,28 +16,28 @@ class Test_performEvent(unittest.TestCase):
         """Perform an event"""
         self.plr.buys = 1
         self.plr.coin = 5
-        sc = self.plr.performEvent(self.card)
+        sc = self.plr.perform_event(self.card)
         self.assertTrue(sc)
         self.assertEqual(self.plr.get_buys(), 0)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
     def test_no_buy(self):
         """Perform an event without a buy"""
         self.plr.buys = 0
         self.plr.coin = 2
-        sc = self.plr.performEvent(self.card)
+        sc = self.plr.perform_event(self.card)
         self.assertFalse(sc)
         self.assertEqual(self.plr.get_buys(), 0)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
     def test_no_coin(self):
         """Perform an event without enough coins"""
         self.plr.coin = 2
         self.plr.buys = 1
-        sc = self.plr.performEvent(self.card)
+        sc = self.plr.perform_event(self.card)
         self.assertFalse(sc)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.getCoin(), 2)
+        self.assertEqual(self.plr.get_coins(), 2)
 
 
 ###############################################################################

@@ -165,7 +165,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.card_setup()
         self.total_cards = self._count_cards()
         self.current_player = self.player_list(0)
-        if self.ally:
+        if self.ally and not self.quiet:
             for plr in self.player_list():
                 plr.add_favors(1)
 
@@ -318,6 +318,8 @@ class Game(object):  # pylint: disable=too-many-public-methods
         if self.ally:
             return
         self.output("Using Allies")
+        if isinstance(self.initally, str):
+            self.initally = [self.initally]
         allies = self.loadNonKingdomCards("Ally", self.initally, 1, AllyPile)
         self.ally = random.choice(list(allies.values())).ally
 
