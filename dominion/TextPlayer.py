@@ -95,7 +95,7 @@ class TextPlayer(Player):
         return " ".join(output)
 
     ###########################################################################
-    def userInput(self, options, prompt):
+    def user_input(self, options, prompt):
         for o in options:
             line = self.selectorLine(o)
             o["line"] = line
@@ -213,7 +213,7 @@ class TextPlayer(Player):
                 if kwargs.get("printtypes"):
                     o["details"] = c.get_cardtype_repr()
                 options.append(o)
-            ui = self.userInput(options, "Select which card?")
+            ui = self.user_input(options, "Select which card?")
             if not ui["card"]:
                 break
             if ui["card"] in selected:
@@ -231,7 +231,7 @@ class TextPlayer(Player):
         for prnt, ans in choices:
             options.append(Option(selector="%s" % index, verb=prnt, answer=ans))
             index += 1
-        o = self.userInput(options, prompt)
+        o = self.user_input(options, prompt)
         return o["answer"]
 
 

@@ -35,7 +35,7 @@ class Card_Crown(Card.Card):
             pr = "Play %s twice" % c.name
             options.append({"selector": sel, "print": pr, "card": c})
             index += 1
-        o = player.userInput(options, "Play which card twice?")
+        o = player.user_input(options, "Play which card twice?")
         if not o["card"]:
             return
         for i in range(1, 3):

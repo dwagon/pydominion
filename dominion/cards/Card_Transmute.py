@@ -38,7 +38,7 @@ class Card_Transmute(Card.Card):
             pr = "Trash %s for %s" % (c.name, trashtag)
             options.append({"selector": sel, "print": pr, "card": c, "gain": trashtag})
             index += 1
-        o = player.userInput(options, "Trash which card?")
+        o = player.user_input(options, "Trash which card?")
         if not o["card"]:
             return
         player.trash_card(o["card"])

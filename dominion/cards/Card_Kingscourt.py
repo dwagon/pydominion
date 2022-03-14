@@ -28,7 +28,7 @@ class Card_Kingscourt(Card.Card):
             pr = "Play %s thrice" % c.name
             options.append({"selector": sel, "print": pr, "card": c})
             index += 1
-        o = player.userInput(options, "Play which action card three times?")
+        o = player.user_input(options, "Play which action card three times?")
         if not o["card"]:
             return
         player.hand.remove(o["card"])

@@ -37,7 +37,7 @@ class Card_Exorcist(Card.Card):
                 options.append({"selector": sel, "print": toprint, "card": card})
                 idx += 1
         if idx:
-            o = player.userInput(options, "Gain a spirit")
+            o = player.user_input(options, "Gain a spirit")
             player.gain_card(o["card"])
         else:
             player.output("No spirits available at that price")

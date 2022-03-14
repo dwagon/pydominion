@@ -51,7 +51,7 @@ class Card_Secretchamber(Card.Card):
                 "reveal": True,
             },
         ]
-        o = player.userInput(options, "Reveal Secret Chamber?")
+        o = player.user_input(options, "Reveal Secret Chamber?")
         return o["reveal"]
 
 

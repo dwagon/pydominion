@@ -31,7 +31,7 @@ class Card_Doctor(Card.Card):
             sel = "%s" % index
             options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
             index += 1
-        o = player.userInput(
+        o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
         )
         cards = []
@@ -72,7 +72,7 @@ class Card_Doctor(Card.Card):
                     Card.TYPE_ACTION: "discard",
                 }
             )
-            o = player.userInput(
+            o = player.user_input(
                 options, "What to do with the top card %s?" % card.name
             )
             if o[Card.TYPE_ACTION] == "trash":

@@ -28,7 +28,7 @@ class Card_Mine(Card.Card):
                 )
                 index += 1
         player.output("Trash a treasure to gain a better one")
-        o = player.userInput(options, "Trash which treasure?")
+        o = player.user_input(options, "Trash which treasure?")
         if o["card"]:
             val = o["card"].cost
             # Make an assumption and pick the best treasure card

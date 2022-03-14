@@ -44,7 +44,7 @@ class Card_Lookout(Card.Card):
             sel = "%d" % index
             index += 1
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
-        o = player.userInput(options, "Select a card to trash")
+        o = player.user_input(options, "Select a card to trash")
         player.trash_card(o["card"])
         return o["card"]
 
@@ -55,7 +55,7 @@ class Card_Lookout(Card.Card):
             sel = "%d" % index
             index += 1
             options.append({"selector": sel, "print": "Discard %s" % c.name, "card": c})
-        o = player.userInput(options, "Select a card to discard")
+        o = player.user_input(options, "Select a card to discard")
         player.discard_card(o["card"])
         return o["card"]
 

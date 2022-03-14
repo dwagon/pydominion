@@ -31,7 +31,7 @@ class Card_Druid(Card.Card):
             bn = list(game._druid_area)[i]
             toprint = "Receive {}: {}".format(bn.name, bn.description(player))
             options.append({"selector": sel, "print": toprint, Card.TYPE_BOON: bn})
-        b = player.userInput(options, "Which boon? ")
+        b = player.user_input(options, "Which boon? ")
         player.receive_boon(boon=b[Card.TYPE_BOON], discard=False)
 
 

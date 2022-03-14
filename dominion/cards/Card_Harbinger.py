@@ -37,7 +37,7 @@ class Card_Harbinger(Card.Card):
         player.output(
             "Look through your discard pile. You may put a card from it onto your deck."
         )
-        o = player.userInput(options, "Which Card? ")
+        o = player.user_input(options, "Which Card? ")
         if not o["card"]:
             return
         player.add_card(o["card"], "topdeck")

@@ -34,7 +34,7 @@ class Card_Pawn(Card.Card):
                     continue
                 options.append({"selector": "%d" % index, "print": v, "opt": k})
                 index += 1
-            o = player.userInput(options, "What do you want to do?")
+            o = player.user_input(options, "What do you want to do?")
             chosen.append(o["opt"])
 
         for choice in chosen:

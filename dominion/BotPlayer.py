@@ -54,7 +54,7 @@ class BotPlayer(Player):
             raise
 
     ###########################################################################
-    def userInput(self, options, prompt):  # pylint: disable=too-many-return-statements
+    def user_input(self, options, prompt):  # pylint: disable=too-many-return-statements
         opts = self.getOptions(options)
         if "spendall" in opts:
             return opts["spendall"]

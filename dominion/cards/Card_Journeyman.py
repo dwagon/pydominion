@@ -24,7 +24,7 @@ class Card_Journeyman(Card.Card):
             sel = "%s" % index
             options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
             index += 1
-        o = player.userInput(
+        o = player.user_input(
             options,
             "Name a card. Reveal cards from your deck until you have 3 that aren't the named card",
         )

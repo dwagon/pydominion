@@ -33,7 +33,7 @@ class Card_Herbalist(Card.Card):
                     index += 1
             print("index=%d" % index)
             if index != 1:
-                o = player.userInput(options, "Put a card on the top of your deck?")
+                o = player.user_input(options, "Put a card on the top of your deck?")
                 if o["card"]:
                     player.played.remove(o["card"])
                     player.add_card(o["card"], "topdeck")

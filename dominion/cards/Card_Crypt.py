@@ -43,7 +43,7 @@ class Card_Crypt(Card.Card):
             toprint = "Bring back {}".format(card.name)
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
-        o = player.userInput(options, "What card to bring back from the crypt?")
+        o = player.user_input(options, "What card to bring back from the crypt?")
         player.add_card(o["card"], "hand")
         player._crypt_reserve.remove(o["card"])
         player.secret_count -= 1

@@ -28,7 +28,7 @@ class Card_Throneroom(Card.Card):
             index += 1
         if index == 1:
             return
-        o = player.userInput(options, "Play which action card twice?")
+        o = player.user_input(options, "Play which action card twice?")
         if not o["card"]:
             return
         for i in range(1, 3):

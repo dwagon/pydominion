@@ -37,7 +37,7 @@ class Card_Archive(Card.Card):
             toprint = "Bring back {}".format(card.name)
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
-        o = player.userInput(options, "What card to bring back from the Archive?")
+        o = player.user_input(options, "What card to bring back from the Archive?")
         player.add_card(o["card"], "hand")
         player._archive_reserve.remove(o["card"])
         player.secret_count -= 1

@@ -29,7 +29,7 @@ class Card_Mastermind(Card.Card):
         if index == 1:
             player.output("No action cards to repeat")
             return
-        o = player.userInput(options, "Play which action card three times?")
+        o = player.user_input(options, "Play which action card three times?")
         if not o["card"]:
             return
         for i in range(1, 4):

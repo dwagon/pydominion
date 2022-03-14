@@ -30,7 +30,7 @@ class Card_Butcher(Card.Card):
         for i in range(player.get_coffers() + 1):
             sel = "%d" % i
             options.append({"selector": sel, "print": "Add %d coins" % i, "coins": i})
-        o = player.userInput(options, "Spend extra coins?")
+        o = player.user_input(options, "Spend extra coins?")
         cost = card.cost + o["coins"]
         player.coffer -= o["coins"]
         player.plr_gain_card(cost=cost)

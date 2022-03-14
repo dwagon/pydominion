@@ -853,7 +853,7 @@ class Player:
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
-            opt = self.userInput(options, prompt)
+            opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":
                 return
@@ -865,7 +865,7 @@ class Player:
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
-            opt = self.userInput(options, prompt)
+            opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":
                 return
@@ -878,7 +878,7 @@ class Player:
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
-            opt = self.userInput(options, prompt)
+            opt = self.user_input(options, prompt)
             self._perform_action(opt)
             if opt["action"] == "quit":
                 break
@@ -1907,7 +1907,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def userInput(self, options, prompt):
+    def user_input(self, options, prompt):
         raise NotImplementedError
 
     ###########################################################################

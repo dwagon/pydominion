@@ -32,7 +32,7 @@ class Card_Trustysteed(Card.Card):
                     continue
                 options.append({"selector": "%d" % index, "print": p, "opt": o})
                 index += 1
-            choice = player.userInput(options, "What do you want to do?")
+            choice = player.user_input(options, "What do you want to do?")
             chosen.append(choice["opt"])
 
         for choice in chosen:

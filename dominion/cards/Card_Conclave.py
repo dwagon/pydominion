@@ -32,7 +32,7 @@ class Card_Conclave(Card.Card):
             toprint = "Play {}".format(p.name)
             options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
-        o = player.userInput(options, "What card do you want to play?")
+        o = player.user_input(options, "What card do you want to play?")
         if o["card"]:
             player.play_card(o["card"], costAction=False)
             player.add_actions(1)

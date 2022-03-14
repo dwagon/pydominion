@@ -29,7 +29,7 @@ class Event_Pilgrimage(Event.Event):
             for cn in cardnames:
                 options.append({"selector": "%d" % index, "print": cn, "opt": cn})
                 index += 1
-            choice = player.userInput(options, "Select a card to gain - up to 3!")
+            choice = player.user_input(options, "Select a card to gain - up to 3!")
             if choice["opt"]:
                 selected.append(choice["opt"])
                 cardnames.remove(choice["opt"])

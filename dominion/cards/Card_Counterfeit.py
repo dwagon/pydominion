@@ -31,7 +31,7 @@ class Card_Counterfeit(Card.Card):
                 )
         if index == 1:
             return
-        o = player.userInput(options, "What to do?")
+        o = player.user_input(options, "What to do?")
         if not o["card"]:
             return
         for _ in range(2):

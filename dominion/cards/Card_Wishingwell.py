@@ -26,7 +26,7 @@ class Card_Wishingwell(Card.Card):
             sel = "%s" % index
             options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
             index += 1
-        o = player.userInput(options, "Guess the top card")
+        o = player.user_input(options, "Guess the top card")
         if not o["card"]:
             return
         c = player.next_card()

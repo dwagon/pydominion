@@ -43,7 +43,7 @@ class Card_Bandit(Card.Card):
             options.append({"selector": sel, "print": pr, "card": c})
             sel = "%s" % index
             index += 1
-        o = bandit.userInput(options, "What to do to %s's cards?" % victim.name)
+        o = bandit.user_input(options, "What to do to %s's cards?" % victim.name)
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:

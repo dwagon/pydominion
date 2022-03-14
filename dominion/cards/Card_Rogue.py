@@ -51,7 +51,7 @@ class Card_Rogue(Card.Card):
             sel = "%d" % index
             index += 1
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
-        o = player.userInput(options, "Trash which card from %s?" % victim.name)
+        o = player.user_input(options, "Trash which card from %s?" % victim.name)
         victim.output("%s's rogue trashed your %s" % (player.name, o["card"].name))
         victim.trash_card(o["card"])
         # Discard what the rogue didn't trash
@@ -79,7 +79,7 @@ class Card_Rogue(Card.Card):
                 )
         if index == 1:
             return False
-        o = player.userInput(options, "Pick a card from the trash")
+        o = player.user_input(options, "Pick a card from the trash")
         game.trashpile.remove(o["card"])
         player.add_card(o["card"])
         player.output("Took a %s from the trash" % o["card"].name)

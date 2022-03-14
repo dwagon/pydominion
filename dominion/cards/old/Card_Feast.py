@@ -31,7 +31,7 @@ class Card_Feast(Card.Card):
             options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
 
-        o = player.userInput(options, "What card do you wish?")
+        o = player.user_input(options, "What card do you wish?")
         if o["card"]:
             player.gain_card(o["card"])
             player.output("Took %s" % o["card"].name)

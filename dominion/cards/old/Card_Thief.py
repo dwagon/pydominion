@@ -56,7 +56,7 @@ class Card_Thief(Card.Card):
             pr = "Steal %s from %s" % (c.name, victim.name)
             options.append({"selector": sel, "print": pr, "card": c, "steal": True})
             index += 1
-        o = thief.userInput(options, "What to do to %s's cards?" % victim.name)
+        o = thief.user_input(options, "What to do to %s's cards?" % victim.name)
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
