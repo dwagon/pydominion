@@ -23,7 +23,7 @@ class Event_Borrow(Event.Event):
             player.output("-1 Card token already in play")
             return
         player.card_token = True
-        player.addCoin(1)
+        player.add_coins(1)
 
 
 ###############################################################################

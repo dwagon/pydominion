@@ -20,10 +20,10 @@ class Card_Fools_Gold(Card.Card):
         count = sum([1 for c in player.played if c.name == "Fool's Gold"])
         if count > 1:
             player.output("Gained 4 Coin")
-            player.addCoin(4)
+            player.add_coins(4)
         else:
             player.output("Gained 1 Coin")
-            player.addCoin(1)
+            player.add_coins(1)
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.name != "Province":

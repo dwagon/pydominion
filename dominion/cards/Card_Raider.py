@@ -18,7 +18,7 @@ class Card_Raider(Card.Card):
         self.cost = 6
 
     def duration(self, game, player):
-        player.addCoin(3)
+        player.add_coins(3)
 
     def night(self, game, player):
         inplay = {_.name for _ in player.played}

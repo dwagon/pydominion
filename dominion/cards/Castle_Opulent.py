@@ -25,7 +25,7 @@ class Card_OpulentCastle(CastleCard):
             cardsrc=victcards,
             prompt="Discard any number of Victory cards. +2 Coin per card discarded",
         )
-        player.addCoin(len(cards) * 2)
+        player.add_coins(len(cards) * 2)
 
 
 ###############################################################################

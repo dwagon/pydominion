@@ -31,7 +31,7 @@ class Test_Commerce(unittest.TestCase):
 
     def test_Commerce(self):
         """Use Commerce"""
-        self.plr.addCoin(5)
+        self.plr.add_coins(5)
         self.plr.gain_card("Moat")
         self.plr.performEvent(self.card)
         self.g.print_state()

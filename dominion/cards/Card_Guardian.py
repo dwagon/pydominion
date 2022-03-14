@@ -19,7 +19,7 @@ class Card_Guardian(Card.Card):
         self.cost = 2
 
     def duration(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}

@@ -14,7 +14,7 @@ class Way_Sheep(Way.Way):
         self.name = "Way of the Sheep"
 
     def special(self, game, player):
-        player.addCoin(2)
+        player.add_coins(2)
 
 
 ###############################################################################

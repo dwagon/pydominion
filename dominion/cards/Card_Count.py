@@ -52,7 +52,7 @@ class Card_Count(Card.Card):
                 player.output("Trashing %s" % c.name)
                 player.trash_card(c)
         else:
-            player.addCoin(3)
+            player.add_coins(3)
 
     ###########################################################################
     def putCard(self, game, player):

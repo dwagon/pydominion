@@ -47,7 +47,7 @@ class Test_Populate(unittest.TestCase):
 
     def test_Populate(self):
         """Use Populate"""
-        self.plr.addCoin(10)
+        self.plr.add_coins(10)
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard("Moat"))
 

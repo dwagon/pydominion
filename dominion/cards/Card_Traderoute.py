@@ -40,7 +40,7 @@ class Card_Traderoute(Card.Card):
         supply pile. When a card is gained from that pile move the
         token to the trade route map"""
         player.plrTrashCard()
-        player.addCoin(self.isWorth())
+        player.add_coins(self.isWorth())
 
 
 ###############################################################################

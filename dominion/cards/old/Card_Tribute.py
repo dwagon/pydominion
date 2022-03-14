@@ -39,7 +39,7 @@ class Card_Tribute(Card.Card):
                 player.addActions(2)
             elif c.isTreasure():
                 player.output("Gained two coin")
-                player.addCoin(2)
+                player.add_coins(2)
             elif c.isVictory():
                 player.output("Gained two cards")
                 player.pickup_cards(2)

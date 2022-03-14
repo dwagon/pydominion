@@ -35,7 +35,7 @@ class Test_Pathfinding(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Pathfinding"""
-        self.plr.addCoin(8)
+        self.plr.add_coins(8)
         self.plr.test_input = ["moat"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Moat")

@@ -1509,7 +1509,7 @@ class Player:
         return self.favors
 
     ###########################################################################
-    def addCoin(self, num=1):
+    def add_coins(self, num=1):
         assert isinstance(num, int)
         self.coin += num
 

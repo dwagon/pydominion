@@ -28,7 +28,7 @@ class Card_Soldier(Card.Card):
                 continue
             if c.isAttack():
                 count += 1
-        player.addCoin(count)
+        player.add_coins(count)
         player.output("Gained %d extra coins" % count)
         for plr in player.attack_victims():
             if plr.hand.size() >= 4:

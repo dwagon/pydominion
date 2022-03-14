@@ -32,7 +32,7 @@ class Event_Summon(Event.Event):
 #
 #    def test_with_summon(self):
 #        """ Use Summon """
-#        self.plr.addCoin(5)
+#        self.plr.add_coins(5)
 #        self.plr.test_input = ['moat']
 #        self.plr.performEvent(self.card)
 

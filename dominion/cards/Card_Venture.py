@@ -27,7 +27,7 @@ class Card_Venture(Card.Card):
                 player.play_card(c)
                 break
             player.output("Picked up and discarded %s" % c.name)
-            player.addCoin(c.coin)  # Compensate for not keeping card
+            player.add_coins(c.coin)  # Compensate for not keeping card
             player.discard_card(c)
 
 

@@ -29,7 +29,7 @@ class Card_ChariotRace(Card.Card):
                 "Your %s costs more than %s's %s"
                 % (card.name, other.name, othercard.name)
             )
-            player.addCoin()
+            player.add_coins()
             player.add_score("Chariot Race")
         else:
             player.output(

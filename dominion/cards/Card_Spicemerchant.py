@@ -31,7 +31,7 @@ class Card_SpiceMerchant(Card.Card):
                 player.pickup_cards(2)
                 player.addActions(1)
             else:
-                player.addCoin(2)
+                player.add_coins(2)
                 player.add_buys(1)
 
 

@@ -29,7 +29,7 @@ class Test_Windfall(unittest.TestCase):
 
     def test_play(self):
         """Perform a Windfall"""
-        self.plr.addCoin(5)
+        self.plr.add_coins(5)
         self.plr.set_discard()
         self.plr.set_deck()
         self.plr.performEvent(self.card)

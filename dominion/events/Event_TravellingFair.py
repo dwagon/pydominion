@@ -36,7 +36,7 @@ class Test_TravellingFair(unittest.TestCase):
 
     def test_play_discard(self):
         """Perform a Travelling Fair"""
-        self.plr.addCoin(2)
+        self.plr.add_coins(2)
         self.plr.performEvent(self.card)
         self.plr.test_input = ["Discard"]
         self.plr.gain_card("Gold")
@@ -46,7 +46,7 @@ class Test_TravellingFair(unittest.TestCase):
 
     def test_play_deck(self):
         """Perform a Travelling Fair and deck the card"""
-        self.plr.addCoin(2)
+        self.plr.add_coins(2)
         self.plr.performEvent(self.card)
         self.plr.test_input = ["Put"]
         self.plr.gain_card("Gold")

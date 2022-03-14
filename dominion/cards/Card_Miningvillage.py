@@ -26,7 +26,7 @@ class Card_Miningvillage(Card.Card):
         )
         if trash:
             player.output("Trashing mining village")
-            player.addCoin(2)
+            player.add_coins(2)
             player.trash_card(self)
 
 

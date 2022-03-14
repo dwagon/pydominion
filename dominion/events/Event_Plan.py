@@ -37,7 +37,7 @@ class Test_Plan(unittest.TestCase):
 
     def test_play(self):
         """Perform a Plan"""
-        self.plr.addCoin(3)
+        self.plr.add_coins(3)
         self.plr.test_input = ["Moat"]
         self.plr.performEvent(self.card)
         self.assertEqual(self.plr.tokens["Trashing"], "Moat")

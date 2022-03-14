@@ -33,7 +33,7 @@ class Card_Broker(Card.Card):
         elif dc == "action":
             player.addActions(cost)
         elif dc == "cash":
-            player.addCoin(cost)
+            player.add_coins(cost)
         elif dc == "favor":
             player.add_favors(cost)
 

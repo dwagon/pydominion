@@ -19,7 +19,7 @@ class Card_Diadem(Card.Card):
 
     def special(self, game, player):
         player.output("Gaining %d coins from unused actions" % player.actions)
-        player.addCoin(player.actions)
+        player.add_coins(player.actions)
 
 
 ###############################################################################

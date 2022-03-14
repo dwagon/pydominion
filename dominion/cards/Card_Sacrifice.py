@@ -27,7 +27,7 @@ class Card_Sacrifice(Card.Card):
             player.pickup_cards(2)
             player.addActions(2)
         if card.isTreasure():
-            player.addCoin(2)
+            player.add_coins(2)
         if card.isVictory():
             player.add_score("Sacrifice", 2)
 

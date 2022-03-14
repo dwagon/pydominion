@@ -14,7 +14,7 @@ class Artifact_Key(Artifact.Artifact):
         self.name = "Key"
 
     def hook_start_turn(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
 
 ###############################################################################

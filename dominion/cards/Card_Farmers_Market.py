@@ -31,7 +31,7 @@ class Card_FarmersMarket(Card.Card):
         else:
             vps += 1
             player.output("Gaining {} coins".format(vps))
-            player.addCoin(vps)
+            player.add_coins(vps)
             game["Farmers' Market"].addVP()
 
 

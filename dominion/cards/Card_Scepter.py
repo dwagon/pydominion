@@ -25,7 +25,7 @@ class Card_Scepter(Card.Card):
             get_coin = True
             player.output("No suitable cards - gaining coin")
         if get_coin:
-            player.addCoin(2)
+            player.add_coins(2)
         else:
             card = player.cardSel(cardsrc=acts)
             player.add_card(card[0], "hand")

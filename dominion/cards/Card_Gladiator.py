@@ -31,7 +31,7 @@ class Card_Gladiator(Card.Card):
         leftycard = lefty.in_hand(mycard[0].name)
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
-            player.addCoin(1)
+            player.add_coins(1)
             c = game["Gladiator"].remove()
             player.trash_card(c)
         else:

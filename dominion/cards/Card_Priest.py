@@ -27,7 +27,7 @@ class Card_Priest(Card.Card):
     def hook_trash_card(self, game, player, card):
         if not self.in_special:
             player.output("Adding 2 from Priest")
-            player.addCoin(2)
+            player.add_coins(2)
 
 
 ###############################################################################

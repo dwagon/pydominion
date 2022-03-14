@@ -21,7 +21,7 @@ class Card_Salvager(Card.Card):
     def special(self, game, player):
         card = player.plrTrashCard(force=True)
         player.output("Gained %d coin" % card[0].cost)
-        player.addCoin(card[0].cost)
+        player.add_coins(card[0].cost)
 
 
 ###############################################################################

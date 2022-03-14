@@ -22,7 +22,7 @@ class Card_CaravanGuard(Card.Card):
         player.pickup_cards(1)
 
     def duration(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
     def hook_underAttack(self, game, player, attacker):
         player.output("Under attack from %s" % attacker.name)

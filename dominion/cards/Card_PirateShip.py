@@ -41,7 +41,7 @@ class Card_PirateShip(Card.Card):
             if trashed:
                 player._pirate_ship += 1
         else:
-            player.addCoin(player._pirate_ship)
+            player.add_coins(player._pirate_ship)
 
     def attack_player(self, player, victim):
         trashed = False

@@ -19,10 +19,10 @@ class Card_Lighthouse(Card.Card):
         self.cost = 2
 
     def duration(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
     def special(self, game, player):
-        player.addCoin(1)
+        player.add_coins(1)
 
 
 ###############################################################################

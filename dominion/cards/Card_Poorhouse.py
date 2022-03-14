@@ -22,7 +22,7 @@ class Card_Poorhouse(Card.Card):
             if card.isTreasure():
                 coins -= 1
         player.output("Gaining %d coins" % max(coins, 0))
-        player.addCoin(max(coins, 0))
+        player.add_coins(max(coins, 0))
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Card_Deathcart(Card.Card):
             player.trash_card(self)
             trash = True
         if trash:
-            player.addCoin(5)
+            player.add_coins(5)
 
     def hook_gain_this_card(self, game, player):
         for _ in range(2):

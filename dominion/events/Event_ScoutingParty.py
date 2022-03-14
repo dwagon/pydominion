@@ -39,7 +39,7 @@ class Test_ScoutingParty(unittest.TestCase):
 
     def test_play(self):
         """Perform a Scouting Party"""
-        self.plr.addCoin(2)
+        self.plr.add_coins(2)
         self.plr.set_deck("Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.performEvent(self.card)

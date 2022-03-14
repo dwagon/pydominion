@@ -27,7 +27,7 @@ class Card_Moneylender(Card.Card):
         )
         if trash:
             player.trash_card(copper)
-            player.addCoin(3)
+            player.add_coins(3)
 
 
 ###############################################################################

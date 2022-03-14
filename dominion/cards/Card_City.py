@@ -24,7 +24,7 @@ class Card_City(Card.Card):
         if empties >= 1:
             player.pickup_card()
         if empties >= 2:
-            player.addCoin(1)
+            player.add_coins(1)
             player.add_buys(1)
 
 

@@ -29,7 +29,7 @@ class Card_SecretCave(Card.Card):
     def duration(self, game, player):
         if self._discarded:
             player.output("Gained 3 Coin from Secret Cave")
-            player.addCoin(3)
+            player.add_coins(3)
 
 
 ###############################################################################

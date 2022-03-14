@@ -24,7 +24,7 @@ class Card_Forager(Card.Card):
         for card in game.trashpile:
             if card.isTreasure():
                 treas.add(card.name)
-        player.addCoin(len(treas))
+        player.add_coins(len(treas))
         player.output("Gained %s from Forager" % len(treas))
 
 

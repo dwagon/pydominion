@@ -33,7 +33,7 @@ class Card_Miser(Card.Card):
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)
-            player.addCoin(coins)
+            player.add_coins(coins)
 
 
 ###############################################################################

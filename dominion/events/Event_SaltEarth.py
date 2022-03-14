@@ -35,7 +35,7 @@ class Test_SaltEarth(unittest.TestCase):
 
     def test_event(self):
         """Use Salt the Earth"""
-        self.plr.addCoin(4)
+        self.plr.add_coins(4)
         self.plr.test_input = ["Province"]
         self.plr.performEvent(self.event)
         self.assertEqual(self.plr.get_score_details()["Salt the Earth"], 1)

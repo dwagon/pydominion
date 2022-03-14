@@ -33,7 +33,7 @@ class Card_Scrap(Card.Card):
         if cost >= 3:
             player.add_buys(1)
         if cost >= 4:
-            player.addCoin(1)
+            player.add_coins(1)
         if cost >= 5:
             player.gain_card("Silver")
             player.output("Gained a Silver")

@@ -24,7 +24,7 @@ class Card_Harvest(Card.Card):
             player.output("Revealed a %s" % c.name)
             player.add_card(c, "discard")
         player.output("Gaining %d coins" % len(cards))
-        player.addCoin(len(cards))
+        player.add_coins(len(cards))
 
 
 ###############################################################################

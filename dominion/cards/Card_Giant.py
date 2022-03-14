@@ -21,7 +21,7 @@ class Card_Giant(Card.Card):
 
     def special(self, game, player):
         if player.flip_journey_token():
-            player.addCoin(5)
+            player.add_coins(5)
             for victim in player.attack_victims():
                 c = victim.next_card()
                 victim.reveal_card(c)
@@ -37,7 +37,7 @@ class Card_Giant(Card.Card):
                     victim.add_card(c, "discard")
                     victim.gain_card("Curse")
         else:
-            player.addCoin(1)
+            player.add_coins(1)
 
 
 ###############################################################################

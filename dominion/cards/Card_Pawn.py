@@ -45,7 +45,7 @@ class Card_Pawn(Card.Card):
             elif choice == "buy":
                 player.add_buys(1)
             elif choice == "coin":
-                player.addCoin(1)
+                player.add_coins(1)
 
 
 ###############################################################################

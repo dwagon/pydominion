@@ -31,7 +31,7 @@ class Card_Amulet(Card.Card):
             ("Gain a silver", "silver"),
         )
         if choice == "coin":
-            player.addCoin(1)
+            player.add_coins(1)
         if choice == "trash":
             player.plrTrashCard(num=1)
         if choice == "silver":

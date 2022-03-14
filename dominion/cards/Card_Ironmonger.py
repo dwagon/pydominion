@@ -42,7 +42,7 @@ class Card_Ironmonger(Card.Card):
             player.addActions(1)
         if card.isTreasure():
             player.output("Gaining a coin as %s was a treasure card" % card.name)
-            player.addCoin(1)
+            player.add_coins(1)
 
 
 ###############################################################################

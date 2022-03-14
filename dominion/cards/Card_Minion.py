@@ -34,7 +34,7 @@ class Card_Minion(Card.Card):
         if attack:
             self.attack(game, player)
         else:
-            player.addCoin(2)
+            player.add_coins(2)
 
     def attack(self, game, player):
         self.dropAndDraw(player)

@@ -23,7 +23,7 @@ class Card_Secretchamber(Card.Card):
         todiscard = player.plrDiscardCards(
             anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
         )
-        player.addCoin(len(todiscard))
+        player.add_coins(len(todiscard))
 
     def hook_underAttack(self, game, player, attacker):
         player.output("Under attack from %s" % attacker.name)

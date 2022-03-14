@@ -43,7 +43,7 @@ class Card_Courtier(Card.Card):
             if opt == "buy":
                 player.add_buys(1)
             if opt == "coin":
-                player.addCoin(3)
+                player.add_coins(3)
             if opt == "gold":
                 player.gain_card("Gold")
 

@@ -27,7 +27,7 @@ class Event_Desperation(Event.Event):
                 curse = player.gain_card("Curse")
                 if curse:
                     player.add_buys(1)
-                    player.addCoin(2)
+                    player.add_coins(2)
                 else:
                     player.output("Didn't get a Curse so no benefits")
             else:
@@ -50,7 +50,7 @@ class Test_Desperation(unittest.TestCase):
 
     def test_Desperation(self):
         """Use Desperation"""
-        self.plr.addCoin(0)
+        self.plr.add_coins(0)
         self.plr.test_input = ["Gain a curse"]
         self.plr.performEvent(self.card)
         self.assertIsNotNone(self.plr.in_discard("Curse"))

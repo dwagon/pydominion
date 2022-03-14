@@ -23,7 +23,7 @@ class Card_Vault(Card.Card):
             anynum=True,
             prompt="Discard any number of cards. +1 Coin per card discarded",
         )
-        player.addCoin(len(discards))
+        player.add_coins(len(discards))
         player.output("Gaining %d coins" % len(discards))
         for plr in game.player_list():
             if plr != player:

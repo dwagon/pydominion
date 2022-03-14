@@ -45,7 +45,7 @@ class Test_Grandmarket(unittest.TestCase):
 
     def test_nobuy(self):
         self.plr.set_hand("Copper", "Gold", "Gold")
-        self.plr.addCoin(6)
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
         options, _ = self.plr._choice_selection()
@@ -58,7 +58,7 @@ class Test_Grandmarket(unittest.TestCase):
     def test_nobuy_played(self):
         self.plr.set_hand("Gold", "Gold", "Gold")
         self.plr.set_played("Copper")
-        self.plr.addCoin(6)
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
         options, _ = self.plr._choice_selection()
@@ -70,7 +70,7 @@ class Test_Grandmarket(unittest.TestCase):
 
     def test_buy(self):
         self.plr.set_hand("Gold", "Gold", "Gold")
-        self.plr.addCoin(6)
+        self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
         options, _ = self.plr._choice_selection()

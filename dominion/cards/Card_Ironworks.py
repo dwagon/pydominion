@@ -24,7 +24,7 @@ class Card_Ironworks(Card.Card):
         if c.isAction():
             player.addActions(1)
         if c.isTreasure():
-            player.addCoin(1)
+            player.add_coins(1)
 
 
 ###############################################################################
