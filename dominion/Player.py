@@ -170,7 +170,7 @@ class Player:
         self.output(hx.description(self))
         for _ in range(hx.cards):
             self.pickup_card()
-        self.addActions(hx.actions)
+        self.add_actions(hx.actions)
         self.buys += hx.buys
         self.coin += self.hook_spend_value(hx, actual=True)
         hx.special(game=self.game, player=self)
@@ -184,7 +184,7 @@ class Player:
         self.output(boon.description(self))
         for _ in range(boon.cards):
             self.pickup_card()
-        self.addActions(boon.actions)
+        self.add_actions(boon.actions)
         self.buys += boon.buys
         self.coin += self.hook_spend_value(boon, actual=True)
         boon.special(game=self.game, player=self)
@@ -1099,7 +1099,7 @@ class Player:
         if self.villager <= 0:
             return
         self.villager -= 1
-        self.addActions(1)
+        self.add_actions(1)
         self.output("Spent a villager")
 
     ###########################################################################
@@ -1161,7 +1161,7 @@ class Player:
         tkns = self.which_token(card.name)
         if "+1 Action" in tkns:
             self.output("Gaining action from +1 Action token")
-            self.addActions(1)
+            self.add_actions(1)
         if "+1 Card" in tkns:
             c = self.pickup_card()
             self.output("Picked up %s from +1 Card token" % c.name)
@@ -1253,7 +1253,7 @@ class Player:
 
     ###########################################################################
     def card_benefits(self, card):
-        self.addActions(card.actions)
+        self.add_actions(card.actions)
         self.coin += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
         self.favors += card.favors
@@ -1523,7 +1523,7 @@ class Player:
         return self.actions
 
     ###########################################################################
-    def addActions(self, num=1):
+    def add_actions(self, num=1):
         assert isinstance(num, int)
         if self.misc.get("no_actions"):
             self.output("No more additional actions allowed")

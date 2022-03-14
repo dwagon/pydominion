@@ -29,7 +29,7 @@ class Card_SpiceMerchant(Card.Card):
             )
             if rew == "cards":
                 player.pickup_cards(2)
-                player.addActions(1)
+                player.add_actions(1)
             else:
                 player.add_coins(2)
                 player.add_buys(1)

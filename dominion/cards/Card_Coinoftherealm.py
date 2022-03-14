@@ -19,7 +19,7 @@ class Card_Coinoftherealm(Card.Card):
 
     def hook_call_reserve(self, game, player):
         """Directly after resolving an action you may call this for +2 Actions"""
-        player.addActions(2)
+        player.add_actions(2)
 
 
 ###############################################################################

@@ -33,7 +33,7 @@ class Card_Crossroads(Card.Card):
             player.output("No victory cards")
         numcross = sum([1 for c in player.played if c.name == "Crossroads"])
         if numcross == 1:
-            player.addActions(3)
+            player.add_actions(3)
 
 
 ###############################################################################

@@ -39,7 +39,7 @@ class Card_Courtier(Card.Card):
             opt = player.plrChooseOptions("Select one", *choices)
             chosen.append(opt)
             if opt == Card.TYPE_ACTION:
-                player.addActions(1)
+                player.add_actions(1)
             if opt == "buy":
                 player.add_buys(1)
             if opt == "coin":

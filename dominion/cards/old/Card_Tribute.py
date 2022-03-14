@@ -36,7 +36,7 @@ class Card_Tribute(Card.Card):
             cardname = c.name
             if c.isAction():
                 player.output("Gained two actions")
-                player.addActions(2)
+                player.add_actions(2)
             elif c.isTreasure():
                 player.output("Gained two coin")
                 player.add_coins(2)

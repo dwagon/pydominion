@@ -24,7 +24,7 @@ class Card_Nobles(Card.Card):
         if cards:
             player.pickup_cards(3)
         else:
-            player.addActions(2)
+            player.add_actions(2)
 
 
 ###############################################################################

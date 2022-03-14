@@ -25,7 +25,7 @@ class Card_Ghost_Town(Card.Card):
 
     def duration(self, game, player):
         player.pickup_card()
-        player.addActions(1)
+        player.add_actions(1)
 
 
 ###############################################################################

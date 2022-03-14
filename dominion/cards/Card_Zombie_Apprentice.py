@@ -34,7 +34,7 @@ class Card_Zombie_Apprentice(Card.Card):
         )
         if tr:
             player.pickup_cards(3)
-            player.addActions(1)
+            player.add_actions(1)
 
 
 ###############################################################################

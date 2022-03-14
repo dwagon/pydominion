@@ -46,7 +46,7 @@ class Test_FarmersMarket(unittest.TestCase):
 
     def test_play(self):
         """Play a Farmers Market"""
-        self.plr.addActions(2)
+        self.plr.add_actions(2)
         self.plr.add_card(self.c1, "hand")
         self.g["Farmers' Market"].addVP(3)
         self.plr.play_card(self.c1)

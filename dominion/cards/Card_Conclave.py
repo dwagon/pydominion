@@ -35,7 +35,7 @@ class Card_Conclave(Card.Card):
         o = player.userInput(options, "What card do you want to play?")
         if o["card"]:
             player.play_card(o["card"], costAction=False)
-            player.addActions(1)
+            player.add_actions(1)
 
 
 ###############################################################################

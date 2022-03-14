@@ -29,7 +29,7 @@ class Card_Tactician(Card.Card):
         if self.discarded:
             player.pickup_cards(5)
             player.add_buys(1)
-            player.addActions(1)
+            player.add_actions(1)
             self.discarded = False
 
 

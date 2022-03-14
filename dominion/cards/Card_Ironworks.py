@@ -22,7 +22,7 @@ class Card_Ironworks(Card.Card):
         if c.isVictory():
             player.pickup_card()
         if c.isAction():
-            player.addActions(1)
+            player.add_actions(1)
         if c.isTreasure():
             player.add_coins(1)
 

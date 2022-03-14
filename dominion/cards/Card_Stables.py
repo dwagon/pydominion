@@ -21,7 +21,7 @@ class Card_Stables(Card.Card):
             cardsrc=treasures, prompt="Discard a card and get +3 Cards +1 Action"
         )
         if tr:
-            player.addActions(1)
+            player.add_actions(1)
             player.pickup_cards(3)
 
 

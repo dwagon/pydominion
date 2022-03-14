@@ -46,7 +46,7 @@ class Test_Rats(unittest.TestCase):
         self.plr.set_deck("Gold")
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.plr.addActions(1)
+        self.plr.add_actions(1)
         self.assertEqual(self.plr.hand[-1].name, "Gold")
 
     def test_trashcard(self):

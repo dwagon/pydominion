@@ -29,7 +29,7 @@ class Card_Scrap(Card.Card):
         if cost >= 1:
             player.pickup_card()
         if cost >= 2:
-            player.addActions(1)
+            player.add_actions(1)
         if cost >= 3:
             player.add_buys(1)
         if cost >= 4:

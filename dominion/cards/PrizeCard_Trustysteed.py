@@ -39,7 +39,7 @@ class Card_Trustysteed(Card.Card):
             if choice == "cards":
                 player.pickup_cards(2)
             elif choice == "actions":
-                player.addActions(2)
+                player.add_actions(2)
             elif choice == "coins":
                 player.add_coins(2)
             elif choice == "silvers":

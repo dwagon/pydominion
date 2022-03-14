@@ -27,7 +27,7 @@ class Card_Villa(Card.Card):
     def hook_gain_this_card(self, game, player):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
-        player.addActions(1)
+        player.add_actions(1)
         return {"destination": "hand"}
 
 

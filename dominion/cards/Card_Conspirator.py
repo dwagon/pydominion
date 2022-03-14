@@ -20,7 +20,7 @@ class Card_Conspirator(Card.Card):
     def special(self, game, player):
         if self.numActionsPlayed(player) >= 3:
             player.pickup_card()
-            player.addActions(1)
+            player.add_actions(1)
 
     def numActionsPlayed(self, player):
         return sum([1 for c in player.played if c.isAction()])

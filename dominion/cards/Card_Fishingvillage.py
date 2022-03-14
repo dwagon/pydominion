@@ -20,7 +20,7 @@ class Card_Fishingvillage(Card.Card):
     def duration(self, game, player):
         """+1 action, +1 coin"""
         player.add_coins(1)
-        player.addActions(1)
+        player.add_actions(1)
 
 
 ###############################################################################
