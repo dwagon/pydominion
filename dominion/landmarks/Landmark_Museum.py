@@ -16,7 +16,7 @@ class Landmark_Museum(Landmark.Landmark):
         c = set()
         for card in player.allCards():
             c.add(card.name)
-        player.addScore("Museum", len(c) * 2)
+        player._add_score("Museum", len(c) * 2)
 
 
 ###############################################################################

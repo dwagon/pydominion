@@ -27,7 +27,7 @@ class Card_Emporium(Card.Card):
     def hook_gain_this_card(self, game, player):
         count = sum([1 for c in player.played if c.isAction()])
         if count >= 5:
-            player.addScore("Emporium", 2)
+            player._add_score("Emporium", 2)
             player.output("Gained 2VP from Emporium")
         else:
             player.output("No VP as only have {} action cards in play".format(count))

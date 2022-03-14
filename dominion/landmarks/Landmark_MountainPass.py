@@ -36,7 +36,7 @@ class Landmark_MountainPass(Landmark.Landmark):
 
             if winning_plr:
                 winning_plr.debt += curbid
-                winning_plr.addScore("Mountain Pass", 8)
+                winning_plr._add_score("Mountain Pass", 8)
                 game.output(
                     "%s won with a bid of %d for 8VP" % (winning_plr.name, curbid)
                 )

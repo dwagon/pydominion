@@ -19,7 +19,7 @@ class Landmark_Battlefield(Landmark.Landmark):
         if card.isVictory() and self._vp >= 0:
             self._vp -= 2
             player.output("Gained 2VP from Battlefield")
-            player.addScore("Battlefield", 2)
+            player._add_score("Battlefield", 2)
 
     def setup(self, game):
         self._vp = 6 * game.numplayers

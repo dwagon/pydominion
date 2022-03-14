@@ -997,7 +997,7 @@ class Player:
         self.output("-" * 50)
 
     ###########################################################################
-    def addScore(self, reason, points=1):
+    def _add_score(self, reason, points=1):
         if reason not in self.score:
             self.score[reason] = 0
         self.score[reason] += points

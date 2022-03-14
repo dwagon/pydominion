@@ -37,7 +37,7 @@ class Card_Bishop(Card.Card):
             return
         card = tc[0]
         points = int(card.cost / 2)
-        player.addScore("bishop", points)
+        player._add_score("bishop", points)
         player.output("Trashing %s for %d points" % (card.name, points))
 
     def trashOtherCard(self, game, player, victim):

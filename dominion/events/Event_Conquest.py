@@ -21,7 +21,7 @@ class Event_Conquest(Event.Event):
             if card.name == "Silver":
                 sc += 1
         player.output("Gained %d VP from Conquest" % sc)
-        player.addScore("Conquest", sc)
+        player._add_score("Conquest", sc)
 
 
 ###############################################################################

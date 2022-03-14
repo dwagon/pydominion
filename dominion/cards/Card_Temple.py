@@ -27,7 +27,7 @@ class Card_Temple(Card.Card):
         )
 
     def special(self, game, player):
-        player.addScore("Temple", 1)
+        player._add_score("Temple", 1)
         cardnames = {_.name for _ in player.hand}
         cards = [player.in_hand(_) for _ in cardnames]
         trash = player.plrTrashCard(
@@ -40,7 +40,7 @@ class Card_Temple(Card.Card):
     def hook_gain_this_card(self, game, player):
         score = game["Temple"].drainVP()
         player.output("Gaining %d VP from Temple" % score)
-        player.addScore("Temple", score)
+        player._add_score("Temple", score)
 
 
 ###############################################################################

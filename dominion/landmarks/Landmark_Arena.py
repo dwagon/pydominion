@@ -35,7 +35,7 @@ class Landmark_Arena(Landmark.Landmark):
         if disc:
             player.output("Gained 2 VP from Arena")
             self._vp -= 2
-            player.addScore("Arena", 2)
+            player._add_score("Arena", 2)
 
 
 ###############################################################################

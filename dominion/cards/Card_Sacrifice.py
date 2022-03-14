@@ -29,7 +29,7 @@ class Card_Sacrifice(Card.Card):
         if card.isTreasure():
             player.addCoin(2)
         if card.isVictory():
-            player.addScore("Sacrifice", 2)
+            player._add_score("Sacrifice", 2)
 
 
 ###############################################################################

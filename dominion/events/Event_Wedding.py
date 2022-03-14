@@ -15,7 +15,7 @@ class Event_Wedding(Event.Event):
         self.debtcost = 3
 
     def special(self, game, player):
-        player.addScore("Wedding", 1)
+        player._add_score("Wedding", 1)
         player.gainCard("Gold")
 
 

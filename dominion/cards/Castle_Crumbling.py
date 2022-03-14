@@ -17,11 +17,11 @@ class Card_CrumblingCastle(CastleCard):
         self.name = "Crumbling Castle"
 
     def hook_gain_this_card(self, game, player):
-        player.addScore("Crumbling Castle", 1)
+        player._add_score("Crumbling Castle", 1)
         player.gainCard("Silver")
 
     def hook_trashThisCard(self, game, player):
-        player.addScore("Crumbling Castle", 1)
+        player._add_score("Crumbling Castle", 1)
         player.gainCard("Silver")
 
 

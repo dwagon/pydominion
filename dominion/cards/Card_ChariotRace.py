@@ -30,7 +30,7 @@ class Card_ChariotRace(Card.Card):
                 % (card.name, other.name, othercard.name)
             )
             player.addCoin()
-            player.addScore("Chariot Race")
+            player._add_score("Chariot Race")
         else:
             player.output(
                 "Your %s costs less than %s's %s - Getting nothing"

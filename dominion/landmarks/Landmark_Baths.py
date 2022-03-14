@@ -20,7 +20,7 @@ class Landmark_Baths(Landmark.Landmark):
     def hook_end_turn(self, game, player):
         if not player.stats["gained"]:
             player.output("Gaining 2 from Baths as no cards gained")
-            player.addScore("Baths", 2)
+            player._add_score("Baths", 2)
             self._vp -= 2
 
     def setup(self, game):

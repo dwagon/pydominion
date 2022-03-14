@@ -22,7 +22,7 @@ class Landmark_Palace(Landmark.Landmark):
             "Palace scored %d VP (%d Copper, %d Silver, %d Gold)"
             % (score, num["Copper"], num["Silver"], num["Gold"])
         )
-        player.addScore("Palace", score)
+        player._add_score("Palace", score)
 
 
 ###############################################################################

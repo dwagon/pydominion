@@ -16,7 +16,7 @@ class Event_Dominate(Event.Event):
     def special(self, game, player):
         c = player.gainCard("Province")
         if c:
-            player.addScore("Dominate", 9)
+            player._add_score("Dominate", 9)
 
 
 ###############################################################################
