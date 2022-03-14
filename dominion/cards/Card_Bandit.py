@@ -20,7 +20,7 @@ class Card_Bandit(Card.Card):
     def special(self, game, player):
         player.gain_card("Gold")
         player.output("Gained a Gold")
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
     def thieveOn(self, victim, bandit):

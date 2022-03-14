@@ -32,7 +32,7 @@ class Card_Replace(Card.Card):
             player.add_card(gain, "topdeck")
             player.discardpile.remove(gain)
         if gain.isVictory():
-            for victim in player.attackVictims():
+            for victim in player.attack_victims():
                 victim.output("Gained a Curse due to {}'s Replace".format(player))
                 victim.gain_card("Curse")
 

@@ -21,7 +21,7 @@ class Card_Legionary(Card.Card):
         au = player.in_hand("Gold")
         if au:
             player.reveal_card(au)
-            for plr in player.attackVictims():
+            for plr in player.attack_victims():
                 plr.output(
                     "%s's Legionary forces you to discard down to 2" % player.name
                 )

@@ -24,7 +24,7 @@ class Card_Black_Cat(Card.Card):
         if owner == player:
             return
         if card.isVictory():
-            for plr in owner.attackVictims():
+            for plr in owner.attack_victims():
                 plr.output("{}'s Black Cat Cursed you".format(owner.name))
                 plr.gain_card("Curse", callhook=False)
 

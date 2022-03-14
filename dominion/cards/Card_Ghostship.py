@@ -19,7 +19,7 @@ class Card_Ghostship(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        for vic in player.attackVictims():
+        for vic in player.attack_victims():
             if vic.hand.size() >= 4:
                 todisc = vic.hand.size() - 3
                 vic.output(

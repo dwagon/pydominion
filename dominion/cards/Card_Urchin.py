@@ -21,7 +21,7 @@ class Card_Urchin(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Discard down to 4 cards from %s's Urchin" % player.name)
             plr.plr_discard_down_to(4)
 

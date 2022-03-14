@@ -41,7 +41,7 @@ class Card_Ambassador(Card.Card):
         for card in choice:
             player.hand.remove(card)
             game[cardname].add()
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Gained a %s from %s's Ambassador" % (cardname, player.name))
             plr.gain_card(cardname)
 

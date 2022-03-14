@@ -19,7 +19,7 @@ class Card_Cutpurse(Card.Card):
     def special(self, game, player):
         """Each other player discard a Copper card (or reveals a
         hand with no copper)."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             c = victim.in_hand("Copper")
             if c:
                 player.output("%s discarded a copper" % victim.name)

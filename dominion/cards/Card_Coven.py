@@ -21,7 +21,7 @@ class Card_Coven(Card.Card):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.exile_card("Curse")
             if game["Curse"].is_empty():
                 num = plr.unexile("Curse")

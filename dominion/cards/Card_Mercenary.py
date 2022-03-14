@@ -31,7 +31,7 @@ class Card_Mercenary(Card.Card):
         player.plrTrashCard(2, force=True)
         player.pickup_cards(2)
         player.addCoin(2)
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.plr_discard_down_to(3)
 
 

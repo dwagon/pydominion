@@ -22,7 +22,7 @@ class Card_Giant(Card.Card):
     def special(self, game, player):
         if player.flip_journey_token():
             player.addCoin(5)
-            for victim in player.attackVictims():
+            for victim in player.attack_victims():
                 c = victim.next_card()
                 victim.reveal_card(c)
                 if c.cost >= 3 and c.cost <= 6:

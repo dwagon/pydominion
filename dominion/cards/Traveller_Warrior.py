@@ -29,7 +29,7 @@ class Card_Warrior(Card.Card):
         for c in player.hand + player.played:
             if c.isTraveller():
                 count += 1
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             for _ in range(count):
                 c = victim.next_card()
                 if c.cost in (3, 4) and not c.potcost:

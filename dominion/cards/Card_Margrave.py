@@ -22,7 +22,7 @@ class Card_Margrave(Card.Card):
 
     def special(self, game, player):
         """Each other player draws a card, then discards down to 3 cards in hand"""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.pickup_card()
             plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
             plr.plr_discard_down_to(3)

@@ -18,7 +18,7 @@ class Card_Fortuneteller(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             while True:
                 card = plr.next_card()
                 plr.reveal_card(card)

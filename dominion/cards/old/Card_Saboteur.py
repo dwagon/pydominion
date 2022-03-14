@@ -23,7 +23,7 @@ class Card_Saboteur(Card.Card):
         deck until revealing one costing 3 or more. He trashes that
         card and may gain a card costing at most 2 less than it.
         He discards the other revealed cards."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             card = self.pickCard(victim, player)
             if not card:
                 continue

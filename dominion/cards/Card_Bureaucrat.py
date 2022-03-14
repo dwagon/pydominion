@@ -20,7 +20,7 @@ class Card_Bureaucrat(Card.Card):
         player.gain_card("Silver", "topdeck")
         player.output("Added silver to deck")
 
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             for c in pl.hand:
                 if c.isVictory():
                     pl.reveal_card(c)

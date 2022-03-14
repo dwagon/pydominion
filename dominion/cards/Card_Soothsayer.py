@@ -19,7 +19,7 @@ class Card_Soothsayer(Card.Card):
     def special(self, game, player):
         player.output("Gained up a Gold")
         player.gain_card("Gold")
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             player.output("%s got cursed" % pl.name)
             pl.output("%s's Soothsayer cursed you" % player.name)
             pl.gain_card("Curse")

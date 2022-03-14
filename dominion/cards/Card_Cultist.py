@@ -20,7 +20,7 @@ class Card_Cultist(Card.Card):
     def special(self, game, player):
         """Each other play gains a Ruins. You may play a Cultist
         from your hand."""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gain_card("Ruins")
         cultist = player.in_hand("Cultist")

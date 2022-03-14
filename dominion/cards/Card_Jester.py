@@ -20,7 +20,7 @@ class Card_Jester(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             card = plr.next_card()
             plr.discard_card(card)
             plr.output("%s's Jester discarded your %s" % (player.name, card.name))

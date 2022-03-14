@@ -18,7 +18,7 @@ class Card_Marauder(Card.Card):
         self.required_cards = ["Spoils"]
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Gained a ruin from %s's Marauder" % player.name)
             plr.gain_card("Ruins")
         player.gain_card("Spoils")

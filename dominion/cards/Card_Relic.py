@@ -19,7 +19,7 @@ class Card_Relic(Card.Card):
     def special(self, game, player):
         """When you play this, each other player puts his -1 Card token
         on his deck."""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             victim.card_token = True
             victim.output("-1 Card token active due to Relic by %s" % player.name)
 

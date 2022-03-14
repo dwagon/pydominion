@@ -17,7 +17,7 @@ class Card_Cardinal(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             exilecount = 0
             for _ in range(2):
                 crd = plr.pickup_card()

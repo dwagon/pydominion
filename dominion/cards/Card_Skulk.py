@@ -24,7 +24,7 @@ class Card_Skulk(Card.Card):
         player.gain_card("Gold")
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("{}'s Skulk hexed you".format(player.name))
             plr.receive_hex()
 

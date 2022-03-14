@@ -1706,7 +1706,7 @@ class Player:
         return _types
 
     ###########################################################################
-    def attackVictims(self):
+    def attack_victims(self):
         """Return list of other players who don't have defences"""
         victims = []
         for plr in list(self.game.players.values()):

@@ -18,7 +18,7 @@ class Card_Mountebank(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             for c in plr.hand:
                 if c.name == "Curse":
                     player.output("Player %s discarded a curse" % plr.name)

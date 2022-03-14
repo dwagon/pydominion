@@ -20,7 +20,7 @@ class Card_Torturer(Card.Card):
     def special(self, game, player):
         """Each other player chooses one: he discards 2 cards; or
         he gains a Curse card, putting it in his hand"""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Choose:")
             self.choiceOfDoom(plr, player)
 

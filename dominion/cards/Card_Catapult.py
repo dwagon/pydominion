@@ -24,7 +24,7 @@ class Card_Catapult(Card.Card):
         if not cards:
             return
         card = cards[0]
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             if card.cost >= 3:
                 plr.output("%s's Catapult Curses you" % player.name)
                 plr.gain_card("Curse")

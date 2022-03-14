@@ -35,7 +35,7 @@ class Card_PirateShip(Card.Card):
         )
         if choice == "attack":
             trashed = False
-            for victim in player.attackVictims():
+            for victim in player.attack_victims():
                 if self.attack_player(player, victim):
                     trashed = True
             if trashed:

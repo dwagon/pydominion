@@ -19,7 +19,7 @@ class Card_Goons(Card.Card):
 
     def special(self, game, player):
         """Each other player discards down to three cards"""
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("Discard down to 3 cards")
             plr.plr_discard_down_to(3)
 

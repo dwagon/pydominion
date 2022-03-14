@@ -19,7 +19,7 @@ class Card_OldWitch(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             player.output("{} got cursed".format(pl.name))
             pl.output("{}'s Old Witch cursed you".format(player.name))
             pl.gain_card("Curse")

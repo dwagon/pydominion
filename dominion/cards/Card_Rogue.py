@@ -26,7 +26,7 @@ class Card_Rogue(Card.Card):
 
     ###########################################################################
     def rifflePlayers(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             self.riffleVictim(plr, player)
 
     ###########################################################################

@@ -22,7 +22,7 @@ class Card_Scryingpool(Card.Card):
         self.potcost = True
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             self.discardOrPutBack(plr, player)
         self.discardOrPutBack(player, player)
         revealed = []

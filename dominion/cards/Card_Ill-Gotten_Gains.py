@@ -31,7 +31,7 @@ class Card_IGG(Card.Card):
             player.gain_card("Copper", destination="hand")
 
     def hook_gain_this_card(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.gain_card("Curse")
             plr.output("Cursed because %s gained an Ill-Gotten Gains" % player.name)
         return {}

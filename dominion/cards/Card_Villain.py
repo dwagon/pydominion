@@ -18,7 +18,7 @@ class Card_Villain(Card.Card):
     ###########################################################################
     def special(self, game, player):
         player.add_coffer(2)
-        for vic in player.attackVictims():
+        for vic in player.attack_victims():
             if vic.hand.size() >= 5:
                 from_cards = []
                 for card in vic.hand:

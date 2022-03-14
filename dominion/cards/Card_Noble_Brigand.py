@@ -25,7 +25,7 @@ class Card_Noble_Brigand(Card.Card):
         self.attack(game, player)
 
     def attack(self, game, player):
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             cards = self.getTreasureCards(victim, player)
             if not cards:
                 victim.output("%s's Noble Brigand gave you a copper" % player.name)

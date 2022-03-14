@@ -19,7 +19,7 @@ class Card_Sirmichael(KnightCard):
         self.cost = 5
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.plr_discard_down_to(3)
         self.knight_special(game, player)
 

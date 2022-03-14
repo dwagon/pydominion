@@ -57,7 +57,7 @@ class KnightCard(Card.Card):
         """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6 and discards the
         rest. If a knight is trashed by this, trash this card"""
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.knight_attack(game, player, pl)
 
     def knight_attack(self, game, player, victim):

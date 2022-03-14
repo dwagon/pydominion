@@ -26,7 +26,7 @@ class Card_Taxman(Card.Card):
         if not cards:
             return
         card = cards[0]
-        for vic in player.attackVictims():
+        for vic in player.attack_victims():
             if vic.hand.size() >= 5:
                 viccard = vic.in_hand(card.name)
                 if viccard:

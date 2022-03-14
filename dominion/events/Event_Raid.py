@@ -16,7 +16,7 @@ class Event_Raid(Event.Event):
     def special(self, game, player):
         """Gain a Silver per Silver that you have in play. Each other player
         puts his -1 Card token on his deck"""
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             victim.card_token = True
             victim.output("-1 Card token active due to Raid event by %s" % player.name)
         count = 0

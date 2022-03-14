@@ -23,7 +23,7 @@ class Card_Thief(Card.Card):
         that you choose. You may gain any or all of these trashed
         Cards. They discard the other revealed cards."""
 
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):

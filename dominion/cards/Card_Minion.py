@@ -38,7 +38,7 @@ class Card_Minion(Card.Card):
 
     def attack(self, game, player):
         self.dropAndDraw(player)
-        for victim in player.attackVictims():
+        for victim in player.attack_victims():
             if victim.hand.size() >= 5:
                 self.dropAndDraw(victim)
 

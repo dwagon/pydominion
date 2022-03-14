@@ -20,7 +20,7 @@ class Card_Followers(Card.Card):
 
     def special(self, game, player):
         player.gain_card("Estate")
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("%s's Followers cursed you" % player.name)
             plr.gain_card("Curse")
             plr.plr_discard_down_to(3)

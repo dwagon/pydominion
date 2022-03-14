@@ -23,7 +23,7 @@ class Card_Tormentor(Card.Card):
             player.gain_card("Imp")
             player.output("Gained an Imp")
         else:
-            for pl in player.attackVictims():
+            for pl in player.attack_victims():
                 player.output("Hexed {}".format(pl.name))
                 pl.output("Received a hex from {}'s Tormentor".format(player.name))
                 pl.receive_hex()

@@ -21,7 +21,7 @@ class Card_Bridgetroll(Card.Card):
 
     def special(self, game, player):
         self._played = True
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             plr.output("%s's Bridge Troll set your -1 Coin token" % player.name)
             plr.coin_token = True
 

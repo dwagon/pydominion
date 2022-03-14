@@ -19,7 +19,7 @@ class Card_Witch(Card.Card):
 
     def special(self, game, player):
         """All other players gain a curse"""
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             player.output("%s got cursed" % pl.name)
             pl.output("%s's witch cursed you" % player.name)
             pl.gain_card("Curse")

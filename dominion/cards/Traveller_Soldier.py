@@ -30,7 +30,7 @@ class Card_Soldier(Card.Card):
                 count += 1
         player.addCoin(count)
         player.output("Gained %d extra coins" % count)
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             if plr.hand.size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
                 plr.plrDiscardCards(force=True)

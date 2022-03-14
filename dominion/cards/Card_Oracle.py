@@ -17,7 +17,7 @@ class Card_Oracle(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        for plr in player.attackVictims():
+        for plr in player.attack_victims():
             self.attack(player, plr, "%s's" % plr.name)
         self.attack(player, player, "your")
         player.pickup_cards(2)

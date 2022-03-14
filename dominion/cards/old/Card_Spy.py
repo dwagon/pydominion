@@ -20,7 +20,7 @@ class Card_Spy(Card.Card):
     def special(self, game, player):
         """Each player (including you) reveals the top of his deck and either discards it or puts it back, your choice"""
         self.spyOn(player, player)
-        for pl in player.attackVictims():
+        for pl in player.attack_victims():
             self.spyOn(player, pl)
 
     def spyOn(self, attacker, victim):
