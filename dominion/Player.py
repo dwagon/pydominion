@@ -836,7 +836,7 @@ class Player:
     def turn(self):
         self.turn_number += 1
         self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
-        stats = "(%d points, %d cards)" % (self.getScore(), self.countCards())
+        stats = "(%d points, %d cards)" % (self.get_score(), self.countCards())
         self.output("%s's Turn %s" % (self.name, stats))
         self.action_phase()
         self.buy_phase()
@@ -1028,7 +1028,7 @@ class Player:
         return scr
 
     ###########################################################################
-    def getScore(self, verbose=False):
+    def get_score(self, verbose=False):
         scr = self.get_score_details(verbose)
         vp = sum(scr.values())
         if verbose:
