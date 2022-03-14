@@ -926,7 +926,7 @@ class Player:
         elif opt["action"] == "reserve":
             self.call_reserve(opt["card"])
         elif opt["action"] == "coffer":
-            self.spendCoffer()
+            self.spend_coffer()
         elif opt["action"] == "villager":
             self.spendVillager()
         elif opt["action"] == "play":
@@ -1087,7 +1087,7 @@ class Player:
             c.hook_start_turn(self.game, self)
 
     ###########################################################################
-    def spendCoffer(self):
+    def spend_coffer(self):
         if self.coffer <= 0:
             return
         self.coffer -= 1
