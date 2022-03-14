@@ -23,7 +23,7 @@ class Card_HauntedWoods(Card.Card):
     def hook_allPlayers_buy_card(self, game, player, owner, card):
         if player == owner:
             return
-        if player.hasDefense(owner):
+        if player.has_defense(owner):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
         for crd in player.hand[:]:

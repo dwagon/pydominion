@@ -1464,11 +1464,11 @@ class Player:
         return options
 
     ###########################################################################
-    def hasDefense(self, attacker, verbose=True):
+    def has_defense(self, attacker, verbose=True):
         assert isinstance(attacker, Player)
         for c in self.hand:
             c.hook_underAttack(game=self.game, player=self, attacker=attacker)
-            if c.hasDefense():
+            if c.has_defense():
                 if verbose:
                     attacker.output("Player %s is defended" % self.name)
                 return True
@@ -1712,7 +1712,7 @@ class Player:
         for plr in list(self.game.players.values()):
             if plr == self:
                 continue
-            if plr.hasDefense(self):
+            if plr.has_defense(self):
                 continue
             victims.append(plr)
         return victims

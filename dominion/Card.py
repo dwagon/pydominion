@@ -151,7 +151,7 @@ class Card:
         pass  # pragma: no cover
 
     ##########################################################################
-    def hasDefense(self):
+    def has_defense(self):
         return self.defense
 
     ##########################################################################
