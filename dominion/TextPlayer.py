@@ -209,7 +209,7 @@ class TextPlayer(Player):
                 if showdesc:
                     o["desc"] = c.description(self)
                 if kwargs.get("printcost"):
-                    o["details"] = str(self.cardCost(c))
+                    o["details"] = str(self.card_cost(c))
                 if kwargs.get("printtypes"):
                     o["details"] = c.get_cardtype_repr()
                 options.append(o)

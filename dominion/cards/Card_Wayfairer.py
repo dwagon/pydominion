@@ -46,10 +46,10 @@ class Test_Wayfarer(unittest.TestCase):
 
     def test_buy(self):
         """Buy a wayfairer"""
-        cost = self.plr.cardCost(self.card)
+        cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)
         self.plr.gainCard("Estate")
-        cost = self.plr.cardCost(self.card)
+        cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 2)
 
 

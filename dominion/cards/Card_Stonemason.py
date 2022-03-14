@@ -28,7 +28,7 @@ class Card_Stonemason(Card.Card):
             prompt="Trash a card from your hand. Gain 2 cards each costing less than it.",
         )
         if tc:
-            cost = player.cardCost(tc[0]) - 1
+            cost = player.card_cost(tc[0]) - 1
             if cost < 0:
                 player.output("No suitable cards")
                 return

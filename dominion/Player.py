@@ -735,7 +735,7 @@ class Player:
             if not c.purchasable:
                 continue
             all_cards.add(c)
-        all_cards.sort(key=self.cardCost)
+        all_cards.sort(key=self.card_cost)
         all_cards.sort(key=lambda c: c.basecard)
         return all_cards
 
@@ -1274,13 +1274,13 @@ class Player:
             card.special(game=self.game, player=self)
 
     ###########################################################################
-    def cardCost(self, card):
+    def card_cost(self, card):
         assert isinstance(card, (Card.Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if "-Cost" in self.which_token(card.name):
             cost -= 2
         for crd in self.relevant_cards():
-            cost += crd.hook_cardCost(game=self.game, player=self, card=card)
+            cost += crd.hook_card_cost(game=self.game, player=self, card=card)
         cost += card.hook_this_card_cost(game=self.game, player=self)
         return max(0, cost)
 
@@ -1382,7 +1382,7 @@ class Player:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
-        cost = self.cardCost(card)
+        cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
         if self.coin < cost:
@@ -1624,7 +1624,7 @@ class Player:
         for c in self.game.cardTypes():
             if not c.pilesize:
                 continue
-            cost = self.cardCost(c)
+            cost = self.card_cost(c)
             if not self.select_by_type(c, types):
                 continue
             if not c.purchasable:
@@ -1644,7 +1644,7 @@ class Player:
             if oper(cost, coin) and oper(c.potcost, potions):
                 affordable.add(c)
                 continue
-        affordable.sort(key=self.cardCost)
+        affordable.sort(key=self.card_cost)
         affordable.sort(key=lambda c: c.basecard)
         return affordable
 
@@ -1720,7 +1720,7 @@ class Player:
     ###########################################################################
     def coststr(self, card):
         cost = []
-        cost.append("%d Coins" % self.cardCost(card))
+        cost.append("%d Coins" % self.card_cost(card))
         if card.debtcost:
             cost.append("%d Debt" % card.debtcost)
         if card.potcost:

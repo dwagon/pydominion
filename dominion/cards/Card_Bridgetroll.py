@@ -25,7 +25,7 @@ class Card_Bridgetroll(Card.Card):
             plr.output("%s's Bridge Troll set your -1 Coin token" % player.name)
             plr.coin_token = True
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         if self._played:
             return -1
         return 0
@@ -55,9 +55,9 @@ class Test_Bridgetroll(unittest.TestCase):
 
     def test_costreduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
 
 
 ###############################################################################

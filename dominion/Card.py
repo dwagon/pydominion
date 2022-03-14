@@ -316,7 +316,7 @@ class Card:
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         return 0  # pragma: no cover
 
     ##########################################################################

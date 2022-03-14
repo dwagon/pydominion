@@ -17,7 +17,7 @@ class Card_Bridge(Card.Card):
         self.coin = 1
         self.cost = 4
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         """All cards (including cards in players' hands) cost 1
         less this turn, but not less than 0"""
         if self in player.played:
@@ -41,9 +41,9 @@ class Test_Bridge(unittest.TestCase):
 
     def test_costreduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
 
 
 ###############################################################################

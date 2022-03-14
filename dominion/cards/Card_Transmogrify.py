@@ -25,7 +25,7 @@ class Card_Transmogrify(Card.Card):
             prompt="Trash a card from you hand. Gain a card costing up to 1 more",
         )
         if tc:
-            cost = player.cardCost(tc[0])
+            cost = player.card_cost(tc[0])
             player.plrGainCard(cost + 1, modifier="less", destination="hand")
 
 

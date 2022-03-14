@@ -25,7 +25,7 @@ class Card_Scrap(Card.Card):
         )
         if not trc:
             return
-        cost = player.cardCost(trc[0])
+        cost = player.card_cost(trc[0])
         if cost >= 1:
             player.pickup_card()
         if cost >= 2:

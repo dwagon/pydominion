@@ -39,7 +39,7 @@ class Card_Taxman(Card.Card):
                     player.output("%s doesn't have a %s" % (vic.name, card.name))
                     for c in vic.hand:
                         vic.reveal_card(c)
-        cardcost = player.cardCost(card) + 3
+        cardcost = player.card_cost(card) + 3
         player.plrGainCard(cost=cardcost, types={Card.TYPE_TREASURE: True})
 
 

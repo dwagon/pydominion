@@ -16,7 +16,7 @@ class Card_Quarry(Card.Card):
         self.coin = 1
         self.cost = 4
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         if self in player.played and card.isAction():
             return -2
         return 0
@@ -35,8 +35,8 @@ class Test_Quarry(unittest.TestCase):
         """Play a quarry"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
-        self.assertEqual(self.plr.cardCost(self.g["Moat"]), 0)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g["Moat"]), 0)
 
 
 ###############################################################################

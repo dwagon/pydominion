@@ -19,7 +19,7 @@ class Card_Inventor(Card.Card):
         """Gain a card costing up to 4"""
         player.plrGainCard(4)
 
-    def hook_cardCost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):
         if self in player.played:
             return -1
         return 0
@@ -41,9 +41,9 @@ class Test_Inventor(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["Get Gardens"]
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
         self.plr.play_card(self.inventor)
-        self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
 
 
 ###############################################################################
