@@ -50,7 +50,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.card = self.g["Festival"].remove()
         self.plr.set_hand("Duchy")
         self.plr.add_card(self.card, "hand")
-        self.plr.setFavor(2)
+        self.plr.set_favors(2)
         self.plr.test_input = ["Gain"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_favors(), 1)
@@ -61,7 +61,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.card = self.g["Festival"].remove()
         self.plr.set_hand("Duchy")
         self.plr.add_card(self.card, "hand")
-        self.plr.setFavor(2)
+        self.plr.set_favors(2)
         self.plr.test_input = ["No"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_favors(), 2)

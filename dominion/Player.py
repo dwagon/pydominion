@@ -1500,7 +1500,7 @@ class Player:
         self.favors += num
 
     ###########################################################################
-    def setFavor(self, num=1):
+    def set_favors(self, num=1):
         assert isinstance(num, int)
         self.favors = num
 

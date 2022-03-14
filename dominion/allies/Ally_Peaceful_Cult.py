@@ -38,7 +38,7 @@ class Test_Peaceful_Cult(unittest.TestCase):
 
     def test_flag(self):
         self.plr.set_hand("Copper", "Silver", "Gold")
-        self.plr.setFavor(2)
+        self.plr.set_favors(2)
         self.plr.test_input = ["Trash Copper", "Finish", "End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_favors(), 1)
