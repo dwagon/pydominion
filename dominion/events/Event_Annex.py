@@ -59,7 +59,7 @@ class Test_Annex(unittest.TestCase):
             "Estate",
             "Finish",
         ]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Gold"))

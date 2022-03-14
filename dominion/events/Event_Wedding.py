@@ -30,7 +30,7 @@ class Test_Wedding(unittest.TestCase):
     def test_play(self):
         """Perform a Wedding"""
         self.plr.add_coins(4)
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.debt, 3)
         self.assertEqual(self.plr.get_score_details()["Wedding"], 1)

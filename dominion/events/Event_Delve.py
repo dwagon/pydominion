@@ -30,7 +30,7 @@ class Test_Delve(unittest.TestCase):
     def test_play(self):
         """Perform a Delve"""
         self.plr.add_coins(2)
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertEqual(self.plr.get_buys(), 2)
 

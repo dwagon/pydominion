@@ -32,7 +32,7 @@ class Test_Windfall(unittest.TestCase):
         self.plr.add_coins(5)
         self.plr.set_discard()
         self.plr.set_deck()
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 3)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Gold")

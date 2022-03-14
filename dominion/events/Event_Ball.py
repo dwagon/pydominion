@@ -33,7 +33,7 @@ class Test_Ball(unittest.TestCase):
         """Use Ball"""
         self.plr.add_coins(5)
         self.plr.test_input = ["militia", "moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertTrue(self.plr.coin_token)
         self.assertIsNotNone(self.plr.in_discard("Militia"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))

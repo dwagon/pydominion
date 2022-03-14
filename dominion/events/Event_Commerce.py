@@ -33,7 +33,7 @@ class Test_Commerce(unittest.TestCase):
         """Use Commerce"""
         self.plr.add_coins(5)
         self.plr.gain_card("Moat")
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 

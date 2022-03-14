@@ -42,7 +42,7 @@ class Test_ScoutingParty(unittest.TestCase):
         self.plr.add_coins(2)
         self.plr.set_deck("Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.deck[0].name, "Gold")
         self.assertEqual(self.plr.deck[1].name, "Silver")
         self.assertEqual(self.plr.discardpile.size(), 3)

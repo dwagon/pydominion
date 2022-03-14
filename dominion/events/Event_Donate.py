@@ -40,7 +40,7 @@ class Test_Donate(unittest.TestCase):
         self.plr.set_hand("Gold", "Estate", "Copper", "Copper")
         self.plr.set_discard("Province", "Estate", "Copper", "Copper")
         self.plr.set_deck("Silver", "Estate", "Copper", "Copper")
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
         self.plr.test_input = ["Gold", "Province", "Silver", "finish"]
         self.plr.end_turn()

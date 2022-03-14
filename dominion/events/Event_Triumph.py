@@ -31,7 +31,7 @@ class Test_Triumph(unittest.TestCase):
     def test_triumph(self):
         """Use Triumph"""
         self.plr.gain_card("Copper")
-        self.plr.performEvent(self.event)
+        self.plr.perform_event(self.event)
         self.assertIsNotNone(self.plr.in_discard("Estate"))
         scores = self.plr.get_score_details()
         self.assertEqual(scores["Triumph"], 2)

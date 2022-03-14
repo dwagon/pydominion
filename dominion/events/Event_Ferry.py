@@ -35,7 +35,7 @@ class Test_Ferry(unittest.TestCase):
     def test_play(self):
         self.plr.add_coins(3)
         self.plr.test_input = ["moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["-2 Cost"], "Moat")
         self.assertEqual(self.plr.get_coins(), 0)
 

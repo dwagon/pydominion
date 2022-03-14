@@ -920,7 +920,7 @@ class Player:
         if opt["action"] == "buy":
             self.buy_card(opt["card"])
         elif opt["action"] == "event":
-            self.performEvent(opt["card"])
+            self.perform_event(opt["card"])
         elif opt["action"] == "project":
             self.buy_project(opt["card"])
         elif opt["action"] == "reserve":
@@ -1579,7 +1579,7 @@ class Player:
         return True
 
     ###########################################################################
-    def performEvent(self, evnt):
+    def perform_event(self, evnt):
         try:
             assert isinstance(evnt, EventPile)
         except AssertionError:

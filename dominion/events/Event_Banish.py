@@ -60,7 +60,7 @@ class Test_Banish(unittest.TestCase):
         self.plr.add_coins(4)
         self.plr.set_hand("Estate", "Estate", "Estate", "Duchy")
         self.plr.test_input = ["Estate", "2"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_exile("Estate"))
         self.assertIsNotNone(self.plr.in_hand("Estate"))
 
@@ -69,7 +69,7 @@ class Test_Banish(unittest.TestCase):
         self.plr.add_coins(4)
         self.plr.set_hand("Estate", "Estate", "Estate", "Duchy")
         self.plr.test_input = ["Duchy"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_exile("Duchy"))
 
 

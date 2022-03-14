@@ -37,7 +37,7 @@ class Test_Training(unittest.TestCase):
         """Use Training"""
         self.plr.add_coins(6)
         self.plr.test_input = ["moat"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["+1 Coin"], "Moat")
         self.assertEqual(self.plr.get_coins(), 0)
 

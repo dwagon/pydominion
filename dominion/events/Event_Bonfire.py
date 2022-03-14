@@ -39,7 +39,7 @@ class Test_Bonfire(unittest.TestCase):
         self.plr.add_card(self.gold, "hand")
         self.plr.play_card(self.gold)
         self.plr.test_input = ["Copper", "Gold", "Finish"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
 

@@ -35,7 +35,7 @@ class Test_Ritual(unittest.TestCase):
         self.plr.add_coins(4)
         self.plr.set_hand("Gold")
         self.plr.test_input = ["Gold"]
-        self.plr.performEvent(self.event)
+        self.plr.perform_event(self.event)
         self.assertEqual(self.plr.get_score_details()["Ritual"], 6)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Curse"))

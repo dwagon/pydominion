@@ -34,7 +34,7 @@ class Test_Enclave(unittest.TestCase):
     def test_Enclave(self):
         """Use Enclave"""
         self.plr.add_coins(8)
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_exile("Duchy"))
 

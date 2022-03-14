@@ -50,7 +50,7 @@ class Test_Save(unittest.TestCase):
         self.plr.coin = 1
         self.plr.set_hand("Gold")
         self.plr.test_input = ["Gold"]
-        self.plr.performEvent(self.card)
+        self.plr.perform_event(self.card)
         self.assertEqual(self.plr._save_reserve[0].name, "Gold")
         self.plr.end_turn()
         self.assertIsNotNone(self.plr.in_hand("Gold"))
