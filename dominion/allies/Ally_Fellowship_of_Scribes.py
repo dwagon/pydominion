@@ -18,7 +18,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
             return
         if player.hand.size() > 4:
             return
-        choice = player.plrChooseOptions(
+        choice = player.plr_choose_options(
             "Use Fellowship of Scribes to spend a favor to pickup a card?",
             ("Gain a card", "gain"),
             ("No thanks", "no"),
