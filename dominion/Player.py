@@ -922,7 +922,7 @@ class Player:
         elif opt["action"] == "event":
             self.performEvent(opt["card"])
         elif opt["action"] == "project":
-            self.buyProject(opt["card"])
+            self.buy_project(opt["card"])
         elif opt["action"] == "reserve":
             self.call_reserve(opt["card"])
         elif opt["action"] == "coffer":
@@ -1560,7 +1560,7 @@ class Player:
         return "<Player %s>" % self.name
 
     ###########################################################################
-    def buyProject(self, project):
+    def buy_project(self, project):
         assert issubclass(project.__class__, ProjectPile)
         if not self.buys:
             self.output("Need a buy to buy a project")
