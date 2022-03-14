@@ -43,7 +43,7 @@ class Test_Plaza(unittest.TestCase):
             self.plr.test_input = ["discard gold"]
             self.plr.add_card(self.card, "hand")
             self.plr.play_card(self.card)
-            self.assertEqual(self.plr.getCoffer(), 1)
+            self.assertEqual(self.plr.get_coffers(), 1)
             self.assertEqual(self.plr.get_actions(), 2)
             self.assertEqual(self.plr.hand.size(), 1)
         except AssertionError:  # pragma: no cover

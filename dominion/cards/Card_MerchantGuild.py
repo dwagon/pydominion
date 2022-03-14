@@ -43,7 +43,7 @@ class Test_MerchantGuild(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.setCoin(3)
         self.plr.buy_card(self.g["Estate"])
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
 
 
 ###############################################################################

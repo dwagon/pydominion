@@ -38,13 +38,13 @@ class Test_Baker(unittest.TestCase):
 
     def test_setup(self):
         """Test each player having a coin"""
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
 
     def test_play(self):
         """Play a baker"""
         self.plr.coffer = 0
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 

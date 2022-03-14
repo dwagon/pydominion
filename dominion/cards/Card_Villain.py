@@ -62,11 +62,11 @@ class Test_Villain(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
-        sc = self.plr.getCoffer()
+        sc = self.plr.get_coffers()
         self.vic.set_hand("Gold", "Province", "Copper", "Copper", "Copper")
         self.vic.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoffer(), sc + 2)
+        self.assertEqual(self.plr.get_coffers(), sc + 2)
         self.assertIsNotNone(self.vic.in_discard("Province"))
 
 

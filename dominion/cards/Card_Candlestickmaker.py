@@ -35,7 +35,7 @@ class Test_Candlestickmaker(unittest.TestCase):
         """Play a candlestick maker"""
         self.plr.coffer = 0
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.getCoffer(), 1)
+        self.assertEqual(self.plr.get_coffers(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
 
