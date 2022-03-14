@@ -1665,7 +1665,7 @@ class Player:
         return self.cardsAffordable(operator.eq, coin, potions, types)
 
     ###########################################################################
-    def getCards(self):
+    def get_cards(self):
         """Return a list of all teh cards owned"""
         cards = defaultdict(int)
         for _, stack in self.stacklist:

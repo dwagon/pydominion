@@ -810,7 +810,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.output("")
         for plr in self.player_list():
             self.output("Cards of %s:" % plr.name)
-            for k, v in plr.getCards().items():
+            for k, v in plr.get_cards().items():
                 self.output("%s: %s=%s" % (plr.name, k, v))
         self.output("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
         return scores
