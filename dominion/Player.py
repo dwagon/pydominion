@@ -1618,7 +1618,7 @@ class Player:
         return True
 
     ###########################################################################
-    def cardsAffordable(self, oper, coin, potions, types):
+    def cards_affordable(self, oper, coin, potions, types):
         """Return the list of cards for under cost"""
         affordable = PlayArea([])
         for c in self.game.cardTypes():
@@ -1654,7 +1654,7 @@ class Player:
         if types is None:
             types = {}
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.le, coin, potions, types)
+        return self.cards_affordable(operator.le, coin, potions, types)
 
     ###########################################################################
     def cardsWorth(self, coin, potions=0, types=None):
@@ -1662,7 +1662,7 @@ class Player:
         if types is None:
             types = {}
         types = self.typeSelector(types)
-        return self.cardsAffordable(operator.eq, coin, potions, types)
+        return self.cards_affordable(operator.eq, coin, potions, types)
 
     ###########################################################################
     def get_cards(self):
