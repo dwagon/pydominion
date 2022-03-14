@@ -1799,7 +1799,7 @@ class Player:
         return None
 
     ###########################################################################
-    def plrPickCard(self, force=False, **kwargs):
+    def plr_pick_card(self, force=False, **kwargs):
         sel = self.cardSel(force=force, **kwargs)
         return sel[0]
 
