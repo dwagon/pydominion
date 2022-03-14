@@ -17,15 +17,15 @@ When you gain or trash this, +2 Favors."""
         self.cost = 2
 
     def special(self, game, player):
-        disc = player.plrDiscardCards(num=3, force=True)
+        disc = player.plr_discard_cards(num=3, force=True)
         if disc:
-            player.addCoin(3)
+            player.add_coins(3)
 
     def hook_gain_this_card(self, game, player):
-        player.addFavor(2)
+        player.add_favors(2)
 
     def hook_trashThisCard(self, game, player):
-        player.addFavor(2)
+        player.add_favors(2)
 
 
 ###############################################################################
@@ -38,32 +38,32 @@ class Test_Sycophant(unittest.TestCase):
 
     def test_gain(self):
         """Gain the card"""
-        favs = self.plr.getFavor()
-        self.plr.gainCard("Sycophant")
-        self.assertEqual(self.plr.getFavor(), favs + 2)
+        favs = self.plr.get_favors()
+        self.plr.gain_card("Sycophant")
+        self.assertEqual(self.plr.get_favors(), favs + 2)
 
     def test_trash(self):
         """Test trashing the card"""
-        self.plr.addCard(self.card, "hand")
-        favs = self.plr.getFavor()
-        self.plr.trashCard(self.card)
-        self.assertEqual(self.plr.getFavor(), favs + 2)
+        self.plr.add_card(self.card, "hand")
+        favs = self.plr.get_favors()
+        self.plr.trash_card(self.card)
+        self.assertEqual(self.plr.get_favors(), favs + 2)
 
     def test_play(self):
         """Play the card"""
-        favs = self.plr.getFavor()
-        coin = self.plr.getCoin()
-        self.plr.setHand("Estate", "Duchy", "Province", "Silver")
-        self.plr.addCard(self.card, "hand")
+        favs = self.plr.get_favors()
+        coin = self.plr.get_coins()
+        self.plr.set_hand("Estate", "Duchy", "Province", "Silver")
+        self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Discard Estate",
             "Discard Duchy",
             "Discard Province",
             "Finish",
         ]
-        self.plr.playCard(self.card)
-        self.assertEqual(self.plr.getFavor(), favs)
-        self.assertEqual(self.plr.getCoin(), coin + 3)
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_favors(), favs)
+        self.assertEqual(self.plr.get_coins(), coin + 3)
         self.assertIsNone(self.plr.in_hand("Province"))
 
 
