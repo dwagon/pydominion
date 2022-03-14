@@ -30,7 +30,7 @@ class Card_Tournament(Card.Card):
         if player.in_hand("Province"):
             player.output("Province revealed so gain a prize")
             player.discard_card(player.in_hand("Province"))
-            player.gainPrize()
+            player.gain_prize()
         if not found:
             player.output("No Province revealed")
             player.add_coins(1)

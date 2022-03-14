@@ -1545,7 +1545,7 @@ class Player:
         self.buys = num
 
     ###########################################################################
-    def gainPrize(self):
+    def gain_prize(self):
         prizes = [self.game[c] for c in self.game.getPrizes()]
         available = [cp for cp in prizes if not cp.is_empty()]
         if available:
