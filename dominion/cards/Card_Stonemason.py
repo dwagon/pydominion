@@ -77,7 +77,7 @@ class Test_Stonemason(unittest.TestCase):
     def test_buy(self):
         self.plr.coin = 5
         self.plr.test_input = ["3", "Moat", "Stonemason"]
-        self.plr.buyCard(self.g["Stonemason"])
+        self.plr.buy_card(self.g["Stonemason"])
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Stonemason"))
 

@@ -21,7 +21,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
             if not cp.isGathering():
                 cls._vp[cp.name] = 2
 
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_allPlayers_buy_card(self, game, player, owner, card):
         if game.landmarks["Defiled Shrine"]._vp[card.name]:
             game.landmarks["Defiled Shrine"]._vp[card.name] -= 1
             self.stored_vp += 1
@@ -49,9 +49,9 @@ class Test_DefiledShrine(unittest.TestCase):
         self.plr.setBuys(2)
         self.plr.setCoin(5)
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 2)
-        self.plr.buyCard(self.g["Moat"])
+        self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 1)
-        self.plr.buyCard(self.g["Curse"])
+        self.plr.buy_card(self.g["Curse"])
         self.assertEqual(self.plr.score["Defiled Shrine"], 1)
 
 

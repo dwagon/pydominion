@@ -21,7 +21,7 @@ class Card_Swamphag(Card.Card):
     def duration(self, game, player):
         player.addCoin(3)
 
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_allPlayers_buy_card(self, game, player, owner, card):
         if player == owner:
             return
         player.gain_card("Curse")
@@ -41,7 +41,7 @@ class Test_Swamphag(unittest.TestCase):
     def test_play(self):
         self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
-        self.victim.buyCard(self.g["Copper"])
+        self.victim.buy_card(self.g["Copper"])
         self.assertEqual(self.attacker.durationpile[0].name, "Swamp Hag")
         self.assertIsNotNone(self.victim.in_discard("Curse"))
         self.attacker.start_turn()

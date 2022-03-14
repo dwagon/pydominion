@@ -54,7 +54,7 @@ class Test_Duplicate(unittest.TestCase):
         self.plr.coin = 6
         self.plr.set_reserve("Duplicate")
         self.plr.test_input = ["Gold"]
-        self.plr.buyCard(self.g["Gold"])
+        self.plr.buy_card(self.g["Gold"])
         self.assertEqual(self.plr.discardpile.size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, "Gold")
@@ -65,7 +65,7 @@ class Test_Duplicate(unittest.TestCase):
         self.plr.coin = 6
         self.plr.set_reserve()
         self.plr.set_hand("Duplicate")
-        self.plr.buyCard(self.g["Gold"])
+        self.plr.buy_card(self.g["Gold"])
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.coin, 0)
 

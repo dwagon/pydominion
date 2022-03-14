@@ -20,7 +20,7 @@ class Card_HauntedWoods(Card.Card):
     def duration(self, game, player):
         player.pickup_cards(3)
 
-    def hook_allPlayers_buyCard(self, game, player, owner, card):
+    def hook_allPlayers_buy_card(self, game, player, owner, card):
         if player == owner:
             return
         if player.hasDefense(owner):
@@ -47,7 +47,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.vic.setCoin(6)
-        self.vic.buyCard(self.g["Gold"])
+        self.vic.buy_card(self.g["Gold"])
         self.assertIsNotNone(self.vic.in_deck("Silver"))
         self.assertIsNotNone(self.vic.in_deck("Duchy"))
         self.assertIsNotNone(self.vic.in_deck("Province"))

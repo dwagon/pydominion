@@ -109,7 +109,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.coin = 6
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.set_deck("Silver", "Province", "Duchy")
-        self.plr.buyCard(self.g["Doctor"])
+        self.plr.buy_card(self.g["Doctor"])
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Province"))
         self.assertEqual(self.plr.deck[-1].name, "Silver")

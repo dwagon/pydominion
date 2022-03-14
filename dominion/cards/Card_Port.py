@@ -51,7 +51,7 @@ class Test_Port(unittest.TestCase):
         """Buy a port"""
         self.plr.set_discard()
         self.plr.setCoin(5)
-        self.plr.buyCard(self.g["Port"])
+        self.plr.buy_card(self.g["Port"])
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Port")
         self.assertEqual(self.plr.discardpile.size(), 2)

@@ -46,7 +46,7 @@ class Test_Masterpiece(unittest.TestCase):
         """Buy a Masterpiece"""
         self.plr.coin = 5
         self.plr.test_input = ["1"]
-        self.plr.buyCard(self.g["Masterpiece"])
+        self.plr.buy_card(self.g["Masterpiece"])
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 

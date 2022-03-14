@@ -918,7 +918,7 @@ class Player:
     ###########################################################################
     def _perform_action(self, opt):
         if opt["action"] == "buy":
-            self.buyCard(opt["card"])
+            self.buy_card(opt["card"])
         elif opt["action"] == "event":
             self.performEvent(opt["card"])
         elif opt["action"] == "project":
@@ -1374,7 +1374,7 @@ class Player:
         self.coin -= ans
 
     ###########################################################################
-    def buyCard(self, card):
+    def buy_card(self, card):
         assert isinstance(card, CardPile)
         if not self.buys:  # pragma: no cover
             return
@@ -1403,17 +1403,17 @@ class Player:
             self.plrTrashCard()
         self.hook_buy_card(newcard)
         newcard.hook_buy_this_card(game=self.game, player=self)
-        self.hook_allPlayers_buyCard(newcard)
+        self.hook_allPlayers_buy_card(newcard)
 
     ###########################################################################
-    def hook_allPlayers_buyCard(self, card):
+    def hook_allPlayers_buy_card(self, card):
         for player in self.game.player_list():
             for crd in player.durationpile:
-                crd.hook_allPlayers_buyCard(
+                crd.hook_allPlayers_buy_card(
                     game=self.game, player=self, owner=player, card=card
                 )
         for crd in self.game.landmarks.values():
-            crd.hook_allPlayers_buyCard(
+            crd.hook_allPlayers_buy_card(
                 game=self.game, player=self, owner=self, card=card
             )
 

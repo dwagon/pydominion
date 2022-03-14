@@ -62,7 +62,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["Yes"]
-        self.plr.buyCard(self.g["Moat"])
+        self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.plr._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
@@ -75,7 +75,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["No"]
-        self.plr.buyCard(self.g["Moat"])
+        self.plr.buy_card(self.g["Moat"])
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
