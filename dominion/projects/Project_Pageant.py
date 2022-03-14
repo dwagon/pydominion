@@ -34,7 +34,7 @@ class Test_Pageant(unittest.TestCase):
     def test_play(self):
         numc = self.plr.get_coffers()
         self.plr.assign_project("Pageant")
-        self.plr.setCoin(5)
+        self.plr.set_coins(5)
         self.plr.test_input = ["End Phase", "4"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_coffers(), numc + 4)

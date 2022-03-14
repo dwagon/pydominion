@@ -41,7 +41,7 @@ class Test_MerchantGuild(unittest.TestCase):
         """Play the card"""
         self.plr.coffer = 0
         self.plr.play_card(self.card)
-        self.plr.setCoin(3)
+        self.plr.set_coins(3)
         self.plr.buy_card(self.g["Estate"])
         self.assertEqual(self.plr.get_coffers(), 1)
 

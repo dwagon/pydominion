@@ -1514,7 +1514,7 @@ class Player:
         self.coin += num
 
     ###########################################################################
-    def setCoin(self, num=1):
+    def set_coins(self, num=1):
         assert isinstance(num, int)
         self.coin = num
 

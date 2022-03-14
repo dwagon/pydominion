@@ -40,7 +40,7 @@ class Test_Groundskeeper(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.plr.setCoin(5)
+        self.plr.set_coins(5)
         self.plr.buy_card(self.g["Duchy"])
         self.assertEqual(self.plr.score["Groundskeeper"], 1)
 

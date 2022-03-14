@@ -74,7 +74,7 @@ class Test_Messenger(unittest.TestCase):
     def test_buy(self):
         """Buy a messenger"""
         self.plr.test_input = ["get silver"]
-        self.plr.setCoin(4)
+        self.plr.set_coins(4)
         self.plr.buy_card(self.g["Messenger"])
         for plr in self.g.player_list():
             self.assertIsNotNone(plr.in_discard("Silver"))

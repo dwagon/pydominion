@@ -56,7 +56,7 @@ class Test_Treasury(unittest.TestCase):
 
     def test_buy_topdeck(self):
         self.plr.test_input = ["put on top"]
-        self.plr.setCoin(5)
+        self.plr.set_coins(5)
         self.plr.buy_card(self.g["Duchy"])
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Treasury")
