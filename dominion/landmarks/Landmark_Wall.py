@@ -30,7 +30,7 @@ class Test_Wall(unittest.TestCase):
         self.plr.set_discard("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
         self.plr.set_deck("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
         self.plr.set_hand("Gold", "Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Wall"], -3)
 
 

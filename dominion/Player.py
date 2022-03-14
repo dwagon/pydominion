@@ -1893,7 +1893,7 @@ class Player:
         self.plrDiscardCards(numtogo, force=True)
 
     ###########################################################################
-    def gameOver(self):
+    def game_over(self):
         """Game is over - do anything special required"""
         for card in self.end_of_game_cards + list(self.game.landmarks.values()):
             card.hook_end_of_game(game=self.game, player=self)

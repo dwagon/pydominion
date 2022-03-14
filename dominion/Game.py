@@ -858,7 +858,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         if self.isGameOver():
             self.gameover = True
             for plr in self.player_list():
-                plr.gameOver()
+                plr.game_over()
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Test_Palace(unittest.TestCase):
         self.plr.set_discard("Gold", "Silver", "Silver", "Copper", "Duchy")
         self.plr.set_deck("Gold", "Silver", "Copper", "Copper", "Duchy")
         self.plr.set_hand("Silver", "Copper", "Copper", "Copper", "Duchy")
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Palace"], 2 * 3)
 
 

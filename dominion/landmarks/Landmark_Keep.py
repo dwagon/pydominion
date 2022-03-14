@@ -59,7 +59,7 @@ class Test_Keep(unittest.TestCase):
     def test_most(self):
         """Use Keep when we have the most Silver"""
         self.plr.set_deck("Silver")
-        self.plr.gameOver()
+        self.plr.game_over()
         try:
             self.assertEqual(self.plr.get_score_details()["Keep"], 5)
         except AssertionError:  # pragma: no cover

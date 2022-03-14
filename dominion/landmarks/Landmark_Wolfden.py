@@ -48,7 +48,7 @@ class Test_WolfDen(unittest.TestCase):
     def test_gain(self):
         """Use Wolf Den"""
         self.plr.set_discard("Gold", "Silver")
-        self.plr.gameOver()
+        self.plr.game_over()
         try:
             self.assertEqual(self.plr.get_score_details()["Wolf Den"], -6)
         except AssertionError:  # pragma: no cover

@@ -39,7 +39,7 @@ class Test_Tower(unittest.TestCase):
     def test_none(self):
         """Use Tower"""
         self.plr.set_hand("Moat", "Moat")
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 0)
 
     def test_one(self):
@@ -48,7 +48,7 @@ class Test_Tower(unittest.TestCase):
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.gameOver()
+        self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 2)
 
 
