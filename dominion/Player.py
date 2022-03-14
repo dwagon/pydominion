@@ -380,7 +380,7 @@ class Player:
 
     ###########################################################################
     def next_card(self):
-        """Return the next card from the deck"""
+        """Return the next card from the deck, but don't pick it up"""
         if not self.deck:
             self.refill_deck()
         if not self.deck:
