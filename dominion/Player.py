@@ -1540,7 +1540,7 @@ class Player:
         self.buys += num
 
     ###########################################################################
-    def setBuys(self, num=1):
+    def set_buys(self, num=1):
         assert isinstance(num, int)
         self.buys = num
 

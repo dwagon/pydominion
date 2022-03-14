@@ -77,7 +77,7 @@ class Test_Bauble(unittest.TestCase):
     def test_play_buy_cash(self):
         """Play the card and gain a buy and cash"""
         self.plr.test_input = ["buy", "cash"]
-        self.plr.setBuys(0)
+        self.plr.set_buys(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
