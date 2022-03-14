@@ -20,7 +20,7 @@ class Card_HauntedWoods(Card.Card):
     def duration(self, game, player):
         player.pickup_cards(3)
 
-    def hook_allPlayers_buy_card(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card):
         if player == owner:
             return
         if player.has_defense(owner):

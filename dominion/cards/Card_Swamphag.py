@@ -21,7 +21,7 @@ class Card_Swamphag(Card.Card):
     def duration(self, game, player):
         player.addCoin(3)
 
-    def hook_allPlayers_buy_card(self, game, player, owner, card):
+    def hook_all_players_buy_card(self, game, player, owner, card):
         if player == owner:
             return
         player.gain_card("Curse")

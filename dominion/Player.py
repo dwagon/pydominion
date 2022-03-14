@@ -1403,17 +1403,17 @@ class Player:
             self.plrTrashCard()
         self.hook_buy_card(newcard)
         newcard.hook_buy_this_card(game=self.game, player=self)
-        self.hook_allPlayers_buy_card(newcard)
+        self.hook_all_players_buy_card(newcard)
 
     ###########################################################################
-    def hook_allPlayers_buy_card(self, card):
+    def hook_all_players_buy_card(self, card):
         for player in self.game.player_list():
             for crd in player.durationpile:
-                crd.hook_allPlayers_buy_card(
+                crd.hook_all_players_buy_card(
                     game=self.game, player=self, owner=player, card=card
                 )
         for crd in self.game.landmarks.values():
-            crd.hook_allPlayers_buy_card(
+            crd.hook_all_players_buy_card(
                 game=self.game, player=self, owner=self, card=card
             )
 

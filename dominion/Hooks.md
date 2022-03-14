@@ -26,7 +26,7 @@ hook_buy_this_card
 ------------------
 This is called after this card has been purchased.
 
-hook_allPlayers_buyCard
+hook_all_players_buy_card
 ---------------
 If any player buys a card call this for any card in everyone's duration pile
 
