@@ -23,7 +23,7 @@ class Card_Ghost(Card.Card):
     def night(self, game, player):
         if not hasattr(player, "_ghost_reserve"):
             player._ghost_reserve = PlayArea.PlayArea([])
-        count = len(player.allCards())
+        count = len(player.all_cards())
         while count:
             card = player.next_card()
             player.reveal_card(card)

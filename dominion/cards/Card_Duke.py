@@ -19,7 +19,7 @@ class Card_Duke(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP per Duchy you have"""
         vp = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.name == "Duchy":
                 vp += 1
         return vp

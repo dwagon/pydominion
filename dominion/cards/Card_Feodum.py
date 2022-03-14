@@ -19,7 +19,7 @@ class Card_Feodum(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP for every 3 silvers cards in your deck rounded down"""
         numsilver = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.name == "Silver":
                 numsilver += 1
         return int(numsilver / 3)

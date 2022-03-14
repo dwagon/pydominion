@@ -22,7 +22,7 @@ class Card_Golem(Card.Card):
         cards other than Golem cards. Discard the other cards, then
         play the Action cards in either order"""
         actions = []
-        maxnum = len(player.allCards())
+        maxnum = len(player.all_cards())
         count = 0
         while len(actions) != 2:
             c = player.next_card()

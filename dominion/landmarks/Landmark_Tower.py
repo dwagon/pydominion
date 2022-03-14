@@ -22,7 +22,7 @@ class Landmark_Tower(Landmark.Landmark):
             if game[st].is_empty() and not game[st].isVictory()
         ]
         for emp in empties:
-            for card in player.allCards():
+            for card in player.all_cards():
                 if card.name == emp:
                     player.add_score("Tower", 1)
 

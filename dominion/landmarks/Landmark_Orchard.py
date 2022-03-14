@@ -15,7 +15,7 @@ class Landmark_Orchard(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         actions = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isAction():
                 actions[card.name] += 1
         score = sum([4 for x in actions.values() if x > 3])

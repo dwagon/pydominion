@@ -16,7 +16,7 @@ class Landmark_TriumphalArch(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         cards = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isAction():
                 cards[card.name] += 1
         nums = sorted(cards.values())

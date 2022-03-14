@@ -21,7 +21,7 @@ class Card_Vineyard(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP for every 3 action cards in your deck rounded down"""
         score = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.isAction():
                 score += 1
         return int(score / 3)

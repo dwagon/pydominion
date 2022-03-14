@@ -14,7 +14,7 @@ class Landmark_Museum(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         c = set()
-        for card in player.allCards():
+        for card in player.all_cards():
             c.add(card.name)
         player.add_score("Museum", len(c) * 2)
 

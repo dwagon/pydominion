@@ -14,7 +14,7 @@ class Landmark_BanditFort(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         score = 0
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.name in ("Silver", "Gold"):
                 score -= 2
         player.add_score("Bandit Fort", score)

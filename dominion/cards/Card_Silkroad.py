@@ -19,7 +19,7 @@ class Card_Silkroad(Card.Card):
     def special_score(self, game, player):
         """Worth 1VP for every 4 victory cards in your deck rounded down"""
         score = 0
-        for c in player.allCards():
+        for c in player.all_cards():
             if c.isVictory():
                 score += 1
         return int(score / 4)

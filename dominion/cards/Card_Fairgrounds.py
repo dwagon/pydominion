@@ -18,7 +18,7 @@ class Card_Fairgrounds(Card.Card):
 
     def special_score(self, game, player):
         """Worth 2VP for every 5 differently named cards in your deck (round down)"""
-        numtypes = {c.name for c in player.allCards()}
+        numtypes = {c.name for c in player.all_cards()}
         return 2 * int(len(numtypes) / 5)
 
 

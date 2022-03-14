@@ -18,7 +18,7 @@ class Landmark_Keep(Landmark.Landmark):
         # For each type of treasure card work out who has how many
         for pl in game.player_list():
             plname = pl.name
-            for card in pl.allCards():
+            for card in pl.all_cards():
                 if card.isTreasure():
                     if card.name not in cards:
                         cards[card.name] = {}

@@ -1003,7 +1003,7 @@ class Player:
         self.score[reason] += points
 
     ###########################################################################
-    def allCards(self):
+    def all_cards(self):
         """Return all the cards that the player has"""
         x = PlayArea([])
         x += self.discardpile
@@ -1019,7 +1019,7 @@ class Player:
     ###########################################################################
     def getScoreDetails(self, verbose=False):
         scr = {}
-        for c in self.allCards():
+        for c in self.all_cards():
             scr[c.name] = scr.get(c.name, 0) + c.victory
             scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
         for s in self.states:

@@ -16,7 +16,7 @@ class Card_KingsCastle(CastleCard):
         self.name = "King's Castle"
 
     def special_score(self, game, player):
-        return sum([2 for card in player.allCards() if card.isCastle()])
+        return sum([2 for card in player.all_cards() if card.isCastle()])
 
 
 ###############################################################################

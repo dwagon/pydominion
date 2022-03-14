@@ -14,7 +14,7 @@ class Landmark_Palace(Landmark.Landmark):
 
     def hook_end_of_game(self, game, player):
         num = {"Copper": 0, "Silver": 0, "Gold": 0}
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.name in num:
                 num[card.name] += 1
         score = min(num.values()) * 3

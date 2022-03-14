@@ -16,7 +16,7 @@ class Landmark_WolfDen(Landmark.Landmark):
     def hook_end_of_game(self, game, player):
         score = 0
         cards = defaultdict(int)
-        for card in player.allCards():
+        for card in player.all_cards():
             cards[card.name] += 1
         for card, num in cards.items():
             if num == 1:

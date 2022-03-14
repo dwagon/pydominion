@@ -18,7 +18,7 @@ class Card_HumbleCastle(CastleCard):
 
     def special_score(self, game, player):
         score = 0
-        for card in player.allCards():
+        for card in player.all_cards():
             if card.isCastle():
                 score += 1
         return score

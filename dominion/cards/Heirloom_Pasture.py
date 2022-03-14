@@ -18,7 +18,7 @@ class Card_Pasture(Card.Card):
         self.purchasable = False
 
     def special_score(self, game, player):
-        estates = sum([1 for _ in player.allCards() if _.name == "Estate"])
+        estates = sum([1 for _ in player.all_cards() if _.name == "Estate"])
         return estates
 
 
