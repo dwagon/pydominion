@@ -18,7 +18,7 @@ class Card_Courtier(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        cards = player.cardSel()
+        cards = player.card_sel()
         if not cards:
             return
         if isinstance(cards[0].cardtype, str):

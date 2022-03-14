@@ -26,7 +26,7 @@ class Card_BorderGuard(Card.Card):
             player.reveal_card(card)
             cards.append(card)
         nacts = sum([1 for _ in cards if _.isAction()])
-        ch = player.cardSel(
+        ch = player.card_sel(
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )

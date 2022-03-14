@@ -29,7 +29,7 @@ class Card_Captain(Card.Card):
             for _ in game.getActionPiles(4)
             if not _.isDuration() and not _.isCommand()
         ]
-        actions = player.cardSel(
+        actions = player.card_sel(
             prompt="What action card do you want to imitate?", cardsrc=actionpiles
         )
         if actions:

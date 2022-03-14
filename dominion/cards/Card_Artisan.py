@@ -17,7 +17,7 @@ class Card_Artisan(Card.Card):
 
     def special(self, game, player):
         player.plr_gain_card(5, destination="hand")
-        card = player.cardSel(
+        card = player.card_sel(
             force=True,
             cardsrc="hand",
             prompt="Put a card from your hand on top of your deck",

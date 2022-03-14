@@ -35,7 +35,7 @@ class Card_Scavenger(Card.Card):
                 if c.name not in cardnames:
                     cards.append(c)
                     cardnames.add(c.name)
-            card = player.cardSel(
+            card = player.card_sel(
                 force=True,
                 cardsrc=cards,
                 prompt="Pull card from discard and add to top of your deck",

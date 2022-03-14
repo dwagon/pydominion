@@ -31,7 +31,7 @@ class Card_Masquerade(Card.Card):
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.playerToLeft(plr).name
-        cards = plr.cardSel(
+        cards = plr.card_sel(
             prompt="Which card to give to %s?" % leftplr, num=1, force=True
         )
         card = cards[0]

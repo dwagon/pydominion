@@ -30,7 +30,7 @@ class Card_Embargo(Card.Card):
         player.trash_card(self)
         piles = list(game.cardpiles.values())
         piles.sort()
-        card = player.cardSel(cardsrc=piles, prompt="Which stack to embargo")
+        card = player.card_sel(cardsrc=piles, prompt="Which stack to embargo")
         game[card[0].name].embargo()
 
 

@@ -20,7 +20,7 @@ class Card_Island(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "island_reserve"):
             player.island_reserve = PlayArea.PlayArea([])
-        c = player.cardSel(prompt="Select a card to set aside for the rest of the game")
+        c = player.card_sel(prompt="Select a card to set aside for the rest of the game")
         if c:
             card = c[0]
             player.island_reserve.add(card)

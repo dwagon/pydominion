@@ -18,7 +18,7 @@ class Event_Save(Event.Event):
             player.output("Already used save this turn")
             return
         player._save_reserve = PlayArea.PlayArea([])
-        card = player.cardSel(
+        card = player.card_sel(
             num=1,
             cardsrc="hand",
             verbs=("Set", "Unset"),

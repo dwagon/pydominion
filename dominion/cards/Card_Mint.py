@@ -25,7 +25,7 @@ class Card_Mint(Card.Card):
         if not treasures:
             player.output("No treasures to reveal")
             return
-        toget = player.cardSel(
+        toget = player.card_sel(
             num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"
         )
         player.reveal_card(toget[0])

@@ -26,7 +26,7 @@ class Card_Hermit(Card.Card):
         for card in player.discardpile + player.hand:
             if not card.isTreasure():
                 to_trash.append(card)
-        choice = player.cardSel(
+        choice = player.card_sel(
             prompt="Trash one of these?", cardsrc=to_trash, verbs=("Trash", "Untrash")
         )
         if choice:

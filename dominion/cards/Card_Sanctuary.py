@@ -22,7 +22,7 @@ class Card_Sanctuary(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        crd = player.cardSel(prompt="Exile a card", verbs=("Exile", "Unexile"))
+        crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
             player.hand.remove(crd[0])
             player.exile_card(crd[0])

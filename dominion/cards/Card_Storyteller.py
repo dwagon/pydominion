@@ -22,7 +22,7 @@ class Card_Storyteller(Card.Card):
         for card in player.hand:
             if card.isTreasure():
                 treasures.append(card)
-        toplay = player.cardSel(
+        toplay = player.card_sel(
             num=3,
             cardsrc=treasures,
             prompt="Play 3 treasures to convert coin to cards",

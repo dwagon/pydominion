@@ -17,7 +17,7 @@ class Card_Displace(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        crd = player.cardSel(
+        crd = player.card_sel(
             prompt="Exile a card to gain a different one costing 2 more",
             verbs=("Exile", "Unexile"),
         )

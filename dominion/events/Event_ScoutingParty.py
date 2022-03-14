@@ -18,7 +18,7 @@ class Event_ScoutingParty(Event.Event):
         cards = []
         for _ in range(5):
             cards.append(player.next_card())
-        discards = player.cardSel(
+        discards = player.card_sel(
             num=3, cardsrc=cards, force=True, prompt="Select cards to discard"
         )
         # TODO - Put cards back in specific order

@@ -25,7 +25,7 @@ class Card_Disciple(Card.Card):
         if not actions:
             player.output("No suitable actions to perform")
             return
-        cards = player.cardSel(cardsrc=actions)
+        cards = player.card_sel(cardsrc=actions)
         if not cards:
             return
         card = cards[0]

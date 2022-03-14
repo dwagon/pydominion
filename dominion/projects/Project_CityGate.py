@@ -15,7 +15,7 @@ class Project_CityGate(Project.Project):
 
     def hook_start_turn(self, game, player):
         player.pickup_card()
-        card = player.cardSel(
+        card = player.card_sel(
             force=True,
             cardsrc="hand",
             prompt="Put a card from your hand onto your deck",

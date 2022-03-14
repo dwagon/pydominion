@@ -28,7 +28,7 @@ class Card_Teacher(Card.Card):
             prompt = "Which stack do you want to add the %s token to?" % tkn
             if player.tokens[tkn]:
                 prompt += " Currently on %s" % player.tokens[tkn]
-            stacks = player.cardSel(num=1, prompt=prompt, cardsrc=actionpiles)
+            stacks = player.card_sel(num=1, prompt=prompt, cardsrc=actionpiles)
             if stacks:
                 player.place_token(tkn, stacks[0].name)
 

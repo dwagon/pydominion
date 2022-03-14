@@ -22,7 +22,7 @@ class Event_Delay(Event.Event):
         if not actions:
             player.output("No actions to delay")
             return
-        delay = player.cardSel(
+        delay = player.card_sel(
             prompt="Set aside an action card to play next turn", cardsrc=actions
         )
         player.defer_card(delay[0])

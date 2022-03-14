@@ -27,7 +27,7 @@ class Card_Scepter(Card.Card):
         if get_coin:
             player.add_coins(2)
         else:
-            card = player.cardSel(cardsrc=acts)
+            card = player.card_sel(cardsrc=acts)
             player.add_card(card[0], "hand")
             player.played.remove(card[0])
             player.play_card(card[0], costAction=False)

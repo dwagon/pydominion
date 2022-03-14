@@ -27,7 +27,7 @@ class Card_Necromancer(Card.Card):
             for _ in game.trashpile
             if _.isAction() and not _.isDuration() and _ not in game._necromancer
         ]
-        card = player.cardSel(cardsrc=act, prompt="Select Action card from Trash")
+        card = player.card_sel(cardsrc=act, prompt="Select Action card from Trash")
         game._necromancer.add(card[0])
         player.play_card(card[0], discard=False, costAction=False)
 

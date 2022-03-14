@@ -18,7 +18,7 @@ class Card_BandOfMisfits(Card.Card):
 
     def special(self, game, player):
         actionpiles = game.getActionPiles(self.cost - 1)
-        actions = player.cardSel(
+        actions = player.card_sel(
             prompt="What action card do you want to play?", cardsrc=actionpiles
         )
         player.card_benefits(actions[0])

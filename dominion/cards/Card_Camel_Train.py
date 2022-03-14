@@ -22,7 +22,7 @@ class Card_Camel_Train(Card.Card):
 
     def special(self, game, player):
         cards = [_ for _ in game.cardpiles.values() if not _.isVictory()]
-        toex = player.cardSel(prompt="Pick a card to Exile", cardsrc=cards)
+        toex = player.card_sel(prompt="Pick a card to Exile", cardsrc=cards)
         if toex:
             player.exile_card(toex[0].name)
 

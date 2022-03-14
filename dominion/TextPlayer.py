@@ -123,7 +123,7 @@ class TextPlayer(Player):
             self.output("Invalid Option (%s)" % inp)
 
     ###########################################################################
-    def cardSelSource(self, **kwargs):
+    def card_selSource(self, **kwargs):
         """Understand the various places to select cards from - either a
         text desctiption of the source, a list of cards, or by default
         the players hand"""
@@ -141,7 +141,7 @@ class TextPlayer(Player):
         return selectfrom
 
     ###########################################################################
-    def cardSel(
+    def card_sel(
         self, num=1, **kwargs
     ):  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
@@ -167,7 +167,7 @@ class TextPlayer(Player):
         * anynum
             True - Any number of cards can be selected
         """
-        selectfrom = self.cardSelSource(**kwargs)
+        selectfrom = self.card_selSource(**kwargs)
         force = kwargs["force"] if "force" in kwargs else False
         showdesc = kwargs["showdesc"] if "showdesc" in kwargs else True
         verbs = kwargs.get("verbs", ("Select", "Unselect"))

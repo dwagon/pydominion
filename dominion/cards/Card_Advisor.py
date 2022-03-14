@@ -25,7 +25,7 @@ class Card_Advisor(Card.Card):
             card = player.pickup_card()
             player.reveal_card(card)
             cards.append(card)
-        to_discard = choser.cardSel(
+        to_discard = choser.card_sel(
             force=True,
             prompt=f"Pick a card of {player.name} to discard from Advisor",
             cardsrc=cards,

@@ -18,7 +18,7 @@ class Card_Ambassador(Card.Card):
 
     def pick_card(self, player):
         while True:
-            choice = player.cardSel(
+            choice = player.card_sel(
                 num=2,
                 cardsrc="hand",
                 prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it",

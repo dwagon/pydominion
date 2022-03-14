@@ -19,7 +19,7 @@ class Card_Smugglers(Card.Card):
         plr = game.playerToRight(player)
         cards = [c for c in plr.stats["bought"] if c.cost <= 6]
         if cards:
-            card = player.cardSel(cardsrc=cards)
+            card = player.card_sel(cardsrc=cards)
             if card:
                 player.add_card(card[0])
         else:

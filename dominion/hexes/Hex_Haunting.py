@@ -18,7 +18,7 @@ class Hex_Haunting(Hex.Hex):
 
     def special(self, game, player):
         if player.hand.size() >= 4:
-            card = player.cardSel(force=True)
+            card = player.card_sel(force=True)
             player.add_card(card[0], "topdeck")
             player.hand.remove(card[0])
 

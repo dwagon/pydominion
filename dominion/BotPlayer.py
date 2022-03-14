@@ -89,7 +89,7 @@ class BotPlayer(Player):
         return None
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def card_sel(self, num=1, **kwargs):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)

@@ -27,7 +27,7 @@ class Card_Research(Card.Card):
         cost = tc[0].cost
         if cost == 0:
             return
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Set aside {} cards for next turn".format(cost),
             verbs=("Set", "Unset"),
             num=cost,

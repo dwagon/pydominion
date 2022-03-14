@@ -28,7 +28,7 @@ class Card_Hostelry(Card.Card):
         if not treas:
             player.output("No suitable cards for Hostelry")
             return
-        discards = player.cardSel(
+        discards = player.card_sel(
             prompt="Discard number of cards to gain that number of horses",
             verbs=("Discard", "Undiscard"),
             anynum=True,

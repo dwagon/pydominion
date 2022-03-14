@@ -34,7 +34,7 @@ class Card_Inn(Card.Card):
                 player.reveal_card(card)
                 cards.append(card)
         cards.append(self)
-        back = player.cardSel(
+        back = player.card_sel(
             anynum=True,
             prompt="Select cards to shuffle back into your deck",
             cardsrc=cards,

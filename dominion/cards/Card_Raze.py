@@ -31,7 +31,7 @@ class Card_Raze(Card.Card):
             cards = []
             for c in range(cost):
                 cards.append(player.next_card())
-            ans = player.cardSel(
+            ans = player.card_sel(
                 force=True, prompt="Pick a card to put into your hand", cardsrc=cards
             )
             for c in cards:

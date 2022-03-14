@@ -32,7 +32,7 @@ class Card_Secretchamber(Card.Card):
         player.reveal_card(self)
         player.pickup_cards(2)
         player.output("Put two cards onto deck")
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Put which two cards on top of deck?",
             force=True,
             num=2,

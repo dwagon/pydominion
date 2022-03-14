@@ -36,7 +36,7 @@ class Card_Squire(Card.Card):
         for cp in game.cardpiles.values():
             if cp.isAttack() and cp.purchasable:
                 attacks.append(cp)
-        cards = player.cardSel(prompt="Gain an attack card", cardsrc=attacks)
+        cards = player.card_sel(prompt="Gain an attack card", cardsrc=attacks)
         player.gain_card(cards[0])
 
 

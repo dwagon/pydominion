@@ -1550,7 +1550,7 @@ class Player:
         available = [cp for cp in prizes if not cp.is_empty()]
         if available:
             self.output("Gain a prize")
-            card = self.cardSel(cardsrc=available)
+            card = self.card_sel(cardsrc=available)
             self.add_card(card[0].remove())
         else:
             self.output("No prizes available")
@@ -1740,7 +1740,7 @@ class Player:
                 kwargs["prompt"] = "Trash %d cards" % num
         if len(cardsrc) == 0:
             return None
-        trash = self.cardSel(
+        trash = self.card_sel(
             num=num,
             cardsrc=cardsrc,
             anynum=anynum,
@@ -1784,7 +1784,7 @@ class Player:
         buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
         if "prompt" not in kwargs:
             kwargs["prompt"] = prompt
-        cards = self.cardSel(
+        cards = self.card_sel(
             cardsrc=buyable,
             recipient=recipient,
             verbs=("Get", "Unget"),
@@ -1800,7 +1800,7 @@ class Player:
 
     ###########################################################################
     def plr_pick_card(self, force=False, **kwargs):
-        sel = self.cardSel(force=force, **kwargs)
+        sel = self.card_sel(force=force, **kwargs)
         return sel[0]
 
     ###########################################################################
@@ -1876,7 +1876,7 @@ class Player:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
                 kwargs["prompt"] = "Discard %d cards" % num
-        discard = self.cardSel(
+        discard = self.card_sel(
             num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs
         )
         for c in discard:
@@ -1911,7 +1911,7 @@ class Player:
         raise NotImplementedError
 
     ###########################################################################
-    def cardSel(self, num=1, **kwargs):
+    def card_sel(self, num=1, **kwargs):
         raise NotImplementedError
 
 

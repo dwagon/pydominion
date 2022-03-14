@@ -18,7 +18,7 @@ class Card_SecretPassage(Card.Card):
         self.cards = 2
 
     def special(self, game, player):
-        card = player.cardSel(
+        card = player.card_sel(
             prompt="Take a card from your hand and put into your deck", cardsrc="hand"
         )
         if card:

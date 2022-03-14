@@ -34,7 +34,7 @@ class Card_Herald(Card.Card):
 
     def hook_overpay(self, game, player, amount):
         for _ in range(amount):
-            card = player.cardSel(
+            card = player.card_sel(
                 num=1,
                 force=True,
                 cardsrc="discard",

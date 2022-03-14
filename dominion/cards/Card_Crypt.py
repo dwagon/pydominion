@@ -21,7 +21,7 @@ class Card_Crypt(Card.Card):
     def night(self, game, player):
         if not hasattr(player, "_crypt_reserve"):
             player._crypt_reserve = PlayArea.PlayArea([])
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Set aside any number of Treasures you have in play",
             verbs=("Set", "Unset"),
             anynum=True,

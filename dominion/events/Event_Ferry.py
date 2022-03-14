@@ -15,7 +15,7 @@ class Event_Ferry(Event.Event):
 
     def special(self, game, player):
         actionpiles = game.getActionPiles()
-        stacks = player.cardSel(
+        stacks = player.card_sel(
             num=1, prompt="What stack to add the -2 Coin Token to?", cardsrc=actionpiles
         )
         if stacks:

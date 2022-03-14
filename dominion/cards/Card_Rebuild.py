@@ -25,7 +25,7 @@ class Card_Rebuild(Card.Card):
         Discard the other cards. Trash the Victory card and gain a
         Victory card cost up to 3 more than it"""
         stacks = game.getVictoryPiles()
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Guess a victory card - the next victory card that is not that will be upgraded",
             cardsrc=stacks,
         )

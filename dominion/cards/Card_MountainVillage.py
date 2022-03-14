@@ -18,7 +18,7 @@ class Card_MountainVillage(Card.Card):
 
     def special(self, game, player):
         if player.discardpile.size():
-            card = player.cardSel(
+            card = player.card_sel(
                 cardsrc="discard",
                 force=True,
                 prompt="Look through your discard pile and put a card from it into your hand",

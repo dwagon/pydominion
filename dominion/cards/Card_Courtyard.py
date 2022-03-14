@@ -18,7 +18,7 @@ class Card_Courtyard(Card.Card):
 
     def special(self, game, player):
         """Put a card from your hand on top of your deck"""
-        cards = player.cardSel(
+        cards = player.card_sel(
             prompt="Put which card on top of deck?", num=1, verbs=("Put", "Unput")
         )
         if not cards:

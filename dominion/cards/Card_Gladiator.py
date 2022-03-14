@@ -21,7 +21,7 @@ class Card_Gladiator(Card.Card):
         self.split = "Fortune"
 
     def special(self, game, player):
-        mycard = player.cardSel(
+        mycard = player.card_sel(
             num=1,
             force=True,
             prompt="Select a card from your hand that the player to your left doesn't have",

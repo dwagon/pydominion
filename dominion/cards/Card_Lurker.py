@@ -29,7 +29,7 @@ class Card_Lurker(Card.Card):
             if not acts:
                 player.output("No suitable cards found")
                 return
-            cards = player.cardSel(
+            cards = player.card_sel(
                 cardsrc=acts, prompt="Select Action from Supply to Trash"
             )
             card = game[cards[0].name].remove()
@@ -40,7 +40,7 @@ class Card_Lurker(Card.Card):
             if not acts:
                 player.output("No suitable cards found")
                 return
-            card = player.cardSel(cardsrc=acts, prompt="Select Action from the Trash")
+            card = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
             game.trashpile.remove(card[0])
             player.add_card(card[0], "discard")
 

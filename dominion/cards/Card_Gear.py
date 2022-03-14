@@ -23,7 +23,7 @@ class Card_Gear(Card.Card):
         """Set aside up to 2 cards from your hand face down..."""
         if not hasattr(player, "gear_reserve"):
             player.gear_reserve = PlayArea.PlayArea([])
-        cards = player.cardSel(
+        cards = player.card_sel(
             num=2,
             cardsrc="hand",
             prompt="Set aside up to 2 cards from your hand to be put back next turn",
