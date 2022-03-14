@@ -49,7 +49,7 @@ class Test_Butcher(unittest.TestCase):
         """Play a butcher"""
         self.plr.coffer = 0
         self.plr.test_input = ["Don't trash"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoffer(), 2)
 
     def test_trash_gold(self):
@@ -62,7 +62,7 @@ class Test_Butcher(unittest.TestCase):
         # Spend 2 coin
         # Buy card 1
         self.plr.test_input = ["trash a card", "trash gold", "add 2", "get silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoffer(), 0)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.discardpile.size(), 1)

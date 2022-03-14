@@ -45,20 +45,20 @@ class Test_Rats(unittest.TestCase):
     def test_play(self):
         self.plr.set_deck("Gold")
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
+        self.plr.play_card(self.rats)
         self.plr.addActions(1)
         self.assertEqual(self.plr.hand[-1].name, "Gold")
 
     def test_trashcard(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
+        self.plr.play_card(self.rats)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertNotEqual(self.g.trashpile[0].name, "Rats")
 
     def test_gainrats(self):
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.rats)
+        self.plr.play_card(self.rats)
         self.assertEqual(self.plr.discardpile[0].name, "Rats")
 
     def test_trashrats(self):

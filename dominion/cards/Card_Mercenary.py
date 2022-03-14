@@ -53,7 +53,7 @@ class Test_Mercenary(unittest.TestCase):
         """Trash nothing with mercenary - should do nothing"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.victim.discardpile.is_empty())
 
@@ -64,7 +64,7 @@ class Test_Mercenary(unittest.TestCase):
         moat = self.g["Moat"].remove()
         self.victim.add_card(moat, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
         # 5 for hand + moat
@@ -77,7 +77,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "1", "2", "0"]
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 2)

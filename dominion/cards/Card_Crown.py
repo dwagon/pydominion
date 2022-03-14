@@ -40,7 +40,7 @@ class Card_Crown(Card.Card):
             return
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, o["card"].name))
-            player.playCard(o["card"], discard=False, costAction=False)
+            player.play_card(o["card"], discard=False, costAction=False)
         player.discard_card(o["card"])
 
 
@@ -57,7 +57,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.set_hand("Duchy", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.phase = Card.TYPE_ACTION
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
     def test_action(self):
         """Play a crown with a suitable action"""
@@ -65,7 +65,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.phase = Card.TYPE_ACTION
         self.plr.test_input = ["moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)
 
     def test_buy(self):
@@ -74,7 +74,7 @@ class Test_Crown(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.phase = "buy"
         self.plr.test_input = ["gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 3 * 2)
 
 

@@ -33,7 +33,7 @@ class Test_Caravan(unittest.TestCase):
 
     def test_playcard(self):
         """Play a caravan"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.durationpile.size(), 1)

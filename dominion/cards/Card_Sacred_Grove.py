@@ -62,7 +62,7 @@ class Test_SacredGrove(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 3 + 1)
             self.assertEqual(self.plr.get_buys(), 1 + 1)
@@ -77,7 +77,7 @@ class Test_SacredGrove(unittest.TestCase):
                 self.g.boons = [b]
                 break
         self.vic.test_input = ["Accept"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 3)
             self.assertEqual(self.plr.get_buys(), 1 + 1)

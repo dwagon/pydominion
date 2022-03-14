@@ -34,7 +34,7 @@ class Test_Wharf(unittest.TestCase):
 
     def test_playcard(self):
         """Play a wharf"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.durationpile.size(), 1)

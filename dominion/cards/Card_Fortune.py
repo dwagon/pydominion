@@ -43,7 +43,7 @@ class Test_Fortune(unittest.TestCase):
     def test_play(self):
         """Play a Fortune"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

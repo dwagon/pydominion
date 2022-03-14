@@ -42,7 +42,7 @@ class Card_Ghost(Card.Card):
         for card in player._ghost_reserve[:]:
             player.output("Ghost playing {}".format(card.name))
             for _ in range(2):
-                player.playCard(card, discard=False, costAction=False)
+                player.play_card(card, discard=False, costAction=False)
             player._ghost_reserve.remove(card)
 
 
@@ -58,7 +58,7 @@ class Test_Ghost(unittest.TestCase):
     def test_play_with_no_actions(self):
         """Play a Ghost with no actions"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(len(self.plr._ghost_reserve), 0)
 
     def test_duration(self):
@@ -66,7 +66,7 @@ class Test_Ghost(unittest.TestCase):
             self.plr.set_deck("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.set_discard("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Card.TYPE_NIGHT
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
             self.assertEqual(self.plr.hand.size(), 5 + 2 * 2)  # Hand + Moat *2

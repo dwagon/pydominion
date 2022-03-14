@@ -39,14 +39,14 @@ class Test_Seahag(unittest.TestCase):
 
     def test_defended(self):
         self.victim.add_card(self.mcard, "hand")
-        self.attacker.playCard(self.seahag)
+        self.attacker.play_card(self.seahag)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertNotEqual(self.victim.deck[0].name, "Curse")
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_nodefense(self):
         self.victim.set_deck("Gold")
-        self.attacker.playCard(self.seahag)
+        self.attacker.play_card(self.seahag)
         self.assertEqual(self.victim.hand.size(), 5)
         self.assertEqual(self.victim.discardpile[0].name, "Gold")
         self.assertEqual(self.victim.deck[0].name, "Curse")

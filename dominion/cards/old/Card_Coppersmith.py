@@ -35,16 +35,16 @@ class Test_Coppersmith(unittest.TestCase):
         """Copper should be worth two"""
         self.plr.set_hand("Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.play_card(self.card)
+        self.plr.play_card(self.plr.hand[0])
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_silver(self):
         """Silver should be unchanged and worth two"""
         self.plr.set_hand("Silver")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.play_card(self.card)
+        self.plr.play_card(self.plr.hand[0])
         self.assertEqual(self.plr.getCoin(), 2)
 
 

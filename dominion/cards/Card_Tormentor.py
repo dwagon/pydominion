@@ -44,7 +44,7 @@ class Test_Tormentor(unittest.TestCase):
     def test_play_imp(self):
         """Play tormentor with no other cards being played"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.plr.in_discard("Imp"))
 
@@ -52,7 +52,7 @@ class Test_Tormentor(unittest.TestCase):
         """Play tormentor with other cards already being played"""
         self.plr.set_played("Tormentor")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Imp"))
         self.assertTrue(self.vic.has_state("Deluded"))
 

@@ -31,7 +31,7 @@ class Test_LuckyCoin(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Silver")
 

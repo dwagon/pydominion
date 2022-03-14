@@ -44,7 +44,7 @@ class Test_HauntedWoods(unittest.TestCase):
     def test_play_buy(self):
         """Play a Haunted Woods"""
         self.vic.set_hand("Silver", "Duchy", "Province")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.vic.setCoin(6)
         self.vic.buyCard(self.g["Gold"])

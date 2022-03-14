@@ -39,7 +39,7 @@ class Test_Dame_Natalie(unittest.TestCase):
         """Play the Dame"""
         self.plr.test_input = ["get silver"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 

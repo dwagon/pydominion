@@ -41,7 +41,7 @@ class Test_Goatherd(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.other.stats["trashed"] = ["Silver"]
         self.plr.test_input = ["Trash Province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Duchy"))

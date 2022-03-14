@@ -62,9 +62,9 @@ class Test_Research(unittest.TestCase):
         self.moat = self.g["Moat"].remove()
         self.plr.add_card(self.moat, "hand")
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.plr.end_turn()

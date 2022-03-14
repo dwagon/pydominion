@@ -49,7 +49,7 @@ class Test_Replace(unittest.TestCase):
         self.plr.set_hand("Estate", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_deck("Moat"))
         self.assertIsNone(self.plr.in_discard("Moat"))
 
@@ -60,7 +60,7 @@ class Test_Replace(unittest.TestCase):
         )
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "Get Estate"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
 
 

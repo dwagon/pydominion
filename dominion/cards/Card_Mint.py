@@ -53,7 +53,7 @@ class Test_Mint(unittest.TestCase):
         self.plr.set_hand("Duchy", "Gold", "Silver", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))

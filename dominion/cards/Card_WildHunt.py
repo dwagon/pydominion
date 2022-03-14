@@ -48,7 +48,7 @@ class Test_WildHunt(unittest.TestCase):
     def test_play_give(self):
         """Play a Wild Hunt and take the cards"""
         self.plr.test_input = ["Cards"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
         self.assertEqual(self.g["Wild Hunt"].getVP(), 1)
 
@@ -56,7 +56,7 @@ class Test_WildHunt(unittest.TestCase):
         """Play a Wild Hunt and take the score"""
         self.plr.test_input = ["Gain"]
         self.g["Wild Hunt"].addVP(3)
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNotNone(self.plr.in_discard("Estate"))
         self.assertEqual(self.plr.get_score_details()["Wild Hunt"], 3)

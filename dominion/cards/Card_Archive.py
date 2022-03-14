@@ -57,7 +57,7 @@ class Test_Archive(unittest.TestCase):
         """Play a Archive"""
         self.plr.set_deck("Gold", "Silver", "Province")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]

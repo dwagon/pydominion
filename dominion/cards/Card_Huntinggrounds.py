@@ -43,7 +43,7 @@ class Test_Huntinggrounds(unittest.TestCase):
 
     def test_play(self):
         """Play a Hunting Ground"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 4)
 
     def test_trash_estate(self):

@@ -40,7 +40,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.set_discard("Estate", "Duchy", "Province")
         self.plr.test_input = ["Don't discard"]
-        self.plr.playCard(self.ccard)
+        self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck.size(), 3)
         self.assertEqual(self.plr.discardpile.size(), 3)
@@ -49,7 +49,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.set_discard("Estate", "Duchy", "Province")
         self.plr.test_input = ["discard deck"]
-        self.plr.playCard(self.ccard)
+        self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.discardpile.size(), 6)

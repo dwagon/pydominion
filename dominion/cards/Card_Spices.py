@@ -34,11 +34,11 @@ class Test_Spices(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Spices"].remove()
         self.plr.add_card(self.card, "hand")
         self.plr.setCoffer(0)
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.getCoffer(), 0)

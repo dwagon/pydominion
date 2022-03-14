@@ -41,7 +41,7 @@ class Test_Sir_Michael(unittest.TestCase):
         """Play the Sir"""
         self.vic.test_input = ["1", "2", "0"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
 
 

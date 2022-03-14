@@ -51,7 +51,7 @@ class Test_Sleigh(unittest.TestCase):
     def test_playcard(self):
         """Play a sleigh"""
         self.plr.test_input = ["Discard by default", "Put Horse into hand"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
         self.assertIsNotNone(self.plr.in_hand("Horse"))
 

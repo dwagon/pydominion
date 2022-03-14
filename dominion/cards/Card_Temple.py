@@ -56,7 +56,7 @@ class Test_Temple(unittest.TestCase):
         self.plr.set_hand("Copper", "Silver", "Silver", "Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper", "Silver", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Temple"], 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 

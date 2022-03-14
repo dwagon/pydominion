@@ -51,7 +51,7 @@ class Test_Catacombs(unittest.TestCase):
     def test_keep(self):
         self.plr.set_deck("Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["keep the three"]
-        self.plr.playCard(self.cat)
+        self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.hand.size(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == "Gold"])
@@ -60,7 +60,7 @@ class Test_Catacombs(unittest.TestCase):
     def test_discard(self):
         self.plr.set_deck("Province", "Province", "Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["discard and draw"]
-        self.plr.playCard(self.cat)
+        self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.hand.size(), 8)
         numgold = sum([1 for c in self.plr.hand if c.name == "Gold"])

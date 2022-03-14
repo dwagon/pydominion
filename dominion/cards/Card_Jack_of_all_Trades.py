@@ -55,7 +55,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.plr.set_hand("Duchy")
         self.plr.test_input = ["keep", "duchy"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # Gain a Silver
 

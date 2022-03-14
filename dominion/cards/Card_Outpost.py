@@ -39,7 +39,7 @@ class Test_Outpost(unittest.TestCase):
 
     def test_play(self):
         """Play Outpost"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.g.print_state()
         # TODO - Not sure how to test this

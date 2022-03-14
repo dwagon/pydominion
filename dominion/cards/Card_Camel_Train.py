@@ -41,7 +41,7 @@ class Test_Camel_Train(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["Select Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_exile("Silver"))
 
     def test_gain(self):

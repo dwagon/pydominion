@@ -47,7 +47,7 @@ class Test_University(unittest.TestCase):
 
     def test_gain(self):
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.university)
+        self.plr.play_card(self.university)
         try:
             self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertTrue(self.plr.discardpile[0].isAction())
@@ -58,7 +58,7 @@ class Test_University(unittest.TestCase):
 
     def test_none(self):
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.university)
+        self.plr.play_card(self.university)
         self.assertTrue(self.plr.discardpile.is_empty())
 
 

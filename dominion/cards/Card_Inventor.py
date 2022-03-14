@@ -42,7 +42,7 @@ class Test_Inventor(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["Get Gardens"]
         self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
-        self.plr.playCard(self.inventor)
+        self.plr.play_card(self.inventor)
         self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
 
 

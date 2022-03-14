@@ -40,7 +40,7 @@ class Test_Remake(unittest.TestCase):
             "Trash Copper",
             "Finish Selecting",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 

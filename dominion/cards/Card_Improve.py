@@ -42,7 +42,7 @@ class Test_Improve(unittest.TestCase):
     def test_play(self):
         self.plr.set_hand("Moat")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
         self.assertIsNotNone(self.g.in_trash("Moat"))

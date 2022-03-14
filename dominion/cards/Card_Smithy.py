@@ -28,7 +28,7 @@ class Test_Smithy(unittest.TestCase):
 
     def test_play(self):
         """Play the smithy"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
 
 

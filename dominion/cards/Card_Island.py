@@ -52,7 +52,7 @@ class Test_Island(unittest.TestCase):
         self.plr.set_hand("Silver", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
         self.assertIsNone(self.plr.in_discard("Island"))
@@ -70,7 +70,7 @@ class Test_Island(unittest.TestCase):
         """Play a island but don't pick another card"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
         self.assertIsNone(self.plr.in_discard("Island"))

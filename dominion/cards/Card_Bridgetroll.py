@@ -46,7 +46,7 @@ class Test_Bridgetroll(unittest.TestCase):
 
     def test_playcard(self):
         """Play a bridge troll"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertTrue(self.victim.coin_token)
         self.plr.end_turn()
@@ -56,7 +56,7 @@ class Test_Bridgetroll(unittest.TestCase):
     def test_costreduction(self):
         self.coin = 1
         self.assertEqual(self.plr.cardCost(self.g["Gold"]), 6)
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.cardCost(self.g["Gold"]), 5)
 
 

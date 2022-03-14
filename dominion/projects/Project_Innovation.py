@@ -25,7 +25,7 @@ class Project_Innovation(Project.Project):
         )
         if ch:
             player.add_card(card, "hand")
-            player.playCard(card, discard=False, costAction=False)
+            player.play_card(card, discard=False, costAction=False)
             # There are circumstances where playing the card can lead
             # to its removal from the player hand
             if card in player.hand:

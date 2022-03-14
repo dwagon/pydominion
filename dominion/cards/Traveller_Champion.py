@@ -37,7 +37,7 @@ class Test_Champion(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
-        self.plr.playCard(moat)
+        self.plr.play_card(moat)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

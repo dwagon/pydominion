@@ -33,7 +33,7 @@ class Test_Supplies(unittest.TestCase):
 
     def test_playcard(self):
         """Play a supplies"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.deck[-1].name, "Horse")
 

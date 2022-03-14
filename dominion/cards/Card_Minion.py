@@ -60,7 +60,7 @@ class Test_Minion(unittest.TestCase):
     def test_play_gold(self):
         """Play a minion and gain two gold"""
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
@@ -68,7 +68,7 @@ class Test_Minion(unittest.TestCase):
     def test_play_discard(self):
         """Play a minion and discard hand"""
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
@@ -81,7 +81,7 @@ class Test_Minion(unittest.TestCase):
         """Play a minion and discard hand - the other player has a small hand"""
         self.victim.set_hand("Estate", "Estate", "Estate", "Estate")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
@@ -94,7 +94,7 @@ class Test_Minion(unittest.TestCase):
         """Play a minion and discard hand - the other player is defended"""
         self.victim.set_hand("Estate", "Estate", "Estate", "Estate", "Moat")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 4)

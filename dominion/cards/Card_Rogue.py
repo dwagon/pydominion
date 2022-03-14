@@ -103,7 +103,7 @@ class Test_Rogue(unittest.TestCase):
         """Nothing should happen"""
         try:
             self.plr.add_card(self.card, "hand")
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.assertEqual(self.plr.getCoin(), 2)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
@@ -115,7 +115,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
         self.victim.add_card(moat, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
     def test_good_trash(self):
         """Rogue to get something juicy from the trash"""
@@ -125,7 +125,7 @@ class Test_Rogue(unittest.TestCase):
             self.plr.trash_card(gold)
         self.plr.test_input = ["1"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertEqual(self.plr.discardpile.size(), 1)
@@ -140,7 +140,7 @@ class Test_Rogue(unittest.TestCase):
         self.victim.set_deck("Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertEqual(self.victim.discardpile.size(), 1)
@@ -151,7 +151,7 @@ class Test_Rogue(unittest.TestCase):
         tsize = self.g.trashSize()
         self.victim.set_deck("Gold", "Province", "Province")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.victim.discardpile.size(), 2)
 

@@ -56,7 +56,7 @@ class Test_Gear(unittest.TestCase):
         self.plr.set_hand("Duchy", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["set silver", "set gold", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.hand.size(), 1 + 2)  # Duchy + 2 picked up
             self.assertIsNotNone(self.plr.in_hand("Duchy"))

@@ -44,7 +44,7 @@ class Test_Devils_Workshop(unittest.TestCase):
 
     def test_play_0(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Gold"))
         except AssertionError:  # pragma: no cover
@@ -55,7 +55,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.gainCard("Copper")
         self.plr.test_input = ["Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertLessEqual(self.plr.discardpile[0].name, "Moat")
         except AssertionError:  # pragma: no cover
@@ -66,7 +66,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.gainCard("Copper")
         self.plr.gainCard("Estate")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Imp"))
         except AssertionError:  # pragma: no cover

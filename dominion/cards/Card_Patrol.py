@@ -49,7 +49,7 @@ class Test_Patrol(unittest.TestCase):
         self.plr.set_deck(
             "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
         )
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Duchy"))

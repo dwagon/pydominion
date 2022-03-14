@@ -85,13 +85,13 @@ class Test_Thief(unittest.TestCase):
 
     def test_no_treasure(self):
         self.victim.set_deck("Estate", "Estate", "Estate")
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertIn("Player victim has no treasures", self.thief.messages)
 
     def test_moat_defense(self):
         self.victim.set_hand("Moat", "Copper", "Copper")
         self.victim.set_deck("Copper", "Silver", "Gold")
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertIn("Player victim is defended", self.thief.messages)
         self.assertEqual(self.victim.deck.size(), 3)
         self.assertEqual(self.victim.discardpile.size(), 0)
@@ -100,7 +100,7 @@ class Test_Thief(unittest.TestCase):
         self.victim.set_hand("Copper", "Copper")
         self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertEqual(self.victim.deck.size(), 1)
         self.assertEqual(self.victim.discardpile.size(), 2)
         self.assertEqual(self.thief.discardpile.size(), 0)
@@ -109,7 +109,7 @@ class Test_Thief(unittest.TestCase):
         self.victim.set_hand("Copper", "Copper")
         self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertIsNotNone(self.g.in_trash("Gold"))
         for c in self.victim.deck:
@@ -121,7 +121,7 @@ class Test_Thief(unittest.TestCase):
         self.victim.set_hand("Copper", "Copper")
         self.victim.set_deck("Copper", "Silver", "Gold")
         self.thief.test_input = ["steal gold"]
-        self.thief.playCard(self.thiefcard)
+        self.thief.play_card(self.thiefcard)
         self.assertEqual(self.g.trashSize(), tsize)
         for c in self.victim.deck:
             self.assertNotEqual(c.name, "Gold")

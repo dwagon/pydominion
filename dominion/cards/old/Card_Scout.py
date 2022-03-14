@@ -44,13 +44,13 @@ class Test_Scout(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.scout, "hand")
-        self.plr.playCard(self.scout)
+        self.plr.play_card(self.scout)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
         self.plr.set_hand()
         self.plr.add_card(self.scout, "hand")
-        self.plr.playCard(self.scout)
+        self.plr.play_card(self.scout)
         for c in self.plr.hand:
             self.assertTrue(c.isVictory())
 
@@ -58,7 +58,7 @@ class Test_Scout(unittest.TestCase):
         self.plr.set_hand()
         self.plr.add_card(self.scout, "hand")
         self.plr.set_deck("Copper", "Copper", "Copper", "Duchy")
-        self.plr.playCard(self.scout)
+        self.plr.play_card(self.scout)
         self.assertEqual(self.plr.hand[0].name, "Duchy")
         for c in self.plr.deck:
             self.assertEqual(c.name, "Copper")

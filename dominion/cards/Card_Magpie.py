@@ -46,7 +46,7 @@ class Test_Magpie(unittest.TestCase):
         """Play a magpie with treasure"""
         self.plr.set_deck("Gold", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         # Hand of 5, the card gained and the treasure
         self.assertEqual(self.plr.hand.size(), 5 + 1 + 1)
         self.assertTrue(self.plr.in_hand("Gold"))
@@ -55,7 +55,7 @@ class Test_Magpie(unittest.TestCase):
         """Play a magpie with treasure"""
         self.plr.set_deck("Duchy", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         # Hand of 5, the card gained
         self.assertEqual(self.plr.hand.size(), 5 + 1)

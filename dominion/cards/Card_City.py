@@ -41,7 +41,7 @@ class Test_City(unittest.TestCase):
 
     def test_nostacks(self):
         """Play a city with no stacks empty"""
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
@@ -51,7 +51,7 @@ class Test_City(unittest.TestCase):
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
 
@@ -65,7 +65,7 @@ class Test_City(unittest.TestCase):
             c = self.g["Cellar"].remove()
             if not c:
                 break
-        self.plr.playCard(self.city)
+        self.plr.play_card(self.city)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 1)
         # 1 default + 1 for city

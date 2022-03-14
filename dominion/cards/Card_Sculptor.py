@@ -36,7 +36,7 @@ class Test_Sculptor(unittest.TestCase):
     def test_gainaction(self):
         self.plr.set_deck("Moat")
         self.plr.test_input = ["Get Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertIsNotNone(self.plr.in_hand("Moat"))
         self.assertLessEqual(self.plr.getVillager(), 1)
@@ -44,7 +44,7 @@ class Test_Sculptor(unittest.TestCase):
     def test_gaintreasure(self):
         self.plr.set_deck("Silver")
         self.plr.test_input = ["Get Silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Silver"))
         self.assertLessEqual(self.plr.getVillager(), 1)
 

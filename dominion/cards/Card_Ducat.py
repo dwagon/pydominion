@@ -45,7 +45,7 @@ class Test_Ducat(unittest.TestCase):
         card = self.g["Ducat"].remove()
         self.plr.setCoffer(0)
         self.plr.add_card(card, "hand")
-        self.plr.playCard(card)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.getCoffer(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 

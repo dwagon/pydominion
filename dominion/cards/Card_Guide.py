@@ -35,7 +35,7 @@ class Test_Guide(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 

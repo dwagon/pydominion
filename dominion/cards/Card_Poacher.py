@@ -34,7 +34,7 @@ class Test_Poacher(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
@@ -46,7 +46,7 @@ class Test_Poacher(unittest.TestCase):
             if not c:
                 break
         self.plr.test_input = ["Discard Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

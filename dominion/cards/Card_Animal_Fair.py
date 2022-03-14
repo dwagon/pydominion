@@ -50,7 +50,7 @@ class Test_Animal_Fair(unittest.TestCase):
         c = self.g["Moat"].remove()
         while c:
             c = self.g["Moat"].remove()
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 

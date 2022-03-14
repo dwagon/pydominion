@@ -57,7 +57,7 @@ class Test_Soldier(unittest.TestCase):
     def test_soldier(self):
         """Play a soldier with no extra attacks"""
         self.vic.set_hand("Copper")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_soldier_more(self):
@@ -65,14 +65,14 @@ class Test_Soldier(unittest.TestCase):
         self.vic.set_hand("Copper")
         mil = self.g["Militia"].remove()
         self.plr.add_card(mil, "played")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
 
     def test_soldier_attack(self):
         """Play a soldier with more than 4 cards"""
         self.vic.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vic.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Gold"))
         self.assertIsNone(self.vic.in_hand("Gold"))
         self.assertEqual(self.vic.hand.size(), 4)

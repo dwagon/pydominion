@@ -39,7 +39,7 @@ class Test_Swamphag(unittest.TestCase):
         self.attacker.add_card(self.seahag, "hand")
 
     def test_play(self):
-        self.attacker.playCard(self.seahag)
+        self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
         self.victim.buyCard(self.g["Copper"])
         self.assertEqual(self.attacker.durationpile[0].name, "Swamp Hag")

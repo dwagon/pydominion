@@ -47,20 +47,20 @@ class Test_Steward(unittest.TestCase):
 
     def test_cards(self):
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.getCoin(), 0)
 
     def test_gold(self):
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_trash(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["2", "1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 3)
@@ -71,7 +71,7 @@ class Test_Steward(unittest.TestCase):
         self.plr.set_hand("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["2", "1", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertEqual(self.plr.hand.size(), 0)

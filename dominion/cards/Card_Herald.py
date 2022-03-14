@@ -30,7 +30,7 @@ class Card_Herald(Card.Card):
         player.reveal_card(card)
         if card.isAction():
             player.add_card(card, "hand")
-            player.playCard(card, costAction=False)
+            player.play_card(card, costAction=False)
 
     def hook_overpay(self, game, player, amount):
         for _ in range(amount):
@@ -56,7 +56,7 @@ class Test_Herald(unittest.TestCase):
         """Play a Herald"""
         self.plr.set_deck("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1 + 1)
         self.assertIsNotNone(self.plr.in_played("Moat"))

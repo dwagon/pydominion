@@ -48,14 +48,14 @@ class Test_Loan(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.loan)
+        self.plr.play_card(self.loan)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_discard(self):
         tsize = self.g.trashSize()
         self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.loan)
+        self.plr.play_card(self.loan)
         self.assertEqual(self.plr.discardpile[-1].name, "Gold")
         for c in self.plr.discardpile[:-1]:
             self.assertNotEqual(c.cardtype, Card.TYPE_TREASURE)
@@ -65,7 +65,7 @@ class Test_Loan(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.loan)
+        self.plr.play_card(self.loan)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         for c in self.plr.discardpile:

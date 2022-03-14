@@ -44,7 +44,7 @@ class Test_Dungeon(unittest.TestCase):
         self.plr.set_hand("Province", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province", "duchy", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)  # 2 picked up from dungeon -2 discard
         self.assertIsNone(self.plr.in_hand("duchy"))
         self.assertEqual(self.plr.durationpile.size(), 1)

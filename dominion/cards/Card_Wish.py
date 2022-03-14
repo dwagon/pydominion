@@ -43,14 +43,14 @@ class Test_Wish(unittest.TestCase):
     def test_return(self):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Return", "Get Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertIsNone(self.plr.in_played("Wish"))
 
     def test_keep(self):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_played("Wish"))
 

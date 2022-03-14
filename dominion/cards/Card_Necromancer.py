@@ -29,7 +29,7 @@ class Card_Necromancer(Card.Card):
         ]
         card = player.cardSel(cardsrc=act, prompt="Select Action card from Trash")
         game._necromancer.add(card[0])
-        player.playCard(card[0], discard=False, costAction=False)
+        player.play_card(card[0], discard=False, costAction=False)
 
     def setup(self, game):
         game._necromancer = PlayArea.PlayArea()
@@ -52,7 +52,7 @@ class Test_Necromancer(unittest.TestCase):
         """Play a Necromancer"""
         self.plr.set_deck("Gold", "Silver")
         self.plr.test_input = ["Zombie Spy", "Keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Silver"))  # From Zombie Spy
 
 

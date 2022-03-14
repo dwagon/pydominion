@@ -36,7 +36,7 @@ class Test_Fisherman(unittest.TestCase):
 
     def test_playcard(self):
         """Play the card"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)

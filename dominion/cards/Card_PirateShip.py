@@ -90,7 +90,7 @@ class Test_PirateShip(unittest.TestCase):
         tsize = self.g.trashSize()
         self.vic.set_deck("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Copper"))
@@ -103,13 +103,13 @@ class Test_PirateShip(unittest.TestCase):
         """Play the card but chose to not trash anything"""
         self.vic.set_deck("Copper", "Estate")
         self.plr.test_input = ["Each other", "Finish selecting"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.vic.in_discard("Copper"))
 
     def test_spend(self):
         self.plr._pirate_ship = 2
         self.plr.test_input = ["per treasure"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
 

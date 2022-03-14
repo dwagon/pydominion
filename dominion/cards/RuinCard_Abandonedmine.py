@@ -32,7 +32,7 @@ class Test_AbandonedMine(unittest.TestCase):
 
     def test_play(self):
         """Play an abandoned mine"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

@@ -930,9 +930,9 @@ class Player:
         elif opt["action"] == "villager":
             self.spend_villager()
         elif opt["action"] == "play":
-            self.playCard(opt["card"])
+            self.play_card(opt["card"])
         elif opt["action"] == "spend":
-            self.playCard(opt["card"])
+            self.play_card(opt["card"])
         elif opt["action"] == "payback":
             self.payback()
         elif opt["action"] == "spendall":
@@ -1078,7 +1078,7 @@ class Player:
             self.currcards.append(card)
             self.deferpile.remove(card)
             self.hand.add(card)
-            self.playCard(card, costAction=False)
+            self.play_card(card, costAction=False)
             self.currcards.pop()
 
     ###########################################################################
@@ -1154,7 +1154,7 @@ class Player:
     def _spend_all_cards(self):
         for card in self.hand[:]:
             if card.isTreasure():
-                self.playCard(card)
+                self.play_card(card)
 
     ###########################################################################
     def _play_card_tokens(self, card):
@@ -1192,7 +1192,7 @@ class Player:
             self.played.remove(card)
 
     ###########################################################################
-    def playCard(self, card, discard=True, costAction=True, postActionHook=True):
+    def play_card(self, card, discard=True, costAction=True, postActionHook=True):
         options = {"skip_card": False, "discard": discard}
         if card not in self.hand and options["discard"]:
             self.output(f"{card.name} is no longer available")

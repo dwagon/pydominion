@@ -28,7 +28,7 @@ class Test_Moat(unittest.TestCase):
 
     def test_play(self):
         """Play a moat"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
 
 

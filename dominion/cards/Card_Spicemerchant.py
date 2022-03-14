@@ -49,7 +49,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.set_hand("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "cards"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertEqual(self.plr.hand.size(), 2)
@@ -63,7 +63,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.plr.set_hand("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "coins"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertEqual(self.plr.hand.size(), 0)

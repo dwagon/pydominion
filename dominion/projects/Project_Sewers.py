@@ -32,7 +32,7 @@ class Test_Sewers(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Silver"))

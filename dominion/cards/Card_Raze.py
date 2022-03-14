@@ -54,7 +54,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Raze", "Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Province"))
@@ -68,7 +68,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Silver", "Gold", "Province")
         self.plr.test_input = ["Copper", "Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.g.in_trash("Copper"))
 

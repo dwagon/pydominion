@@ -46,19 +46,19 @@ class Test_Goons(unittest.TestCase):
 
     def test_play(self):
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.victim.hand.size(), 3)
 
     def test_defended(self):
         self.victim.set_hand("Moat", "Estate", "Gold", "Copper")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.victim.hand.size(), 4)
 
     def test_buy(self):
         self.victim.set_hand("Moat", "Estate", "Gold", "Copper")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.buyCard(self.g["Copper"])
         sc = self.plr.get_score_details()
         self.assertEqual(sc["Goons"], 1)

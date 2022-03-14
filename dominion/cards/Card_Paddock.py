@@ -39,7 +39,7 @@ class Test_Paddock(unittest.TestCase):
             c = self.g["Moat"].remove()
             if not c:
                 break
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_discard("Horse"))
 

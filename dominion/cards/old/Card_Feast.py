@@ -63,7 +63,7 @@ class Test_Feast(unittest.TestCase):
     def test_dontTrash(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["keep this"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize)
         try:
             self.assertEqual(self.plr.played[0].name, "Feast")
@@ -75,7 +75,7 @@ class Test_Feast(unittest.TestCase):
         tsize = self.g.trashSize()
         try:
             self.plr.test_input = ["trash", "nothing"]
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))
             self.assertTrue(self.plr.played.is_empty())
@@ -86,7 +86,7 @@ class Test_Feast(unittest.TestCase):
     def test_trashForSomething(self):
         tsize = self.g.trashSize()
         self.plr.test_input = ["trash", "Get Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashSize(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))

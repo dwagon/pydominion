@@ -52,7 +52,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.setFavor(2)
         self.plr.test_input = ["Gain"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getFavor(), 1)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
 
@@ -63,7 +63,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.setFavor(2)
         self.plr.test_input = ["No"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getFavor(), 2)
         self.assertEqual(self.plr.hand.size(), 1)
 

@@ -40,7 +40,7 @@ class Test_Pooka(unittest.TestCase):
         self.plr.set_hand("Copper", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNone(self.g.in_trash("Gold"))

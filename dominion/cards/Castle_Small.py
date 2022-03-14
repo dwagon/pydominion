@@ -44,14 +44,14 @@ class Test_SmallCastle(unittest.TestCase):
         """Play a castle - trash nothing"""
         self.plr.test_input = ["Finish"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Small Castle"], 2)
 
     def test_trash(self):
         """Play a castle - trash self"""
         self.plr.test_input = ["small"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

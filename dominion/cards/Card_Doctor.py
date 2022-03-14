@@ -99,7 +99,7 @@ class Test_Doctor(unittest.TestCase):
         """Play the Doctor"""
         self.plr.set_deck("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_deck("Silver"))
         self.assertIsNotNone(self.plr.in_deck("Duchy"))

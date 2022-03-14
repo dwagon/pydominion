@@ -55,7 +55,7 @@ class Test_Journeyman(unittest.TestCase):
         """Play the pawn - select card and action"""
         self.plr.set_deck("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Province"))

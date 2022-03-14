@@ -43,7 +43,7 @@ class Test_Royalseal(unittest.TestCase):
     def test_play(self):
         """Play a Royal Seal"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_discard(self):

@@ -57,7 +57,7 @@ class Test_NightWatchman(unittest.TestCase):
             "Discard Province",
             "Return Gold",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_discard("Duchy"))
             self.assertIsNotNone(self.plr.in_discard("Province"))

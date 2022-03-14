@@ -51,7 +51,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.set_hand("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "cards"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_play_action(self):
@@ -59,7 +59,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.set_hand("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "actions"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_play_cash(self):
@@ -67,7 +67,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.set_hand("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "coins"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_favor(self):
@@ -76,7 +76,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.set_hand("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "favor"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getFavor(), fav + 2)
 
 

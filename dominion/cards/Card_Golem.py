@@ -40,7 +40,7 @@ class Card_Golem(Card.Card):
         # TODO - let the player choose the order
         for card in actions:
             player.output("Golem playing %s" % card.name)
-            player.playCard(card, costAction=False)
+            player.play_card(card, costAction=False)
 
 
 ###############################################################################
@@ -58,7 +58,7 @@ class Test_Golem(unittest.TestCase):
         self.plr.set_hand()
         self.plr.set_deck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(
             ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
         )
@@ -71,7 +71,7 @@ class Test_Golem(unittest.TestCase):
             "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
         )
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(
             ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
         )
@@ -83,7 +83,7 @@ class Test_Golem(unittest.TestCase):
         self.plr.set_hand("Copper", "Copper", "Copper")
         self.plr.set_deck("Copper", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
 
 
 ###############################################################################

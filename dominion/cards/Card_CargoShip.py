@@ -55,11 +55,11 @@ class Test_CargoShip(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard_yes(self):
+    def test_play_card_yes(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["Yes"]
         self.plr.buyCard(self.g["Moat"])
@@ -68,11 +68,11 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.start_turn()
         self.assertTrue(self.plr.in_hand("Moat"))
 
-    def test_playCard_no(self):
+    def test_play_card_no(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.plr.test_input = ["No"]
         self.plr.buyCard(self.g["Moat"])

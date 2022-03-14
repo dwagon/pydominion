@@ -55,7 +55,7 @@ class Test_Vault(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.other.test_input = ["Copper", "Silver", "Finish"]
         self.plr.test_input = ["Duchy", "Province", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.other.hand.size(), 3 - 2 + 1)

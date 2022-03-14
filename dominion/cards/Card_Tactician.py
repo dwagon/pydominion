@@ -45,7 +45,7 @@ class Test_Tactician(unittest.TestCase):
     def test_play_discard(self):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["discard"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
@@ -56,7 +56,7 @@ class Test_Tactician(unittest.TestCase):
     def test_play_keep(self):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()

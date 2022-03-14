@@ -39,7 +39,7 @@ class Test_Tradingpost(unittest.TestCase):
         """Play Trading Post"""
         tsize = self.g.trashSize()
         self.plr.test_input = ["1", "2", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertTrue(self.plr.in_hand("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
@@ -47,7 +47,7 @@ class Test_Tradingpost(unittest.TestCase):
         """Play a trading post but don't trash enough"""
         tsize = self.g.trashSize()
         self.plr.test_input = ["1", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertFalse(self.plr.in_hand("Silver"))
         self.assertEqual(self.g.trashSize(), tsize + 1)
 

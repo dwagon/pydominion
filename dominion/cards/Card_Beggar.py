@@ -40,7 +40,7 @@ class Test_Beggar(unittest.TestCase):
         """Play a beggar"""
         self.plr.set_hand()
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
 
@@ -50,7 +50,7 @@ class Test_Beggar(unittest.TestCase):
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         militia = self.g["Militia"].remove()
         self.attacker.add_card(militia, "hand")
-        self.attacker.playCard(militia)
+        self.attacker.play_card(militia)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 

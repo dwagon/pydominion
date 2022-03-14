@@ -43,7 +43,7 @@ class Test_Baker(unittest.TestCase):
     def test_play(self):
         """Play a baker"""
         self.plr.coffer = 0
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoffer(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)

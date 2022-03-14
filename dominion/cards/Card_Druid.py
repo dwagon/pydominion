@@ -47,7 +47,7 @@ class Test_Druid(unittest.TestCase):
     def test_play(self):
         """Play a Druid"""
         self.plr.test_input = ["0", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.get_buys(), 2)
 
     def test_setaside(self):

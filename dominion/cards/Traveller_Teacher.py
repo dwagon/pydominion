@@ -59,7 +59,7 @@ class Test_Teacher(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["Cellar", "Chapel", "Moat", "Vassal"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Cellar")
         self.assertEqual(self.plr.tokens["+1 Action"], "Chapel")
         self.assertEqual(self.plr.tokens["+1 Buy"], "Moat")

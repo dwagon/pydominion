@@ -36,7 +36,7 @@ class Test_Oasis(unittest.TestCase):
     def test_playcard(self):
         """Play an oasis"""
         self.plr.test_input = ["discard gold", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 1)

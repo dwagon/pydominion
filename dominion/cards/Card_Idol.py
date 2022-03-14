@@ -48,7 +48,7 @@ class Test_Idol(unittest.TestCase):
         """Play an even number of Idol"""
         self.plr.set_played("Idol", "Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.vic.in_discard("Curse"))
         self.assertIsNone(self.plr.in_discard("Silver"))
@@ -57,7 +57,7 @@ class Test_Idol(unittest.TestCase):
         """Play an odd number of Idol"""
         self.plr.set_played("Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNone(self.vic.in_discard("Curse"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))  # From Mountain boon

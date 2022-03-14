@@ -47,7 +47,7 @@ class Test_Storeroom(unittest.TestCase):
     def test_play(self):
         """Play a store room"""
         self.plr.test_input = ["0", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertTrue(self.plr.discardpile.is_empty())
@@ -55,7 +55,7 @@ class Test_Storeroom(unittest.TestCase):
     def test_discardonce(self):
         """Storeroom: Only discard during the first discard phase"""
         self.plr.test_input = ["1", "0", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 - 1 + 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
@@ -63,7 +63,7 @@ class Test_Storeroom(unittest.TestCase):
     def test_discardtwice(self):
         """Storeroom: Discard during the both discard phases"""
         self.plr.test_input = ["1", "0", "1", "0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 - 1)
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertEqual(self.plr.get_buys(), 2)

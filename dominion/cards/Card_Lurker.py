@@ -56,14 +56,14 @@ class Test_Lurker(unittest.TestCase):
 
     def test_trash(self):
         self.plr.test_input = ["Trash an Action", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.get_actions(), 0 + 1)
 
     def test_recover(self):
         self.plr.test_input = ["Gain an Action", "Moat"]
         self.g.set_trash("Moat")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNone(self.g.in_trash("Moat"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))
 

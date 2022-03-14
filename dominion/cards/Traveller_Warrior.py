@@ -62,7 +62,7 @@ class Test_Warrior(unittest.TestCase):
 
     def test_warrior(self):
         """Play a warrior nothing to trash"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.victim.discardpile.size(), 1)
         except AssertionError:  # pragma: no cover
@@ -74,13 +74,13 @@ class Test_Warrior(unittest.TestCase):
         tsize = self.g.trashSize()
         self.victim.set_deck("Silver", "Silver")
         self.plr.set_played("Page")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
 
     def test_end_turn(self):
         """End the turn with a played warrior"""
         self.plr.test_input = ["keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
 
 

@@ -37,7 +37,7 @@ class Test_Poorhouse(unittest.TestCase):
         """Play an Poor House"""
         self.plr.set_hand("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 4 - 1)
 
 

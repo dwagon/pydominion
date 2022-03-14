@@ -40,13 +40,13 @@ class Test_BandOfMisfits(unittest.TestCase):
     def test_play_market(self):
         """Make the Band of Misfits be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_deck("Silver"))
 
     def test_play_feast(self):
         """Make the Band of Misfits be a Village"""
         self.plr.test_input = ["Select Village"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 2)
 

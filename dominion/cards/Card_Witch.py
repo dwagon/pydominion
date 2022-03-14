@@ -37,13 +37,13 @@ class Test_Witch(unittest.TestCase):
 
     def test_defended(self):
         self.victim.add_card(self.mcard, "hand")
-        self.attacker.playCard(self.wcard)
+        self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertEqual(self.attacker.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 0)
 
     def test_nodefense(self):
-        self.attacker.playCard(self.wcard)
+        self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.hand.size(), 5)
         self.assertEqual(self.attacker.hand.size(), 7)
         self.assertEqual(self.victim.discardpile[0].name, "Curse")

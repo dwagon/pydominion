@@ -32,7 +32,7 @@ class Test_RuinedMarket(unittest.TestCase):
 
     def test_play(self):
         """Play a ruined market"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
 

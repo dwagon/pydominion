@@ -31,7 +31,7 @@ class Card_Cultist(Card.Card):
                 ("Play another cultist", True),
             )
             if ans:
-                player.playCard(cultist, costAction=False)
+                player.play_card(cultist, costAction=False)
 
     def hook_trashThisCard(self, game, player):
         """When you trash this, +3 cards"""
@@ -49,7 +49,7 @@ class Test_Cultist(unittest.TestCase):
     def test_play(self):
         """Play a cultists - should give 2 cards"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertTrue(self.victim.discardpile[0].isRuin())
@@ -59,7 +59,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         moat = self.g["Moat"].remove()
         self.victim.add_card(moat, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertTrue(self.victim.discardpile.is_empty())
 
@@ -68,7 +68,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.set_hand("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
     def test_anothercultist_no(self):
@@ -76,7 +76,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.set_hand("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 1)
 
     def test_anothercultist_yes(self):
@@ -84,7 +84,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.set_hand("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 2)
         self.assertEqual(self.plr.get_actions(), 0)
         for c in self.plr.played:

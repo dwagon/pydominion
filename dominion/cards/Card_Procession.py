@@ -31,7 +31,7 @@ class Card_Procession(Card.Card):
 
         for i in range(1, 3):
             player.output("Play %d of %s" % (i, card.name))
-            player.playCard(card, discard=False, costAction=False)
+            player.play_card(card, discard=False, costAction=False)
         player.trash_card(card)
         cost = player.cardCost(card) + 1
         player.plrGainCard(cost, modifier="equal", types={Card.TYPE_ACTION: True})
@@ -52,7 +52,7 @@ class Test_Procession(unittest.TestCase):
         self.plr.set_hand("Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat", "Witch"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.hand.size(), 4)
         self.assertIsNotNone(self.plr.in_discard("Witch"))

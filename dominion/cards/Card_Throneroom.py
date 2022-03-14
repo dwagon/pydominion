@@ -33,7 +33,7 @@ class Card_Throneroom(Card.Card):
             return
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, o["card"].name))
-            player.playCard(o["card"], discard=False, costAction=False)
+            player.play_card(o["card"], discard=False, costAction=False)
         player.discard_card(o["card"])
 
 
@@ -49,7 +49,7 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.set_hand("Copper", "Mine")
         card = self.plr.gainCard("Throne Room", "hand")
         self.plr.test_input = ["1", "1", "1"]
-        self.plr.playCard(card)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.hand[0].name, "Gold")
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Mine")
@@ -60,13 +60,13 @@ class Test_Throneroom(unittest.TestCase):
         self.plr.set_hand("Copper", "Mine")
         card = self.plr.gainCard("Throne Room", "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(card)
+        self.plr.play_card(card)
 
     def test_noaction(self):
         self.plr.set_hand("Copper", "Copper")
         card = self.plr.gainCard("Throne Room", "hand")
         self.plr.test_input = ["0"]
-        self.plr.playCard(card)
+        self.plr.play_card(card)
         self.assertEqual(self.plr.test_input, ["0"])
 
 

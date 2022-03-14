@@ -37,7 +37,7 @@ class Test_Cobbler(unittest.TestCase):
     def test_duration(self):
         try:
             self.plr.add_card(self.card, "hand")
-            self.plr.playCard(self.card)
+            self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.test_input = ["1"]
             self.plr.start_turn()

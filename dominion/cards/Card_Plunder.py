@@ -29,7 +29,7 @@ class Test_Plunder(unittest.TestCase):
 
     def test_play(self):
         """Play a rebuild"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_score_details()["Plunder"], 1)
 

@@ -47,21 +47,21 @@ class Test_Pearldiver(unittest.TestCase):
     def test_play(self):
         self.plr.set_deck("Copper", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_donothing(self):
         self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertEqual(self.plr.deck[0].name, "Copper")
 
     def test_putontop(self):
         self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.pearldiver)
+        self.plr.play_card(self.pearldiver)
         # Duchy gets pulled due to +1 card
         self.assertEqual(self.plr.deck[-1].name, "Copper")
         self.assertEqual(self.plr.deck[0].name, "Estate")

@@ -36,7 +36,7 @@ class Test_Soothsayer(unittest.TestCase):
         self.attacker.add_card(self.wcard, "hand")
 
     def test_play(self):
-        self.attacker.playCard(self.wcard)
+        self.attacker.play_card(self.wcard)
         self.assertEqual(self.victim.hand.size(), 6)
         self.assertIsNotNone(self.victim.in_discard("Curse"))
         self.assertIsNotNone(self.attacker.in_discard("Gold"))

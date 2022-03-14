@@ -39,7 +39,7 @@ class Test_Sir_Bailey(unittest.TestCase):
     def test_score(self):
         """Play the Sir"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 

@@ -48,7 +48,7 @@ class Test_Treasuremap(unittest.TestCase):
         self.plr.set_deck()
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0", "1", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Treasure Map"))
         self.assertEqual(self.plr.deck.size(), 0)
@@ -60,7 +60,7 @@ class Test_Treasuremap(unittest.TestCase):
         self.plr.set_hand("Treasure Map")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Treasure Map"))
         self.assertEqual(self.plr.deck.size(), 4)

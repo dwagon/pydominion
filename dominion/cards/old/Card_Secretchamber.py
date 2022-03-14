@@ -69,7 +69,7 @@ class Test_Secretchamber(unittest.TestCase):
         """Play the Secret Chamber - discard none"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.getCoin(), 0)
 
@@ -83,7 +83,7 @@ class Test_Secretchamber(unittest.TestCase):
             "discard gold",
             "finish",
         ]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
 
@@ -94,7 +94,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.add_card(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["Reveal", "Silver", "Gold", "Finish"]
-        self.att.playCard(mil)
+        self.att.play_card(mil)
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Duchy"))
         self.assertIsNone(self.plr.in_deck("Province"))
@@ -109,7 +109,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.att.add_card(mil, "hand")
         self.plr.set_hand("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["nothing"]
-        self.att.playCard(mil)
+        self.att.play_card(mil)
         self.assertIsNotNone(self.plr.in_deck("Province"))
         self.assertIsNotNone(self.plr.in_deck("Duchy"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))

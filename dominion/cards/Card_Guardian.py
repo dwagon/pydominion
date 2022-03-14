@@ -39,7 +39,7 @@ class Test_Guardian(unittest.TestCase):
 
     def test_duration(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.getCoin(), 1)

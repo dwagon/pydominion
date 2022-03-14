@@ -41,7 +41,7 @@ class Test_Courtyard(unittest.TestCase):
         """Play courtyard"""
         self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["finish"]
-        self.plr.playCard(self.cy)
+        self.plr.play_card(self.cy)
         self.assertEqual(self.plr.hand.size(), 8)
 
     def test_putcard(self):
@@ -49,7 +49,7 @@ class Test_Courtyard(unittest.TestCase):
         self.plr.set_hand("Gold")
         self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["put gold"]
-        self.plr.playCard(self.cy)
+        self.plr.play_card(self.cy)
         card = self.plr.next_card()
         self.assertEqual(card.name, "Gold")
         for c in self.plr.hand:

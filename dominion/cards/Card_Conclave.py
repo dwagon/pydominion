@@ -34,7 +34,7 @@ class Card_Conclave(Card.Card):
             index += 1
         o = player.userInput(options, "What card do you want to play?")
         if o["card"]:
-            player.playCard(o["card"], costAction=False)
+            player.play_card(o["card"], costAction=False)
             player.addActions(1)
 
 
@@ -50,14 +50,14 @@ class Test_Conclave(unittest.TestCase):
         self.plr.set_hand("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.set_played("Moat")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_not_played(self):
         self.plr.set_hand("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

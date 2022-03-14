@@ -39,7 +39,7 @@ class Test_Swamps_Gift(unittest.TestCase):
     def test_winds_gift(self):
         self.plr.add_card(self.card, "hand")
         self.g.print_state()
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Will-o'-Wisp"))
 
 

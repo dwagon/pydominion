@@ -50,7 +50,7 @@ class Test_IGG(unittest.TestCase):
         self.plr.set_hand("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.getCoin(), 1)
 

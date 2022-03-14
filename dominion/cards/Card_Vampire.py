@@ -42,7 +42,7 @@ class Test_Vampire(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["Get Duchy"]
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertTrue(self.vic.has_state("Deluded"))
         self.assertIsNotNone(self.plr.in_discard("Duchy"))
         self.assertIsNone(self.plr.in_discard("Vampire"))

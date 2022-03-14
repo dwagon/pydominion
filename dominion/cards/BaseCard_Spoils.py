@@ -36,7 +36,7 @@ class Test_Spoils(unittest.TestCase):
         numspoils = self.g["Spoils"].numcards
         spoils = self.g["Spoils"].remove()
         self.plr.add_card(spoils, "hand")
-        self.plr.playCard(spoils)
+        self.plr.play_card(spoils)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertTrue(self.plr.played.is_empty())
         self.assertEqual(self.g["Spoils"].numcards, numspoils)

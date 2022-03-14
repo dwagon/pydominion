@@ -56,7 +56,7 @@ class Test_Raider(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.set_played("Gold", "Silver")
         self.vic.set_hand("Silver", "Gold", "Estate", "Copper", "Copper")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.vic.in_discard("Gold"))
             self.assertIsNotNone(self.vic.in_discard("Silver"))

@@ -53,7 +53,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr.set_discard("Province", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertIsNone(self.plr.in_discard("Gold"))
 

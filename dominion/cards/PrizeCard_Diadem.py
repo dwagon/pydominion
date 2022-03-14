@@ -32,7 +32,7 @@ class Test_Diadem(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.actions = 1
         self.assertEqual(self.plr.getCoin(), 3)
 

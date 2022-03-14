@@ -51,7 +51,7 @@ class Test_Suns_Gift(unittest.TestCase):
     def test_suns_gift(self):
         self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertIsNotNone(self.plr.in_deck("Silver"))
             self.assertIsNotNone(self.plr.in_deck("Gold"))

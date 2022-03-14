@@ -40,7 +40,7 @@ class Test_Adventurer(unittest.TestCase):
     def test_treasures(self):
         self.plr.set_deck("Copper", "Silver", "Gold", "Estate")
         self.plr.set_hand("Adventurer")
-        self.plr.playCard(self.plr.hand[0])
+        self.plr.play_card(self.plr.hand[0])
         self.assertEqual(
             sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.hand])
         )

@@ -41,7 +41,7 @@ class Test_Bordervillage(unittest.TestCase):
         self.plr.add_card(self.bv, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.bv)
+        self.plr.play_card(self.bv)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 

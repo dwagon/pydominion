@@ -54,7 +54,7 @@ class Test_Pillage(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.victim.set_hand("Copper", "Estate", "Duchy", "Gold", "Silver", "Province")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Spoils")
@@ -67,7 +67,7 @@ class Test_Pillage(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.victim.set_hand("Copper", "Estate", "Duchy", "Gold")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Spoils")

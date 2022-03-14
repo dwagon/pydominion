@@ -32,7 +32,7 @@ class Test_RuinedLibrary(unittest.TestCase):
 
     def test_play(self):
         """Play a ruined library"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
 

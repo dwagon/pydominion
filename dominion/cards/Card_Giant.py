@@ -54,7 +54,7 @@ class Test_Giant(unittest.TestCase):
         self.victim.set_deck("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
         self.assertIsNotNone(self.g.in_trash("Gold"))
 
@@ -64,7 +64,7 @@ class Test_Giant(unittest.TestCase):
         self.victim.set_deck("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 5)
         self.assertIsNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.victim.in_discard("Curse"))
@@ -74,7 +74,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.set_hand()
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = True
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
 

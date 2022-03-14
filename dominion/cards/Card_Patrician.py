@@ -41,7 +41,7 @@ class Test_Patrician(unittest.TestCase):
         """Play the Patrician"""
         self.plr.set_deck("Estate", "Estate")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 
@@ -49,7 +49,7 @@ class Test_Patrician(unittest.TestCase):
         """Play the Patrician"""
         self.plr.set_deck("Gold", "Estate")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))

@@ -43,7 +43,7 @@ class Test_Cache(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.cache, "hand")
-        self.plr.playCard(self.cache)
+        self.plr.play_card(self.cache)
         self.assertEqual(self.plr.getCoin(), 3)
 
 

@@ -29,7 +29,7 @@ class Test_Laboratory(unittest.TestCase):
 
     def test_play(self):
         """Play a Laboratory"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         # 5 hand, +2 for playing lab
         self.assertEqual(self.plr.hand.size(), 7)

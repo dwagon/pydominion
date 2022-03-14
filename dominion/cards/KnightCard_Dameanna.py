@@ -42,7 +42,7 @@ class Test_Dame_Anna(unittest.TestCase):
         self.plr.set_hand("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.g.trashSize(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Province"))
 

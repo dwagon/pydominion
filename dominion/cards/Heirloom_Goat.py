@@ -39,7 +39,7 @@ class Test_Goat(unittest.TestCase):
         self.plr.set_hand("Province", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertIsNotNone(self.g.in_trash("Province"))
 

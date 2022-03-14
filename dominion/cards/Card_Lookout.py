@@ -72,7 +72,7 @@ class Test_Lookout(unittest.TestCase):
         self.plr.set_deck("Copper", "Estate", "Gold", "Province")
         self.plr.add_card(self.lookout, "hand")
         self.plr.test_input = ["Province", "Gold"]
-        self.plr.playCard(self.lookout)
+        self.plr.play_card(self.lookout)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
         self.assertEqual(self.plr.deck[0].name, "Copper")
@@ -83,7 +83,7 @@ class Test_Lookout(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.set_deck()
         self.plr.add_card(self.lookout, "hand")
-        self.plr.playCard(self.lookout)
+        self.plr.play_card(self.lookout)
         self.assertEqual(self.g.trashSize(), tsize)
         self.assertEqual(self.plr.discardpile.size(), 0)
 

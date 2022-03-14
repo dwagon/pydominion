@@ -56,7 +56,7 @@ class Test_Ghostship(unittest.TestCase):
         self.vic.set_deck("Estate")
         self.vic.set_hand("Duchy", "Province", "Copper", "Silver", "Gold")
         self.vic.test_input = ["Silver", "Gold", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.vic.hand.size(), 3)
         self.assertEqual(self.vic.deck.size(), 3)
         self.assertIn(self.vic.deck[-1].name, ("Silver", "Gold"))

@@ -49,7 +49,7 @@ class Test_Tracker(unittest.TestCase):
     def test_play(self):
         """Play a Tracker"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.getCoin(), 1)
         except AssertionError:  # pragma: no cover

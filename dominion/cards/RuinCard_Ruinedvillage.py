@@ -32,7 +32,7 @@ class Test_RuinedVillage(unittest.TestCase):
 
     def test_play(self):
         """Play a ruined village"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

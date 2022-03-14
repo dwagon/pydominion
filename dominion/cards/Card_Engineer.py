@@ -41,7 +41,7 @@ class Test_Engineer(unittest.TestCase):
         """Play an Engineer and trash it"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Trash", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_discard("Moat"))
         self.assertIsNotNone(self.g.in_trash("Engineer"))
@@ -50,7 +50,7 @@ class Test_Engineer(unittest.TestCase):
         """Play an Engineer and keep it"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Keep"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertIsNotNone(self.plr.in_played("Engineer"))
         self.assertIsNone(self.g.in_trash("Engineer"))

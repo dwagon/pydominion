@@ -51,7 +51,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.set_hand("Moat", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["play moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         # (moat + 2) * 3 + estate
         self.assertEqual(self.plr.hand.size(), 2 * 3 + 1)
         self.assertEqual(self.plr.played.size(), 2)
@@ -69,7 +69,7 @@ class Test_Kingscourt(unittest.TestCase):
     def test_noactions(self):
         self.plr.set_hand("Estate", "Estate")
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.played.size(), 1)
 
@@ -78,7 +78,7 @@ class Test_Kingscourt(unittest.TestCase):
         self.plr.set_hand("Estate", "Estate", "Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["don't play"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertEqual(self.plr.played.size(), 1)
 

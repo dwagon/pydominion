@@ -34,7 +34,7 @@ class Test_Capital(unittest.TestCase):
     def test_play(self):
         """Play a Capital"""
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 6)
         self.plr.coin = 3

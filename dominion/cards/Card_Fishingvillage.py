@@ -34,7 +34,7 @@ class Test_Fishingvillage(unittest.TestCase):
 
     def test_playcard(self):
         """Play a fishing village"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.durationpile.size(), 1)

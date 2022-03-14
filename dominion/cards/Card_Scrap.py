@@ -55,7 +55,7 @@ class Test_Scrap(unittest.TestCase):
         self.plr.set_hand("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash copper"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
 
     def test_playcard_cost3(self):
@@ -64,7 +64,7 @@ class Test_Scrap(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Province")
         self.plr.test_input = ["trash silver"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertEqual(self.plr.get_buys(), 2)
@@ -76,7 +76,7 @@ class Test_Scrap(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.set_deck("Copper")
         self.plr.test_input = ["trash province"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.get_buys(), 2)

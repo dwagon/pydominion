@@ -52,7 +52,7 @@ class Test_Mandarin(unittest.TestCase):
         self.plr.set_hand("Gold", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
 

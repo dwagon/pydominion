@@ -45,7 +45,7 @@ class Test_Margrave(unittest.TestCase):
     def test_defense(self):
         self.attacker.add_card(self.card, "hand")
         self.defender.add_card(self.g["Moat"].remove(), "hand")
-        self.attacker.playCard(self.card)
+        self.attacker.play_card(self.card)
         self.assertEqual(self.defender.hand.size(), 5 + 1)  # Moat
         self.assertEqual(self.attacker.hand.size(), 5 + 3)
         self.assertEqual(self.attacker.get_buys(), 1 + 1)
@@ -53,7 +53,7 @@ class Test_Margrave(unittest.TestCase):
     def test_attack(self):
         self.attacker.add_card(self.card, "hand")
         self.defender.test_input = ["1", "2", "3", "0"]
-        self.attacker.playCard(self.card)
+        self.attacker.play_card(self.card)
         self.assertEqual(self.defender.hand.size(), 3)
         self.assertEqual(self.defender.discardpile.size(), 3)
         self.assertEqual(self.attacker.hand.size(), 5 + 3)

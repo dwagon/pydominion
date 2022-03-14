@@ -50,7 +50,7 @@ class Test_Contraband(unittest.TestCase):
     def test_play(self):
         self.nbr.test_input = ["Gold"]
         self.plr.coins = 6
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.phase = "buy"
         options, _ = self.plr._choice_selection()
         for msg in options:

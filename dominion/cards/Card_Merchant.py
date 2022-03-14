@@ -40,14 +40,14 @@ class Test_Merchant(unittest.TestCase):
 
     def test_play(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
         self.plr.add_card(self.s1, "hand")
-        self.plr.playCard(self.s1)
+        self.plr.play_card(self.s1)
         self.assertEqual(self.plr.getCoin(), 3)
         self.plr.add_card(self.s2, "hand")
-        self.plr.playCard(self.s2)
+        self.plr.play_card(self.s2)
         self.assertEqual(self.plr.getCoin(), 5)
 
 

@@ -49,11 +49,11 @@ class Test_FarmersMarket(unittest.TestCase):
         self.plr.addActions(2)
         self.plr.add_card(self.c1, "hand")
         self.g["Farmers' Market"].addVP(3)
-        self.plr.playCard(self.c1)
+        self.plr.play_card(self.c1)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.getCoin(), 4)
         self.plr.add_card(self.c2, "hand")
-        self.plr.playCard(self.c2)
+        self.plr.play_card(self.c2)
         self.assertEqual(self.plr.get_score_details()["Farmers' Market"], 4)
         self.assertIsNotNone(self.g.in_trash("Farmers' Market"))
 

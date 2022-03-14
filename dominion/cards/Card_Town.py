@@ -40,14 +40,14 @@ class Test_Town(unittest.TestCase):
     def test_play_card_actions(self):
         """Play the card and card + actions"""
         self.plr.test_input = ["card"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 1 + 1)
 
     def test_play_buy_cash(self):
         """Play the card and buy + coin"""
         self.plr.test_input = ["buy"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 

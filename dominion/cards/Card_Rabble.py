@@ -57,14 +57,14 @@ class Test_Rabble(unittest.TestCase):
 
     def test_defended(self):
         self.victim.add_card(self.moat, "hand")
-        self.attacker.playCard(self.rabble)
+        self.attacker.play_card(self.rabble)
         self.assertEqual(self.victim.hand.size(), 6)  # 5 + moat
         self.assertEqual(self.attacker.hand.size(), 5 + 3)
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_nodefense(self):
         self.victim.set_deck("Copper", "Estate", "Rabble")
-        self.attacker.playCard(self.rabble)
+        self.attacker.play_card(self.rabble)
         self.assertEqual(self.victim.deck[-1].name, "Estate")
         self.assertEqual(self.victim.discardpile.size(), 2)
         self.assertEqual(self.attacker.hand.size(), 5 + 3)

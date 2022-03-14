@@ -46,7 +46,7 @@ class Test_SecretPassage(unittest.TestCase):
         self.plr.set_hand("Gold", "Province", "Duchy", "Copper", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Province", "Bottom"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.get_actions(), 1)
             self.assertEqual(

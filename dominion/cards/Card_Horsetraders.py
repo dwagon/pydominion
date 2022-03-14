@@ -40,7 +40,7 @@ class Test_Horsetraders(unittest.TestCase):
         self.plr.set_hand("Estate", "Duchy", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.getCoin(), 3)
         self.assertEqual(self.plr.discardpile.size(), 2)

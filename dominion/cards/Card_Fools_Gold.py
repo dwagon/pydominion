@@ -51,13 +51,13 @@ class Test_Fools_Gold(unittest.TestCase):
 
     def test_play_once(self):
         """Play the Fools_Gold"""
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 1)
 
     def test_play_twice(self):
         """Play the Fools_Gold again"""
         self.plr.set_played("Fool's Gold")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 4)
 
     def test_gain_province(self):

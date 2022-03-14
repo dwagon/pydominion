@@ -44,7 +44,7 @@ class Test_OpulentCastle(unittest.TestCase):
         self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Opulent Castle"], 3)
         self.assertEqual(self.plr.getCoin(), 6)
 

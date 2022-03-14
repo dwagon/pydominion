@@ -42,7 +42,7 @@ class Test_Coven(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.getCoin(), 2)
         self.assertIsNotNone(self.vic.in_exile("Curse"))

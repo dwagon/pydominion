@@ -30,7 +30,7 @@ class Card_Scepter(Card.Card):
             card = player.cardSel(cardsrc=acts)
             player.add_card(card[0], "hand")
             player.played.remove(card[0])
-            player.playCard(card[0], costAction=False)
+            player.play_card(card[0], costAction=False)
 
 
 ###############################################################################
@@ -44,13 +44,13 @@ class Test_Scepter(unittest.TestCase):
 
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 2)
 
     def test_play_replay(self):
         self.plr.set_played("Moat")
         self.plr.test_input = ["Replay", "Moat"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.getCoin(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 

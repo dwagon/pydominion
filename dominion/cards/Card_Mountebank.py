@@ -46,12 +46,12 @@ class Test_Mountebank(unittest.TestCase):
     def test_hascurse(self):
         self.attacker.add_card(self.mountebank, "hand")
         self.victim.add_card(self.curse, "hand")
-        self.attacker.playCard(self.mountebank)
+        self.attacker.play_card(self.mountebank)
         self.assertEqual(self.victim.discardpile[0].name, "Curse")
 
     def test_nocurse(self):
         self.attacker.add_card(self.mountebank, "hand")
-        self.attacker.playCard(self.mountebank)
+        self.attacker.play_card(self.mountebank)
         discards = [c.name for c in self.victim.discardpile]
         self.assertEqual(sorted(discards), sorted(["Curse", "Copper"]))
 

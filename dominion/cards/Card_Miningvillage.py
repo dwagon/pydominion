@@ -42,7 +42,7 @@ class Test_Miningvillage(unittest.TestCase):
     def test_play(self):
         """Play a Mining Village"""
         self.plr.test_input = ["0"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.getCoin(), 0)
@@ -52,7 +52,7 @@ class Test_Miningvillage(unittest.TestCase):
     def test_trash(self):
         """Trash the mining village"""
         self.plr.test_input = ["1"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertTrue(self.plr.played.is_empty())
         self.assertEqual(self.plr.get_actions(), 2)

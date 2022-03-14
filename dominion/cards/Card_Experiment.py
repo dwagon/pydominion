@@ -37,10 +37,10 @@ class Test_Experiment(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_playCard(self):
+    def test_play_card(self):
         self.card = self.g["Experiment"].remove()
         self.plr.add_card(self.card, "hand")
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
