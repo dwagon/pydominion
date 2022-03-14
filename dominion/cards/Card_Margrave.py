@@ -25,7 +25,7 @@ class Card_Margrave(Card.Card):
         for plr in player.attackVictims():
             plr.pickup_card()
             plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################

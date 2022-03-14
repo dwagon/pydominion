@@ -23,7 +23,7 @@ class Card_Followers(Card.Card):
         for plr in player.attackVictims():
             plr.output("%s's Followers cursed you" % player.name)
             plr.gain_card("Curse")
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################

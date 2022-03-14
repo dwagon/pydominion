@@ -15,7 +15,7 @@ class Hex_Poverty(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        player.plrDiscardDownTo(3)
+        player.plr_discard_down_to(3)
 
 
 ###############################################################################

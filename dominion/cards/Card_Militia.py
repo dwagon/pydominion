@@ -21,7 +21,7 @@ class Card_Militia(Card.Card):
         """Every other player discards down to 3 cards"""
         for plr in player.attackVictims():
             plr.output("%s's Militia: Discard down to 3 cards" % player.name)
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################

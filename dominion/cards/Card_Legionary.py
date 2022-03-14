@@ -25,7 +25,7 @@ class Card_Legionary(Card.Card):
                 plr.output(
                     "%s's Legionary forces you to discard down to 2" % player.name
                 )
-                plr.plrDiscardDownTo(2)
+                plr.plr_discard_down_to(2)
                 plr.pickup_card()
 
 

@@ -32,7 +32,7 @@ class Card_Catapult(Card.Card):
                 plr.output(
                     "%s's Catapult forces you to discard down to 3 cards" % player.name
                 )
-                plr.plrDiscardDownTo(3)
+                plr.plr_discard_down_to(3)
 
 
 ###############################################################################

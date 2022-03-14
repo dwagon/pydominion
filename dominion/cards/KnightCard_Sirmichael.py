@@ -20,7 +20,7 @@ class Card_Sirmichael(KnightCard):
 
     def special(self, game, player):
         for plr in player.attackVictims():
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
         self.knight_special(game, player)
 
 

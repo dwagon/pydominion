@@ -23,7 +23,7 @@ class Card_Urchin(Card.Card):
     def special(self, game, player):
         for plr in player.attackVictims():
             plr.output("Discard down to 4 cards from %s's Urchin" % player.name)
-            plr.plrDiscardDownTo(4)
+            plr.plr_discard_down_to(4)
 
     def hook_cleanup(self, game, player):
         attacks = 0

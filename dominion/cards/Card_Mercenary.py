@@ -32,7 +32,7 @@ class Card_Mercenary(Card.Card):
         player.pickup_cards(2)
         player.addCoin(2)
         for plr in player.attackVictims():
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
 
 ###############################################################################

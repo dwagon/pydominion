@@ -21,7 +21,7 @@ class Card_Goons(Card.Card):
         """Each other player discards down to three cards"""
         for plr in player.attackVictims():
             plr.output("Discard down to 3 cards")
-            plr.plrDiscardDownTo(3)
+            plr.plr_discard_down_to(3)
 
     def hook_buy_card(self, game, player, card):
         """While this card is in play, when you buy a card +1 VP"""

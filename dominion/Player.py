@@ -1885,7 +1885,7 @@ class Player:
         return discard
 
     ###########################################################################
-    def plrDiscardDownTo(self, num):
+    def plr_discard_down_to(self, num):
         """Get the player to discard down to num cards in their hand"""
         numtogo = len(self.hand) - num
         if numtogo <= 0:
