@@ -928,7 +928,7 @@ class Player:
         elif opt["action"] == "coffer":
             self.spend_coffer()
         elif opt["action"] == "villager":
-            self.spendVillager()
+            self.spend_villager()
         elif opt["action"] == "play":
             self.playCard(opt["card"])
         elif opt["action"] == "spend":
@@ -1095,7 +1095,7 @@ class Player:
         self.output("Spent a coffer")
 
     ###########################################################################
-    def spendVillager(self):
+    def spend_villager(self):
         if self.villager <= 0:
             return
         self.villager -= 1
