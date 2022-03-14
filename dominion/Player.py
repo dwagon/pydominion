@@ -851,7 +851,7 @@ class Player:
         self.output("************ Night Phase ************")
         self.phase = "night"
         while True:
-            self.displayOverview()
+            self._display_overview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self._perform_action(opt)
@@ -863,7 +863,7 @@ class Player:
         self.output("************ Action Phase ************")
         self.phase = "action"
         while True:
-            self.displayOverview()
+            self._display_overview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self._perform_action(opt)
@@ -876,7 +876,7 @@ class Player:
         self.phase = "buy"
         self.hook_preBuy()
         while True:
-            self.displayOverview()
+            self._display_overview()
             options, prompt = self._choice_selection()
             opt = self.userInput(options, prompt)
             self._perform_action(opt)
@@ -947,7 +947,7 @@ class Player:
         self.misc["is_start"] = False
 
     ###########################################################################
-    def displayOverview(self):  # pylint: disable=too-many-branches
+    def _display_overview(self):  # pylint: disable=too-many-branches
         self.output("-" * 50)
         tknoutput = []
         for tkn in self.tokens:
@@ -1063,7 +1063,7 @@ class Player:
         self.played_ways = []
         self.misc = {"is_start": True, "cleaned": False}
         self.stats = {"gained": [], "bought": [], "trashed": []}
-        self.displayOverview()
+        self._display_overview()
         self.hook_start_turn()
         for card in self.durationpile:
             self.output("Playing %s from duration pile" % card.name)
