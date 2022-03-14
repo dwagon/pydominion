@@ -936,7 +936,7 @@ class Player:
         elif opt["action"] == "payback":
             self.payback()
         elif opt["action"] == "spendall":
-            self.spendAllCards()
+            self._spend_all_cards()
         elif opt["action"] == "quit":
             return
         elif opt["action"] == "way":
@@ -1151,7 +1151,7 @@ class Player:
         return val
 
     ###########################################################################
-    def spendAllCards(self):
+    def _spend_all_cards(self):
         for card in self.hand[:]:
             if card.isTreasure():
                 self.playCard(card)
