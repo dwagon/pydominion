@@ -20,7 +20,7 @@ class Card_Horsetraders(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2)
+        player.plr_discard_cards(num=2)
 
     def todo(self):  # TODO
         """When another player plays an Attack card, you may set

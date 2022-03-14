@@ -33,7 +33,7 @@ class Card_Soldier(Card.Card):
         for plr in player.attack_victims():
             if plr.hand.size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
-                plr.plrDiscardCards(force=True)
+                plr.plr_discard_cards(force=True)
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""

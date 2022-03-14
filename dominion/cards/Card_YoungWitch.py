@@ -38,7 +38,7 @@ class Card_YoungWitch(Card.Card):
         game.output("Using %s as the bane for Young Witch" % game._bane)
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2, force=True)
+        player.plr_discard_cards(num=2, force=True)
         for pl in player.attack_victims():
             if pl.in_hand(game._bane):
                 player.output("%s has the bane: %s" % (pl.name, game._bane))

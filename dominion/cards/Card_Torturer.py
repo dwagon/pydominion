@@ -31,7 +31,7 @@ class Card_Torturer(Card.Card):
         )
         if discard:
             player.output("%s discarded" % victim.name)
-            victim.plrDiscardCards(2)
+            victim.plr_discard_cards(2)
         else:
             player.output("%s opted for a curse" % victim.name)
             victim.gain_card("Curse", "hand")

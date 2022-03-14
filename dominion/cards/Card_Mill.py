@@ -19,7 +19,7 @@ class Card_Mill(Card.Card):
         self.cards = 1
 
     def special(self, game, player):
-        dc = player.plrDiscardCards(num=2)
+        dc = player.plr_discard_cards(num=2)
         if len(dc) == 2:
             player.add_coins(2)
 

@@ -31,7 +31,7 @@ class Card_Sentry(Card.Card):
         if not cards:
             return
         player.output("Discard any/all of {}".format(self.names(cards)))
-        to_discard = player.plrDiscardCards(cardsrc=cards, num=2)
+        to_discard = player.plr_discard_cards(cardsrc=cards, num=2)
         to_deck = [player.add_card(_, "topdeck") for _ in cards if _ not in to_discard]
         if to_deck:
             player.output("Moving {} to the deck".format(self.names(to_deck)))

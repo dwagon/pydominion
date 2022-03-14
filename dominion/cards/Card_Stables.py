@@ -17,7 +17,7 @@ class Card_Stables(Card.Card):
 
     def special(self, game, player):
         treasures = [c for c in player.hand if c.isTreasure()]
-        tr = player.plrDiscardCards(
+        tr = player.plr_discard_cards(
             cardsrc=treasures, prompt="Discard a card and get +3 Cards +1 Action"
         )
         if tr:

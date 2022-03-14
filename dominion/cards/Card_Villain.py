@@ -25,7 +25,7 @@ class Card_Villain(Card.Card):
                     if card.cost >= 2:
                         from_cards.append(card)
                 if from_cards:
-                    disc = vic.plrDiscardCards(
+                    disc = vic.plr_discard_cards(
                         prompt="{}'s Villain forcing you to discard one card".format(
                             player.name
                         ),

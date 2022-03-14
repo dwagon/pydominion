@@ -18,7 +18,7 @@ class Boon_Winds_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2)
+        player.plr_discard_cards(num=2)
 
 
 ###############################################################################

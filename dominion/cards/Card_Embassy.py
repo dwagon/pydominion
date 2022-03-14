@@ -17,7 +17,7 @@ class Card_Embassy(Card.Card):
         self.cards = 5
 
     def special(self, game, player):
-        player.plrDiscardCards(3, force=True)
+        player.plr_discard_cards(3, force=True)
 
     def hook_gain_this_card(self, game, player):
         """When you gain this, each other player gains a Silver"""

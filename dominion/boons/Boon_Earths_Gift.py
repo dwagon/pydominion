@@ -21,7 +21,7 @@ class Boon_Earths_Gift(Boon.Boon):
         treasures = [c for c in player.hand if c.isTreasure()]
         if not treasures:
             return
-        tr = player.plrDiscardCards(
+        tr = player.plr_discard_cards(
             cardsrc=treasures,
             prompt="Discard a Treasure to gain a card costing up to 4",
         )

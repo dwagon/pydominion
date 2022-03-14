@@ -20,7 +20,7 @@ class Card_OpulentCastle(CastleCard):
 
     def special(self, game, player):
         victcards = [c for c in player.hand if c.isVictory()]
-        cards = player.plrDiscardCards(
+        cards = player.plr_discard_cards(
             anynum=True,
             cardsrc=victcards,
             prompt="Discard any number of Victory cards. +2 Coin per card discarded",

@@ -17,7 +17,7 @@ class State_Lost_in_woods(State.State):
         self.unique_state = True
 
     def hook_start_turn(self, game, player):
-        dc = player.plrDiscardCards(
+        dc = player.plr_discard_cards(
             prompt="Lost in the Woods: Discard a card to receive a boon"
         )
         if dc:

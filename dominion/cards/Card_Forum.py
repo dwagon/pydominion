@@ -22,7 +22,7 @@ class Card_Forum(Card.Card):
         return "+3 Cards, +1 Action, Discard 2 cards."
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2, force=True)
+        player.plr_discard_cards(num=2, force=True)
 
     def hook_buy_this_card(self, game, player):
         player.add_buys(1)

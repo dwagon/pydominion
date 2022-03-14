@@ -1869,7 +1869,7 @@ class Player:
         self.artifacts.remove([_ for _ in self.artifacts if _.name == name][0])
 
     ###########################################################################
-    def plrDiscardCards(self, num=1, anynum=False, **kwargs):
+    def plr_discard_cards(self, num=1, anynum=False, **kwargs):
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
             if anynum:
@@ -1890,7 +1890,7 @@ class Player:
         numtogo = len(self.hand) - num
         if numtogo <= 0:
             return
-        self.plrDiscardCards(numtogo, force=True)
+        self.plr_discard_cards(numtogo, force=True)
 
     ###########################################################################
     def game_over(self):

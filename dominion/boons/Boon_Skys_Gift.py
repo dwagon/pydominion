@@ -17,7 +17,7 @@ class Boon_Skys_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        dc = player.plrDiscardCards(
+        dc = player.plr_discard_cards(
             anynum=True, prompt="Discard 3 cards to gain a Gold"
         )
         if len(dc) >= 3:

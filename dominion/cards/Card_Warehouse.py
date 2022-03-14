@@ -19,7 +19,7 @@ class Card_Warehouse(Card.Card):
 
     def special(self, game, player):
         """Discard 3 cards"""
-        player.plrDiscardCards(3, force=True)
+        player.plr_discard_cards(3, force=True)
 
 
 ###############################################################################

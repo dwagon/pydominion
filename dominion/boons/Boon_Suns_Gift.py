@@ -22,7 +22,7 @@ class Boon_Suns_Gift(Boon.Boon):
             c = player.next_card()
             if c:
                 cards.append(c)
-        todisc = player.plrDiscardCards(
+        todisc = player.plr_discard_cards(
             prompt="Discard any number and the rest go back on the top of the deck",
             anynum=True,
             cardsrc=cards,

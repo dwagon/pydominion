@@ -25,7 +25,7 @@ class Card_Inn(Card.Card):
         return "+2 Cards, +2 Actions, Discard 2 cards"
 
     def special(self, game, player):
-        player.plrDiscardCards(num=2, force=True)
+        player.plr_discard_cards(num=2, force=True)
 
     def hook_gain_this_card(self, game, player):
         cards = []

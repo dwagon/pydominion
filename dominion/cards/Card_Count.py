@@ -36,7 +36,7 @@ class Card_Count(Card.Card):
         elif ans == "putcard":
             self.putCard(game, player)
         else:
-            player.plrDiscardCards(2)
+            player.plr_discard_cards(2)
 
         ans = player.plrChooseOptions(
             "What do you want to do now?",

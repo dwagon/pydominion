@@ -22,7 +22,7 @@ class Card_Storeroom(Card.Card):
         """Discard any number of cards. +1 Card per card discarded.
         Discard any number of cards. +1 Coin per card discarded the
         second time"""
-        todiscard = player.plrDiscardCards(
+        todiscard = player.plr_discard_cards(
             0,
             anynum=True,
             prompt="Discard any number of cards. +1 Card per card discarded",
@@ -30,7 +30,7 @@ class Card_Storeroom(Card.Card):
         player.output("Gaining %d cards from Storeroom" % len(todiscard))
         player.pickup_cards(len(todiscard))
         player.output("Discard any number of cards. +1 Coin per card discarded")
-        todiscard = player.plrDiscardCards(0, anynum=True)
+        todiscard = player.plr_discard_cards(0, anynum=True)
         player.output("Gaining %d coins from Storeroom" % len(todiscard))
         player.add_coins(len(todiscard))
 

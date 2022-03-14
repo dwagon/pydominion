@@ -20,7 +20,7 @@ class Card_Fugitive(Card.Card):
         self.numcards = 5
 
     def special(self, game, player):
-        player.plrDiscardCards(num=1)
+        player.plr_discard_cards(num=1)
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Warrior"""

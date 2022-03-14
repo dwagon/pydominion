@@ -20,7 +20,7 @@ class Card_Oasis(Card.Card):
 
     def special(self, game, player):
         """Discard a card"""
-        player.plrDiscardCards()
+        player.plr_discard_cards()
 
 
 ###############################################################################

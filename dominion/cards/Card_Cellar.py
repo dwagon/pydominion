@@ -19,7 +19,7 @@ class Card_Cellar(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        todiscard = player.plrDiscardCards(
+        todiscard = player.plr_discard_cards(
             0,
             anynum=True,
             prompt="Discard any number of cards and gain one per card discarded",

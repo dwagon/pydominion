@@ -23,7 +23,7 @@ class Card_Haunted_Mirror(Card.Card):
         if not ac:
             player.output("No action cards in hand, no effect")
             return
-        td = player.plrDiscardCards(cardsrc=ac)
+        td = player.plr_discard_cards(cardsrc=ac)
         if td:
             player.gain_card("Ghost")
 

@@ -20,7 +20,7 @@ class Hex_Fear(Hex.Hex):
         if player.hand.size() < 5:
             return
         tanda = [_ for _ in player.hand if _.isAction() or _.isTreasure()]
-        player.plrDiscardCards(
+        player.plr_discard_cards(
             num=1, cardsrc=tanda, prompt="Discard an Action or a Treasure"
         )
 

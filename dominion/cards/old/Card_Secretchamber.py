@@ -20,7 +20,7 @@ class Card_Secretchamber(Card.Card):
 
     def special(self, game, player):
         """Discard any number of cards, +1 coin per card discarded"""
-        todiscard = player.plrDiscardCards(
+        todiscard = player.plr_discard_cards(
             anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
         )
         player.add_coins(len(todiscard))
