@@ -1657,7 +1657,7 @@ class Player:
         return self.cards_affordable(operator.le, coin, potions, types)
 
     ###########################################################################
-    def cardsWorth(self, coin, potions=0, types=None):
+    def cards_worth(self, coin, potions=0, types=None):
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
@@ -1778,7 +1778,7 @@ class Player:
         elif modifier == "equal":
             if cost:
                 prompt += "costing exactly %d" % cost
-            buyable = self.cardsWorth(cost, types=types)
+            buyable = self.cards_worth(cost, types=types)
         buyable = [_ for _ in buyable if _.purchasable]
         buyable = [_ for _ in buyable if not _.debtcost]
         buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
