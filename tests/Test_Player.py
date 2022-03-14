@@ -30,19 +30,19 @@ class TestPlayer(unittest.TestCase):
 
     def test_trashcard_hand(self):
         """Test that trashing a card from hand works"""
-        num_cards = self.g.countCards()
+        num_cards = self.g._count_cards()
         card = self.plr.hand[0]
         self.plr.trash_card(card)
-        self.assertEqual(num_cards, self.g.countCards())
+        self.assertEqual(num_cards, self.g._count_cards())
         self.assertIsNotNone(self.g.in_trash(card))
 
     def test_trashcard_played(self):
         """Test that trashing a card from played works"""
-        num_cards = self.g.countCards()
+        num_cards = self.g._count_cards()
         self.plr.set_played("Estate")
         card = self.plr.played[0]
         self.plr.trash_card(card)
-        self.assertEqual(num_cards, self.g.countCards())
+        self.assertEqual(num_cards, self.g._count_cards())
         self.assertIsNotNone(self.g.in_trash(card))
 
     def test_deckorder(self):
@@ -176,7 +176,7 @@ class Test_playonce(unittest.TestCase):
 
 
 ###############################################################################
-class Test_cardsAffordable(unittest.TestCase):
+class Test_cards_affordable(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True,
@@ -198,7 +198,7 @@ class Test_cardsAffordable(unittest.TestCase):
 
     def test_under(self):
         price = 4
-        ans = self.plr.cardsUnder(price, types={Card.TYPE_ACTION: True})
+        ans = self.plr.cards_under(price, types={Card.TYPE_ACTION: True})
         for a in ans:
             try:
                 self.assertLessEqual(a.cost, price)
@@ -210,13 +210,13 @@ class Test_cardsAffordable(unittest.TestCase):
 
     def test_worth(self):
         price = 5
-        ans = self.plr.cardsWorth(price, types={Card.TYPE_VICTORY: True})
+        ans = self.plr.cards_worth(price, types={Card.TYPE_VICTORY: True})
         for a in ans:
             self.assertEqual(a.cost, price)
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
-        ans = self.plr.cardsAffordable(
+        ans = self.plr.cards_affordable(
             "less",
             coin=None,
             potions=0,
@@ -231,33 +231,33 @@ class Test_cardsAffordable(unittest.TestCase):
 
 
 ###############################################################################
-class Test_typeSelector(unittest.TestCase):
+class Test__type_selector(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_selzero(self):
-        x = self.plr.typeSelector({})
+        x = self.plr._type_selector({})
         self.assertTrue(x[Card.TYPE_ACTION])
         self.assertTrue(x[Card.TYPE_TREASURE])
         self.assertTrue(x[Card.TYPE_VICTORY])
 
     def test_selone(self):
-        x = self.plr.typeSelector({Card.TYPE_ACTION: True})
+        x = self.plr._type_selector({Card.TYPE_ACTION: True})
         self.assertTrue(x[Card.TYPE_ACTION])
         self.assertFalse(x[Card.TYPE_TREASURE])
         self.assertFalse(x[Card.TYPE_VICTORY])
 
     def test_seltwo(self):
-        x = self.plr.typeSelector({Card.TYPE_ACTION: True, Card.TYPE_VICTORY: True})
+        x = self.plr._type_selector({Card.TYPE_ACTION: True, Card.TYPE_VICTORY: True})
         self.assertTrue(x[Card.TYPE_ACTION])
         self.assertFalse(x[Card.TYPE_TREASURE])
         self.assertTrue(x[Card.TYPE_VICTORY])
 
 
 ###############################################################################
-class Test_plrTrashCard(unittest.TestCase):
+class Test_plr_trash_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -266,14 +266,14 @@ class Test_plrTrashCard(unittest.TestCase):
     def test_None(self):
         self.plr.set_hand("Gold")
         self.plr.test_input = ["0"]
-        x = self.plr.plrTrashCard()
+        x = self.plr.plr_trash_card()
         self.assertEqual(x, [])
         self.assertIsNone(self.g.in_trash("Gold"))
 
     def test_Two(self):
         self.plr.set_hand("Gold", "Copper", "Silver")
         self.plr.test_input = ["Gold", "Silver", "0"]
-        x = self.plr.plrTrashCard(num=2)
+        x = self.plr.plr_trash_card(num=2)
         self.assertEqual(len(x), 2)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
@@ -283,7 +283,7 @@ class Test_plrTrashCard(unittest.TestCase):
         tsize = self.g.trashSize()
         self.plr.set_hand("Gold")
         self.plr.test_input = ["1"]
-        x = self.plr.plrTrashCard()
+        x = self.plr.plr_trash_card()
         self.assertEqual(x[0].name, "Gold")
         self.assertEqual(self.g.trashSize(), tsize + 1)
         self.assertIn("Gold", [_.name for _ in self.g.trashpile])
@@ -291,7 +291,7 @@ class Test_plrTrashCard(unittest.TestCase):
     def test_Force(self):
         self.plr.set_hand("Gold")
         self.plr.test_input = ["0", "1"]
-        x = self.plr.plrTrashCard(force=True)
+        x = self.plr.plr_trash_card(force=True)
         self.assertEqual(x[0].name, "Gold")
         self.assertEqual(self.g.trashpile[-1].name, "Gold")
         for m in self.plr.messages:
@@ -306,7 +306,7 @@ class Test_plrTrashCard(unittest.TestCase):
     def test_exclude(self):
         self.plr.set_hand("Gold", "Gold", "Copper")
         self.plr.test_input = ["1"]
-        x = self.plr.plrTrashCard(exclude=["Gold"])
+        x = self.plr.plr_trash_card(exclude=["Gold"])
         self.assertEqual(x[0].name, "Copper")
         self.assertEqual(self.g.trashpile[-1].name, "Copper")
 
@@ -321,7 +321,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def test_discardNone(self):
         self.plr.set_hand("Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["0"]
-        x = self.plr.plrDiscardCards(0)
+        x = self.plr.plr_discard_cards(0)
         self.assertEqual(x, [])
         self.assertEqual(len(self.plr.hand), 4)
         self.assertTrue(self.plr.discardpile.is_empty())
@@ -329,7 +329,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def test_discardOne(self):
         self.plr.set_hand("Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["1", "0"]
-        x = self.plr.plrDiscardCards(1)
+        x = self.plr.plr_discard_cards(1)
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
@@ -338,7 +338,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def test_discardAnynum(self):
         self.plr.set_hand("Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["1", "0"]
-        x = self.plr.plrDiscardCards(0, anynum=True)
+        x = self.plr.plr_discard_cards(0, anynum=True)
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
@@ -346,7 +346,7 @@ class Test_plrDiscardCard(unittest.TestCase):
 
 
 ###############################################################################
-class Test_attackVictims(unittest.TestCase):
+class Test_attack_victims(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=3, initcards=["Moat"])
         self.g.start_game()
@@ -354,7 +354,7 @@ class Test_attackVictims(unittest.TestCase):
         self.defend.set_hand("Moat")
 
     def test_output(self):
-        v = self.plr.attackVictims()
+        v = self.plr.attack_victims()
         self.assertEqual(v, [self.victim])
 
 
@@ -397,35 +397,35 @@ class Test_in_hand(unittest.TestCase):
 
 
 ###############################################################################
-class Test_gainCard(unittest.TestCase):
+class Test_gain_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_gainByString(self):
-        self.plr.gainCard("Copper")
+        self.plr.gain_card("Copper")
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
 
     def test_gainByCardpile(self):
         cp = self.g["Copper"]
-        self.plr.gainCard(cp)
+        self.plr.gain_card(cp)
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
 
     def test_gainSpecific(self):
         cu = self.g["Copper"].remove()
-        self.plr.gainCard(newcard=cu)
+        self.plr.gain_card(newcard=cu)
         self.assertEqual(self.plr.discardpile[0].name, "Copper")
 
     def test_destination(self):
         self.plr.hand.empty()
-        self.plr.gainCard("Copper", "hand")
+        self.plr.gain_card("Copper", "hand")
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand[0].name, "Copper")
 
 
 ###############################################################################
-class Test_spendAllCards(unittest.TestCase):
+class Test__spend_all_cards(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
         self.g.start_game()
@@ -434,8 +434,8 @@ class Test_spendAllCards(unittest.TestCase):
     def test_spendCards(self):
         """Spend all cards in hand"""
         self.plr.set_hand("Gold", "Silver", "Estate", "Moat")
-        self.plr.spendAllCards()
-        self.assertEqual(self.plr.getCoin(), 3 + 2)
+        self.plr._spend_all_cards()
+        self.assertEqual(self.plr.get_coins(), 3 + 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
@@ -524,9 +524,9 @@ class Test_misc(unittest.TestCase):
         numactions = self.plr.get_actions()
         self.assertEqual(numactions, 3)
 
-    def test_addActions(self):
+    def test_add_actions(self):
         self.plr.actions = 3
-        self.plr.addActions(2)
+        self.plr.add_actions(2)
         self.assertEqual(self.plr.actions, 5)
 
     def test_get_buys(self):
@@ -534,9 +534,9 @@ class Test_misc(unittest.TestCase):
         numbuys = self.plr.get_buys()
         self.assertEqual(numbuys, 3)
 
-    def test_addBuys(self):
+    def test_add_buys(self):
         self.plr.buys = 3
-        self.plr.addBuys(2)
+        self.plr.add_buys(2)
         self.assertEqual(self.plr.buys, 5)
 
     def test_coststr(self):
@@ -552,9 +552,9 @@ class Test_misc(unittest.TestCase):
         self.assertFalse(self.plr.in_hand("Gold"))
         self.assertTrue(self.plr.in_hand("Silver"))
 
-    def test_getPotions(self):
+    def test_get_potions(self):
         self.plr.potions = 3
-        self.assertEqual(self.plr.getPotions(), 3)
+        self.assertEqual(self.plr.get_potions(), 3)
 
     def test_durationpile_size(self):
         copper = self.g["Copper"].remove()
@@ -571,7 +571,7 @@ class Test_misc(unittest.TestCase):
 
 
 ###############################################################################
-class Test_displayOverview(unittest.TestCase):
+class Test__display_overview(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(
             quiet=True, numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
@@ -583,7 +583,7 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.messages = []
         self.plr.set_hand()
         self.plr.set_played()
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Hand: <EMPTY>", self.plr.messages)
         self.assertIn("| Played: <NONE>", self.plr.messages)
 
@@ -591,38 +591,38 @@ class Test_displayOverview(unittest.TestCase):
         self.plr.messages = []
         self.plr.set_hand("Copper", "Estate")
         self.plr.set_played("Moat")
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Hand: Copper, Estate", self.plr.messages)
         self.assertIn("| Played: Moat", self.plr.messages)
 
     def test_reserve(self):
         self.plr.messages = []
         self.plr.set_reserve("Copper")
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Reserve: Copper", self.plr.messages)
 
     def test_duration(self):
         self.plr.messages = []
         self.plr.durationpile.add(self.g["Copper"].remove())
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Duration: Copper", self.plr.messages)
 
     def test_discards(self):
         self.plr.messages = []
         self.plr.set_discard("Copper")
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| 1 cards in discard pile", self.plr.messages)
 
     def test_project(self):
         self.plr.messages = []
         self.plr.assign_project("Cathedral")
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Project: Cathedral", self.plr.messages)
 
     def test_artifact(self):
         self.plr.messages = []
         self.plr.assign_artifact("Horn")
-        self.plr.displayOverview()
+        self.plr._display_overview()
         self.assertIn("| Artifacts: Horn", self.plr.messages)
 
 
@@ -637,7 +637,7 @@ class Test__buyable_selection(unittest.TestCase):
         self.moat = self.g["Moat"].remove()
 
     def test_buy_moat(self):
-        self.plr.addCoin(3)
+        self.plr.add_coins(3)
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -667,7 +667,7 @@ class Test__buyable_selection(unittest.TestCase):
             self.fail("Copper not buyable")
 
     def test_buy_token(self):
-        self.plr.addCoin(2)
+        self.plr.add_coins(2)
         self.plr.place_token("+1 Card", "Moat")
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
@@ -863,7 +863,7 @@ class Test__spendable_selection(unittest.TestCase):
 
 
 ###############################################################################
-class Test_buyCard(unittest.TestCase):
+class Test_buy_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1, initcards=["Embargo"])
         self.g.start_game()
@@ -871,76 +871,76 @@ class Test_buyCard(unittest.TestCase):
 
     def test_debt(self):
         self.plr.debt = 1
-        self.plr.buyCard(self.g["Copper"])
+        self.plr.buy_card(self.g["Copper"])
         self.assertIn("Must pay off debt first", self.plr.messages)
 
     def test_embargo(self):
         self.g["Copper"].embargo()
-        self.plr.buyCard(self.g["Copper"])
+        self.plr.buy_card(self.g["Copper"])
         self.assertIsNotNone(self.plr.in_discard("Curse"))
         self.assertIn("Gained a Curse from embargo", self.plr.messages)
 
 
 ###############################################################################
-class Test_spendCoffer(unittest.TestCase):
+class Test_spend_coffer(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_spendCoffer(self):
+    def test_spend_coffer(self):
         """Spend a coffer that the player has"""
         self.plr.coffer = 1
-        self.plr.spendCoffer()
-        self.assertEqual(self.plr.getCoffer(), 0)
-        self.assertEqual(self.plr.getCoin(), 1)
+        self.plr.spend_coffer()
+        self.assertEqual(self.plr.get_coffers(), 0)
+        self.assertEqual(self.plr.get_coins(), 1)
 
     def test_spendNothing(self):
         """Spend a coffer that the player doesn't have"""
         self.plr.coffer = 0
-        self.plr.spendCoffer()
-        self.assertEqual(self.plr.getCoffer(), 0)
-        self.assertEqual(self.plr.getCoin(), 0)
+        self.plr.spend_coffer()
+        self.assertEqual(self.plr.get_coffers(), 0)
+        self.assertEqual(self.plr.get_coins(), 0)
 
 
 ###############################################################################
-class Test_spendVillager(unittest.TestCase):
+class Test_spend_villager(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_spendVillager(self):
+    def test_spend_villager(self):
         """Spend a Villager that the player has"""
         self.plr.villager = 1
-        self.plr.spendVillager()
-        self.assertEqual(self.plr.getVillager(), 0)
+        self.plr.spend_villager()
+        self.assertEqual(self.plr.get_villagers(), 0)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_spendNothing(self):
         """Spend a Villager that the player doesn't have"""
         self.plr.villager = 0
-        self.plr.spendVillager()
-        self.assertEqual(self.plr.getVillager(), 0)
+        self.plr.spend_villager()
+        self.assertEqual(self.plr.get_villagers(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################
-class Test_plrGainCard(unittest.TestCase):
+class Test_plr_gain_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_gainCard_equal(self):
+    def test_gain_card_equal(self):
         self.plr.test_input = ["get silver"]
-        c = self.plr.plrGainCard(3, modifier="equal")
+        c = self.plr.plr_gain_card(3, modifier="equal")
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertEqual(c.name, "Silver")
 
-    def test_gainCard_less(self):
+    def test_gain_card_less(self):
         self.plr.test_input = ["get silver"]
-        c = self.plr.plrGainCard(4, modifier="less")
+        c = self.plr.plr_gain_card(4, modifier="less")
         self.assertIsNotNone(self.plr.in_discard("Silver"))
         self.assertEqual(c.name, "Silver")
 
@@ -966,7 +966,7 @@ class Test_exile(unittest.TestCase):
 
 
 ###############################################################################
-class Test_plrDiscardDownTo(unittest.TestCase):
+class Test_plr_discard_down_to(unittest.TestCase):
     def setUp(self):
         self.g = Game.Game(quiet=True, numplayers=1)
         self.g.start_game()
@@ -974,13 +974,13 @@ class Test_plrDiscardDownTo(unittest.TestCase):
 
     def test_discard_nothing(self):
         self.plr.set_hand("Estate", "Duchy", "Province")
-        self.plr.plrDiscardDownTo(3)
+        self.plr.plr_discard_down_to(3)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_discard_one(self):
         self.plr.test_input = ["gold", "finish"]
         self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
-        self.plr.plrDiscardDownTo(3)
+        self.plr.plr_discard_down_to(3)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))
 
@@ -995,23 +995,23 @@ class Test_Favor(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_setfavor(self):
-        """plr.setFavor()"""
+        """plr.set_favors()"""
         self.plr.favors = 0
-        self.plr.setFavor(3)
+        self.plr.set_favors(3)
         self.assertEqual(self.plr.favors, 3)
 
     def test_addfavor(self):
-        """plr.addFavor()"""
+        """plr.add_favors()"""
         self.plr.favors = 0
-        self.plr.addFavor()
+        self.plr.add_favors()
         self.assertEqual(self.plr.favors, 1)
-        self.plr.addFavor(1)
+        self.plr.add_favors(1)
         self.assertEqual(self.plr.favors, 2)
 
     def test_getfavor(self):
-        """plr.getFavor()"""
+        """plr.get_favors()"""
         self.plr.favors = 3
-        self.assertEqual(self.plr.getFavor(), 3)
+        self.assertEqual(self.plr.get_favors(), 3)
 
 
 ###############################################################################

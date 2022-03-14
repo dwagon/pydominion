@@ -24,7 +24,7 @@ class Test_replace_traveller(unittest.TestCase):
     def test_replace(self):
         """Replace a traveller"""
         self.plr.test_input = ["replace"]
-        self.plr.playCard(self.card)
+        self.plr.play_card(self.card)
         self.plr.replace_traveller(self.card, "Treasure Hunter")
         self.assertIsNone(self.plr.in_hand("Page"))
         self.assertIsNotNone(self.plr.in_hand("Treasure Hunter"))

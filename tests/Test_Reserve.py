@@ -20,7 +20,7 @@ class Test__get_whens(unittest.TestCase):
 
     def test_not_start(self):
         self.plr.start_turn()
-        self.plr.perform_action({"action": "spendall"})
+        self.plr._perform_action({"action": "spendall"})
         whens = self.plr._get_whens()
         self.assertNotIn("start", whens)
 
@@ -39,7 +39,7 @@ class Test__get_whens(unittest.TestCase):
     def test_not_postaction(self):
         whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
-        self.plr.perform_action({"action": "spendall"})
+        self.plr._perform_action({"action": "spendall"})
         whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
 

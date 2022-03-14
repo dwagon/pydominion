@@ -75,27 +75,27 @@ class Test_game_over(unittest.TestCase):
     def test_provinces(self):
         """Someone took the last province"""
         while self.g["Province"].pilesize:
-            self.plr.gainCard("Province")
+            self.plr.gain_card("Province")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """Three stacks are empty"""
         while self.g["Estate"].pilesize:
-            self.plr.gainCard("Estate")
+            self.plr.gain_card("Estate")
         while self.g["Copper"].pilesize:
-            self.plr.gainCard("Copper")
+            self.plr.gain_card("Copper")
         while self.g["Silver"].pilesize:
-            self.plr.gainCard("Silver")
+            self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """Two stacks are empty"""
         while self.g["Estate"].pilesize:
-            self.plr.gainCard("Estate")
+            self.plr.gain_card("Estate")
         while self.g["Silver"].pilesize:
-            self.plr.gainCard("Silver")
+            self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertFalse(over)
 
