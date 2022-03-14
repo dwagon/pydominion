@@ -17,12 +17,12 @@ class Card_Soothsayer(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        player.gainCard("Gold")
-        for pl in player.attackVictims():
+        player.gain_card("Gold")
+        for pl in player.attack_victims():
             player.output(f"{pl.name} got cursed")
             pl.output("f{player.name}'s Soothsayer cursed you")
-            pl.gainCard("Curse")
-            pl.pickupCard()
+            pl.gain_card("Curse")
+            pl.pickup_card()
 
 
 ###############################################################################
