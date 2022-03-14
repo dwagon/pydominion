@@ -1495,7 +1495,7 @@ class Player:
         return self.villager
 
     ###########################################################################
-    def addFavor(self, num=1):
+    def add_favors(self, num=1):
         assert isinstance(num, int)
         self.favors += num
 

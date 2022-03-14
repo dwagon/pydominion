@@ -167,7 +167,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.current_player = self.player_list(0)
         if self.ally:
             for plr in self.player_list():
-                plr.addFavor(1)
+                plr.add_favors(1)
 
     ###########################################################################
     def player_list(self, num=None):

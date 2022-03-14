@@ -25,7 +25,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
         )
         if choice == "gain":
             player.pickup_card()
-            player.addFavor(-1)
+            player.add_favors(-1)
 
 
 ###############################################################################
