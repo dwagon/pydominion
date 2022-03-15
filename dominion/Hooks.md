@@ -58,7 +58,7 @@ hook_end_buy_phase
 -----------
 Fires off at the end of the buy phase
 
-hook_gain_card
+hook_gain_card(game, player, card)
 -------------
 This hook is triggered for every card in play when you gain
 another card.
