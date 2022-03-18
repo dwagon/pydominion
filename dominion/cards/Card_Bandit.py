@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -19,7 +18,6 @@ class Card_Bandit(Card.Card):
 
     def special(self, game, player):
         player.gain_card("Gold")
-        player.output("Gained a Gold")
         for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
@@ -33,26 +31,26 @@ class Card_Bandit(Card.Card):
             else:
                 victim.add_card(c, "discard")
         if not treasures:
-            bandit.output("Player %s has no suitable treasures" % victim.name)
+            bandit.output(f"Player {victim.name} has no suitable treasures")
             return
         index = 1
         options = [{"selector": "0", "print": "Don't trash any card", "card": None}]
         for c in treasures:
             sel = "%s" % index
-            pr = "Trash %s from %s" % (c.name, victim.name)
+            pr = "Trash {c.name} from {victim.name}"
             options.append({"selector": sel, "print": pr, "card": c})
             sel = "%s" % index
             index += 1
-        o = bandit.user_input(options, "What to do to %s's cards?" % victim.name)
+        o = bandit.user_input(options, f"What to do to {victim.name}'s cards?")
         # Discard the ones we don't care about
         for tc in treasures:
             if o["card"] != tc:
                 victim.add_card(tc, "discard")
             else:
                 victim.trash_card(o["card"])
-                bandit.output("Trashed %s from %s" % (o["card"].name, victim.name))
+                bandit.output(f"Trashed {o['card'].name} from {victim.name}")
                 victim.output(
-                    "%s's Bandit trashed your %s" % (bandit.name, o["card"].name)
+                    f"{bandit.name}'s Bandit trashed your {o['card'].name}"
                 )
 
 
