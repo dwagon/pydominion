@@ -37,7 +37,7 @@ class Card_Bandit(Card.Card):
         options = [{"selector": "0", "print": "Don't trash any card", "card": None}]
         for c in treasures:
             sel = "%s" % index
-            pr = "Trash {c.name} from {victim.name}"
+            pr = f"Trash {c.name} from {victim.name}"
             options.append({"selector": sel, "print": pr, "card": c})
             sel = "%s" % index
             index += 1
