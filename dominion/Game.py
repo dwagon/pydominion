@@ -119,7 +119,7 @@ class Game:  # pylint: disable=too-many-public-methods
             args["projectpath"] if "projectpath" in args else "dominion/projects"
         )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
-        self.init_ally = args["init_ally"] if "init_ally" in args else []
+        self.init_ally = args["ally"] if "ally" in args else []
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
