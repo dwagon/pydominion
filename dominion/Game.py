@@ -82,6 +82,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
+        self.use_liaisons = args["use_liaisons"] if "use_liaisons" in args else True
         self.allypath = "dominion/allies"
         self.hexpath = "dominion/hexes"
         self.numstacks = args["numstacks"] if "numstacks" in args else 10
@@ -314,9 +315,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def loadAlly(self):
-        """ Load the allies and pick a single one to have in the game"""
-        if self.ally:
-            return
+        """Load the allies and pick a single one to have in the game"""
         self.output("Using Allies")
         if isinstance(self.initally, str):
             self.initally = [self.initally]
@@ -453,10 +452,12 @@ class Game(object):  # pylint: disable=too-many-public-methods
         try:
             available.remove(crd)
         except ValueError:  # pragma: no cover
-            sys.stderr.write("Unknown card '%s'\n" % crd)
+            print(f"Unknown card '{crd}'\n", file=sys.stderr)
             sys.exit(1)
         cpile = CardPile(crd, self.cardmapping["Card"][crd], self)
         if not force and not cpile.insupply:
+            return 0
+        if cpile.isLiaison() and not self.use_liaisons:
             return 0
         self.cardpiles[cpile.name] = cpile
         self.output("Playing with card %s" % self[crd].name)
@@ -516,7 +517,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
                 self.loadBoons()
             if self.cardpiles[card].isDoom() and not self.hexes:
                 self.loadHexes()
-            if self.cardpiles[card].isLiaison():
+            if self.cardpiles[card].isLiaison() and not self.ally:
                 self.loadAlly()
             if self.cardpiles[card].traveller:
                 self.loadTravellers()
@@ -931,6 +932,12 @@ def parse_cli_args(args=None):
         action="append",
         default=[],
         help="Include specific ally",
+    )
+    # Don't use liaisons as allies can break a lot of tests
+    parser.add_argument(
+        "--no_liaisons", dest="use_liaisons", action="store_false", default=True,
+        help=argparse.SUPPRESS
+
     )
 
     parser.add_argument(
