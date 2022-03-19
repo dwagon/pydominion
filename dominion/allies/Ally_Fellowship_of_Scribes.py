@@ -36,11 +36,11 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_Fellowship_of_Scribes(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             ally="Fellowship of Scribes",
             initcards=["Festival", "Underling"],
+            use_liaisons=True,
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -53,6 +53,7 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
         self.plr.set_favors(2)
         self.plr.test_input = ["Gain"]
         self.plr.play_card(self.card)
+        self.g.print_state()
         self.assertEqual(self.plr.get_favors(), 1)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
 
