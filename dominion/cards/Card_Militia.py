@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -20,7 +19,7 @@ class Card_Militia(Card.Card):
     def special(self, game, player):
         """Every other player discards down to 3 cards"""
         for plr in player.attack_victims():
-            plr.output("%s's Militia: Discard down to 3 cards" % player.name)
+            plr.output(f"{player.name}'s Militia: Discard down to 3 cards")
             plr.plr_discard_down_to(3)
 
 
