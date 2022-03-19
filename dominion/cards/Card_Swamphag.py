@@ -32,7 +32,7 @@ class Card_Swamphag(Card.Card):
 ###############################################################################
 class Test_Swamphag(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Swamp Hag"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Swamp Hag"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Swamp Hag"].remove()

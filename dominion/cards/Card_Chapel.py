@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
+###############################################################################
 class Card_Chapel(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -22,7 +22,7 @@ class Card_Chapel(Card.Card):
 ###############################################################################
 class Test_Chapel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Chapel"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Chapel"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chapel"].remove()

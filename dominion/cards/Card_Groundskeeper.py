@@ -27,8 +27,8 @@ class Card_Groundskeeper(Card.Card):
 ###############################################################################
 class Test_Groundskeeper(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"]
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

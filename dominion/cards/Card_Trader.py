@@ -21,7 +21,7 @@ class Card_Trader(Card.Card):
             prompt="Trash a card from your hand. Gain a number of Silvers equal to its cost in coins."
         )
         if card:
-            player.output("Gaining %d Silvers" % card[0].cost)
+            player.output(f"Gaining {card[0].cost} Silvers")
             for _ in range(card[0].cost):
                 player.gain_card("Silver")
 
@@ -29,8 +29,8 @@ class Card_Trader(Card.Card):
         if card.name == "Silver":
             return {}
         silver = player.plr_choose_options(
-            "From your Trader gain %s or gain a Silver instead?" % card.name,
-            ("Still gain %s" % card.name, False),
+            "From your Trader gain {card.name} or gain a Silver instead?",
+            (f"Still gain {card.name}", False),
             ("Instead gain Silver", True),
         )
         if silver:
@@ -41,7 +41,7 @@ class Card_Trader(Card.Card):
 ###############################################################################
 class Test_Trader(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Trader"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Trader"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Trader"].remove()

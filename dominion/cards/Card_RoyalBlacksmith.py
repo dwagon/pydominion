@@ -29,7 +29,7 @@ class Card_RoyalBlacksmith(Card.Card):
 ###############################################################################
 class Test_RoyalBlacksmith(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Royal Blacksmith"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Royal Blacksmith"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Royal Blacksmith"].remove()

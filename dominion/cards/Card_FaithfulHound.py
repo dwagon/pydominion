@@ -25,7 +25,7 @@ class Card_FaithfulHound(Card.Card):
 ###############################################################################
 class Test_FaithfulHound(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Faithful Hound"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Faithful Hound"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.plr._tracker_dont_boon = True

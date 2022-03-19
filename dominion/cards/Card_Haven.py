@@ -43,7 +43,7 @@ class Card_Haven(Card.Card):
 ###############################################################################
 class Test_Haven(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Haven"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Haven"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haven"].remove()

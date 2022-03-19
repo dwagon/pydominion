@@ -28,8 +28,12 @@ class Boon_Skys_Gift(Boon.Boon):
 ###############################################################################
 class Test_Skys_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        self.g = Game.TestGame(
+            quiet=True,
+            numplayers=1,
+            initcards=["Bard"],
+            badcards=["Druid"],
+            use_liaisons=False,
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

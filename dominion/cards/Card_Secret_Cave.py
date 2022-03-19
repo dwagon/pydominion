@@ -35,7 +35,7 @@ class Card_SecretCave(Card.Card):
 ###############################################################################
 class Test_SecretCave(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Secret Cave"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Secret Cave"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Secret Cave"].remove()

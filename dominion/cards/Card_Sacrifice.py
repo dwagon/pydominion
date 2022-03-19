@@ -12,9 +12,8 @@ class Card_Sacrifice(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...
-        Action card: +2 Cards, +2 Actions;
-        Treasure card: +2 Coin;
-        Victory card: +2VP"""
+            Action card: +2 Cards, +2 Actions; Treasure card: +2 Coin;
+            Victory card: +2VP"""
         self.name = "Sacrifice"
         self.cost = 4
 
@@ -35,7 +34,7 @@ class Card_Sacrifice(Card.Card):
 ###############################################################################
 class Test_Sacrifice(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Sacrifice", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Sacrifice", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sacrifice"].remove()

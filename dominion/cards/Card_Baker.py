@@ -30,7 +30,7 @@ class Card_Baker(Card.Card):
 ###############################################################################
 class Test_Baker(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Baker"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Baker"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Baker"].remove()

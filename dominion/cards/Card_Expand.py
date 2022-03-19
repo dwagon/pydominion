@@ -30,7 +30,7 @@ class Card_Expand(Card.Card):
 ###############################################################################
 class Test_Expand(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Expand"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Expand"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.expand = self.g["Expand"].remove()

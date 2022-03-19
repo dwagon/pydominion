@@ -23,8 +23,7 @@ class Card_Workshop(Card.Card):
 ###############################################################################
 class Test_Workshop(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["Workshop", "Gardens"],
             badcards=["Blessed Village", "Cemetery"],

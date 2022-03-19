@@ -32,7 +32,7 @@ class Card_Skulk(Card.Card):
 ###############################################################################
 class Test_Skulk(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Skulk"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Skulk"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.Skulk = self.g["Skulk"].remove()

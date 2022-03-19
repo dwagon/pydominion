@@ -31,7 +31,7 @@ class Card_OpulentCastle(CastleCard):
 ###############################################################################
 class Test_OpulentCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:

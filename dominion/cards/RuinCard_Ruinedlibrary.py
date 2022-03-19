@@ -21,7 +21,7 @@ class Card_RuinedLibrary(Card.Card):
 ###############################################################################
 class Test_RuinedLibrary(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=4, initcards=["Cultist"])
+        self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:

@@ -18,7 +18,7 @@ class Project_Pageant(Project.Project):
         if player.coin == 0:
             return
         for num in range(player.coin + 1):
-            options.append(("Buy {} Coffers for {} Coin".format(num, num), num))
+            options.append((f"Buy {num} Coffers for {num} Coin", num))
         pick = player.plr_choose_options("Exchange coin for coffers", *options)
         player.add_coffer(pick)
         player.coin -= pick
@@ -27,7 +27,9 @@ class Project_Pageant(Project.Project):
 ###############################################################################
 class Test_Pageant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Pageant"])
+        self.g = Game.Game(
+            quiet=True, numplayers=1, initprojects=["Pageant"], use_liaisons=False
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

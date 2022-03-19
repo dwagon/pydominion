@@ -37,7 +37,7 @@ class Card_Embargo(Card.Card):
 ###############################################################################
 class Test_Embargo(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Embargo"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Embargo"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Embargo"].remove()

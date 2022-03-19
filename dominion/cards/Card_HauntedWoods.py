@@ -35,7 +35,7 @@ class Card_HauntedWoods(Card.Card):
 ###############################################################################
 class Test_HauntedWoods(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Haunted Woods"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Haunted Woods"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Haunted Woods"].remove()

@@ -38,7 +38,7 @@ class Card_Patrol(Card.Card):
 ###############################################################################
 class Test_Patrol(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Patrol"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Patrol"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Patrol"].remove()

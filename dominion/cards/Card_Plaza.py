@@ -30,7 +30,7 @@ class Card_Plaza(Card.Card):
 ###############################################################################
 class Test_Plaza(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Plaza", "Pooka"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Plaza", "Pooka"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Plaza"].remove()

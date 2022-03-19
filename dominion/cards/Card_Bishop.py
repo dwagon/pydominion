@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -38,13 +37,13 @@ class Card_Bishop(Card.Card):
         card = tc[0]
         points = int(card.cost / 2)
         player.add_score("bishop", points)
-        player.output("Trashing %s for %d points" % (card.name, points))
+        player.output(f"Trashing {card.name} for {points} points")
 
     def trashOtherCard(self, game, player, victim):
-        victim.output("%s's bishop lets you trash a card" % player.name)
+        victim.output(f"{player.name}'s bishop lets you trash a card")
         tc = victim.plr_trash_card()
         if tc:
-            victim.output("Trashing %s" % tc[0].name)
+            victim.output(f"Trashing {tc[0].name}")
         else:
             victim.output("All mine I tell you, all mine")
 
@@ -64,7 +63,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Bishop(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Bishop"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Bishop"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.bishop = self.g["Bishop"].remove()

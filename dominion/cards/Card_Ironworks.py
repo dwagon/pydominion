@@ -43,7 +43,7 @@ class Test_Ironworks(unittest.TestCase):
             "Market",
             "Rebuild",
         ]
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=initcards)
+        self.g = Game.TestGame(numplayers=1, initcards=initcards)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Iron Works"].remove()

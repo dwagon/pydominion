@@ -37,7 +37,7 @@ class Card_Magpie(Card.Card):
 ###############################################################################
 class Test_Magpie(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Magpie"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Magpie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Magpie"].remove()

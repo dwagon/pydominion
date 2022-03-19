@@ -27,7 +27,7 @@ class Card_HumbleCastle(CastleCard):
 ###############################################################################
 class Test_HumbleCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Castles"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:

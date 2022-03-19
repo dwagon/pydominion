@@ -2,9 +2,7 @@
 
 import random
 import unittest
-from dominion import Game
-from dominion import Card
-from dominion import CardPile
+from dominion import Card, CardPile, Game
 
 
 ###############################################################################
@@ -48,7 +46,7 @@ class KnightCardPile(CardPile.CardPile):
         return None
 
     def __repr__(self):
-        return "KnightCardPile %s: %d" % (self.name, self.pilesize)
+        return f"KnightCardPile {self.name}: {self.pilesize}"
 
 
 ###############################################################################
@@ -102,7 +100,7 @@ class KnightCard(Card.Card):
 ###############################################################################
 class Test_Knight(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Knight"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Knight"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = None

@@ -42,7 +42,7 @@ class Card_ChariotRace(Card.Card):
 ###############################################################################
 class Test_ChariotRace(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Chariot Race"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Chariot Race"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Chariot Race"].remove()

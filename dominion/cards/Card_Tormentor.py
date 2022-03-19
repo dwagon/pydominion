@@ -32,7 +32,7 @@ class Card_Tormentor(Card.Card):
 ###############################################################################
 class Test_Tormentor(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tormentor"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Tormentor"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Tormentor"].remove()

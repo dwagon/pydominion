@@ -31,7 +31,7 @@ class Card_Merchant(Card.Card):
 ###############################################################################
 class Test_Merchant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Merchant"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Merchant"].remove()

@@ -22,7 +22,7 @@ class Card_Underling(Card.Card):
 ###############################################################################
 class Test_Underling(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Underling"], use_liaisons=True)
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Underling"].remove()

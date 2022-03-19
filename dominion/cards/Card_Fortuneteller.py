@@ -40,7 +40,7 @@ class Card_Fortuneteller(Card.Card):
 ###############################################################################
 class Test_Fortuneteller(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Fortune Teller"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Fortune Teller"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Fortune Teller"].remove()

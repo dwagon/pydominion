@@ -43,7 +43,7 @@ class Card_Watchtower(Card.Card):
 ###############################################################################
 class Test_Watchtower(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Watchtower"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Watchtower"].remove()

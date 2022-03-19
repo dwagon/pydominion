@@ -28,7 +28,7 @@ class Card_Soothsayer(Card.Card):
 ###############################################################################
 class Test_Soothsayer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Soothsayer"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Soothsayer"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Soothsayer"].remove()

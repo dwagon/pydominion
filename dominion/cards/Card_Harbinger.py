@@ -47,7 +47,7 @@ class Card_Harbinger(Card.Card):
 ###############################################################################
 class Test_Harbinger(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Harbinger"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Harbinger"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Harbinger"].remove()

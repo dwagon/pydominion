@@ -23,7 +23,7 @@ class Card_Platinum(Card.Card):
 ###############################################################################
 class Test_Platinum(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, prosperity=True, numplayers=1)
+        self.g = Game.TestGame(quiet=True, prosperity=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Platinum"].remove()

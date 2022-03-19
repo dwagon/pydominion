@@ -31,7 +31,7 @@ class Card_Haunted_Mirror(Card.Card):
 ###############################################################################
 class Test_Haunted_Mirror(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Cemetery", "Moat"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Cemetery", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haunted Mirror"].remove()

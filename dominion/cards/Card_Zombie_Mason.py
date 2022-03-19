@@ -31,9 +31,7 @@ class Card_Zombie_Mason(Card.Card):
 ###############################################################################
 class Test_Zombie_Mason(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Zombie Mason", "Guide"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Zombie Mason", "Guide"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Zombie Mason"].remove()

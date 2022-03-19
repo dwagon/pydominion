@@ -35,8 +35,8 @@ class Card_CaravanGuard(Card.Card):
 ###############################################################################
 class Test_CaravanGuard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
         )
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()

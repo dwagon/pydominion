@@ -27,8 +27,8 @@ class Card_Vampire(Card.Card):
 ###############################################################################
 class Test_Vampire(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=2, initcards=["Vampire"], badcards=["Duchess"]
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Vampire"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()

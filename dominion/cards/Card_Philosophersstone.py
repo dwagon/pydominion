@@ -29,7 +29,7 @@ class Card_Philosophersstone(Card.Card):
 ###############################################################################
 class Test_Philosophersstone(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Philosopher's Stone"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Philosopher's Stone"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Philosopher's Stone"].remove()

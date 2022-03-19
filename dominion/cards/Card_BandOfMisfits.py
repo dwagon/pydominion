@@ -27,8 +27,7 @@ class Card_BandOfMisfits(Card.Card):
 ###############################################################################
 class Test_BandOfMisfits(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Band of Misfits", "Village", "Bureaucrat", "Moat"],
         )

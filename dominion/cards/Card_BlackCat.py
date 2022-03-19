@@ -32,7 +32,7 @@ class Card_Black_Cat(Card.Card):
 ###############################################################################
 class Test_Black_Cat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Black Cat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Black Cat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Black Cat"].remove()

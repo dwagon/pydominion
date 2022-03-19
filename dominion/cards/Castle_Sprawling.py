@@ -32,7 +32,7 @@ class Card_SprawlingCastle(CastleCard):
 ###############################################################################
 class Test_SprawlingCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
+        self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Castles"], badcards=["Duchess"]
         )
         self.g.start_game()

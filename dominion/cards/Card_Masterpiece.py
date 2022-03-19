@@ -31,7 +31,7 @@ class Card_Masterpiece(Card.Card):
 ###############################################################################
 class Test_Masterpiece(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Masterpiece"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Masterpiece"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Masterpiece"].remove()

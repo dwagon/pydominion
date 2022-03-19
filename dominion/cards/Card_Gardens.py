@@ -25,7 +25,7 @@ class Card_Gardens(Card.Card):
 ###############################################################################
 class Test_Gardens(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Gardens"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Gardens"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

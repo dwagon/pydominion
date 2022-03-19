@@ -32,8 +32,7 @@ class Card_Transmogrify(Card.Card):
 ###############################################################################
 class Test_Transmogrify(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Transmogrify"],
             badcards=["Duchess", "Fool's Gold"],

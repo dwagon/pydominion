@@ -52,7 +52,7 @@ class Card_Warrior(Card.Card):
 ###############################################################################
 class Test_Warrior(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
+        self.g = Game.TestGame(
             quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"]
         )
         self.g.start_game()

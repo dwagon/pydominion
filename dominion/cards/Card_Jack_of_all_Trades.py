@@ -43,7 +43,7 @@ class Card_Jack_of_all_Trades(Card.Card):
 ###############################################################################
 class Test_Jack_of_all_Trades(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Jack of all Trades"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Jack of all Trades"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Jack of all Trades"].remove()

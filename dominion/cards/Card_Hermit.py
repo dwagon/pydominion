@@ -55,7 +55,7 @@ class Card_Hermit(Card.Card):
 ###############################################################################
 class Test_Hermit(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Hermit"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Hermit"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hermit"].remove()

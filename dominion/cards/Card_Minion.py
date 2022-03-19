@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -51,7 +50,7 @@ class Card_Minion(Card.Card):
 ###############################################################################
 class Test_Minion(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Minion", "Moat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Minion", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Minion"].remove()

@@ -42,7 +42,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_HauntedCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:

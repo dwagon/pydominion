@@ -35,7 +35,7 @@ class Card_GrandCastle(CastleCard):
 ###############################################################################
 class Test_GrandCastle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Castles"])
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

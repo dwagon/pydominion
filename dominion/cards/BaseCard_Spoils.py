@@ -28,7 +28,7 @@ class Card_Spoils(Card.Card):
 ###############################################################################
 class Test_Spoils(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bandit Camp"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bandit Camp"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

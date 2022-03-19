@@ -46,8 +46,8 @@ class Card_Taxman(Card.Card):
 ###############################################################################
 class Test_Taxman(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"]
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"]
         )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()

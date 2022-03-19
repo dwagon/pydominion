@@ -41,7 +41,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Duchy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Duchy"].remove()

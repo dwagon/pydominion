@@ -26,7 +26,7 @@ class Card_Highway(Card.Card):
 ###############################################################################
 class Test_Highway(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Highway"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Highway"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Highway"].remove()

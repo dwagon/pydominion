@@ -24,7 +24,7 @@ class Card_Bagofgold(Card.Card):
 ###############################################################################
 class Test_Bagofgold(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tournament"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Bag of Gold"].remove()

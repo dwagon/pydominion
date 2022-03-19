@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -38,7 +37,7 @@ class Card_SpiceMerchant(Card.Card):
 ###############################################################################
 class Test_SpiceMerchant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Spice Merchant"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Spice Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Spice Merchant"].remove()

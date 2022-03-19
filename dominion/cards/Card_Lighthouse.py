@@ -28,7 +28,7 @@ class Card_Lighthouse(Card.Card):
 ###############################################################################
 class Test_Lighthouse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Lighthouse"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Lighthouse"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Lighthouse"].remove()

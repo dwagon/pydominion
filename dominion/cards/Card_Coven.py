@@ -35,7 +35,7 @@ class Card_Coven(Card.Card):
 ###############################################################################
 class Test_Coven(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Coven", "Moat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Coven", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Coven"].remove()

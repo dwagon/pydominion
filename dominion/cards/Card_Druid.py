@@ -38,7 +38,7 @@ class Card_Druid(Card.Card):
 ###############################################################################
 class Test_Druid(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Druid", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Druid", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Druid"].remove()

@@ -44,7 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Catapult(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Catapult"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Catapult"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Catapult"].remove()

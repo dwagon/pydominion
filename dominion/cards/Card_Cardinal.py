@@ -38,7 +38,7 @@ class Card_Cardinal(Card.Card):
 ###############################################################################
 class Test_Cardinal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Cardinal", "Village"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Cardinal", "Village"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Cardinal"].remove()

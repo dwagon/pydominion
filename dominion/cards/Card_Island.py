@@ -20,7 +20,9 @@ class Card_Island(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "island_reserve"):
             player.island_reserve = PlayArea.PlayArea([])
-        c = player.card_sel(prompt="Select a card to set aside for the rest of the game")
+        c = player.card_sel(
+            prompt="Select a card to set aside for the rest of the game"
+        )
         if c:
             card = c[0]
             player.island_reserve.add(card)
@@ -42,7 +44,7 @@ class Card_Island(Card.Card):
 ###############################################################################
 class Test_Island(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Island"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Island"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Island"].remove()

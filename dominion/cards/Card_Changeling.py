@@ -47,7 +47,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
 ###############################################################################
 class Test_Changeling(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Changeling"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Changeling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Changeling"].remove()

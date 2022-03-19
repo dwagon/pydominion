@@ -28,8 +28,7 @@ class Card_Inventor(Card.Card):
 ###############################################################################
 class Test_Inventor(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Inventor", "Gardens"],
             badcards=["Blessed Village", "Cemetery"],

@@ -25,7 +25,7 @@ class Card_Junkdealer(Card.Card):
 ###############################################################################
 class Test_Junkdealer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Junk Dealer"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Junk Dealer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.jd = self.g["Junk Dealer"].remove()

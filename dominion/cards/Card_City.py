@@ -31,9 +31,7 @@ class Card_City(Card.Card):
 ###############################################################################
 class Test_City(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["City", "Moat", "Cellar"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["City", "Moat", "Cellar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.city = self.g["City"].remove()

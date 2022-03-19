@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -39,14 +38,14 @@ class Card_Temple(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         score = game["Temple"].drainVP()
-        player.output("Gaining %d VP from Temple" % score)
+        player.output(f"Gaining {score} VP from Temple")
         player.add_score("Temple", score)
 
 
 ###############################################################################
 class Test_Temple(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Temple"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Temple"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Temple"].remove()

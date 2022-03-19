@@ -34,7 +34,7 @@ class Card_Vagrant(Card.Card):
 ###############################################################################
 class Test_Vagrant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Vagrant"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Vagrant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Vagrant"].remove()

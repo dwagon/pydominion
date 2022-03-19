@@ -54,8 +54,7 @@ class Card_Stonemason(Card.Card):
 ###############################################################################
 class Test_Stonemason(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Stonemason", "Moat"],
             badcards=["Fool's Gold"],

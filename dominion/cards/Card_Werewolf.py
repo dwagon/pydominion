@@ -33,7 +33,7 @@ class Card_Werewolf(Card.Card):
 ###############################################################################
 class Test_Werewolf(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Werewolf"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Werewolf"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Werewolf"].remove()

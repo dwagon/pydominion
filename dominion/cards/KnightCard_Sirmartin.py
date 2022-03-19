@@ -26,7 +26,7 @@ class Card_Sir_Martin(KnightCard):
 ###############################################################################
 class Test_Sir_Martin(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Knight"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knight"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:

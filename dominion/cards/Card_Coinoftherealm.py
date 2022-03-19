@@ -25,7 +25,7 @@ class Card_Coinoftherealm(Card.Card):
 ###############################################################################
 class Test_Coinoftherealm(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Coin of the Realm"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Coin of the Realm"].remove()

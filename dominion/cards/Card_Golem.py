@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -35,20 +34,18 @@ class Card_Golem(Card.Card):
                 player.pickup_card(card=c)
                 actions.append(c)
             else:
-                player.output("Drew and discarded %s" % c.name)
+                player.output(f"Drew and discarded {c.name}")
                 player.discard_card(c)
         # TODO - let the player choose the order
         for card in actions:
-            player.output("Golem playing %s" % card.name)
+            player.output(f"Golem playing {card.name}")
             player.play_card(card, costAction=False)
 
 
 ###############################################################################
 class Test_Golem(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Golem", "Village", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Golem", "Village", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Golem"].remove()

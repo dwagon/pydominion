@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -18,7 +17,9 @@ class Card_Tradingpost(Card.Card):
     def special(self, game, player):
         """Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         num = min(2, player.hand.size())
-        trash = player.plr_trash_card(num=num, prompt="Trash two cards to gain a silver")
+        trash = player.plr_trash_card(
+            num=num, prompt="Trash two cards to gain a silver"
+        )
         if len(trash) == 2:
             player.gain_card("Silver", "hand")
             player.add_coins(2)
@@ -29,7 +30,7 @@ class Card_Tradingpost(Card.Card):
 ###############################################################################
 class Test_Tradingpost(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Trading Post"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Trading Post"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Trading Post"].remove()

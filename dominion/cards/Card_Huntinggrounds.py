@@ -30,8 +30,7 @@ class Card_Huntinggrounds(Card.Card):
 ###############################################################################
 class Test_Huntinggrounds(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Hunting Grounds"],
             badcards=["Duchess"],

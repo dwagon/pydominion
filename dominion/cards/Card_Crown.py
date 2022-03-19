@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -18,10 +17,10 @@ class Card_Crown(Card.Card):
 
     def special(self, game, player):
         if player.phase == Card.TYPE_ACTION:
-            cards = [c for c in player.hand if c.isAction()]
+            cards = [_ for _ in player.hand if _.isAction()]
             self.do_twice(player, cards)
         if player.phase == "buy":
-            cards = [c for c in player.hand if c.isTreasure()]
+            cards = [_ for _ in player.hand if _.isTreasure()]
             self.do_twice(player, cards)
 
     def do_twice(self, player, cards):
@@ -32,14 +31,14 @@ class Card_Crown(Card.Card):
         index = 1
         for c in cards:
             sel = "%d" % index
-            pr = "Play %s twice" % c.name
+            pr = f"Play {c.name} twice"
             options.append({"selector": sel, "print": pr, "card": c})
             index += 1
         o = player.user_input(options, "Play which card twice?")
         if not o["card"]:
             return
         for i in range(1, 3):
-            player.output("Number %d play of %s" % (i, o["card"].name))
+            player.output(f"Number {i} play of {o['card'].name}")
             player.play_card(o["card"], discard=False, costAction=False)
         player.discard_card(o["card"])
 
@@ -47,7 +46,7 @@ class Card_Crown(Card.Card):
 ###############################################################################
 class Test_Crown(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Crown", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Crown", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Crown"].remove()

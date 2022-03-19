@@ -34,7 +34,7 @@ class Card_Bordervillage(Card.Card):
 ###############################################################################
 class Test_Bordervillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Border Village"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Border Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.bv = self.g["Border Village"].remove()

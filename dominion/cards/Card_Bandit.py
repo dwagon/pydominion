@@ -37,7 +37,7 @@ class Card_Bandit(Card.Card):
         options = [{"selector": "0", "print": "Don't trash any card", "card": None}]
         for c in treasures:
             sel = "%s" % index
-            pr = "Trash {c.name} from {victim.name}"
+            pr = f"Trash {c.name} from {victim.name}"
             options.append({"selector": sel, "print": pr, "card": c})
             sel = "%s" % index
             index += 1
@@ -49,15 +49,13 @@ class Card_Bandit(Card.Card):
             else:
                 victim.trash_card(o["card"])
                 bandit.output(f"Trashed {o['card'].name} from {victim.name}")
-                victim.output(
-                    f"{bandit.name}'s Bandit trashed your {o['card'].name}"
-                )
+                victim.output(f"{bandit.name}'s Bandit trashed your {o['card'].name}")
 
 
 ###############################################################################
 class Test_Bandit(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Bandit"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Bandit"])
         self.g.start_game()
         self.thief, self.vic = self.g.player_list()
         self.thief.name = "MrBandit"

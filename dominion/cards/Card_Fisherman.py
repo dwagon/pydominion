@@ -28,7 +28,7 @@ class Card_Fisherman(Card.Card):
 ###############################################################################
 class Test_Fisherman(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Fisherman"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Fisherman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Fisherman"].remove()

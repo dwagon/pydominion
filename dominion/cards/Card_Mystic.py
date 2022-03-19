@@ -43,8 +43,7 @@ class Card_Mystic(Card.Card):
 ###############################################################################
 class Test_Mystic(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Mystic"],
             badcards=["Tournament", "Fool's Gold", "Pooka"],
