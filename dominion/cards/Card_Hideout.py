@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -28,7 +27,7 @@ class Card_Hideout(Card.Card):
 ###############################################################################
 class Test_Hideout(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Hideout"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Hideout"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

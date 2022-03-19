@@ -31,7 +31,7 @@ class Card_Dismantle(Card.Card):
 ###############################################################################
 class Test_Dismantle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Dismantle"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Dismantle"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.rcard = self.g["Dismantle"].remove()

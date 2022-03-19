@@ -26,7 +26,7 @@ class Card_Altar(Card.Card):
 ###############################################################################
 class Test_Altar(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Altar", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Altar", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Altar"].remove()

@@ -33,7 +33,7 @@ class Card_MarketSquare(Card.Card):
 ###############################################################################
 class Test_MarketSquare(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Market Square"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Market Square"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Market Square"].remove()

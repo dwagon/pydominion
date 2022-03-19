@@ -26,8 +26,7 @@ class Card_Farmland(Card.Card):
 ###############################################################################
 class Test_Farmland(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Farmland", "Militia"],
             badcards=["Death Cart", "Cemetery", "Blessed Village"],

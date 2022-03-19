@@ -51,8 +51,7 @@ class Card_YoungWitch(Card.Card):
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["Young Witch"],
             badcards=["Secret Chamber", "Duchess", "Caravan Guard"],

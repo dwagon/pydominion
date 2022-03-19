@@ -24,8 +24,7 @@ class Card_Cobbler(Card.Card):
 ###############################################################################
 class Test_Cobbler(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Cobbler"],
             badcards=["Blessed Village", "Cemetery"],

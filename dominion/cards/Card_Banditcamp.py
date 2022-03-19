@@ -27,7 +27,7 @@ class Card_Banditcamp(Card.Card):
 ###############################################################################
 class Test_Banditcamp(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bandit Camp"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Bandit Camp"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

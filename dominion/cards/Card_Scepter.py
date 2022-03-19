@@ -36,7 +36,7 @@ class Card_Scepter(Card.Card):
 ###############################################################################
 class Test_Scepter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Scepter", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Scepter", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Scepter"].remove()

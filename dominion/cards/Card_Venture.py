@@ -34,7 +34,7 @@ class Card_Venture(Card.Card):
 ###############################################################################
 class Test_Venture(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Venture"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Venture"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Venture"].remove()

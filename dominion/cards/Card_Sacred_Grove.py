@@ -44,8 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_SacredGrove(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["Sacred Grove", "Moat"],
             badcards=["Druid"],

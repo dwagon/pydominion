@@ -38,7 +38,7 @@ class Card_Storeroom(Card.Card):
 ###############################################################################
 class Test_Storeroom(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Store Room"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Store Room"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Store Room"].remove()

@@ -24,7 +24,7 @@ class Card_LuckyCoin(Card.Card):
 ###############################################################################
 class Test_LuckyCoin(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Fool"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Fool"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Lucky Coin"].remove()

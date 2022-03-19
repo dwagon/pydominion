@@ -51,7 +51,7 @@ class Card_Pawn(Card.Card):
 ###############################################################################
 class Test_Pawn(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Pawn"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Pawn"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Pawn"].remove()

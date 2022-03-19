@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -28,19 +27,19 @@ class Card_Apothecary(Card.Card):
             c = player.next_card()
             player.reveal_card(c)
             if c.name in ("Copper", "Potion"):
-                player.output("Putting %s in hand" % c.name)
+                player.output(f"Putting {c.name} in hand")
                 player.add_card(c, "hand")
             else:
                 unput.append(c)
         for c in unput:
-            player.output("Putting %s back in deck" % c.name)
+            player.output(f"Putting {c.name} back in deck")
             player.add_card(c, "deck")
 
 
 ###############################################################################
 class Test_Apothecary(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Apothecary"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Apothecary"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

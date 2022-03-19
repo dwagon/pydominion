@@ -25,7 +25,7 @@ class Card_Quarry(Card.Card):
 ###############################################################################
 class Test_Quarry(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Quarry", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Quarry", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Quarry"].remove()

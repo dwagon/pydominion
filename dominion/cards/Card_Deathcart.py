@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -42,14 +41,17 @@ class Card_Deathcart(Card.Card):
     def hook_gain_this_card(self, game, player):
         for _ in range(2):
             c = player.gain_card("Ruins")
-            player.output("Gained %s" % c.name)
+            player.output(f"Gained {c.name}")
         return {}
 
 
 ###############################################################################
 class Test_Deathcart(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Death Cart", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1,
+            initcards=["Death Cart", "Moat"],
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Death Cart"].remove()

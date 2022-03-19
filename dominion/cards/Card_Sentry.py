@@ -43,7 +43,7 @@ class Card_Sentry(Card.Card):
 ###############################################################################
 class Test_Sentry(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Sentry"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Sentry"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentry"].remove()

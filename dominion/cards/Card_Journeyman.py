@@ -45,7 +45,7 @@ class Card_Journeyman(Card.Card):
 ###############################################################################
 class Test_Journeyman(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Journeyman"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Journeyman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Journeyman"].remove()

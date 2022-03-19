@@ -30,7 +30,7 @@ class Card_Bounty_Hunter(Card.Card):
 ###############################################################################
 class Test_Bounty_Hunter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bounty Hunter"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Bounty Hunter"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Bounty Hunter"].remove()

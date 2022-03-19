@@ -18,7 +18,7 @@ class State_Twice_Miserable(State.State):
 ###############################################################################
 class Test_Twice_Miserable(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Bard"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.state = self.g.states["Twice Miserable"]

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -24,7 +23,7 @@ class Card_Mine(Card.Card):
             if c.isTreasure():
                 sel = "%s" % index
                 options.append(
-                    {"selector": sel, "print": "Trash/Upgrade %s" % c.name, "card": c}
+                    {"selector": sel, "print": f"Trash/Upgrade {c.name}", "card": c}
                 )
                 index += 1
         player.output("Trash a treasure to gain a better one")
@@ -36,7 +35,7 @@ class Card_Mine(Card.Card):
             for tc in game.base_cards:
                 if game[tc].cost == val + 3:
                     c = player.gain_card(tc, "hand")
-                    player.output("Converted to %s" % c.name)
+                    player.output(f"Converted to {c.name}")
                     player.trash_card(o["card"])
                     break
             else:  # pragma: no cover
@@ -46,7 +45,7 @@ class Card_Mine(Card.Card):
 ###############################################################################
 class Test_Mine(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Mine"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Mine"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mine"].remove()

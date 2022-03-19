@@ -23,7 +23,7 @@ class Card_Armory(Card.Card):
 ###############################################################################
 class Test_Armory(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Armory", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Armory", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.armory = self.g["Armory"].remove()

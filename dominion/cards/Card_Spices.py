@@ -30,7 +30,7 @@ class Card_Spices(Card.Card):
 ###############################################################################
 class Test_Spices(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Spices"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Spices"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

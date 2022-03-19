@@ -22,7 +22,7 @@ class Card_Urchin(Card.Card):
 
     def special(self, game, player):
         for plr in player.attack_victims():
-            plr.output("Discard down to 4 cards from %s's Urchin" % player.name)
+            plr.output(f"Discard down to 4 cards from {player.name}'s Urchin")
             plr.plr_discard_down_to(4)
 
     def hook_cleanup(self, game, player):
@@ -51,7 +51,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Urchin(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Urchin", "Militia"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Urchin"].remove()

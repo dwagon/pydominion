@@ -89,8 +89,7 @@ class Card_Rogue(Card.Card):
 ###############################################################################
 class Test_Rogue(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["Rogue", "Moat"],
             badcards=["Pooka", "Fool"],

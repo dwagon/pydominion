@@ -28,7 +28,7 @@ class Card_Stables(Card.Card):
 ###############################################################################
 class Test_Stables(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Stables"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Stables"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Stables"].remove()

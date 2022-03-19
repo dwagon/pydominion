@@ -33,7 +33,7 @@ class Card_Moneylender(Card.Card):
 ###############################################################################
 class Test_Moneylender(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Money Lender"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Money Lender"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Money Lender"].remove()

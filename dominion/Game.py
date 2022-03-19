@@ -48,7 +48,7 @@ SEASIDE = "seaside"
 ###############################################################################
 ###############################################################################
 ###############################################################################
-class Game(object):  # pylint: disable=too-many-public-methods
+class Game:  # pylint: disable=too-many-public-methods
     """Game class"""
 
     def __init__(self, **kwargs):
@@ -166,7 +166,7 @@ class Game(object):  # pylint: disable=too-many-public-methods
         self.card_setup()
         self.total_cards = self._count_cards()
         self.current_player = self.player_list(0)
-        if self.ally and not self.quiet:
+        if self.ally:
             for plr in self.player_list():
                 plr.add_favors(1)
 
@@ -865,6 +865,16 @@ class Game(object):  # pylint: disable=too-many-public-methods
 
 
 ###############################################################################
+class TestGame(Game):
+    def __init__(self, **kwargs):
+        if "use_liaisons" not in kwargs:
+            kwargs["use_liaisons"] = False
+        if "quiet" not in kwargs:
+            kwargs["quiet"] = True
+        super().__init__(**kwargs)
+
+
+###############################################################################
 def parse_cli_args(args=None):
     """Parse the command line arguments"""
     if args is None:
@@ -935,9 +945,11 @@ def parse_cli_args(args=None):
     )
     # Don't use liaisons as allies can break a lot of tests
     parser.add_argument(
-        "--no_liaisons", dest="use_liaisons", action="store_false", default=True,
-        help=argparse.SUPPRESS
-
+        "--no_liaisons",
+        dest="use_liaisons",
+        action="store_false",
+        default=True,
+        help=argparse.SUPPRESS,
     )
 
     parser.add_argument(

@@ -30,7 +30,7 @@ class Card_Goatherd(Card.Card):
 ###############################################################################
 class Test_Goatherd(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Goatherd"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Goatherd"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Goatherd"].remove()

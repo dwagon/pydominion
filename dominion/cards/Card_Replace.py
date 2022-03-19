@@ -40,7 +40,7 @@ class Card_Replace(Card.Card):
 ###############################################################################
 class Test_Replace(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Replace", "Moat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Replace", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Replace"].remove()

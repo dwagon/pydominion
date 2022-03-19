@@ -23,13 +23,13 @@ class Card_Countinghouse(Card.Card):
                 player.add_card(c, "hand")
                 player.discardpile.remove(c)
                 count += 1
-        player.output("Picked up %d coppers" % count)
+        player.output(f"Picked up {count} coppers")
 
 
 ###############################################################################
 class Test_Countinghouse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Counting House"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Counting House"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()

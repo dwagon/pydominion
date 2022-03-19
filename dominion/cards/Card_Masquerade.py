@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card
 
 
 ###############################################################################
@@ -25,18 +24,18 @@ class Card_Masquerade(Card.Card):
         for plr in list(xfer.keys()):
             newplr = game.playerToLeft(plr)
             newcrd = xfer[plr]
-            newplr.output("You gained a %s from %s" % (newcrd.name, plr.name))
+            newplr.output(f"You gained a {newcrd.name} from {plr.name}")
             newplr.add_card(newcrd, "hand")
         player.plr_trash_card()
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.playerToLeft(plr).name
         cards = plr.card_sel(
-            prompt="Which card to give to %s?" % leftplr, num=1, force=True
+            prompt=f"Which card to give to {leftplr}?", num=1, force=True
         )
         card = cards[0]
         plr.hand.remove(card)
-        plr.output("Gave %s to %s" % (card.name, leftplr))
+        plr.output(f"Gave {card.name} to {leftplr}")
         return card
 
 
@@ -49,7 +48,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Masquerade(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Masquerade"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Masquerade"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Masquerade"].remove()

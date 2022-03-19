@@ -29,7 +29,7 @@ class Card_Sentinel(Card.Card):
 ###############################################################################
 class Test_Sentinel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Sentinel"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Sentinel"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentinel"].remove()

@@ -31,7 +31,7 @@ class Card_Horsetraders(Card.Card):
 ###############################################################################
 class Test_Horsetraders(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Horse Traders"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Horse Traders"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Horse Traders"].remove()

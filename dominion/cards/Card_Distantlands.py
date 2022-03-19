@@ -31,7 +31,7 @@ class Card_Distantlands(Card.Card):
 ###############################################################################
 class Test_Distantlands(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Distant Lands"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Distant Lands"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Distant Lands"].remove()

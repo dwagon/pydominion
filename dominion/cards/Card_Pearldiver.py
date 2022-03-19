@@ -38,7 +38,7 @@ class Card_Pearldiver(Card.Card):
 ###############################################################################
 class Test_Pearldiver(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Pearl Diver"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Pearl Diver"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.pearldiver = self.g["Pearl Diver"].remove()

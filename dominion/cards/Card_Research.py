@@ -53,7 +53,7 @@ class Card_Research(Card.Card):
 ###############################################################################
 class Test_Research(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Research", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Research", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Research"].remove()

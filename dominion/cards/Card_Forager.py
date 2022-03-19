@@ -31,7 +31,7 @@ class Card_Forager(Card.Card):
 ###############################################################################
 class Test_Forager(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Forager"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Forager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Forager"].remove()

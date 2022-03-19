@@ -54,9 +54,7 @@ class Card_Crypt(Card.Card):
 ###############################################################################
 class Test_Crypt(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=2, initcards=["Crypt"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Crypt"], badcards=["Duchess"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Crypt"].remove()

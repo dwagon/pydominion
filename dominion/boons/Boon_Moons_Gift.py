@@ -37,7 +37,7 @@ class Boon_Moons_Gift(Boon.Boon):
 ###############################################################################
 class Test_Moons_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
+        self.g = Game.TestGame(
             quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
         )
         self.g.start_game()

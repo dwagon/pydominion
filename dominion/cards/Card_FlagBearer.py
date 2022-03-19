@@ -29,7 +29,7 @@ class Card_FlagBearer(Card.Card):
 ###############################################################################
 class Test_FlagBearer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Flag Bearer"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Flag Bearer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Flag Bearer"].remove()

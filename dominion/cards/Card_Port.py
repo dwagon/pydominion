@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -34,7 +33,7 @@ class Card_Port(Card.Card):
 ###############################################################################
 class Test_Port(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Port"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Port"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Port"].remove()

@@ -26,7 +26,7 @@ class Card_Fishingvillage(Card.Card):
 ###############################################################################
 class Test_Fishingvillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Fishing Village"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Fishing Village"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Fishing Village"].remove()

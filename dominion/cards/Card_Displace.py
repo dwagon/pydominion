@@ -30,7 +30,7 @@ class Card_Displace(Card.Card):
 ###############################################################################
 class Test_Displace(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Displace"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Displace"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Displace"].remove()

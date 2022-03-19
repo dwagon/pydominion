@@ -39,7 +39,7 @@ class Card_Lost_City(Card.Card):
 ###############################################################################
 class Test_Lost_City(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Lost City"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Lost City"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Lost City"].remove()

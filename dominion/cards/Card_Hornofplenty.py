@@ -33,8 +33,7 @@ class Card_Hornofplenty(Card.Card):
 ###############################################################################
 class Test_Hornofplenty(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Horn of Plenty", "Moat"],
             badcards=["Duchess"],

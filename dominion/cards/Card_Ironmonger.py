@@ -48,7 +48,7 @@ class Card_Ironmonger(Card.Card):
 ###############################################################################
 class Test_Ironmonger(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Iron Monger"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Iron Monger"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.im = self.g["Iron Monger"].remove()

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -20,14 +19,14 @@ class Card_Salvager(Card.Card):
 
     def special(self, game, player):
         card = player.plr_trash_card(force=True)
-        player.output("Gained %d coin" % card[0].cost)
+        player.output(f"Gained {card[0].cost} coin")
         player.add_coins(card[0].cost)
 
 
 ###############################################################################
 class Test_Salvager(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Salvager"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Salvager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Salvager"].remove()

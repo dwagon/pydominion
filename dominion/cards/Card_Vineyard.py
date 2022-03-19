@@ -30,7 +30,7 @@ class Card_Vineyard(Card.Card):
 ###############################################################################
 class Test_Vineyard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Vineyard", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Vineyard", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

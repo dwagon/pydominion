@@ -44,7 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Vault(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Vault"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Vault"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Vault"].remove()

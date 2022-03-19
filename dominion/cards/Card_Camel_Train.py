@@ -33,7 +33,7 @@ class Card_Camel_Train(Card.Card):
 ###############################################################################
 class Test_Camel_Train(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Camel Train"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Camel Train"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Camel Train"].remove()

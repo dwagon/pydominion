@@ -25,7 +25,7 @@ class Card_Diadem(Card.Card):
 ###############################################################################
 class Test_Diadem(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Tournament"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Diadem"].remove()

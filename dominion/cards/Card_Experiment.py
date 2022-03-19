@@ -33,7 +33,7 @@ class Card_Experiment(Card.Card):
 ###############################################################################
 class Test_Experiment(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Experiment"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Experiment"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

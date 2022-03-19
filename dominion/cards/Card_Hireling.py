@@ -26,7 +26,7 @@ class Card_Hireling(Card.Card):
 ###############################################################################
 class Test_Hireling(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Hireling"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Hireling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hireling"].remove()

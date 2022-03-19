@@ -32,9 +32,7 @@ class Card_Idol(Card.Card):
 ###############################################################################
 class Test_Idol(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=2, initcards=["Idol"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Idol"], badcards=["Druid"])
         self.g.start_game()
         for b in self.g.boons:
             if b.name == "The Mountain's Gift":

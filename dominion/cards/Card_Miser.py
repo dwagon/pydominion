@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -18,8 +17,8 @@ class Card_Miser(Card.Card):
     def special(self, game, player):
         """Choose one: Put a Copper from your hand onto your Tavern mat;
         or +1 Coin per Copper on your Tavern mat."""
-        inhand = sum([1 for c in player.hand if c.name == "Copper"])
-        coins = sum([1 for c in player.reserve if c.name == "Copper"])
+        inhand = sum([1 for _ in player.hand if _.name == "Copper"])
+        coins = sum([1 for _ in player.reserve if _.name == "Copper"])
         deposit = False
         if inhand:
             deposit = player.plr_choose_options(
@@ -39,7 +38,7 @@ class Card_Miser(Card.Card):
 ###############################################################################
 class Test_Miser(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Miser"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Miser"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Miser"].remove()

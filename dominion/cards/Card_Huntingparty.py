@@ -43,7 +43,7 @@ class Card_Huntingparty(Card.Card):
 ###############################################################################
 class Test_Huntingparty(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Hunting Party"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Hunting Party"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hunting Party"].remove()

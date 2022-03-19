@@ -49,7 +49,7 @@ class Card_Oracle(Card.Card):
 ###############################################################################
 class Test_Oracle(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Oracle"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Oracle"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Oracle"].remove()

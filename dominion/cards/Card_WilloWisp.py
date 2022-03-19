@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -24,16 +23,16 @@ class Card_WilloWisp(Card.Card):
         player.reveal_card(c)
         if c.cost <= 2 and not c.potcost and not c.debtcost:
             player.add_card(c, "hand")
-            player.output("Moving {} from your deck to your hand".format(c.name))
+            player.output(f"Moving {c.name} from your deck to your hand")
         else:
             player.add_card(c, "topdeck")
-            player.output("Keep {} on top of your deck".format(c.name))
+            player.output(f"Keep {c.name} on top of your deck")
 
 
 ###############################################################################
 class Test_WilloWisp(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Will-o'-Wisp"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Will-o'-Wisp"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Will-o'-Wisp"].remove()

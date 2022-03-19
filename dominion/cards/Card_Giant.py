@@ -43,7 +43,7 @@ class Card_Giant(Card.Card):
 ###############################################################################
 class Test_Giant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Giant"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Giant"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Giant"].remove()

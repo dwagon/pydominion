@@ -39,7 +39,7 @@ class Card_Butcher(Card.Card):
 ###############################################################################
 class Test_Butcher(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Butcher"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Butcher"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Butcher"].remove()

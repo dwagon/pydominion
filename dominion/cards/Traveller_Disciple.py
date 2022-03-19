@@ -47,7 +47,7 @@ class Card_Disciple(Card.Card):
 ###############################################################################
 class Test_Disciple(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Peasant", "Moat"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Peasant", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Disciple"].remove()

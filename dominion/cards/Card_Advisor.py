@@ -56,7 +56,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Advisor(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Advisor"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Advisor"])
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
         self.acard = self.g["Advisor"].remove()

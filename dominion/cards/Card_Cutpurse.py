@@ -34,7 +34,7 @@ class Card_Cutpurse(Card.Card):
 ###############################################################################
 class Test_Cutpurse(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Cutpurse"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Cutpurse"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Cutpurse"].remove()

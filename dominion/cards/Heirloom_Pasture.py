@@ -25,7 +25,7 @@ class Card_Pasture(Card.Card):
 ###############################################################################
 class Test_Pasture(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Shepherd"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Pasture"].remove()

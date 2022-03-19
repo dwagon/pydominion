@@ -40,9 +40,7 @@ class Card_Zombie_Apprentice(Card.Card):
 ###############################################################################
 class Test_Zombie_Apprentice(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Zombie Apprentice", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Zombie Apprentice", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Zombie Apprentice"].remove()

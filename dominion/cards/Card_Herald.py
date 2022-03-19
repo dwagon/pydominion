@@ -47,7 +47,7 @@ class Card_Herald(Card.Card):
 ###############################################################################
 class Test_Herald(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Herald", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Herald", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Herald"].remove()

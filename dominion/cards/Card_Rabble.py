@@ -48,7 +48,7 @@ class Card_Rabble(Card.Card):
 ###############################################################################
 class Test_Rabble(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Rabble", "Moat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Rabble", "Moat"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.rabble = self.g["Rabble"].remove()

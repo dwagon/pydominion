@@ -30,7 +30,7 @@ class Card_Fugitive(Card.Card):
 ###############################################################################
 class Test_Fugitive(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Page"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Page"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Fugitive"].remove()

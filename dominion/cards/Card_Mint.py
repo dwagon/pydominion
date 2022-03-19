@@ -44,7 +44,7 @@ class Card_Mint(Card.Card):
 ###############################################################################
 class Test_Mint(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Mint", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Mint", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mint"].remove()

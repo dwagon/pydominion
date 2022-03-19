@@ -39,7 +39,7 @@ class Card_Steward(Card.Card):
 ###############################################################################
 class Test_Steward(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Steward"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Steward"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Steward"].remove()

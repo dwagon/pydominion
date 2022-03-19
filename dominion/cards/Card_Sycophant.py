@@ -31,7 +31,8 @@ When you gain or trash this, +2 Favors."""
 ###############################################################################
 class Test_Sycophant(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Sycophant"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Sycophant"], use_liaisons=True)
+        print(f"{self.g.use_liaisons=}")
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sycophant"].remove()

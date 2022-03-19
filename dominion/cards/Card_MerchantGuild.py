@@ -25,7 +25,7 @@ class Card_MerchantGuild(Card.Card):
 ###############################################################################
 class Test_MerchantGuild(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Merchant Guild"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Merchant Guild"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Merchant Guild"].remove()

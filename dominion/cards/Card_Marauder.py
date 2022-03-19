@@ -27,7 +27,7 @@ class Card_Marauder(Card.Card):
 ###############################################################################
 class Test_Marauder(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Marauder"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Marauder"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Marauder"].remove()

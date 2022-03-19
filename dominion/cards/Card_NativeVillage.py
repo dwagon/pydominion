@@ -57,7 +57,7 @@ class Card_NativeVillage(Card.Card):
 ###############################################################################
 class Test_NativeVillage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Native Village"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Native Village"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Native Village"].remove()

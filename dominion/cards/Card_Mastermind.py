@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Mastermind """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -33,7 +32,7 @@ class Card_Mastermind(Card.Card):
         if not o["card"]:
             return
         for i in range(1, 4):
-            player.output("Number %d play of %s" % (i, o["card"].name))
+            player.output(f"Number {i} play of {o['card'].name}")
             player.play_card(o["card"], discard=False, costAction=False)
         player.add_card(o["card"], "played")
         player.hand.remove(o["card"])
@@ -42,7 +41,7 @@ class Card_Mastermind(Card.Card):
 ###############################################################################
 class Test_Mastermind(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Mastermind", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Mastermind", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mastermind"].remove()
