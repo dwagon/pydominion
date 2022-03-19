@@ -119,7 +119,7 @@ class Game:  # pylint: disable=too-many-public-methods
             args["projectpath"] if "projectpath" in args else "dominion/projects"
         )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
-        self.initally = args["ally"] if "ally" in args else []
+        self.init_ally = args["init_ally"] if "init_ally" in args else []
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
@@ -317,9 +317,9 @@ class Game:  # pylint: disable=too-many-public-methods
     def loadAlly(self):
         """Load the allies and pick a single one to have in the game"""
         self.output("Using Allies")
-        if isinstance(self.initally, str):
-            self.initally = [self.initally]
-        allies = self.loadNonKingdomCards("Ally", self.initally, 1, AllyPile)
+        if isinstance(self.init_ally, str):
+            self.init_ally = [self.init_ally]
+        allies = self.loadNonKingdomCards("Ally", self.init_ally, 1, AllyPile)
         self.ally = random.choice(list(allies.values())).ally
 
     ###########################################################################
@@ -417,7 +417,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 continue
             allyname = self.guess_cardname(crd, "Ally")
             if allyname:
-                self.initally.append(allyname)
+                self.init_ally.append(allyname)
                 continue
             print("Can't guess what card '%s' is" % crd)
             foundall = False
@@ -938,7 +938,7 @@ def parse_cli_args(args=None):
     )
     parser.add_argument(
         "--ally",
-        dest="initally",
+        dest="init_ally",
         action="append",
         default=[],
         help="Include specific ally",
