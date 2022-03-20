@@ -1024,6 +1024,7 @@ class Player:
             scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
         for s in self.states:
             scr[s.name] = scr.get(s.name, 0) + s.victory
+        scr[self.game.ally.name] = self.game.ally.special_score(self.game, self)
         scr.update(self.score)
         return scr
 
