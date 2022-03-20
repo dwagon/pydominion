@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -23,9 +22,7 @@ class Card_Replace(Card.Card):
         if not tr:
             return
         cost = tr[0].cost
-        gain = player.plr_gain_card(
-            cost, prompt="Gain a card costing up to {}".format(cost)
-        )
+        gain = player.plr_gain_card(cost, prompt=f"Gain a card costing up to {cost}")
         if not gain:
             return
         if gain.isAction() or gain.isTreasure():
@@ -33,7 +30,7 @@ class Card_Replace(Card.Card):
             player.discardpile.remove(gain)
         if gain.isVictory():
             for victim in player.attack_victims():
-                victim.output("Gained a Curse due to {}'s Replace".format(player))
+                victim.output(f"Gained a Curse due to {player.name}'s Replace")
                 victim.gain_card("Curse")
 
 
