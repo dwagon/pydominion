@@ -40,7 +40,12 @@ class Card_Broker(Card.Card):
 ###############################################################################
 class Test_Broker(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Broker"], use_liaisons=True)
+        self.g = Game.TestGame(
+            numplayers=1,
+            initcards=["Broker"],
+            use_liaisons=True,
+            ally="Plateau Shepherds",
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Broker"].remove()
