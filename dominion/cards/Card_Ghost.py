@@ -29,7 +29,7 @@ class Card_Ghost(Card.Card):
             player.reveal_card(card)
             if card.isAction():
                 player._ghost_reserve.add(card)
-                self.secret_count += 1
+                player.secret_count += 1
                 break
             player.add_card(card, "discard")
             count -= 1
