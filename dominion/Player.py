@@ -1523,6 +1523,10 @@ class Player:
         return self.actions
 
     ###########################################################################
+    def set_actions(self, num=1):
+        self.actions = num
+
+    ###########################################################################
     def add_actions(self, num=1):
         assert isinstance(num, int)
         if self.misc.get("no_actions"):
