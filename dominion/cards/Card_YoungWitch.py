@@ -3,8 +3,7 @@
 
 import unittest
 import random
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -35,16 +34,16 @@ class Card_YoungWitch(Card.Card):
                 banes.append(card.name)
         game._bane = random.choice(banes)
         game.useCardPile(game.getAvailableCards(), game._bane)
-        game.output("Using %s as the bane for Young Witch" % game._bane)
+        game.output(f"Using {game._bane} as the bane for Young Witch")
 
     def special(self, game, player):
         player.plr_discard_cards(num=2, force=True)
         for pl in player.attack_victims():
             if pl.in_hand(game._bane):
-                player.output("%s has the bane: %s" % (pl.name, game._bane))
+                player.output(f"{pl.name} has the bane: {game._bane}")
                 continue
-            player.output("%s got cursed" % pl.name)
-            pl.output("%s's Young Witch cursed you" % player.name)
+            player.output(f"{pl.name} got cursed")
+            pl.output(f"{player.name}'s Young Witch cursed you")
             pl.gain_card("Curse")
 
 
@@ -55,6 +54,8 @@ class Test_YoungWitch(unittest.TestCase):
             numplayers=2,
             initcards=["Young Witch"],
             badcards=["Secret Chamber", "Duchess", "Caravan Guard"],
+            use_liaisons=True,
+            ally="Plateau Shepherds"
         )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
