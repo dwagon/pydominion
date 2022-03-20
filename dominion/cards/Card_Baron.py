@@ -23,13 +23,12 @@ class Card_Baron(Card.Card):
             ans = player.plr_choose_options(
                 "Discard Estate?",
                 ("Keep Estate - Gain another", False),
-                ("Discard an Estate - Gain +4 Gold", True),
+                ("Discard an Estate - Gain +4 Coin", True),
             )
             if ans:
                 player.discard_card(hasEstate)
                 player.add_coins(4)
                 return
-        player.output("Gained an Estate")
         player.gain_card("Estate")
 
 
