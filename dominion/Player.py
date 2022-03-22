@@ -420,8 +420,8 @@ class Player:
     def _shuffle_discard(self):
         self.output(f"Shuffling Pile of {len(self.discardpile)} cards")
         for card in self.projects:
-            if hasattr(card, "hook_preShuffle"):
-                card.hook_preShuffle(game=self.game, player=self)
+            if hasattr(card, "hook_pre_shuffle"):
+                card.hook_pre_shuffle(game=self.game, player=self)
         self.discardpile.shuffle()
 
     ###########################################################################
