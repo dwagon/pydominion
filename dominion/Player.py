@@ -110,7 +110,7 @@ class Player:
 
     ###########################################################################
     def _find_cardpile(self, cname):
-        """ Return the cardpile that has cards called {cname}"""
+        """Return the cardpile that has cards called {cname}"""
         dstcp = None
         for cp in self.game.cardpiles.values():
             if cp.name == cname:
@@ -148,7 +148,9 @@ class Player:
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
         dstcp = self._find_cardpile(dst)
-        newcard = self.gain_card(cardpile=dstcp, destination=destination, callhook=False)
+        newcard = self.gain_card(
+            cardpile=dstcp, destination=destination, callhook=False
+        )
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add()
@@ -394,6 +396,9 @@ class Player:
         self._shuffle_discard()
         while self.discardpile:
             self.add_card(self.discardpile.topcard(), "deck")
+        for card in self.relevant_cards():
+            if hasattr(card, "hook_post_shuffle"):
+                card.hook_post_shuffle(game=self.game, player=self)
 
     ###########################################################################
     def pickup_cards(self, num, verbose=True, verb="Picked up"):
@@ -985,8 +990,12 @@ class Player:
             self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
         else:
             self.output("| Played: <NONE>")
+        self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output("| Ally: %s: %s" % (self.game.ally.name, self.game.ally.description(self)))
+            self.output(
+                "| Ally: %s: %s"
+                % (self.game.ally.name, self.game.ally.description(self))
+            )
         self.output(
             "| Discard: %s" % ", ".join([c.name for c in self.discardpile])
         )  # Debug

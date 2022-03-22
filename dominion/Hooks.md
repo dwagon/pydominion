@@ -149,4 +149,9 @@ hook_pre_shuffle
 ---------------
 Called just before the deck gets shuffled
 
+hook_post_shuffle(game, player)
+--------------------------------
+Called after the deck got shuffled
+
+
 #EOF
