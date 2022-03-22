@@ -1,0 +1,14 @@
+---
+name: run_tests
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Pythong
+        uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Run Tests
+      - run: ./run_tests
