@@ -66,7 +66,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_MountainPass(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, landmarkcards=["Mountain Pass"])
+        self.g = Game.TestGame(numplayers=2, landmarkcards=["Mountain Pass"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.mp = self.g.landmarks["Mountain Pass"]

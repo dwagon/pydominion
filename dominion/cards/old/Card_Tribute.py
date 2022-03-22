@@ -48,7 +48,7 @@ class Card_Tribute(Card.Card):
 ###############################################################################
 class Test_Tribute(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Tribute"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Tribute"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Tribute"].remove()

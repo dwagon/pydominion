@@ -37,8 +37,7 @@ class Event_Desperation(Event.Event):
 ###############################################################################
 class Test_Desperation(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Desperation"],
             initcards=["Cellar", "Chapel", "Moat", "Militia", "Village", "Workshop"],

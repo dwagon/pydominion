@@ -28,8 +28,7 @@ class Landmark_Battlefield(Landmark.Landmark):
 ###############################################################################
 class Test_Battlefield(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             landmarkcards=["Battlefield"],
             badcards=["Duchess"],

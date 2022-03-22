@@ -22,8 +22,7 @@ class Event_Enclave(Event.Event):
 ###############################################################################
 class Test_Enclave(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Enclave"],
         )

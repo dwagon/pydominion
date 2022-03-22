@@ -24,7 +24,7 @@ class Card_Greathall(Card.Card):
 ###############################################################################
 class Test_Greathall(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Great Hall"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Great Hall"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Great Hall"].remove()

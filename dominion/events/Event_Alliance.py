@@ -27,8 +27,8 @@ class Event_Alliance(Event.Event):
 ###############################################################################
 class Test_Alliance(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=["Alliance"], badcards=["Duchess"]
+        self.g = Game.TestGame(
+            numplayers=1, eventcards=["Alliance"], badcards=["Duchess"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

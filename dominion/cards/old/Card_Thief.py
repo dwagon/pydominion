@@ -75,7 +75,7 @@ class Card_Thief(Card.Card):
 ###############################################################################
 class Test_Thief(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2, initcards=["Thief", "Moat"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Thief", "Moat"])
         self.g.start_game()
         self.thiefcard = self.g["Thief"].remove()
         self.thief, self.victim = self.g.player_list()

@@ -22,7 +22,7 @@ class Project_Cathedral(Project.Project):
 ###############################################################################
 class Test_Cathedral(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Cathedral"])
+        self.g = Game.TestGame(numplayers=1, initprojects=["Cathedral"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

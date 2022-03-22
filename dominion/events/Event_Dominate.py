@@ -22,7 +22,7 @@ class Event_Dominate(Event.Event):
 ###############################################################################
 class Test_Dominate(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Dominate"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Dominate"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events["Dominate"]

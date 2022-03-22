@@ -22,8 +22,8 @@ class Event_Commerce(Event.Event):
 ###############################################################################
 class Test_Commerce(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=["Commerce"], initcards=["Moat"]
+        self.g = Game.TestGame(
+            numplayers=1, eventcards=["Commerce"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

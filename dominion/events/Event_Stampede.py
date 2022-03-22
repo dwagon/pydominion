@@ -27,8 +27,7 @@ class Event_Stampede(Event.Event):
 ###############################################################################
 class Test_Stampede(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Stampede"],
             initcards=["Cellar", "Chapel", "Moat", "Militia", "Village", "Workshop"],

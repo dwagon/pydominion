@@ -20,8 +20,7 @@ class Way_Sheep(Way.Way):
 ###############################################################################
 class Test_Sheep(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Sheep"],
             initcards=["Moat"],

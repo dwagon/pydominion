@@ -20,7 +20,7 @@ class Artifact_Key(Artifact.Artifact):
 ###############################################################################
 class Test_Key(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=["Key"])
+        self.g = Game.TestGame(numplayers=1, initartifacts=["Key"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.artifact = self.g.artifacts["Key"]

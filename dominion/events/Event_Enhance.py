@@ -33,8 +33,7 @@ class Event_Enhance(Event.Event):
 ###############################################################################
 class Test_Enhance(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Enhance"],
             initcards=["Festival"],

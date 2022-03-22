@@ -30,8 +30,8 @@ class Landmark_Tower(Landmark.Landmark):
 ###############################################################################
 class Test_Tower(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, landmarkcards=["Tower"], initcards=["Moat"]
+        self.g = Game.TestGame(
+            numplayers=1, landmarkcards=["Tower"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
