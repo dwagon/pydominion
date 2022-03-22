@@ -1,5 +1,6 @@
 ---
 name: run_tests
+on: push
 
 jobs:
   build:
