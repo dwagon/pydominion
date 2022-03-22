@@ -1087,6 +1087,8 @@ class Player:
     def hook_start_turn(self):
         for c in self.hand + self.states + self.projects + self.artifacts:
             c.hook_start_turn(self.game, self)
+        if self.game.ally:
+            self.game.ally.hook_start_turn(self.game, self)
 
     ###########################################################################
     def spend_coffer(self):
