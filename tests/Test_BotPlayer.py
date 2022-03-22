@@ -7,7 +7,7 @@ from dominion import Game
 ###############################################################################
 class Test_getOptions(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, bot=True)
+        self.g = Game.TestGame(numplayers=1, bot=True)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -80,7 +80,7 @@ class Test_getOptions(unittest.TestCase):
 ###############################################################################
 class TestPick_to_discard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, bot=True)
+        self.g = Game.TestGame(numplayers=1, bot=True)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

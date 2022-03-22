@@ -7,8 +7,7 @@ from dominion import Game
 ###############################################################################
 class Test_assignProject(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["StateTester"],
             statepath="tests/states",
@@ -57,8 +56,7 @@ class Test_assignProject(unittest.TestCase):
 ###############################################################################
 class Test_buy_project(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["StateTester"],
             statepath="tests/states",

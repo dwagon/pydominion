@@ -7,7 +7,7 @@ from dominion import Game
 ###############################################################################
 class Test_perform_event(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Raid"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Raid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events["Raid"]
@@ -43,9 +43,7 @@ class Test_perform_event(unittest.TestCase):
 ###############################################################################
 class Test__event_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, eventcards=["Alms", "Expedition", "Raid"]
-        )
+        self.g = Game.TestGame(numplayers=1, eventcards=["Alms", "Expedition", "Raid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -70,13 +68,13 @@ class Test__event_selection(unittest.TestCase):
 ###############################################################################
 class Test_eventRandom(unittest.TestCase):
     def test_none(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 0)
 
     def test_specify(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Alms", "Raid"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Alms", "Raid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
@@ -84,13 +82,13 @@ class Test_eventRandom(unittest.TestCase):
         self.assertIn("Raid", self.g.events)
 
     def test_random(self):
-        self.g = Game.Game(quiet=True, numplayers=1, numevents=2)
+        self.g = Game.TestGame(numplayers=1, numevents=2)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)
 
     def test_both(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Alms"], numevents=2)
+        self.g = Game.TestGame(numplayers=1, eventcards=["Alms"], numevents=2)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.assertEqual(len(self.g.events), 2)

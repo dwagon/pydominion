@@ -11,32 +11,32 @@ class Test_args(unittest.TestCase):
 
     def test_numplayers(self):
         """TODO"""
-        g = Game.Game(quiet=True, numplayers=4)
+        g = Game.TestGame(numplayers=4)
         g.start_game()
         self.assertEqual(len(g.player_list()), 4)
 
     def test_card(self):
         """TODO"""
-        g = Game.Game(quiet=True, initcards=["Moat"])
+        g = Game.TestGame(initcards=["Moat"])
         g.start_game()
         self.assertIn("Moat", g.cardpiles)
 
     def test_basecard(self):
         """Make sure that if you specify a basecard in initcards it works"""
-        g = Game.Game(quiet=True, initcards=["Platinum"])
+        g = Game.TestGame(initcards=["Platinum"])
         g.start_game()
         self.assertIn("Platinum", g.cardpiles)
 
     def test_prosperity(self):
         """TODO"""
-        g = Game.Game(quiet=True, prosperity=True)
+        g = Game.TestGame(prosperity=True)
         g.start_game()
         self.assertIn("Colony", g.cardpiles)
         self.assertIn("Platinum", g.cardpiles)
 
     def test_event(self):
         """Test that we can specify an event on the command line"""
-        g = Game.Game(quiet=True, eventcards=["Alms"])
+        g = Game.TestGame(eventcards=["Alms"])
         g.start_game()
         self.assertIn("Alms", g.events)
 
@@ -46,7 +46,7 @@ class Test_guess_cardname(unittest.TestCase):
     """TODO"""
 
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2)
+        self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
 
     def test_guesses(self):
@@ -63,7 +63,7 @@ class Test_guess_cardname(unittest.TestCase):
 ###############################################################################
 class Test_game_over(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2)
+        self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -103,7 +103,7 @@ class Test_game_over(unittest.TestCase):
 ###############################################################################
 class Test_in_trash(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.plr.set_hand("Copper")
@@ -128,7 +128,7 @@ class Test_in_trash(unittest.TestCase):
 ###############################################################################
 class Test_actionpiles(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
 
     def test_actionpiles(self):
@@ -141,7 +141,7 @@ class Test_actionpiles(unittest.TestCase):
 class Test_boon(unittest.TestCase):
     # TODO - convert to using real boons rather than letters
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -177,9 +177,7 @@ class Test_boon(unittest.TestCase):
 class Test_whowon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
-        self.g = Game.Game(
-            quiet=True, numplayers=self.numplayers, badcards=["Shepherd"]
-        )
+        self.g = Game.TestGame(numplayers=self.numplayers, badcards=["Shepherd"])
         self.g.start_game()
 
     def test_whoWon(self):
@@ -213,19 +211,19 @@ class Test_parse_args(unittest.TestCase):
 
     def test_use_events(self):
         args = Game.parse_cli_args(["--quiet", "--events", "Alms"])
-        g = Game.Game(**vars(args))
+        g = Game.TestGame(**vars(args))
         g.start_game()
         self.assertIn("Alms", g.events)
 
     def test_use_card(self):
         args = Game.parse_cli_args(["--quiet", "--card", "Moat"])
-        g = Game.Game(**vars(args))
+        g = Game.TestGame(**vars(args))
         g.start_game()
         self.assertIn("Moat", g.cardpiles)
 
     def test_use_landmark(self):
         args = Game.parse_cli_args(["--quiet", "--landmark", "Aqueduct"])
-        g = Game.Game(**vars(args))
+        g = Game.TestGame(**vars(args))
         g.start_game()
         self.assertIn("Aqueduct", g.landmarks)
 

@@ -7,7 +7,7 @@ from dominion import Game
 ###############################################################################
 class TestArtifact(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=2)
+        self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 
