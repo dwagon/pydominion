@@ -17,8 +17,7 @@ class Artifact_Lantern(Artifact.Artifact):
 ###############################################################################
 class Test_Lantern(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initartifacts=["Lantern"],
             initcards=["Border Guard", "Moat", "Guide"],

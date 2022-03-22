@@ -28,8 +28,7 @@ class Landmark_WolfDen(Landmark.Landmark):
 ###############################################################################
 class Test_WolfDen(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             landmarkcards=["Wolf Den"],
             badcards=[

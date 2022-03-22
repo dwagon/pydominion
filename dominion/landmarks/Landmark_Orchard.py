@@ -25,8 +25,7 @@ class Landmark_Orchard(Landmark.Landmark):
 ###############################################################################
 class Test_Orchard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             landmarkcards=["Orchard"],
             initcards=["Moat", "Militia"],

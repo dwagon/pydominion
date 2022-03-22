@@ -20,8 +20,7 @@ class Way_Camel(Way.Way):
 ###############################################################################
 class Test_Camel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Camel"],
             initcards=["Moat"],

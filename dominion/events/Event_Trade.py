@@ -25,7 +25,7 @@ class Event_Trade(Event.Event):
 ###############################################################################
 class Test_Trade(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Trade"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Trade"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Trade"]

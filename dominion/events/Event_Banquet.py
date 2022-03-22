@@ -29,7 +29,7 @@ class Event_Banquet(Event.Event):
 ###############################################################################
 class Test_Banquet(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Banquet"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Banquet"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Banquet"]

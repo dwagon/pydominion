@@ -49,8 +49,7 @@ class Card_Feast(Card.Card):
 ###############################################################################
 class Test_Feast(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Feast"],
             badcards=["Den of Sin", "Ghost Town", "Duchess"],

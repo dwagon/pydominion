@@ -35,8 +35,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
 ###############################################################################
 class Test_DefiledShrine(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             landmarkcards=["Defiled Shrine"],
             initcards=["Moat"],

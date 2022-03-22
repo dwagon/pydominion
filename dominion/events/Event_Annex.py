@@ -37,8 +37,7 @@ class Event_Annex(Event.Event):
 ###############################################################################
 class Test_Annex(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Annex"],
             initcards=["Moat"],

@@ -25,8 +25,7 @@ class Event_Advance(Event.Event):
 ###############################################################################
 class Test_Advance(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Advance"],
             initcards=["Moat", "Lurker"],

@@ -21,8 +21,7 @@ class Event_Ride(Event.Event):
 ###############################################################################
 class Test_Ride(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Ride"],
         )

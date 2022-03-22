@@ -29,7 +29,7 @@ class Project_Silos(Project.Project):
 ###############################################################################
 class Test_Silos(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Silos"])
+        self.g = Game.TestGame(numplayers=1, initprojects=["Silos"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

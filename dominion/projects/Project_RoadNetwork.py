@@ -26,8 +26,7 @@ class Project_RoadNetwork(Project.Project):
 ###############################################################################
 class Test_RoadNetwork(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initprojects=["Road Network"],
             badcards=["Duchess"],

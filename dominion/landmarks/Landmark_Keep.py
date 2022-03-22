@@ -39,8 +39,7 @@ class Landmark_Keep(Landmark.Landmark):
 ###############################################################################
 class Test_Keep(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             landmarkcards=["Keep"],
             badcards=[

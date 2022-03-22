@@ -20,8 +20,7 @@ class Way_Squirrel(Way.Way):
 ###############################################################################
 class Test_Squirrel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Squirrel"],
             initcards=["Moat"],

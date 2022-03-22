@@ -29,8 +29,7 @@ class Landmark_TriumphalArch(Landmark.Landmark):
 ###############################################################################
 class Test_TriumphalArch(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             landmarkcards=["Triumphal Arch"],
             initcards=["Moat", "Militia"],

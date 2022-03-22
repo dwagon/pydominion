@@ -31,8 +31,8 @@ class Project_Piazza(Project.Project):
 ###############################################################################
 class Test_Piazza(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initprojects=["Piazza"], initcards=["Moat"]
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Piazza"], initcards=["Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
