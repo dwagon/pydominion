@@ -7,9 +7,7 @@ from dominion import Game
 ###############################################################################
 class Test__get_whens(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Moat"], badcards=["Pixie"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Pixie"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -47,7 +45,7 @@ class Test__get_whens(unittest.TestCase):
 ###############################################################################
 class Test_Reserve(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Coin of the Realm"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -97,7 +95,7 @@ class Test_Reserve(unittest.TestCase):
 ###############################################################################
 class Test_reserveSelection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Coin of the Realm"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

@@ -11,7 +11,7 @@ class TestPlayer(unittest.TestCase):
     """Test cases for Player class"""
 
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -61,7 +61,7 @@ class Test_discard_hand(unittest.TestCase):
     """Test plr.discard_hand()"""
 
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -77,7 +77,7 @@ class Test_discard_hand(unittest.TestCase):
 ###############################################################################
 class Test_in_played(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -107,7 +107,7 @@ class Test_in_played(unittest.TestCase):
 ###############################################################################
 class Test_in_discard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -137,7 +137,7 @@ class Test_in_discard(unittest.TestCase):
 ###############################################################################
 class Test_next_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -164,7 +164,7 @@ class Test_next_card(unittest.TestCase):
 ###############################################################################
 class Test_playonce(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -178,8 +178,7 @@ class Test_playonce(unittest.TestCase):
 ###############################################################################
 class Test_cards_affordable(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             badcards=[
                 "Werewolf",
@@ -233,7 +232,7 @@ class Test_cards_affordable(unittest.TestCase):
 ###############################################################################
 class Test__type_selector(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -259,7 +258,7 @@ class Test__type_selector(unittest.TestCase):
 ###############################################################################
 class Test_plr_trash_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -314,7 +313,7 @@ class Test_plr_trash_card(unittest.TestCase):
 ###############################################################################
 class Test_plrDiscardCard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -348,7 +347,7 @@ class Test_plrDiscardCard(unittest.TestCase):
 ###############################################################################
 class Test_attack_victims(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=3, initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=3, initcards=["Moat"])
         self.g.start_game()
         self.plr, self.defend, self.victim = self.g.player_list()
         self.defend.set_hand("Moat")
@@ -361,7 +360,7 @@ class Test_attack_victims(unittest.TestCase):
 ###############################################################################
 class Test_in_deck(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -380,7 +379,7 @@ class Test_in_deck(unittest.TestCase):
 ###############################################################################
 class Test_in_hand(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -399,7 +398,7 @@ class Test_in_hand(unittest.TestCase):
 ###############################################################################
 class Test_gain_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -427,7 +426,7 @@ class Test_gain_card(unittest.TestCase):
 ###############################################################################
 class Test__spend_all_cards(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -446,7 +445,7 @@ class Test__spend_all_cards(unittest.TestCase):
 ###############################################################################
 class Test_pickup_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -493,9 +492,7 @@ class Test_pickup_card(unittest.TestCase):
 ###############################################################################
 class Test_misc(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Golem", "Witch", "Engineer"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Golem", "Witch", "Engineer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -573,8 +570,8 @@ class Test_misc(unittest.TestCase):
 ###############################################################################
 class Test__display_overview(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -629,8 +626,8 @@ class Test__display_overview(unittest.TestCase):
 ###############################################################################
 class Test__buyable_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
@@ -682,7 +679,7 @@ class Test__buyable_selection(unittest.TestCase):
 ###############################################################################
 class Test__playable_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.moat = self.g["Moat"].remove()
@@ -712,7 +709,7 @@ class Test__playable_selection(unittest.TestCase):
 ###############################################################################
 class Test__choice_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Moat", "Alchemist"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Moat", "Alchemist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.moat = self.g["Moat"].remove()
@@ -783,7 +780,7 @@ class Test__choice_selection(unittest.TestCase):
 ###############################################################################
 class Test__night_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Monastery", "Moat"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Monastery", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.moat = self.g["Moat"].remove()
@@ -806,8 +803,7 @@ class Test__night_selection(unittest.TestCase):
 ###############################################################################
 class Test__spendable_selection(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             initcards=["Moat", "Alchemist"],
             badcards=["Baker"],
@@ -865,7 +861,7 @@ class Test__spendable_selection(unittest.TestCase):
 ###############################################################################
 class Test_buy_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Embargo"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Embargo"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -884,7 +880,7 @@ class Test_buy_card(unittest.TestCase):
 ###############################################################################
 class Test_spend_coffer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -906,7 +902,7 @@ class Test_spend_coffer(unittest.TestCase):
 ###############################################################################
 class Test_spend_villager(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -928,7 +924,7 @@ class Test_spend_villager(unittest.TestCase):
 ###############################################################################
 class Test_plr_gain_card(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -950,7 +946,7 @@ class Test_exile(unittest.TestCase):
     """Test exile pile"""
 
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -968,7 +964,7 @@ class Test_exile(unittest.TestCase):
 ###############################################################################
 class Test_plr_discard_down_to(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -990,7 +986,7 @@ class Test_Favor(unittest.TestCase):
     """Favor testing"""
 
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1)
+        self.g = Game.TestGame(numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
