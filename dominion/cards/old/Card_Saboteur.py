@@ -58,8 +58,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage
 ###############################################################################
 class Test_Saboteur(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=2,
             initcards=["Saboteur"],
             badcards=["Blessed Village", "Cemetery", "Necromancer", "Animal Fair"],

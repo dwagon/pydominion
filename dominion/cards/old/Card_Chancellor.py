@@ -29,7 +29,7 @@ class Card_Chancellor(Card.Card):
 ###############################################################################
 class Test_Chancellor(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initcards=["Chancellor"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Chancellor"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chancellor"].remove()

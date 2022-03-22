@@ -21,7 +21,7 @@ class Project_Guildhall(Project.Project):
 ###############################################################################
 class Test_Guildhall(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Guildhall"])
+        self.g = Game.TestGame(numplayers=1, initprojects=["Guildhall"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

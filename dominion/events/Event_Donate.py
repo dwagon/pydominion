@@ -21,7 +21,9 @@ class Event_Donate(Event.Event):
             for card in area[:]:
                 player.add_card(card, "hand")
                 area.remove(card)
-        player.plr_trash_card(anynum=True, prompt="Donate allows you to trash any cards")
+        player.plr_trash_card(
+            anynum=True, prompt="Donate allows you to trash any cards"
+        )
         player.discard_hand()
         player.pickup_cards(5)
 
@@ -29,7 +31,7 @@ class Event_Donate(Event.Event):
 ###############################################################################
 class Test_Donate(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Donate"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Donate"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Donate"]

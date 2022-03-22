@@ -35,8 +35,7 @@ class Way_Seal(Way.Way):
 ###############################################################################
 class Test_Seal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Seal"],
             initcards=["Moat"],

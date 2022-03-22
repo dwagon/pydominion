@@ -17,8 +17,8 @@ class Artifact_Horn(Artifact.Artifact):
 ###############################################################################
 class Test_Horn(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True, numplayers=1, initartifacts=["Horn"], initcards=["Border Guard"]
+        self.g = Game.TestGame(
+            numplayers=1, initartifacts=["Horn"], initcards=["Border Guard"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

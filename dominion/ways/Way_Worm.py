@@ -20,8 +20,7 @@ class Way_Worm(Way.Way):
 ###############################################################################
 class Test_Worm(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Worm"],
             initcards=["Moat"],

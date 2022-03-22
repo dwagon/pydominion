@@ -23,8 +23,7 @@ class Way_Frog(Way.Way):
 ###############################################################################
 class Test_Frog(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Frog"],
             initcards=["Moat"],

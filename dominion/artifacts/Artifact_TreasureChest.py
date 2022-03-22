@@ -21,7 +21,7 @@ class Artifact_TreasureChest(Artifact.Artifact):
 ###############################################################################
 class Test_TreasureChest(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initartifacts=["Treasure Chest"])
+        self.g = Game.TestGame(numplayers=1, initartifacts=["Treasure Chest"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

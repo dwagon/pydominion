@@ -23,7 +23,7 @@ class Event_Triumph(Event.Event):
 ###############################################################################
 class Test_Triumph(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Triumph"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Triumph"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Triumph"]

@@ -29,7 +29,7 @@ class Landmark_Labyrinth(Landmark.Landmark):
 ###############################################################################
 class Test_Labyrinth(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, landmarkcards=["Labyrinth"])
+        self.g = Game.TestGame(numplayers=1, landmarkcards=["Labyrinth"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

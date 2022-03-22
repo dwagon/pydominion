@@ -18,8 +18,7 @@ class Way_Ox(Way.Way):
 ###############################################################################
 class Test_Ox(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Ox"],
             initcards=["Moat"],

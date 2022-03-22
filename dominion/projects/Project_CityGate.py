@@ -27,7 +27,7 @@ class Project_CityGate(Project.Project):
 ###############################################################################
 class Test_CityGate(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["City Gate"])
+        self.g = Game.TestGame(numplayers=1, initprojects=["City Gate"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

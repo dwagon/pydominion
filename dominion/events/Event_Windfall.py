@@ -22,7 +22,7 @@ class Event_Windfall(Event.Event):
 ###############################################################################
 class Test_Windfall(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, eventcards=["Windfall"])
+        self.g = Game.TestGame(numplayers=1, eventcards=["Windfall"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events["Windfall"]

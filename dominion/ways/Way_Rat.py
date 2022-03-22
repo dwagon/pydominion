@@ -29,8 +29,7 @@ class Way_Rat(Way.Way):
 ###############################################################################
 class Test_Rat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Rat"],
             initcards=["Moat"],

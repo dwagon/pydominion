@@ -32,8 +32,7 @@ class Event_Delay(Event.Event):
 ###############################################################################
 class Test_Delay(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Delay"],
             initcards=["Moat"],

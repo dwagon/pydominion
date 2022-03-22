@@ -23,7 +23,7 @@ class Project_Exploration(Project.Project):
 ###############################################################################
 class Test_Exploration(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(quiet=True, numplayers=1, initprojects=["Exploration"])
+        self.g = Game.TestGame(numplayers=1, initprojects=["Exploration"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

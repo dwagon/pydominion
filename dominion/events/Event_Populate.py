@@ -23,8 +23,7 @@ class Event_Populate(Event.Event):
 ###############################################################################
 class Test_Populate(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             eventcards=["Populate"],
             initcards=[

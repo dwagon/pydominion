@@ -24,8 +24,7 @@ class Way_Butterfly(Way.Way):
 ###############################################################################
 class Test_Butterfly(unittest.TestCase):
     def setUp(self):
-        self.g = Game.Game(
-            quiet=True,
+        self.g = Game.TestGame(
             numplayers=1,
             waycards=["Way of the Butterfly"],
             initcards=["Moat", "Witch"],
