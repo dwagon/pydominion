@@ -13,7 +13,7 @@ class Project_StarChart(Project.Project):
         self.name = "Star Chart"
         self.cost = 3
 
-    def hook_preShuffle(self, game, player):
+    def hook_pre_shuffle(self, game, player):
         names = {_.name for _ in player.discardpile}
         choices = []
         for name in names:
