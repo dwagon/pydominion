@@ -47,6 +47,7 @@ class Test_CaveDwellers(unittest.TestCase):
 
     def test_play(self):
         """Play card"""
+        self.plr.set_deck("Copper", "Copper", "Copper", "Copper")
         self.plr.set_hand("Estate", "Duchy", "Gold")
         self.plr.set_favors(2)
         self.plr.test_input = ["Spend", "Discard Estate", "Spend", "Discard Duchy"]
