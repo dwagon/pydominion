@@ -13,3 +13,7 @@ jobs:
         run: python3 -m pip install -r requirements-dev.txt
       - name: Run Tests
         run: ./run_tests
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
