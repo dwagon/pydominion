@@ -12,7 +12,7 @@ class Card_Patron(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
         self.base = Game.RENAISSANCE
         self.desc = (
-            "+1 Villager; +2. When something causes you to reveal this, +1 Coffers."
+            "+1 Villager; +2 Coin. When something causes you to reveal this, +1 Coffers."
         )
         self.name = "Patron"
         self.cost = 4
