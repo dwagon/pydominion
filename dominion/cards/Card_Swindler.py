@@ -52,19 +52,19 @@ class Test_Swindler(unittest.TestCase):
 
     def test_defended(self):
         """Swindle a defended player"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.victim.set_hand("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertEqual(self.g.trash_size(), tsize)
 
     def test_attack(self):
         """Swindle an undefended player"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.victim.set_deck("Gold")
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Gold"))
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
 
 
 ###############################################################################

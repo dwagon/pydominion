@@ -75,7 +75,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.prosperity:
             self.base_cards.append("Colony")
             self.base_cards.append("Platinum")
-        self.cardmapping = self.getAvailableCardClasses()
+        self.cardmapping = self._get_available_card_classes()
         self.total_cards = 0
         self.loaded_travellers = False  # For testing purposes
 
@@ -135,7 +135,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.loadLandmarks()
         self.loadArtifacts()
         self.loadProjects()
-        heirlooms = self.enable_heirlooms()
+        heirlooms = self._enable_heirlooms()
 
         if self.hexes or self.boons:
             self.loadStates()
@@ -152,7 +152,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self.players[the_uuid] = BotPlayer(
                     game=self,
                     quiet=self.quiet,
-                    name="%sBot" % name,
+                    name=f"{name}Bot",
                     heirlooms=heirlooms,
                 )
                 self.bot = False
@@ -208,7 +208,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _count_cards(self):
         """TODO"""
         count = {}
-        count["trash"] = self.trashSize()
+        count["trash"] = self.trash_size()
         for cpile in list(self.cardpiles.values()):
             count["pile_%s" % cpile.name] = cpile.pilesize
         for pl in self.player_list():
@@ -220,10 +220,10 @@ class Game:  # pylint: disable=too-many-public-methods
     def output(self, msg):
         """Send output to all players"""
         if not self.quiet:
-            sys.stdout.write("ALL: %s\n" % msg)
+            sys.stdout.write(f"ALL: {msg}\n")
 
     ###########################################################################
-    def trashSize(self):
+    def trash_size(self):
         """TODO"""
         return len(self.trashpile)
 
@@ -469,7 +469,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return 1
 
     ###########################################################################
-    def enable_heirlooms(self):
+    def _enable_heirlooms(self):
         """Go through the cardpiles and see if any require heirloom cards
         to be brought into the game"""
         heirlooms = set()
@@ -499,7 +499,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     k, crd = "BaseCard", x
                 if crd not in self.cardpiles:
                     self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output("Playing with %s" % crd)
+                    self.output(f"Playing with {crd}")
 
         for card in self.landmarks.values():
             for x in card.required_cards:
@@ -509,7 +509,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     k, crd = "BaseCard", x
                 if crd not in self.cardpiles:
                     self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output("Playing with %s" % crd)
+                    self.output(f"Playing with {crd}")
 
         for card in list(self.cardpiles.keys()):
             if self.cardpiles[card].isLooter() and "Ruins" not in self.cardpiles:
@@ -549,7 +549,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return key in self.cardpiles
 
     ###########################################################################
-    def getAvailableCardClasses(self):
+    def _get_available_card_classes(self):
         """Create a mapping between the cardname and the module"""
         mapping = {}
         for prefix in (
@@ -722,9 +722,9 @@ class Game:  # pylint: disable=too-many-public-methods
     def print_state(self):  # pragma: no cover
         """This is used for debugging"""
         print("#" * 40)
-        print("Trash: %s" % ", ".join([_.name for _ in self.trashpile]))
-        print("Boons: {}".format(", ".join([_.name for _ in self.boons])))
-        print("Hexes: {}".format(", ".join([_.name for _ in self.hexes])))
+        print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
+        print(f"Boons: {', '.join([_.name for _ in self.boons])}")
+        print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
         print(f"Ally: {self.ally}")
         print(
             "Projects: {}".format(", ".join([_.name for _ in self.projects.values()]))
@@ -737,8 +737,8 @@ class Game:  # pylint: disable=too-many-public-methods
                     tokens += "%s[%s]" % (plr.name, ",".join(tkns))
 
             print(
-                "CardPile %s: %d cards %s"
-                % (cpile, self.cardpiles[cpile].pilesize, tokens)
+                f"CardPile {cpile}: %d cards {tokens}"
+                % (self.cardpiles[cpile].pilesize)
             )
         for plr in self.player_list():
             print(
@@ -793,7 +793,7 @@ class Game:  # pylint: disable=too-many-public-methods
             )
 
     ###########################################################################
-    def playerToLeft(self, plr):
+    def player_to_left(self, plr):
         """Return the player to the 'left' of the one specified"""
         players = self.player_list()
         place = players.index(plr) - 1
@@ -856,10 +856,10 @@ class Game:  # pylint: disable=too-many-public-methods
             assert self._count_cards() == self.total_cards
         except AssertionError:
             self.count_all_cards()
-            sys.stderr.write("current = %s\n" % self._count_cards())
+            print(f"current = {self._count_cards()}\n", file=sys.stderr)
             sys.stderr.write("original = %d\n" % self.total_cards)
             raise
-        self.current_player = self.playerToLeft(self.current_player)
+        self.current_player = self.player_to_left(self.current_player)
         self.current_player.start_turn()
         self.current_player.turn()
         self.current_player.end_turn()

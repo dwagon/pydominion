@@ -20,7 +20,7 @@ class Card_Advisor(Card.Card):
         left chooses one of them. Discard that card. Put
         the other cards into your hand."""
         cards = []
-        choser = game.playerToLeft(player)
+        choser = game.player_to_left(player)
         for _ in range(3):
             card = player.pickup_card()
             player.reveal_card(card)

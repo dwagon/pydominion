@@ -18,7 +18,7 @@ class Card_Contraband(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        plr = game.playerToLeft(player)
+        plr = game.player_to_left(player)
         cps = [cp for cp in game.cardpiles if game.cardpiles[cp].purchasable]
         options = []
         for cp in cps:

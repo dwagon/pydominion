@@ -118,7 +118,7 @@ class Test_Rogue(unittest.TestCase):
 
     def test_good_trash(self):
         """Rogue to get something juicy from the trash"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         for _ in range(2):
             gold = self.g["Gold"].remove()
             self.plr.trash_card(gold)
@@ -126,7 +126,7 @@ class Test_Rogue(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertEqual(self.plr.discardpile.size(), 1)
             self.assertEqual(self.plr.discardpile[-1].name, "Gold")
         except AssertionError:  # pragma: no cover
@@ -135,23 +135,23 @@ class Test_Rogue(unittest.TestCase):
 
     def test_good_player(self):
         """Rogue to trash something from another player"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.victim.set_deck("Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertEqual(self.victim.discardpile[-1].name, "Gold")
 
     def test_bad_player(self):
         """Rogue to trash nothing from another player"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.victim.set_deck("Gold", "Province", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertEqual(self.g.trash_size(), tsize)
         self.assertEqual(self.victim.discardpile.size(), 2)
 
 
