@@ -1737,7 +1737,7 @@ class Player:
     ###########################################################################
     def coststr(self, card):
         cost = []
-        cost.append("{self.card_cost(card)} Coins")
+        cost.append(f"{self.card_cost(card)} Coins")
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")
         if card.potcost:
