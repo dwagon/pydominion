@@ -22,7 +22,7 @@ class EventPile:
 
     ###########################################################################
     def __repr__(self):
-        return "Event %s" % self.name
+        return f"Event {self.name}"
 
 
 # EOF
