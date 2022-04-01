@@ -25,12 +25,12 @@ class Test_PlayArea(unittest.TestCase):
         card_b = Card.Card()
         s = PlayArea.PlayArea([card_a])
         s.add(card_b)
-        self.assertEqual(s.cards, [card_a, card_b])
+        self.assertEqual(s._cards, [card_a, card_b])
 
     def test_remove(self):
         s = PlayArea.PlayArea(["a", "b"])
         s.remove("b")
-        self.assertEqual(s.cards, ["a"])
+        self.assertEqual(s._cards, ["a"])
 
     def test_len(self):
         s = PlayArea.PlayArea(["a", "b"])

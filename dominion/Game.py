@@ -210,7 +210,7 @@ class Game:  # pylint: disable=too-many-public-methods
         count = {}
         count["trash"] = self.trashSize()
         for cpile in list(self.cardpiles.values()):
-            count["pile_%s" % cpile.name] = cpile.pilesize
+            count["pile_%s" % cpile.name] = len(cpile)
         for pl in self.player_list():
             count["player_%s" % pl.name] = pl._count_cards()
         total = sum(count.values())
@@ -515,7 +515,7 @@ class Game:  # pylint: disable=too-many-public-methods
             if self.cardpiles[card].isLooter() and "Ruins" not in self.cardpiles:
                 nc = self.numplayers * 10
                 self.cardpiles["Ruins"] = RuinCardPile(
-                    self.cardmapping["RuinCard"], pilesize=nc
+                    game=self, pile_size=nc
                 )
                 self.output("Playing with Ruins")
             if self.cardpiles[card].isFate() and not self.boons:
@@ -556,9 +556,7 @@ class Game:  # pylint: disable=too-many-public-methods
             "Card",
             "BaseCard",
             "Traveller",
-            "RuinCard",
             "PrizeCard",
-            "KnightCard",
             "Castle",
             "Heirloom",
         ):
@@ -571,9 +569,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 "Card",
                 "BaseCard",
                 "Traveller",
-                "RuinCard",
                 "PrizeCard",
-                "KnightCard",
                 "Castle",
                 "Heirloom",
             ):
@@ -608,7 +604,12 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def getSetCardClasses(self, prefix, path, defdir, class_prefix):
         """Import all the modules to determine the real name of the card
-        This is slow, but it is the only way that I can think of"""
+        This is slow, but it is the only way that I can think of
+
+        Look in {path} for files starting with {prefix},
+        but also failback to look in {defdir}
+
+        """
         mapping = {}
         files = glob.glob("%s/%s_*.py" % (path, prefix))
         for fname in [os.path.basename(_) for _ in files]:
@@ -738,7 +739,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
             print(
                 "CardPile %s: %d cards %s"
-                % (cpile, self.cardpiles[cpile].pilesize, tokens)
+                % (cpile, len(self.cardpiles[cpile]), tokens)
             )
         for plr in self.player_list():
             print(
@@ -827,7 +828,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def count_all_cards(self):  # pragma: no cover
         """TODO"""
         for pile in self.cardpiles.values():
-            total = pile.pilesize
+            total = len(pile)
             sys.stderr.write("%-15s  " % pile.name)
             if total:
                 sys.stderr.write("pile=%d " % total)

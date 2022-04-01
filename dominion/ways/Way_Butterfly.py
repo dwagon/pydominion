@@ -41,7 +41,7 @@ class Test_Butterfly(unittest.TestCase):
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.in_discard("Witch"))
-        self.assertEqual(self.g["Moat"].stack_size(), 10)
+        self.assertEqual(len(self.g["Moat"]), 10)
 
 
 ###############################################################################

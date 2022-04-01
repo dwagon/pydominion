@@ -13,7 +13,7 @@ class Card_Knight(Card.Card):
         self.base = Game.DARKAGES
 
     def setup(self, game):
-        game.cardpiles["Knight"] = KnightCardPile(game.cardmapping["KnightCard"])
+        game.cardpiles["Knight"] = KnightCardPile(game)
 
 
 ###############################################################################
@@ -23,34 +23,30 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
-    def __init__(self, mapping, pilesize=10):
-        self.pilesize = pilesize
-        self.embargo_level = 0
-        knighttypes = mapping
+    def __init__(self, game):
+        self.mapping = game.getSetCardClasses(
+            "KnightCard", game.cardpath, "dominion/cards", "Card_"
+        )
+        super().__init__(
+            cardname="Knight",
+            klass=None,
+            game=game,
+        )
 
-        self.knights = [c() for c in knighttypes.values()]
-        random.shuffle(self.knights)
+    def __getattr__(self, name):
+        return getattr(self._cards[0], name)
 
-    def __getattr__(self, key):
-        try:
-            if key == "card":
-                return self.knights[-1]
-            return getattr(self.knights[-1], key)
-        except IndexError:
-            return None
-
-    def remove(self):
-        if self.pilesize:
-            self.pilesize -= 1
-            return self.knights.pop()
-        return None
-
-    def __repr__(self):
-        return f"KnightCardPile {self.name}: {self.pilesize}"
+    def init_cards(self):
+        self._cards = [_() for _ in self.mapping.values()]
+        random.shuffle(self._cards)
 
 
 ###############################################################################
 class KnightCard(Card.Card):
+    def __init__(self):
+        self.name = "Undef Knight"
+        super().__init__()
+
     def knight_special(self, game, player):
         """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6 and discards the

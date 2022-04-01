@@ -1,19 +1,32 @@
 ###############################################################################
 class CardPile:
-    def __init__(self, cardname, klass, game, cardpath="cards"):
-        self.cardpath = cardpath
+    def __init__(self, cardname, klass, game, pile_size=10):
         self.cardname = cardname
         self.cardclass = klass
-        self.card = klass()
+        self.pile_size = pile_size
+        self.game = game
+        self._cards = []
         self.embargo_level = 0
-        if hasattr(self.card, "calc_numcards"):
-            self.pilesize = self.card.calc_numcards(game)
-        else:
-            self.pilesize = self.card.numcards
+        self.card = None
+        if klass:
+            self.card = klass()   # Non-playable instance to access card attributes
+        self.init_cards()
 
     ###########################################################################
-    def stack_size(self):
-        return self.pilesize
+    def init_cards(self):
+        """ Create the cards in the pile - overwrite for funky piles """
+        for _ in range(self.pile_size):
+            self._cards.append(self.cardclass())
+
+    ###########################################################################
+    def add_to_pile(self, num):
+        # Extend the pile
+        for _ in range(num):
+            self._cards.append(self.cardclass())
+
+    ###########################################################################
+    def __len__(self):
+        return len(self._cards)
 
     ###########################################################################
     def __bool__(self):
@@ -25,30 +38,31 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, a):
-        return self.card.name < a.card.name
+        return self._cards[0].name < a.card.name
 
     ###########################################################################
     def __getattr__(self, name):
-        return getattr(self.card, name)
+        # print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
+        return getattr(self._cards[0], name)
 
     ###########################################################################
     def is_empty(self):
-        return self.pilesize == 0
+        return self._cards == []
 
     ###########################################################################
     def remove(self):
-        if self.pilesize:
-            self.pilesize -= 1
-            return self.cardclass()
-        return None
+        try:
+            return self._cards.pop()
+        except IndexError:
+            return None
 
     ###########################################################################
-    def add(self):
-        self.pilesize += 1
+    def add(self, card):
+        self._cards.insert(0, card)
 
     ###########################################################################
     def __repr__(self):
-        return "CardPile %s: %d" % (self.name, self.pilesize)
+        return "CardPile %s: %d" % (self.name, len(self._cards))
 
 
 # EOF

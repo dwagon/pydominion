@@ -14,36 +14,21 @@ class Card_Castles(Card.Card):
         self.base = Game.EMPIRES
 
     def setup(self, game):
-        game.cardpiles["Castles"] = CastleCardPile(game.cardmapping["Castle"])
+        game.cardpiles["Castles"] = CastleCardPile(game)
 
 
 ###############################################################################
 class CastleCardPile(CardPile.CardPile):
-    def __init__(self, mapping, numcards=10):
-        self.pilesize = numcards
-        self.embargo_level = 0
-        castletypes = mapping
-
-        self.castles = sorted(
-            [c() for c in castletypes.values()], key=lambda x: x.cost, reverse=True
+    def __init__(self, game, pile_size=10):
+        self.mapping = game.getSetCardClasses(
+            "Castle", game.cardpath, "dominions/cards", "Card_"
         )
+        super().__init__(cardname="Castles", klass=None, game=game, pile_size=pile_size)
 
-    def __getattr__(self, key):
-        try:
-            if key == "card":
-                return self.castles[-1]
-            return getattr(self.castles[-1], key)
-        except IndexError:
-            return None
-
-    def remove(self):
-        if self.castles:
-            self.pilesize -= 1
-            return self.castles.pop()
-        return None
-
-    def __repr__(self):
-        return "CastleCardPile %s: %d" % (self.name, self.pilesize)
+    def init_cards(self):
+        self._cards = sorted(
+            [_() for _ in self.mapping.values()], key=lambda x: x.cost, reverse=True
+        )
 
 
 ###############################################################################

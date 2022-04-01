@@ -69,6 +69,7 @@ class Test_SprawlingCastle(unittest.TestCase):
         self.plr.gain_card("Castles")
         self.assertIsNone(self.plr.in_discard("Duchy"))
         self.assertIsNotNone(self.plr.in_discard("Estate"))
+        self.g.print_state()
         self.assertEqual(self.plr.discardpile.size(), 3 + 1)
 
 
