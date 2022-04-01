@@ -50,7 +50,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
 
     def test_play(self):
         """Play a Jack of all Trades"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
         self.plr.set_hand("Duchy")
         self.plr.test_input = ["keep", "duchy"]
@@ -62,7 +62,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand("Gold"))  # Keep on deck, then picked up
 
         self.assertEqual(self.plr.hand.size(), 5 - 1)  # One trashed
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
 
 

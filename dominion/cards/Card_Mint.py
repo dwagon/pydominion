@@ -59,12 +59,12 @@ class Test_Mint(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_buy(self):
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.coin = 5
         self.plr.set_hand("Gold", "Estate")
         self.plr.set_played("Copper", "Silver", "Estate", "Moat")
         self.plr.buy_card(self.g["Mint"])
-        self.assertEqual(self.g.trashSize(), tsize + 2)
+        self.assertEqual(self.g.trash_size(), tsize + 2)
         self.assertIsNotNone(self.g.in_trash("Copper"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
         self.assertIsNone(self.g.in_trash("Gold"))

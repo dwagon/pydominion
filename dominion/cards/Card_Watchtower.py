@@ -67,13 +67,13 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_trash(self):
         """React to gaining a card - discard card"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         try:
             self.plr.test_input = ["trash"]
             self.plr.set_hand("Gold")
             self.plr.add_card(self.card, "hand")
             self.plr.gain_card("Copper")
-            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, "Copper")
             self.assertEqual(self.plr.hand.size(), 2)
             self.assertEqual(self.plr.in_hand("Copper"), None)
@@ -83,13 +83,13 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_topdeck(self):
         """React to gaining a card - put card on deck"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.test_input = ["top"]
         self.plr.set_hand("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.gain_card("Silver")
         try:
-            self.assertEqual(self.g.trashSize(), tsize)
+            self.assertEqual(self.g.trash_size(), tsize)
             self.assertEqual(self.plr.hand.size(), 2)
             self.assertEqual(self.plr.in_hand("Silver"), None)
             c = self.plr.next_card()

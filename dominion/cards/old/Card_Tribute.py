@@ -19,7 +19,7 @@ class Card_Tribute(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        victim = game.playerToLeft(player)
+        victim = game.player_to_left(player)
         cards = []
         for _ in range(2):
             card = victim.next_card()

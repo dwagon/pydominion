@@ -1,3 +1,4 @@
+""" The master class for all cards """
 # pylint: disable=no-member
 
 TYPE_ACTION = "action"
@@ -35,6 +36,8 @@ TYPE_ZOMBIE = "zombie"
 ##############################################################################
 ##############################################################################
 class Card:
+    """Card class"""
+
     def __init__(self):
         self.basecard = False
         self.cost = -1
@@ -74,29 +77,23 @@ class Card:
         Some of these checks are caused by inconsistent naming standards
         """
         if not hasattr(self, "base"):
-            raise NotImplementedError("{} has no base".format(self.__class__.__name__))
+            raise NotImplementedError(f"{self.__class__.__name__} has no base")
         if not hasattr(self, "name"):
-            raise NotImplementedError("{} has no name".format(self.__class__.__name__))
+            raise NotImplementedError(f"{self.__class__.__name__} has no name")
         if hasattr(self, "coins"):
-            raise NotImplementedError(
-                "{} has coins not coin".format(self.__class__.__name__)
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has coins not coin")
         if hasattr(self, "action"):
             raise NotImplementedError(
-                "{} has action not actions".format(self.__class__.__name__)
+                f"{self.__class__.__name__} has action not actions"
             )
         if hasattr(self, "potions"):
             raise NotImplementedError(
-                "{} has potions not potion".format(self.__class__.__name__)
+                f"{self.__class__.__name__} has potions not potion"
             )
         if hasattr(self, "card"):
-            raise NotImplementedError(
-                "{} has card not cards".format(self.__class__.__name__)
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has card not cards")
         if hasattr(self, "buy"):
-            raise NotImplementedError(
-                "{} has buy not buys".format(self.__class__.__name__)
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has buy not buys")
 
     ##########################################################################
     def get_cardtype_repr(self):
@@ -136,28 +133,29 @@ class Card:
 
     ##########################################################################
     def special(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def night(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def duration(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def setup(self, game):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def has_defense(self):
+        """Hook - overwritten in subclasses"""
         return self.defense
 
     ##########################################################################
     def isLiaison(self):
-        """ Is this card a Liaison
-        http://wiki.dominionstrategy.com/index.php/Liaison """
+        """Is this card a Liaison
+        http://wiki.dominionstrategy.com/index.php/Liaison"""
         if TYPE_LIAISON in self.cardtype:
             return True
         return False
@@ -277,105 +275,113 @@ class Card:
 
     ##########################################################################
     def special_score(self, game, player):
+        """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover
 
     ##########################################################################
     def hook_cleanup(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_all_players_pre_action(self, game, player, owner, card):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_all_players_buy_card(self, game, player, owner, card):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_buy_card(self, game, player, card):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_buy_this_card(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_call_reserve(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_allowed_to_buy(self, game, player):
+        """Hook - overwritten in subclasses"""
         return True  # pragma: no cover
 
     ##########################################################################
     def hook_allplayers_gain_card(self, game, player, owner, card):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_card(self, game, player, card):
+        """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
     ##########################################################################
     def hook_card_cost(self, game, player, card):
+        """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
     def hook_this_card_cost(self, game, player):
+        """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
     def hook_coinvalue(self, game, player):
+        """Hook - overwritten in subclasses"""
         """How much coin does this card contribute"""
         return self.coin  # pragma: no cover
 
     ##########################################################################
     def hook_spend_value(self, game, player, card):
+        """Hook - overwritten in subclasses"""
         """Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 
     ##########################################################################
     def hook_underAttack(self, game, player, attacker):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_discard_this_card(self, game, player, source):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_trashThisCard(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_trash_card(self, game, player, card):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_gain_this_card(self, game, player):
+        """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
     ##########################################################################
     def hook_end_turn(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_end_of_game(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_pre_buy(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_end_buy_phase(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_start_turn(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
     ##########################################################################
     def hook_revealThisCard(self, game, player):
-        pass  # pragma: no cover
+        """Hook - overwritten in subclasses"""
 
 
 # EOF

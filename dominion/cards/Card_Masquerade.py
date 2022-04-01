@@ -22,14 +22,14 @@ class Card_Masquerade(Card.Card):
         for plr in game.player_list():
             xfer[plr] = self.pickCardToXfer(plr, game)
         for plr in list(xfer.keys()):
-            newplr = game.playerToLeft(plr)
+            newplr = game.player_to_left(plr)
             newcrd = xfer[plr]
             newplr.output(f"You gained a {newcrd.name} from {plr.name}")
             newplr.add_card(newcrd, "hand")
         player.plr_trash_card()
 
     def pickCardToXfer(self, plr, game):
-        leftplr = game.playerToLeft(plr).name
+        leftplr = game.player_to_left(plr).name
         cards = plr.card_sel(
             prompt=f"Which card to give to {leftplr}?", num=1, force=True
         )
@@ -55,7 +55,7 @@ class Test_Masquerade(unittest.TestCase):
 
     def test_play(self):
         """Play a masquerade"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.set_deck("Estate", "Duchy", "Province")
@@ -66,11 +66,11 @@ class Test_Masquerade(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.plr.in_hand("Gold"))
         self.assertTrue(self.other.in_hand("Silver"))
-        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertEqual(self.g.trash_size(), tsize)
 
     def test_play_with_trash(self):
         """Play a masquerade and trash after"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.other.set_hand("Copper", "Silver", "Gold")
         self.plr.set_hand("Copper", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
@@ -78,7 +78,7 @@ class Test_Masquerade(unittest.TestCase):
         self.other.test_input = ["select gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 - 1)
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
 
 
 ###############################################################################

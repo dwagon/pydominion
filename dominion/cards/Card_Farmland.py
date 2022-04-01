@@ -38,11 +38,11 @@ class Test_Farmland(unittest.TestCase):
     def test_gain(self):
         """Gain a farmland"""
         try:
-            tsize = self.g.trashSize()
+            tsize = self.g.trash_size()
             self.plr.set_hand("Estate", "Duchy")
             self.plr.test_input = ["Trash Estate", "Get Militia"]
             self.plr.gain_card("Farmland")
-            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertEqual(self.plr.hand.size(), 1)
             # 1 for farmland, 1 for gained card
             self.assertEqual(self.plr.discardpile.size(), 2)

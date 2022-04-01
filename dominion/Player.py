@@ -255,7 +255,7 @@ class Player:
 
     ###########################################################################
     def reveal_card(self, card):
-        self.game.output("{} reveals {}".format(self.name, card.name))
+        self.game.output(f"{self.name} reveals {card.name}")
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
@@ -542,7 +542,7 @@ class Player:
             )
             notes = ""
             for tkn in self.which_token(p.name):
-                notes += "[Tkn: %s]" % tkn
+                notes += f"[Tkn: {tkn}]"
             o["notes"] = notes
             options.append(o)
             index += 1
@@ -588,8 +588,8 @@ class Player:
         spendable = [c for c in self.hand if c.isTreasure()]
         totcoin = sum([self.hook_spend_value(c) for c in spendable])
         numpots = sum([1 for c in spendable if c.name == "Potion"])
-        potstr = ", %d potions" % numpots if numpots else ""
-        details = "%d coin%s" % (totcoin, potstr)
+        potstr = f", {numpots} potions" if numpots else ""
+        details = f"{totcoin} coin{potstr}"
         if spendable:
             o = Option(
                 selector="1",
@@ -612,7 +612,7 @@ class Player:
 
         index = 4
         for s in spendable:
-            tp = "%d coin; %s" % (self.hook_spend_value(s), s.get_cardtype_repr())
+            tp = f"{self.hook_spend_value(s)} coin; {s.get_cardtype_repr()}"
             o = Option(
                 selector=str(index),
                 name=s.name,
@@ -695,7 +695,7 @@ class Player:
             else:
                 sel = "-"
                 action = None
-            details = "Project; %s" % self.coststr(op)
+            details = f"Project; {self.coststr(op)}"
             o = Option(
                 selector=sel,
                 verb="Buy",
@@ -720,7 +720,7 @@ class Player:
             else:
                 sel = "-"
                 action = None
-            details = "Event; %s" % self.coststr(op)
+            details = f"Event; {self.coststr(op)}"
             o = Option(
                 selector=sel,
                 verb="Use",
@@ -770,13 +770,13 @@ class Player:
                 action = None
             details = [self.coststr(card)]
             if card.embargo_level:
-                details.append("Embargo %d" % card.embargo_level)
+                details.append(f"Embargo {card.embargo_level}")
             if card.getVP():
-                details.append("Gathered %d VP" % card.getVP())
+                details.append(f"Gathered {card.getVP()} VP")
             details.append(card.get_cardtype_repr())
             details.append(f"{len(card)} left")
             for tkn in self.which_token(card.name):
-                details.append("[Tkn: %s]" % tkn)
+                details.append(f"[Tkn: {tkn}]")
             o = Option(
                 selector=sel,
                 verb=verb,
@@ -823,28 +823,28 @@ class Player:
         op, index = self._landmark_selection(index)
         options.extend(op)
 
-        status = "Actions=%d Buys=%d" % (self.actions, self.buys)
+        status = f"Actions={self.actions} Buys={self.buys}"
         if self.coin:
-            status += " Coins=%d" % self.coin
+            status += f" Coins={self.coin}"
         if self.debt:
-            status += " Debt=%s" % self.debt
+            status += f" Debt={self.debt}"
         if self.potions:
             status += " Potion"
         if self.favors:
-            status += " Favours=%s" % self.favors
+            status += f" Favours={self.favors}"
         if self.coffer:
-            status += " Coffer=%d" % self.coffer
+            status += f" Coffer={self.coffer}"
         if self.villager:
-            status += " Villager=%d" % self.villager
-        prompt = "What to do (%s)?" % status
+            status += f" Villager={self.villager}"
+        prompt = f"What to do ({status})?"
         return options, prompt
 
     ###########################################################################
     def turn(self):
         self.turn_number += 1
-        self.output("%s Turn %d %s" % ("#" * 20, self.turn_number, "#" * 20))
-        stats = "(%d points, %d cards)" % (self.get_score(), self._count_cards())
-        self.output("%s's Turn %s" % (self.name, stats))
+        self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
+        stats = "({self.get_score()} points, {self._count_cards()} cards)"
+        self.output(f"{self.name}'s Turn {stats}")
         self.action_phase()
         self.buy_phase()
         self.night_phase()
@@ -917,10 +917,10 @@ class Player:
 
     ###########################################################################
     def payback(self):
-        pb = min(self.coin, self.debt)
-        self.output("Paying back %d debt" % pb)
-        self.coin -= pb
-        self.debt -= pb
+        payback = min(self.coin, self.debt)
+        self.output("Paying back {payback}%d debt")
+        self.coin -= payback
+        self.debt -= payback
 
     ###########################################################################
     def _perform_action(self, opt):
@@ -949,7 +949,7 @@ class Player:
         elif opt["action"] == "way":
             self.perform_way(opt["way"], opt["card"])
         else:  # pragma: no cover
-            sys.stderr.write("ERROR: Unhandled action %s" % opt["action"])
+            print("ERROR: Unhandled action {opt['action']}", file=sys.stderr)
             sys.exit(1)
         self.misc["is_start"] = False
 
@@ -959,7 +959,7 @@ class Player:
         tknoutput = []
         for tkn in self.tokens:
             if self.tokens[tkn]:
-                tknoutput.append("%s: %s" % (tkn, self.tokens[tkn]))
+                tknoutput.append("{tkn}: {self.tokens[tkn]}")
         if self.card_token:
             tknoutput.append("-1 Card")
         if self.coin_token:
@@ -968,16 +968,16 @@ class Player:
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
-        self.output("| Phase: %s" % self.phase)
-        self.output("| Tokens: %s" % "; ".join(tknoutput))
+        self.output(f"| Phase: {self.phase}")
+        self.output(f"| Tokens: {'; '.join(tknoutput)}")
         if self.deferpile:
-            self.output("| Defer: %s" % ", ".join([c.name for c in self.deferpile]))
+            self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
             self.output(
                 "| Duration: %s" % ", ".join([c.name for c in self.durationpile])
             )
         if self.projects:
-            self.output("| Project: %s" % ", ".join([p.name for p in self.projects]))
+            self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.reserve:
             self.output("| Reserve: %s" % ", ".join([c.name for c in self.reserve]))
         if self.hand:
@@ -985,7 +985,7 @@ class Player:
         else:
             self.output("| Hand: <EMPTY>")
         if self.artifacts:
-            self.output("| Artifacts: %s" % ", ".join([c.name for c in self.artifacts]))
+            self.output(f"| Artifacts: {', '.join([_.name for _ in self.artifacts])}")
         if self.exilepile:
             self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
         if self.played:
@@ -1002,7 +1002,7 @@ class Player:
             "| Discard: %s" % ", ".join([c.name for c in self.discardpile])
         )  # Debug
         self.output(
-            "| Trash: %s" % ", ".join([_.name for _ in self.game.trashpile])
+            f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}"
         )  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
@@ -1045,7 +1045,7 @@ class Player:
         scr = self.get_score_details(verbose)
         vp = sum(scr.values())
         if verbose:
-            self.game.output("%s: %s" % (self.name, scr))
+            self.game.output("{self.name}: {scr}")
         return vp
 
     ###########################################################################
@@ -1413,7 +1413,7 @@ class Player:
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(newcard)
-        self.output("Bought %s for %d coin" % (newcard.name, cost))
+        self.output(f"Bought {newcard.name} for {cost} coin")
         if "Trashing" in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plr_trash_card()
@@ -1577,7 +1577,7 @@ class Player:
 
     ###########################################################################
     def __str__(self):
-        return "<Player %s>" % self.name
+        return f"<Player {self.name}>"
 
     ###########################################################################
     def buy_project(self, project):
@@ -1589,7 +1589,7 @@ class Player:
             self.output("Must pay off debt first")
             return False
         if self.coin < project.cost:
-            self.output("Need %d coins to buy this project" % project.cost)
+            self.output(f"Need {project.cost} coins to buy this project")
             return False
         self.buys -= 1
         self.coin -= project.cost
@@ -1740,9 +1740,9 @@ class Player:
     ###########################################################################
     def coststr(self, card):
         cost = []
-        cost.append("%d Coins" % self.card_cost(card))
+        cost.append(f"{self.card_cost(card)} Coins")
         if card.debtcost:
-            cost.append("%d Debt" % card.debtcost)
+            cost.append(f"{card.debtcost} Debt")
         if card.potcost:
             cost.append("Potion")
         if card.overpay:
@@ -1757,7 +1757,7 @@ class Player:
             if anynum:
                 kwargs["prompt"] = "Trash any cards"
             else:
-                kwargs["prompt"] = "Trash %d cards" % num
+                kwargs["prompt"] = f"Trash {num} cards"
         if len(cardsrc) == 0:
             return None
         trash = self.card_sel(
@@ -1793,11 +1793,11 @@ class Player:
         types = self._type_selector(types)
         if modifier == "less":
             if cost:
-                prompt += "costing up to %d" % cost
+                prompt += f"costing up to {cost}"
             buyable = self.cards_under(cost, types=types)
         elif modifier == "equal":
             if cost:
-                prompt += "costing exactly %d" % cost
+                prompt += f"costing exactly {cost}"
             buyable = self.cards_worth(cost, types=types)
         buyable = [_ for _ in buyable if _.purchasable]
         buyable = [_ for _ in buyable if not _.debtcost]
@@ -1814,7 +1814,7 @@ class Player:
         if cards:
             cardpile = cards[0]
             newcard = recipient.gain_card(cardpile, destination)
-            recipient.output("Got a %s" % newcard.name)
+            recipient.output(f"Got a {newcard.name}")
             return newcard
         return None
 
@@ -1895,12 +1895,12 @@ class Player:
             if anynum:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
-                kwargs["prompt"] = "Discard %d cards" % num
+                kwargs["prompt"] = f"Discard {num} cards"
         discard = self.card_sel(
             num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs
         )
         for c in discard:
-            self.output("Discarding %s" % c.name)
+            self.output(f"Discarding {c.name}")
             self.discard_card(c)
         return discard
 

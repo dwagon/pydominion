@@ -1,3 +1,4 @@
+""" Player is a non-interactive bot of dubious intelligence - big money strategy """
 import inspect
 import sys
 import colorama
@@ -11,46 +12,46 @@ if sys.version[0] == "3":  # pragma: no cover
 ###############################################################################
 ###############################################################################
 class BotPlayer(Player):
+    """The Bot"""
+
     def __init__(self, game, name="", quiet=False, **kwargs):
         colorama.init()
-        self.colour = "%s%s" % (colorama.Back.BLACK, colorama.Fore.RED)
+        self.colour = f"{colorama.Back.BLACK}{colorama.Fore.RED}"
         self.quiet = quiet
         Player.__init__(self, game, name, **kwargs)
 
     ###########################################################################
     def output(self, msg, end="\n"):
         if not self.quiet:
-            sys.stdout.write(
-                "%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL)
-            )
-            sys.stdout.write("%s%s" % (msg, end))
+            sys.stdout.write(f"{self.colour}{self.name}{colorama.Style.RESET_ALL}: ")
+            sys.stdout.write(f"{msg}{end}")
         self.messages.append(msg)
 
     ###########################################################################
     def getOptions(self, options):
         try:
             opts = {}
-            for o in options:
-                if o["action"] == "buy" and o["card"].name == "Colony":
-                    opts["colony"] = o
-                if o["action"] == "buy" and o["card"].name == "Province":
-                    opts["province"] = o
-                if o["action"] == "buy" and o["card"].name == "Platinum":
-                    opts["platinum"] = o
-                if o["action"] == "buy" and o["card"].name == "Gold":
-                    opts["gold"] = o
-                if o["action"] == "buy" and o["card"].name == "Duchy":
-                    opts["duchy"] = o
-                if o["action"] == "buy" and o["card"].name == "Silver":
-                    opts["silver"] = o
-                if o["action"] == "quit":
-                    opts["quit"] = o
-                if o["action"] == "spendall":
-                    opts["spendall"] = o
+            for opt in options:
+                if opt["action"] == "buy" and opt["card"].name == "Colony":
+                    opts["colony"] = opt
+                if opt["action"] == "buy" and opt["card"].name == "Province":
+                    opts["province"] = opt
+                if opt["action"] == "buy" and opt["card"].name == "Platinum":
+                    opts["platinum"] = opt
+                if opt["action"] == "buy" and opt["card"].name == "Gold":
+                    opts["gold"] = opt
+                if opt["action"] == "buy" and opt["card"].name == "Duchy":
+                    opts["duchy"] = opt
+                if opt["action"] == "buy" and opt["card"].name == "Silver":
+                    opts["silver"] = opt
+                if opt["action"] == "quit":
+                    opts["quit"] = opt
+                if opt["action"] == "spendall":
+                    opts["spendall"] = opt
             return opts
         except KeyError as exc:  # pragma: no cover
-            print("Options=%s" % options)
-            print("Exception: %s" % str(exc))
+            print(f"Options={options}")
+            print(f"Exception: {str(exc)}")
             raise
 
     ###########################################################################
@@ -61,7 +62,7 @@ class BotPlayer(Player):
         if self.get_buys() == 0:
             return opts["quit"]
         coin = self.get_coins()
-        self.output("Have %d coins" % coin)
+        self.output(f"Have {coin} coins")
         if coin >= 11 and "colony" in opts:
             return opts["colony"]
         if coin >= 9 and "platinum" in opts:
@@ -80,11 +81,11 @@ class BotPlayer(Player):
     def getCallingCard(self):
         """Get the module that represents the card doing requiring the response"""
         stack = inspect.stack()
-        for st in stack:
-            mod = inspect.getmodule(st[0])
-            mod_name = mod.__name__.replace('dominion.', '')
+        for rec in stack:
+            mod = inspect.getmodule(rec[0])
+            mod_name = mod.__name__.replace("dominion.", "")
             if mod_name not in ("BotPlayer", "Player", "__main__"):
-                mod = inspect.getmodule(st[0])
+                mod = inspect.getmodule(rec[0])
                 return mod
         return None
 
@@ -93,7 +94,7 @@ class BotPlayer(Player):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)
-        assert False, "BigMoneyBot can't select cards from %s" % mod.__name__
+        assert False, f"BigMoneyBot can't select cards from {mod.__name__}"
         return None
 
     ###########################################################################
@@ -101,7 +102,7 @@ class BotPlayer(Player):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)
-        assert False, "BigMoneyBot can't choopse options from %s" % mod.__name__
+        assert False, f"BigMoneyBot can't choopse options from {mod.__name__}"
         return None
 
     ###########################################################################
@@ -131,11 +132,10 @@ class BotPlayer(Player):
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
         sys.stderr.write(
-            "Couldn't find cards to discard %d from %s\n"
-            % (numtodiscard, ", ".join([c.name for c in self.hand]))
+            f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}"
         )
         sys.stderr.write(
-            "Managed to get %s so far\n" % (", ".join([c.name for c in todiscard]))
+            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
         )
 
 

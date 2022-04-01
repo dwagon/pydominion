@@ -60,10 +60,10 @@ class Test_Feast(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_dontTrash(self):
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.test_input = ["keep this"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertEqual(self.g.trash_size(), tsize)
         try:
             self.assertEqual(self.plr.played[0].name, "Feast")
         except AssertionError:  # pragma: no cover
@@ -71,11 +71,11 @@ class Test_Feast(unittest.TestCase):
             raise
 
     def test_trashForNothing(self):
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         try:
             self.plr.test_input = ["trash", "nothing"]
             self.plr.play_card(self.card)
-            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))
             self.assertTrue(self.plr.played.is_empty())
         except AssertionError:  # pragma: no cover
@@ -83,11 +83,11 @@ class Test_Feast(unittest.TestCase):
             raise
 
     def test_trashForSomething(self):
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.test_input = ["trash", "Get Duchy"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.g.trashSize(), tsize + 1)
+            self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertIsNotNone(self.g.in_trash("Feast"))
             self.assertTrue(self.plr.played.is_empty())
             self.assertEqual(self.plr.discardpile.size(), 1)

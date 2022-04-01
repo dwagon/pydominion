@@ -38,24 +38,24 @@ class Test_Upgrade(unittest.TestCase):
 
     def test_play(self):
         """Play the Upgrade"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.g.trashSize(), tsize)
+        self.assertEqual(self.g.trash_size(), tsize)
 
     def test_trash(self):
         """Trash an upgrade"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.set_hand("Duchy", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.in_discard("Gold"))

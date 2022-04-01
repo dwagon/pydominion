@@ -279,12 +279,12 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand("Copper"))
 
     def test_Trash(self):
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.set_hand("Gold")
         self.plr.test_input = ["1"]
         x = self.plr.plr_trash_card()
         self.assertEqual(x[0].name, "Gold")
-        self.assertEqual(self.g.trashSize(), tsize + 1)
+        self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIn("Gold", [_.name for _ in self.g.trashpile])
 
     def test_Force(self):
