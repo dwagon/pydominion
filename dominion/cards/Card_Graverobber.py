@@ -79,7 +79,7 @@ class Test_Graverobber(unittest.TestCase):
         self.g.set_trash("Militia")
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), 0)
+        self.assertEqual(self.g.trash_size(), 0)
         self.assertIsNotNone(self.plr.in_deck("Militia"))
 
     def test_loot_empty(self):
@@ -87,7 +87,7 @@ class Test_Graverobber(unittest.TestCase):
         self.g.set_trash("Copper")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashSize(), 1)
+        self.assertEqual(self.g.trash_size(), 1)
 
 
 ###############################################################################

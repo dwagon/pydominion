@@ -44,7 +44,7 @@ class Test_Forge(unittest.TestCase):
 
     def test_play(self):
         """Play the Forge"""
-        tsize = self.g.trashSize()
+        tsize = self.g.trash_size()
         self.plr.set_hand("Estate", "Estate", "Estate")
         self.plr.add_card(self.forge, "hand")
         # Trash two cards, Finish Trashing, Select another
@@ -52,7 +52,7 @@ class Test_Forge(unittest.TestCase):
         self.plr.play_card(self.forge)
         self.assertEqual(self.plr.discardpile[0].cost, 4)
         self.assertIsNotNone(self.g.in_trash("Estate"))
-        self.assertEqual(self.g.trashSize(), tsize + 2)
+        self.assertEqual(self.g.trash_size(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 1)
 
 
