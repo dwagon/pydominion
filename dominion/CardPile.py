@@ -42,12 +42,15 @@ class CardPile:
 
     ###########################################################################
     def __getattr__(self, name):
-        # print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
-        return getattr(self._cards[0], name)
+        try:
+            return getattr(self._cards[0], name)
+        except RecursionError:
+            print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
+            raise
 
     ###########################################################################
     def is_empty(self):
-        return self._cards == []
+        return not self._cards
 
     ###########################################################################
     def remove(self):
@@ -62,7 +65,7 @@ class CardPile:
 
     ###########################################################################
     def __repr__(self):
-        return "CardPile %s: %d" % (self.name, len(self._cards))
+        return f"CardPile {self.name}: {len(self._cards)}"
 
 
 # EOF

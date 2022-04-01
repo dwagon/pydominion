@@ -135,11 +135,11 @@ class Game:  # pylint: disable=too-many-public-methods
         self.loadLandmarks()
         self.loadArtifacts()
         self.loadProjects()
-        heirlooms = self.enable_heirlooms()
+        heirlooms = self._enable_heirlooms()
 
         if self.hexes or self.boons:
             self.loadStates()
-        self.checkCardRequirements()
+        self._check_card_requirements()
 
         for plrnum in range(self.numplayers):
             try:
@@ -435,15 +435,13 @@ class Game:  # pylint: disable=too-many-public-methods
                 continue
             unfilled -= self.useCardPile(available, crd)
 
-        self.checkCardRequirements()
+        self._check_card_requirements()
 
     ###########################################################################
     def addPrizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self.cardpiles[prize] = PrizeCardPile(
-                prize, self.cardmapping["PrizeCard"][prize]
-            )
+            self.cardpiles[prize] = PrizeCardPile(self, 0)
         self.output("Playing with Prizes")
 
     ###########################################################################
@@ -469,7 +467,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return 1
 
     ###########################################################################
-    def enable_heirlooms(self):
+    def _enable_heirlooms(self):
         """Go through the cardpiles and see if any require heirloom cards
         to be brought into the game"""
         heirlooms = set()
@@ -484,7 +482,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(heirlooms)
 
     ###########################################################################
-    def checkCardRequirements(self):
+    def _check_card_requirements(self):
         """TODO"""
         for card in (
             list(self.cardpiles.values())
@@ -514,9 +512,7 @@ class Game:  # pylint: disable=too-many-public-methods
         for card in list(self.cardpiles.keys()):
             if self.cardpiles[card].isLooter() and "Ruins" not in self.cardpiles:
                 nc = self.numplayers * 10
-                self.cardpiles["Ruins"] = RuinCardPile(
-                    game=self, pile_size=nc
-                )
+                self.cardpiles["Ruins"] = RuinCardPile(game=self, pile_size=nc)
                 self.output("Playing with Ruins")
             if self.cardpiles[card].isFate() and not self.boons:
                 self.loadBoons()
@@ -738,8 +734,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     tokens += "%s[%s]" % (plr.name, ",".join(tkns))
 
             print(
-                "CardPile %s: %d cards %s"
-                % (cpile, len(self.cardpiles[cpile]), tokens)
+                "CardPile %s: %d cards %s" % (cpile, len(self.cardpiles[cpile]), tokens)
             )
         for plr in self.player_list():
             print(
