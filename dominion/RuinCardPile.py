@@ -5,28 +5,19 @@ from dominion.CardPile import CardPile
 
 ###############################################################################
 class RuinCardPile(CardPile):
-    def __init__(self, mapping, pilesize=10):  # pylint: disable=super-init-not-called
-        self.pilesize = pilesize
-        ruintypes = mapping
+    def __init__(self, game, pile_size):
+        self.mapping = game.getSetCardClasses("RuinCard", game.cardpath, "cards", "Card_")
+        super().__init__(
+            cardname="Ruins",
+            klass=None,
+            game=game,
+            pile_size=pile_size
+        )
 
-        self.ruins = []
-        for _ in range(pilesize):
-            c = random.choice(list(ruintypes.keys()))
-            self.ruins.append(ruintypes[c]())
-
-    def __getattr__(self, key):
-        if key == "card":
-            return self.ruins[-1]
-        return getattr(self.ruins[-1], key)
-
-    def remove(self):
-        if self.pilesize:
-            self.pilesize -= 1
-            return self.ruins.pop()
-        return None
-
-    def __repr__(self):
-        return "RuinCardPile %s: %d" % (self.name, self.pilesize)
+    def init_cards(self):
+        for _ in range(self.pile_size):
+            c = random.choice(list(self.mapping.keys()))
+            self._cards.append(self.mapping[c]())
 
 
 # EOF

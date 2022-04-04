@@ -83,14 +83,18 @@ class Player:
         """
         if heirlooms is None:
             heirlooms = []
-        self.game["Copper"].pilesize += 7 - len(heirlooms)
+
+        self.game["Copper"].add_to_pile(7 - len(heirlooms))
         for _ in range(7 - len(heirlooms)):
             self.deck.add(self.game["Copper"].remove())
+
         for hl in heirlooms:
-            self.deck.add(self.game[hl].remove())
-        self.game["Estate"].pilesize += 3
+            self.deck.add(hl.remove())
+
+        self.game["Estate"].add_to_pile(3)
         for _ in range(3):
             self.deck.add(self.game["Estate"].remove())
+
         self.deck.shuffle()
 
     ###########################################################################
@@ -144,6 +148,7 @@ class Player:
 
     ###########################################################################
     def replace_card(self, src, dst, **kwargs):
+        """ Replace the {src} card with the {dst} card"""
         # New card goes into hand as it is about to be discarded
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
@@ -153,7 +158,7 @@ class Player:
         )
         if newcard:
             cardpile = self.game.cardpiles[src.name]
-            cardpile.add()
+            cardpile.add(src)
             self.played.remove(src)
 
     ###########################################################################
@@ -340,42 +345,43 @@ class Player:
 
     ###########################################################################
     def set_exile(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.exilepile.empty()
         for c in cards:
             self.exilepile.add(self.game[c].remove())
 
     ###########################################################################
     def set_reserve(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.reserve.empty()
         for c in cards:
             self.reserve.add(self.game[c].remove())
 
     ###########################################################################
     def set_played(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.played.empty()
         for c in cards:
             self.played.add(self.game[c].remove())
 
     ###########################################################################
     def set_discard(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.discardpile.empty()
         for c in cards:
             self.discardpile.add(self.game[c].remove())
 
     ###########################################################################
     def set_hand(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.hand.empty()
-        for c in cards:
-            self.hand.add(self.game[c].remove())
+        for cname in cards:
+            card = self.game[cname].remove()
+            self.hand.add(card)
 
     ###########################################################################
     def set_deck(self, *cards):
-        """This is mostly used for testing"""
+        """This is used for testing"""
         self.deck.empty()
         for c in cards:
             self.deck.add(self.game[c].remove())
@@ -772,7 +778,7 @@ class Player:
             if card.getVP():
                 details.append(f"Gathered {card.getVP()} VP")
             details.append(card.get_cardtype_repr())
-            details.append(f"{card.pilesize} left")
+            details.append(f"{len(card)} left")
             for tkn in self.which_token(card.name):
                 details.append(f"[Tkn: {tkn}]")
             o = Option(
@@ -1043,7 +1049,7 @@ class Player:
         scr = self.get_score_details(verbose)
         vp = sum(scr.values())
         if verbose:
-            self.game.output("{self.name}: {scr}")
+            self.game.output(f"{self.name}: {scr}")
         return vp
 
     ###########################################################################
@@ -1314,6 +1320,7 @@ class Player:
                 newcard = self.game[cardpile].remove()
             else:
                 newcard = cardpile.remove()
+
         if not newcard:
             self.output(f"No more {cardpile}")
             return None
@@ -1333,7 +1340,7 @@ class Player:
 
         # Replace is to gain a different card
         if "replace" in options:
-            self.game[newcard.name].add()
+            self.game[newcard.name].add(newcard)
             newcard = self.game[options["replace"]].remove()
         self.stats["gained"].append(newcard)
         if options.get("destination"):
@@ -1639,7 +1646,7 @@ class Player:
         """Return the list of cards for under cost"""
         affordable = PlayArea([])
         for c in self.game.cardTypes():
-            if not c.pilesize:
+            if not c:
                 continue
             cost = self.card_cost(c)
             if not self.select_by_type(c, types):

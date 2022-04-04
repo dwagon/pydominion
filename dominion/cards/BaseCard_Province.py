@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -34,13 +33,13 @@ class Test_Province(unittest.TestCase):
     def test_two_player(self):
         self.g = Game.TestGame(quiet=True, numplayers=2)
         self.g.start_game()
-        self.assertEqual(self.g["Province"].pilesize, 8)
+        self.assertEqual(len(self.g["Province"]), 8)
         self.plr = self.g.player_list()[0]
 
-    def Xtest_five(self):
+    def test_five(self):
         self.g = Game.TestGame(quiet=True, numplayers=5)
         self.g.start_game()
-        self.assertEqual(self.g["Province"].pilesize, 15)
+        self.assertEqual(len(self.g["Province"]), 15)
 
 
 ###############################################################################

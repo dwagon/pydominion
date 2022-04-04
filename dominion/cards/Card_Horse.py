@@ -24,9 +24,9 @@ class Card_Horse(Card.Card):
     def special(self, game, player):
         player.discard_card(self)
         try:  # If Horse is played multiple times e.g. Kings Court
-            player.played.remove(self)
-            player.discardpile.remove(self)
-            game["Horse"].add()
+            card = player.played.remove(self)
+            card = player.discardpile.remove(self)
+            game["Horse"].add(card)
         except ValueError:
             pass
 

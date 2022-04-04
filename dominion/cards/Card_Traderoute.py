@@ -24,13 +24,13 @@ class Card_Traderoute(Card.Card):
         cls.game = game
         for cp in list(game.cardpiles.values()):
             if cp.isVictory():
-                cls.tokens[cp.name] = cp.pilesize
+                cls.tokens[cp.name] = len(cp)
 
     def isWorth(self):
         worth = 0
         for cp in list(self.game.cardpiles.values()):
             if cp.name in self.tokens:
-                if self.tokens[cp.name] != cp.pilesize:
+                if self.tokens[cp.name] != len(cp):
                     worth += 1
         return worth
 

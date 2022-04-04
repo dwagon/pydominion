@@ -74,27 +74,27 @@ class Test_game_over(unittest.TestCase):
 
     def test_provinces(self):
         """Someone took the last province"""
-        while self.g["Province"].pilesize:
+        while self.g["Province"]:
             self.plr.gain_card("Province")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """Three stacks are empty"""
-        while self.g["Estate"].pilesize:
+        while self.g["Estate"]:
             self.plr.gain_card("Estate")
-        while self.g["Copper"].pilesize:
+        while self.g["Copper"]:
             self.plr.gain_card("Copper")
-        while self.g["Silver"].pilesize:
+        while self.g["Silver"]:
             self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """Two stacks are empty"""
-        while self.g["Estate"].pilesize:
+        while self.g["Estate"]:
             self.plr.gain_card("Estate")
-        while self.g["Silver"].pilesize:
+        while self.g["Silver"]:
             self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertFalse(over)
@@ -162,15 +162,6 @@ class Test_boon(unittest.TestCase):
         self.assertEqual(self.g.discarded_boons, ["c", "d"])
         self.assertEqual(len(self.g.boons), 1)
         self.assertNotIn(b, self.g.boons)
-
-    def test_discard_boon(self):
-        # TODO
-        return
-        self.g.boons = ["b"]
-        self.g.discarded_boons = ["c", "d"]
-        self.g.discard_boon("a")
-        self.assertEqual(self.g.discarded_boons, ["c", "d", "a"])
-        self.assertEqual(self.g.boons, ["b"])
 
 
 ###############################################################################

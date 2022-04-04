@@ -1,3 +1,4 @@
+""" Class defining a PlayArea - such as a deck of cards, a player's hand of cards, etc """
 import random
 import sys
 from dominion import Card
@@ -11,10 +12,10 @@ class PlayArea:
     def __init__(self, initial=None):
         if initial is None:
             initial = []
-        self.cards = initial
+        self._cards = initial
 
     def __repr__(self):
-        return "<PlayArea: %s>" % ", ".join([c.name for c in self.cards])
+        return "<PlayArea: %s>" % ", ".join([c.name for c in self._cards])
 
     def add(self, card):
         try:
@@ -22,61 +23,61 @@ class PlayArea:
                 card, (Card.Card, CardPile.CardPile, Event.EventPile, BoonPile.BoonPile)
             )
         except AssertionError:
-            print("Card={} ({})".format(card, type(card)))
+            print(f"PlayArea.add({card=}) ({type(card)})")
             raise
-        self.cards.append(card)
+        self._cards.append(card)
 
     def remove(self, card):
         try:
-            self.cards.remove(card)
+            self._cards.remove(card)
         except ValueError:
             sys.stderr.write(
                 "Trying to remove a card (%s) that doesn't exist (%s)\n"
-                % (card.name, ", ".join([c.name for c in self.cards]))
+                % (card.name, ", ".join([c.name for c in self._cards]))
             )
             raise
 
     def addToTop(self, card):
-        self.cards.insert(0, card)
+        self._cards.insert(0, card)
 
     def shuffle(self):
-        random.shuffle(self.cards)
+        random.shuffle(self._cards)
 
     def size(self):
         return len(self)
 
     def __len__(self):
-        return len(self.cards)
+        return len(self._cards)
 
     def topcard(self):
-        return self.cards.pop()
+        return self._cards.pop()
 
     def empty(self):
-        self.cards = []
+        self._cards = []
 
     def count(self, card):
         if hasattr(card, "name"):
             cname = card.name
         else:
             cname = card
-        return [_.name for _ in self.cards].count(cname)
+        return [_.name for _ in self._cards].count(cname)
 
     def is_empty(self):
-        return self.cards == []
+        return self._cards == []
 
     def __eq__(self, a):
         if hasattr(a, "cards"):
-            return self.cards == a.cards
-        return self.cards == a
+            return self._cards == a.cards
+        return self._cards == a
 
     def __add__(self, a):
-        x = self.cards[:]
+        x = self._cards[:]
         if a is None:
             pass
         elif hasattr(a, "values"):
             x.extend(a.values())
         elif isinstance(a, PlayArea):
-            x.extend(a.cards[:])
+            x.extend(a._cards[:])
         elif isinstance(a, list):
             x.extend(a[:])
         elif isinstance(a, Card.Card):
@@ -86,14 +87,14 @@ class PlayArea:
         return PlayArea(x)
 
     def __iter__(self):
-        for c in self.cards:
+        for c in self._cards:
             yield c
 
     def sort(self, *args, **kwargs):
-        self.cards.sort(*args, **kwargs)
+        self._cards.sort(*args, **kwargs)
 
     def __getitem__(self, key):
-        return self.cards[key]
+        return self._cards[key]
 
 
 # EOF

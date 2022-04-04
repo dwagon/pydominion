@@ -38,12 +38,12 @@ class TestPlayer(unittest.TestCase):
 
     def test_trashcard_played(self):
         """Test that trashing a card from played works"""
-        num_cards = self.g._count_cards()
         self.plr.set_played("Estate")
+        num_cards = self.g._count_cards()
         card = self.plr.played[0]
         self.plr.trash_card(card)
-        self.assertEqual(num_cards, self.g._count_cards())
         self.assertIsNotNone(self.g.in_trash(card))
+        self.assertEqual(num_cards, self.g._count_cards())
 
     def test_deckorder(self):
         """Ensure adding cards to decks in the correct order"""
@@ -332,7 +332,7 @@ class Test_plrDiscardCard(unittest.TestCase):
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
-        self.assertEqual(x, self.plr.discardpile.cards)
+        self.assertEqual(x, self.plr.discardpile._cards)
 
     def test_discardAnynum(self):
         self.plr.set_hand("Copper", "Estate", "Province", "Gold")

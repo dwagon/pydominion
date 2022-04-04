@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -27,7 +26,7 @@ class Card_Wish(Card.Card):
         )
         if dc:
             player.discard_card(self)
-            game["Wish"].add()
+            game["Wish"].add(self)
             player.played.remove(self)
             player.plr_gain_card(cost=6)
 
