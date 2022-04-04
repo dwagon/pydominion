@@ -1049,7 +1049,7 @@ class Player:
         scr = self.get_score_details(verbose)
         vp = sum(scr.values())
         if verbose:
-            self.game.output("{self.name}: {scr}")
+            self.game.output(f"{self.name}: {scr}")
         return vp
 
     ###########################################################################
