@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -37,12 +36,12 @@ class Card_Ambassador(Card.Card):
             return
         cardname = choice[0].name
         player.reveal_card(choice[0])
-        player.output("Putting %s back" % cardname)
+        player.output(f"Putting {cardname} back")
         for card in choice:
             player.hand.remove(card)
-            game[cardname].add()
+            game[cardname].add(card)
         for plr in player.attack_victims():
-            plr.output("Gained a %s from %s's Ambassador" % (cardname, player.name))
+            plr.output(f"Gained a {cardname} from {player.name}'s Ambassador")
             plr.gain_card(cardname)
 
 

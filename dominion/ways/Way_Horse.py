@@ -16,7 +16,7 @@ class Way_Horse(Way.Way):
         self.actions = 1
 
     def special_way(self, game, player, card):
-        game[card.name].add()
+        game[card.name].add(card)
         return {"discard": False}
 
 

@@ -21,7 +21,7 @@ class Card_Spoils(Card.Card):
 
     def special(self, game, player):
         """When you play this return it to the spoils pile"""
-        game["Spoils"].add()
+        game["Spoils"].add(self)
         player.played.remove(self)
 
 

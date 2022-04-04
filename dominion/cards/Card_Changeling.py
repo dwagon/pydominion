@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -22,9 +21,9 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         if game["Changeling"].is_empty():
             return None
         swap = player.plr_choose_options(
-            "Swap {} for a Changeling?".format(card.name),
-            ("Swap {}".format(card.name), True),
-            ("Keep {}".format(card.name), False),
+            f"Swap {card.name} for a Changeling?",
+            (f"Swap {card.name}", True),
+            (f"Keep {card.name}", False),
         )
         if swap:
             return {"replace": "Changeling"}
@@ -34,8 +33,8 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
         options = [{"selector": "0", "print": "Keep Changeling", "card": None}]
         index = 1
         for card in player.played + player.hand:
-            sel = "{}".format(index)
-            pr = "Exchange for {}".format(card.name)
+            sel = f"{index}"
+            pr = f"Exchange for {card.name}"
             options.append({"selector": sel, "print": pr, "card": card})
             index += 1
         o = player.user_input(options, "Trash Changeling to gain a card")

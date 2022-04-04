@@ -26,7 +26,7 @@ class Card_Experiment(Card.Card):
     ###########################################################################
     def special(self, game, player):
         player.played.remove(self)
-        game[self.name].add()
+        game[self.name].add(self)
         player.output("Returned experiment to stack")
 
 

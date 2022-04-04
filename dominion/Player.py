@@ -1340,7 +1340,7 @@ class Player:
 
         # Replace is to gain a different card
         if "replace" in options:
-            self.game[newcard.name].add()
+            self.game[newcard.name].add(newcard)
             newcard = self.game[options["replace"]].remove()
         self.stats["gained"].append(newcard)
         if options.get("destination"):

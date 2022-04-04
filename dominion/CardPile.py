@@ -15,6 +15,8 @@ class CardPile:
     ###########################################################################
     def init_cards(self):
         """ Create the cards in the pile - overwrite for funky piles """
+        if hasattr(self, "calc_numcards"):
+            self.pile_size = self.calc_numcards(self.game)
         for _ in range(self.pile_size):
             self._cards.append(self.cardclass())
 
