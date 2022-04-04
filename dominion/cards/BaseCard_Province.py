@@ -36,7 +36,7 @@ class Test_Province(unittest.TestCase):
         self.assertEqual(len(self.g["Province"]), 8)
         self.plr = self.g.player_list()[0]
 
-    def Xtest_five(self):
+    def test_five(self):
         self.g = Game.TestGame(quiet=True, numplayers=5)
         self.g.start_game()
         self.assertEqual(len(self.g["Province"]), 15)
