@@ -401,7 +401,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 continue
             cardname = self.guess_cardname(crd)
             if cardname:
-                self.useCardPile(available, cardname, force=True)
+                self._use_cardpile(available, cardname, force=True)
                 unfilled -= 1
                 continue
             eventname = self.guess_cardname(crd, "Event")
@@ -435,15 +435,15 @@ class Game:  # pylint: disable=too-many-public-methods
             crd = random.choice(available)
             if crd in self.badcards:
                 continue
-            unfilled -= self.useCardPile(available, crd)
+            unfilled -= self._use_cardpile(available, crd)
 
         self._check_card_requirements()
 
     ###########################################################################
-    def addPrizes(self):
+    def _add_prizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self.cardpiles[prize] = PrizeCardPile(self, 0)
+            self.cardpiles[prize] = PrizeCardPile(cardname=prize, game=self, pile_size=10)
         self.output("Playing with Prizes")
 
     ###########################################################################
@@ -452,7 +452,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
-    def useCardPile(self, available, crd, force=False):
+    def _use_cardpile(self, available, crd, force=False):
         """TODO"""
         try:
             available.remove(crd)
@@ -473,12 +473,15 @@ class Game:  # pylint: disable=too-many-public-methods
         """Go through the cardpiles and see if any require heirloom cards
         to be brought into the game"""
         heirlooms = set()
-        for card in list(self.cardpiles.values()):
+        for _, card in list(self.cardpiles.items()):
             if card.heirloom is not None:
-                heirlooms.add(card.heirloom)
                 cpile = CardPile(
-                    card.heirloom, self.cardmapping["Heirloom"][card.heirloom], self
+                    card.heirloom,
+                    self.cardmapping["Heirloom"][card.heirloom],
+                    game=self,
+                    pile_size=10,
                 )
+                heirlooms.add(cpile)
                 self.cardpiles[cpile.name] = cpile
 
         return list(heirlooms)
@@ -525,7 +528,7 @@ class Game:  # pylint: disable=too-many-public-methods
             if self.cardpiles[card].traveller:
                 self._load_travellers()
             if self.cardpiles[card].needsprize:
-                self.addPrizes()
+                self._add_prizes()
             if self.cardpiles[card].needsartifacts:
                 self._load_artifacts()
             if self.cardpiles[card].needsprojects:
@@ -735,10 +738,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 if tkns:
                     tokens += "%s[%s]" % (plr.name, ",".join(tkns))
 
-            print(
-                f"CardPile {cpile}: %d cards {tokens}"
-                % len(self.cardpiles[cpile])
-            )
+            print(f"CardPile {cpile}: %d cards {tokens}" % len(self.cardpiles[cpile]))
         for plr in self.player_list():
             print(
                 f"\n{plr.name}'s state: %s" % (", ".join([s.name for s in plr.states]))

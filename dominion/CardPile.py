@@ -7,9 +7,9 @@ class CardPile:
         self.game = game
         self._cards = []
         self.embargo_level = 0
-        self.card = None
+        self._card = None
         if klass:
-            self.card = klass()   # Non-playable instance to access card attributes
+            self._card = klass()   # Non-playable instance to access card attributes
         self.init_cards()
 
     ###########################################################################
@@ -38,14 +38,19 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, a):
-        return self._cards[0].name < a.card.name
+        return self._cards[0].name < a._cards[0].name
 
     ###########################################################################
     def __getattr__(self, name):
         try:
+            if self._card:
+                return getattr(self._card, name)
             return getattr(self._cards[0], name)
         except RecursionError:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
+            raise
+        except IndexError:
+            print(f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}")
             raise
 
     ###########################################################################
@@ -65,7 +70,7 @@ class CardPile:
 
     ###########################################################################
     def __repr__(self):
-        return f"CardPile {self.name}: {len(self._cards)}"
+        return f"<CardPile {self.name}: {len(self._cards)}>"
 
 
 # EOF

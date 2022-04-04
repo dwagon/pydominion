@@ -33,7 +33,7 @@ class Card_YoungWitch(Card.Card):
             if card.cost in (2, 3):
                 banes.append(card.name)
         game._bane = random.choice(banes)
-        game.useCardPile(game.getAvailableCards(), game._bane)
+        game._use_cardpile(game.getAvailableCards(), game._bane)
         game.output(f"Using {game._bane} as the bane for Young Witch")
 
     def special(self, game, player):

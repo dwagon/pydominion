@@ -1,3 +1,4 @@
+""" Class defining a PlayArea - such as a deck of cards, a player's hand of cards, etc """
 import random
 import sys
 from dominion import Card

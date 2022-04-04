@@ -5,11 +5,11 @@ from dominion import CardPile
 
 ###############################################################################
 class PrizeCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size):
+    def __init__(self, cardname, game, pile_size):
         self.mapping = game.getSetCardClasses(
             "PrizeCard", game.cardpath, "domain/cards", "Card_"
         )
-        super().__init__(cardname="Prizes", klass=None, game=game, pile_size=pile_size)
+        super().__init__(cardname="Prizes", klass=self.mapping[cardname], game=game, pile_size=pile_size)
 
 
 # EOF
