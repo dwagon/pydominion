@@ -29,6 +29,7 @@ TYPE_STATE = "state"
 TYPE_TRAVELLER = "traveller"
 TYPE_TREASURE = "treasure"
 TYPE_VICTORY = "victory"
+TYPE_WIZARD = "wizard"
 TYPE_ZOMBIE = "zombie"
 
 
@@ -328,14 +329,14 @@ class Card:
 
     ##########################################################################
     def hook_coinvalue(self, game, player):
-        """Hook - overwritten in subclasses"""
-        """How much coin does this card contribute"""
+        """Hook - overwritten in subclasses;
+        How much coin does this card contribute"""
         return self.coin  # pragma: no cover
 
     ##########################################################################
     def hook_spend_value(self, game, player, card):
-        """Hook - overwritten in subclasses"""
-        """Does this card make any  modifications on the value of spending a card"""
+        """Hook - overwritten in subclasses
+        Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 
     ##########################################################################
