@@ -21,14 +21,15 @@ class Card_Student(WizardCard):
     def special(self, game, player):
         opt = player.plr_choose_options(
             "Do you want to rotate the Wizards?",
-            ("Rotate", True),
             ("Don't change", False),
+            ("Rotate", True),
         )
         if opt:
             game["Wizards"].rotate()
         trshd = player.plr_trash_card(prompt="Pick a card to trash", num=1, force=True)
         if trshd[0].isTreasure():
             player.add_favors(1)
+            player.played.remove(self)
             player.add_card(self, "deck")
 
 

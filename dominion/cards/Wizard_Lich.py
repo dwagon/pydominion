@@ -15,7 +15,7 @@ class Card_Lich(WizardCard):
         self.cards = 6
         self.actions = 2
         self.name = "Lich"
-        self.desc = """+6 Cards; +2 Actions; Skip a turn.;
+        self.desc = """+6 Cards; +2 Actions; Skip a turn;
             When you trash this, discard it and gain a cheaper card from the trash."""
 
 
@@ -27,23 +27,18 @@ class Test_Lich(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
     def test_play(self):
-        """Play a sprawling castle"""
+        """Play a lich"""
         while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Grand Castle":
+            card = self.g["Wizards"].remove()
+            if card.name == "Lich":
                 break
-        self.plr.add_card(self.card, "hand")
-        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
-
-    def test_gain(self):
-        """Gain Grand Castle"""
-        self.plr.set_hand("Duchy", "Province")
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Sprawling Castle":  # One before Grand
-                break
-        self.plr.gain_card("Castles")
-        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)
+        self.plr.add_card(card, "hand")
+        hndsz = self.plr.hand.size()
+        self.plr.set_discard("Estate", "Duchy", "Province", "Silver", "Gold")
+        self.plr.play_card(card)
+        self.g.print_state()
+        self.assertEqual(self.plr.hand.size(), hndsz + 6 - 1)
+        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################

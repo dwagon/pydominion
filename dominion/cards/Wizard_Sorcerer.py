@@ -12,8 +12,11 @@ class Card_Sorcerer(WizardCard):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_WIZARD, Card.TYPE_ATTACK]
         self.base = Game.ALLIES
         self.cost = 5
+        self.cards = 1
+        self.actions = 1
         self.name = "Sorcerer"
-        self.desc = """TBA"""
+        self.desc = """+1 Card; +1 Action; Each other player names a card,
+            then reveals the top card of their deck. If wrong, they gain a Curse."""
 
 
 ###############################################################################
@@ -24,23 +27,15 @@ class Test_Sorcerer(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
     def test_play(self):
-        """Play a sprawling castle"""
         while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Grand Castle":
+            card = self.g["Wizards"].remove()
+            if card.name == "Sorcerer":
                 break
-        self.plr.add_card(self.card, "hand")
-        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
-
-    def test_gain(self):
-        """Gain Grand Castle"""
-        self.plr.set_hand("Duchy", "Province")
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Sprawling Castle":  # One before Grand
-                break
-        self.plr.gain_card("Castles")
-        self.assertEqual(self.plr.get_score_details()["Grand Castle"], 2)
+        self.plr.add_card(card, "hand")
+        hndsz = self.plr.hand.size()
+        self.plr.play_card(card)
+        self.assertEqual(self.plr.hand.size(), hndsz)
+        self.assertEqual(self.plr.get_actions(), 1)
 
 
 ###############################################################################

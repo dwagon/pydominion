@@ -847,7 +847,7 @@ class Player:
     def turn(self):
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
-        stats = "({self.get_score()} points, {self._count_cards()} cards)"
+        stats = f"({self.get_score()} points, {self._count_cards()} cards)"
         self.output(f"{self.name}'s Turn {stats}")
         self.action_phase()
         self.buy_phase()
@@ -1856,7 +1856,7 @@ class Player:
         for pl in self.game.player_list():
             for st in pl.artifacts[:]:
                 if st.name == artifact and self != pl:
-                    pl.output("{} took your {}".format(self.name, artifact))
+                    pl.output(f"{self.name} took your {artifact}")
                     pl.artifacts.remove(st)
                     break
         # If we already have it don't get it again
@@ -1871,7 +1871,7 @@ class Player:
             self.output("Can't have more than two projects")
             return False
         if project in [_.name for _ in self.projects]:
-            self.output("Already have project {}".format(project))
+            self.output(f"Already have project {project}")
             return False
         self.projects.append(projectcard)
         return True

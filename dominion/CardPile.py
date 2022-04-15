@@ -40,14 +40,14 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, a):
-        return self._cards[0].name < a._cards[0].name
+        return self._cards[-1].name < a._cards[-1].name
 
     ###########################################################################
     def __getattr__(self, name):
         try:
             if self._card:
                 return getattr(self._card, name)
-            return getattr(self._cards[0], name)
+            return getattr(self._cards[-1], name)
         except RecursionError:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
             raise

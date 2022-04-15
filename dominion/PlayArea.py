@@ -96,5 +96,12 @@ class PlayArea:
     def __getitem__(self, key):
         return self._cards[key]
 
+    ###########################################################################
+    def dump(self):
+        """Print out all of the playarea - for debugging purposes only"""
+        print("----------")
+        for crd in self._cards:
+            print(f"Card={crd}")
+        print("----------")
 
 # EOF
