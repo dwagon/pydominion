@@ -1,6 +1,8 @@
 """ The master class for all cards """
 # pylint: disable=no-member
 
+import uuid
+
 TYPE_ACTION = "action"
 TYPE_ALLY = "ally"
 TYPE_ARTIFACT = "artifact"
@@ -70,6 +72,7 @@ class Card:
         self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
+        self._uuid = uuid.uuid4().hex
 
     ##########################################################################
     def check(self):
@@ -105,7 +108,7 @@ class Card:
 
     ##########################################################################
     def __repr__(self):
-        return self.name
+        return f"{self.name} {self._uuid}"
 
     ##########################################################################
     def __lt__(self, card):
@@ -328,14 +331,14 @@ class Card:
 
     ##########################################################################
     def hook_coinvalue(self, game, player):
-        """Hook - overwritten in subclasses"""
-        """How much coin does this card contribute"""
+        """Hook - overwritten in subclasses
+        How much coin does this card contribute"""
         return self.coin  # pragma: no cover
 
     ##########################################################################
     def hook_spend_value(self, game, player, card):
-        """Hook - overwritten in subclasses"""
-        """Does this card make any  modifications on the value of spending a card"""
+        """Hook - overwritten in subclasses
+        Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
 
     ##########################################################################
