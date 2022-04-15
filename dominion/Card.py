@@ -1,6 +1,8 @@
 """ The master class for all cards """
 # pylint: disable=no-member
 
+import uuid
+
 TYPE_ACTION = "action"
 TYPE_ALLY = "ally"
 TYPE_ARTIFACT = "artifact"
@@ -71,6 +73,7 @@ class Card:
         self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
+        self._uuid = uuid.uuid4().hex
 
     ##########################################################################
     def check(self):
@@ -106,7 +109,7 @@ class Card:
 
     ##########################################################################
     def __repr__(self):
-        return self.name
+        return f"{self.name} {self._uuid}"
 
     ##########################################################################
     def __lt__(self, card):
