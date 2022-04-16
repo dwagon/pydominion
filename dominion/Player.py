@@ -138,7 +138,7 @@ class Player:
 
         choice = self.plr_choose_options(
             "Replace Traveller",
-            (f"Keep {src}", "keep"),
+            (f"Keep {src.name}", "keep"),
             (f"Replace with a {dstcp.name}?", "replace"),
         )
         if choice == "keep":
@@ -1082,14 +1082,7 @@ class Player:
         self.stats = {"gained": [], "bought": [], "trashed": []}
         self._display_overview()
         self.hook_start_turn()
-        for card in self.durationpile:
-            self.output("Playing %s from duration pile" % card.name)
-            self.currcards.append(card)
-            card.duration(game=self.game, player=self)
-            self.currcards.pop()
-            if not card.permanent:
-                self.add_card(card, "played")
-                self.durationpile.remove(card)
+        self._duration_start_turn()
         for card in self.deferpile:
             self.output("Playing deferred %s" % card.name)
             self.currcards.append(card)
@@ -1097,6 +1090,21 @@ class Player:
             self.hand.add(card)
             self.play_card(card, costAction=False)
             self.currcards.pop()
+
+    ###########################################################################
+    def _duration_start_turn(self):
+        """ Perform the duration pile at the start of the turn """
+        for card in self.durationpile:
+            options = {"dest": "played"}
+            self.output("Playing %s from duration pile" % card.name)
+            self.currcards.append(card)
+            upd_opts = card.duration(game=self.game, player=self)
+            if isinstance(upd_opts, dict):
+                options.update(upd_opts)
+            self.currcards.pop()
+            if not card.permanent:
+                self.add_card(card, options["dest"])
+                self.durationpile.remove(card)
 
     ###########################################################################
     def hook_start_turn(self):
