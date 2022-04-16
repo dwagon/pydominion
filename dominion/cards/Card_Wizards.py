@@ -11,6 +11,7 @@ class Card_Wizards(Card.Card):
         self.name = "Wizards"
         self.base = Game.ALLIES
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
+        self.required_cards = ["Curse"]
 
     def setup(self, game):
         game.cardpiles["Wizards"] = WizardCardPile(game)
