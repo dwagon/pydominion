@@ -394,14 +394,14 @@ class Player:
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.topcard()
+        c = self.deck.next_card()
         return c
 
     ###########################################################################
     def refill_deck(self):
         self._shuffle_discard()
         while self.discardpile:
-            self.add_card(self.discardpile.topcard(), "deck")
+            self.add_card(self.discardpile.next_card(), "deck")
         for card in self.relevant_cards():
             if hasattr(card, "hook_post_shuffle"):
                 card.hook_post_shuffle(game=self.game, player=self)
@@ -513,10 +513,10 @@ class Player:
         for way, card in self.played_ways:
             way.hook_way_discard_this_card(game=self.game, player=self, card=card)
         while self.hand:
-            card = self.hand.topcard()
+            card = self.hand.next_card()
             self.discard_card(card, "hand", hook=False)
         while self.played:
-            card = self.played.topcard()
+            card = self.played.next_card()
             self.discard_card(card, "played", hook=False)
 
     ###########################################################################

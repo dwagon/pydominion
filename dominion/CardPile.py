@@ -74,15 +74,20 @@ class CardPile:
         self._cards.insert(0, card)
 
     ###########################################################################
+    def top_card(self):
+        """ What is the top card of the cardpile """
+        return self._cards[-1].name
+
+    ###########################################################################
     def rotate(self):
         """Rotate a pile of cards - only works with split decks
         http://wiki.dominionstrategy.com/index.php/Rotate
         """
-        top_card_name = self._cards[-1].name
+        top_card_name = self.top_card()
         count = 0
         while True:
             count += 1
-            if self._cards[-1].name != top_card_name:
+            if self.top_card() != top_card_name:
                 break
             next_card = self.remove()
             self.add(next_card)

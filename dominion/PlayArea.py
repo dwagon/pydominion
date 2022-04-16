@@ -49,8 +49,13 @@ class PlayArea:
     def __len__(self):
         return len(self._cards)
 
-    def topcard(self):
+    def next_card(self):
+        """ Take the next card of the playarea """
         return self._cards.pop()
+
+    def top_card(self):
+        """ Return the next card - but don't move it """
+        return self._cards[0]
 
     def empty(self):
         self._cards = []

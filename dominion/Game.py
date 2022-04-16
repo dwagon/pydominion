@@ -541,7 +541,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def __getitem__(self, key):
-        """TODO"""
+        """Return the card using `game[cardname]`"""
         return self.cardpiles[key]
 
     ###########################################################################
