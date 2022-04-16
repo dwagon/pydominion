@@ -17,11 +17,23 @@ class Card_Lich(Card.Card):
         self.desc = """+6 Cards; +2 Actions; Skip a turn;
             When you trash this, discard it and gain a cheaper card from the trash."""
 
+    def special(self, game, player):
+        player.skip_turn = True
+
+    def hook_trashThisCard(self, game, player):
+        """Discard rather than trash"""
+        player.add_card(self, "discard")
+        player.hand.remove(self)
+        intrash = [_ for _ in game.trashpile if _.cost < self.cost]
+        if intrash:
+            player.plr_gain_card(5, cardsrc=intrash)
+        return {"trash": False}
+
 
 ###############################################################################
 class Test_Lich(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Wizards"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"], use_liaisons=True)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

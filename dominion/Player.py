@@ -63,7 +63,7 @@ class Player:
         self.states = []
         self.artifacts = []
         self.projects = []
-        self.players = []
+        self.skip_turn = False
         self.stacklist = (
             ("Discard", self.discardpile),
             ("Hand", self.hand),
@@ -848,6 +848,9 @@ class Player:
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
         stats = f"({self.get_score()} points, {self._count_cards()} cards)"
+        if self.skip_turn:
+            self.skip_turn = False
+            return
         self.output(f"{self.name}'s Turn {stats}")
         self.action_phase()
         self.buy_phase()
