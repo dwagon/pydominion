@@ -20,9 +20,7 @@ class Card_Conjurer(WizardCard):
         player.plr_gain_card(4)
 
     def duration(self, game, player):
-        player.add_card(self, "hand")
-        player.durationpile.dump()
-        player.durationpile.remove(self)
+        return {"dest": "hand"}
 
 
 ###############################################################################
