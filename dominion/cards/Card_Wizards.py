@@ -10,6 +10,7 @@ class Card_Wizards(Card.Card):
         Card.Card.__init__(self)
         self.name = "Wizards"
         self.base = Game.ALLIES
+        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
 
     def setup(self, game):
         game.cardpiles["Wizards"] = WizardCardPile(game)
@@ -37,14 +38,9 @@ class WizardCardPile(CardPile.CardPile):
 
 
 ###############################################################################
-class WizardCard(Card.Card):
-    pass
-
-
-###############################################################################
 class Test_Wizard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"], use_liaisons=True)
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

@@ -2,13 +2,12 @@
 
 import unittest
 from dominion import Game, Card
-from dominion.cards.Card_Wizards import WizardCard
 
 
 ###############################################################################
-class Card_Student(WizardCard):
+class Card_Student(Card.Card):
     def __init__(self):
-        WizardCard.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_WIZARD, Card.TYPE_LIAISON]
         self.base = Game.ALLIES
         self.cost = 3
@@ -36,7 +35,7 @@ class Card_Student(WizardCard):
 ###############################################################################
 class Test_Student(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Wizards"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

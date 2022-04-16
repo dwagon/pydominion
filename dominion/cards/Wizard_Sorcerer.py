@@ -2,13 +2,12 @@
 
 import unittest
 from dominion import Game, Card
-from dominion.cards.Card_Wizards import WizardCard
 
 
 ###############################################################################
-class Card_Sorcerer(WizardCard):
+class Card_Sorcerer(Card.Card):
     def __init__(self):
-        WizardCard.__init__(self)
+        Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_WIZARD, Card.TYPE_ATTACK]
         self.base = Game.ALLIES
         self.cost = 5
