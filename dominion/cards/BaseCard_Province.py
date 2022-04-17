@@ -17,7 +17,8 @@ class Card_Province(Card.Card):
         self.cost = 8
         self.victory = 6
 
-    def calc_numcards(self, game):
+    @classmethod
+    def calc_numcards(cls, game):
         if game.numplayers == 2:
             return 8
         if game.numplayers > 4:
