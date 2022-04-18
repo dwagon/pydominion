@@ -26,8 +26,9 @@ class Card_Lich(Card.Card):
         player.hand.remove(self)
         intrash = [_ for _ in game.trashpile if _.cost < self.cost]
         if intrash:
-            crd = player.plr_pick_card(cardsrc=intrash)
-            player.gain_card(crd)
+            crd = player.plr_pick_card(cardsrc=intrash, force=True, num=1)
+            player.gain_card(newcard=crd)
+            game.trashpile.remove(crd)
         return {"trash": False}
 
 
