@@ -603,7 +603,8 @@ class Game:  # pylint: disable=too-many-public-methods
         return mapping
 
     ###########################################################################
-    def getSetCardClasses(self, prefix, path, defdir, class_prefix):
+    @classmethod
+    def getSetCardClasses(cls, prefix, path, defdir, class_prefix):
         """Import all the modules to determine the real name of the card
         This is slow, but it is the only way that I can think of
 

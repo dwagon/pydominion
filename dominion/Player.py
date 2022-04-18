@@ -1641,7 +1641,8 @@ class Player:
         return True
 
     ###########################################################################
-    def select_by_type(self, card, types):
+    @classmethod
+    def select_by_type(cls, card, types):
         if card.isAction() and not types[Card.TYPE_ACTION]:
             return False
         if card.isVictory() and not types[Card.TYPE_VICTORY]:
@@ -1718,7 +1719,8 @@ class Player:
         return total
 
     ###########################################################################
-    def _type_selector(self, types=None):
+    @classmethod
+    def _type_selector(cls, types=None):
         if types is None:
             types = {}
         assert set(types.keys()) <= set(
