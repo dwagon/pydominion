@@ -847,7 +847,7 @@ class Player:
     def turn(self):
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
-        stats = "({self.get_score()} points, {self._count_cards()} cards)"
+        stats = f"({self.get_score()} points, {self._count_cards()} cards)"
         self.output(f"{self.name}'s Turn {stats}")
         self.action_phase()
         self.buy_phase()
