@@ -19,7 +19,8 @@ class Card_Copper(Card.Card):
         self.coin = 1
         self.cost = 0
 
-    def calc_numcards(self, game):
+    @classmethod
+    def calc_numcards(cls, game):
         return 60 - game.numplayers * 7
 
 
