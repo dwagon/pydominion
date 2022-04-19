@@ -49,8 +49,13 @@ class PlayArea:
     def __len__(self):
         return len(self._cards)
 
-    def topcard(self):
+    def next_card(self):
+        """ Take the next card of the playarea """
         return self._cards.pop()
+
+    def top_card(self):
+        """ Return the next card - but don't move it """
+        return self._cards[0]
 
     def empty(self):
         self._cards = []
@@ -96,5 +101,11 @@ class PlayArea:
     def __getitem__(self, key):
         return self._cards[key]
 
+    ###########################################################################
+    def dump(self, name):
+        """Print out all of the playarea - for debugging purposes only"""
+        print(f"---------- {name}")
+        for crd in self._cards:
+            print(f"Card={crd}")
 
 # EOF

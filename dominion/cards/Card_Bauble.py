@@ -67,7 +67,7 @@ class Card_Bauble(Card.Card):
 ###############################################################################
 class Test_Bauble(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Bauble"], use_liaisons=True)
+        self.g = Game.TestGame(numplayers=1, initcards=["Bauble"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Bauble"].remove()

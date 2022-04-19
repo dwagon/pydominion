@@ -63,7 +63,7 @@ class Player:
         self.states = []
         self.artifacts = []
         self.projects = []
-        self.players = []
+        self.skip_turn = False
         self.stacklist = (
             ("Discard", self.discardpile),
             ("Hand", self.hand),
@@ -138,7 +138,7 @@ class Player:
 
         choice = self.plr_choose_options(
             "Replace Traveller",
-            (f"Keep {src}", "keep"),
+            (f"Keep {src.name}", "keep"),
             (f"Replace with a {dstcp.name}?", "replace"),
         )
         if choice == "keep":
@@ -394,14 +394,14 @@ class Player:
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.topcard()
+        c = self.deck.next_card()
         return c
 
     ###########################################################################
     def refill_deck(self):
         self._shuffle_discard()
         while self.discardpile:
-            self.add_card(self.discardpile.topcard(), "deck")
+            self.add_card(self.discardpile.next_card(), "deck")
         for card in self.relevant_cards():
             if hasattr(card, "hook_post_shuffle"):
                 card.hook_post_shuffle(game=self.game, player=self)
@@ -513,10 +513,10 @@ class Player:
         for way, card in self.played_ways:
             way.hook_way_discard_this_card(game=self.game, player=self, card=card)
         while self.hand:
-            card = self.hand.topcard()
+            card = self.hand.next_card()
             self.discard_card(card, "hand", hook=False)
         while self.played:
-            card = self.played.topcard()
+            card = self.played.next_card()
             self.discard_card(card, "played", hook=False)
 
     ###########################################################################
@@ -848,6 +848,9 @@ class Player:
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
         stats = f"({self.get_score()} points, {self._count_cards()} cards)"
+        if self.skip_turn:
+            self.skip_turn = False
+            return
         self.output(f"{self.name}'s Turn {stats}")
         self.action_phase()
         self.buy_phase()
@@ -1082,14 +1085,7 @@ class Player:
         self.stats = {"gained": [], "bought": [], "trashed": []}
         self._display_overview()
         self.hook_start_turn()
-        for card in self.durationpile:
-            self.output("Playing %s from duration pile" % card.name)
-            self.currcards.append(card)
-            card.duration(game=self.game, player=self)
-            self.currcards.pop()
-            if not card.permanent:
-                self.add_card(card, "played")
-                self.durationpile.remove(card)
+        self._duration_start_turn()
         for card in self.deferpile:
             self.output("Playing deferred %s" % card.name)
             self.currcards.append(card)
@@ -1097,6 +1093,21 @@ class Player:
             self.hand.add(card)
             self.play_card(card, costAction=False)
             self.currcards.pop()
+
+    ###########################################################################
+    def _duration_start_turn(self):
+        """ Perform the duration pile at the start of the turn """
+        for card in self.durationpile:
+            options = {"dest": "played"}
+            self.output("Playing %s from duration pile" % card.name)
+            self.currcards.append(card)
+            upd_opts = card.duration(game=self.game, player=self)
+            if isinstance(upd_opts, dict):
+                options.update(upd_opts)
+            self.currcards.pop()
+            if not card.permanent:
+                self.add_card(card, options["dest"])
+                self.durationpile.remove(card)
 
     ###########################################################################
     def hook_start_turn(self):
@@ -1630,7 +1641,8 @@ class Player:
         return True
 
     ###########################################################################
-    def select_by_type(self, card, types):
+    @classmethod
+    def select_by_type(cls, card, types):
         if card.isAction() and not types[Card.TYPE_ACTION]:
             return False
         if card.isVictory() and not types[Card.TYPE_VICTORY]:
@@ -1707,7 +1719,8 @@ class Player:
         return total
 
     ###########################################################################
-    def _type_selector(self, types=None):
+    @classmethod
+    def _type_selector(cls, types=None):
         if types is None:
             types = {}
         assert set(types.keys()) <= set(
@@ -1856,7 +1869,7 @@ class Player:
         for pl in self.game.player_list():
             for st in pl.artifacts[:]:
                 if st.name == artifact and self != pl:
-                    pl.output("{} took your {}".format(self.name, artifact))
+                    pl.output(f"{self.name} took your {artifact}")
                     pl.artifacts.remove(st)
                     break
         # If we already have it don't get it again
@@ -1871,7 +1884,7 @@ class Player:
             self.output("Can't have more than two projects")
             return False
         if project in [_.name for _ in self.projects]:
-            self.output("Already have project {}".format(project))
+            self.output(f"Already have project {project}")
             return False
         self.projects.append(projectcard)
         return True

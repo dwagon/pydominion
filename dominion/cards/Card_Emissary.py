@@ -23,7 +23,7 @@ class Card_Emissary(Card.Card):
 ###############################################################################
 class Test_Emissary(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Emissary"], use_liaisons=True)
+        self.g = Game.TestGame(numplayers=1, initcards=["Emissary"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Emissary"].remove()

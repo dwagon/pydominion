@@ -54,7 +54,6 @@ class Test_YoungWitch(unittest.TestCase):
             numplayers=2,
             initcards=["Young Witch"],
             badcards=["Secret Chamber", "Duchess", "Caravan Guard"],
-            use_liaisons=True,
             ally="Plateau Shepherds"
         )
         self.g.start_game()

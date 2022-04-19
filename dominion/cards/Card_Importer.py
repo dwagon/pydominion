@@ -29,8 +29,7 @@ class Test_Importer(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Importer", "moat"],
-            use_liaisons=True,
-            ally="Plateau Shepherds",
+            ally="Plateau Shepherds"
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]

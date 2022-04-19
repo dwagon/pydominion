@@ -32,8 +32,7 @@ class Test_Skys_Gift(unittest.TestCase):
             quiet=True,
             numplayers=1,
             initcards=["Bard"],
-            badcards=["Druid"],
-            use_liaisons=False,
+            badcards=["Druid"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

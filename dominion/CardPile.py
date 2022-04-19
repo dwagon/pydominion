@@ -9,12 +9,12 @@ class CardPile:
         self.embargo_level = 0
         self._card = None
         if klass:
-            self._card = klass()   # Non-playable instance to access card attributes
+            self._card = klass()  # Non-playable instance to access card attributes
         self.init_cards()
 
     ###########################################################################
     def init_cards(self):
-        """ Create the cards in the pile - overwrite for funky piles """
+        """Create the cards in the pile - overwrite for funky piles"""
         if hasattr(self, "calc_numcards"):
             self.pile_size = self.calc_numcards(self.game)
         for _ in range(self.pile_size):
@@ -40,19 +40,21 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, a):
-        return self._cards[0].name < a._cards[0].name
+        return self._cards[-1].name < a._cards[-1].name
 
     ###########################################################################
     def __getattr__(self, name):
         try:
             if self._card:
                 return getattr(self._card, name)
-            return getattr(self._cards[0], name)
+            return getattr(self._cards[-1], name)
         except RecursionError:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
             raise
         except IndexError:
-            print(f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}")
+            print(
+                f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}"
+            )
             raise
 
     ###########################################################################
@@ -68,7 +70,36 @@ class CardPile:
 
     ###########################################################################
     def add(self, card):
+        """Add a card to the bottom of the deck"""
         self._cards.insert(0, card)
+
+    ###########################################################################
+    def top_card(self):
+        """ What is the top card of the cardpile """
+        return self._cards[-1].name
+
+    ###########################################################################
+    def rotate(self):
+        """Rotate a pile of cards - only works with split decks
+        http://wiki.dominionstrategy.com/index.php/Rotate
+        """
+        top_card_name = self.top_card()
+        count = 0
+        while True:
+            count += 1
+            if self.top_card() != top_card_name:
+                break
+            next_card = self.remove()
+            self.add(next_card)
+            if count > 20:  # Only one sort of card in deck
+                break
+
+    ###########################################################################
+    def dump(self):
+        """Print out all of the pile - for debugging purposes only"""
+        print("----------")
+        for crd in self._cards:
+            print(f"Card={crd}")
 
     ###########################################################################
     def __repr__(self):

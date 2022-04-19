@@ -43,7 +43,6 @@ class Test_Broker(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Broker"],
-            use_liaisons=True,
             ally="Plateau Shepherds",
         )
         self.g.start_game()

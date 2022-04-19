@@ -39,8 +39,7 @@ class Test_CityState(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             ally="City State",
-            initcards=["Underling"],
-            use_liaisons=True,
+            initcards=["Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
