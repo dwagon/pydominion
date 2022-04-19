@@ -40,9 +40,7 @@ class Card_Throneroom(Card.Card):
 ###############################################################################
 class Test_Throneroom(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Throne Room", "Mine"], use_liaisons=False
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Throne Room", "Mine"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

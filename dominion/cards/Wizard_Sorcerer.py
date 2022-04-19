@@ -44,7 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Sorcerer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"], use_liaisons=True)
+        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

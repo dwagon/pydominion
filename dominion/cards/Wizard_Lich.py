@@ -35,7 +35,7 @@ class Card_Lich(Card.Card):
 ###############################################################################
 class Test_Lich(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"], use_liaisons=True)
+        self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

@@ -25,8 +25,7 @@ class Test_League_Bankers(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             ally="League of Bankers",
-            initcards=["Underling"],
-            use_liaisons=True,
+            initcards=["Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

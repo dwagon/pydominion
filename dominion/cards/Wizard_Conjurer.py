@@ -25,7 +25,7 @@ class Card_Conjurer(Card.Card):
 ###############################################################################
 class Test_Conjurer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"], use_liaisons=True)
+        self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

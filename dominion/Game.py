@@ -82,8 +82,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
-        self.use_liaisons = args["use_liaisons"] if "use_liaisons" in args else True
-        self.allypath = "dominion/allies"
+        self.allypath = args["allypath"] if "allypath" in args else "dominion/allies"
         self.hexpath = "dominion/hexes"
         self.numstacks = args["numstacks"] if "numstacks" in args else 10
         self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
@@ -462,8 +461,6 @@ class Game:  # pylint: disable=too-many-public-methods
         cpile = CardPile(crd, self.cardmapping["Card"][crd], self)
         if not force and not cpile.insupply:
             return 0
-        if cpile.isLiaison() and not self.use_liaisons:
-            return 0
         self.cardpiles[cpile.name] = cpile
         self.output("Playing with card %s" % self[crd].name)
         return 1
@@ -728,7 +725,8 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
         print(f"Boons: {', '.join([_.name for _ in self.boons])}")
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
-        print(f"Ally: {self.ally}")
+        if self.ally:
+            print(f"Ally: {self.ally.name}")
         print(
             "Projects: {}".format(", ".join([_.name for _ in self.projects.values()]))
         )
@@ -871,8 +869,10 @@ class Game:  # pylint: disable=too-many-public-methods
 ###############################################################################
 class TestGame(Game):
     def __init__(self, **kwargs):
-        if "use_liaisons" not in kwargs:
-            kwargs["use_liaisons"] = False
+        if "ally" not in kwargs:
+            kwargs["init_ally"] = "noop"
+            kwargs["ally"] = "noop"
+            kwargs["allypath"] = "tests/allies"
         if "quiet" not in kwargs:
             kwargs["quiet"] = True
         super().__init__(**kwargs)
@@ -947,15 +947,6 @@ def parse_cli_args(args=None):
         default=[],
         help="Include specific ally",
     )
-    # Don't use liaisons as allies can break a lot of tests
-    parser.add_argument(
-        "--no_liaisons",
-        dest="use_liaisons",
-        action="store_false",
-        default=True,
-        help=argparse.SUPPRESS,
-    )
-
     parser.add_argument(
         "--cardset",
         type=argparse.FileType("r"),
