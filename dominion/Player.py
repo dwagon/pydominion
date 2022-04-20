@@ -1256,8 +1256,8 @@ class Player:
         self.currcards.pop()
         if postActionHook and card.isAction():
             for crd in self.relevant_cards():
-                if hasattr(crd, "hook_postAction"):
-                    crd.hook_postAction(game=self.game, player=self, card=card)
+                if hasattr(crd, "hook_post_action"):
+                    crd.hook_post_action(game=self.game, player=self, card=card)
 
     ###########################################################################
     def perform_way(self, way, card):

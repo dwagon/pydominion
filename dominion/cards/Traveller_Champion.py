@@ -19,7 +19,7 @@ class Card_Champion(Card.Card):
         self.numcards = 5
         self.cost = 6
 
-    def hook_postAction(self, game, player, card):
+    def hook_post_action(self, game, player, card):
         player.add_actions(1)
 
 
