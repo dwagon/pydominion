@@ -13,7 +13,7 @@ class Project_Citadel(Project.Project):
         self.name = "Citadel"
         self.cost = 8
 
-    def hook_postAction(self, game, player, card):
+    def hook_post_action(self, game, player, card):
         if player.played.size() == 1:
             player.output("Citadel plays {} again".format(card.name))
             player.play_card(

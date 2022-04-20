@@ -101,7 +101,7 @@ Called before action cards are played.
 Returns None or a dictionary with keys:
     skip_card - if true then the benefits of the card is skipped
 
-hook_postAction
+hook_post_action(game, player, card)
 ---------------
 Called for every card in played + duration pile after an action has happened
 
