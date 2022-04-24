@@ -18,7 +18,7 @@ class Card_Enchantress(Card.Card):
         self.cost = 3
 
     def duration(self, game, player):
-        player.add_cards(2)
+        player.pickup_cards(2)
 
     def hook_all_players_pre_action(self, game, player, owner, card):
         if len(player.played) == 0:
@@ -53,8 +53,10 @@ class Test_Enchantress(unittest.TestCase):
         self.assertEqual(self.vic.get_actions(), 1)
         self.vic.add_card(self.m1, "hand")
         self.vic.play_card(self.m1)
-        self.g.print_state()
         self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Ench + Moat
+        self.plr.end_turn()
+        self.plr.start_turn()
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
 ###############################################################################
