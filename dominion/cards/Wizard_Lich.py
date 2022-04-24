@@ -8,7 +8,10 @@ from dominion import Game, Card
 class Card_Lich(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_WIZARD]
+        self.cardtype = [
+            Card.TYPE_ACTION,
+            Card.TYPE_WIZARD,  # pylint: disable=no-member
+        ]
         self.base = Game.ALLIES
         self.cost = 6
         self.cards = 6
@@ -56,7 +59,7 @@ class Test_Lich(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_trash(self):
-        """ Trash the lich """
+        """Trash the lich"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Silver"]
         self.g.set_trash("Silver")
