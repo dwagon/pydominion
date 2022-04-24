@@ -8,7 +8,10 @@ from dominion import Game, Card
 class Card_Town_Crier(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = [
+            Card.TYPE_ACTION,
+            Card.TYPE_TOWNSFOLK,  # pylint: disable=no-member
+        ]
         self.base = Game.ALLIES
         self.cost = 2
         self.name = "Town Crier"
