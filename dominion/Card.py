@@ -31,7 +31,6 @@ TYPE_STATE = "state"
 TYPE_TRAVELLER = "traveller"
 TYPE_TREASURE = "treasure"
 TYPE_VICTORY = "victory"
-TYPE_WIZARD = "wizard"
 TYPE_ZOMBIE = "zombie"
 
 

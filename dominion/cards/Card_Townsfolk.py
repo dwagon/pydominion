@@ -12,6 +12,7 @@ class Card_Townsfolk(Card.Card):
         self.base = Game.ALLIES
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
         self.required_cards = ["Curse"]
+        Card.TYPE_TOWNSFOLK = "townsfolk"
 
     def setup(self, game):
         game.cardpiles["Townsfolk"] = TownsfolkCardPile(game)

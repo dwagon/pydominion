@@ -8,7 +8,11 @@ from dominion import Game, Card
 class Card_Sorcerer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_WIZARD, Card.TYPE_ATTACK]
+        self.cardtype = [
+            Card.TYPE_ACTION,
+            Card.TYPE_WIZARD,  # pylint: disable=no-member
+            Card.TYPE_ATTACK,
+        ]
         self.base = Game.ALLIES
         self.cost = 5
         self.cards = 1
@@ -37,7 +41,7 @@ class Card_Sorcerer(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    """ Possibly not the best guess, but might be good enough """
+    """Possibly not the best guess, but might be good enough"""
     return "Copper"
 
 
