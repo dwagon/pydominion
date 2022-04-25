@@ -24,6 +24,8 @@ class Ally_Market_Towns(Ally.Ally):
                 player.play_card(chc, costAction=False)
                 acts.remove(chc)
                 player.add_favors(-1)
+            else:
+                break
 
 
 ###############################################################################
