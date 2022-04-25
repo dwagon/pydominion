@@ -80,7 +80,7 @@ class Test_Barbarian(unittest.TestCase):
         self.attacker.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNone(self.victim.in_discard("Curse"))
-        self.assertIsNone(self.victim.in_discard("Gold"))
+        self.assertIsNotNone(self.victim.in_discard("Gold"))
 
 
 ###############################################################################
