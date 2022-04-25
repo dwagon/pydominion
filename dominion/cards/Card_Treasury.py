@@ -33,7 +33,10 @@ class Card_Treasury(Card.Card):
             )
             if topdeck:
                 player.add_card(self, "topdeck")
-                player.discardpile.remove(self)
+                if self in player.played:
+                    player.played.remove(self)
+                elif self in player.discardpile:
+                    player.discardpile.remove(self)
 
 
 ###############################################################################
