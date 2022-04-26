@@ -42,7 +42,13 @@ class Card_Encampment(Card.Card):
 
     def hook_cleanup(self, game, player):
         if self._discard:
-            game["Encampment"].add(self)
+            for card in player.played[:]:
+                if card.name == "Encampment":
+                    player.output("Returning Encampment to Supply")
+                    game["Encampment"].add(self)
+                    player.played.remove(self)
+                    self._discard = False
+                    return
 
 
 ###############################################################################
@@ -69,6 +75,7 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_return(self):
         """Play a Encampment and don't have anything to return"""
+        self.plr.set_discard("Copper", "Copper", "Copper", "Estate", "Estate")
         self.plr.set_hand("Silver")
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
