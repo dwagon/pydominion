@@ -21,6 +21,10 @@ class CardPile:
             self._cards.append(self.cardclass())
 
     ###########################################################################
+    def __iter__(self):
+        return CardPileIterator(self)
+
+    ###########################################################################
     def add_to_pile(self, num):
         # Extend the pile
         for _ in range(num):
@@ -75,7 +79,7 @@ class CardPile:
 
     ###########################################################################
     def top_card(self):
-        """ What is the top card of the cardpile """
+        """What is the top card of the cardpile"""
         return self._cards[-1].name
 
     ###########################################################################
@@ -104,6 +108,21 @@ class CardPile:
     ###########################################################################
     def __repr__(self):
         return f"<CardPile {self.name}: {len(self._cards)}>"
+
+
+###############################################################################
+class CardPileIterator:
+    def __init__(self, cpile):
+        self.cpile = cpile
+        self.index = 0
+
+    def __next__(self):
+        try:
+            result = self.cpile._cards[self.index]
+        except IndexError:
+            raise StopIteration  # pylint: disable=raise-missing-from
+        self.index += 1
+        return result
 
 
 # EOF

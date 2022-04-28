@@ -17,8 +17,8 @@ class Card_Estate(Card.Card):
     @classmethod
     def calc_numcards(cls, game):
         if game.numplayers == 2:
-            return 8
-        return 12
+            return 8 + game.numplayers * 3
+        return 12 + game.numplayers * 3
 
 
 # EOF
