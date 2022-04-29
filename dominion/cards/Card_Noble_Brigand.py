@@ -12,8 +12,9 @@ class Card_Noble_Brigand(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.HINTERLANDS
         self.desc = """+1 Coin. When you buy this or play it, each other player reveals
-        the top 2 cards of his deck, trashes a revealed Silver or Gold you choose,
-        and discards the rest. If he didn't reveal a Treasure, he gains a Copper. You gain the trashed cards."""
+            the top 2 cards of his deck, trashes a revealed Silver or Gold you choose,
+            and discards the rest. If he didn't reveal a Treasure, he gains a Copper.
+            You gain the trashed cards."""
         self.name = "Noble Brigand"
         self.coin = 1
         self.cost = 4
@@ -28,31 +29,34 @@ class Card_Noble_Brigand(Card.Card):
         for victim in player.attack_victims():
             cards = self.getTreasureCards(victim, player)
             if not cards:
-                victim.output("%s's Noble Brigand gave you a copper" % player.name)
+                victim.output(f"{player.name}'s Noble Brigand gave you a copper")
                 victim.gain_card("Copper")
-                return
+                continue
             ans = None
             choices = []
             for card in cards:
                 if card.name in ("Silver", "Gold"):
-                    choices.append(("Steal %s" % card.name, card))
+                    choices.append((f"Steal {card.name}", card))
             if choices:
                 ans = player.plr_choose_options("Pick a card to steal", *choices)
             for card in cards:
                 if card == ans:
+                    victim.trash_card(card)
                     victim.output(
-                        "%s's Noble Brigand stole your %s" % (player.name, card.name)
+                        f"{player.name}'s Noble Brigand trashed your {card.name}"
                     )
-                    player.output("Stole %s from %s" % (card.name, victim.name))
+                    player.output(f"Stole {card.name} from {victim.name}")
+                    game.trashpile.remove(ans)
+                    card.player = player
                     player.add_card(ans)
                 else:
                     victim.output(
-                        "%s's Noble Brigand discarded your %s"
-                        % (player.name, card.name)
+                        f"{player.name}'s Noble Brigand discarded your {card.name}"
                     )
                     victim.discard_card(card)
 
-    def getTreasureCards(self, plr, player):
+    @classmethod
+    def getTreasureCards(cls, plr, player):
         cards = []
         for _ in range(2):
             c = plr.next_card()
@@ -60,9 +64,7 @@ class Card_Noble_Brigand(Card.Card):
             if c.isTreasure():
                 cards.append(c)
             else:
-                plr.output(
-                    "%s's Noble Brigand discarded your %s" % (player.name, c.name)
-                )
+                plr.output(f"{player.name}'s Noble Brigand discarded your {c.name}")
                 plr.add_card(c, "discard")
         return cards
 
@@ -98,7 +100,9 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)
         self.assertIsNotNone(self.vic.in_discard("Silver"))
+        self.assertIsNone(self.vic.in_discard("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIsNone(self.g.in_trash("Gold"))
 
 
 ###############################################################################
