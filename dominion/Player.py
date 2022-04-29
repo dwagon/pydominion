@@ -1369,13 +1369,11 @@ class Player:
 
         # Replace is to gain a different card
         if options.get("replace"):
-            print(f"DBG {options=}")
             self.game[newcard.name].add(newcard)
             newcard = self.game[options["replace"]].remove()
             if not newcard:
                 self.output(f"No more {options['replace']}")
             else:
-                print(f"DBG {newcard=}")
                 newcard.player = self
         self.stats["gained"].append(newcard)
         if options.get("destination"):
