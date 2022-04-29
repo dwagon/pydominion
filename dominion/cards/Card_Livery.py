@@ -31,6 +31,7 @@ class Test_Livery(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Livery"].remove()
+        self.card.player = self.plr
         self.plr.add_card(self.card, "hand")
 
     def test_playcard_cost0(self):

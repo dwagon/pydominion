@@ -84,16 +84,20 @@ class Player:
         if heirlooms is None:
             heirlooms = []
 
-        self.game["Copper"].add_to_pile(7 - len(heirlooms))
         for _ in range(7 - len(heirlooms)):
-            self.deck.add(self.game["Copper"].remove())
+            card = self.game["Copper"].remove()
+            card.player = self
+            self.deck.add(card)
 
         for hl in heirlooms:
-            self.deck.add(hl.remove())
+            card = hl.remove()
+            card.player = self
+            self.deck.add(card)
 
-        self.game["Estate"].add_to_pile(3)
         for _ in range(3):
-            self.deck.add(self.game["Estate"].remove())
+            card = self.game["Estate"].remove()
+            card.player = self
+            self.deck.add(card)
 
         self.deck.shuffle()
 
@@ -333,6 +337,8 @@ class Player:
             trashopts.update(rc)
         if trashopts.get("trash", True):
             self.game.trashpile.add(card)
+            card.player = None
+            card.location = "trash"
             if card in self.played:
                 self.played.remove(card)
             elif card in self.hand:
@@ -461,6 +467,7 @@ class Player:
 
     ###########################################################################
     def add_card(self, card, pile="discard"):
+        """ Add an existing card to a new location """
         if not card:  # pragma: no cover
             return None
         assert isinstance(card, Card.Card)
@@ -473,6 +480,7 @@ class Player:
             "duration",
             "reserve",
         )
+        card.location = pile
         if pile == "discard":
             self.discardpile.add(card)
         elif pile == "hand":
@@ -856,6 +864,15 @@ class Player:
         self.buy_phase()
         self.night_phase()
         self.cleanup_phase()
+        self._check()
+
+    ###########################################################################
+    def _check(self):
+        """ DBG Is everything where it should be? """
+        for stack_name, stack in self.stacklist:
+            for card in stack:
+                assert card.location == stack_name.lower(), f"{card} {stack_name=}"
+                assert card.player == self, f"{card} {self}"
 
     ###########################################################################
     def night_phase(self):
@@ -1336,6 +1353,7 @@ class Player:
             self.output(f"No more {cardpile}")
             return None
         self.output(f"Gained a {newcard.name}")
+        newcard.player = self
         if callhook:
             rc = self.hook_gain_card(newcard)
             if rc:
@@ -1350,9 +1368,13 @@ class Player:
             self.check_unexile(newcard.name)
 
         # Replace is to gain a different card
-        if "replace" in options:
+        if options.get("replace"):
             self.game[newcard.name].add(newcard)
             newcard = self.game[options["replace"]].remove()
+            if not newcard:
+                self.output(f"No more {options['replace']}")
+            else:
+                newcard.player = self
         self.stats["gained"].append(newcard)
         if options.get("destination"):
             destination = options["destination"]

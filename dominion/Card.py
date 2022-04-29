@@ -73,6 +73,8 @@ class Card:
         self.retain_boon = False
         self.heirloom = None
         self._uuid = uuid.uuid4().hex
+        self._location = None
+        self._player = None
 
     ##########################################################################
     def check(self):
@@ -99,6 +101,24 @@ class Card:
             raise NotImplementedError(f"{self.__class__.__name__} has buy not buys")
 
     ##########################################################################
+    @property
+    def location(self):
+        return self._location
+
+    @location.setter
+    def location(self, val):
+        self._location = val
+
+    ##########################################################################
+    @property
+    def player(self):
+        return self._player
+
+    @player.setter
+    def player(self, val):
+        self._player = val
+
+    ##########################################################################
     def get_cardtype_repr(self):
         if isinstance(self.cardtype, str):
             ct = [self.cardtype]
@@ -108,7 +128,7 @@ class Card:
 
     ##########################################################################
     def __repr__(self):
-        return f"{self.name} {self._uuid}"
+        return f"{self.name} {self._uuid} {self._player}@{self._location}"
 
     ##########################################################################
     def __lt__(self, card):

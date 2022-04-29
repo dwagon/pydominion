@@ -71,13 +71,16 @@ class Game:  # pylint: disable=too-many-public-methods
         self.trashpile = PlayArea([])
         self.gameover = False
         self.current_player = None
-        self.base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
+        # The _base_cards are in every game
+        self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
         if self.prosperity:
-            self.base_cards.append("Colony")
-            self.base_cards.append("Platinum")
+            self._base_cards.append("Colony")
+            self._base_cards.append("Platinum")
+
         self.cardmapping = self._get_available_card_classes()
-        self.total_cards = 0
+        self._total_cards = 0
         self.loaded_travellers = False  # For testing purposes
+        self._cards = {}
 
     ###########################################################################
     def parse_args(self, **args):
@@ -128,7 +131,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if playernames is None:
             playernames = []
         names = playerNames[:]
-        self.loadDecks(self.initcards, self.numstacks)
+        self._load_decks(self.initcards, self.numstacks)
         self._load_events()
         self._load_ways()
         self._load_landmarks()
@@ -165,7 +168,8 @@ class Game:  # pylint: disable=too-many-public-methods
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
-        self.total_cards = self._count_cards()
+        self._total_cards = self._count_cards()
+        self._init_cardset = set(self._cards.keys())
         self.current_player = self.player_list(0)
         if self.ally:
             for plr in self.player_list():
@@ -383,11 +387,12 @@ class Game:  # pylint: disable=too-many-public-methods
         return None
 
     ###########################################################################
-    def loadDecks(self, initcards, numstacks):
+    def _load_decks(self, initcards, numstacks):
         """TODO"""
-        for card in self.base_cards:
-            cpile = CardPile(card, self.cardmapping["BaseCard"][card], self)
-            self.cardpiles[cpile.name] = cpile
+        for card in self._base_cards:
+            self._use_cardpile(self._base_cards[:], card, force=True, cardtype="BaseCard")
+            # cpile = CardPile(card, self.cardmapping["BaseCard"][card], self)
+            # self.cardpiles[cpile.name] = cpile
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -451,17 +456,20 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
-    def _use_cardpile(self, available, crd, force=False):
+    def _use_cardpile(self, available, crd, force=False, cardtype="Card"):
         """TODO"""
         try:
             available.remove(crd)
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{crd}'\n", file=sys.stderr)
             sys.exit(1)
-        cpile = CardPile(crd, self.cardmapping["Card"][crd], self)
+        cpile = CardPile(crd, self.cardmapping[cardtype][crd], self)
         if not force and not cpile.insupply:
             return 0
         self.cardpiles[cpile.name] = cpile
+        for card in cpile:
+            self._cards[card._uuid] = card
+            card.location = "cardpile"
         self.output("Playing with card %s" % self[crd].name)
         return 1
 
@@ -788,6 +796,8 @@ class Game:  # pylint: disable=too-many-public-methods
                 f"  {plr.name}: coffers=%d villagers=%d potions=%d"
                 % (plr.coffer, plr.villager, plr.potions)
             )
+            for v in self._cards.values():
+                print(f"    {v}")
 
     ###########################################################################
     def player_to_left(self, plr):
@@ -850,11 +860,13 @@ class Game:  # pylint: disable=too-many-public-methods
     def turn(self):
         """TODO"""
         try:
-            assert self._count_cards() == self.total_cards
+            assert self._count_cards() == self._total_cards
+            current_cardset = set(self._cards.keys())
+            assert self._init_cardset == current_cardset
         except AssertionError:
             self.count_all_cards()
             print(f"current = {self._count_cards()}\n", file=sys.stderr)
-            sys.stderr.write(f"original = {self.total_cards}\n")
+            sys.stderr.write(f"original = {self._total_cards}\n")
             raise
         self.current_player = self.player_to_left(self.current_player)
         self.current_player.start_turn()

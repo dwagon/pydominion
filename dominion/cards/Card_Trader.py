@@ -28,7 +28,7 @@ class Card_Trader(Card.Card):
         if card.name == "Silver":
             return {}
         silver = player.plr_choose_options(
-            "From your Trader gain {card.name} or gain a Silver instead?",
+            f"From your Trader gain {card.name} or gain a Silver instead?",
             (f"Still gain {card.name}", False),
             ("Instead gain Silver", True),
         )
