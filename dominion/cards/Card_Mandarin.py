@@ -27,15 +27,13 @@ class Card_Mandarin(Card.Card):
             cardsrc="hand",
             prompt="Put a card from your hand on top of your deck",
         )
-        player.add_card(card[0], "topdeck")
-        player.hand.remove(card[0])
+        player.move_card(card[0], "topdeck")
 
     def hook_gain_this_card(self, game, player):
         for card in player.played[:]:
             if card.isTreasure():
                 player.output("Putting %s on to deck" % card.name)
-                player.add_card(card, "topdeck")
-                player.played.remove(card)
+                player.move_card(card, "topdeck")
         return {}
 
 

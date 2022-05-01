@@ -23,8 +23,7 @@ class Card_Bounty_Hunter(Card.Card):
         if crd:
             if not player.in_exile(crd[0].name):
                 player.add_coins(3)
-            player.hand.remove(crd[0])
-            player.exile_card(crd[0])
+            player.move_card(crd[0], "exile")
 
 
 ###############################################################################

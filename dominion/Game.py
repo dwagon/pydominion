@@ -390,7 +390,9 @@ class Game:  # pylint: disable=too-many-public-methods
     def _load_decks(self, initcards, numstacks):
         """TODO"""
         for card in self._base_cards:
-            self._use_cardpile(self._base_cards[:], card, force=True, cardtype="BaseCard")
+            self._use_cardpile(
+                self._base_cards[:], card, force=True, cardtype="BaseCard"
+            )
             # cpile = CardPile(card, self.cardmapping["BaseCard"][card], self)
             # self.cardpiles[cpile.name] = cpile
         available = self.getAvailableCards()
@@ -447,7 +449,9 @@ class Game:  # pylint: disable=too-many-public-methods
     def _add_prizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self.cardpiles[prize] = PrizeCardPile(cardname=prize, game=self, pile_size=10)
+            self.cardpiles[prize] = PrizeCardPile(
+                cardname=prize, game=self, pile_size=10
+            )
         self.output("Playing with Prizes")
 
     ###########################################################################

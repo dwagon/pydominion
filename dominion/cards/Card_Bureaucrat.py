@@ -24,8 +24,7 @@ class Card_Bureaucrat(Card.Card):
             for c in pl.hand:
                 if c.isVictory():
                     pl.reveal_card(c)
-                    pl.add_card(c, "topdeck")
-                    pl.hand.remove(c)
+                    pl.move_card(c, "topdeck")
                     pl.output(
                         "Moved %s to deck due to Bureaucrat played by %s"
                         % (c.name, player.name)

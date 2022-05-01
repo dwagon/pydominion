@@ -21,7 +21,8 @@ class Card_Bandit(Card.Card):
         for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
-    def thieveOn(self, victim, bandit):
+    @classmethod
+    def thieveOn(cls, victim, bandit):
         treasures = []
         for _ in range(2):
             c = victim.next_card()

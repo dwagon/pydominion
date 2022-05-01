@@ -354,28 +354,36 @@ class Player:
         """This is used for testing"""
         self.exilepile.empty()
         for c in cards:
-            self.exilepile.add(self.game[c].remove())
+            card = self.game[c].remove()
+            card.location = "exile"
+            self.exilepile.add(card)
 
     ###########################################################################
     def set_reserve(self, *cards):
         """This is used for testing"""
         self.reserve.empty()
         for c in cards:
-            self.reserve.add(self.game[c].remove())
+            card = self.game[c].remove()
+            card.location = "reserve"
+            self.reserve.add(card)
 
     ###########################################################################
     def set_played(self, *cards):
         """This is used for testing"""
         self.played.empty()
         for c in cards:
-            self.played.add(self.game[c].remove())
+            card = self.game[c].remove()
+            card.location = "played"
+            self.played.add(card)
 
     ###########################################################################
     def set_discard(self, *cards):
         """This is used for testing"""
         self.discardpile.empty()
         for c in cards:
-            self.discardpile.add(self.game[c].remove())
+            crd = self.game[c].remove()
+            crd.location = "discard"
+            self.discardpile.add(crd)
 
     ###########################################################################
     def set_hand(self, *cards):
@@ -383,6 +391,7 @@ class Player:
         self.hand.empty()
         for cname in cards:
             card = self.game[cname].remove()
+            card.location = "hand"
             self.hand.add(card)
 
     ###########################################################################
@@ -390,7 +399,9 @@ class Player:
         """This is used for testing"""
         self.deck.empty()
         for c in cards:
-            self.deck.add(self.game[c].remove())
+            card = self.game[c].remove()
+            card.location = "deck"
+            self.deck.add(card)
 
     ###########################################################################
     def next_card(self):
@@ -466,6 +477,31 @@ class Player:
         self.coffer += num
 
     ###########################################################################
+    def remove_card(self, card):
+        """ Remove a card from wherever it is """
+        curr_loc = card.location
+        if curr_loc == "discard":
+            self.discardpile.remove(card)
+        elif curr_loc == "hand":
+            self.hand.remove(card)
+        elif curr_loc == "topdeck":
+            self.deck.remove(card)
+        elif curr_loc == "deck":
+            self.deck.remove(card)
+        elif curr_loc == "played":
+            self.played.remove(card)
+        elif curr_loc == "duration":
+            self.durationpile.remove(card)
+        elif curr_loc == "reserve":
+            self.reserve.remove(card)
+
+    ###########################################################################
+    def move_card(self, card, dest):
+        """ Move a card to {dest} cardpile """
+        self.remove_card(card)
+        return self.add_card(card, dest)
+
+    ###########################################################################
     def add_card(self, card, pile="discard"):
         """ Add an existing card to a new location """
         if not card:  # pragma: no cover
@@ -479,6 +515,7 @@ class Player:
             "played",
             "duration",
             "reserve",
+            "exile"
         )
         card.location = pile
         if pile == "discard":
@@ -495,6 +532,8 @@ class Player:
             self.durationpile.add(card)
         elif pile == "reserve":
             self.reserve.add(card)
+        elif pile == "exile":
+            self.exile_card(card)
         return card
 
     ###########################################################################

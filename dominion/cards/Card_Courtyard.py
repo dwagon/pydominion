@@ -24,8 +24,7 @@ class Card_Courtyard(Card.Card):
         if not cards:
             return
         card = cards[0]
-        player.add_card(card, "topdeck")
-        player.hand.remove(card)
+        player.move_card(card, "topdeck")
         player.output("Put %s on top of deck" % card.name)
 
 
