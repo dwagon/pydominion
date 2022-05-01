@@ -24,7 +24,7 @@ class Card_Archive(Card.Card):
             player._archive_reserve = PlayArea.PlayArea([])
         for _ in range(3):
             card = player.next_card()
-            player.output("Putting {} in the archive".format(card.name))
+            player.output(f"Putting {card.name} in the archive")
             player._archive_reserve.add(card)
             player.secret_count += 1
         self.permanent = True
@@ -33,8 +33,8 @@ class Card_Archive(Card.Card):
         options = []
         index = 0
         for card in player._archive_reserve:
-            sel = "{}".format(index)
-            toprint = "Bring back {}".format(card.name)
+            sel = f"{index}"
+            toprint = f"Bring back {card.name}"
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.user_input(options, "What card to bring back from the Archive?")

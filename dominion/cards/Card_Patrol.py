@@ -27,11 +27,11 @@ class Card_Patrol(Card.Card):
                 break
             if c.isVictory() or c.name == "Curse":
                 player.add_card(c, "hand")
-                player.output("Patrol adding {}".format(c.name))
+                player.output(f"Patrol adding {c.name}")
             else:
                 cards.add(c)
         for c in cards:
-            player.output("Putting {} back on deck".format(c.name))
+            player.output(f"Putting {c.name} back on deck")
             player.add_card(c, "topdeck")
 
 

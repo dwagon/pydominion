@@ -26,11 +26,11 @@ class Card_Catapult(Card.Card):
         card = cards[0]
         for plr in player.attack_victims():
             if card.cost >= 3:
-                plr.output("%s's Catapult Curses you" % player.name)
+                plr.output(f"{player.name}'s Catapult Curses you")
                 plr.gain_card("Curse")
             if card.isTreasure():
                 plr.output(
-                    "%s's Catapult forces you to discard down to 3 cards" % player.name
+                    f"{player.name}'s Catapult forces you to discard down to 3 cards"
                 )
                 plr.plr_discard_down_to(3)
 

@@ -25,12 +25,12 @@ class Card_Seer(Card.Card):
             c = player.next_card()
             player.reveal_card(c)
             if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
-                player.output("Putting {} into your hand".format(c))
+                player.output(f"Putting {c} into your hand")
                 player.add_card(c, "hand")
             else:
                 drawn.append(c)
         for card in drawn:
-            player.output("Putting {} back on deck".format(card))
+            player.output(f"Putting {card} back on deck")
             player.add_card(card, "topdeck")
 
 

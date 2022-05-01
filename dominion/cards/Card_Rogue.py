@@ -38,9 +38,7 @@ class Card_Rogue(Card.Card):
             if 3 <= c.cost <= 6:
                 cards.append(c)
             else:
-                victim.output(
-                    "{}'s Rogue discarded {} as unsuitable".format(player.name, c.name)
-                )
+                victim.output(f"{player.name}'s Rogue discarded {c.name} as unsuitable")
                 victim.add_card(c, "discard")
         if not cards:
             player.output("No suitable cards from %s" % victim.name)

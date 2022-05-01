@@ -24,7 +24,7 @@ class Card_Zombie_Mason(Card.Card):
     def special(self, game, player):
         topdeck = player.next_card()
         player.trash_card(topdeck)
-        player.output("Trashed {} from the top of your deck".format(topdeck.name))
+        player.output(f"Trashed {topdeck.name} from the top of your deck")
         player.plr_gain_card(topdeck.cost + 1)
 
 

@@ -88,7 +88,7 @@ class PlayArea:
         elif isinstance(a, Card.Card):
             x.append(a)
         else:
-            sys.stderr.write("Unhandled __add__ operand: {}\n".format(type(a)))
+            sys.stderr.write(f"Unhandled __add__ operand: {type(a)}\n")
         return PlayArea(x)
 
     def __iter__(self):
