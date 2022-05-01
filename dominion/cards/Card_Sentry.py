@@ -25,16 +25,16 @@ class Card_Sentry(Card.Card):
         player.output(
             "Look at the top two cards of your deck. Trash, discard or move to deck"
         )
-        player.output("Trash any/all of {}".format(self.names(cards)))
+        player.output(f"Trash any/all of {self.names(cards)}")
         to_trash = player.plr_trash_card(cardsrc=cards, num=2)
         cards = [_ for _ in cards if _ not in to_trash]
         if not cards:
             return
-        player.output("Discard any/all of {}".format(self.names(cards)))
+        player.output(f"Discard any/all of {self.names(cards)}")
         to_discard = player.plr_discard_cards(cardsrc=cards, num=2)
         to_deck = [player.add_card(_, "topdeck") for _ in cards if _ not in to_discard]
         if to_deck:
-            player.output("Moving {} to the deck".format(self.names(to_deck)))
+            player.output(f"Moving {self.names(to_deck)} to the deck")
 
     def names(self, cards):
         return ", ".join([_.name for _ in cards])

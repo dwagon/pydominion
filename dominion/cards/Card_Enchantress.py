@@ -22,9 +22,7 @@ class Card_Enchantress(Card.Card):
 
     def hook_all_players_pre_action(self, game, player, owner, card):
         if len(player.played) == 0:
-            player.output(
-                "{}'s Enchantress gazump'd your {}".format(owner.name, card.name)
-            )
+            player.output(f"{owner.name}'s Enchantress gazump'd your {card.name}")
             player.add_actions(1)
             player.pickup_card()
             return {"skip_card": True}

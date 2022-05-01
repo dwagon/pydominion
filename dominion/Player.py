@@ -1394,10 +1394,10 @@ class Player:
         """Give players option to un-exile card"""
         num = sum([1 for _ in self.exilepile if _.name == cardname])
         choices = [
-            ("Un-exile {} x {}".format(num, cardname), True),
-            ("Don't un-exile {}".format(cardname), False),
+            (f"Un-exile {num} x {cardname}", True),
+            (f"Don't un-exile {cardname}", False),
         ]
-        unex = self.plr_choose_options("Un-exile {}".format(cardname), *choices)
+        unex = self.plr_choose_options(f"Un-exile {cardname}", *choices)
         if unex:
             self.unexile(cardname)
 
@@ -1640,7 +1640,7 @@ class Player:
         try:
             assert isinstance(evnt, EventPile)
         except AssertionError:
-            print("Event={} ({})".format(evnt, type(evnt)))
+            print("Event={evnt} ({type(evnt)})")
             raise
 
         if not self.buys:

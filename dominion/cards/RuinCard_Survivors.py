@@ -23,8 +23,8 @@ class Card_Survivors(Card.Card):
         crds = player.pickup_cards(2)
         ans = player.plr_choose_options(
             "What to do with survivors?",
-            ("Discard {} and {}".format(crds[0].name, crds[1].name), "discard"),
-            ("Return {} and {} to deck".format(crds[0].name, crds[1].name), "return"),
+            (f"Discard {crds[0].name} and {crds[1].name}", "discard"),
+            (f"Return {crds[0].name} and {crds[1].name} to deck", "return"),
         )
         if ans == "discard":
             player.discard_card(crds[0])

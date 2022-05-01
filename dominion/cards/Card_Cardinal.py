@@ -24,14 +24,10 @@ class Card_Cardinal(Card.Card):
                 plr.reveal_card(crd)
                 if 3 <= crd.cost <= 6 and not exilecount:
                     plr.exile_card(crd)
-                    plr.output(
-                        "{}'s Cardinal exiled your {}".format(player.name, crd.name)
-                    )
+                    plr.output(f"{player.name}'s Cardinal exiled your {crd.name}")
                     exilecount += 1
                 else:
-                    plr.output(
-                        "{}'s Cardinal discarded your {}".format(player.name, crd.name)
-                    )
+                    plr.output(f"{player.name}'s Cardinal discarded your {crd.name}")
                     plr.discard_card(crd)
 
 

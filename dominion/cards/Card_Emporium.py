@@ -30,7 +30,7 @@ class Card_Emporium(Card.Card):
             player.add_score("Emporium", 2)
             player.output("Gained 2VP from Emporium")
         else:
-            player.output("No VP as only have {} action cards in play".format(count))
+            player.output(f"No VP as only have {count} action cards in play")
 
 
 ###############################################################################

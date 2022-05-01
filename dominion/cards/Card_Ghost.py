@@ -41,7 +41,7 @@ class Card_Ghost(Card.Card):
         if not hasattr(player, "_ghost_reserve"):
             return
         for card in player._ghost_reserve[:]:
-            player.output("Ghost playing {}".format(card.name))
+            player.output(f"Ghost playing {card.name}")
             for _ in range(2):
                 player.play_card(card, discard=False, costAction=False)
             player._ghost_reserve.remove(card)

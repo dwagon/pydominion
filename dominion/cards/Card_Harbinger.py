@@ -24,8 +24,8 @@ class Card_Harbinger(Card.Card):
         ]
         already = []
         for c in player.discardpile:
-            sel = "{}".format(index)
-            pr = "Put {} back in your deck".format(c.name)
+            sel = f"{index}"
+            pr = f"Put {c.name} back in your deck"
             if c.name in already:
                 continue
             options.append({"selector": sel, "print": pr, "card": c})

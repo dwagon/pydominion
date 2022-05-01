@@ -33,8 +33,8 @@ class Card_Imp(Card.Card):
         options = [{"selector": "0", "print": "Nothing", "card": None}]
         index = 1
         for p in sac:
-            selector = "{}".format(index)
-            toprint = "Play {} ({})".format(p.name, p.description(player))
+            selector = f"{index}"
+            toprint = f"Play {p.name} ({p.description(player)})"
             options.append({"selector": selector, "print": toprint, "card": p})
             index += 1
         o = player.user_input(options, "What card do you want to play?")

@@ -72,7 +72,7 @@ class Test_YoungWitch(unittest.TestCase):
             self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
             self.assertIsNotNone(self.victim.in_discard("Curse"))
         except AssertionError:  # pragma: no cover
-            print("Bane={}".format(self.g._bane))
+            print(f"Bane={self.g._bane}")
             self.g.print_state()
             raise
 
@@ -86,7 +86,7 @@ class Test_YoungWitch(unittest.TestCase):
         try:
             self.assertIsNone(self.victim.in_discard("Curse"))
         except AssertionError:  # pragma: no cover
-            print("Bane={}".format(self.g._bane))
+            print(f"Bane={self.g._bane}")
             self.g.print_state()
             raise
 

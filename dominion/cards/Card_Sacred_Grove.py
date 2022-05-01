@@ -19,17 +19,15 @@ class Card_SacredGrove(Card.Card):
 
     def special(self, game, player):
         b = player.receive_boon()
-        player.output("{} coin={}".format(b.name, b.coin))
+        player.output(f"{b.name} coin={b.coin}")
         if b.coin == 1:
             return
         for pl in game.player_list():
             if pl == player:
                 continue
             ch = pl.plr_choose_options(
-                "Accept a boon of {} from {}'s Sacred Grove?".format(
-                    b.name, player.name
-                ),
-                ("Accept ({})".format(b.description(pl)), True),
+                f"Accept a boon of {b.name} from {player.name}'s Sacred Grove?",
+                (f"Accept ({b.description(pl)})", True),
                 ("Refuse", False),
             )
             if ch:

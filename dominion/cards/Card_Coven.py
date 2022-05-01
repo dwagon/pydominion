@@ -26,10 +26,10 @@ class Card_Coven(Card.Card):
             if game["Curse"].is_empty():
                 num = plr.unexile("Curse")
                 plr.output(
-                    "Unexiled {} Curses from {}'s Coven".format(num, player.name)
+                    f"Unexiled {num} Curses from {player.name}'s Coven"
                 )
             else:
-                plr.output("Exiled a Curse from {}'s Coven".format(player.name))
+                plr.output(f"Exiled a Curse from {player.name}'s Coven")
 
 
 ###############################################################################

@@ -25,7 +25,7 @@ class Card_CargoShip(Card.Card):
             return None
         if not player._cargo_ship:
             choice = player.plr_choose_options(
-                "Do you want to set {} aside to play next turn?".format(card.name),
+                f"Do you want to set {card.name} aside to play next turn?",
                 ("Yes", True),
                 ("No", False),
             )

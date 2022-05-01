@@ -26,19 +26,17 @@ class Card_Villain(Card.Card):
                         from_cards.append(card)
                 if from_cards:
                     disc = vic.plr_discard_cards(
-                        prompt="{}'s Villain forcing you to discard one card".format(
-                            player.name
-                        ),
+                        prompt=f"{player.name}'s Villain forcing you to discard one card",
                         cardsrc=from_cards,
                         num=1,
                     )
-                    player.output("{} discarded {}".format(vic.name, disc[0].name))
+                    player.output(f"{vic.name} discarded {disc[0].name}")
                 else:
-                    player.output("{} had no appropriate cards".format(vic.name))
+                    player.output(f"{vic.name} had no appropriate cards")
                     for card in vic.hand:
                         vic.reveal_card(card)
             else:
-                player.output("{}'s hand size is too small".format(vic.name))
+                player.output(f"{vic.name}'s hand size is too small")
 
 
 ###############################################################################

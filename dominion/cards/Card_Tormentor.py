@@ -24,8 +24,8 @@ class Card_Tormentor(Card.Card):
             player.output("Gained an Imp")
         else:
             for pl in player.attack_victims():
-                player.output("Hexed {}".format(pl.name))
-                pl.output("Received a hex from {}'s Tormentor".format(player.name))
+                player.output(f"Hexed {pl.name}")
+                pl.output(f"Received a hex from {player.name}'s Tormentor")
                 pl.receive_hex()
 
 

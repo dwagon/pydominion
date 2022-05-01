@@ -26,8 +26,8 @@ class Card_NightWatchman(Card.Card):
         for c in cards:
             discard = player.plr_choose_options(
                 "What do you want to do?",
-                ("Discard {}".format(c.name), True),
-                ("Return {} to the deck".format(c.name), False),
+                (f"Discard {c.name}", True),
+                (f"Return {c.name} to the deck", False),
             )
             if discard:
                 player.discard_card(c)

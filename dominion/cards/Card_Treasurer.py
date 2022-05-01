@@ -24,7 +24,7 @@ class Card_Treasurer(Card.Card):
             "Choose one?",
             ("Trash a treasure from your hand", "trash"),
             (
-                "Gain a treasure from the trash ({} available)".format(len(gain_treas)),
+                f"Gain a treasure from the trash ({len(gain_treas)} available)",
                 "gain",
             ),
             ("Take the key", "key"),

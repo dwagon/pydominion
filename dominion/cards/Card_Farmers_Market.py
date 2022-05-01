@@ -18,19 +18,19 @@ class Card_FarmersMarket(Card.Card):
     def desc(self, player):
         vps = player.game["Farmers' Market"].getVP()
         if vps >= 4:
-            return "+1 Buy; Take {} VPs and trash this.".format(vps)
-        return "+1 Buy; Add 1VP to the pile and then +{} Coin.".format(vps)
+            return f"+1 Buy; Take {vps} VPs and trash this."
+        return f"+1 Buy; Add 1VP to the pile and then +{vps} Coin."
 
     def special(self, game, player):
         vps = game["Farmers' Market"].getVP()
         if vps >= 4:
             player.add_score("Farmers' Market", vps)
             player.trash_card(self)
-            player.output("Gaining {} VPs and trashing the Farmers' Market".format(vps))
+            player.output(f"Gaining {vps} VPs and trashing the Farmers' Market")
             game["Farmers' Market"].drainVP()
         else:
             vps += 1
-            player.output("Gaining {} coins".format(vps))
+            player.output(f"Gaining {vps} coins")
             player.add_coins(vps)
             game["Farmers' Market"].addVP()
 
