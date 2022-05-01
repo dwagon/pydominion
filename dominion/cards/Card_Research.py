@@ -28,7 +28,7 @@ class Card_Research(Card.Card):
         if cost == 0:
             return
         cards = player.card_sel(
-            prompt="Set aside {} cards for next turn".format(cost),
+            prompt=f"Set aside {cost} cards for next turn",
             verbs=("Set", "Unset"),
             num=cost,
             cardsrc="hand",
@@ -44,7 +44,7 @@ class Card_Research(Card.Card):
         for card in player._research:
             cards.append(card)
         for card in cards:
-            player.output("Bringing {} out from research".format(card.name))
+            player.output(f"Bringing {card.name} out from research")
             player.add_card(card, "hand")
             player._research.remove(card)
             player.secret_count -= 1

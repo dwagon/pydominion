@@ -21,12 +21,12 @@ class Card_Bauble(Card.Card):
             return {}
         mod = {}
         deck = player.plr_choose_options(
-            "Where to put %s?" % card.name,
-            ("Put %s on discard" % card.name, False),
-            ("Put %s on top of deck" % card.name, True),
+            f"Where to put {card.name}?",
+            (f"Put {card.name} on discard", False),
+            (f"Put {card.name} on top of deck", True),
         )
         if deck:
-            player.output("Putting %s on deck due to Royal Seal" % card.name)
+            player.output(f"Putting {card.name} on deck due to Royal Seal")
             mod["destination"] = "topdeck"
         return mod
 

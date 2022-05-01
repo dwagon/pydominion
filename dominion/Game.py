@@ -735,9 +735,7 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
         if self.ally:
             print(f"Ally: {self.ally.name}")
-        print(
-            "Projects: {}".format(", ".join([_.name for _ in self.projects.values()]))
-        )
+        print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
         for cpile in self.cardpiles:
             tokens = ""
             for plr in self.player_list():
