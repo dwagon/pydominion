@@ -30,10 +30,8 @@ class Card_BorderGuard(Card.Card):
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )
-        print(f"DBG {cards=}")
-        print(f"DBG {ch[0]=}")
-        player.deck.dump()  # DBG
-        player.move_card(ch[0], "hand")
+        player.add_card(ch[0], "hand")
+        cards.remove(ch[0])
         for card in cards:
             player.output(f"Putting {card.name} into the discard pile")
             player.add_card(card, "discard")
@@ -70,16 +68,14 @@ class Test_BorderGuard(unittest.TestCase):
 
     def test_play(self):
         self.plr.set_deck("Silver", "Gold")
-        self.plr.deck.dump("test_play")  # DBG
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
-        self.g.print_state()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_discard("Silver"))
 
-    def Xtest_play_actions(self):
+    def test_play_actions(self):
         self.plr.set_deck("Moat", "Guide")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
