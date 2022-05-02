@@ -34,6 +34,7 @@ class Test_Winemerchant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Wine Merchant"].remove()
+        self.card.player = self.plr
 
     def test_play(self):
         """Play a Wine Merchant"""
@@ -46,6 +47,8 @@ class Test_Winemerchant(unittest.TestCase):
         """Recover a wine merchant"""
         self.plr.coin = 2
         self.plr.set_reserve("Wine Merchant")
+        for crd in self.plr.reserve:
+            crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
         self.assertEqual(self.plr.reserve.size(), 0)

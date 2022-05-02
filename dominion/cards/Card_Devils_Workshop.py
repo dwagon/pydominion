@@ -20,7 +20,7 @@ class Card_Devils_Workshop(Card.Card):
 
     def night(self, game, player):
         nc = len(player.stats["gained"])
-        player.output("You gained {} cards this turn".format(nc))
+        player.output(f"You gained {nc} cards this turn")
         if nc >= 2:
             player.gain_card("Imp")
             player.output("Gained an Imp")

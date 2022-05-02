@@ -25,7 +25,7 @@ class Card_Idol(Card.Card):
             player.receive_boon()
         else:  # Even
             for pl in player.attack_victims():
-                pl.output("{}'s Idol cursed you".format(player.name))
+                pl.output(f"{player.name}'s Idol cursed you")
                 pl.gain_card("Curse")
 
 

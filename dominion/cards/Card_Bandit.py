@@ -21,7 +21,8 @@ class Card_Bandit(Card.Card):
         for pl in player.attack_victims():
             self.thieveOn(pl, player)
 
-    def thieveOn(self, victim, bandit):
+    @classmethod
+    def thieveOn(cls, victim, bandit):
         treasures = []
         for _ in range(2):
             c = victim.next_card()
@@ -39,7 +40,7 @@ class Card_Bandit(Card.Card):
             sel = "%s" % index
             pr = f"Trash {c.name} from {victim.name}"
             options.append({"selector": sel, "print": pr, "card": c})
-            sel = "%s" % index
+            sel = f"{index}"
             index += 1
         o = bandit.user_input(options, f"What to do to {victim.name}'s cards?")
         # Discard the ones we don't care about

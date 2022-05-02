@@ -32,8 +32,8 @@ class Card_Exorcist(Card.Card):
         idx = 0
         for card in ("Ghost", "Imp", "Will-o'-Wisp"):
             if game[card].cost < cost:
-                sel = "{}".format(idx)
-                toprint = "Get {}".format(card)
+                sel = f"{idx}"
+                toprint = f"Get {card}"
                 options.append({"selector": sel, "print": toprint, "card": card})
                 idx += 1
         if idx:

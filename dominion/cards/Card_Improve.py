@@ -36,6 +36,7 @@ class Test_Improve(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Improve"].remove()
+        self.card.player = self.plr
 
     def test_play(self):
         self.plr.set_hand("Moat")

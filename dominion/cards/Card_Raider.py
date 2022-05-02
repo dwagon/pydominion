@@ -24,16 +24,12 @@ class Card_Raider(Card.Card):
         inplay = {_.name for _ in player.played}
         for pl in player.attack_victims():
             if pl.hand.size() >= 5:
-                player.output("Raiding {}".format(pl.name))
+                player.output(f"Raiding {pl.name}")
                 todiscard = []
                 for c in pl.hand:
                     if c.name in inplay:
-                        pl.output(
-                            "{}'s Raider discarded your {}".format(player.name, c.name)
-                        )
-                        player.output(
-                            "Raider discarded {}'s {}".format(pl.name, c.name)
-                        )
+                        pl.output(f"{player.name}'s Raider discarded your {c.name}")
+                        player.output(f"Raider discarded {pl.name}'s {c.name}")
                         todiscard.append(c)
                 if not todiscard:
                     for card in pl.hand:

@@ -15,15 +15,11 @@ class Card_Temple(Card.Card):
 
     def desc(self, player):
         if player.phase == "buy":
-            return """+1 VP. Trash from 1 to 3 differently named cards from your
+            return f"""+1 VP. Trash from 1 to 3 differently named cards from your
                 hand.  Add 1 VP to the Temple Supply pile. When you gain this,
-                take the VP from the Temple Supply pile ({} VP).""".format(
-                player.game["Temple"].getVP()
-            )
-        return """+1 VP. Trash from 1 to 3 differently named cards from your hand.
-            Add 1 VP to the Temple Supply pile ({} VP).""".format(
-            player.game["Temple"].getVP()
-        )
+                take the VP from the Temple Supply pile ({player.game["Temple"].getVP()} VP)."""
+        return f"""+1 VP. Trash from 1 to 3 differently named cards from your hand.
+            Add 1 VP to the Temple Supply pile ({player.game["Temple"].getVP()} VP)."""
 
     def special(self, game, player):
         player.add_score("Temple", 1)

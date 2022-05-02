@@ -39,8 +39,8 @@ class Card_Crypt(Card.Card):
         options = []
         index = 0
         for card in player._crypt_reserve:
-            sel = "{}".format(index)
-            toprint = "Bring back {}".format(card.name)
+            sel = f"{index}"
+            toprint = f"Bring back {card.name}"
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.user_input(options, "What card to bring back from the crypt?")

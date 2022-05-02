@@ -12,9 +12,9 @@ class Card_NativeVillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
-        self.desc = """+2 Actions
-        Choose one: Set aside the top card of your deck face down on your
-        Native Village mat; or put all the cards from your mat into your hand."""
+        self.desc = """+2 Actions;
+            Choose one: Set aside the top card of your deck face down on your
+            Native Village mat; or put all the cards from your mat into your hand."""
         self.name = "Native Village"
         self.base = Game.SEASIDE
         self.actions = 2

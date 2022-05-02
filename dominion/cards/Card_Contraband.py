@@ -19,7 +19,7 @@ class Card_Contraband(Card.Card):
 
     def special(self, game, player):
         plr = game.player_to_left(player)
-        cps = [cp for cp in game.cardpiles if game.cardpiles[cp].purchasable]
+        cps = [_ for _ in game.cardpiles if game.cardpiles[_].purchasable]
         options = []
         for cp in cps:
             options.append((cp, cp))

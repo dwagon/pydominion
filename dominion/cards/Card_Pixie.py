@@ -22,11 +22,9 @@ class Card_Pixie(Card.Card):
         topboon = game.receive_boon()
         opt = player.plr_choose_options(
             "Either:",
-            ("Discard {}".format(topboon.name), False),
+            (f"Discard {topboon.name}", False),
             (
-                "Trash Pixie to get {} twice ({})".format(
-                    topboon.name, topboon.description(player)
-                ),
+                f"Trash Pixie to get {topboon.name} twice ({topboon.description(player)})",
                 True,
             ),
         )
