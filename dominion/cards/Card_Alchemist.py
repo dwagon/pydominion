@@ -33,14 +33,7 @@ class Card_Alchemist(Card.Card):
             ("Put on top of deck", True),
         )
         if ans:
-            alc = player.in_played("Alchemist")
-            if alc:
-                player.played.remove(alc)
-            else:
-                alc = player.in_discard("Alchemist")
-                if alc:
-                    player.discardpile.remove(alc)
-            player.add_card(self, "topdeck")
+            player.move_card(self, "topdeck")
 
 
 ###############################################################################

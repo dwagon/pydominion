@@ -66,8 +66,7 @@ class Card_Count(Card.Card):
             index += 1
         o = player.user_input(options, "Select card to put on top of your deck")
         player.output("Moving %s to top of deck" % o["card"].name)
-        player.add_card(o["card"], "topdeck")
-        player.hand.remove(o["card"])
+        player.move_card(o["card"], "topdeck")
 
 
 ###############################################################################

@@ -20,8 +20,7 @@ class Card_Countinghouse(Card.Card):
         count = 0
         for c in player.discardpile:
             if c.name == "Copper":
-                player.add_card(c, "hand")
-                player.discardpile.remove(c)
+                player.move_card(c, "hand")
                 count += 1
         player.output(f"Picked up {count} coppers")
 

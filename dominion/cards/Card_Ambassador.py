@@ -15,7 +15,8 @@ class Card_Ambassador(Card.Card):
         self.name = "Ambassador"
         self.cost = 5
 
-    def pick_card(self, player):
+    @classmethod
+    def pick_card(cls, player):
         while True:
             choice = player.card_sel(
                 num=2,
@@ -38,7 +39,7 @@ class Card_Ambassador(Card.Card):
         player.reveal_card(choice[0])
         player.output(f"Putting {cardname} back")
         for card in choice:
-            player.hand.remove(card)
+            player.remove_card(card)
             game[cardname].add(card)
         for plr in player.attack_victims():
             plr.output(f"Gained a {cardname} from {player.name}'s Ambassador")

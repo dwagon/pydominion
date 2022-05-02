@@ -102,7 +102,7 @@ class PlayArea:
         return self._cards[key]
 
     ###########################################################################
-    def dump(self, name):
+    def dump(self, name="PlayArea"):
         """Print out all of the playarea - for debugging purposes only"""
         print(f"---------- {name}")
         for crd in self._cards:

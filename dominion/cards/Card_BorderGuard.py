@@ -33,7 +33,7 @@ class Card_BorderGuard(Card.Card):
         player.add_card(ch[0], "hand")
         cards.remove(ch[0])
         for card in cards:
-            player.output("Putting {} into the discard pile".format(card.name))
+            player.output(f"Putting {card.name} into the discard pile")
             player.add_card(card, "discard")
 
         if nacts == ncards:
@@ -53,8 +53,7 @@ class Card_BorderGuard(Card.Card):
             ("Keep in discard", False),
         )
         if ch:
-            player.add_card(self, "topdeck")
-            player.discardpile.remove(self)
+            player.move_card(self, "topdeck")
 
 
 ###############################################################################

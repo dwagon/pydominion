@@ -1011,6 +1011,58 @@ class Test_Favor(unittest.TestCase):
 
 
 ###############################################################################
+class Test_Add_Card(unittest.TestCase):
+    """Test add_card()"""
+
+    def setUp(self):
+        self.g = Game.TestGame(numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_add(self):
+        """Add card to discard pile"""
+        self.plr.set_discard()
+        card = self.g["Copper"].remove()
+        self.plr.add_card(card, "discard")
+        self.assertEqual(card.location, "discard")
+        self.assertIsNotNone(self.plr.in_discard("Copper"))
+
+    def test_played(self):
+        """Add card to played pile"""
+        self.plr.set_played()
+        card = self.g["Copper"].remove()
+        card.location = "played"
+        self.plr.add_card(card, "played")
+        self.assertIsNotNone(self.plr.in_played("Copper"))
+
+
+###############################################################################
+class Test_Remove_Card(unittest.TestCase):
+    """Test remove_card()"""
+
+    def setUp(self):
+        self.g = Game.TestGame(numplayers=1)
+        self.g.start_game()
+        self.plr = self.g.player_list(0)
+
+    def test_discard(self):
+        """Remove card from discard pile"""
+        self.plr.set_discard("Gold")
+        card = self.plr.discardpile[0]
+        card.location = "discard"
+        self.plr.remove_card(card)
+        self.assertIsNone(self.plr.in_discard("Gold"))
+
+    def test_played(self):
+        """Remove card from played pile"""
+        self.plr.set_played("Gold")
+        card = self.plr.played[0]
+        card.location = "played"
+        self.plr.remove_card(card)
+        self.assertIsNone(self.plr.in_played("Gold"))
+
+
+###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 

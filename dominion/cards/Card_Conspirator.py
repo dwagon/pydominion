@@ -23,7 +23,7 @@ class Card_Conspirator(Card.Card):
             player.add_actions(1)
 
     def numActionsPlayed(self, player):
-        return sum([1 for c in player.played if c.isAction()])
+        return sum([1 for _ in player.played if _.isAction()])
 
 
 ###############################################################################
