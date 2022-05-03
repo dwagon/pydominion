@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Herb_Gatherer"""
 
 import unittest
 from dominion import Game, Card
@@ -21,7 +22,21 @@ class Card_Herb_Gatherer(Card.Card):
             You may rotate the Augurs."""
 
     def special(self, game, player):
-        pass
+        for crd in player.deck[:]:
+            player.move_card(crd, "discard")
+        treasures = []
+        for crd in player.discardpile:
+            if crd.isTreasure():
+                treasures.append(crd)
+        if treasures:
+            options = []
+            already = set()
+            for treas in treasures:
+                if treas.name not in already:
+                    already.add(treas.name)
+                    options.append((f"Play {treas.name}?", treas))
+            choice = player.plr_choose_options("Play a treasure?", **options)
+
 
 
 ###############################################################################
@@ -32,13 +47,13 @@ class Test_Herb_Gatherer(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g["Augurs"].remove()
             if card.name == "Herb Gatherer":
                 break
         self.card = card
 
     def test_play(self):
-        """Play a lich"""
+        """Play a card"""
         hndsz = self.plr.hand.size()
         self.plr.add_card(self.card, "hand")
         self.plr.set_discard("Estate", "Duchy", "Province", "Silver", "Gold")
@@ -46,18 +61,6 @@ class Test_Herb_Gatherer(unittest.TestCase):
         self.g.print_state()
         self.assertEqual(self.plr.hand.size(), hndsz + 6)
         self.assertEqual(self.plr.get_actions(), 2)
-
-    def test_trash(self):
-        """Trash the lich"""
-        self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Silver"]
-        self.g.set_trash("Silver")
-        self.plr.trash_card(self.card)
-        self.g.print_state()
-        self.assertIsNone(self.g.in_trash("Herb Gatherer"))
-        self.assertIsNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Herb Gatherer"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
 
 
 ###############################################################################
