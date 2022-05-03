@@ -230,7 +230,7 @@ class Player:
     ###########################################################################
     def call_reserve(self, card):
         if isinstance(card, str):
-            card = self.in_reserve(card)
+            card = self.reserve[card]
             if not card:
                 return None
         assert isinstance(card, Card.Card)
@@ -243,7 +243,7 @@ class Player:
         return card
 
     ###########################################################################
-    def in_reserve(self, cardname):
+    def Xin_reserve(self, cardname):
         """Return named card if cardname is in reserve"""
         assert isinstance(cardname, str)
         for card in self.reserve:
@@ -252,7 +252,7 @@ class Player:
         return None
 
     ###########################################################################
-    def in_hand(self, cardname):
+    def Xin_hand(self, cardname):
         """Return named card if cardname is in hand"""
         assert isinstance(cardname, str)
 
@@ -267,7 +267,7 @@ class Player:
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def in_duration(self, cardname):
+    def Xin_duration(self, cardname):
         """Return named card if cardname is in the duration pile"""
         assert isinstance(cardname, str)
 
@@ -277,7 +277,7 @@ class Player:
         return None
 
     ###########################################################################
-    def in_defer(self, cardname):
+    def Xin_defer(self, cardname):
         """Return named card if cardname is in the defer pile"""
         assert isinstance(cardname, str)
 
@@ -287,7 +287,7 @@ class Player:
         return None
 
     ###########################################################################
-    def in_exile(self, cardname):
+    def Xin_exile(self, cardname):
         """Return named card if cardname is in the exile pile"""
         assert isinstance(cardname, str)
 
@@ -297,17 +297,12 @@ class Player:
         return None
 
     ###########################################################################
-    def in_discard(self, cardname):
+    def Xin_discard(self, cardname):
         """Return named card if cardname is in the discard pile"""
-        assert isinstance(cardname, str)
-
-        for card in self.discardpile:
-            if card.name == cardname:
-                return card
-        return None
+        return self.discardpile[cardname]
 
     ###########################################################################
-    def in_played(self, cardname):
+    def Xin_played(self, cardname):
         """Return named card if cardname is in the played pile"""
         assert isinstance(cardname, str)
 
@@ -317,7 +312,7 @@ class Player:
         return None
 
     ###########################################################################
-    def in_deck(self, cardname):
+    def Xin_deck(self, cardname):
         """Return named card if cardname is in the deck pile"""
         assert isinstance(cardname, str)
 
@@ -1274,7 +1269,7 @@ class Player:
     def defer_card(self, card):
         """Set a non-duration card to be played in its entirety next turn"""
         self.deferpile.add(card)
-        if self.in_played(card.name):
+        if self.played[card.name]:
             self.played.remove(card)
 
     ###########################################################################
@@ -1403,7 +1398,7 @@ class Player:
                 options.update(rc)
 
         # check for un-exiling
-        if self.in_exile(newcard.name):
+        if self.exilepile[newcard.name]:
             self.check_unexile(newcard.name)
 
         # Replace is to gain a different card

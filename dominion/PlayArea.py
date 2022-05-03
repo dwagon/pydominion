@@ -14,9 +14,34 @@ class PlayArea:
             initial = []
         self._cards = initial
 
+    ###########################################################################
     def __repr__(self):
         return "<PlayArea: %s>" % ", ".join([c.name for c in self._cards])
 
+    ###########################################################################
+    def __contains__(self, obj) -> bool:
+        """Return True if a card {obj} or a card with name {obj} is in playarea"""
+        for card in self._cards:
+            if isinstance(obj, str):
+                if card.name == obj:
+                    return True
+            elif card == obj:
+                return True
+        return False
+
+    ###########################################################################
+    def __getitem__(self, name_or_idx):
+        """Return a card with the name {name_or_idx} or None from playarea
+        If the {name_or_idx} is a integer - return that card from that index
+        """
+        if isinstance(name_or_idx, int):
+            return self._cards[name_or_idx]
+        for card in self._cards:
+            if card.name == name_or_idx:
+                return card
+        return None
+
+    ###########################################################################
     def add(self, card):
         try:
             assert isinstance(
@@ -50,11 +75,11 @@ class PlayArea:
         return len(self._cards)
 
     def next_card(self):
-        """ Take the next card of the playarea """
+        """Take the next card of the playarea"""
         return self._cards.pop()
 
     def top_card(self):
-        """ Return the next card - but don't move it """
+        """Return the next card - but don't move it"""
         return self._cards[0]
 
     def empty(self):
@@ -98,14 +123,12 @@ class PlayArea:
     def sort(self, *args, **kwargs):
         self._cards.sort(*args, **kwargs)
 
-    def __getitem__(self, key):
-        return self._cards[key]
-
     ###########################################################################
     def dump(self, name="PlayArea"):
         """Print out all of the playarea - for debugging purposes only"""
         print(f"---------- {name}")
         for crd in self._cards:
             print(f"Card={crd}")
+
 
 # EOF
