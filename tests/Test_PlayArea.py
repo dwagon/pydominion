@@ -43,6 +43,15 @@ class Test_PlayArea(unittest.TestCase):
         self.assertEqual(s, ["a", "b"])
         self.assertNotEqual(s, ["a"])
 
+    def test_iter(self):
+        bits = ["a", "b", "c", "d"]
+        s = PlayArea.PlayArea(bits)
+        found = set()
+        for obj in s:
+            found.add(obj)
+        self.assertEqual(len(found), 4)
+        self.assertEqual(found, set(bits))
+
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
