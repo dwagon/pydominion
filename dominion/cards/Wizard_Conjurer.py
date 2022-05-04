@@ -42,7 +42,7 @@ class Test_Conjurer(unittest.TestCase):
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
         self.plr.end_turn()
         self.g.print_state()
         self.plr.start_turn()

@@ -42,8 +42,8 @@ class Test_Engineer(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Trash", "Moat"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.discardpile)
         self.assertIsNotNone(self.g.in_trash("Engineer"))
 
     def test_play_keep(self):
@@ -51,7 +51,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Silver", "Keep"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_played("Engineer"))
         self.assertIsNone(self.g.in_trash("Engineer"))
 

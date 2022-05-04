@@ -36,7 +36,7 @@ class Card_Gear(Card.Card):
 
     def duration(self, game, player):
         """... At the start of your next turn, put them into your hand"""
-        for card in player.gear_reserve[:]:
+        for card in player.gear_reserve:
             player.output("Pulling %s reserved by Gear" % card.name)
             player.add_card(card, "hand")
             player.gear_reserve.remove(card)

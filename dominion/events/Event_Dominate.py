@@ -31,7 +31,7 @@ class Test_Dominate(unittest.TestCase):
         """Perform a Dominate"""
         self.plr.add_coins(14)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIsNotNone(self.plr.discardpile["Province"])
         self.assertEqual(self.plr.get_score_details()["Dominate"], 9)
 
 

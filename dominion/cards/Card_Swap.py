@@ -48,7 +48,7 @@ class Test_Swap(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Swap"))
+        self.assertIn("Swap", self.plr.discardpile)
 
 
 ###############################################################################

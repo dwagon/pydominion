@@ -67,7 +67,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 5)
         self.assertIsNone(self.g.in_trash("Copper"))
-        self.assertIsNotNone(self.victim.in_discard("Curse"))
+        self.assertIn("Curse", self.victim.discardpile)
 
     def test_play_no_journey(self):
         """Play a giant - bad journey"""

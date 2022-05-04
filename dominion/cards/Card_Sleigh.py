@@ -52,7 +52,7 @@ class Test_Sleigh(unittest.TestCase):
         """Play a sleigh"""
         self.plr.test_input = ["Discard by default", "Put Horse into hand"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIn("Horse", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Horse"))
 
     def test_gaincard(self):
@@ -60,7 +60,7 @@ class Test_Sleigh(unittest.TestCase):
         self.plr.test_input = ["Put Estate onto your deck"]
         self.plr.gain_card("Estate")
         self.assertIsNotNone(self.plr.in_deck("Estate"))
-        self.assertIsNotNone(self.plr.in_discard("Sleigh"))
+        self.assertIn("Sleigh", self.plr.discardpile)
 
 
 ###############################################################################

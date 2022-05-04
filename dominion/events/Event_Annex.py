@@ -21,7 +21,7 @@ class Event_Annex(Event.Event):
             num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile"
         )
         keep = []
-        for card in player.discardpile[:]:
+        for card in player.discardpile:
             if card in cards:
                 keep.append(card)
             else:
@@ -60,8 +60,8 @@ class Test_Annex(unittest.TestCase):
         ]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertIsNotNone(self.plr.discardpile["Duchy"])
+        self.assertNotIn("Gold", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_deck("Gold"))
 
 

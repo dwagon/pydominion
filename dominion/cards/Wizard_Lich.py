@@ -67,8 +67,8 @@ class Test_Lich(unittest.TestCase):
         self.g.print_state()
         self.assertIsNone(self.g.in_trash("Lich"))
         self.assertIsNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.discardpile["Lich"])
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
+        self.assertIn("Lich", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

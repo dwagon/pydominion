@@ -41,7 +41,7 @@ class Test_Stampede(unittest.TestCase):
         """Use Stampede"""
         self.plr.add_coins(5)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIsNotNone(self.plr.discardpile["Horse"])
         self.assertEqual(self.plr.discardpile.size(), 5)
 
     def test_no_Stampede(self):
@@ -49,7 +49,7 @@ class Test_Stampede(unittest.TestCase):
         self.plr.set_played("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
         self.plr.add_coins(5)
         self.plr.perform_event(self.card)
-        self.assertIsNone(self.plr.in_discard("Horse"))
+        self.assertNotIn("Horse", self.plr.discardpile)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
 

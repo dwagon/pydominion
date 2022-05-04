@@ -51,8 +51,8 @@ class Test_Survivors(unittest.TestCase):
         self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)
         self.assertIsNone(self.plr.in_hand("Gold"))
         self.assertIsNone(self.plr.in_hand("Silver"))
 
@@ -61,8 +61,8 @@ class Test_Survivors(unittest.TestCase):
         self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["Return"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_discard("Silver"))
+        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Silver"))
 

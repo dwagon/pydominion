@@ -45,7 +45,7 @@ class Test_Specialist(unittest.TestCase):
         self.plr.test_input = ["Select Moat", "Gain a copy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1 + 2)
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIn("Moat", self.plr.discardpile)
 
     def test_play_again(self):
         """Play the card and play it again"""
@@ -54,7 +54,7 @@ class Test_Specialist(unittest.TestCase):
         self.plr.test_input = ["Select Moat", "Play it again"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1 + 2 + 2)
-        self.assertIsNone(self.plr.in_discard("Moat"))
+        self.assertNotIn("Moat", self.plr.discardpile)
 
 
 ###############################################################################

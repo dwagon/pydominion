@@ -50,7 +50,7 @@ class Test_Enhance(unittest.TestCase):
         self.plr.test_input = ["Trash Silver", "Get Festival"]
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Festival"))
+        self.assertIsNotNone(self.plr.discardpile["Festival"])
 
 
 ###############################################################################

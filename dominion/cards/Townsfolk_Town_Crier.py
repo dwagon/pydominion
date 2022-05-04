@@ -67,7 +67,7 @@ class Test_Town_Crier(unittest.TestCase):
         """Play a town crier - don't rotate, but get silver"""
         self.plr.test_input = ["Silver", "Don't"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIsNotNone(self.plr.discard["Silver"])
         card = self.g["Townsfolk"].remove()
         self.assertEqual(card.name, "Town Crier")
 

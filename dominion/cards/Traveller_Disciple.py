@@ -67,7 +67,7 @@ class Test_Disciple(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIn("Moat", self.plr.discardpile)
 
 
 ###############################################################################

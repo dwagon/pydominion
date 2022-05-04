@@ -45,7 +45,7 @@ class Test_CrumblingCastle(unittest.TestCase):
     def test_trash(self):
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Crumbling Castle"], 1)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

@@ -45,8 +45,8 @@ class Test_Quest(unittest.TestCase):
         self.plr.test_input = ["witch", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Witch"))
+        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.discardpile["Witch"])
 
     def test_with_curses(self):
         """Use Quest with two curse cards"""
@@ -54,8 +54,8 @@ class Test_Quest(unittest.TestCase):
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 3)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Curse"))
+        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.discardpile["Curse"])
 
     def test_with_six_cards(self):
         """Use Quest with six cards"""
@@ -63,8 +63,8 @@ class Test_Quest(unittest.TestCase):
         self.plr.test_input = ["1", "2", "3", "4", "5", "6", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 7)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Copper"))
+        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.discardpile["Copper"])
 
     def test_with_five_cards(self):
         """Use Quest with five cards"""
@@ -72,7 +72,7 @@ class Test_Quest(unittest.TestCase):
         self.plr.test_input = ["1", "2", "3", "4", "5", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 5)
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

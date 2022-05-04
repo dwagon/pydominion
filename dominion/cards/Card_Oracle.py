@@ -61,8 +61,8 @@ class Test_Oracle(unittest.TestCase):
         self.plr.set_deck("Copper", "Silver", "Gold")
         self.plr.test_input = ["discard", "top"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.vic.in_discard("Duchy"))
-        self.assertIsNotNone(self.vic.in_discard("Province"))
+        self.assertIn("Duchy", self.vic.discardpile)
+        self.assertIn("Province", self.vic.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Silver"))
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertEqual(self.plr.hand.size(), 7)

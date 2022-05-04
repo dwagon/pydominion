@@ -55,7 +55,7 @@ class Test_Moons_Gift(unittest.TestCase):
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

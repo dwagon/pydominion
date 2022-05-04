@@ -59,7 +59,7 @@ class Test_MarketSquare(unittest.TestCase):
         self.plr.test_input = ["discard"]
         self.plr.trash_card(self.plr.in_hand("Copper"))
         self.assertIsNone(self.plr.in_hand("Market Square"))
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

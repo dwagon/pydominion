@@ -56,7 +56,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIn("Province", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_deck("Silver"))
         self.assertIsNotNone(self.g.in_trash("Raze"))

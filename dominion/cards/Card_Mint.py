@@ -55,7 +55,7 @@ class Test_Mint(unittest.TestCase):
         self.plr.test_input = ["Gold", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Gold", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
 
     def test_buy(self):

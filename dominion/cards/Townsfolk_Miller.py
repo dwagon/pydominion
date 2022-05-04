@@ -48,7 +48,7 @@ class Test_Miller(unittest.TestCase):
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
         self.assertIsNone(self.plr.in_deck("Silver"))
 
 

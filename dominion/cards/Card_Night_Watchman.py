@@ -59,10 +59,10 @@ class Test_NightWatchman(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_discard("Duchy"))
-            self.assertIsNotNone(self.plr.in_discard("Province"))
-            self.assertIsNone(self.plr.in_discard("Gold"))
-            self.assertIsNone(self.plr.in_discard("Silver"))
+            self.assertIn("Duchy", self.plr.discardpile)
+            self.assertIn("Province", self.plr.discardpile)
+            self.assertNotIn("Gold", self.plr.discardpile)
+            self.assertNotIn("Silver", self.plr.discardpile)
 
             self.assertIsNone(self.plr.in_deck("Duchy"))
             self.assertIsNone(self.plr.in_deck("Province"))

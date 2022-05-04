@@ -63,8 +63,8 @@ class Test_Trader(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.set_coins(6)
         self.plr.buy_card(self.g["Gold"])
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

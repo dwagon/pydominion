@@ -15,11 +15,11 @@ class Hex_BadOmens(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        for c in player.deck[:]:
+        for c in player.deck:
             player.add_card(c, "discard")
             player.deck.remove(c)
         numcu = 0
-        for c in player.discardpile[:]:
+        for c in player.discardpile:
             if c.name == "Copper":
                 numcu += 1
                 player.add_card(c, "deck")

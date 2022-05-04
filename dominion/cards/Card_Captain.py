@@ -57,8 +57,8 @@ class Test_Captain(unittest.TestCase):
         """Make the Captain be a Workshop"""
         self.plr.test_input = ["Select Workshop", "Get Bureaucrat"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Workshop"))
-        self.assertIsNotNone(self.plr.in_discard("Bureaucrat"))
+        self.assertNotIn("Workshop", self.plr.discardpile)
+        self.assertIn("Bureaucrat", self.plr.discardpile)
 
 
 ###############################################################################

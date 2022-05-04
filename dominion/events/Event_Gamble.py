@@ -42,7 +42,7 @@ class Test_Gamble(unittest.TestCase):
         self.plr.set_deck("Gold")
         self.assertEqual(self.plr.get_buys(), 1)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIsNotNone(self.plr.discardpile["Gold"])
         self.assertEqual(self.plr.get_coins(), 3)
         self.assertEqual(self.plr.get_buys(), 1)
 
@@ -51,7 +51,7 @@ class Test_Gamble(unittest.TestCase):
         self.plr.add_coins(2)
         self.plr.set_deck("Estate", "Estate", "Copper", "Moat")
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIsNotNone(self.plr.discardpile["Moat"])
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.get_buys(), 1)

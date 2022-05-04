@@ -40,7 +40,7 @@ class Test_Advance(unittest.TestCase):
         self.plr.test_input = ["Trash moat", "Get Lurker"]
         self.plr.perform_event(self.card)
         self.assertIsNone(self.plr.in_hand("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Lurker"))
+        self.assertIsNotNone(self.plr.discardpile["Lurker"])
 
 
 ###############################################################################

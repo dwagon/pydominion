@@ -56,7 +56,7 @@ class Test_Journeyman(unittest.TestCase):
         self.plr.set_deck("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIn("Duchy", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_hand("Gold"))
         self.assertIsNotNone(self.plr.in_hand("Province"))
         self.assertIsNotNone(self.plr.in_hand("Estate"))

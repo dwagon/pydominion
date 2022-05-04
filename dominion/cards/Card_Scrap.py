@@ -120,8 +120,8 @@ class Test_Scrap(unittest.TestCase):
         self.assertIsNotNone(self.plr.in_hand("Copper"))
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Horse", self.plr.discardpile)
 
 
 ###############################################################################

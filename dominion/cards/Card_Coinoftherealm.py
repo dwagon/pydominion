@@ -37,8 +37,7 @@ class Test_Coinoftherealm(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.reserve.size(), 1)
-        c = self.plr.in_reserve("Coin of the Realm")
-        self.assertEqual(c.name, "Coin of the Realm")
+        self.assertIn("Coin of the Realm", self.plr.reserve)
 
     def test_call(self):
         """Call from Reserve"""

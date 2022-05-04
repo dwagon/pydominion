@@ -71,7 +71,7 @@ class Test_Barbarian(unittest.TestCase):
         self.victim.set_deck("Copper")
         self.attacker.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
-        self.assertIsNotNone(self.victim.in_discard("Curse"))
+        self.assertIn("Curse", self.victim.discardpile)
 
     def test_expense(self):
         """Test trashing an expensive card"""
@@ -79,8 +79,8 @@ class Test_Barbarian(unittest.TestCase):
         self.victim.test_input = ["Select Gold"]
         self.attacker.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
-        self.assertIsNone(self.victim.in_discard("Curse"))
-        self.assertIsNotNone(self.victim.in_discard("Gold"))
+        self.assertNotIn("Curse", self.victim.discardpile)
+        self.assertIn("Gold", self.victim.discardpile)
 
 
 ###############################################################################

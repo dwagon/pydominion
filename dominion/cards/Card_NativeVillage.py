@@ -47,7 +47,7 @@ class Card_NativeVillage(Card.Card):
         self.pull_back(player)
 
     def pull_back(self, player):
-        for card in player._native_map[:]:
+        for card in player._native_map:
             player.output("Returning %s from Native Map" % card.name)
             player.add_card(card, "hand")
             player._native_map.remove(card)

@@ -57,7 +57,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertIsNotNone(self.victim.in_discard("Curse"))
+        self.assertIn("Curse", self.victim.discardpile)
 
     def test_play_treasure(self):
         """Play a Catapult with a treasure"""

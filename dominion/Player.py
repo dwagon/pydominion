@@ -243,16 +243,7 @@ class Player:
         return card
 
     ###########################################################################
-    def Xin_reserve(self, cardname):
-        """Return named card if cardname is in reserve"""
-        assert isinstance(cardname, str)
-        for card in self.reserve:
-            if card.name == cardname:
-                return card
-        return None
-
-    ###########################################################################
-    def Xin_hand(self, cardname):
+    def in_hand(self, cardname):
         """Return named card if cardname is in hand"""
         assert isinstance(cardname, str)
 
@@ -267,7 +258,7 @@ class Player:
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def Xin_duration(self, cardname):
+    def in_duration(self, cardname):
         """Return named card if cardname is in the duration pile"""
         assert isinstance(cardname, str)
 
@@ -277,7 +268,7 @@ class Player:
         return None
 
     ###########################################################################
-    def Xin_defer(self, cardname):
+    def in_defer(self, cardname):
         """Return named card if cardname is in the defer pile"""
         assert isinstance(cardname, str)
 
@@ -287,7 +278,7 @@ class Player:
         return None
 
     ###########################################################################
-    def Xin_exile(self, cardname):
+    def in_exile(self, cardname):
         """Return named card if cardname is in the exile pile"""
         assert isinstance(cardname, str)
 
@@ -297,12 +288,7 @@ class Player:
         return None
 
     ###########################################################################
-    def Xin_discard(self, cardname):
-        """Return named card if cardname is in the discard pile"""
-        return self.discardpile[cardname]
-
-    ###########################################################################
-    def Xin_played(self, cardname):
+    def in_played(self, cardname):
         """Return named card if cardname is in the played pile"""
         assert isinstance(cardname, str)
 
@@ -312,7 +298,7 @@ class Player:
         return None
 
     ###########################################################################
-    def Xin_deck(self, cardname):
+    def in_deck(self, cardname):
         """Return named card if cardname is in the deck pile"""
         assert isinstance(cardname, str)
 
@@ -1233,7 +1219,7 @@ class Player:
 
     ###########################################################################
     def _spend_all_cards(self):
-        for card in self.hand[:]:
+        for card in self.hand:
             if card.isTreasure():
                 self.play_card(card)
 

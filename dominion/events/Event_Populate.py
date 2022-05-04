@@ -48,7 +48,7 @@ class Test_Populate(unittest.TestCase):
         """Use Populate"""
         self.plr.add_coins(10)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIsNotNone(self.plr.discardpile["Moat"])
 
 
 ###############################################################################

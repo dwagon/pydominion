@@ -39,7 +39,7 @@ class Test_CropRotation(unittest.TestCase):
         self.plr.test_input = ["Discard Estate"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 3 + 2 - 1)
-        self.assertIsNotNone(self.plr.in_discard("Estate"))
+        self.assertIsNotNone(self.plr.discardpile["Estate"])
 
 
 ###############################################################################

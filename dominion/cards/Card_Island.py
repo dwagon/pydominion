@@ -35,7 +35,7 @@ class Card_Island(Card.Card):
         player.secret_count += 1
 
     def hook_end_of_game(self, game, player):
-        for card in player.island_reserve[:]:
+        for card in player.island_reserve:
             player.output("Returning %s from Island" % card.name)
             player.add_card(card)
             player.island_reserve.remove(card)
@@ -57,13 +57,13 @@ class Test_Island(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
-        self.assertIsNone(self.plr.in_discard("Island"))
+        self.assertNotIn("Island", self.plr.discardpile)
         self.assertIsNone(self.plr.in_hand("Province"))
-        self.assertIsNone(self.plr.in_discard("Province"))
+        self.assertNotIn("Province", self.plr.discardpile)
         self.assertEqual(self.plr.secret_count, 2)
         self.plr.game_over()
-        self.assertIsNotNone(self.plr.in_discard("Island"))
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIn("Island", self.plr.discardpile)
+        self.assertIn("Province", self.plr.discardpile)
         score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
         self.assertEqual(score["Province"], 6)
@@ -75,10 +75,10 @@ class Test_Island(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNone(self.plr.in_played("Island"))
         self.assertIsNone(self.plr.in_hand("Island"))
-        self.assertIsNone(self.plr.in_discard("Island"))
+        self.assertNotIn("Island", self.plr.discardpile)
         self.assertEqual(self.plr.secret_count, 1)
         self.plr.game_over()
-        self.assertIsNotNone(self.plr.in_discard("Island"))
+        self.assertIn("Island", self.plr.discardpile)
         score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
 

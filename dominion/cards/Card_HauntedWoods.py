@@ -26,7 +26,7 @@ class Card_HauntedWoods(Card.Card):
         if player.has_defense(owner):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
-        for crd in player.hand[:]:
+        for crd in player.hand:
             player.add_card(crd, "topdeck")
             player.hand.remove(crd)
             player.output("Moving %s to deck" % crd.name)

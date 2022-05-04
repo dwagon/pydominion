@@ -70,7 +70,7 @@ class Test_YoungWitch(unittest.TestCase):
         try:
             self.assertIn(self.g[self.g._bane].cost, (2, 3))
             self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
-            self.assertIsNotNone(self.victim.in_discard("Curse"))
+            self.assertIn("Curse", self.victim.discardpile)
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()
@@ -84,7 +84,7 @@ class Test_YoungWitch(unittest.TestCase):
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            self.assertIsNone(self.victim.in_discard("Curse"))
+            self.assertNotIn("Curse", self.victim.discardpile)
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()

@@ -39,8 +39,7 @@ class Test_Ratcatcher(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.reserve.size(), 1)
-        c = self.plr.in_reserve("Ratcatcher")
-        self.assertEqual(c.name, "Ratcatcher")
+        self.assertIn("Ratcatcher", self.plr.reserve)
 
     def test_call(self):
         """Call from Reserve"""

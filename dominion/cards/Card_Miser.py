@@ -49,7 +49,7 @@ class Test_Miser(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["put"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_reserve("Copper"))
+        self.assertIsNotNone(self.plr.reserve["Copper"])
         self.assertEqual(self.plr.reserve.size(), 1)
         self.assertIsNone(self.plr.in_hand("Copper"))
 
@@ -58,7 +58,7 @@ class Test_Miser(unittest.TestCase):
         self.plr.set_hand("Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_reserve("Copper"))
+        self.assertIsNone(self.plr.reserve["Copper"])
         self.assertEqual(self.plr.reserve.size(), 0)
 
     def test_add(self):

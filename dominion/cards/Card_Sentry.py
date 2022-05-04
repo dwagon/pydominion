@@ -54,13 +54,13 @@ class Test_Sentry(unittest.TestCase):
         self.plr.test_input = ["Trash Copper", "Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIn("Province", self.plr.discardpile)
 
     def test_discard_keep(self):
         self.plr.set_deck("Gold", "Province", "Duchy")
         self.plr.test_input = ["Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIn("Province", self.plr.discardpile)
         self.assertIsNotNone(self.plr.in_deck("Gold"))
 
 

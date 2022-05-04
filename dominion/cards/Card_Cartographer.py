@@ -51,8 +51,8 @@ class Test_Cartographer(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_deck("Silver"))
         self.assertIsNotNone(self.plr.in_deck("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Province"))
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIn("Province", self.plr.discardpile)
+        self.assertIn("Duchy", self.plr.discardpile)
 
 
 ###############################################################################

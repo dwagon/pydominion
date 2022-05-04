@@ -35,8 +35,8 @@ class Test_Ball(unittest.TestCase):
         self.plr.test_input = ["militia", "moat"]
         self.plr.perform_event(self.card)
         self.assertTrue(self.plr.coin_token)
-        self.assertIsNotNone(self.plr.in_discard("Militia"))
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIsNotNone(self.plr.discardpile["Militia"])
+        self.assertIsNotNone(self.plr.discardpile["Moat"])
 
 
 ###############################################################################

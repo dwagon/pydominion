@@ -36,7 +36,7 @@ class Test_Conquest(unittest.TestCase):
         """Use Conquest"""
         self.plr.add_coins(6)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIsNotNone(self.plr.discardpile["Silver"])
         self.assertEqual(self.plr.discardpile.size(), 2)
         self.assertEqual(self.plr.get_score_details()["Conquest"], 2)
 

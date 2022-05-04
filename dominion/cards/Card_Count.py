@@ -48,7 +48,7 @@ class Card_Count(Card.Card):
             player.output("Gained a duchy")
             player.gain_card("Duchy")
         elif ans == "trash":
-            for c in player.hand[:]:
+            for c in player.hand:
                 player.output("Trashing %s" % c.name)
                 player.trash_card(c)
         else:

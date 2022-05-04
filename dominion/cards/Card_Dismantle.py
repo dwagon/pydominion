@@ -52,8 +52,8 @@ class Test_Dismantle(unittest.TestCase):
         self.plr.play_card(self.rcard)
         self.assertIsNotNone(self.g.in_trash("Estate"))
         self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Copper"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Copper", self.plr.discardpile)
         self.assertEqual(self.plr.hand.size(), 2)
 
 

@@ -72,7 +72,7 @@ class Test_Urchin(unittest.TestCase):
             crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase", "mercenary"]
         self.plr.turn()
-        self.assertIsNotNone(self.plr.in_discard("Mercenary"))
+        self.assertIn("Mercenary", self.plr.discardpile)
         self.assertIsNone(self.plr.in_hand("Urchin"))
 
 

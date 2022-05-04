@@ -44,13 +44,13 @@ class Test_Groom(unittest.TestCase):
         """Play Card"""
         self.plr.test_input = ["Get Moat"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIn("Horse", self.plr.discardpile)
 
     def test_playcard_victory(self):
         """Play Card"""
         self.plr.test_input = ["Get Estate"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Horse"))
+        self.assertNotIn("Horse", self.plr.discardpile)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 

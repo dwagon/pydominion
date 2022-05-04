@@ -50,8 +50,8 @@ class Test_Wanderingminstrel(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertIsNotNone(self.plr.in_deck("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

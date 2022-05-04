@@ -39,7 +39,7 @@ class Test_Stables(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 3)
 

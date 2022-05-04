@@ -60,7 +60,7 @@ class Test_Tournament(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
+        self.assertIn("Bag of Gold", self.plr.discardpile)
 
     def test_play_all_province(self):
         """Play a tournament - others have provinces"""
@@ -72,7 +72,7 @@ class Test_Tournament(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
+        self.assertIn("Bag of Gold", self.plr.discardpile)
 
 
 ###############################################################################

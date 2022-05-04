@@ -58,7 +58,7 @@ class Test_IGG(unittest.TestCase):
         """Gain an Ill-Gotten Gains"""
         self.plr.set_hand("Estate")
         self.plr.gain_card("Ill-Gotten Gains")
-        self.assertIsNotNone(self.vic.in_discard("Curse"))
+        self.assertIn("Curse", self.vic.discardpile)
 
 
 ###############################################################################

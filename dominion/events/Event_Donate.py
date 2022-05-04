@@ -18,7 +18,7 @@ class Event_Donate(Event.Event):
 
     def hook_end_turn(self, game, player):
         for area in (player.hand, player.deck, player.played, player.discardpile):
-            for card in area[:]:
+            for card in area:
                 player.add_card(card, "hand")
                 area.remove(card)
         player.plr_trash_card(

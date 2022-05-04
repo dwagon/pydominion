@@ -38,7 +38,7 @@ class Test_Hireling(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertIsNone(self.plr.in_discard("Hireling"))
+        self.assertNotIn("Hireling", self.plr.discardpile)
 
 
 ###############################################################################

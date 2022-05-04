@@ -45,7 +45,7 @@ class Test_Improve(unittest.TestCase):
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
         self.assertIsNotNone(self.g.in_trash("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Guide"))
+        self.assertIn("Guide", self.plr.discardpile)
 
 
 ###############################################################################

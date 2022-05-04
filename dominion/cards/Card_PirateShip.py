@@ -104,7 +104,7 @@ class Test_PirateShip(unittest.TestCase):
         self.vic.set_deck("Copper", "Estate")
         self.plr.test_input = ["Each other", "Finish selecting"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.vic.in_discard("Copper"))
+        self.assertIn("Copper", self.vic.discardpile)
 
     def test_spend(self):
         self.plr._pirate_ship = 2

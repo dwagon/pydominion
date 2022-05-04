@@ -42,7 +42,7 @@ class Test_Remake(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

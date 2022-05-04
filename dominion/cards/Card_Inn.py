@@ -29,7 +29,7 @@ class Card_Inn(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         cards = []
-        for card in player.discardpile[:]:
+        for card in player.discardpile:
             if card.isAction():
                 player.reveal_card(card)
                 cards.append(card)
