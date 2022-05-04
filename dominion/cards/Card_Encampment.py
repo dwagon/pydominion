@@ -42,7 +42,7 @@ class Card_Encampment(Card.Card):
 
     def hook_cleanup(self, game, player):
         if self._discard:
-            for card in player.played[:]:
+            for card in player.played:
                 if card.name == "Encampment":
                     player.output("Returning Encampment to Supply")
                     game["Encampment"].add(self)

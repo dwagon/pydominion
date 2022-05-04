@@ -27,10 +27,10 @@ class Card_Loan(Card.Card):
             player.reveal_card(c)
             if c.isTreasure():
                 break
-            player.output("Revealed and discarded %s" % c.name)
+            player.output(f"Revealed and discarded {c.name}")
             player.discard_card(c)
         discard = player.plr_choose_options(
-            "What to do?", ("Discard %s" % c.name, True), ("Trash %s" % c.name, False)
+            "What to do?", (f"Discard {c.name}", True), (f"Trash {c.name}", False)
         )
         if discard:
             player.discard_card(c)
@@ -46,30 +46,22 @@ class Test_Loan(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.loan = self.plr.gain_card("Loan", "hand")
 
-    def test_play(self):
-        self.plr.test_input = ["0"]
-        self.plr.play_card(self.loan)
-        self.assertEqual(self.plr.get_coins(), 1)
-
     def test_discard(self):
         tsize = self.g.trash_size()
         self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
-        self.plr.test_input = ["0"]
+        self.plr.test_input = ["Discard Gold"]
         self.plr.play_card(self.loan)
-        self.assertEqual(self.plr.discardpile[-1].name, "Gold")
-        for c in self.plr.discardpile[:-1]:
-            self.assertNotEqual(c.cardtype, Card.TYPE_TREASURE)
+        self.assertIn("Gold", self.plr.discardpile)
         self.assertEqual(self.g.trash_size(), tsize)
 
     def test_trash(self):
         tsize = self.g.trash_size()
         self.plr.set_deck("Estate", "Gold", "Estate", "Duchy")
-        self.plr.test_input = ["1"]
+        self.plr.test_input = ["Trash Gold"]
         self.plr.play_card(self.loan)
         self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Gold"))
-        for c in self.plr.discardpile:
-            self.assertNotEqual(c.cardtype, Card.TYPE_TREASURE)
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################
