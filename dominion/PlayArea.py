@@ -65,7 +65,7 @@ class PlayArea:
 
     ###########################################################################
     def addToTop(self, card):
-        self._cards.insert(0, card)
+        self._cards.append(card)
 
     ###########################################################################
     def shuffle(self):
@@ -87,7 +87,7 @@ class PlayArea:
     ###########################################################################
     def top_card(self):
         """Return the next card - but don't move it"""
-        return self._cards[0]
+        return self._cards[-1]
 
     ###########################################################################
     def empty(self):
