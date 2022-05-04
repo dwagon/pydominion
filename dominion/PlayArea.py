@@ -16,7 +16,7 @@ class PlayArea:
 
     ###########################################################################
     def __repr__(self):
-        return "<PlayArea: %s>" % ", ".join([c.name for c in self._cards])
+        return f"<PlayArea: {', '.join([_.name for _ in self._cards])}>"
 
     ###########################################################################
     def __contains__(self, obj) -> bool:
@@ -52,6 +52,7 @@ class PlayArea:
             raise
         self._cards.append(card)
 
+    ###########################################################################
     def remove(self, card):
         try:
             self._cards.remove(card)
@@ -62,29 +63,37 @@ class PlayArea:
             )
             raise
 
+    ###########################################################################
     def addToTop(self, card):
         self._cards.insert(0, card)
 
+    ###########################################################################
     def shuffle(self):
         random.shuffle(self._cards)
 
+    ###########################################################################
     def size(self):
         return len(self)
 
+    ###########################################################################
     def __len__(self):
         return len(self._cards)
 
+    ###########################################################################
     def next_card(self):
         """Take the next card of the playarea"""
         return self._cards.pop()
 
+    ###########################################################################
     def top_card(self):
         """Return the next card - but don't move it"""
         return self._cards[0]
 
+    ###########################################################################
     def empty(self):
         self._cards = []
 
+    ###########################################################################
     def count(self, card):
         if hasattr(card, "name"):
             cname = card.name
@@ -92,14 +101,17 @@ class PlayArea:
             cname = card
         return [_.name for _ in self._cards].count(cname)
 
+    ###########################################################################
     def is_empty(self):
         return self._cards == []
 
+    ###########################################################################
     def __eq__(self, a):
         if hasattr(a, "cards"):
             return self._cards == a.cards
         return self._cards == a
 
+    ###########################################################################
     def __add__(self, a):
         x = self._cards[:]
         if a is None:
@@ -116,19 +128,22 @@ class PlayArea:
             sys.stderr.write(f"Unhandled __add__ operand: {type(a)}\n")
         return PlayArea(x)
 
+    ###########################################################################
     def __iter__(self):
-        for c in self._cards:
+        for c in self._cards[:]:
             yield c
 
+    ###########################################################################
     def sort(self, *args, **kwargs):
         self._cards.sort(*args, **kwargs)
 
     ###########################################################################
     def dump(self, name="PlayArea"):
         """Print out all of the playarea - for debugging purposes only"""
-        print(f"---------- {name}")
+        print(f"-vvvvvvvv- {name}")
         for crd in self._cards:
             print(f"Card={crd}")
+        print(f"-^^^^^^^^- {name}")
 
 
 # EOF
