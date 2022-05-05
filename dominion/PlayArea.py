@@ -137,7 +137,7 @@ class PlayArea:
             x.append(a)
         else:
             sys.stderr.write(f"Unhandled __add__ operand: {type(a)}\n")
-        return PlayArea(x)
+        return PlayArea("", self.game, x)
 
     ###########################################################################
     def __iter__(self):
