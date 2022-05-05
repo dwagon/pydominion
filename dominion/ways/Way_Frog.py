@@ -41,7 +41,7 @@ class Test_Frog(unittest.TestCase):
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.discard_hand()
-        self.assertIsNotNone(self.plr.in_deck("Moat"))
+        self.assertIn("Moat", self.plr.deck)
 
 
 ###############################################################################

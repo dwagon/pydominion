@@ -48,8 +48,8 @@ class Test_Develop(unittest.TestCase):
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Smithy"))
+        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Smithy", self.plr.deck)
 
 
 ###############################################################################

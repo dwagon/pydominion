@@ -80,7 +80,7 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trash_size(), 0)
-        self.assertIsNotNone(self.plr.in_deck("Militia"))
+        self.assertIn("Militia", self.plr.deck)
 
     def test_loot_empty(self):
         """Play a grave robber - looting the trash that doesn't have anything"""

@@ -50,7 +50,7 @@ class Test_Donate(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
-        self.assertIsNone(self.plr.in_deck("Gold"))
+        self.assertNotIn("Gold", self.plr.deck)
         self.assertEqual(self.g.trash_size(), tsize + 3)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)

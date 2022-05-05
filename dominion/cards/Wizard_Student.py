@@ -55,7 +55,7 @@ class Test_Student(unittest.TestCase):
         favs = self.plr.get_favors()
         self.plr.play_card(card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
-        self.assertIsNotNone(self.plr.in_deck("Student"))
+        self.assertIn("Student", self.plr.deck)
         self.assertEqual(self.plr.get_favors(), favs + 1)
 
     def test_play_trash_non_treas(self):
@@ -70,7 +70,7 @@ class Test_Student(unittest.TestCase):
         favs = self.plr.get_favors()
         self.plr.play_card(card)
         self.assertIsNotNone(self.g.in_trash("Estate"))
-        self.assertIsNone(self.plr.in_deck("Student"))
+        self.assertNotIn("Student", self.plr.deck)
         self.assertEqual(self.plr.get_favors(), favs)
 
     def test_play_trash_rotate(self):

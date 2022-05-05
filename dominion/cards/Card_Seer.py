@@ -49,7 +49,7 @@ class Test_Seer(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_deck("Copper"))
+        self.assertIn("Copper", self.plr.deck)
         self.assertIn("Province", self.plr.hand)
         self.assertIn("Silver", self.plr.hand)
         self.assertIn("Estate", self.plr.hand)

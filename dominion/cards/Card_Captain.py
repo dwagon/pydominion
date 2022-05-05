@@ -51,7 +51,7 @@ class Test_Captain(unittest.TestCase):
         """Make the Captain be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
+        self.assertIn("Silver", self.plr.deck)
 
     def test_play_market(self):
         """Make the Captain be a Workshop"""

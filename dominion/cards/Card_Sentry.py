@@ -61,7 +61,7 @@ class Test_Sentry(unittest.TestCase):
         self.plr.test_input = ["Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
         self.assertIn("Province", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

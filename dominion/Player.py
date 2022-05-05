@@ -258,16 +258,6 @@ class Player:
         return None
 
     ###########################################################################
-    def in_deck(self, cardname):
-        """Return named card if cardname is in the deck pile"""
-        assert isinstance(cardname, str)
-
-        for card in self.deck:
-            if card.name == cardname:
-                return card
-        return None
-
-    ###########################################################################
     def trash_card(self, card, **kwargs):
         """Take a card out of the game"""
         assert isinstance(card, Card.Card)

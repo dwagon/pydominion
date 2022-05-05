@@ -101,8 +101,8 @@ class Test_Doctor(unittest.TestCase):
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
-        self.assertIsNotNone(self.plr.in_deck("Duchy"))
+        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Duchy", self.plr.deck)
 
     def test_buy(self):
         """Buy a Doctor"""

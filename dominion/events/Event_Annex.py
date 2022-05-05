@@ -62,7 +62,7 @@ class Test_Annex(unittest.TestCase):
         self.assertEqual(self.plr.debt, 8)
         self.assertIsNotNone(self.plr.discardpile["Duchy"])
         self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

@@ -42,7 +42,7 @@ class Test_TravellingFair(unittest.TestCase):
         self.plr.gain_card("Gold")
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIsNone(self.plr.in_deck("Gold"))
+        self.assertNotIn("Gold", self.plr.deck)
 
     def test_play_deck(self):
         """Perform a Travelling Fair and deck the card"""
@@ -53,7 +53,7 @@ class Test_TravellingFair(unittest.TestCase):
         self.g.print_state()
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

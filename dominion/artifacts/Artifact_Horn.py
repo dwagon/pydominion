@@ -29,7 +29,7 @@ class Test_Horn(unittest.TestCase):
         self.plr.assign_artifact("Horn")
         self.plr.test_input = ["Put into hand"]
         self.plr.discard_card(self.card)
-        self.assertIsNotNone(self.plr.in_deck("Border Guard"))
+        self.assertIn("Border Guard", self.plr.deck)
         self.assertNotIn("Border Guard", self.plr.discardpile)
 
 

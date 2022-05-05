@@ -33,7 +33,7 @@ class Test_Greed(unittest.TestCase):
         self.plr.set_deck("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.discardpile["Cursed Village"])
-        self.assertIsNotNone(self.plr.in_deck("Copper"))
+        self.assertIn("Copper", self.plr.deck)
 
 
 ###############################################################################

@@ -59,7 +59,7 @@ class Test_Sleigh(unittest.TestCase):
         """Gain a card while Sleigh in hand"""
         self.plr.test_input = ["Put Estate onto your deck"]
         self.plr.gain_card("Estate")
-        self.assertIsNotNone(self.plr.in_deck("Estate"))
+        self.assertIn("Estate", self.plr.deck)
         self.assertIn("Sleigh", self.plr.discardpile)
 
 

@@ -328,25 +328,6 @@ class Test_attack_victims(unittest.TestCase):
 
 
 ###############################################################################
-class Test_in_deck(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1)
-        self.g.start_game()
-        self.plr = self.g.player_list(0)
-
-    def test_indeck(self):
-        """Test card is in deck"""
-        self.plr.set_deck("Copper")
-        self.assertTrue(self.plr.in_deck("Copper"))
-        self.assertEqual(self.plr.in_deck("Copper").name, "Copper")
-
-    def test_notindeck(self):
-        """Test card that isn't in deck"""
-        self.plr.set_deck("Copper")
-        self.assertFalse(self.plr.in_deck("Estate"))
-
-
-###############################################################################
 class Test_gain_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1)
