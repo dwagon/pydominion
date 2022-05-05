@@ -21,7 +21,7 @@ class Card_CargoShip(Card.Card):
 
     ###########################################################################
     def hook_gain_card(self, game, player, card):
-        if not player.in_duration("Cargo Ship"):
+        if "Cargo Ship" not in player.durationpile:
             return None
         if not player._cargo_ship:
             choice = player.plr_choose_options(
