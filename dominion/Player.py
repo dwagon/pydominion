@@ -248,16 +248,6 @@ class Player:
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def in_defer(self, cardname):
-        """Return named card if cardname is in the defer pile"""
-        assert isinstance(cardname, str)
-
-        for card in self.deferpile:
-            if card.name == cardname:
-                return card
-        return None
-
-    ###########################################################################
     def in_exile(self, cardname):
         """Return named card if cardname is in the exile pile"""
         assert isinstance(cardname, str)
