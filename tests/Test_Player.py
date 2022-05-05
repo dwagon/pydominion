@@ -75,36 +75,6 @@ class Test_discard_hand(unittest.TestCase):
 
 
 ###############################################################################
-class Test_in_played(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1)
-        self.g.start_game()
-        self.plr = self.g.player_list(0)
-
-    def test_emptydiscard(self):
-        """Test in_played() with no played pile"""
-        self.plr.set_played()
-        self.assertIsNone(self.plr.in_played("Copper"))
-
-    def test_indiscard(self):
-        """Test in_played() with it the only card in the played pile"""
-        self.plr.set_played("Copper")
-        self.assertIsNotNone(self.plr.in_played("Copper"))
-
-    def test_inmultidiscard(self):
-        """Test in_played() with it one of many cards in the played pile"""
-        self.plr.set_played("Copper", "Gold", "Copper")
-        c = self.plr.in_played("Gold")
-        self.assertIsNotNone(c)
-        self.assertEqual(c.name, "Gold")
-
-    def test_notinmultidiscard(self):
-        """Test in_played() with it not one of many cards in the played pile"""
-        self.plr.set_played("Copper", "Gold", "Copper")
-        self.assertIsNone(self.plr.in_played("Estate"))
-
-
-###############################################################################
 class Test_next_card(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1)
@@ -956,7 +926,7 @@ class Test_Add_Card(unittest.TestCase):
         card = self.g["Copper"].remove()
         card.location = "played"
         self.plr.add_card(card, "played")
-        self.assertIsNotNone(self.plr.in_played("Copper"))
+        self.assertIn("Copper", self.plr.played)
 
 
 ###############################################################################
@@ -982,7 +952,7 @@ class Test_Remove_Card(unittest.TestCase):
         card = self.plr.played[0]
         card.location = "played"
         self.plr.remove_card(card)
-        self.assertIsNone(self.plr.in_played("Gold"))
+        self.assertNotIn("Gold", self.plr.played)
 
 
 ###############################################################################

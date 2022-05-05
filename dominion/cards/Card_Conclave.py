@@ -21,7 +21,7 @@ class Card_Conclave(Card.Card):
         if not ac:
             player.output("No actions to play")
             return
-        sac = [_ for _ in ac if not player.in_played(_.name)]
+        sac = [_ for _ in ac if _.name not in player.played]
         if not sac:
             player.output("No suitable actions to play")
             return

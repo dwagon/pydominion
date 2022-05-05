@@ -48,7 +48,7 @@ class Test_Rat(unittest.TestCase):
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.discardpile["Moat"])
         self.assertIsNotNone(self.plr.discardpile["Copper"])
-        self.assertIsNotNone(self.plr.in_played("Moat"))
+        self.assertIn("Moat", self.plr.played)
         self.assertNotIn("Copper", self.plr.hand)
 
 

@@ -59,7 +59,7 @@ class Test_Mandarin(unittest.TestCase):
         self.plr.set_played("Gold", "Duchy")
         self.plr.gain_card("Mandarin")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertIsNotNone(self.plr.in_played("Duchy"))
+        self.assertIn("Duchy", self.plr.played)
 
 
 ###############################################################################

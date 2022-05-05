@@ -40,7 +40,7 @@ class Test_Vassal(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.plr.in_played("Moat"))
+        self.assertIn("Moat", self.plr.played)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_play_non_action(self):

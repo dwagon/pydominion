@@ -25,7 +25,7 @@ class Card_Alchemist(Card.Card):
         # We have to check the discardpile as well
         if source != "played":
             return
-        if not player.in_played("Potion") and not player.discardpile["Potion"]:
+        if "Potion" not in player.played and "Potion" not in player.discardpile:
             return
         ans = player.plr_choose_options(
             "What to do with the alchemist?",

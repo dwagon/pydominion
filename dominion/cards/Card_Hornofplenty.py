@@ -49,7 +49,7 @@ class Test_Hornofplenty(unittest.TestCase):
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_played("Horn of Plenty"))
+        self.assertIn("Horn of Plenty", self.plr.played)
 
     def test_play_victory(self):
         """Horn of Plenty - gaining a victory card"""
@@ -57,7 +57,7 @@ class Test_Hornofplenty(unittest.TestCase):
         self.plr.test_input = ["Get Duchy"]
         self.plr.play_card(self.card)
         self.assertIn("Duchy", self.plr.discardpile)
-        self.assertIsNone(self.plr.in_played("Horn of Plenty"))
+        self.assertNotIn("Horn of Plenty", self.plr.played)
         self.assertIsNotNone(self.g.in_trash("Horn of Plenty"))
 
     def test_play_nothing(self):
@@ -66,7 +66,7 @@ class Test_Hornofplenty(unittest.TestCase):
         self.plr.test_input = ["finish selecting"]
         self.plr.play_card(self.card)
         self.assertNotIn("Duchy", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_played("Horn of Plenty"))
+        self.assertIn("Horn of Plenty", self.plr.played)
         self.assertIsNone(self.g.in_trash("Horn of Plenty"))
 
 

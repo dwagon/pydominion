@@ -52,7 +52,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.test_input = ["Get Silver", "Keep"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_played("Engineer"))
+        self.assertIn("Engineer", self.plr.played)
         self.assertIsNone(self.g.in_trash("Engineer"))
 
 

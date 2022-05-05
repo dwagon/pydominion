@@ -248,16 +248,6 @@ class Player:
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def in_played(self, cardname):
-        """Return named card if cardname is in the played pile"""
-        assert isinstance(cardname, str)
-
-        for card in self.played:
-            if card.name == cardname:
-                return card
-        return None
-
-    ###########################################################################
     def trash_card(self, card, **kwargs):
         """Take a card out of the game"""
         assert isinstance(card, Card.Card)

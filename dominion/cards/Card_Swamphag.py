@@ -45,7 +45,7 @@ class Test_Swamphag(unittest.TestCase):
         self.assertEqual(self.attacker.durationpile[0].name, "Swamp Hag")
         self.assertIn("Curse", self.victim.discardpile)
         self.attacker.start_turn()
-        self.assertIsNotNone(self.attacker.in_played("Swamp Hag"))
+        self.assertIn("Swamp Hag", self.attacker.played)
         self.assertEqual(self.attacker.get_coins(), 3)
 
 

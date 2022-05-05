@@ -55,7 +55,7 @@ class Test_Island(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_played("Island"))
+        self.assertNotIn("Island", self.plr.played)
         self.assertNotIn("Island", self.plr.hand)
         self.assertNotIn("Island", self.plr.discardpile)
         self.assertNotIn("Province", self.plr.hand)
@@ -73,7 +73,7 @@ class Test_Island(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_played("Island"))
+        self.assertNotIn("Island", self.plr.played)
         self.assertNotIn("Island", self.plr.hand)
         self.assertNotIn("Island", self.plr.discardpile)
         self.assertEqual(self.plr.secret_count, 1)

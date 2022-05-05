@@ -59,7 +59,7 @@ class Test_Herald(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1 + 1)
-        self.assertIsNotNone(self.plr.in_played("Moat"))
+        self.assertIn("Moat", self.plr.played)
 
     def test_buy(self):
         """Buy a Herald"""
