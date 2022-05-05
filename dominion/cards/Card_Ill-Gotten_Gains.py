@@ -51,7 +51,7 @@ class Test_IGG(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gain(self):

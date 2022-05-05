@@ -54,7 +54,7 @@ class Test_Vagrant(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertTrue(self.plr.in_hand("Province"))
+        self.assertIn("Province", self.plr.hand)
 
 
 ###############################################################################

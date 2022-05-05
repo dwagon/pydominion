@@ -70,7 +70,7 @@ class Test_Artificer(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(self.plr.deck[0].name, "Silver")
 
 

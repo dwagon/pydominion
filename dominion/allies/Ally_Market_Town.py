@@ -45,7 +45,7 @@ class Test_Market_Towns(unittest.TestCase):
         hndsz = self.plr.hand.size()
         self.plr.buy_phase()
         self.assertIsNotNone(self.plr.in_played("Moat"))
-        self.assertIsNone(self.plr.in_hand("Moat"))
+        self.assertNotIn("Moat", self.plr.hand)
         self.assertEqual(self.plr.get_favors(), 2)
         self.assertEqual(self.plr.hand.size(), hndsz + 2 - 1)   # Moat - played
 

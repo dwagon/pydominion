@@ -89,7 +89,7 @@ class Test_Scrap(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Province"))
+        self.assertIn("Province", self.plr.hand)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
@@ -117,7 +117,7 @@ class Test_Scrap(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIn("Silver", self.plr.discardpile)

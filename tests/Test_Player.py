@@ -246,7 +246,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertEqual(len(x), 2)
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
 
     def test_Trash(self):
         tsize = self.g.trash_size()
@@ -344,25 +344,6 @@ class Test_in_deck(unittest.TestCase):
         """Test card that isn't in deck"""
         self.plr.set_deck("Copper")
         self.assertFalse(self.plr.in_deck("Estate"))
-
-
-###############################################################################
-class Test_in_hand(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1)
-        self.g.start_game()
-        self.plr = self.g.player_list(0)
-
-    def test_inhand(self):
-        """Test card is in hand"""
-        self.plr.set_hand("Copper")
-        self.assertTrue(self.plr.in_hand("Copper"))
-        self.assertEqual(self.plr.in_hand("Copper").name, "Copper")
-
-    def test_notinhand(self):
-        """Test card that isn't in hand"""
-        self.plr.set_hand("Copper")
-        self.assertFalse(self.plr.in_hand("Estate"))
 
 
 ###############################################################################
@@ -513,11 +494,6 @@ class Test_misc(unittest.TestCase):
         self.assertEqual(self.plr.coststr(witch), "3 Coins")
         self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
         self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
-
-    def test_in_hand(self):
-        self.plr.set_hand("Silver")
-        self.assertFalse(self.plr.in_hand("Gold"))
-        self.assertTrue(self.plr.in_hand("Silver"))
 
     def test_get_potions(self):
         self.plr.potions = 3

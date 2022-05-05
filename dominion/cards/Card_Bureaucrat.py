@@ -49,7 +49,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.victim.set_deck("Silver")
         self.plr.play_card(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, "Estate")
-        self.assertIsNone(self.victim.in_hand("Estate"))
+        self.assertNotIn("Estate", self.victim.hand)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
     def test_novictory(self):
@@ -66,7 +66,7 @@ class Test_Bureaucrat(unittest.TestCase):
         self.plr.play_card(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertEqual(self.victim.deck[-1].name, "Province")
-        self.assertIsNotNone(self.victim.in_hand("Estate"))
+        self.assertIn("Estate", self.victim.hand)
 
 
 ###############################################################################

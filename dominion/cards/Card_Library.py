@@ -69,7 +69,7 @@ class Test_Library(unittest.TestCase):
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.deck[-1].name, "Duchy")
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertTrue(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
 
 
 ###############################################################################

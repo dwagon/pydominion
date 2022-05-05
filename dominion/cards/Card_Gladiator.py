@@ -28,7 +28,7 @@ class Card_Gladiator(Card.Card):
         )
         player.reveal_card(mycard[0])
         lefty = game.player_to_left(player)
-        leftycard = lefty.in_hand(mycard[0].name)
+        leftycard = lefty.hand[mycard[0].name]
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.add_coins(1)

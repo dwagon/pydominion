@@ -50,7 +50,7 @@ class Test_Hamlet(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Silver", self.plr.hand)
 
     def test_discard_buy(self):
         """Play a hamlet and discard to gain a buy"""
@@ -59,7 +59,7 @@ class Test_Hamlet(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNone(self.plr.in_hand("Gold"))
+        self.assertNotIn("Gold", self.plr.hand)
 
 
 ###############################################################################

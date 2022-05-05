@@ -49,7 +49,7 @@ class Test_Rat(unittest.TestCase):
         self.assertIsNotNone(self.plr.discardpile["Moat"])
         self.assertIsNotNone(self.plr.discardpile["Copper"])
         self.assertIsNotNone(self.plr.in_played("Moat"))
-        self.assertIsNone(self.plr.in_hand("Copper"))
+        self.assertNotIn("Copper", self.plr.hand)
 
 
 ###############################################################################

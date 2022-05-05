@@ -76,7 +76,7 @@ class Test_Watchtower(unittest.TestCase):
             self.assertEqual(self.g.trash_size(), tsize + 1)
             self.assertEqual(self.g.trashpile[-1].name, "Copper")
             self.assertEqual(self.plr.hand.size(), 2)
-            self.assertEqual(self.plr.in_hand("Copper"), None)
+            self.assertNotIn("Copper", self.plr.hand)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -91,7 +91,7 @@ class Test_Watchtower(unittest.TestCase):
         try:
             self.assertEqual(self.g.trash_size(), tsize)
             self.assertEqual(self.plr.hand.size(), 2)
-            self.assertEqual(self.plr.in_hand("Silver"), None)
+            self.assertNotIn("Silver", self.plr.hand)
             c = self.plr.next_card()
             self.assertEqual(c.name, "Silver")
         except AssertionError:  # pragma: no cover

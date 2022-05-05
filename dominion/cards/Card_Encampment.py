@@ -21,8 +21,8 @@ class Card_Encampment(Card.Card):
         self._discard = False
 
     def special(self, game, player):
-        gld = player.in_hand("Gold")
-        pln = player.in_hand("Plunder")
+        gld = player.hand["Gold"]
+        pln = player.hand["Plunder"]
         if gld or pln:
             self._discard = False
             chc = player.plr_choose_options(

@@ -56,8 +56,8 @@ class Test_Raider(unittest.TestCase):
         try:
             self.assertIn("Gold", self.vic.discardpile)
             self.assertIn("Silver", self.vic.discardpile)
-            self.assertIsNone(self.vic.in_hand("Gold"))
-            self.assertIsNone(self.vic.in_hand("Silver"))
+            self.assertNotIn("Gold", self.vic.hand)
+            self.assertNotIn("Silver", self.vic.hand)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

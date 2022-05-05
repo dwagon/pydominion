@@ -49,7 +49,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.start_turn()
         self.plr.gain_card("Moat")
         self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)
-        self.assertIsNotNone(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
         self.assertNotIn("Moat", self.plr.discardpile)
 
     def test_dontplay(self):
@@ -58,7 +58,7 @@ class Test_Innovation(unittest.TestCase):
         self.plr.start_turn()
         self.plr.gain_card("Moat")
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIsNone(self.plr.in_hand("Moat"))
+        self.assertNotIn("Moat", self.plr.hand)
         self.assertIsNotNone(self.plr.discardpile["Moat"])
 
 

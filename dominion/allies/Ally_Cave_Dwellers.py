@@ -52,7 +52,7 @@ class Test_CaveDwellers(unittest.TestCase):
         self.plr.test_input = ["Spend", "Discard Estate", "Spend", "Discard Duchy"]
         self.plr.start_turn()
         self.assertEqual(self.plr.get_favors(), 2 - 2)
-        self.assertIsNone(self.plr.in_hand("Estate"))
+        self.assertNotIn("Estate", self.plr.hand)
         self.assertIsNotNone(self.plr.discardpile["Duchy"])
 
 

@@ -50,9 +50,9 @@ class Test_Seer(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertIsNotNone(self.plr.in_deck("Copper"))
-        self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

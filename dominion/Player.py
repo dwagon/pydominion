@@ -243,16 +243,6 @@ class Player:
         return card
 
     ###########################################################################
-    def in_hand(self, cardname):
-        """Return named card if cardname is in hand"""
-        assert isinstance(cardname, str)
-
-        for card in self.hand:
-            if card.name == cardname:
-                return card
-        return None
-
-    ###########################################################################
     def reveal_card(self, card):
         self.game.output(f"{self.name} reveals {card.name}")
         card.hook_revealThisCard(game=self.game, player=self)

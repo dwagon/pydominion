@@ -23,13 +23,13 @@ class Card_Tournament(Card.Card):
         found = False
         for plr in game.player_list():
             if plr != player:
-                prov = plr.in_hand("Province")
+                prov = plr.hand["Province"]
                 if prov:
                     plr.reveal_card(prov)
                     found = True
-        if player.in_hand("Province"):
+        if "Province" in player.hand:
             player.output("Province revealed so gain a prize")
-            player.discard_card(player.in_hand("Province"))
+            player.discard_card(player.hand["Province"])
             player.gain_prize()
         if not found:
             player.output("No Province revealed")

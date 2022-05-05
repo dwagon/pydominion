@@ -52,7 +52,7 @@ class Test_MountainVillage(unittest.TestCase):
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertNotIn("Gold", self.plr.discardpile)
 
 

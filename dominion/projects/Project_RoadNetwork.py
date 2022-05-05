@@ -39,14 +39,14 @@ class Test_RoadNetwork(unittest.TestCase):
         self.plr.set_deck("Gold")
         self.other.gain_card("Duchy")
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
 
     def test_not_victory(self):
         self.plr.assign_project("Road Network")
         self.plr.set_deck("Gold")
         self.other.gain_card("Copper")
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIsNone(self.plr.in_hand("Gold"))
+        self.assertNotIn("Gold", self.plr.hand)
 
 
 ###############################################################################

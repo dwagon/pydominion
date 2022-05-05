@@ -17,7 +17,7 @@ class Card_Explorer(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        prov = player.in_hand("Province")
+        prov = player.hand["Province"]
         if prov:
             player.reveal_card(prov)
             player.gain_card("Gold", destination="hand")
@@ -37,13 +37,13 @@ class Test_Explorer(unittest.TestCase):
     def test_province(self):
         self.plr.gain_card("Province", "hand")
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         # 5 + province + gold
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_no_province(self):
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), 6)
 
 

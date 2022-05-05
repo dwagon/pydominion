@@ -68,7 +68,7 @@ class Test_Sycophant(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_favors(), favs)
         self.assertEqual(self.plr.get_coins(), coin + 3)
-        self.assertIsNone(self.plr.in_hand("Province"))
+        self.assertNotIn("Province", self.plr.hand)
 
 
 ###############################################################################

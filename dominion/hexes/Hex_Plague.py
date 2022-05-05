@@ -33,7 +33,7 @@ class Test_Plague(unittest.TestCase):
     def test_plague(self):
         self.plr.set_deck("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertIsNotNone(self.plr.in_hand("Curse"))
+        self.assertIn("Curse", self.plr.hand)
 
 
 ###############################################################################

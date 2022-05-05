@@ -59,15 +59,15 @@ class Test_Gear(unittest.TestCase):
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.hand.size(), 1 + 2)  # Duchy + 2 picked up
-            self.assertIsNotNone(self.plr.in_hand("Duchy"))
+            self.assertIn("Duchy", self.plr.hand)
             self.assertEqual(self.plr.durationpile.size(), 1)
             self.plr.end_turn()
             self.plr.start_turn()
             self.assertEqual(self.plr.durationpile.size(), 0)
             self.assertEqual(self.plr.played.size(), 1)
             self.assertEqual(self.plr.played[-1].name, "Gear")
-            self.assertIsNotNone(self.plr.in_hand("Silver"))
-            self.assertIsNotNone(self.plr.in_hand("Gold"))
+            self.assertIn("Silver", self.plr.hand)
+            self.assertIn("Gold", self.plr.hand)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

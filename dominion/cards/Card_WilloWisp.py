@@ -44,8 +44,8 @@ class Test_WilloWisp(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Copper", self.plr.hand)
+        self.assertIn("Estate", self.plr.hand)
 
     def test_special_expensive(self):
         self.plr.set_hand()
@@ -54,9 +54,9 @@ class Test_WilloWisp(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNone(self.plr.in_hand("Gold"))
+        self.assertNotIn("Gold", self.plr.hand)
         self.assertIsNotNone(self.plr.in_deck("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

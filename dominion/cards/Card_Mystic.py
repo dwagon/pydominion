@@ -68,7 +68,7 @@ class Test_Mystic(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertTrue(self.plr.in_hand("Province"))
+        self.assertIn("Province", self.plr.hand)
         self.assertTrue(self.plr.deck.is_empty())
 
     def test_bad(self):
@@ -79,8 +79,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertTrue(not self.plr.in_hand("Gold"))
-        self.assertTrue(not self.plr.in_hand("Province"))
+        self.assertNotIn("Gold", self.plr.hand)
+        self.assertNotIn("Province", self.plr.hand)
         self.assertEqual(self.plr.deck[-1].name, "Province")
 
 

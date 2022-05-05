@@ -70,7 +70,7 @@ class Test_Advisor(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
         self.assertIn("Gold", self.plr.discardpile)
-        self.assertIsNone(self.plr.in_hand("Gold"))
+        self.assertNotIn("Gold", self.plr.hand)
 
 
 ###############################################################################

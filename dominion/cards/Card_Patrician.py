@@ -52,7 +52,7 @@ class Test_Patrician(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
 
 
 ###############################################################################

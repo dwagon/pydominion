@@ -46,7 +46,7 @@ class Test_Scheme(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.test_input = ["moat"]
         self.plr.cleanup_phase()
-        self.assertIsNotNone(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
         self.assertIn("Scheme", self.plr.discardpile)
 
 

@@ -34,7 +34,7 @@ class Test_Lantern(unittest.TestCase):
         self.plr.test_input = ["Select Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertIsNotNone(self.plr.discardpile["Silver"])
         self.assertIsNotNone(self.plr.discardpile["Province"])
 
@@ -43,7 +43,7 @@ class Test_Lantern(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
         self.assertIsNotNone(self.plr.discardpile["Guide"])
         self.assertTrue(self.plr.has_artifact("Horn"))
 

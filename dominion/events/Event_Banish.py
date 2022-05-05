@@ -61,7 +61,7 @@ class Test_Banish(unittest.TestCase):
         self.plr.test_input = ["Estate", "2"]
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.in_exile("Estate"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Estate", self.plr.hand)
 
     def test_Banish_single(self):
         """Use Banish"""

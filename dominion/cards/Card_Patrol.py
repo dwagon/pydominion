@@ -51,9 +51,9 @@ class Test_Patrol(unittest.TestCase):
         )
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Duchy"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Duchy", self.plr.hand)
+        self.assertNotIn("Silver", self.plr.hand)
 
 
 ###############################################################################

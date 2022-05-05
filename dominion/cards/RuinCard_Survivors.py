@@ -53,8 +53,8 @@ class Test_Survivors(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.discardpile)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertIsNone(self.plr.in_hand("Gold"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Gold", self.plr.hand)
+        self.assertNotIn("Silver", self.plr.hand)
 
     def test_play_keep(self):
         """Play a survivor and keep cards"""
@@ -63,8 +63,8 @@ class Test_Survivors(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertNotIn("Gold", self.plr.discardpile)
         self.assertNotIn("Silver", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.hand)
 
 
 ###############################################################################

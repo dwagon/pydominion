@@ -66,7 +66,7 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(self.plr._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertTrue(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
 
     def test_play_card_no(self):
         self.card = self.g["Cargo Ship"].remove()
@@ -79,7 +79,7 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(len(self.plr._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIsNone(self.plr.in_hand("Moat"))
+        self.assertNotIn("Moat", self.plr.hand)
 
 
 ###############################################################################

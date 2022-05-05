@@ -64,15 +64,15 @@ class Test_Wishingwell(unittest.TestCase):
         self.plr.set_deck("Silver", "Copper")
         self.plr.test_input = ["Silver"]
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
 
     def test_bad(self):
         """Guessing badly should result in the card staying on the deck"""
         self.plr.set_deck("Province", "Copper")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertTrue(not self.plr.in_hand("Gold"))
-        self.assertTrue(not self.plr.in_hand("Province"))
+        self.assertNotIn("Gold",  self.plr.hand)
+        self.assertNotIn("Province", self.plr.hand)
 
 
 ###############################################################################

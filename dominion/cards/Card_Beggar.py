@@ -42,7 +42,7 @@ class Test_Beggar(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
 
     def test_attack(self):
         """React to an attack as a beggar"""

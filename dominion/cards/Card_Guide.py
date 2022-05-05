@@ -47,7 +47,7 @@ class Test_Guide(unittest.TestCase):
         self.plr.call_reserve("Guide")
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNone(self.plr.in_hand("Estate"))
+        self.assertNotIn("Estate", self.plr.hand)
         self.assertIn("Estate", self.plr.discardpile)
 
 

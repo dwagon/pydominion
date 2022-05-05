@@ -64,8 +64,8 @@ class Test_Masquerade(unittest.TestCase):
         self.other.test_input = ["select gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertTrue(self.plr.in_hand("Gold"))
-        self.assertTrue(self.other.in_hand("Silver"))
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.other.hand)
         self.assertEqual(self.g.trash_size(), tsize)
 
     def test_play_with_trash(self):
