@@ -21,7 +21,7 @@ class Card_Bounty_Hunter(Card.Card):
     def special(self, game, player):
         crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
-            if not player.in_exile(crd[0].name):
+            if crd[0] not in player.exilepile:
                 player.add_coins(3)
             player.move_card(crd[0], "exile")
 

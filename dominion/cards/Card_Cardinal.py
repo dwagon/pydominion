@@ -44,7 +44,7 @@ class Test_Cardinal(unittest.TestCase):
         self.oth.set_deck("Silver", "Village")
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.oth.discardpile)
-        self.assertIsNotNone(self.oth.in_exile("Village"))
+        self.assertIn("Village", self.oth.exilepile)
 
 
 ###############################################################################

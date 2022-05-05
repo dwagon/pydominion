@@ -35,7 +35,7 @@ class Test_Camel(unittest.TestCase):
         """Perform a Camel"""
         self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.in_exile("Gold"))
+        self.assertIn("Gold", self.plr.exilepile)
 
 
 ###############################################################################

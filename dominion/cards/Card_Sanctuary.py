@@ -46,7 +46,7 @@ class Test_Sanctuary(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.plr.in_exile("Copper"))
+        self.assertIn("Copper", self.plr.exilepile)
 
 
 ###############################################################################

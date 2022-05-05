@@ -896,15 +896,11 @@ class Test_exile(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_in_exile(self):
-        self.plr.set_exile("Silver")
-        self.assertIsNotNone(self.plr.in_exile("Silver"))
-
     def test_exile_card(self):
         au_card = self.g["Gold"].remove()
         self.plr.set_exile()
         self.plr.exile_card(au_card)
-        self.assertIsNotNone(self.plr.in_exile("Gold"))
+        self.assertNotIn("Gold", self.plr.exilepile)
 
 
 ###############################################################################
