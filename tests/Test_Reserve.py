@@ -60,7 +60,7 @@ class Test_Reserve(unittest.TestCase):
         self.plr.reserve.set("Copper")
         self.assertFalse(self.plr.reserve["Estate"])
 
-    def test_reserve.set(self):
+    def test_reserve_set(self):
         """set reserved"""
         self.plr.reserve.set("Silver")
         self.assertEqual(self.plr.reserve.size(), 1)
