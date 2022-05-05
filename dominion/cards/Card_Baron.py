@@ -72,7 +72,7 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.discardpile[0].name, "Estate")
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIn("Estate", self.plr.in_hand)
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

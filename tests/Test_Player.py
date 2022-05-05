@@ -829,7 +829,7 @@ class Test_exile(unittest.TestCase):
 
     def test_exile_card(self):
         au_card = self.g["Gold"].remove()
-        self.plr.exilepile.set()
+        self.plr.exilepile.empty()
         self.plr.exile_card(au_card)
         self.assertNotIn("Gold", self.plr.exilepile)
 
