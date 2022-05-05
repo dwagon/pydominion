@@ -41,9 +41,9 @@ class Test_Guide(unittest.TestCase):
 
     def test_call(self):
         """Call Guide from reserve"""
-        self.plr.set_hand("Estate", "Estate")
-        self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
-        self.plr.set_reserve("Guide")
+        self.plr.hand.set("Estate", "Estate")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.reserve.set("Guide")
         self.plr.call_reserve("Guide")
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 2)

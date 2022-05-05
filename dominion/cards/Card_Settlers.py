@@ -38,8 +38,8 @@ class Test_Settlers(unittest.TestCase):
 
     def test_play(self):
         """Play a Settlers and pull a copper"""
-        self.plr.set_discard("Gold", "Silver", "Copper")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.discardpile.set("Gold", "Silver", "Copper")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.plr.hand)
@@ -49,9 +49,9 @@ class Test_Settlers(unittest.TestCase):
 
     def test_play_nocopper(self):
         """Play a Settlers and pull a copper"""
-        self.plr.set_deck("Gold", "Silver")
-        self.plr.set_discard("Gold", "Silver", "Duchy")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.deck.set("Gold", "Silver")
+        self.plr.discardpile.set("Gold", "Silver", "Duchy")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertNotIn("Copper", self.plr.hand)

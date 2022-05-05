@@ -50,8 +50,8 @@ class Test_Raider(unittest.TestCase):
     def test_play(self):
         """Play a Raider"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.set_played("Gold", "Silver")
-        self.vic.set_hand("Silver", "Gold", "Estate", "Copper", "Copper")
+        self.plr.played.set("Gold", "Silver")
+        self.vic.hand.set("Silver", "Gold", "Estate", "Copper", "Copper")
         self.plr.play_card(self.card)
         try:
             self.assertIn("Gold", self.vic.discardpile)

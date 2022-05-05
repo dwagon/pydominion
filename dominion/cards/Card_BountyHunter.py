@@ -35,8 +35,8 @@ class Test_Bounty_Hunter(unittest.TestCase):
         self.card = self.g["Bounty Hunter"].remove()
 
     def test_play(self):
-        self.plr.set_exile("Copper")
-        self.plr.set_hand("Silver", "Copper")
+        self.plr.exilepile.set("Copper")
+        self.plr.hand.set("Silver", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Silver"]
         self.plr.play_card(self.card)

@@ -49,10 +49,10 @@ class Test_Mastermind(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.set_discard("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.discardpile.set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.play_card(self.card)
         self.plr.end_turn()
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.test_input = ["Play Moat"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 6)

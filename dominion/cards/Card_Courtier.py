@@ -54,7 +54,7 @@ class Test_Courtier(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Courtier"].remove()
-        self.plr.set_hand("Copper", "Moat", "Estate")
+        self.plr.hand.set("Copper", "Moat", "Estate")
         self.plr.add_card(self.card, "hand")
 
     def test_play_action(self):

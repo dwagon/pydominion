@@ -62,7 +62,7 @@ class Test_Hermit(unittest.TestCase):
 
     def test_play_discard(self):
         """Play a Hermit trashing card from discard"""
-        self.plr.set_discard("Province", "Gold")
+        self.plr.discardpile.set("Province", "Gold")
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
@@ -72,7 +72,7 @@ class Test_Hermit(unittest.TestCase):
 
     def test_play_hand(self):
         """Play a Hermit trashing card from hand"""
-        self.plr.set_hand("Province")
+        self.plr.hand.set("Province")
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)

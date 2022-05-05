@@ -78,7 +78,7 @@ class Test_Minion(unittest.TestCase):
 
     def test_play_victim_smallhand(self):
         """Play a minion and discard hand - the other player has a small hand"""
-        self.victim.set_hand("Estate", "Estate", "Estate", "Estate")
+        self.victim.hand.set("Estate", "Estate", "Estate", "Estate")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 0)
@@ -91,7 +91,7 @@ class Test_Minion(unittest.TestCase):
 
     def test_play_defended(self):
         """Play a minion and discard hand - the other player is defended"""
-        self.victim.set_hand("Estate", "Estate", "Estate", "Estate", "Moat")
+        self.victim.hand.set("Estate", "Estate", "Estate", "Estate", "Moat")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 0)

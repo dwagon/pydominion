@@ -53,7 +53,7 @@ class Test_Journeyman(unittest.TestCase):
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
-        self.plr.set_deck("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.deck.set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertIn("Duchy", self.plr.discardpile)

@@ -30,7 +30,7 @@ class Test_Greed(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.set_deck("Duchy", "Cursed Village", "Gold")
+        self.plr.deck.set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.discardpile["Cursed Village"])
         self.assertIn("Copper", self.plr.deck)

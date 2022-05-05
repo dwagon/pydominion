@@ -76,7 +76,7 @@ class Test_Count(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Count"].remove()
-        self.plr.set_hand("Copper", "Estate", "Silver", "Province", "Gold")
+        self.plr.hand.set("Copper", "Estate", "Silver", "Province", "Gold")
 
     def test_discard(self):
         self.plr.add_card(self.card, "hand")
@@ -93,7 +93,7 @@ class Test_Count(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 3)
 
     def test_topdeck(self):
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.card, "hand")
         # top deck, card select, +3 coin
         self.plr.test_input = ["top of your deck", "put gold", "+3 coin"]

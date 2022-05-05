@@ -36,7 +36,7 @@ class Test_Followers(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.victim.set_hand("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.victim.hand.set("Copper", "Copper", "Copper", "Silver", "Gold")
         self.victim.test_input = ["silver", "gold", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)

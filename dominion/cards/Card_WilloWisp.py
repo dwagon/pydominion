@@ -38,8 +38,8 @@ class Test_WilloWisp(unittest.TestCase):
         self.card = self.g["Will-o'-Wisp"].remove()
 
     def test_special_cheap(self):
-        self.plr.set_hand()
-        self.plr.set_deck("Copper", "Estate")
+        self.plr.hand.set()
+        self.plr.deck.set("Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
@@ -48,8 +48,8 @@ class Test_WilloWisp(unittest.TestCase):
         self.assertIn("Estate", self.plr.hand)
 
     def test_special_expensive(self):
-        self.plr.set_hand()
-        self.plr.set_deck("Gold", "Estate")
+        self.plr.hand.set()
+        self.plr.deck.set("Gold", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)

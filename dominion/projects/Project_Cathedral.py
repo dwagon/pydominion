@@ -28,7 +28,7 @@ class Test_Cathedral(unittest.TestCase):
 
     def test_flag(self):
         self.plr.assign_project("Cathedral")
-        self.plr.set_hand("Copper", "Estate", "Province")
+        self.plr.hand.set("Copper", "Estate", "Province")
         self.plr.test_input = ["Copper"]
         self.plr.start_turn()
         self.assertIsNotNone(self.g.in_trash("Copper"))

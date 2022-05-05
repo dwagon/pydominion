@@ -48,14 +48,14 @@ class Test_Navigator(unittest.TestCase):
         self.plr.add_card(self.navigator, "hand")
 
     def test_discard(self):
-        self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.deck.set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.navigator)
         self.assertEqual(self.plr.discardpile.size(), 5)
         self.assertEqual(self.plr.deck.size(), 1)
 
     def test_keep(self):
-        self.plr.set_deck("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.deck.set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["return"]
         self.plr.play_card(self.navigator)
         self.assertEqual(self.plr.discardpile.size(), 0)

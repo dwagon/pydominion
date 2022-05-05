@@ -49,7 +49,7 @@ class Test_Arena(unittest.TestCase):
 
     def test_gain(self):
         """Use Arena"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.test_input = ["Discard Moat", "End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_score_details()["Arena"], 2)

@@ -72,7 +72,7 @@ class Test_Torturer(unittest.TestCase):
 
     def test_defended(self):
         """Defending against a torturer"""
-        self.victim.set_hand("Moat")
+        self.victim.hand.set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
         self.assertEqual(self.victim.hand.size(), 1)

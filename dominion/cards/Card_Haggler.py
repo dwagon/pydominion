@@ -40,7 +40,7 @@ class Test_Haggler(unittest.TestCase):
 
     def test_buy(self):
         """Buy a Gold and haggle a silver"""
-        self.plr.set_played("Haggler")
+        self.plr.played.set("Haggler")
         self.plr.test_input = ["Get Silver"]
         self.plr.set_coins(6)
         self.plr.buy_card(self.g["Gold"])

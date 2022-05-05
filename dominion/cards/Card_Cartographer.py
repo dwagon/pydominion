@@ -44,7 +44,7 @@ class Test_Cartographer(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")
+        self.plr.deck.set("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)

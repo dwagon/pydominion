@@ -40,7 +40,7 @@ class Test_Modify(unittest.TestCase):
 
     def test_play_action(self):
         """Play the card gaining action"""
-        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.hand.set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash estate", "action"]
         self.plr.play_card(self.card)
@@ -50,7 +50,7 @@ class Test_Modify(unittest.TestCase):
 
     def test_play_gain(self):
         """Play the card gaining a card"""
-        self.plr.set_hand("Copper", "Estate", "Duchy")
+        self.plr.hand.set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash estate", "gain", "get silver"]
         self.plr.play_card(self.card)

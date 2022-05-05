@@ -55,8 +55,8 @@ class Test_Taxman(unittest.TestCase):
 
     def test_play(self):
         """Play a Taxman"""
-        self.plr.set_hand("Silver")
-        self.victim.set_hand("Copper", "Copper", "Estate", "Duchy", "Silver")
+        self.plr.hand.set("Silver")
+        self.victim.hand.set("Copper", "Copper", "Estate", "Duchy", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)

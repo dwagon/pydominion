@@ -64,7 +64,7 @@ class Test_Advisor(unittest.TestCase):
 
     def test_play(self):
         """ " Play an advisor"""
-        self.plr.set_deck("Duchy", "Silver", "Gold")
+        self.plr.deck.set("Duchy", "Silver", "Gold")
         self.plr2.test_input = ["discard gold"]
         self.plr.play_card(self.acard)
         self.assertEqual(self.plr.get_actions(), 1)

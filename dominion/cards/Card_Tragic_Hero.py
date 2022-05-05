@@ -35,7 +35,7 @@ class Test_Tragic_Hero(unittest.TestCase):
 
     def test_play(self):
         """Play a Tragic Hero with less than 8 cards"""
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)

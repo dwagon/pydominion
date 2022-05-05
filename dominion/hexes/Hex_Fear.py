@@ -42,12 +42,12 @@ class Test_Fear(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_empty_war(self):
-        self.plr.set_hand("Estate", "Duchy", "Province", "Gold")
+        self.plr.hand.set("Estate", "Duchy", "Province", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.discardpile.size(), 1)  # The Cursed Village
 
     def test_war(self):
-        self.plr.set_hand("Estate", "Duchy", "Estate", "Duchy", "Copper")
+        self.plr.hand.set("Estate", "Duchy", "Estate", "Duchy", "Copper")
         self.plr.test_input = ["Copper"]
         self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.discardpile.size(), 2)

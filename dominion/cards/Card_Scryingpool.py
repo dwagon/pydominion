@@ -66,8 +66,8 @@ class Test_ScryingPool(unittest.TestCase):
 
     def test_playcard(self):
         """Play a scrying pool"""
-        self.plr.set_deck("Moat", "Gold")
-        self.vic.set_deck("Duchy")
+        self.plr.deck.set("Moat", "Gold")
+        self.vic.deck.set("Duchy")
         self.plr.test_input = ["discard", "putback"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

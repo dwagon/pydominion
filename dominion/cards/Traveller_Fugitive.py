@@ -37,7 +37,7 @@ class Test_Fugitive(unittest.TestCase):
 
     def test_fugitive(self):
         """Play a fugitive"""
-        self.plr.set_hand("Province")
+        self.plr.hand.set("Province")
         self.plr.test_input = ["province"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)

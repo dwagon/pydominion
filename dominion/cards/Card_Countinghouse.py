@@ -32,11 +32,11 @@ class Test_Countinghouse(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.ch, "hand")
 
     def test_pullcoppers(self):
-        self.plr.set_discard("Copper", "Gold", "Duchy", "Copper")
+        self.plr.discardpile.set("Copper", "Gold", "Duchy", "Copper")
         self.plr.play_card(self.ch)
         self.assertEqual(self.plr.hand.size(), 2)
         for c in self.plr.hand:

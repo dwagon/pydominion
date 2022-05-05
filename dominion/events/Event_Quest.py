@@ -41,7 +41,7 @@ class Test_Quest(unittest.TestCase):
 
     def test_with_attack(self):
         """Use Quest with an attack card"""
-        self.plr.set_hand("Witch")
+        self.plr.hand.set("Witch")
         self.plr.test_input = ["witch", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 2)
@@ -50,7 +50,7 @@ class Test_Quest(unittest.TestCase):
 
     def test_with_curses(self):
         """Use Quest with two curse cards"""
-        self.plr.set_hand("Curse", "Curse")
+        self.plr.hand.set("Curse", "Curse")
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 3)
@@ -59,7 +59,7 @@ class Test_Quest(unittest.TestCase):
 
     def test_with_six_cards(self):
         """Use Quest with six cards"""
-        self.plr.set_hand("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.test_input = ["1", "2", "3", "4", "5", "6", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 7)
@@ -68,7 +68,7 @@ class Test_Quest(unittest.TestCase):
 
     def test_with_five_cards(self):
         """Use Quest with five cards"""
-        self.plr.set_hand("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.test_input = ["1", "2", "3", "4", "5", "finish"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.discardpile.size(), 5)

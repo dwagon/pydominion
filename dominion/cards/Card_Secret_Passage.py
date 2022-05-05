@@ -41,7 +41,7 @@ class Test_SecretPassage(unittest.TestCase):
 
     def test_play(self):
         """Play an Secret Passage"""
-        self.plr.set_hand("Gold", "Province", "Duchy", "Copper", "Silver")
+        self.plr.hand.set("Gold", "Province", "Duchy", "Copper", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Province", "Bottom"]
         self.plr.play_card(self.card)

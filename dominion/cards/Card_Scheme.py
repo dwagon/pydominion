@@ -40,7 +40,7 @@ class Test_Scheme(unittest.TestCase):
     def test_play(self):
         """Play a scheme"""
         self.plr.add_card(self.card, "hand")
-        self.plr.set_played("Moat")
+        self.plr.played.set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)

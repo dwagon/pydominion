@@ -46,7 +46,7 @@ class Test_Stampede(unittest.TestCase):
 
     def test_no_Stampede(self):
         """Use Stampede with played lots"""
-        self.plr.set_played("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
+        self.plr.played.set("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
         self.plr.add_coins(5)
         self.plr.perform_event(self.card)
         self.assertNotIn("Horse", self.plr.discardpile)

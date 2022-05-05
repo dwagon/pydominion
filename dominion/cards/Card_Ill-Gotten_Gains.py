@@ -47,7 +47,7 @@ class Test_IGG(unittest.TestCase):
 
     def test_play(self):
         """Play an Ill-Gotten Gains"""
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.plr.play_card(self.card)
@@ -56,7 +56,7 @@ class Test_IGG(unittest.TestCase):
 
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.gain_card("Ill-Gotten Gains")
         self.assertIn("Curse", self.vic.discardpile)
 

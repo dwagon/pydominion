@@ -28,15 +28,15 @@ class Player:
         self.had_cards = []
         self.messages = []
         self.hooks = {}
-        self.hand = PlayArea([])
-        self.exilepile = PlayArea([])
-        self.durationpile = PlayArea([])
-        self.deferpile = PlayArea([])
-        self.deck = PlayArea([])
-        self.played = PlayArea([])
-        self.discardpile = PlayArea([])
+        self.hand = PlayArea("hand", game=self.game)
+        self.exilepile = PlayArea("exilepile", game=self.game)
+        self.durationpile = PlayArea("durationpile", game=self.game)
+        self.deferpile = PlayArea("deferpile", game=self.game)
+        self.deck = PlayArea("deck", game=self.game)
+        self.played = PlayArea("played", game=self.game)
+        self.discardpile = PlayArea("discardpile", game=self.game)
         self.debt = 0
-        self.reserve = PlayArea([])
+        self.reserve = PlayArea("reserve", game=self.game)
         self.buys = 1
         self.actions = 1
         self.coin = 0
@@ -48,7 +48,7 @@ class Player:
         self.journey_token = True
         self.test_input = []
         self.forbidden_to_buy = []
-        self.played_events = PlayArea([])
+        self.played_events = PlayArea("played_events", game=self.game)
         self.played_ways = []
         self._initial_deck(heirlooms)
         self._initial_tokens()
@@ -269,60 +269,6 @@ class Player:
                 rc = crd.hook_trash_card(game=self.game, player=self, card=card)
                 if rc:
                     trashopts.update(rc)
-
-    ###########################################################################
-    def set_exile(self, *cards):
-        """This is used for testing"""
-        self.exilepile.empty()
-        for c in cards:
-            card = self.game[c].remove()
-            card.location = "exile"
-            self.exilepile.add(card)
-
-    ###########################################################################
-    def set_reserve(self, *cards):
-        """This is used for testing"""
-        self.reserve.empty()
-        for c in cards:
-            card = self.game[c].remove()
-            card.location = "reserve"
-            self.reserve.add(card)
-
-    ###########################################################################
-    def set_played(self, *cards):
-        """This is used for testing"""
-        self.played.empty()
-        for c in cards:
-            card = self.game[c].remove()
-            card.location = "played"
-            self.played.add(card)
-
-    ###########################################################################
-    def set_discard(self, *cards):
-        """This is used for testing"""
-        self.discardpile.empty()
-        for c in cards:
-            crd = self.game[c].remove()
-            crd.location = "discard"
-            self.discardpile.add(crd)
-
-    ###########################################################################
-    def set_hand(self, *cards):
-        """This is used for testing"""
-        self.hand.empty()
-        for cname in cards:
-            card = self.game[cname].remove()
-            card.location = "hand"
-            self.hand.add(card)
-
-    ###########################################################################
-    def set_deck(self, *cards):
-        """This is used for testing"""
-        self.deck.empty()
-        for c in cards:
-            card = self.game[c].remove()
-            card.location = "deck"
-            self.deck.add(card)
 
     ###########################################################################
     def next_card(self):
@@ -709,7 +655,7 @@ class Player:
     ###########################################################################
     def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
-        all_cards = PlayArea([])
+        all_cards = PlayArea("all_purchasable")
         for c in self.game.cardTypes():
             if not c.purchasable:
                 continue
@@ -1000,7 +946,7 @@ class Player:
     ###########################################################################
     def all_cards(self):
         """Return all the cards that the player has"""
-        x = PlayArea([])
+        x = PlayArea("all")
         x += self.discardpile
         x += self.hand
         x += self.deck
@@ -1126,7 +1072,7 @@ class Player:
             card.hook_end_turn(game=self.game, player=self)
             self.currcards.pop()
         self.newhandsize = 5
-        self.played_events = PlayArea([])
+        self.played_events = PlayArea("played_events")
         self.messages = []
         self.forbidden_to_buy = []
         self.once = {}
@@ -1638,7 +1584,7 @@ class Player:
     ###########################################################################
     def cards_affordable(self, oper, coin, potions, types):
         """Return the list of cards for under cost"""
-        affordable = PlayArea([])
+        affordable = PlayArea("affordable")
         for c in self.game.cardTypes():
             if not c:
                 continue

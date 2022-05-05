@@ -47,7 +47,7 @@ class Test_Gang_Pickpockets(unittest.TestCase):
 
     def test_discard(self):
         """Discard"""
-        self.plr.set_hand("Estate", "Duchy", "Silver", "Gold", "Copper")
+        self.plr.hand.set("Estate", "Duchy", "Silver", "Gold", "Copper")
         self.plr.set_favors(1)
         self.plr.test_input = ["Discard", "Discard Duchy"]
         self.plr.start_turn()

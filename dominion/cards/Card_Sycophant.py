@@ -57,7 +57,7 @@ class Test_Sycophant(unittest.TestCase):
         """Play the card"""
         favs = self.plr.get_favors()
         coin = self.plr.get_coins()
-        self.plr.set_hand("Estate", "Duchy", "Province", "Silver")
+        self.plr.hand.set("Estate", "Duchy", "Province", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Discard Estate",

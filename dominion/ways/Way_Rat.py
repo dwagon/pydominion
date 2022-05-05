@@ -42,7 +42,7 @@ class Test_Rat(unittest.TestCase):
 
     def test_play(self):
         """Perform a Rat"""
-        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.hand.set("Copper", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
         self.plr.perform_way(self.way, self.card)

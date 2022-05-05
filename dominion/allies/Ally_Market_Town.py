@@ -39,7 +39,7 @@ class Test_Market_Towns(unittest.TestCase):
 
     def test_play(self):
         """Play a Market Town"""
-        self.plr.set_hand("Moat", "Copper", "Silver", "Gold")
+        self.plr.hand.set("Moat", "Copper", "Silver", "Gold")
         self.plr.set_favors(3)
         self.plr.test_input = ["Play Moat", "End Phase"]
         hndsz = self.plr.hand.size()

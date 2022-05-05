@@ -44,7 +44,7 @@ class Test_Familiar(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_defended(self):
-        self.victim.set_hand("Gold", "Moat")
+        self.victim.hand.set("Gold", "Moat")
         self.plr.play_card(self.card)
         self.assertTrue(self.victim.discardpile.is_empty())
         self.assertEqual(self.plr.get_actions(), 1)

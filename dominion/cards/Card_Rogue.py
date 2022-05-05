@@ -134,7 +134,7 @@ class Test_Rogue(unittest.TestCase):
     def test_good_player(self):
         """Rogue to trash something from another player"""
         tsize = self.g.trash_size()
-        self.victim.set_deck("Gold", "Duchy")
+        self.victim.deck.set("Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
@@ -146,7 +146,7 @@ class Test_Rogue(unittest.TestCase):
     def test_bad_player(self):
         """Rogue to trash nothing from another player"""
         tsize = self.g.trash_size()
-        self.victim.set_deck("Gold", "Province", "Province")
+        self.victim.deck.set("Gold", "Province", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trash_size(), tsize)

@@ -36,7 +36,7 @@ class Test_Advance(unittest.TestCase):
 
     def test_advance(self):
         """Use Advance twice"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.test_input = ["Trash moat", "Get Lurker"]
         self.plr.perform_event(self.card)
         self.assertNotIn("Moat", self.plr.hand)

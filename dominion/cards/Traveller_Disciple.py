@@ -54,14 +54,14 @@ class Test_Disciple(unittest.TestCase):
 
     def test_play_no_actions(self):
         """Play a disciple with no actions available"""
-        self.plr.set_hand("Copper", "Estate")
+        self.plr.hand.set("Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.played.size(), 1)
 
     def test_play_actions(self):
         """Play a disciple with an action available"""
-        self.plr.set_hand("Copper", "Estate", "Moat")
+        self.plr.hand.set("Copper", "Estate", "Moat")
         self.plr.test_input = ["moat"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)

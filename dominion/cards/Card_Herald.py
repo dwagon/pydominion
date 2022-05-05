@@ -54,7 +54,7 @@ class Test_Herald(unittest.TestCase):
 
     def test_play(self):
         """Play a Herald"""
-        self.plr.set_deck("Moat", "Copper")
+        self.plr.deck.set("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
@@ -65,7 +65,7 @@ class Test_Herald(unittest.TestCase):
         """Buy a Herald"""
         self.plr.coin = 5
         self.plr.test_input = ["1", "moat"]
-        self.plr.set_discard("Estate", "Moat", "Copper")
+        self.plr.discardpile.set("Estate", "Moat", "Copper")
         self.plr.buy_card(self.g["Herald"])
         self.assertEqual(self.plr.deck[-1].name, "Moat")
 

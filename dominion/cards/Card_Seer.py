@@ -43,8 +43,8 @@ class Test_Seer(unittest.TestCase):
         self.card = self.g["Seer"].remove()
 
     def test_play(self):
-        self.plr.set_deck("Copper", "Silver", "Estate", "Province")
-        self.plr.set_hand()
+        self.plr.deck.set("Copper", "Silver", "Estate", "Province")
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)

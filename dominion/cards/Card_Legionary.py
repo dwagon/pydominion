@@ -45,7 +45,7 @@ class Test_Legionary(unittest.TestCase):
 
     def test_play(self):
         """Play a Legionary"""
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.victim.test_input = ["1", "2", "3", "0"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)

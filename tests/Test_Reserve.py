@@ -27,10 +27,10 @@ class Test__get_whens(unittest.TestCase):
         self.assertIn("any", whens)
 
     def test_postaction(self):
-        self.plr.set_played("Moat")
+        self.plr.played.set("Moat")
         whens = self.plr._get_whens()
         self.assertIn("postaction", whens)
-        self.plr.set_played("Copper")
+        self.plr.played.set("Copper")
         whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
 
@@ -51,23 +51,23 @@ class Test_Reserve(unittest.TestCase):
 
     def test_reserve(self):
         """Test reserve[]"""
-        self.plr.set_reserve("Copper")
+        self.plr.reserve.set("Copper")
         self.assertTrue(self.plr.reserve["Copper"])
         self.assertEqual(self.plr.reserve["Copper"].name, "Copper")
 
     def test_not_reserve(self):
         """Test reserve[]"""
-        self.plr.set_reserve("Copper")
+        self.plr.reserve.set("Copper")
         self.assertFalse(self.plr.reserve["Estate"])
 
-    def test_set_reserve(self):
+    def test_reserve.set(self):
         """set reserved"""
-        self.plr.set_reserve("Silver")
+        self.plr.reserve.set("Silver")
         self.assertEqual(self.plr.reserve.size(), 1)
         self.assertEqual(self.plr.reserve[0].name, "Silver")
 
     def test_call_reserve(self):
-        self.plr.set_reserve("Silver")
+        self.plr.reserve.set("Silver")
         self.assertEqual(self.plr.reserve.size(), 1)
         c = self.plr.call_reserve("Silver")
         self.assertEqual(self.plr.reserve.size(), 0)
@@ -75,7 +75,7 @@ class Test_Reserve(unittest.TestCase):
 
     def test_bad_call_reserve(self):
         """Call a reserve that isn't there!"""
-        self.plr.set_reserve("Copper")
+        self.plr.reserve.set("Copper")
         c = self.plr.call_reserve("Silver")
         self.assertIsNone(c)
 

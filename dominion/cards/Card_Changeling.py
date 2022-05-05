@@ -60,7 +60,7 @@ class Test_Changeling(unittest.TestCase):
 
     def test_play_swap(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.set_played("Gold")
+        self.plr.played.set("Gold")
         self.plr.test_input = ["Exchange for Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.discardpile)

@@ -42,7 +42,7 @@ class Test_Swap(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_hand("Moat", "Copper", "Estate")
+        self.plr.hand.set("Moat", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Get Swap"]
         self.plr.play_card(self.card)

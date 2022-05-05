@@ -40,7 +40,7 @@ class Test_Specialist(unittest.TestCase):
 
     def test_play_gain(self):
         """Play the card and gain a copy"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Gain a copy"]
         self.plr.play_card(self.card)
@@ -49,7 +49,7 @@ class Test_Specialist(unittest.TestCase):
 
     def test_play_again(self):
         """Play the card and play it again"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Play it again"]
         self.plr.play_card(self.card)

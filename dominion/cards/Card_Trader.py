@@ -48,7 +48,7 @@ class Test_Trader(unittest.TestCase):
     def test_play(self):
         """Play a trader - trashing an estate"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["estate", "finish"]
         self.plr.play_card(self.card)

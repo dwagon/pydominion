@@ -46,7 +46,7 @@ class Test_CityState(unittest.TestCase):
 
     def test_play(self):
         """Play card"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.set_favors(2)
         self.plr.set_actions(0)
         self.plr.test_input = ["Play"]
@@ -57,7 +57,7 @@ class Test_CityState(unittest.TestCase):
 
     def test_dont_play(self):
         """Dont play card"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.set_favors(2)
         self.plr.set_actions(0)
         self.plr.test_input = ["nothing"]

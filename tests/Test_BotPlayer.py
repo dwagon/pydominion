@@ -86,20 +86,20 @@ class TestPick_to_discard(unittest.TestCase):
 
     def test_no_discard(self):
         """Test pick_to_discard with no discard requirement"""
-        self.plr.set_hand("Estate", "Copper", "Copper", "Gold")
+        self.plr.hand.set("Estate", "Copper", "Copper", "Gold")
         card = self.plr.pick_to_discard(0)
         self.assertEqual(len(card), 0)
 
     def test_not_treasure(self):
         """Test pick_to_discard with a non-treasure to discard"""
-        self.plr.set_hand("Estate", "Copper", "Copper", "Gold")
+        self.plr.hand.set("Estate", "Copper", "Copper", "Gold")
         card = self.plr.pick_to_discard(1)
         self.assertEqual(len(card), 1)
         self.assertEqual(card[0].name, "Estate")
 
     def test_treasure(self):
         """Test pick_to_discard when it has to drop a treasure"""
-        self.plr.set_hand("Estate", "Copper", "Silver", "Gold")
+        self.plr.hand.set("Estate", "Copper", "Silver", "Gold")
         cards = self.plr.pick_to_discard(2)
         self.assertEqual(len(cards), 2)
         cardnames = [c.name for c in cards]
@@ -109,7 +109,7 @@ class TestPick_to_discard(unittest.TestCase):
 
     def test_good_treasure(self):
         """Test pick_to_discard when it has to drop good treasures"""
-        self.plr.set_hand("Gold", "Gold", "Silver", "Gold")
+        self.plr.hand.set("Gold", "Gold", "Silver", "Gold")
         cards = self.plr.pick_to_discard(2)
         self.assertEqual(len(cards), 2)
         cardnames = [c.name for c in cards]

@@ -38,14 +38,14 @@ class Test_Piazza(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        self.plr.set_deck("Copper", "Copper", "Copper", "Copper", "Copper", "Moat")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Copper", "Copper", "Moat")
         self.plr.assign_project("Piazza")
         self.plr.start_turn()
         self.assertIn("Moat", self.plr.played)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
     def test_noaction(self):
-        self.plr.set_deck("Province", "Silver")
+        self.plr.deck.set("Province", "Silver")
         self.plr.assign_project("Piazza")
         self.plr.start_turn()
         self.assertEqual(self.plr.deck[-1].name, "Silver")

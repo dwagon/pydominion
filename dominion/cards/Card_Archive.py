@@ -55,7 +55,7 @@ class Test_Archive(unittest.TestCase):
 
     def test_play(self):
         """Play a Archive"""
-        self.plr.set_deck("Gold", "Silver", "Province")
+        self.plr.deck.set("Gold", "Silver", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

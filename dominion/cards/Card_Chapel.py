@@ -26,7 +26,7 @@ class Test_Chapel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chapel"].remove()
-        self.plr.set_hand("Copper", "Silver", "Estate")
+        self.plr.hand.set("Copper", "Silver", "Estate")
         self.plr.add_card(self.ccard, "hand")
 
     def test_trashnone(self):

@@ -61,7 +61,7 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_reveal(self):
         """Play a Encampment and reveal a Gold"""
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.test_input = ["Reveal card"]
@@ -75,8 +75,8 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_return(self):
         """Play a Encampment and don't have anything to return"""
-        self.plr.set_discard("Copper", "Copper", "Copper", "Estate", "Estate")
-        self.plr.set_hand("Silver")
+        self.plr.discardpile.set("Copper", "Copper", "Copper", "Estate", "Estate")
+        self.plr.hand.set("Silver")
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.add_card(self.card, "hand")

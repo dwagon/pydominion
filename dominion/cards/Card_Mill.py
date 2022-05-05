@@ -33,7 +33,7 @@ class Test_Mill(unittest.TestCase):
         self.card = self.g["Mill"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Finish"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
@@ -43,7 +43,7 @@ class Test_Mill(unittest.TestCase):
         self.assertIn("Gold", self.plr.discardpile)
 
     def test_discard(self):
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Discard Silver", "Finish"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)

@@ -41,14 +41,14 @@ class Test_MountainVillage(unittest.TestCase):
 
     def test_play_no_discard(self):
         """Play Mountain Village without a discard card"""
-        self.plr.set_discard()
+        self.plr.discardpile.set()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_discard(self):
         """Play Mountain Village with a discard card"""
-        self.plr.set_discard("Gold", "Silver")
+        self.plr.discardpile.set("Gold", "Silver")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)

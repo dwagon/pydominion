@@ -62,8 +62,8 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_nobane(self):
         """Play the young witch without a bane"""
-        self.victim.set_hand("Copper", "Silver")
-        self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.victim.hand.set("Copper", "Silver")
+        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
@@ -78,8 +78,8 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_bane(self):
         """Play the young witch with a bane"""
-        self.victim.set_hand("Copper", "Silver", self.g._bane)
-        self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.victim.hand.set("Copper", "Silver", self.g._bane)
+        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)

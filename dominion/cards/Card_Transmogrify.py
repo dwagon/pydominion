@@ -48,8 +48,8 @@ class Test_Transmogrify(unittest.TestCase):
         self.assertIsNotNone(self.plr.reserve["Transmogrify"])
 
     def test_call(self):
-        self.plr.set_hand("Duchy", "Estate")
-        self.plr.set_reserve("Transmogrify")
+        self.plr.hand.set("Duchy", "Estate")
+        self.plr.reserve.set("Transmogrify")
         self.plr.test_input = ["trash duchy", "get gold"]
         self.plr.call_reserve("Transmogrify")
         self.assertIsNotNone(self.g.in_trash("Duchy"))

@@ -54,7 +54,7 @@ class Test_Pilgrimage(unittest.TestCase):
 
     def test_play(self):
         """Perform a Pilgrimage"""
-        self.plr.set_played("Moat", "Silver", "Gold", "Copper", "Duchy")
+        self.plr.played.set("Moat", "Silver", "Gold", "Copper", "Duchy")
         self.plr.test_input = ["moat", "silver", "finish"]
         self.plr.journey_token = False
         self.plr.add_coins(4)

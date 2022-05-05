@@ -38,7 +38,7 @@ class Test_Harvest(unittest.TestCase):
 
     def test_play(self):
         """Harvest"""
-        self.plr.set_deck("Duchy", "Duchy", "Silver", "Copper")
+        self.plr.deck.set("Duchy", "Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 3)
         self.assertIn("Silver", self.plr.discardpile)

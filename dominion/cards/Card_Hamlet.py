@@ -33,7 +33,7 @@ class Test_Hamlet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hamlet"].remove()
-        self.plr.set_hand("Silver", "Gold")
+        self.plr.hand.set("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):

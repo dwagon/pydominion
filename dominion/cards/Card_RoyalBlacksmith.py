@@ -36,8 +36,8 @@ class Test_RoyalBlacksmith(unittest.TestCase):
 
     def test_play(self):
         """Play an Royal Blacksmith"""
-        self.plr.set_deck("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
-        self.plr.set_hand("Copper", "Silver", "Duchy")
+        self.plr.deck.set("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
+        self.plr.hand.set("Copper", "Silver", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3 - 2 + 5)

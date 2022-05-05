@@ -45,7 +45,7 @@ class Test_Treasuremap(unittest.TestCase):
     def test_trash(self):
         """Trash a TM"""
         tsize = self.g.trash_size()
-        self.plr.set_deck()
+        self.plr.deck.set()
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0", "1", "finish"]
         self.plr.play_card(self.card)
@@ -56,8 +56,8 @@ class Test_Treasuremap(unittest.TestCase):
     def test_trash_two(self):
         """Trash 2 TM"""
         tsize = self.g.trash_size()
-        self.plr.set_deck()
-        self.plr.set_hand("Treasure Map")
+        self.plr.deck.set()
+        self.plr.hand.set("Treasure Map")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1", "finish"]
         self.plr.play_card(self.card)

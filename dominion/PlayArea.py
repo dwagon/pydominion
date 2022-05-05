@@ -9,14 +9,16 @@ from dominion import BoonPile
 
 ###############################################################################
 class PlayArea:
-    def __init__(self, initial=None):
+    def __init__(self, name='', game=None, initial=None):
+        self.name = name
+        self.game = game
         if initial is None:
             initial = []
         self._cards = initial
 
     ###########################################################################
     def __repr__(self):
-        return f"<PlayArea: {', '.join([_.name for _ in self._cards])}>"
+        return f"<PlayArea {self.name}: {', '.join([_.name for _ in self._cards])}>"
 
     ###########################################################################
     def __contains__(self, obj) -> bool:
@@ -40,6 +42,15 @@ class PlayArea:
             if card.name == name_or_idx:
                 return card
         return None
+
+    ###########################################################################
+    def set(self, *cards):
+        """ Used for testing to set contents """
+        self.empty()
+        for cardname in cards:
+            card = self.game[cardname].remove()
+            card.location = self.name
+            self.add(card)
 
     ###########################################################################
     def add(self, card):

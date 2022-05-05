@@ -31,8 +31,8 @@ class Test_Emissary(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_deck("Copper", "Copper")
-        self.plr.set_discard("Estate", "Estate", "Estate", "Duchy")
+        self.plr.deck.set("Copper", "Copper")
+        self.plr.discardpile.set("Estate", "Estate", "Estate", "Duchy")
         favs = self.plr.get_favors()
         acts = self.plr.get_actions()
         self.plr.play_card(self.card)

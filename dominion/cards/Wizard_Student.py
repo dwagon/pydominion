@@ -49,7 +49,7 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.set_hand("Copper", "Silver", "Gold", "Estate")
+        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Don't change", "Trash Copper"]
         favs = self.plr.get_favors()
@@ -64,7 +64,7 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.set_hand("Copper", "Silver", "Gold", "Estate")
+        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Don't change", "Trash Estate"]
         favs = self.plr.get_favors()
@@ -79,7 +79,7 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.set_hand("Copper", "Silver", "Gold", "Estate")
+        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Rotate", "Trash Estate"]
         self.plr.play_card(card)

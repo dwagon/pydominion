@@ -30,16 +30,16 @@ class Test_Gardens(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score_0(self):
-        self.plr.set_hand("Gardens", "Copper", "Copper")
-        self.plr.set_deck("Copper", "Copper", "Copper")
-        self.plr.set_discard("Copper", "Copper", "Copper")
+        self.plr.hand.set("Gardens", "Copper", "Copper")
+        self.plr.deck.set("Copper", "Copper", "Copper")
+        self.plr.discardpile.set("Copper", "Copper", "Copper")
         score = self.plr.get_score_details()
         self.assertEqual(score["Gardens"], 0)
 
     def test_score_1(self):
-        self.plr.set_hand("Gardens", "Copper", "Copper")
-        self.plr.set_deck("Copper", "Copper", "Copper", "Copper")
-        self.plr.set_discard("Copper", "Copper", "Copper")
+        self.plr.hand.set("Gardens", "Copper", "Copper")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Copper")
+        self.plr.discardpile.set("Copper", "Copper", "Copper")
         score = self.plr.get_score_details()
         self.assertEqual(score["Gardens"], 1)
 

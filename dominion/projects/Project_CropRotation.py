@@ -35,7 +35,7 @@ class Test_CropRotation(unittest.TestCase):
 
     def test_cost(self):
         self.plr.assign_project("Crop Rotation")
-        self.plr.set_hand("Copper", "Silver", "Estate")
+        self.plr.hand.set("Copper", "Silver", "Estate")
         self.plr.test_input = ["Discard Estate"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 3 + 2 - 1)

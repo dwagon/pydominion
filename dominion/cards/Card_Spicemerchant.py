@@ -45,7 +45,7 @@ class Test_SpiceMerchant(unittest.TestCase):
     def test_play_card(self):
         """Play an Spice Merchant and select cards"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "cards"]
         self.plr.play_card(self.card)
@@ -59,7 +59,7 @@ class Test_SpiceMerchant(unittest.TestCase):
     def test_play_coins(self):
         """Play an Spice Merchant and select coins"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold", "coins"]
         self.plr.play_card(self.card)

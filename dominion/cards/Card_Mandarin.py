@@ -47,7 +47,7 @@ class Test_Mandarin(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_hand("Gold", "Copper")
+        self.plr.hand.set("Gold", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
@@ -56,7 +56,7 @@ class Test_Mandarin(unittest.TestCase):
 
     def test_gain(self):
         """Gain the card"""
-        self.plr.set_played("Gold", "Duchy")
+        self.plr.played.set("Gold", "Duchy")
         self.plr.gain_card("Mandarin")
         self.assertEqual(self.plr.deck[-1].name, "Gold")
         self.assertIn("Duchy", self.plr.played)

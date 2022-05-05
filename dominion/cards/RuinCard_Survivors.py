@@ -48,7 +48,7 @@ class Test_Survivors(unittest.TestCase):
 
     def test_play_discard(self):
         """Play a survivor and discard cards"""
-        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.discardpile)
@@ -58,7 +58,7 @@ class Test_Survivors(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a survivor and keep cards"""
-        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Return"]
         self.plr.play_card(self.card)
         self.assertNotIn("Gold", self.plr.discardpile)

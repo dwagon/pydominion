@@ -48,7 +48,7 @@ class Test_Temple(unittest.TestCase):
 
     def test_play(self):
         """Play a Temple"""
-        self.plr.set_hand("Copper", "Silver", "Silver", "Gold", "Duchy")
+        self.plr.hand.set("Copper", "Silver", "Silver", "Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper", "Silver", "finish"]
         self.plr.play_card(self.card)

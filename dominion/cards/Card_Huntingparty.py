@@ -47,12 +47,12 @@ class Test_Huntingparty(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hunting Party"].remove()
-        self.plr.set_hand("Silver", "Gold")
+        self.plr.hand.set("Silver", "Gold")
 
     def test_playcard(self):
         """Play a hunting party"""
-        self.plr.set_deck("Copper", "Province", "Silver", "Gold", "Duchy")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.deck.set("Copper", "Province", "Silver", "Gold", "Duchy")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

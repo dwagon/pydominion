@@ -63,7 +63,7 @@ class Test_NativeVillage(unittest.TestCase):
         self.card = self.g["Native Village"].remove()
 
     def test_play(self):
-        self.plr.set_deck("Gold")
+        self.plr.deck.set("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Set aside"]
         self.plr.play_card(self.card)

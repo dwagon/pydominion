@@ -29,7 +29,7 @@ class Test_Lantern(unittest.TestCase):
         self.plr.assign_artifact("Lantern")
 
     def test_play(self):
-        self.plr.set_deck("Province", "Silver", "Gold")
+        self.plr.deck.set("Province", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
         self.plr.play_card(self.card)
@@ -39,7 +39,7 @@ class Test_Lantern(unittest.TestCase):
         self.assertIsNotNone(self.plr.discardpile["Province"])
 
     def test_play_actions(self):
-        self.plr.set_deck("Guide", "Moat", "Guide")
+        self.plr.deck.set("Guide", "Moat", "Guide")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.play_card(self.card)

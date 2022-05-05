@@ -65,8 +65,8 @@ class Test_Ghost(unittest.TestCase):
 
     def test_duration(self):
         try:
-            self.plr.set_deck("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.set_discard("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.deck.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.discardpile.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Card.TYPE_NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()

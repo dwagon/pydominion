@@ -46,7 +46,7 @@ class Test_Crossroads(unittest.TestCase):
 
     def test_play(self):
         """Play crossroads once"""
-        self.plr.set_hand("Silver", "Estate", "Estate")
+        self.plr.hand.set("Silver", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
@@ -54,8 +54,8 @@ class Test_Crossroads(unittest.TestCase):
 
     def test_play_twice(self):
         """Play crossroads again"""
-        self.plr.set_hand("Silver", "Copper", "Crossroads")
-        self.plr.set_played("Crossroads")
+        self.plr.hand.set("Silver", "Copper", "Crossroads")
+        self.plr.played.set("Crossroads")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)

@@ -52,7 +52,7 @@ class Test_Duchess(unittest.TestCase):
 
     def test_play(self):
         """Play duchess - keep on deck"""
-        self.plr.set_deck("Province")
+        self.plr.deck.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)
@@ -62,7 +62,7 @@ class Test_Duchess(unittest.TestCase):
 
     def test_disacrd(self):
         """Play duchess - discard"""
-        self.plr.set_deck("Province")
+        self.plr.deck.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
