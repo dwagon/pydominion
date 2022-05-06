@@ -139,8 +139,10 @@ class PlayArea:
         self._cards.sort(*args, **kwargs)
 
     ###########################################################################
-    def dump(self, name="PlayArea"):
+    def dump(self, name=None):
         """Print out all of the playarea - for debugging purposes only"""
+        if name is None:
+            name = self.name
         print(f"-vvvvvvvv- {name}")
         for crd in self._cards:
             print(f"Card={crd}")
