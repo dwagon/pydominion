@@ -12,8 +12,8 @@ class Card_BorderGuard(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+1 Action; Reveal the top 2 cards of your deck.
-        Put one into your hand and discard the other. If both were Actions,
-        take the Lantern or Horn."""
+            Put one into your hand and discard the other. If both were Actions,
+            take the Lantern or Horn."""
         self.name = "Border Guard"
         self.cost = 2
         self.actions = 1
@@ -48,8 +48,8 @@ class Card_BorderGuard(Card.Card):
         if not player.has_artifact("Horn"):
             return
         ch = player.plr_choose_options(
-            "Use Horn and put Border Guard into hand?",
-            ("Put into hand", True),
+            "Use Horn and put Border Guard onto deck?",
+            ("Put onto deck", True),
             ("Keep in discard", False),
         )
         if ch:
