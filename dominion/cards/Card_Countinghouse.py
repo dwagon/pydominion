@@ -18,10 +18,9 @@ class Card_Countinghouse(Card.Card):
 
     def special(self, game, player):
         count = 0
-        for c in player.discardpile:
-            game.print_state()
-            if c.name == "Copper":
-                player.move_card(c, "hand")
+        for card in player.discardpile:
+            if card.name == "Copper":
+                player.move_card(card, "hand")
                 count += 1
         player.output(f"Picked up {count} coppers")
 

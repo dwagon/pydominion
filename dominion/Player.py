@@ -530,16 +530,16 @@ class Player:
             options.append(o)
 
         index = 4
-        for s in spendable:
-            tp = f"{self.hook_spend_value(s)} coin; {s.get_cardtype_repr()}"
+        for card in spendable:
+            tp = f"{self.hook_spend_value(card)} coin; {card.get_cardtype_repr()}"
             o = Option(
                 selector=str(index),
-                name=s.name,
+                name=card.name,
                 details=tp,
                 verb="Spend",
-                card=s,
+                card=card,
                 action="spend",
-                desc=s.description(self),
+                desc=card.description(self),
             )
             options.append(o)
             index += 1
