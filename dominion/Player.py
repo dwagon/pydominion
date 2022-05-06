@@ -152,7 +152,7 @@ class Player:
 
     ###########################################################################
     def replace_card(self, src, dst, **kwargs):
-        """ Replace the {src} card with the {dst} card"""
+        """Replace the {src} card with the {dst} card"""
         # New card goes into hand as it is about to be discarded
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
@@ -345,14 +345,12 @@ class Player:
 
     ###########################################################################
     def remove_card(self, card):
-        """ Remove a card from wherever it is """
+        """Remove a card from wherever it is"""
         curr_loc = card.location
-        if curr_loc == "discardpile":
+        if curr_loc in ("discardpile", "discard"):
             self.discardpile.remove(card)
         elif curr_loc == "hand":
             self.hand.remove(card)
-        elif curr_loc == "topdeck":
-            self.deck.remove(card)
         elif curr_loc == "deck":
             self.deck.remove(card)
         elif curr_loc == "played":
@@ -361,16 +359,20 @@ class Player:
             self.durationpile.remove(card)
         elif curr_loc == "reserve":
             self.reserve.remove(card)
+        else:
+            raise AssertionError(
+                f"Trying to remove_card({card=}) from unknown location {curr_loc}"
+            )
 
     ###########################################################################
     def move_card(self, card, dest):
-        """ Move a card to {dest} cardpile """
+        """Move a card to {dest} cardpile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
     def add_card(self, card, pile="discard"):
-        """ Add an existing card to a new location """
+        """Add an existing card to a new location"""
         if not card:  # pragma: no cover
             return None
         assert isinstance(card, Card.Card)
@@ -382,7 +384,7 @@ class Player:
             "played",
             "duration",
             "reserve",
-            "exile"
+            "exile",
         )
         card.location = pile
         card.player = self
@@ -391,6 +393,7 @@ class Player:
         elif pile == "hand":
             self.hand.add(card)
         elif pile == "topdeck":
+            card.location = "deck"
             self.deck.addToTop(card)
         elif pile == "deck":
             self.deck.add(card)
@@ -776,7 +779,7 @@ class Player:
 
     ###########################################################################
     def _check(self):
-        """ DBG Is everything where it should be? """
+        """DBG Is everything where it should be?"""
         for stack_name, stack in self.stacklist:
             for card in stack:
                 assert card.location == stack_name.lower(), f"{card} {stack_name=}"
@@ -1021,7 +1024,7 @@ class Player:
 
     ###########################################################################
     def _duration_start_turn(self):
-        """ Perform the duration pile at the start of the turn """
+        """Perform the duration pile at the start of the turn"""
         for card in self.durationpile:
             options = {"dest": "played"}
             self.output("Playing %s from duration pile" % card.name)
