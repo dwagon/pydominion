@@ -42,7 +42,7 @@ class Test_Camel_Train(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["Select Silver"]
         self.plr.play_card(self.card)
-        self.assertIn("SilveR", self.plr.exilepile)
+        self.assertIn("Silver", self.plr.exilepile)
 
     def test_gain(self):
         self.plr.gain_card("Camel Train")

@@ -2,9 +2,6 @@
 import random
 import sys
 from dominion import Card
-from dominion import CardPile
-from dominion import Event
-from dominion import BoonPile
 
 
 ###############################################################################
@@ -50,18 +47,11 @@ class PlayArea:
         for cardname in cards:
             card = self.game[cardname].remove()
             card.location = self.name
-            self.add(card)
+            self.addToTop(card)
 
     ###########################################################################
     def add(self, card):
-        try:
-            assert isinstance(
-                card, (Card.Card, CardPile.CardPile, Event.EventPile, BoonPile.BoonPile)
-            )
-        except AssertionError:
-            print(f"PlayArea.add({card=}) ({type(card)})")
-            raise
-        self._cards.append(card)
+        self._cards.insert(0, card)
 
     ###########################################################################
     def remove(self, card):

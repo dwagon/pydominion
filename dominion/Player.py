@@ -385,14 +385,15 @@ class Player:
             "exile"
         )
         card.location = pile
+        card.player = self
         if pile == "discard":
             self.discardpile.add(card)
         elif pile == "hand":
             self.hand.add(card)
         elif pile == "topdeck":
-            self.deck.add(card)
-        elif pile == "deck":
             self.deck.addToTop(card)
+        elif pile == "deck":
+            self.deck.add(card)
         elif pile == "played":
             self.played.add(card)
         elif pile == "duration":

@@ -19,6 +19,7 @@ class Card_Countinghouse(Card.Card):
     def special(self, game, player):
         count = 0
         for c in player.discardpile:
+            game.print_state()
             if c.name == "Copper":
                 player.move_card(c, "hand")
                 count += 1
@@ -41,8 +42,7 @@ class Test_Countinghouse(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2)
         for c in self.plr.hand:
             self.assertEqual(c.name, "Copper")
-        for c in self.plr.discardpile:
-            self.assertNotEqual(c.name, "Copper")
+        self.assertNotIn("Copper", self.plr.discardpile)
 
 
 ###############################################################################

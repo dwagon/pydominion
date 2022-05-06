@@ -2,8 +2,6 @@
 
 import unittest
 from dominion import PlayArea
-from dominion import Card
-
 
 ###############################################################################
 class CardTester(object):
@@ -21,11 +19,11 @@ class Test_PlayArea(unittest.TestCase):
         self.assertEqual(s.count(CT("c")), 2)
 
     def test_add(self):
-        card_a = Card.Card()
-        card_b = Card.Card()
+        card_a = CardTester("a")
+        card_b = CardTester("b")
         s = PlayArea.PlayArea("name", "game", [card_a])
         s.add(card_b)
-        self.assertEqual(s._cards, [card_a, card_b])
+        self.assertEqual(s._cards, [card_b, card_a])
 
     def test_remove(self):
         s = PlayArea.PlayArea("name", "game", ["a", "b"])

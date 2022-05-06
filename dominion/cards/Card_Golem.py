@@ -57,9 +57,12 @@ class Test_Golem(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(
-            ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
+            sorted(["Golem", "Moat", "Village"]),
+            sorted([c.name for c in self.plr.played]),
         )
-        self.assertEqual(["Copper", "Estate"], [c.name for c in self.plr.discardpile])
+        self.assertEqual(
+            sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.discardpile])
+        )
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
@@ -70,10 +73,12 @@ class Test_Golem(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(
-            ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
+            sorted(["Golem", "Moat", "Village"]),
+            sorted([c.name for c in self.plr.played]),
         )
         self.assertEqual(
-            ["Copper", "Estate", "Golem"], [c.name for c in self.plr.discardpile]
+            sorted(["Copper", "Estate", "Golem"]),
+            sorted([c.name for c in self.plr.discardpile]),
         )
 
     def test_nocards(self):

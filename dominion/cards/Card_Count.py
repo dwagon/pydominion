@@ -55,7 +55,8 @@ class Card_Count(Card.Card):
             player.add_coins(3)
 
     ###########################################################################
-    def putCard(self, game, player):
+    @classmethod
+    def putCard(cls, game, player):
         """Put a card from your hand on top of your deck"""
         index = 1
         options = []
@@ -125,7 +126,7 @@ class Test_Count(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["gain a copper", "gain duchy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[1].name, "Duchy")
+        self.assertIn("Duchy", self.plr.discardpile)
 
 
 ###############################################################################
