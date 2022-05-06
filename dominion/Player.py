@@ -347,7 +347,7 @@ class Player:
     def remove_card(self, card):
         """ Remove a card from wherever it is """
         curr_loc = card.location
-        if curr_loc == "discard":
+        if curr_loc == "discardpile":
             self.discardpile.remove(card)
         elif curr_loc == "hand":
             self.hand.remove(card)
