@@ -36,7 +36,7 @@ class Test_Goat(unittest.TestCase):
         self.card = self.g["Goat"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Province", "Estate")
+        self.plr.hand.set("Province", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)

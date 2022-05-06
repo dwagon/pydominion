@@ -39,8 +39,8 @@ class Test_Banquet(unittest.TestCase):
         self.plr.test_input = ["Get Silver"]
         self.plr.add_coins(3)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Copper"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIsNotNone(self.plr.discardpile["Copper"])
+        self.assertIsNotNone(self.plr.discardpile["Silver"])
         self.assertEqual(self.plr.discardpile.size(), 3)
 
 

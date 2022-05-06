@@ -40,7 +40,7 @@ class Card_Ghost(Card.Card):
     def duration(self, game, player):
         if not hasattr(player, "_ghost_reserve"):
             return
-        for card in player._ghost_reserve[:]:
+        for card in player._ghost_reserve:
             player.output(f"Ghost playing {card.name}")
             for _ in range(2):
                 player.play_card(card, discard=False, costAction=False)
@@ -65,8 +65,8 @@ class Test_Ghost(unittest.TestCase):
 
     def test_duration(self):
         try:
-            self.plr.set_deck("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.set_discard("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.deck.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.discardpile.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Card.TYPE_NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()

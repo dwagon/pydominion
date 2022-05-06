@@ -36,7 +36,7 @@ class Test_Expand(unittest.TestCase):
         self.expand = self.g["Expand"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.expand, "hand")
         self.plr.test_input = ["Trash Copper", "Get Estate"]
         self.plr.play_card(self.expand)

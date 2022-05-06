@@ -53,13 +53,13 @@ class Test_Journeyman(unittest.TestCase):
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
-        self.plr.set_deck("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.deck.set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

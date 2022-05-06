@@ -33,7 +33,7 @@ class Test_Salvager(unittest.TestCase):
 
     def test_play(self):
         """Play a salvage"""
-        self.plr.set_hand("Duchy", "Estate")
+        self.plr.hand.set("Duchy", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)

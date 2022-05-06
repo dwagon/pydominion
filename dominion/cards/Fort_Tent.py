@@ -50,7 +50,7 @@ class Test_Tent(unittest.TestCase):
         """Play a tent - don't rotate"""
         self.plr.test_input = ["Discard as normal"]
         self.plr.discard_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Tent"))
+        self.assertIn("Tent", self.plr.discardpile)
 
     def test_play_rotate(self):
         """Play a tent - rotate"""

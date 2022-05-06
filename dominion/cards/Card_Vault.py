@@ -50,8 +50,8 @@ class Test_Vault(unittest.TestCase):
         self.card = self.g["Vault"].remove()
 
     def test_play(self):
-        self.other.set_hand("Copper", "Silver", "Gold")
-        self.plr.set_hand("Duchy", "Province", "Gold", "Silver", "Estate")
+        self.other.hand.set("Copper", "Silver", "Gold")
+        self.plr.hand.set("Duchy", "Province", "Gold", "Silver", "Estate")
         self.plr.add_card(self.card, "hand")
         self.other.test_input = ["Copper", "Silver", "Finish"]
         self.plr.test_input = ["Duchy", "Province", "Finish"]

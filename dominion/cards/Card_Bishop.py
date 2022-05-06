@@ -53,10 +53,10 @@ class Card_Bishop(Card.Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Trash an estate, then a copper else nothing
-    es = player.in_hand("estate")
+    es = player.hand["estate"]
     if es:
         return [es]
-    cu = player.in_hand("copper")
+    cu = player.hand["copper"]
     if cu:
         return [cu]
     return []
@@ -78,7 +78,7 @@ class Test_Bishop(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash(self):
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["finish"]
@@ -89,8 +89,8 @@ class Test_Bishop(unittest.TestCase):
 
     def test_bothtrash(self):
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold")
-        self.other.set_hand("Province")
+        self.plr.hand.set("Gold")
+        self.other.hand.set("Province")
         self.plr.add_card(self.bishop, "hand")
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["trash province"]

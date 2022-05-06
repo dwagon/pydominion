@@ -52,8 +52,8 @@ class Test_Innkeeper(unittest.TestCase):
 
     def test_play_three(self):
         """Play the card to gain three cards"""
-        self.plr.set_deck("Copper", "Silver", "Gold")
-        self.plr.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.deck.set("Copper", "Silver", "Gold")
+        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.add_card(self.card, "hand")
         hndsize = self.plr.hand.size()
         self.plr.test_input = [

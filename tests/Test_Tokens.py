@@ -30,7 +30,7 @@ class TestToken(unittest.TestCase):
     def test_short_draw(self):
         """Ensure we draw less if the -Card token is in place"""
         self.plr.card_token = True
-        self.plr.set_hand()
+        self.plr.hand.set()
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
         self.assertEqual(self.plr.hand.size(), 1)
@@ -51,7 +51,7 @@ class TestToken(unittest.TestCase):
     def test_trashing_token(self):
         """Does the Trashing token work"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold", "Province", "Duchy")
+        self.plr.hand.set("Gold", "Province", "Duchy")
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
         self.plr.set_coins(5)
@@ -67,7 +67,7 @@ class TestToken(unittest.TestCase):
 
     def test_card_token(self):
         """Does the +1 Card token work"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.place_token("+1 Card", "Moat")
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")

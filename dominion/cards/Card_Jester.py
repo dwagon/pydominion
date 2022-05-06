@@ -52,15 +52,15 @@ class Test_Jester(unittest.TestCase):
 
     def test_victory(self):
         """Play a jester with the victim having a Victory on top of deck"""
-        self.victim.set_deck("Duchy")
+        self.victim.deck.set("Duchy")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.victim.in_discard("Curse"))
-        self.assertIsNotNone(self.victim.in_discard("Duchy"))
+        self.assertIn("Curse", self.victim.discardpile)
+        self.assertIn("Duchy", self.victim.discardpile)
 
     def test_give_card(self):
         """Play a jester and give the duplicate to the victim"""
-        self.victim.set_deck("Gold")
+        self.victim.deck.set("Gold")
         self.plr.test_input = ["gets"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
@@ -68,21 +68,21 @@ class Test_Jester(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 0)
         for c in self.victim.discardpile:
             self.assertEqual(c.name, "Gold")
-        self.assertIsNone(self.victim.in_discard("Curse"))
-        self.assertIsNotNone(self.victim.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertNotIn("Curse", self.victim.discardpile)
+        self.assertIn("Gold", self.victim.discardpile)
+        self.assertNotIn("Gold", self.plr.discardpile)
 
     def test_take_card(self):
         """Play a jester and take the duplicate from the victim"""
-        self.victim.set_deck("Gold")
+        self.victim.deck.set("Gold")
         self.plr.test_input = ["you"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.victim.discardpile.size(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNone(self.victim.in_discard("Curse"))
-        self.assertIsNotNone(self.victim.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertNotIn("Curse", self.victim.discardpile)
+        self.assertIn("Gold", self.victim.discardpile)
+        self.assertIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

@@ -72,8 +72,8 @@ class Test_Warrior(unittest.TestCase):
     def test_with_trash(self):
         """Play a warrior with something to trash"""
         tsize = self.g.trash_size()
-        self.victim.set_deck("Silver", "Silver")
-        self.plr.set_played("Page")
+        self.victim.deck.set("Silver", "Silver")
+        self.plr.played.set("Page")
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trash_size(), tsize + 2)
 

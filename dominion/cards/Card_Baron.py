@@ -18,7 +18,7 @@ class Card_Baron(Card.Card):
     def special(self, game, player):
         """You may discard an Estate card. If you do +4 Coin. Otherwise,
         gain an estate card"""
-        hasEstate = player.in_hand("Estate")
+        hasEstate = player.hand["Estate"]
         if hasEstate:
             ans = player.plr_choose_options(
                 "Discard Estate?",
@@ -47,7 +47,7 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_noestate(self):
-        self.plr.set_hand("Copper", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Copper")
         self.plr.add_card(self.baron, "hand")
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.get_coins(), 0)
@@ -55,24 +55,24 @@ class Test_Baron(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 1)
 
     def test_discardestate(self):
-        self.plr.set_hand("Gold", "Estate", "Copper")
+        self.plr.hand.set("Gold", "Estate", "Copper")
         self.plr.add_card(self.baron, "hand")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.get_coins(), 4)
         self.assertEqual(self.plr.discardpile[0].name, "Estate")
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.in_hand("Estate"), None)
+        self.assertNotIn("Estate", self.plr.hand)
 
     def test_keepestate(self):
-        self.plr.set_hand("Estate", "Gold", "Copper")
+        self.plr.hand.set("Estate", "Gold", "Copper")
         self.plr.add_card(self.baron, "hand")
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.discardpile[0].name, "Estate")
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertNotEqual(self.plr.in_hand("Estate"), None)
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

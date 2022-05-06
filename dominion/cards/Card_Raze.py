@@ -51,21 +51,21 @@ class Test_Raze(unittest.TestCase):
     def test_play(self):
         """Play a raze - trashing itself"""
         self.plr.add_card(self.card, "hand")
-        self.plr.set_deck("Silver", "Gold", "Province")
+        self.plr.deck.set("Silver", "Gold", "Province")
         self.plr.test_input = ["Raze", "Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
+        self.assertIn("Province", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.deck)
         self.assertIsNotNone(self.g.in_trash("Raze"))
 
     def test_copper(self):
         """Play a raze - trashing copper - a zero value card"""
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.set_deck("Silver", "Gold", "Province")
+        self.plr.deck.set("Silver", "Gold", "Province")
         self.plr.test_input = ["Copper", "Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)

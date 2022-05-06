@@ -45,7 +45,7 @@ class Test_Courtyard(unittest.TestCase):
 
     def test_putcard(self):
         """Use courtyard to put a card to the top of the deck"""
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.cy, "hand")
         self.plr.test_input = ["put gold"]
         self.plr.play_card(self.cy)

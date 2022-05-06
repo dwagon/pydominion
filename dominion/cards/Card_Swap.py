@@ -42,13 +42,13 @@ class Test_Swap(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_hand("Moat", "Copper", "Estate")
+        self.plr.hand.set("Moat", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Get Swap"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Swap"))
+        self.assertIn("Swap", self.plr.discardpile)
 
 
 ###############################################################################

@@ -63,7 +63,7 @@ class Test_Rabble(unittest.TestCase):
         self.assertTrue(self.victim.discardpile.is_empty())
 
     def test_nodefense(self):
-        self.victim.set_deck("Copper", "Estate", "Rabble")
+        self.victim.deck.set("Copper", "Estate", "Rabble")
         self.attacker.play_card(self.rabble)
         self.assertEqual(self.victim.deck[-1].name, "Estate")
         self.assertEqual(self.victim.discardpile.size(), 2)

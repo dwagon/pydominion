@@ -66,8 +66,8 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.add_card(militia, "hand")
         self.plr.test_input = ["1", "militia", "get gold"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_hand("Militia"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Militia", self.plr.hand)
 
     def test_trash_empty(self):
         """Play a grave robber - nothing to trash"""
@@ -80,7 +80,7 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trash_size(), 0)
-        self.assertIsNotNone(self.plr.in_deck("Militia"))
+        self.assertIn("Militia", self.plr.deck)
 
     def test_loot_empty(self):
         """Play a grave robber - looting the trash that doesn't have anything"""

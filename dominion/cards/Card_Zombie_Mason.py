@@ -37,11 +37,11 @@ class Test_Zombie_Mason(unittest.TestCase):
         self.card = self.g["Zombie Mason"].remove()
 
     def test_play(self):
-        self.plr.set_deck("Estate")
+        self.plr.deck.set("Estate")
         self.plr.test_input = ["Guide"]
         self.plr.play_card(self.card, discard=False, costAction=False)
         self.assertIsNotNone(self.g.in_trash("Estate"))
-        self.assertIsNotNone(self.plr.in_discard("Guide"))
+        self.assertIn("Guide", self.plr.discardpile)
 
 
 ###############################################################################

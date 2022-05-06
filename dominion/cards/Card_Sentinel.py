@@ -37,12 +37,12 @@ class Test_Sentinel(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_deck("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.deck.set("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Copper"))
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

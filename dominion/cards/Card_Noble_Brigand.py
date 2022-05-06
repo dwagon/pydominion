@@ -85,23 +85,23 @@ class Test_Noble_Brigand(unittest.TestCase):
 
     def test_no_treasure(self):
         """Play an Noble Brigand but with no treasure"""
-        self.vic.set_deck("Estate", "Estate")
+        self.vic.deck.set("Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.vic.discardpile.size(), 3)
-        self.assertIsNotNone(self.vic.in_discard("Copper"))
+        self.assertIn("Copper", self.vic.discardpile)
 
     def test_gold(self):
         """Play an Noble Brigand with a gold"""
-        self.vic.set_deck("Silver", "Gold")
+        self.vic.deck.set("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)
-        self.assertIsNotNone(self.vic.in_discard("Silver"))
-        self.assertIsNone(self.vic.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Silver", self.vic.discardpile)
+        self.assertNotIn("Gold", self.vic.discardpile)
+        self.assertIn("Gold", self.plr.discardpile)
         self.assertIsNone(self.g.in_trash("Gold"))
 
 

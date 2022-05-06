@@ -11,8 +11,8 @@ class Card_Rats(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """+1 Card, +1 Action, Gain a Rats.
-        Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
-        When you trash this, +1 Card."""
+            Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
+            When you trash this, +1 Card."""
         self.name = "Rats"
         self.numcards = 20
         self.cards = 1
@@ -37,16 +37,14 @@ class Test_Rats(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.rats = self.g["Rats"].remove()
-        self.plr.set_deck("Estate", "Province", "Duchy")
-        self.plr.set_hand("Copper", "Gold", "Silver", "Rats")
+        self.plr.deck.set("Estate", "Province", "Duchy")
+        self.plr.hand.set("Copper", "Gold", "Silver", "Rats")
         self.plr.add_card(self.rats, "hand")
 
     def test_play(self):
-        self.plr.set_deck("Gold")
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.plr.add_actions(1)
-        self.assertEqual(self.plr.hand[-1].name, "Gold")
+        self.assertIn("Copper", self.g.trashpile)
 
     def test_trashcard(self):
         tsize = self.g.trash_size()

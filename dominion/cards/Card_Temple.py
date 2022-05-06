@@ -24,7 +24,7 @@ class Card_Temple(Card.Card):
     def special(self, game, player):
         player.add_score("Temple", 1)
         cardnames = {_.name for _ in player.hand}
-        cards = [player.in_hand(_) for _ in cardnames]
+        cards = [player.hand[_] for _ in cardnames]
         trash = player.plr_trash_card(
             cardsrc=cards, prompt="Trash up to 3 different cards", num=3
         )
@@ -48,7 +48,7 @@ class Test_Temple(unittest.TestCase):
 
     def test_play(self):
         """Play a Temple"""
-        self.plr.set_hand("Copper", "Silver", "Silver", "Gold", "Duchy")
+        self.plr.hand.set("Copper", "Silver", "Silver", "Gold", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper", "Silver", "finish"]
         self.plr.play_card(self.card)

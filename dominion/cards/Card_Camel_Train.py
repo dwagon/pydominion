@@ -42,11 +42,11 @@ class Test_Camel_Train(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["Select Silver"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_exile("Silver"))
+        self.assertIn("Silver", self.plr.exilepile)
 
     def test_gain(self):
         self.plr.gain_card("Camel Train")
-        self.assertIsNotNone(self.plr.in_exile("Gold"))
+        self.assertIn("Gold", self.plr.exilepile)
 
 
 ###############################################################################

@@ -55,19 +55,19 @@ class Test_Archive(unittest.TestCase):
 
     def test_play(self):
         """Play a Archive"""
-        self.plr.set_deck("Gold", "Silver", "Province")
+        self.plr.deck.set("Gold", "Silver", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(len(self.plr._archive_reserve), 2)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Province"]
         self.plr.start_turn()

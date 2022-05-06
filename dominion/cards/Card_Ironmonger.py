@@ -63,33 +63,33 @@ class Test_Ironmonger(unittest.TestCase):
 
     def test_victory(self):
         self.plr.test_input = ["put back"]
-        self.plr.set_deck("Duchy", "Estate")
+        self.plr.deck.set("Duchy", "Estate")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_treasure(self):
         self.plr.test_input = ["put back"]
-        self.plr.set_deck("Copper", "Gold")
+        self.plr.deck.set("Copper", "Gold")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_action(self):
         self.plr.test_input = ["put back"]
-        self.plr.set_deck("Iron Monger", "Iron Monger")
+        self.plr.deck.set("Iron Monger", "Iron Monger")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_discard(self):
         self.plr.test_input = ["discard"]
-        self.plr.set_deck("Iron Monger", "Gold")
+        self.plr.deck.set("Iron Monger", "Gold")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.discardpile[0].name, "Iron Monger")
 
     def test_putback(self):
         self.plr.test_input = ["put back"]
-        self.plr.set_deck("Copper", "Gold")
+        self.plr.deck.set("Copper", "Gold")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.deck[0].name, "Copper")
 

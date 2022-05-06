@@ -44,16 +44,16 @@ class Test_Patrol(unittest.TestCase):
         self.card = self.g["Patrol"].remove()
 
     def test_play(self):
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
-        self.plr.set_deck(
+        self.plr.deck.set(
             "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
         )
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Duchy"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Duchy", self.plr.hand)
+        self.assertNotIn("Silver", self.plr.hand)
 
 
 ###############################################################################

@@ -47,7 +47,7 @@ class Test_Hill_Fort(unittest.TestCase):
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), hndsz)
         self.assertEqual(self.plr.get_actions(), acts - 1)
 
@@ -56,7 +56,7 @@ class Test_Hill_Fort(unittest.TestCase):
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), hndsz + 1 - 1)
         self.assertEqual(self.plr.get_actions(), acts - 1 + 1)
 

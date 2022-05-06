@@ -21,7 +21,7 @@ class Card_Conclave(Card.Card):
         if not ac:
             player.output("No actions to play")
             return
-        sac = [_ for _ in ac if not player.in_played(_.name)]
+        sac = [_ for _ in ac if _.name not in player.played]
         if not sac:
             player.output("No suitable actions to play")
             return
@@ -47,14 +47,14 @@ class Test_Conclave(unittest.TestCase):
         self.card = self.g["Conclave"].remove()
 
     def test_played(self):
-        self.plr.set_hand("Moat", "Copper")
+        self.plr.hand.set("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.set_played("Moat")
+        self.plr.played.set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
 
     def test_not_played(self):
-        self.plr.set_hand("Moat", "Copper")
+        self.plr.hand.set("Moat", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)

@@ -23,7 +23,7 @@ class Card_OldWitch(Card.Card):
             player.output(f"{pl.name} got cursed")
             pl.output(f"{player.name}'s Old Witch cursed you")
             pl.gain_card("Curse")
-            tr = pl.in_hand("Curse")
+            tr = pl.hand["Curse"]
             if tr:
                 c = pl.plr_trash_card(cardsrc=[tr], prompt="You may trash a Curse")
                 if c:
@@ -44,18 +44,18 @@ class Test_OldWitch(unittest.TestCase):
         self.card = self.g["Old Witch"].remove()
 
     def test_play(self):
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
-        self.assertIsNotNone(self.vic.in_discard("Curse"))
+        self.assertIn("Curse", self.vic.discardpile)
 
     def test_has_curse(self):
-        self.vic.set_hand("Curse")
+        self.vic.hand.set("Curse")
         self.plr.add_card(self.card, "hand")
         self.vic.test_input = ["Trash Curse"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.vic.in_hand("Curse"))
+        self.assertNotIn("Curse", self.vic.hand)
         self.assertIsNotNone(self.g.in_trash("Curse"))
 
 

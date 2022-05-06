@@ -40,7 +40,7 @@ class Test_Swamps_Gift(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.g.print_state()
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Will-o'-Wisp"))
+        self.assertIsNotNone(self.plr.discardpile["Will-o'-Wisp"])
 
 
 ###############################################################################

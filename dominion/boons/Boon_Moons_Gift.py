@@ -50,12 +50,12 @@ class Test_Moons_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_moons_gift(self):
-        self.plr.set_discard("Province", "Gold")
+        self.plr.discardpile.set("Province", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertIsNone(self.plr.in_discard("Gold"))
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

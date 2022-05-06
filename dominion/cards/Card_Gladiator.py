@@ -28,7 +28,7 @@ class Card_Gladiator(Card.Card):
         )
         player.reveal_card(mycard[0])
         lefty = game.player_to_left(player)
-        leftycard = lefty.in_hand(mycard[0].name)
+        leftycard = lefty.hand[mycard[0].name]
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
             player.add_coins(1)
@@ -49,7 +49,7 @@ class Test_Gladiator(unittest.TestCase):
 
     def test_play_nothave(self):
         """Play a Gladiator - something the other player doesn't have"""
-        self.plr.set_hand("Moat", "Copper", "Estate")
+        self.plr.hand.set("Moat", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
@@ -58,8 +58,8 @@ class Test_Gladiator(unittest.TestCase):
 
     def test_play_has(self):
         """Play a Gladiator - something the other player has"""
-        self.plr.set_hand("Moat", "Copper", "Estate")
-        self.vic.set_hand("Moat", "Copper", "Estate")
+        self.plr.hand.set("Moat", "Copper", "Estate")
+        self.vic.hand.set("Moat", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)

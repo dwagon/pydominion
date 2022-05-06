@@ -36,20 +36,20 @@ class Test_Cellar(unittest.TestCase):
         self.ccard = self.g["Cellar"].remove()
 
     def test_none(self):
-        self.plr.set_hand("Estate", "Copper", "Silver")
+        self.plr.hand.set("Estate", "Copper", "Silver")
         self.plr.add_card(self.ccard, "hand")
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.hand.size(), 3)
 
     def test_one(self):
-        self.plr.set_hand("Estate", "Copper", "Silver")
-        self.plr.set_deck("Province", "Gold")
+        self.plr.hand.set("Estate", "Copper", "Silver")
+        self.plr.deck.set("Province", "Gold")
         self.plr.add_card(self.ccard, "hand")
         self.plr.test_input = ["discard estate", "finish"]
         self.plr.play_card(self.ccard)
         self.assertEqual(self.plr.deck[-1].name, "Province")
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), 3)
 
 

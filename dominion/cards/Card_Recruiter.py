@@ -33,7 +33,7 @@ class Test_Recruiter(unittest.TestCase):
         self.card = self.g["Recruiter"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Copper", "Silver")
+        self.plr.hand.set("Copper", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver"]
         self.plr.play_card(self.card)

@@ -30,7 +30,7 @@ class Card_Messenger(Card.Card):
             ("Yes - dump it", True),
         )
         if o:
-            for c in player.deck[:]:
+            for c in player.deck:
                 player.add_card(c, "discard")
                 player.deck.remove(c)
 
@@ -77,7 +77,7 @@ class Test_Messenger(unittest.TestCase):
         self.plr.set_coins(4)
         self.plr.buy_card(self.g["Messenger"])
         for plr in self.g.player_list():
-            self.assertIsNotNone(plr.in_discard("Silver"))
+            self.assertIn("Silver", plr.discardpile)
 
 
 ###############################################################################

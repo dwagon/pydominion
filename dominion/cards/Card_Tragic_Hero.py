@@ -35,7 +35,7 @@ class Test_Tragic_Hero(unittest.TestCase):
 
     def test_play(self):
         """Play a Tragic Hero with less than 8 cards"""
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
@@ -46,7 +46,7 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

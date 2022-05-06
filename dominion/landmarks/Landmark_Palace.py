@@ -34,9 +34,9 @@ class Test_Palace(unittest.TestCase):
 
     def test_gain(self):
         """Use Palace"""
-        self.plr.set_discard("Gold", "Silver", "Silver", "Copper", "Duchy")
-        self.plr.set_deck("Gold", "Silver", "Copper", "Copper", "Duchy")
-        self.plr.set_hand("Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.discardpile.set("Gold", "Silver", "Silver", "Copper", "Duchy")
+        self.plr.deck.set("Gold", "Silver", "Copper", "Copper", "Duchy")
+        self.plr.hand.set("Silver", "Copper", "Copper", "Copper", "Duchy")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Palace"], 2 * 3)
 

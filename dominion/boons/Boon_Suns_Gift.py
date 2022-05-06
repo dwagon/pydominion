@@ -49,14 +49,14 @@ class Test_Suns_Gift(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_suns_gift(self):
-        self.plr.set_deck("Silver", "Gold", "Province", "Duchy", "Copper")
+        self.plr.deck.set("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_deck("Silver"))
-            self.assertIsNotNone(self.plr.in_deck("Gold"))
-            self.assertIsNotNone(self.plr.in_discard("Province"))
-            self.assertIsNotNone(self.plr.in_discard("Duchy"))
+            self.assertIn("Silver", self.plr.deck)
+            self.assertIn("Gold", self.plr.deck)
+            self.assertIsNotNone(self.plr.discardpile["Province"])
+            self.assertIsNotNone(self.plr.discardpile["Duchy"])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

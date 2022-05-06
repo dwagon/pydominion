@@ -44,7 +44,7 @@ class Test_War(unittest.TestCase):
 
     def test_war(self):
         tsize = self.g.trash_size()
-        self.plr.set_deck("Duchy", "Cursed Village", "Silver")
+        self.plr.deck.set("Duchy", "Cursed Village", "Silver")
         self.plr.gain_card("Cursed Village")
         self.assertEqual(self.g.trash_size(), tsize + 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))

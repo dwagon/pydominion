@@ -52,7 +52,7 @@ class Test_Seal(unittest.TestCase):
         self.plr.test_input = ["top of deck"]
         self.plr.perform_way(self.way, self.card)
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
+        self.assertEqual(self.plr.deck.top_card().name, "Gold")
 
 
 ###############################################################################

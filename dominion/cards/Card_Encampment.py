@@ -21,8 +21,8 @@ class Card_Encampment(Card.Card):
         self._discard = False
 
     def special(self, game, player):
-        gld = player.in_hand("Gold")
-        pln = player.in_hand("Plunder")
+        gld = player.hand["Gold"]
+        pln = player.hand["Plunder"]
         if gld or pln:
             self._discard = False
             chc = player.plr_choose_options(
@@ -42,7 +42,7 @@ class Card_Encampment(Card.Card):
 
     def hook_cleanup(self, game, player):
         if self._discard:
-            for card in player.played[:]:
+            for card in player.played:
                 if card.name == "Encampment":
                     player.output("Returning Encampment to Supply")
                     game["Encampment"].add(self)
@@ -61,7 +61,7 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_reveal(self):
         """Play a Encampment and reveal a Gold"""
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.test_input = ["Reveal card"]
@@ -75,8 +75,8 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_return(self):
         """Play a Encampment and don't have anything to return"""
-        self.plr.set_discard("Copper", "Copper", "Copper", "Estate", "Estate")
-        self.plr.set_hand("Silver")
+        self.plr.discardpile.set("Copper", "Copper", "Copper", "Estate", "Estate")
+        self.plr.hand.set("Silver")
         hndsz = self.plr.hand.size()
         acts = self.plr.get_actions()
         self.plr.add_card(self.card, "hand")

@@ -21,13 +21,13 @@ class Event_Annex(Event.Event):
             num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile"
         )
         keep = []
-        for card in player.discardpile[:]:
+        for card in player.discardpile:
             if card in cards:
                 keep.append(card)
             else:
                 player.add_card(card, "deck")
         player.deck.shuffle()
-        player.set_discard()
+        player.discardpile.set()
         for card in keep:
             player.add_card(card, "discard")
         if player.gain_card("Duchy"):
@@ -49,7 +49,7 @@ class Test_Annex(unittest.TestCase):
 
     def test_play(self):
         """Perform Annex"""
-        self.plr.set_discard("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
+        self.plr.discardpile.set("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
         self.plr.test_input = [
             "Silver",
             "Copper",
@@ -60,9 +60,9 @@ class Test_Annex(unittest.TestCase):
         ]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
-        self.assertIsNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertIsNotNone(self.plr.discardpile["Duchy"])
+        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

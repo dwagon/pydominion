@@ -38,7 +38,7 @@ class Test_Crafters_Guild(unittest.TestCase):
         self.plr.test_input = ["Get Silver"]
         self.plr.start_turn()
         self.assertEqual(self.plr.get_favors(), 3)
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
+        self.assertIn("Silver", self.plr.deck)
 
 
 ###############################################################################

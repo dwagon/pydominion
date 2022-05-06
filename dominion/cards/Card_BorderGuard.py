@@ -12,8 +12,8 @@ class Card_BorderGuard(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
         self.desc = """+1 Action; Reveal the top 2 cards of your deck.
-        Put one into your hand and discard the other. If both were Actions,
-        take the Lantern or Horn."""
+            Put one into your hand and discard the other. If both were Actions,
+            take the Lantern or Horn."""
         self.name = "Border Guard"
         self.cost = 2
         self.actions = 1
@@ -48,8 +48,8 @@ class Card_BorderGuard(Card.Card):
         if not player.has_artifact("Horn"):
             return
         ch = player.plr_choose_options(
-            "Use Horn and put Border Guard into hand?",
-            ("Put into hand", True),
+            "Use Horn and put Border Guard onto deck?",
+            ("Put onto deck", True),
             ("Keep in discard", False),
         )
         if ch:
@@ -67,21 +67,21 @@ class Test_BorderGuard(unittest.TestCase):
         self.card = self.g["Border Guard"].remove()
 
     def test_play(self):
-        self.plr.set_deck("Silver", "Gold")
+        self.plr.deck.set("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.discardpile)
 
     def test_play_actions(self):
-        self.plr.set_deck("Moat", "Guide")
+        self.plr.deck.set("Moat", "Guide")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Guide"))
+        self.assertIn("Moat", self.plr.hand)
+        self.assertIn("Guide", self.plr.discardpile)
         self.assertTrue(self.plr.has_artifact("Horn"))
 
 

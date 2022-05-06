@@ -30,7 +30,7 @@ class Test_Goat(unittest.TestCase):
 
     def test_play(self):
         """Perform a Goat"""
-        self.plr.set_hand("Copper", "Silver")
+        self.plr.hand.set("Copper", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
         self.plr.perform_way(self.way, self.card)

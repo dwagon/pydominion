@@ -50,14 +50,14 @@ class Test_Huntinggrounds(unittest.TestCase):
         self.plr.test_input = ["Estates"]
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 3)
-        self.assertIsNotNone(self.plr.in_discard("Estate"))
+        self.assertIn("Estate", self.plr.discardpile)
 
     def test_trash_duchy(self):
         """Trash a hunting ground and gain duchy"""
         self.plr.test_input = ["Duchy"]
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIn("Duchy", self.plr.discardpile)
 
 
 ###############################################################################

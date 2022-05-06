@@ -56,7 +56,7 @@ class Test_Squire(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertIsNone(self.plr.in_discard("Silver"))
+        self.assertNotIn("Silver", self.plr.discardpile)
 
     def test_play_buys(self):
         """Play a Squire - gain buys"""
@@ -65,7 +65,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 3)
-        self.assertIsNone(self.plr.in_discard("Silver"))
+        self.assertNotIn("Silver", self.plr.discardpile)
 
     def test_play_silver(self):
         """Play a Squire - gain Silver"""
@@ -74,13 +74,13 @@ class Test_Squire(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
 
     def test_trash(self):
         """Trash a Squire"""
         self.plr.test_input = ["militia"]
         self.plr.trash_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Militia"))
+        self.assertIn("Militia", self.plr.discardpile)
 
 
 ###############################################################################

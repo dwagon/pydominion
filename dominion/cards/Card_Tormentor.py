@@ -46,14 +46,14 @@ class Test_Tormentor(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.plr.in_discard("Imp"))
+        self.assertIn("Imp", self.plr.discardpile)
 
     def test_play_hex(self):
         """Play tormentor with other cards already being played"""
-        self.plr.set_played("Tormentor")
+        self.plr.played.set("Tormentor")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Imp"))
+        self.assertNotIn("Imp", self.plr.discardpile)
         self.assertTrue(self.vic.has_state("Deluded"))
 
 

@@ -40,7 +40,7 @@ class Test_Dame_Natalie(unittest.TestCase):
         self.plr.test_input = ["get silver"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

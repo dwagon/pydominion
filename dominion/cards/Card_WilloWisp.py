@@ -38,25 +38,25 @@ class Test_WilloWisp(unittest.TestCase):
         self.card = self.g["Will-o'-Wisp"].remove()
 
     def test_special_cheap(self):
-        self.plr.set_hand()
-        self.plr.set_deck("Copper", "Estate")
+        self.plr.hand.set()
+        self.plr.deck.set("Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertIn("Copper", self.plr.hand)
+        self.assertIn("Estate", self.plr.hand)
 
     def test_special_expensive(self):
-        self.plr.set_hand()
-        self.plr.set_deck("Gold", "Estate")
+        self.plr.hand.set()
+        self.plr.deck.set("Gold", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Estate"))
+        self.assertNotIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Estate", self.plr.hand)
 
 
 ###############################################################################

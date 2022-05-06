@@ -47,13 +47,13 @@ class Test_Procession(unittest.TestCase):
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Moat"))
         self.assertEqual(self.plr.hand.size(), 4)
-        self.assertIsNotNone(self.plr.in_discard("Witch"))
+        self.assertIn("Witch", self.plr.discardpile)
 
 
 ###############################################################################

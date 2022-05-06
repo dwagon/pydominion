@@ -33,7 +33,7 @@ class Test_Peasant(unittest.TestCase):
 
     def test_play(self):
         """Play a peasant"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)

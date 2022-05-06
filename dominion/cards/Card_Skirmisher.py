@@ -56,7 +56,7 @@ class Test_Skirmisher(unittest.TestCase):
 
     def test_gain_attack(self):
         """Gain an attack card after this is in play"""
-        self.vict.set_hand("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.vict.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vict.test_input = ["Estate", "Duchy", "finish"]
         self.plr.play_card(self.card)
         self.plr.gain_card("Skirmisher")

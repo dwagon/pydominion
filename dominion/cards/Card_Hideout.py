@@ -32,8 +32,8 @@ class Test_Hideout(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
-        self.plr.set_deck("Silver")
-        self.plr.set_hand("Copper", "Estate")
+        self.plr.deck.set("Silver")
+        self.plr.hand.set("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
@@ -42,15 +42,15 @@ class Test_Hideout(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2)
 
     def test_trashVictory(self):
-        self.plr.set_deck("Silver")
-        self.plr.set_hand("Copper", "Estate")
+        self.plr.deck.set("Silver")
+        self.plr.hand.set("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertIsNotNone(self.plr.in_discard("Curse"))
+        self.assertIn("Curse", self.plr.discardpile)
 
 
 ###############################################################################

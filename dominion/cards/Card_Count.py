@@ -48,14 +48,15 @@ class Card_Count(Card.Card):
             player.output("Gained a duchy")
             player.gain_card("Duchy")
         elif ans == "trash":
-            for c in player.hand[:]:
+            for c in player.hand:
                 player.output("Trashing %s" % c.name)
                 player.trash_card(c)
         else:
             player.add_coins(3)
 
     ###########################################################################
-    def putCard(self, game, player):
+    @classmethod
+    def putCard(cls, game, player):
         """Put a card from your hand on top of your deck"""
         index = 1
         options = []
@@ -76,7 +77,7 @@ class Test_Count(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Count"].remove()
-        self.plr.set_hand("Copper", "Estate", "Silver", "Province", "Gold")
+        self.plr.hand.set("Copper", "Estate", "Silver", "Province", "Gold")
 
     def test_discard(self):
         self.plr.add_card(self.card, "hand")
@@ -93,7 +94,7 @@ class Test_Count(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 3)
 
     def test_topdeck(self):
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.card, "hand")
         # top deck, card select, +3 coin
         self.plr.test_input = ["top of your deck", "put gold", "+3 coin"]
@@ -125,7 +126,7 @@ class Test_Count(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["gain a copper", "gain duchy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[1].name, "Duchy")
+        self.assertIn("Duchy", self.plr.discardpile)
 
 
 ###############################################################################

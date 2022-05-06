@@ -45,28 +45,28 @@ class Test_Bureaucrat(unittest.TestCase):
         self.plr.add_card(self.bcard, "hand")
 
     def test_hasvictory(self):
-        self.victim.set_hand("Estate", "Copper", "Copper")
-        self.victim.set_deck("Silver")
+        self.victim.hand.set("Estate", "Copper", "Copper")
+        self.victim.deck.set("Silver")
         self.plr.play_card(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, "Estate")
-        self.assertIsNone(self.victim.in_hand("Estate"))
+        self.assertNotIn("Estate", self.victim.hand)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
     def test_novictory(self):
-        self.victim.set_hand("Copper", "Copper", "Copper")
-        self.victim.set_deck("Province")
-        self.plr.set_deck("Province")
+        self.victim.hand.set("Copper", "Copper", "Copper")
+        self.victim.deck.set("Province")
+        self.plr.deck.set("Province")
         self.plr.play_card(self.bcard)
         self.assertEqual(self.victim.deck[-1].name, "Province")
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
     def test_defense(self):
-        self.victim.set_deck("Province")
-        self.victim.set_hand("Estate", "Duchy", "Moat")
+        self.victim.deck.set("Province")
+        self.victim.hand.set("Estate", "Duchy", "Moat")
         self.plr.play_card(self.bcard)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
         self.assertEqual(self.victim.deck[-1].name, "Province")
-        self.assertIsNotNone(self.victim.in_hand("Estate"))
+        self.assertIn("Estate", self.victim.hand)
 
 
 ###############################################################################

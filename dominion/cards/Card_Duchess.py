@@ -52,35 +52,35 @@ class Test_Duchess(unittest.TestCase):
 
     def test_play(self):
         """Play duchess - keep on deck"""
-        self.plr.set_deck("Province")
+        self.plr.deck.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.plr.in_deck("Province"))
-        self.assertIsNone(self.plr.in_discard("Province"))
+        self.assertIn("Province", self.plr.deck)
+        self.assertNotIn("Province", self.plr.discardpile)
 
     def test_disacrd(self):
         """Play duchess - discard"""
-        self.plr.set_deck("Province")
+        self.plr.deck.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNone(self.plr.in_deck("Province"))
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertNotIn("Province", self.plr.deck)
+        self.assertIn("Province", self.plr.discardpile)
 
     def test_buy_duchess(self):
         self.plr.test_input = ["Duchess"]
         self.plr.gain_card("Duchy")
-        self.assertIsNotNone(self.plr.in_discard("Duchess"))
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertIn("Duchess", self.plr.discardpile)
+        self.assertIn("Duchy", self.plr.discardpile)
 
     def test_buy_duchy(self):
         self.plr.test_input = ["No"]
         self.plr.gain_card("Duchy")
-        self.assertIsNone(self.plr.in_discard("Duchess"))
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertNotIn("Duchess", self.plr.discardpile)
+        self.assertIn("Duchy", self.plr.discardpile)
 
 
 ###############################################################################

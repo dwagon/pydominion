@@ -33,19 +33,18 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_play(self):
         """Play a ratcatcher"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.reserve.size(), 1)
-        c = self.plr.in_reserve("Ratcatcher")
-        self.assertEqual(c.name, "Ratcatcher")
+        self.assertIn("Ratcatcher", self.plr.reserve)
 
     def test_call(self):
         """Call from Reserve"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold")
+        self.plr.hand.set("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Gold"]
         self.plr.play_card(self.card)

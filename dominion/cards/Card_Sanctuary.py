@@ -38,15 +38,15 @@ class Test_Sanctuary(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.set_deck("Estate", "Duchy", "Province")
-        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.deck.set("Estate", "Duchy", "Province")
+        self.plr.hand.set("Copper", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Copper"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.plr.in_exile("Copper"))
+        self.assertIn("Copper", self.plr.exilepile)
 
 
 ###############################################################################

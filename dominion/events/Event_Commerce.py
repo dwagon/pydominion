@@ -35,7 +35,7 @@ class Test_Commerce(unittest.TestCase):
         self.plr.gain_card("Moat")
         self.plr.perform_event(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIsNotNone(self.plr.discardpile["Gold"])
 
 
 ###############################################################################

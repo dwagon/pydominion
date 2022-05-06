@@ -45,7 +45,7 @@ class Test_Coven(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.vic.in_exile("Curse"))
+        self.assertIn("Curse", self.vic.exilepile)
 
 
 ###############################################################################
