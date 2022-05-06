@@ -40,7 +40,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gain_card("Copper")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
-        self.assertIsNone(self.plr.in_discard("Horse"))
+        self.assertNotIn("Horse", self.plr.discardpile)
 
     def test_playcard_cost6(self):
         """Play a livery and gain something worth 6"""
@@ -48,7 +48,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gain_card("Province")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIn("Horse", self.plr.discardpile)
 
 
 ###############################################################################

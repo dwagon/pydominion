@@ -62,18 +62,18 @@ class Test_Crypt(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.set_played("Silver", "Gold", "Estate")
+        self.plr.played.set("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(len(self.plr._crypt_reserve), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.assertFalse(self.card.permanent)
 
 

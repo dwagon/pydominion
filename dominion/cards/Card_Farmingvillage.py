@@ -44,18 +44,18 @@ class Test_Farmingvillage(unittest.TestCase):
 
     def test_play_treasure(self):
         """Play farming village with a treasure in deck"""
-        self.plr.set_deck("Estate", "Estate", "Silver", "Estate", "Estate")
+        self.plr.deck.set("Estate", "Estate", "Silver", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Estate")
 
     def test_play_action(self):
         """Play farming village with an action in deck"""
-        self.plr.set_deck("Estate", "Estate", "Farming Village", "Estate", "Estate")
+        self.plr.deck.set("Estate", "Estate", "Farming Village", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.in_hand("Farming Village"))
+        self.assertIn("Farming Village", self.plr.hand)
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Estate")

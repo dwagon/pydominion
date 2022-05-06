@@ -57,7 +57,7 @@ class Test_Sycophant(unittest.TestCase):
         """Play the card"""
         favs = self.plr.get_favors()
         coin = self.plr.get_coins()
-        self.plr.set_hand("Estate", "Duchy", "Province", "Silver")
+        self.plr.hand.set("Estate", "Duchy", "Province", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Discard Estate",
@@ -68,7 +68,7 @@ class Test_Sycophant(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_favors(), favs)
         self.assertEqual(self.plr.get_coins(), coin + 3)
-        self.assertIsNone(self.plr.in_hand("Province"))
+        self.assertNotIn("Province", self.plr.hand)
 
 
 ###############################################################################

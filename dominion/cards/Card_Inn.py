@@ -29,7 +29,7 @@ class Card_Inn(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         cards = []
-        for card in player.discardpile[:]:
+        for card in player.discardpile:
             if card.isAction():
                 player.reveal_card(card)
                 cards.append(card)
@@ -58,7 +58,7 @@ class Test_Inn(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_hand("Duchy", "Province", "Gold", "Silver")
+        self.plr.hand.set("Duchy", "Province", "Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy", "Province", "finish"]
         self.plr.play_card(self.card)
@@ -66,16 +66,16 @@ class Test_Inn(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_gain(self):
-        self.plr.set_discard("Moat", "Gold")
+        self.plr.discardpile.set("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
         self.plr.gain_card("Inn")
-        self.assertIsNotNone(self.plr.in_deck("Moat"))
+        self.assertIn("Moat", self.plr.deck)
 
     def test_gain_self(self):
-        self.plr.set_discard()
+        self.plr.discardpile.set()
         self.plr.test_input = ["Inn", "finish"]
         self.plr.gain_card("Inn")
-        self.assertIsNotNone(self.plr.in_deck("Inn"))
+        self.assertIn("Inn", self.plr.deck)
 
 
 ###############################################################################

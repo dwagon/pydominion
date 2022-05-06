@@ -15,11 +15,11 @@ class Hex_BadOmens(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        for c in player.deck[:]:
+        for c in player.deck:
             player.add_card(c, "discard")
             player.deck.remove(c)
         numcu = 0
-        for c in player.discardpile[:]:
+        for c in player.discardpile:
             if c.name == "Copper":
                 numcu += 1
                 player.add_card(c, "deck")
@@ -40,7 +40,7 @@ class Test_BadOmens(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play(self):
-        self.plr.set_deck("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Silver", "Gold")
         self.plr.gain_card("Cursed Village")
         self.assertEqual(self.plr.deck.size(), 2)
         self.assertEqual(self.plr.deck.count("Copper"), 2)

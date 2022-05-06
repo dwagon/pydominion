@@ -46,14 +46,14 @@ class Test_CaveDwellers(unittest.TestCase):
 
     def test_play(self):
         """Play card"""
-        self.plr.set_deck("Copper", "Copper", "Copper", "Copper")
-        self.plr.set_hand("Estate", "Duchy", "Gold")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Copper")
+        self.plr.hand.set("Estate", "Duchy", "Gold")
         self.plr.set_favors(2)
         self.plr.test_input = ["Spend", "Discard Estate", "Spend", "Discard Duchy"]
         self.plr.start_turn()
         self.assertEqual(self.plr.get_favors(), 2 - 2)
-        self.assertIsNone(self.plr.in_hand("Estate"))
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
+        self.assertNotIn("Estate", self.plr.hand)
+        self.assertIsNotNone(self.plr.discardpile["Duchy"])
 
 
 ###############################################################################

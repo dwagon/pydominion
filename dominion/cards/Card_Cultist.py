@@ -23,7 +23,7 @@ class Card_Cultist(Card.Card):
         for plr in player.attack_victims():
             plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gain_card("Ruins")
-        cultist = player.in_hand("Cultist")
+        cultist = player.hand["Cultist"]
         if cultist:
             ans = player.plr_choose_options(
                 "Play another cultist?",
@@ -65,7 +65,7 @@ class Test_Cultist(unittest.TestCase):
 
     def test_noother(self):
         """Don't ask to play another cultist if it doesn't exist"""
-        self.plr.set_hand("Estate", "Estate", "Estate")
+        self.plr.hand.set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
@@ -73,7 +73,7 @@ class Test_Cultist(unittest.TestCase):
 
     def test_anothercultist_no(self):
         """Don't play the other cultist"""
-        self.plr.set_hand("Cultist", "Estate", "Estate")
+        self.plr.hand.set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
@@ -81,7 +81,7 @@ class Test_Cultist(unittest.TestCase):
 
     def test_anothercultist_yes(self):
         """Another cultist can be played for free"""
-        self.plr.set_hand("Cultist", "Estate", "Estate")
+        self.plr.hand.set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)

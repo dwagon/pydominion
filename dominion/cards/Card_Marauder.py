@@ -36,7 +36,7 @@ class Test_Marauder(unittest.TestCase):
         """Play a marauder"""
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Spoils"))
+        self.assertIn("Spoils", self.plr.discardpile)
         self.assertTrue(self.victim.discardpile[0].isRuin())
 
 

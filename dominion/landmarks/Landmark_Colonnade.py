@@ -27,7 +27,7 @@ class Landmark_Colonnade(Landmark.Landmark):
             return
         if not self._vp:
             return
-        if player.in_played(card.name):
+        if card.name in player.played:
             self._vp -= 2
             player.add_score("Colonnade", 2)
             player.output("Gained 2VP from Colonnade")
@@ -44,7 +44,7 @@ class Test_Colonnade(unittest.TestCase):
 
     def test_play(self):
         """Test Colonnade"""
-        self.plr.set_played("Moat")
+        self.plr.played.set("Moat")
         self.plr.set_coins(5)
         self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.plr.get_score_details()["Colonnade"], 2)

@@ -18,7 +18,7 @@ class Event_Donate(Event.Event):
 
     def hook_end_turn(self, game, player):
         for area in (player.hand, player.deck, player.played, player.discardpile):
-            for card in area[:]:
+            for card in area:
                 player.add_card(card, "hand")
                 area.remove(card)
         player.plr_trash_card(
@@ -39,9 +39,9 @@ class Test_Donate(unittest.TestCase):
     def test_with_treasure(self):
         """Use Donate"""
         tsize = self.g.trash_size()
-        self.plr.set_hand("Gold", "Estate", "Copper", "Copper")
-        self.plr.set_discard("Province", "Estate", "Copper", "Copper")
-        self.plr.set_deck("Silver", "Estate", "Copper", "Copper")
+        self.plr.hand.set("Gold", "Estate", "Copper", "Copper")
+        self.plr.discardpile.set("Province", "Estate", "Copper", "Copper")
+        self.plr.deck.set("Silver", "Estate", "Copper", "Copper")
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt, 8)
         self.plr.test_input = ["Gold", "Province", "Silver", "finish"]
@@ -50,7 +50,7 @@ class Test_Donate(unittest.TestCase):
         self.assertIsNotNone(self.g.in_trash("Gold"))
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertIsNotNone(self.g.in_trash("Silver"))
-        self.assertIsNone(self.plr.in_deck("Gold"))
+        self.assertNotIn("Gold", self.plr.deck)
         self.assertEqual(self.g.trash_size(), tsize + 3)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)

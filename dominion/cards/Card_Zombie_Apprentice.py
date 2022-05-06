@@ -52,7 +52,7 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.assertEqual(self.g.trash_size(), tsize)
 
     def test_play_action(self):
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card, discard=False, costAction=False)
         self.assertEqual(self.plr.hand.size(), 3)

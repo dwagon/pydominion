@@ -18,9 +18,9 @@ class Card_Countinghouse(Card.Card):
 
     def special(self, game, player):
         count = 0
-        for c in player.discardpile:
-            if c.name == "Copper":
-                player.move_card(c, "hand")
+        for card in player.discardpile:
+            if card.name == "Copper":
+                player.move_card(card, "hand")
                 count += 1
         player.output(f"Picked up {count} coppers")
 
@@ -32,17 +32,16 @@ class Test_Countinghouse(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.ch, "hand")
 
     def test_pullcoppers(self):
-        self.plr.set_discard("Copper", "Gold", "Duchy", "Copper")
+        self.plr.discardpile.set("Copper", "Gold", "Duchy", "Copper")
         self.plr.play_card(self.ch)
         self.assertEqual(self.plr.hand.size(), 2)
         for c in self.plr.hand:
             self.assertEqual(c.name, "Copper")
-        for c in self.plr.discardpile:
-            self.assertNotEqual(c.name, "Copper")
+        self.assertNotIn("Copper", self.plr.discardpile)
 
 
 ###############################################################################

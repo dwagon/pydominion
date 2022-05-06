@@ -46,7 +46,7 @@ class Test_Winemerchant(unittest.TestCase):
     def test_recover(self):
         """Recover a wine merchant"""
         self.plr.coin = 2
-        self.plr.set_reserve("Wine Merchant")
+        self.plr.reserve.set("Wine Merchant")
         for crd in self.plr.reserve:
             crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase"]

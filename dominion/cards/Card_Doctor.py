@@ -97,21 +97,21 @@ class Test_Doctor(unittest.TestCase):
 
     def test_play_card(self):
         """Play the Doctor"""
-        self.plr.set_deck("Silver", "Province", "Duchy")
+        self.plr.deck.set("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
-        self.assertIsNotNone(self.plr.in_deck("Silver"))
-        self.assertIsNotNone(self.plr.in_deck("Duchy"))
+        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Duchy", self.plr.deck)
 
     def test_buy(self):
         """Buy a Doctor"""
         self.plr.coin = 6
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
-        self.plr.set_deck("Silver", "Province", "Duchy")
+        self.plr.deck.set("Silver", "Province", "Duchy")
         self.plr.buy_card(self.g["Doctor"])
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertIsNotNone(self.plr.in_discard("Province"))
+        self.assertIn("Province", self.plr.discardpile)
         self.assertEqual(self.plr.deck[-1].name, "Silver")
 
 

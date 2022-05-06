@@ -47,8 +47,8 @@ class Test_Haven(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haven"].remove()
-        self.plr.set_discard("Copper", "Copper", "Copper", "Copper", "Copper")
-        self.plr.set_deck("Estate", "Estate", "Estate", "Estate", "Gold")
+        self.plr.discardpile.set("Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Gold")
         self.plr.add_card(self.card, "hand")
 
     def test_playcard(self):
@@ -61,7 +61,7 @@ class Test_Haven(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.played.size(), 1)
-        self.assertTrue(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 1)
 

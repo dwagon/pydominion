@@ -44,12 +44,12 @@ class Test_Miller(unittest.TestCase):
 
     def test_play(self):
         """Play a miller"""
-        self.plr.set_deck("Silver", "Gold", "Estate", "Duchy")
+        self.plr.deck.set("Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNone(self.plr.in_deck("Silver"))
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.deck)
 
 
 ###############################################################################

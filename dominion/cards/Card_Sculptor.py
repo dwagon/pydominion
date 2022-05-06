@@ -30,22 +30,22 @@ class Test_Sculptor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sculptor"].remove()
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
 
     def test_gainaction(self):
-        self.plr.set_deck("Moat")
+        self.plr.deck.set("Moat")
         self.plr.test_input = ["Get Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertIsNotNone(self.plr.in_hand("Moat"))
+        self.assertIn("Moat", self.plr.hand)
         self.assertLessEqual(self.plr.get_villagers(), 1)
 
     def test_gaintreasure(self):
-        self.plr.set_deck("Silver")
+        self.plr.deck.set("Silver")
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertIn("Silver", self.plr.hand)
         self.assertLessEqual(self.plr.get_villagers(), 1)
 
 

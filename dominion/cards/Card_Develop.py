@@ -43,13 +43,13 @@ class Test_Develop(unittest.TestCase):
         self.card = self.g["Develop"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Duchy")
+        self.plr.hand.set("Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Duchy"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Smithy"))
+        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Smithy", self.plr.deck)
 
 
 ###############################################################################

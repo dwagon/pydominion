@@ -34,7 +34,7 @@ class Test_Artisan(unittest.TestCase):
         self.card = self.g["Artisan"].remove()
 
     def test_play(self):
-        self.plr.set_hand("Copper", "Estate", "Silver", "Gold", "Province")
+        self.plr.hand.set("Copper", "Estate", "Silver", "Gold", "Province")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Festival", "Select Gold"]
         self.plr.play_card(self.card)

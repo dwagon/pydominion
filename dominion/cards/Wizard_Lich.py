@@ -52,7 +52,7 @@ class Test_Lich(unittest.TestCase):
         """Play a lich"""
         hndsz = self.plr.hand.size()
         self.plr.add_card(self.card, "hand")
-        self.plr.set_discard("Estate", "Duchy", "Province", "Silver", "Gold")
+        self.plr.discardpile.set("Estate", "Duchy", "Province", "Silver", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.hand.size(), hndsz + 6)
@@ -67,8 +67,8 @@ class Test_Lich(unittest.TestCase):
         self.g.print_state()
         self.assertIsNone(self.g.in_trash("Lich"))
         self.assertIsNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Lich"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Lich", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)
 
 
 ###############################################################################

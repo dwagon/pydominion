@@ -65,7 +65,7 @@ class Test_Lurker(unittest.TestCase):
         self.g.set_trash("Moat")
         self.plr.play_card(self.card)
         self.assertIsNone(self.g.in_trash("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIn("Moat", self.plr.discardpile)
 
 
 ###############################################################################

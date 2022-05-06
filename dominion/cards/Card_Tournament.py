@@ -23,13 +23,13 @@ class Card_Tournament(Card.Card):
         found = False
         for plr in game.player_list():
             if plr != player:
-                prov = plr.in_hand("Province")
+                prov = plr.hand["Province"]
                 if prov:
                     plr.reveal_card(prov)
                     found = True
-        if player.in_hand("Province"):
+        if "Province" in player.hand:
             player.output("Province revealed so gain a prize")
-            player.discard_card(player.in_hand("Province"))
+            player.discard_card(player.hand["Province"])
             player.gain_prize()
         if not found:
             player.output("No Province revealed")
@@ -54,25 +54,25 @@ class Test_Tournament(unittest.TestCase):
     def test_play_have_province(self):
         """Play a tournament - self provinces"""
         self.plr.test_input = ["Bag"]
-        self.plr.set_hand("Province")
+        self.plr.hand.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
+        self.assertIn("Bag of Gold", self.plr.discardpile)
 
     def test_play_all_province(self):
         """Play a tournament - others have provinces"""
-        self.other.set_hand("Province")
+        self.other.hand.set("Province")
         self.plr.test_input = ["Bag"]
-        self.plr.set_hand("Province")
+        self.plr.hand.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIsNotNone(self.plr.in_discard("Bag of Gold"))
+        self.assertIn("Bag of Gold", self.plr.discardpile)
 
 
 ###############################################################################

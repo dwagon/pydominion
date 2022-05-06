@@ -18,7 +18,7 @@ class Card_Settlers(Card.Card):
         self.desc = """+1 Card +1 Action. Look through your discard pile. You may reveal a Copper from it and put it into your hand."""
 
     def special(self, game, player):
-        cu = player.in_discard("Copper")
+        cu = player.discardpile["Copper"]
         if cu:
             player.add_card(cu, "hand")
             player.discardpile.remove(cu)
@@ -38,23 +38,23 @@ class Test_Settlers(unittest.TestCase):
 
     def test_play(self):
         """Play a Settlers and pull a copper"""
-        self.plr.set_discard("Gold", "Silver", "Copper")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.discardpile.set("Gold", "Silver", "Copper")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
-        self.assertIsNone(self.plr.in_discard("Copper"))
+        self.assertIn("Copper", self.plr.hand)
+        self.assertNotIn("Copper", self.plr.discardpile)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 2 + 1 + 1)
 
     def test_play_nocopper(self):
         """Play a Settlers and pull a copper"""
-        self.plr.set_deck("Gold", "Silver")
-        self.plr.set_discard("Gold", "Silver", "Duchy")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.deck.set("Gold", "Silver")
+        self.plr.discardpile.set("Gold", "Silver", "Duchy")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_hand("Copper"))
+        self.assertNotIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
 
 

@@ -59,12 +59,12 @@ class Test_Sorcerer(unittest.TestCase):
                 break
         self.plr.add_card(card, "hand")
         hndsz = self.plr.hand.size()
-        self.vic.set_deck("Duchy")
+        self.vic.deck.set("Duchy")
         self.vic.test_input = ["Duchy"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.hand.size(), hndsz)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNone(self.vic.in_discard("Curse"))
+        self.assertNotIn("Curse", self.vic.discardpile)
 
     def test_play_miss(self):
         while True:
@@ -73,12 +73,12 @@ class Test_Sorcerer(unittest.TestCase):
                 break
         self.plr.add_card(card, "hand")
         hndsz = self.plr.hand.size()
-        self.vic.set_deck("Duchy")
+        self.vic.deck.set("Duchy")
         self.vic.test_input = ["Estate"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.hand.size(), hndsz)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.vic.in_discard("Curse"))
+        self.assertIn("Curse", self.vic.discardpile)
 
 
 ###############################################################################

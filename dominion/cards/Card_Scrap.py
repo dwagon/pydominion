@@ -68,7 +68,7 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost0(self):
         """Play a scrap and trash something worth 0"""
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.card)
@@ -76,9 +76,9 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost3(self):
         """Play a scrap and trash something worth 3"""
-        self.plr.set_hand("Silver")
+        self.plr.hand.set("Silver")
         self.plr.add_card(self.card, "hand")
-        self.plr.set_deck("Province")
+        self.plr.deck.set("Province")
         self.plr.test_input = [
             "trash silver",
             "card",
@@ -89,16 +89,16 @@ class Test_Scrap(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Province"))
+        self.assertIn("Province", self.plr.hand)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
         self.assertIsNotNone(self.g.in_trash("Silver"))
 
     def test_playcard_cost6(self):
         """Play a scrap and trash something worth more than 4"""
-        self.plr.set_hand("Province")
+        self.plr.hand.set("Province")
         self.plr.add_card(self.card, "hand")
-        self.plr.set_deck("Copper")
+        self.plr.deck.set("Copper")
         self.plr.test_input = [
             "trash province",
             "card",
@@ -117,11 +117,11 @@ class Test_Scrap(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Province"))
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Horse", self.plr.discardpile)
 
 
 ###############################################################################

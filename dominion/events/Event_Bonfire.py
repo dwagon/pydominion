@@ -33,7 +33,7 @@ class Test_Bonfire(unittest.TestCase):
         """Use Bonfire"""
         tsize = self.g.trash_size()
         self.plr.add_coins(3)
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.add_card(self.copper, "hand")
         self.plr.play_card(self.copper)
         self.plr.add_card(self.gold, "hand")

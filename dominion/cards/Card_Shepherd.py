@@ -36,7 +36,7 @@ class Test_Shepherd(unittest.TestCase):
 
     def test_play(self):
         """Play a Shepherd"""
-        self.plr.set_hand("Estate", "Province", "Duchy")
+        self.plr.hand.set("Estate", "Province", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.play_card(self.card)

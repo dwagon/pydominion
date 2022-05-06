@@ -25,7 +25,7 @@ class Card_Scavenger(Card.Card):
             ("Put deck into discard?", True),
         )
         if dumpdeck:
-            for card in player.deck[:]:
+            for card in player.deck:
                 player.add_card(card, "discard")
                 player.deck.remove(card)
         if player.discardpile.size():
@@ -54,13 +54,13 @@ class Test_Scavenger(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.set_deck("Province", "Moat", "Witch", "Duchy")
+        self.plr.deck.set("Province", "Moat", "Witch", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Put", "Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.deck[-1].name, "Moat")
-        self.assertIsNotNone(self.plr.in_discard("Witch"))
+        self.assertIn("Witch", self.plr.discardpile)
 
 
 ###############################################################################

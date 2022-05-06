@@ -44,7 +44,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.phase = Card.TYPE_NIGHT
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_discard("Gold"))
+            self.assertIn("Gold", self.plr.discardpile)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -66,7 +66,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.gain_card("Estate")
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_discard("Imp"))
+            self.assertIn("Imp", self.plr.discardpile)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

@@ -54,13 +54,13 @@ class Test_Pilgrimage(unittest.TestCase):
 
     def test_play(self):
         """Perform a Pilgrimage"""
-        self.plr.set_played("Moat", "Silver", "Gold", "Copper", "Duchy")
+        self.plr.played.set("Moat", "Silver", "Gold", "Copper", "Duchy")
         self.plr.test_input = ["moat", "silver", "finish"]
         self.plr.journey_token = False
         self.plr.add_coins(4)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIsNotNone(self.plr.discardpile["Moat"])
+        self.assertIsNotNone(self.plr.discardpile["Silver"])
         self.assertTrue(self.plr.journey_token)
 
 

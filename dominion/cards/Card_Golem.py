@@ -52,33 +52,38 @@ class Test_Golem(unittest.TestCase):
 
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
-        self.plr.set_hand()
-        self.plr.set_deck("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
+        self.plr.hand.set()
+        self.plr.deck.set("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(
-            ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
+            sorted(["Golem", "Moat", "Village"]),
+            sorted([c.name for c in self.plr.played]),
         )
-        self.assertEqual(["Copper", "Estate"], [c.name for c in self.plr.discardpile])
+        self.assertEqual(
+            sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.discardpile])
+        )
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
-        self.plr.set_hand()
-        self.plr.set_deck(
+        self.plr.hand.set()
+        self.plr.deck.set(
             "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
         )
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(
-            ["Golem", "Moat", "Village"], [c.name for c in self.plr.played]
+            sorted(["Golem", "Moat", "Village"]),
+            sorted([c.name for c in self.plr.played]),
         )
         self.assertEqual(
-            ["Copper", "Estate", "Golem"], [c.name for c in self.plr.discardpile]
+            sorted(["Copper", "Estate", "Golem"]),
+            sorted([c.name for c in self.plr.discardpile]),
         )
 
     def test_nocards(self):
-        self.plr.set_hand("Copper", "Copper", "Copper")
-        self.plr.set_deck("Copper", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Copper")
+        self.plr.deck.set("Copper", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
 

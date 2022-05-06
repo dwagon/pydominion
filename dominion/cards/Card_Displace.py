@@ -37,12 +37,12 @@ class Test_Displace(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.set_hand("Copper", "Silver")
+        self.plr.hand.set("Copper", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Copper", "Get Estate"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_exile("Copper"))
-        self.assertIsNotNone(self.plr.in_discard("Estate"))
+        self.assertIn("Copper", self.plr.exilepile)
+        self.assertIn("Estate", self.plr.discardpile)
 
 
 ###############################################################################

@@ -40,7 +40,7 @@ class Test_Port(unittest.TestCase):
 
     def test_play(self):
         """Play a port"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
@@ -48,7 +48,7 @@ class Test_Port(unittest.TestCase):
 
     def test_buy(self):
         """Buy a port"""
-        self.plr.set_discard()
+        self.plr.discardpile.set()
         self.plr.set_coins(5)
         self.plr.buy_card(self.g["Port"])
         for c in self.plr.discardpile:

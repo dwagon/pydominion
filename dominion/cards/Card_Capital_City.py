@@ -48,27 +48,27 @@ class Test_Capital_City(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.set_hand("Copper", "Copper", "Estate", "Duchy")
-        self.plr.set_deck("Gold", "Silver", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
+        self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "Gain"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2 + 2)
-        self.assertIsNone(self.plr.in_hand("Duchy"))
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Duchy", self.plr.hand)
+        self.assertIn("Silver", self.plr.hand)
 
     def test_play_no_pickup(self):
         """Play the card but don't pickup new cards """
-        self.plr.set_hand("Copper", "Copper", "Estate", "Duchy")
-        self.plr.set_deck("Gold", "Silver", "Copper", "Copper")
+        self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
+        self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "nothing"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2)
-        self.assertIsNone(self.plr.in_hand("Duchy"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Duchy", self.plr.hand)
+        self.assertNotIn("Silver", self.plr.hand)
 
 
 ###############################################################################

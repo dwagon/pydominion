@@ -51,7 +51,7 @@ class Test_Fortress(unittest.TestCase):
     def test_trash(self):
         self.plr.trash_card(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.in_hand("Fortress"))
+        self.assertIn("Fortress", self.plr.hand)
         self.assertIsNone(self.g.in_trash("Fortress"))
 
 

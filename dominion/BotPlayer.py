@@ -28,7 +28,8 @@ class BotPlayer(Player):
         self.messages.append(msg)
 
     ###########################################################################
-    def getOptions(self, options):
+    @classmethod
+    def getOptions(cls, options):
         try:
             opts = {}
             for opt in options:
@@ -78,7 +79,8 @@ class BotPlayer(Player):
         return opts["quit"]
 
     ###########################################################################
-    def getCallingCard(self):
+    @classmethod
+    def getCallingCard(cls):
         """Get the module that represents the card doing requiring the response"""
         stack = inspect.stack()
         for rec in stack:
@@ -126,7 +128,7 @@ class BotPlayer(Player):
         # Discard cheapest treasures next
         while len(todiscard) < numtodiscard:
             for treas in ("Copper", "Silver", "Gold"):
-                for card in self.hand[:]:
+                for card in self.hand:
                     if card.name == treas:
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:

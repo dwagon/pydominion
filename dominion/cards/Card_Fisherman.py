@@ -43,9 +43,9 @@ class Test_Fisherman(unittest.TestCase):
 
     def test_buycard(self):
         """Buy the card"""
-        self.plr.set_discard("Copper")
+        self.plr.discardpile.set("Copper")
         self.assertEqual(self.plr.card_cost(self.card), 5)
-        self.plr.set_discard()
+        self.plr.discardpile.set()
         self.assertEqual(self.plr.card_cost(self.card), 2)
 
 

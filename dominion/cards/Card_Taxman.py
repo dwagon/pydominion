@@ -28,7 +28,7 @@ class Card_Taxman(Card.Card):
         card = cards[0]
         for vic in player.attack_victims():
             if vic.hand.size() >= 5:
-                viccard = vic.in_hand(card.name)
+                viccard = vic.hand[card.name]
                 if viccard:
                     vic.output(
                         "Discarding %s due to %s's Taxman" % (viccard.name, player.name)
@@ -55,14 +55,14 @@ class Test_Taxman(unittest.TestCase):
 
     def test_play(self):
         """Play a Taxman"""
-        self.plr.set_hand("Silver")
-        self.victim.set_hand("Copper", "Copper", "Estate", "Duchy", "Silver")
+        self.plr.hand.set("Silver")
+        self.victim.hand.set("Copper", "Copper", "Estate", "Duchy", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertIsNotNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.victim.in_discard("Silver"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Silver", self.victim.discardpile)
 
 
 ###############################################################################

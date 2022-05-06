@@ -48,7 +48,7 @@ class Test_NightWatchman(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.set_deck("Gold", "Province", "Gold", "Duchy", "Silver")
+        self.plr.deck.set("Gold", "Province", "Gold", "Duchy", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
             "Return Silver",
@@ -59,15 +59,15 @@ class Test_NightWatchman(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.plr.in_discard("Duchy"))
-            self.assertIsNotNone(self.plr.in_discard("Province"))
-            self.assertIsNone(self.plr.in_discard("Gold"))
-            self.assertIsNone(self.plr.in_discard("Silver"))
+            self.assertIn("Duchy", self.plr.discardpile)
+            self.assertIn("Province", self.plr.discardpile)
+            self.assertNotIn("Gold", self.plr.discardpile)
+            self.assertNotIn("Silver", self.plr.discardpile)
 
-            self.assertIsNone(self.plr.in_deck("Duchy"))
-            self.assertIsNone(self.plr.in_deck("Province"))
-            self.assertIsNotNone(self.plr.in_deck("Gold"))
-            self.assertIsNotNone(self.plr.in_deck("Silver"))
+            self.assertNotIn("Duchy", self.plr.deck)
+            self.assertNotIn("Province", self.plr.deck)
+            self.assertIn("Gold", self.plr.deck)
+            self.assertIn("Silver", self.plr.deck)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

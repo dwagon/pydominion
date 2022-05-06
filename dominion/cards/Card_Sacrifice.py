@@ -41,7 +41,7 @@ class Test_Sacrifice(unittest.TestCase):
 
     def test_play_action(self):
         """Sacrifice an Action"""
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
@@ -51,7 +51,7 @@ class Test_Sacrifice(unittest.TestCase):
 
     def test_play_treasure(self):
         """Sacrifice a Treasure"""
-        self.plr.set_hand("Silver")
+        self.plr.hand.set("Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.card)
@@ -59,7 +59,7 @@ class Test_Sacrifice(unittest.TestCase):
 
     def test_play_victory(self):
         """Sacrifice a Victory"""
-        self.plr.set_hand("Duchy")
+        self.plr.hand.set("Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)

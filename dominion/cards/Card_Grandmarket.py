@@ -44,7 +44,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_nobuy(self):
-        self.plr.set_hand("Copper", "Gold", "Gold")
+        self.plr.hand.set("Copper", "Gold", "Gold")
         self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
@@ -56,8 +56,8 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
-        self.plr.set_hand("Gold", "Gold", "Gold")
-        self.plr.set_played("Copper")
+        self.plr.hand.set("Gold", "Gold", "Gold")
+        self.plr.played.set("Copper")
         self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"
@@ -69,7 +69,7 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
-        self.plr.set_hand("Gold", "Gold", "Gold")
+        self.plr.hand.set("Gold", "Gold", "Gold")
         self.plr.add_coins(6)
         self.plr.test_input = ["0"]
         self.plr.phase = "buy"

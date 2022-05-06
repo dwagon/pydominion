@@ -44,7 +44,7 @@ class Test_Importer(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.in_discard("Moat"))
+        self.assertIn("Moat", self.plr.discardpile)
 
 
 ###############################################################################

@@ -35,7 +35,7 @@ class Test_Worm(unittest.TestCase):
         """Perform a Worm"""
         self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.in_exile("Estate"))
+        self.assertIn("Estate", self.plr.exilepile)
 
 
 ###############################################################################

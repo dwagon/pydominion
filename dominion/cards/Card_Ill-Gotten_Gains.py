@@ -47,18 +47,18 @@ class Test_IGG(unittest.TestCase):
 
     def test_play(self):
         """Play an Ill-Gotten Gains"""
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["copper"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_hand("Copper"))
+        self.assertIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""
-        self.plr.set_hand("Estate")
+        self.plr.hand.set("Estate")
         self.plr.gain_card("Ill-Gotten Gains")
-        self.assertIsNotNone(self.vic.in_discard("Curse"))
+        self.assertIn("Curse", self.vic.discardpile)
 
 
 ###############################################################################

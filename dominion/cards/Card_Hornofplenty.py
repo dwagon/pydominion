@@ -45,28 +45,28 @@ class Test_Hornofplenty(unittest.TestCase):
 
     def test_play(self):
         """Horn of Plenty"""
-        self.plr.set_played("Copper", "Silver", "Silver")
+        self.plr.played.set("Copper", "Silver", "Silver")
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_played("Horn of Plenty"))
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Horn of Plenty", self.plr.played)
 
     def test_play_victory(self):
         """Horn of Plenty - gaining a victory card"""
-        self.plr.set_played("Copper", "Silver", "Gold", "Moat")
+        self.plr.played.set("Copper", "Silver", "Gold", "Moat")
         self.plr.test_input = ["Get Duchy"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Duchy"))
-        self.assertIsNone(self.plr.in_played("Horn of Plenty"))
+        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertNotIn("Horn of Plenty", self.plr.played)
         self.assertIsNotNone(self.g.in_trash("Horn of Plenty"))
 
     def test_play_nothing(self):
         """Horn of Plenty - gaining nothing"""
-        self.plr.set_played("Copper", "Silver", "Gold", "Moat")
+        self.plr.played.set("Copper", "Silver", "Gold", "Moat")
         self.plr.test_input = ["finish selecting"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Duchy"))
-        self.assertIsNotNone(self.plr.in_played("Horn of Plenty"))
+        self.assertNotIn("Duchy", self.plr.discardpile)
+        self.assertIn("Horn of Plenty", self.plr.played)
         self.assertIsNone(self.g.in_trash("Horn of Plenty"))
 
 

@@ -29,7 +29,7 @@ class Test_BanditFort(unittest.TestCase):
 
     def test_gain(self):
         """Use Bandit Fort"""
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Bandit Fort"], -4)
 

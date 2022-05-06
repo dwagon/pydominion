@@ -42,15 +42,15 @@ class Test_Haunted_Mirror(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_trash_nothing(self):
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.trash_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Ghost"))
+        self.assertNotIn("Ghost", self.plr.discardpile)
 
     def test_trash(self):
-        self.plr.set_hand("Moat")
+        self.plr.hand.set("Moat")
         self.plr.test_input = ["Moat"]
         self.plr.trash_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Ghost"))
+        self.assertIn("Ghost", self.plr.discardpile)
 
 
 ###############################################################################

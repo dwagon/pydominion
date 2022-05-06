@@ -64,13 +64,13 @@ class Test_Advisor(unittest.TestCase):
 
     def test_play(self):
         """ " Play an advisor"""
-        self.plr.set_deck("Duchy", "Silver", "Gold")
+        self.plr.deck.set("Duchy", "Silver", "Gold")
         self.plr2.test_input = ["discard gold"]
         self.plr.play_card(self.acard)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Gold", self.plr.hand)
 
 
 ###############################################################################

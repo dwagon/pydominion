@@ -38,26 +38,26 @@ class Test_Distantlands(unittest.TestCase):
 
     def test_play(self):
         """Play a distant lands"""
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertIsNotNone(self.plr.in_reserve("Distant Lands"))
+        self.assertIsNotNone(self.plr.reserve["Distant Lands"])
 
     def test_notonmat(self):
-        self.plr.set_hand("Distant Lands")
+        self.plr.hand.set("Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 0)
 
     def test_onmat(self):
         """Distant lands on mat"""
-        self.plr.set_reserve("Distant Lands")
+        self.plr.reserve.set("Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 4)
 
     def test_onmat_twice(self):
         """Two Distant lands on mat"""
-        self.plr.set_reserve("Distant Lands", "Distant Lands")
+        self.plr.reserve.set("Distant Lands", "Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 8)
 

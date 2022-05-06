@@ -36,12 +36,12 @@ class Test_Frog(unittest.TestCase):
 
     def test_play(self):
         """Perform a Frog"""
-        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.hand.set("Copper", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.plr.discard_hand()
-        self.assertIsNotNone(self.plr.in_deck("Moat"))
+        self.assertIn("Moat", self.plr.deck)
 
 
 ###############################################################################

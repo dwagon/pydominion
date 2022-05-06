@@ -50,14 +50,14 @@ class Test_Raider(unittest.TestCase):
     def test_play(self):
         """Play a Raider"""
         self.plr.phase = Card.TYPE_NIGHT
-        self.plr.set_played("Gold", "Silver")
-        self.vic.set_hand("Silver", "Gold", "Estate", "Copper", "Copper")
+        self.plr.played.set("Gold", "Silver")
+        self.vic.hand.set("Silver", "Gold", "Estate", "Copper", "Copper")
         self.plr.play_card(self.card)
         try:
-            self.assertIsNotNone(self.vic.in_discard("Gold"))
-            self.assertIsNotNone(self.vic.in_discard("Silver"))
-            self.assertIsNone(self.vic.in_hand("Gold"))
-            self.assertIsNone(self.vic.in_hand("Silver"))
+            self.assertIn("Gold", self.vic.discardpile)
+            self.assertIn("Silver", self.vic.discardpile)
+            self.assertNotIn("Gold", self.vic.hand)
+            self.assertNotIn("Silver", self.vic.hand)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

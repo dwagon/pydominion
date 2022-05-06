@@ -49,7 +49,7 @@ class Test_Treasurer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Treasurer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.plr.set_hand("Copper", "Silver")
+        self.plr.hand.set("Copper", "Silver")
         self.card = self.g["Treasurer"].remove()
         self.plr.add_card(self.card, "hand")
 
@@ -65,7 +65,7 @@ class Test_Treasurer(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 3)
         self.assertIsNone(self.g.in_trash("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Gold", self.plr.hand)
 
     def test_play_key(self):
         self.plr.test_input = ["Take the key"]

@@ -48,23 +48,23 @@ class Test_Survivors(unittest.TestCase):
 
     def test_play_discard(self):
         """Play a survivor and discard cards"""
-        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNone(self.plr.in_hand("Gold"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Gold", self.plr.hand)
+        self.assertNotIn("Silver", self.plr.hand)
 
     def test_play_keep(self):
         """Play a survivor and keep cards"""
-        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Return"]
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
+        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.hand)
 
 
 ###############################################################################

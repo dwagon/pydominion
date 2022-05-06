@@ -57,14 +57,14 @@ class Test_Oracle(unittest.TestCase):
 
     def test_play_card(self):
         """Play Oracle"""
-        self.vic.set_deck("Estate", "Duchy", "Province")
-        self.plr.set_deck("Copper", "Silver", "Gold")
+        self.vic.deck.set("Estate", "Duchy", "Province")
+        self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["discard", "top"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.vic.in_discard("Duchy"))
-        self.assertIsNotNone(self.vic.in_discard("Province"))
-        self.assertIsNotNone(self.plr.in_hand("Silver"))
-        self.assertIsNotNone(self.plr.in_hand("Gold"))
+        self.assertIn("Duchy", self.vic.discardpile)
+        self.assertIn("Province", self.vic.discardpile)
+        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Gold", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), 7)
 
 

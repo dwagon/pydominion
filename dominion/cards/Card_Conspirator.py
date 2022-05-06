@@ -44,7 +44,7 @@ class Test_Conspirator(unittest.TestCase):
 
     def test_actions(self):
         """Play the conspirator with enough actions"""
-        self.plr.set_played("Witch", "Witch", "Witch")
+        self.plr.played.set("Witch", "Witch", "Witch")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.get_actions(), 1)

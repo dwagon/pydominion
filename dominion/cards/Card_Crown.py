@@ -53,14 +53,14 @@ class Test_Crown(unittest.TestCase):
 
     def test_play(self):
         """Play a crown with no suitable actions"""
-        self.plr.set_hand("Duchy", "Gold")
+        self.plr.hand.set("Duchy", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.phase = Card.TYPE_ACTION
         self.plr.play_card(self.card)
 
     def test_action(self):
         """Play a crown with a suitable action"""
-        self.plr.set_hand("Estate", "Duchy", "Copper", "Gold", "Moat")
+        self.plr.hand.set("Estate", "Duchy", "Copper", "Gold", "Moat")
         self.plr.add_card(self.card, "hand")
         self.plr.phase = Card.TYPE_ACTION
         self.plr.test_input = ["moat"]
@@ -69,7 +69,7 @@ class Test_Crown(unittest.TestCase):
 
     def test_buy(self):
         """Play a crown in a buy phase"""
-        self.plr.set_hand("Estate", "Duchy", "Copper", "Gold")
+        self.plr.hand.set("Estate", "Duchy", "Copper", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.phase = "buy"
         self.plr.test_input = ["gold"]

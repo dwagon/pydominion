@@ -30,9 +30,9 @@ class Test_Museum(unittest.TestCase):
 
     def test_gain(self):
         """Use Museum"""
-        self.plr.set_hand("Copper", "Estate")
-        self.plr.set_discard("Gold", "Silver", "Copper")
-        self.plr.set_deck("Gold", "Moat", "Moat")
+        self.plr.hand.set("Copper", "Estate")
+        self.plr.discardpile.set("Gold", "Silver", "Copper")
+        self.plr.deck.set("Gold", "Moat", "Moat")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Museum"], 10)
 

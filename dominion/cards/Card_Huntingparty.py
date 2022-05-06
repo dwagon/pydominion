@@ -12,8 +12,8 @@ class Card_Huntingparty(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.CORNUCOPIA
         self.desc = """+1 Card +1 Action. Reveal your hand.
-        Reveal cards from your deck until you reveal a card that isn't a duplicate of one in your hand.
-        Put it into your hand and discard the rest."""
+            Reveal cards from your deck until you reveal a card that isn't a
+            duplicate of one in your hand. Put it into your hand and discard the rest."""
         self.name = "Hunting Party"
         self.cards = 1
         self.actions = 1
@@ -29,11 +29,11 @@ class Card_Huntingparty(Card.Card):
             if not card:
                 player.output("No more cards")
                 break
-            if player.in_hand(card.name):
-                player.output("Discarding %s" % card.name)
+            if player.hand[card.name]:
+                player.output(f"Discarding {card.name}")
                 discards.append(card)
                 continue
-            player.output("Picked up a %s" % card.name)
+            player.output(f"Picked up a {card.name}")
             player.add_card(card, "hand")
             break
         for card in discards:
@@ -47,19 +47,19 @@ class Test_Huntingparty(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hunting Party"].remove()
-        self.plr.set_hand("Silver", "Gold")
+        self.plr.hand.set("Silver", "Gold")
 
     def test_playcard(self):
         """Play a hunting party"""
-        self.plr.set_deck("Copper", "Province", "Silver", "Gold", "Duchy")
-        self.plr.set_hand("Gold", "Silver")
+        self.plr.deck.set("Copper", "Province", "Silver", "Gold", "Duchy")
+        self.plr.hand.set("Gold", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.plr.in_hand("Duchy"))
-        self.assertIsNotNone(self.plr.in_hand("Province"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Duchy", self.plr.hand)
+        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.discardpile)
         # Original Hand of 2 + 1 card and 1 non-dupl picked up
         self.assertEqual(self.plr.hand.size(), 4)
 

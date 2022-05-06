@@ -40,7 +40,7 @@ class Test_Butterfly(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.in_discard("Witch"))
+        self.assertIsNotNone(self.plr.discardpile["Witch"])
         self.assertEqual(len(self.g["Moat"]), 10)
 
 

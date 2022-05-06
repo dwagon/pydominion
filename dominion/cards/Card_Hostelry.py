@@ -57,11 +57,11 @@ class Test_Hostelry(unittest.TestCase):
 
     def test_gain(self):
         """Gain the card"""
-        self.plr.set_hand("Copper", "Silver", "Gold")
+        self.plr.hand.set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Copper", "Silver", "Finish"]
         self.plr.gain_card("Hostelry")
-        self.assertIsNotNone(self.plr.in_discard("Horse"))
-        self.assertIsNone(self.plr.in_hand("Silver"))
+        self.assertIn("Horse", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.hand)
 
 
 ###############################################################################

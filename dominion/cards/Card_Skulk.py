@@ -49,7 +49,7 @@ class Test_Skulk(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gain_card("Skulk")
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
+        self.assertIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################

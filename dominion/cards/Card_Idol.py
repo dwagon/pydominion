@@ -44,21 +44,21 @@ class Test_Idol(unittest.TestCase):
 
     def test_play_even(self):
         """Play an even number of Idol"""
-        self.plr.set_played("Idol", "Gold")
+        self.plr.played.set("Idol", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNotNone(self.vic.in_discard("Curse"))
-        self.assertIsNone(self.plr.in_discard("Silver"))
+        self.assertIn("Curse", self.vic.discardpile)
+        self.assertNotIn("Silver", self.plr.discardpile)
 
     def test_play_odd(self):
         """Play an odd number of Idol"""
-        self.plr.set_played("Gold")
+        self.plr.played.set("Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
-        self.assertIsNone(self.vic.in_discard("Curse"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))  # From Mountain boon
+        self.assertNotIn("Curse", self.vic.discardpile)
+        self.assertIn("Silver", self.plr.discardpile)  # From Mountain boon
 
 
 ###############################################################################

@@ -49,7 +49,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.add_card(self.cat, "hand")
 
     def test_keep(self):
-        self.plr.set_deck("Province", "Gold", "Gold", "Gold")
+        self.plr.deck.set("Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["keep the three"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
@@ -58,7 +58,7 @@ class Test_Catacombs(unittest.TestCase):
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
-        self.plr.set_deck("Province", "Province", "Province", "Gold", "Gold", "Gold")
+        self.plr.deck.set("Province", "Province", "Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["discard and draw"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones

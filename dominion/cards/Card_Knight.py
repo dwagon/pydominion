@@ -106,18 +106,18 @@ class Test_Knight(unittest.TestCase):
         while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
             self.card = self.g["Knight"].remove()
 
-        self.plr.set_hand("Silver", "Gold")
+        self.plr.hand.set("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
 
     def test_playcard_nosuitable(self):
         """Play a knight woth no suitable cards"""
-        self.vic.set_deck("Copper", "Copper")
+        self.vic.deck.set("Copper", "Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 2)
 
     def test_playcard_one_suitable(self):
         """Play a knight with one suitable card"""
-        self.vic.set_deck("Copper", "Duchy")
+        self.vic.deck.set("Copper", "Duchy")
         self.vic.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.vic.discardpile.size(), 1)

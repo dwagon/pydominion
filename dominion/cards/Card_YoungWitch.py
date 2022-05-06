@@ -39,7 +39,7 @@ class Card_YoungWitch(Card.Card):
     def special(self, game, player):
         player.plr_discard_cards(num=2, force=True)
         for pl in player.attack_victims():
-            if pl.in_hand(game._bane):
+            if pl.hand[game._bane]:
                 player.output(f"{pl.name} has the bane: {game._bane}")
                 continue
             player.output(f"{pl.name} got cursed")
@@ -62,15 +62,15 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_nobane(self):
         """Play the young witch without a bane"""
-        self.victim.set_hand("Copper", "Silver")
-        self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.victim.hand.set("Copper", "Silver")
+        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
             self.assertIn(self.g[self.g._bane].cost, (2, 3))
             self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
-            self.assertIsNotNone(self.victim.in_discard("Curse"))
+            self.assertIn("Curse", self.victim.discardpile)
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()
@@ -78,13 +78,13 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_bane(self):
         """Play the young witch with a bane"""
-        self.victim.set_hand("Copper", "Silver", self.g._bane)
-        self.attacker.set_hand("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.victim.hand.set("Copper", "Silver", self.g._bane)
+        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.attacker.add_card(self.card, "hand")
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            self.assertIsNone(self.victim.in_discard("Curse"))
+            self.assertNotIn("Curse", self.victim.discardpile)
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()

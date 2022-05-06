@@ -54,14 +54,14 @@ class Test_Harbinger(unittest.TestCase):
 
     def test_play(self):
         """Play a harbinger"""
-        self.plr.set_discard("Gold", "Silver", "Province")
+        self.plr.discardpile.set("Gold", "Silver", "Province")
         self.plr.test_input = ["Put Gold"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertIsNone(self.plr.in_discard("Gold"))
-        self.assertIsNotNone(self.plr.in_deck("Gold"))
+        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.deck)
 
 
 ###############################################################################

@@ -21,9 +21,8 @@ class Project_StarChart(Project.Project):
         opt = player.plr_choose_options(
             "Pick a card to put on top of your deck", *choices
         )
-        card = player.in_discard(opt)
-        player.add_card(card, "topdeck")
-        player.discardpile.remove(card)
+        card = player.discardpile[opt]
+        player.move_card(card, "topdeck")
 
 
 ###############################################################################
@@ -35,10 +34,11 @@ class Test_StarChart(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Star Chart")
-        self.plr.set_discard("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
-        self.plr.set_deck()
+        self.plr.discardpile.set("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
+        self.plr.deck.set()
         self.plr.test_input = ["Put Gold"]
         c = self.plr.next_card()
+        self.g.print_state()
         self.assertEqual(c.name, "Gold")
 
 
