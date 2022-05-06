@@ -505,6 +505,7 @@ class Player:
     def _spendable_selection(self):
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
+        spendable.sort(key=lambda x: x.name)
         totcoin = sum([self.hook_spend_value(c) for c in spendable])
         numpots = sum([1 for c in spendable if c.name == "Potion"])
         potstr = f", {numpots} potions" if numpots else ""
