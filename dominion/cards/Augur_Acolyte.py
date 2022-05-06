@@ -53,12 +53,12 @@ class Test_Acolyte(unittest.TestCase):
 
     def test_play(self):
         """Play a lich"""
-        self.plr.set_hand("Estate", "Copper")
+        self.plr.hand.set("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.in_discard("Gold"))
-        self.assertIsNone(self.plr.in_hand("Estate"))
+        self.assertIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Estate", self.plr.hand)
 
 
 ###############################################################################

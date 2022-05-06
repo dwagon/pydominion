@@ -22,8 +22,9 @@ class Card_Herb_Gatherer(Card.Card):
             You may rotate the Augurs."""
 
     def special(self, game, player):
-        for crd in player.deck[:]:
+        for crd in player.deck:
             player.move_card(crd, "discard")
+            player.output(f"Discarding {crd.name} from deck")
         treasures = []
         for crd in player.discardpile:
             if crd.isTreasure():
@@ -35,8 +36,17 @@ class Card_Herb_Gatherer(Card.Card):
                 if treas.name not in already:
                     already.add(treas.name)
                     options.append((f"Play {treas.name}?", treas))
-            choice = player.plr_choose_options("Play a treasure?", **options)
+            choice = player.plr_choose_options("Play a treasure?", *options)
+            player.move_card(choice, "hand")
+            player.play_card(choice, costAction=False)
 
+        opt = player.plr_choose_options(
+            "Do you want to rotate the Augurs?",
+            ("Don't change", False),
+            ("Rotate", True),
+        )
+        if opt:
+            game["Augurs"].rotate()
 
 
 ###############################################################################
@@ -54,13 +64,10 @@ class Test_Herb_Gatherer(unittest.TestCase):
 
     def test_play(self):
         """Play a card"""
-        hndsz = self.plr.hand.size()
+        self.plr.deck.set("Copper", "Silver", "Gold", "Duchy", "Province")
         self.plr.add_card(self.card, "hand")
-        self.plr.set_discard("Estate", "Duchy", "Province", "Silver", "Gold")
+        self.plr.test_input = ["Play Gold", "Don't change"]
         self.plr.play_card(self.card)
-        self.g.print_state()
-        self.assertEqual(self.plr.hand.size(), hndsz + 6)
-        self.assertEqual(self.plr.get_actions(), 2)
 
 
 ###############################################################################
