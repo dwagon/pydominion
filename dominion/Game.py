@@ -798,8 +798,8 @@ class Game:  # pylint: disable=too-many-public-methods
                 f"  {plr.name}: coffers=%d villagers=%d potions=%d"
                 % (plr.coffer, plr.villager, plr.potions)
             )
-            for v in self._cards.values():
-                print(f"    {v}")
+        for v in self._cards.values():
+            print(f"    {v}")
 
     ###########################################################################
     def player_to_left(self, plr):
