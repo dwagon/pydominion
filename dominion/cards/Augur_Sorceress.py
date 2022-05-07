@@ -23,7 +23,19 @@ class Card_Sorceress(Card.Card):
             gains a Curse."""
 
     def special(self, game, player):
-        pass
+        options = [{"selector": "0", "print": "No guess", "card": None}]
+        index = 1
+        for c in sorted(game.cardTypes()):
+            sel = "%s" % index
+            options.append({"selector": sel, "print": f"Guess {c.name}", "card": c})
+            index += 1
+        o = player.user_input(options, "Guess the top card")
+        c = player.pickup_card()
+        player.output(f"Next card = {c.name}, Guess = {o['card'].name}")
+        if c.name == o['card'].name:
+            game.output(f"Guessed {c.name} correctly")
+            for plr in player.attack_victims():
+                plr.gain_card("Curse")
 
 
 ###############################################################################
@@ -38,28 +50,15 @@ class Test_Sorceress(unittest.TestCase):
             if card.name == "Sorceress":
                 break
         self.card = card
-
-    def test_play(self):
-        """Play a lich"""
-        hndsz = self.plr.hand.size()
         self.plr.add_card(self.card, "hand")
-        self.plr.set_discard("Estate", "Duchy", "Province", "Silver", "Gold")
+
+    def test_good_guess(self):
+        """Play a sorceress and guess correctly"""
+        self.plr.deck.set("Gold", "Gold")
+        self.plr.test_input = ["Guess Gold"]
         self.plr.play_card(self.card)
-        self.g.print_state()
-        self.assertEqual(self.plr.hand.size(), hndsz + 6)
-        self.assertEqual(self.plr.get_actions(), 2)
-
-    def test_trash(self):
-        """Trash the lich"""
-        self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Silver"]
-        self.g.set_trash("Silver")
-        self.plr.trash_card(self.card)
-        self.g.print_state()
-        self.assertIsNone(self.g.in_trash("Sorceress"))
-        self.assertIsNone(self.g.in_trash("Silver"))
-        self.assertIsNotNone(self.plr.in_discard("Sorceress"))
-        self.assertIsNotNone(self.plr.in_discard("Silver"))
+        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Curse", self.vic.discardpile)
 
 
 ###############################################################################

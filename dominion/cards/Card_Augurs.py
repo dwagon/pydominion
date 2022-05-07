@@ -24,7 +24,7 @@ class AugurCardPile(CardPile.CardPile):
         self.mapping = game.getSetCardClasses(
             "Augurs", game.cardpath, "dominions/cards", "Card_"
         )
-        super().__init__(cardname="Augurss", klass=None, game=game, pile_size=pile_size)
+        super().__init__(cardname="Augurs", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel
@@ -42,11 +42,11 @@ class AugurCardPile(CardPile.CardPile):
 ###############################################################################
 class Test_Augurs(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Augurss"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
-    def test_wizards(self):
+    def test_augurs(self):
         card = self.g["Augurs"].remove()
         self.assertEqual(len(self.g["Augurs"]), 15)
         self.assertEqual(card.name, "Herb Gatherer")

@@ -15,7 +15,7 @@ class Card_Acolyte(Card.Card):
         ]
         self.base = Game.ALLIES
         self.cost = 4
-        self.name = "Acoyte"
+        self.name = "Acolyte"
         self.desc = """You may trash an Action or Victory card from your hand
             to gain a Gold.  You may trash this to gain an Augur."""
 
@@ -47,12 +47,12 @@ class Test_Acolyte(unittest.TestCase):
 
         while True:
             card = self.g["Augurs"].remove()
-            if card.name == "Acoyte":
+            if card.name == "Acolyte":
                 break
         self.card = card
 
     def test_play(self):
-        """Play a lich"""
+        """Play the card"""
         self.plr.hand.set("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate"]
