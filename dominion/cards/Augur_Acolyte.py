@@ -21,19 +21,17 @@ class Card_Acolyte(Card.Card):
 
     def special(self, game, player):
         options = []
+        options.append(("Do nothing", None))
         for card in player.hand:
-            if card == self:
-                options.append((f"Trash {self.name} to gain an Augur", self))
-            elif card.isAction() or card.isVictory():
+            if card.isAction() or card.isVictory():
                 options.append((f"Trash {card.name} to gain a Gold", card))
-        if not options:
-            return
+        options.append(("Trash self to gain an Augur", self))
         ans = player.plr_choose_options("Trash some cards?", *options)
         if not ans:
             return
         player.trash_card(ans)
         if ans == self:
-            player.gain_card("Augur")
+            player.gain_card("Augurs")
         else:
             player.gain_card("Gold")
 
@@ -59,6 +57,16 @@ class Test_Acolyte(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.discardpile)
         self.assertNotIn("Estate", self.plr.hand)
+
+    def test_trash_self(self):
+        """Play the card and trash self"""
+        self.g["Augurs"].rotate()
+        self.plr.hand.set("Estate", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.test_input = ["Trash self"]
+        self.plr.play_card(self.card)
+        self.assertIn("Acolyte", self.g.trashpile)
+        self.assertIn("Sorceress", self.plr.discardpile)
 
 
 ###############################################################################
