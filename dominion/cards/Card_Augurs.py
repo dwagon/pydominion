@@ -13,14 +13,16 @@ class Card_Augurs(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
         self.required_cards = ["Curse"]
         Card.TYPE_AUGUR = "augur"
+        self.numcards = 1
 
-    def setup(self, game):
-        game.cardpiles["Augurs"] = AugurCardPile(game)
+    @classmethod
+    def cardpile_setup(cls, game):
+        return AugurCardPile(game)
 
 
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=10):
+    def __init__(self, game, pile_size=12):
         self.mapping = game.getSetCardClasses(
             "Augurs", game.cardpath, "dominions/cards", "Card_"
         )
@@ -55,6 +57,7 @@ class Test_Augurs(unittest.TestCase):
         card = self.g["Augurs"].remove()
         card = self.g["Augurs"].remove()
         self.assertEqual(card.name, "Acolyte")
+        self.g.print_state()
 
 
 ###############################################################################

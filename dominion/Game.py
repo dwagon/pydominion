@@ -470,7 +470,10 @@ class Game:  # pylint: disable=too-many-public-methods
         cpile = CardPile(crd, self.cardmapping[cardtype][crd], self)
         if not force and not cpile.insupply:
             return 0
-        self.cardpiles[cpile.name] = cpile
+        cpilename = cpile.name
+        if hasattr(cpile, "cardpile_setup"):
+            cpile = cpile.cardpile_setup(self)
+        self.cardpiles[cpilename] = cpile
         for card in cpile:
             self._cards[card._uuid] = card
             card.location = "cardpile"

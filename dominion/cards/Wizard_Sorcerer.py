@@ -16,6 +16,7 @@ class Card_Sorcerer(Card.Card):
         self.base = Game.ALLIES
         self.cost = 5
         self.cards = 1
+        self.required_cards = ["Curse"]
         self.actions = 1
         self.name = "Sorcerer"
         self.desc = """+1 Card; +1 Action; Each other player names a card,
