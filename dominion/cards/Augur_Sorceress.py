@@ -17,6 +17,7 @@ class Card_Sorceress(Card.Card):
         self.base = Game.ALLIES
         self.cost = 5
         self.actions = 1
+        self.required_cards = ["Curse"]
         self.name = "Sorceress"
         self.desc = """+1 Action; Name a card. Reveal the top card of your deck
             and put it into your hand. If it's the named card, each other player
@@ -26,13 +27,13 @@ class Card_Sorceress(Card.Card):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for c in sorted(game.cardTypes()):
-            sel = "%s" % index
+            sel = f"{index}"
             options.append({"selector": sel, "print": f"Guess {c.name}", "card": c})
             index += 1
         o = player.user_input(options, "Guess the top card")
         c = player.pickup_card()
         player.output(f"Next card = {c.name}, Guess = {o['card'].name}")
-        if c.name == o['card'].name:
+        if c.name == o["card"].name:
             game.output(f"Guessed {c.name} correctly")
             for plr in player.attack_victims():
                 plr.gain_card("Curse")
