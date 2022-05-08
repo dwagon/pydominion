@@ -297,7 +297,7 @@ class Card:
         return False
 
     ##########################################################################
-    def special_score(self, game, player):
+    def special_score(self, game, player):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: nocover
 
@@ -326,7 +326,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_allowed_to_buy(self, game, player):
+    def hook_allowed_to_buy(self, game, player):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return True  # pragma: no cover
 
@@ -335,17 +335,17 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_gain_card(self, game, player, card):
+    def hook_gain_card(self, game, player, card):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
     ##########################################################################
-    def hook_card_cost(self, game, player, card):
+    def hook_card_cost(self, game, player, card):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
     ##########################################################################
-    def hook_this_card_cost(self, game, player):
+    def hook_this_card_cost(self, game, player):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return 0  # pragma: no cover
 
@@ -356,7 +356,7 @@ class Card:
         return self.coin  # pragma: no cover
 
     ##########################################################################
-    def hook_spend_value(self, game, player, card):
+    def hook_spend_value(self, game, player, card):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses
         Does this card make any  modifications on the value of spending a card"""
         return 0  # pragma: no cover
@@ -378,7 +378,7 @@ class Card:
         """Hook - overwritten in subclasses"""
 
     ##########################################################################
-    def hook_gain_this_card(self, game, player):
+    def hook_gain_this_card(self, game, player):  # pylint: disable=no-self-use
         """Hook - overwritten in subclasses"""
         return {}  # pragma: no cover
 
