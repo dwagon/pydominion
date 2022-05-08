@@ -287,7 +287,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.hexes:
             return
-        self.output("Using hexes")
         d = self._load_non_kingdom_cards("Hex", None, None, HexPile)
         self.hexes = list(d.values())
         random.shuffle(self.hexes)
@@ -305,7 +304,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.artifacts:
             return
-        self.output("Using artifacts")
         self.artifacts = self._load_non_kingdom_cards(
             "Artifact", None, None, ArtifactPile
         )
@@ -315,7 +313,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.projects:
             return
-        self.output("Using projects")
         self.projects = self._load_non_kingdom_cards(
             "Project", self.initprojects, self.numprojects, ProjectPile
         )
@@ -323,7 +320,6 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_ally(self):
         """Load the allies and pick a single one to have in the game"""
-        self.output("Using Allies")
         if isinstance(self.init_ally, str):
             self.init_ally = [self.init_ally]
         allies = self._load_non_kingdom_cards("Ally", self.init_ally, 1, AllyPile)
@@ -452,7 +448,6 @@ class Game:  # pylint: disable=too-many-public-methods
             self.cardpiles[prize] = PrizeCardPile(
                 cardname=prize, game=self, pile_size=10
             )
-        self.output("Playing with Prizes")
 
     ###########################################################################
     def getPrizes(self):
@@ -463,7 +458,8 @@ class Game:  # pylint: disable=too-many-public-methods
     def _use_cardpile(self, available, crd, force=False, cardtype="Card"):
         """TODO"""
         try:
-            available.remove(crd)
+            if available is not None:
+                available.remove(crd)
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{crd}'\n", file=sys.stderr)
             sys.exit(1)
@@ -500,51 +496,48 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _check_card_requirements(self):
-        """TODO"""
+        """If any card we are playing requires another card (e.g. Curse) then
+        ensure that is loaded as well"""
+
         for card in (
-            list(self.cardpiles.values())
+            list(self._cards.values())
             + list(self.events.values())
             + list(self.hexes)
             + list(self.boons)
+            + list(self.landmarks.values())
         ):
             for x in card.required_cards:
                 if isinstance(x, tuple):
-                    k, crd = x
+                    krdtype, crd = x
                 else:
-                    k, crd = "BaseCard", x
+                    krdtype, crd = "BaseCard", x
                 if crd not in self.cardpiles:
-                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output(f"Playing with {crd}")
+                    self._use_cardpile(None, crd, force=True, cardtype=krdtype)
+                    self.output(f"Playing with {crd} as required by {card.name}")
 
-        for card in self.landmarks.values():
-            for x in card.required_cards:
-                if isinstance(x, tuple):
-                    k, crd = x
-                else:
-                    k, crd = "BaseCard", x
-                if crd not in self.cardpiles:
-                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output(f"Playing with {crd}")
-
-        for card in list(self.cardpiles.keys()):
-            if self.cardpiles[card].isLooter() and "Ruins" not in self.cardpiles:
+            if card.isLooter() and "Ruins" not in self.cardpiles:
                 nc = self.numplayers * 10
                 self.cardpiles["Ruins"] = RuinCardPile(game=self, pile_size=nc)
-                self.output("Playing with Ruins")
-            if self.cardpiles[card].isFate() and not self.boons:
+                self.output(f"Playing with Ruins as required by {card.name}")
+            if card.isFate() and not self.boons:
                 self._load_boons()
-            if self.cardpiles[card].isDoom() and not self.hexes:
+            if card.isDoom() and not self.hexes:
                 self._load_hexes()
-            if self.cardpiles[card].isLiaison() and not self.ally:
+                self.output(f"Using hexes as required by {card.name}")
+            if card.isLiaison() and not self.ally:
                 self._load_ally()
-            if self.cardpiles[card].traveller:
+                self.output(f"Using Allies as required by {card.name}")
+            if card.traveller and not self.loaded_travellers:
                 self._load_travellers()
-            if self.cardpiles[card].needsprize:
+            if card.needsprize:
                 self._add_prizes()
-            if self.cardpiles[card].needsartifacts:
+                self.output(f"Playing with Prizes as required by {card.name}")
+            if card.needsartifacts and not self.artifacts:
                 self._load_artifacts()
-            if self.cardpiles[card].needsprojects:
+                self.output(f"Using artifacts as required by {card.name}")
+            if card.needsprojects and not self.projects:
                 self._load_projects()
+                self.output(f"Using projects as required by {card.name}")
 
     ###########################################################################
     def cardTypes(self):
