@@ -17,13 +17,14 @@ class Card_Smugglers(Card.Card):
 
     def special(self, game, player):
         plr = game.playerToRight(player)
-        cards = [c for c in plr.stats["bought"] if c.cost <= 6]
+        cards = [_ for _ in plr.stats["bought"] if _.cost <= 6]
         if cards:
             card = player.card_sel(cardsrc=cards)
             if card:
+                game[card[0]].remove()
                 player.add_card(card[0])
         else:
-            player.output("%s didn't buy any suitable cards" % plr.name)
+            player.output(f"{plr.name} didn't buy any suitable cards")
 
 
 ###############################################################################
