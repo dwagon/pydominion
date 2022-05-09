@@ -21,8 +21,7 @@ class Card_Smugglers(Card.Card):
         if cards:
             card = player.card_sel(cardsrc=cards)
             if card:
-                game[card[0]].remove()
-                player.add_card(card[0])
+                player.gain_card(card[0].name)
         else:
             player.output(f"{plr.name} didn't buy any suitable cards")
 
