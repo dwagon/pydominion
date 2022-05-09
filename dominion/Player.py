@@ -90,7 +90,7 @@ class Player:
             self.add_card(card, "deck")
 
         for hl in heirlooms:
-            card = hl.remove()
+            card = self.game[hl].remove()
             card.player = self
             self.add_card(card, "deck")
 
