@@ -19,7 +19,6 @@ from dominion.HexPile import HexPile
 from dominion.LandmarkPile import LandmarkPile
 from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
-from dominion.PrizeCardPile import PrizeCardPile
 from dominion.ProjectPile import ProjectPile
 from dominion.RuinCardPile import RuinCardPile
 from dominion.StatePile import StatePile
@@ -445,9 +444,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _add_prizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self.cardpiles[prize] = PrizeCardPile(
-                cardname=prize, game=self, pile_size=10
-            )
+            self._use_cardpile(None, prize, False, "PrizeCard")
 
     ###########################################################################
     def getPrizes(self):
