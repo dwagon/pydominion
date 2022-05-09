@@ -44,7 +44,21 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, a):
-        return self._cards[-1].name < a._cards[-1].name
+        if self._card:
+            selfname = self._card.name
+        else:
+            try:
+                selfname = self._cards[-1].name
+            except IndexError:
+                selfname = "ZZZZ"
+        if a._card:
+            aname = a._card.name
+        else:
+            try:
+                aname = a._cards[-1].name
+            except IndexError:
+                aname = "ZZZZ"
+        return selfname < aname
 
     ###########################################################################
     def __getattr__(self, name):

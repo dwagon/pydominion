@@ -14,8 +14,9 @@ class Card_Wizards(Card.Card):
         self.required_cards = ["Curse"]
         Card.TYPE_WIZARD = "wizard"
 
-    def setup(self, game):
-        game.cardpiles["Wizards"] = WizardCardPile(game)
+    @classmethod
+    def cardpile_setup(cls, game):
+        return WizardCardPile(game)
 
 
 ###############################################################################

@@ -19,7 +19,6 @@ from dominion.HexPile import HexPile
 from dominion.LandmarkPile import LandmarkPile
 from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
-from dominion.PrizeCardPile import PrizeCardPile
 from dominion.ProjectPile import ProjectPile
 from dominion.RuinCardPile import RuinCardPile
 from dominion.StatePile import StatePile
@@ -68,8 +67,9 @@ class Game:  # pylint: disable=too-many-public-methods
         self.hexes = []
         self.ally = None
         self.discarded_hexes = []
-        self.trashpile = PlayArea([])
+        self.trashpile = PlayArea("trash", game=self)
         self.gameover = False
+        self._heirlooms = []
         self.current_player = None
         # The _base_cards are in every game
         self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
@@ -137,7 +137,6 @@ class Game:  # pylint: disable=too-many-public-methods
         self._load_landmarks()
         self._load_artifacts()
         self._load_projects()
-        heirlooms = self._enable_heirlooms()
 
         if self.hexes or self.boons:
             self._load_states()
@@ -155,7 +154,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     game=self,
                     quiet=self.quiet,
                     name=f"{name}Bot",
-                    heirlooms=heirlooms,
+                    heirlooms=self._heirlooms,
                 )
                 self.bot = False
             else:
@@ -164,7 +163,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     quiet=self.quiet,
                     name=name,
                     number=plrnum,
-                    heirlooms=heirlooms,
+                    heirlooms=self._heirlooms,
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
@@ -287,7 +286,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.hexes:
             return
-        self.output("Using hexes")
         d = self._load_non_kingdom_cards("Hex", None, None, HexPile)
         self.hexes = list(d.values())
         random.shuffle(self.hexes)
@@ -305,7 +303,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.artifacts:
             return
-        self.output("Using artifacts")
         self.artifacts = self._load_non_kingdom_cards(
             "Artifact", None, None, ArtifactPile
         )
@@ -315,7 +312,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.projects:
             return
-        self.output("Using projects")
         self.projects = self._load_non_kingdom_cards(
             "Project", self.initprojects, self.numprojects, ProjectPile
         )
@@ -323,7 +319,6 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_ally(self):
         """Load the allies and pick a single one to have in the game"""
-        self.output("Using Allies")
         if isinstance(self.init_ally, str):
             self.init_ally = [self.init_ally]
         allies = self._load_non_kingdom_cards("Ally", self.init_ally, 1, AllyPile)
@@ -449,10 +444,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _add_prizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self.cardpiles[prize] = PrizeCardPile(
-                cardname=prize, game=self, pile_size=10
-            )
-        self.output("Playing with Prizes")
+            self._use_cardpile(None, prize, False, "PrizeCard")
 
     ###########################################################################
     def getPrizes(self):
@@ -460,17 +452,22 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
-    def _use_cardpile(self, available, crd, force=False, cardtype="Card"):
+    def _use_cardpile(self, available, crd, force=False, cardtype="Card") -> int:
         """TODO"""
+        # print(f"DBG _use_cardpile({crd=}, {force=}, {cardtype=})")
         try:
-            available.remove(crd)
+            if available is not None:
+                available.remove(crd)
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{crd}'\n", file=sys.stderr)
             sys.exit(1)
         cpile = CardPile(crd, self.cardmapping[cardtype][crd], self)
         if not force and not cpile.insupply:
             return 0
-        self.cardpiles[cpile.name] = cpile
+        cpilename = cpile.name
+        if hasattr(cpile, "cardpile_setup"):
+            cpile = cpile.cardpile_setup(self)
+        self.cardpiles[cpilename] = cpile
         for card in cpile:
             self._cards[card._uuid] = card
             card.location = "cardpile"
@@ -478,70 +475,54 @@ class Game:  # pylint: disable=too-many-public-methods
         return 1
 
     ###########################################################################
-    def _enable_heirlooms(self):
-        """Go through the cardpiles and see if any require heirloom cards
-        to be brought into the game"""
-        heirlooms = set()
-        for _, card in list(self.cardpiles.items()):
-            if card.heirloom is not None:
-                cpile = CardPile(
-                    card.heirloom,
-                    self.cardmapping["Heirloom"][card.heirloom],
-                    game=self,
-                    pile_size=10,
-                )
-                heirlooms.add(cpile)
-                self.cardpiles[cpile.name] = cpile
-
-        return list(heirlooms)
-
-    ###########################################################################
     def _check_card_requirements(self):
-        """TODO"""
+        """If any card we are playing requires another card (e.g. Curse) then
+        ensure that is loaded as well"""
+
         for card in (
-            list(self.cardpiles.values())
+            list(self._cards.values())
             + list(self.events.values())
             + list(self.hexes)
             + list(self.boons)
+            + list(self.landmarks.values())
         ):
             for x in card.required_cards:
                 if isinstance(x, tuple):
-                    k, crd = x
+                    krdtype, crd = x
                 else:
-                    k, crd = "BaseCard", x
+                    krdtype, crd = "BaseCard", x
                 if crd not in self.cardpiles:
-                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output(f"Playing with {crd}")
+                    self._use_cardpile(None, crd, force=True, cardtype=krdtype)
+                    self.output(f"Playing with {crd} as required by {card.name}")
 
-        for card in self.landmarks.values():
-            for x in card.required_cards:
-                if isinstance(x, tuple):
-                    k, crd = x
-                else:
-                    k, crd = "BaseCard", x
-                if crd not in self.cardpiles:
-                    self.cardpiles[crd] = CardPile(crd, self.cardmapping[k][crd], self)
-                    self.output(f"Playing with {crd}")
+            if card.heirloom is not None and card.heirloom not in self._heirlooms:
+                self._use_cardpile(None, card.heirloom, force=True, cardtype="Heirloom")
+                self._heirlooms.append(card.heirloom)
+                self.output(f"Playing with {card.heirloom} as required by {card.name}")
 
-        for card in list(self.cardpiles.keys()):
-            if self.cardpiles[card].isLooter() and "Ruins" not in self.cardpiles:
+            if card.isLooter() and "Ruins" not in self.cardpiles:
                 nc = self.numplayers * 10
                 self.cardpiles["Ruins"] = RuinCardPile(game=self, pile_size=nc)
-                self.output("Playing with Ruins")
-            if self.cardpiles[card].isFate() and not self.boons:
+                self.output(f"Playing with Ruins as required by {card.name}")
+            if card.isFate() and not self.boons:
                 self._load_boons()
-            if self.cardpiles[card].isDoom() and not self.hexes:
+            if card.isDoom() and not self.hexes:
                 self._load_hexes()
-            if self.cardpiles[card].isLiaison() and not self.ally:
+                self.output(f"Using hexes as required by {card.name}")
+            if card.isLiaison() and not self.ally:
                 self._load_ally()
-            if self.cardpiles[card].traveller:
+                self.output(f"Using Allies as required by {card.name}")
+            if card.traveller and not self.loaded_travellers:
                 self._load_travellers()
-            if self.cardpiles[card].needsprize:
+            if card.needsprize:
                 self._add_prizes()
-            if self.cardpiles[card].needsartifacts:
+                self.output(f"Playing with Prizes as required by {card.name}")
+            if card.needsartifacts and not self.artifacts:
                 self._load_artifacts()
-            if self.cardpiles[card].needsprojects:
+                self.output(f"Using artifacts as required by {card.name}")
+            if card.needsprojects and not self.projects:
                 self._load_projects()
+                self.output(f"Using projects as required by {card.name}")
 
     ###########################################################################
     def cardTypes(self):
@@ -798,8 +779,8 @@ class Game:  # pylint: disable=too-many-public-methods
                 f"  {plr.name}: coffers=%d villagers=%d potions=%d"
                 % (plr.coffer, plr.villager, plr.potions)
             )
-            for v in self._cards.values():
-                print(f"    {v}")
+        for v in self._cards.values():
+            print(f"    {v}")
 
     ###########################################################################
     def player_to_left(self, plr):

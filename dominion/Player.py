@@ -87,17 +87,17 @@ class Player:
         for _ in range(7 - len(heirlooms)):
             card = self.game["Copper"].remove()
             card.player = self
-            self.deck.add(card)
+            self.add_card(card, "deck")
 
         for hl in heirlooms:
-            card = hl.remove()
+            card = self.game[hl].remove()
             card.player = self
-            self.deck.add(card)
+            self.add_card(card, "deck")
 
         for _ in range(3):
             card = self.game["Estate"].remove()
             card.player = self
-            self.deck.add(card)
+            self.add_card(card, "deck")
 
         self.deck.shuffle()
 

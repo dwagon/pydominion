@@ -14,8 +14,9 @@ class Card_Townsfolk(Card.Card):
         self.required_cards = ["Curse"]
         Card.TYPE_TOWNSFOLK = "townsfolk"
 
-    def setup(self, game):
-        game.cardpiles["Townsfolk"] = TownsfolkCardPile(game)
+    @classmethod
+    def cardpile_setup(cls, game):
+        return TownsfolkCardPile(game)
 
 
 ###############################################################################
