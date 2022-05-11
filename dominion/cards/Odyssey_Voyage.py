@@ -36,12 +36,12 @@ class Card_Voyage(Card.Card):
 ###############################################################################
 class Test_Voyage(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 
         while True:
-            card = self.g["Augurs"].remove()
+            card = self.g["Odysseys"].remove()
             if card.name == "Voyage":
                 break
         self.card = card
@@ -50,20 +50,8 @@ class Test_Voyage(unittest.TestCase):
         """Play the card"""
         self.plr.hand.set("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Trash Estate"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertNotIn("Estate", self.plr.hand)
-
-    def test_trash_self(self):
-        """Play the card and trash self"""
-        self.g["Augurs"].rotate()
-        self.plr.hand.set("Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Trash self"]
-        self.plr.play_card(self.card)
-        self.assertIn("Voyage", self.g.trashpile)
-        self.assertIn("Sorceress", self.plr.discardpile)
+        # TODO - testing
 
 
 ###############################################################################
