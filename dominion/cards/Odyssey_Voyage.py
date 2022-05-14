@@ -24,7 +24,7 @@ class Card_Voyage(Card.Card):
         self._taketurn = False
 
     def special(self, game, player):
-        if game.turns[-1] != player.uuid:
+        if game.last_turn(player):
             self._taketurn = True
         else:
             player.output("You had the previous turn")

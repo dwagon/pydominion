@@ -65,7 +65,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.discarded_boons = []
         self.retained_boons = []
         self.hexes = []
-        self.turns = []
+        self._turns = []
         self.ally = None
         self.discarded_hexes = []
         self.trashpile = PlayArea("trash", game=self)
@@ -815,6 +815,14 @@ class Game:  # pylint: disable=too-many-public-methods
         return scores
 
     ###########################################################################
+    def last_turn(self, plr) -> bool:
+        """ Who had the last turn """
+        try:
+            return self._turns[-1] == plr.uuid
+        except IndexError:
+            return False
+
+    ###########################################################################
     def count_all_cards(self):  # pragma: no cover
         """TODO"""
         for pile in self.cardpiles.values():
@@ -856,7 +864,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.current_player.start_turn()
         self.current_player.turn()
         self.current_player.end_turn()
-        self.turns.append(self.current_player.uuid)
+        self._turns.append(self.current_player.uuid)
         if self.isGameOver():
             self.gameover = True
             for plr in self.player_list():
