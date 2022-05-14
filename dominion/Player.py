@@ -17,8 +17,6 @@ from dominion.ProjectPile import ProjectPile
 ###############################################################################
 class Player:
     def __init__(self, game, name, heirlooms=None):
-        if heirlooms is None:
-            heirlooms = []
         self.game = game
         self.name = name
         self.currcards = []
@@ -43,6 +41,7 @@ class Player:
         self.potions = 0
         self.favors = 0
         self.newhandsize = 5
+        self.playlimit = None
         self.card_token = False
         self.coin_token = False
         self.journey_token = True
@@ -759,6 +758,8 @@ class Player:
             status += f" Coffer={self.coffer}"
         if self.villager:
             status += f" Villager={self.villager}"
+        if self.playlimit is not None:
+            status += f" Play Limit={self.playlimit}"
         prompt = f"What to do ({status})?"
         return options, prompt
 
@@ -1072,6 +1073,7 @@ class Player:
     def end_turn(self):
         if not self.misc["cleaned"]:
             self.cleanup_phase()
+        self.playlimit = None
         for card in self.had_cards:
             self.currcards.append(card)
             card.hook_end_turn(game=self.game, player=self)
@@ -1155,6 +1157,12 @@ class Player:
         if card not in self.hand and options["discard"]:
             self.output(f"{card.name} is no longer available")
             return
+        if self.playlimit is not None:
+            if self.playlimit <= 0:
+                self.output(f"Can't play {card.name} due to limits in number of plays")
+                return
+            else:
+                self.playlimit -= 1
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction():
