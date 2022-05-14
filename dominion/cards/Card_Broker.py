@@ -18,6 +18,8 @@ class Card_Broker(Card.Card):
 
     def special(self, game, player):
         tr = player.plr_trash_card(printcost=True)
+        if not tr:
+            return
         cost = tr[0].cost
         if cost == 0:
             return
@@ -56,6 +58,15 @@ class Test_Broker(unittest.TestCase):
         self.plr.test_input = ["Trash Estate", "cards"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 2)
+
+    def test_play_nothing(self):
+        """ Play but select nothing to trash """
+        self.plr.hand.set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, "hand")
+        self.plr.test_input = ["finish"]
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.g.trash_size(), 0)
 
     def test_play_action(self):
         """Play the card - gain action"""
