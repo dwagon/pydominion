@@ -24,12 +24,16 @@ class Card_Voyage(Card.Card):
         self._taketurn = False
 
     def special(self, game, player):
-        self._taketurn = True
+        if game.turns[-1] != player.uuid:
+            self._taketurn = True
+        else:
+            player.output("You had the previous turn")
 
     def hook_end_turn(self, game, player):
         if self._taketurn:
             player.output("Having a second turn due to Voyage")
-            player.newhandsize = 3
+            player.playlimit = 3
+            self._taketurn = False
             game.current_player = game.playerToRight(player)
 
 

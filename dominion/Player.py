@@ -17,8 +17,6 @@ from dominion.ProjectPile import ProjectPile
 ###############################################################################
 class Player:
     def __init__(self, game, name, heirlooms=None):
-        if heirlooms is None:
-            heirlooms = []
         self.game = game
         self.name = name
         self.currcards = []
