@@ -1161,8 +1161,7 @@ class Player:
             if self.playlimit <= 0:
                 self.output(f"Can't play {card.name} due to limits in number of plays")
                 return
-            else:
-                self.playlimit -= 1
+            self.playlimit -= 1
         self.output("Playing %s" % card.name)
         self.currcards.append(card)
         if card.isAction():
