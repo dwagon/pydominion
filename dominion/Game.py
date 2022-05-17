@@ -480,13 +480,17 @@ class Game:  # pylint: disable=too-many-public-methods
         """If any card we are playing requires another card (e.g. Curse) then
         ensure that is loaded as well"""
 
-        for card in (
+        check_cards = (
             list(self._cards.values())
             + list(self.events.values())
             + list(self.hexes)
             + list(self.boons)
             + list(self.landmarks.values())
-        ):
+        )
+        if self.ally:
+            check_cards.append(self.ally)
+
+        for card in check_cards:
             for x in card.required_cards:
                 if isinstance(x, tuple):
                     krdtype, crd = x

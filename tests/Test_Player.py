@@ -143,7 +143,7 @@ class Test_cards_affordable(unittest.TestCase):
                 self.assertLessEqual(a.cost, price)
                 self.assertTrue(a.isAction())
             except AssertionError:  # pragma: no cover
-                print("a={}".format(a))
+                print(f"{a=}")
                 self.g.print_state()
                 raise
 
@@ -533,7 +533,7 @@ class Test__buyable_selection(unittest.TestCase):
                     self.assertEqual(i[Card.TYPE_ACTION], "buy")
                     self.assertEqual(i["card"], self.g["Copper"])
                 except AssertionError:  # pragma: no cover
-                    print("Buy Copper {}".format(i))
+                    print(f"Buy Copper {i}")
                     self.g.print_state()
                     raise
                 break
