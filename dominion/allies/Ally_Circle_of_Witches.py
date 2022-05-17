@@ -28,7 +28,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
             player.add_favors(-3)
             for plr in game.player_list():
                 if plr != player:
-                    plr.output(f"{player.name}'s Circle of Witches cursed you")
+                    plr.output(f"{player.name}'s {self.name} cursed you")
                     plr.gain_card("Curse")
 
 
@@ -42,27 +42,14 @@ class Test_Circle_of_Witches(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
     def test_play_card(self):
-        """Play and gain a card"""
+        """Play a liaison and curse"""
         self.plr.set_favors(4)
-        card = self.g["Moat"].remove()
+        card = self.g["Underling"].remove()
+        self.plr.add_card(card, "hand")
+        self.plr.test_input = ["Curse"]
         self.plr.play_card(card)
-        self.assertNotIn("Curse", self.vic.discardpile)
-
-    def test_play_actions(self):
-        """Play and gain an action"""
-        self.plr.set_favors(1)
-        acts = self.plr.get_actions()
-        self.plr.test_input = ["+1 Action"]
-        self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_actions(), acts + 1)
-
-    def test_play_buys(self):
-        """Play and gain a buys"""
-        self.plr.set_favors(1)
-        bys = self.plr.get_buys()
-        self.plr.test_input = ["+1 Buy"]
-        self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_buys(), bys + 1)
+        self.assertIn("Curse", self.vic.discardpile)
+        self.assertEqual(self.plr.get_favors(), 1 + 1)  # +1 for playing underling
 
 
 ###############################################################################

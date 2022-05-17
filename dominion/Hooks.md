@@ -103,7 +103,7 @@ Returns None or a dictionary with keys:
 
 hook_post_action(game, player, card)
 ---------------
-Called for every card in played + duration pile after an action has happened
+Called for every card after an action has happened
 
 hook_end_turn
 ------------
