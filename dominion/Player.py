@@ -767,7 +767,7 @@ class Player:
     def turn(self):
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
-        stats = f"({self.get_score()} points, {self._count_cards()} cards)"
+        stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
             return
@@ -1650,7 +1650,7 @@ class Player:
         return cards
 
     ###########################################################################
-    def _count_cards(self):
+    def count_cards(self):
         count = {}
         for name, stack in self.stacklist:
             count[name] = len(stack)

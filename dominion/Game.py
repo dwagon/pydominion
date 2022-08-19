@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """ Dominion Game Code """
-# pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes
+# pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 import argparse
 import glob
 import imp
@@ -168,7 +168,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
-        self._total_cards = self._count_cards()
+        self._total_cards = self.count_cards()
         self._init_cardset = set(self._cards.keys())
         self.current_player = self.player_list(0)
         if self.ally:
@@ -208,14 +208,14 @@ class Game:  # pylint: disable=too-many-public-methods
             lmk.setup(game=self)
 
     ###########################################################################
-    def _count_cards(self):
+    def count_cards(self):
         """TODO"""
         count = {}
         count["trash"] = self.trash_size()
         for cpile in list(self.cardpiles.values()):
             count[f"pile_{cpile.name}"] = len(cpile)
         for plr in self.player_list():
-            count[f"player_{plr.name}"] = plr._count_cards()
+            count[f"player_{plr.name}"] = plr.count_cards()
         total = sum(count.values())
         return total
 
@@ -434,6 +434,9 @@ class Game:  # pylint: disable=too-many-public-methods
             sys.exit(1)
 
         while unfilled:
+            if not available:
+                # Not enough cards to fill the hand - almost certainly in a test
+                break
             crd = random.choice(available)
             if crd in self.badcards:
                 continue
@@ -470,9 +473,9 @@ class Game:  # pylint: disable=too-many-public-methods
             cpile = cpile.cardpile_setup(self)
         self.cardpiles[cpilename] = cpile
         for card in cpile:
-            self._cards[card._uuid] = card
+            self._cards[card.uuid] = card
             card.location = "cardpile"
-        self.output("Playing with card %s" % self[crd].name)
+        self.output(f"Playing with card {self[crd].name}")
         return 1
 
     ###########################################################################
@@ -559,16 +562,8 @@ class Game:  # pylint: disable=too-many-public-methods
             mapping[prefix] = self.getSetCardClasses(
                 prefix, self.cardpath, "cards", "Card_"
             )
-        if self.oldcards:
-            oldpath = os.path.join(self.cardpath, "old")
-            for prefix in (
-                "Card",
-                "BaseCard",
-                "Traveller",
-                "PrizeCard",
-                "Castle",
-                "Heirloom",
-            ):
+            if self.oldcards:
+                oldpath = os.path.join(self.cardpath, "old")
                 mapping[prefix].update(
                     self.getSetCardClasses(prefix, oldpath, "cards", "Card_")
                 )
@@ -620,7 +615,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     klass = getattr(mod, kls)
                     break
             else:  # pragma: no cover
-                sys.stderr.write("Couldn't find %s Class in %s\n" % (prefix, pathname))
+                sys.stderr.write(f"Couldn't find {prefix} Class in {pathname}\n")
             mapping[klass().name] = klass
             klass().check()
         return mapping
@@ -731,7 +726,7 @@ class Game:  # pylint: disable=too-many-public-methods
             for plr in self.player_list():
                 tkns = plr.which_token(cpile)
                 if tkns:
-                    tokens += "%s[%s]" % (plr.name, ",".join(tkns))
+                    tokens += f"{plr.name}[{','.join(tkns)}]"
 
             print(f"CardPile {cpile}: %d cards {tokens}" % len(self.cardpiles[cpile]))
         for plr in self.player_list():
@@ -778,7 +773,8 @@ class Game:  # pylint: disable=too-many-public-methods
             )
             print(f"  {plr.name}'s tokens: %s" % (plr.tokens))
             print(
-                f"  {plr.name}'s turn: coin={plr.coin} debt={plr.debt} actions={plr.actions} buys={plr.buys} favors={plr.favors}"
+                f"  {plr.name}'s turn: coin={plr.coin} debt={plr.debt} actions={plr.actions}"
+                f" buys={plr.buys} favors={plr.favors}"
             )
             print(
                 f"  {plr.name}: coffers=%d villagers=%d potions=%d"
@@ -856,12 +852,12 @@ class Game:  # pylint: disable=too-many-public-methods
     def turn(self):
         """TODO"""
         try:
-            assert self._count_cards() == self._total_cards
+            assert self.count_cards() == self._total_cards
             current_cardset = set(self._cards.keys())
             assert self._init_cardset == current_cardset
         except AssertionError:
             self.count_all_cards()
-            print(f"current = {self._count_cards()}\n", file=sys.stderr)
+            print(f"current = {self.count_cards()}\n", file=sys.stderr)
             sys.stderr.write(f"original = {self._total_cards}\n")
             raise
         self.current_player = self.player_to_left(self.current_player)
@@ -877,6 +873,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
 ###############################################################################
 class TestGame(Game):
+    """ Game for testing purposes """
     def __init__(self, **kwargs):
         if "ally" not in kwargs:
             kwargs["init_ally"] = "noop"
