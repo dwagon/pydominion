@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# pylint: disable=invalid-name, protected-access, fixme
+""" Test the Game module """
 
 import unittest
 from dominion import Game
@@ -6,6 +8,7 @@ from dominion import Game
 
 ###############################################################################
 class Test_args(unittest.TestCase):
+    """ Test argument parsing """
     def setUp(self):
         pass
 
@@ -39,6 +42,12 @@ class Test_args(unittest.TestCase):
         g = Game.TestGame(eventcards=["Alms"])
         g.start_game()
         self.assertIn("Alms", g.events)
+
+    def test_old_cards(self):
+        """ Can we access old cards """
+        g = Game.TestGame(cardpath="tests/cards", oldcards=True)
+        g.start_game()
+        self.assertIn("OldCard", g.cardpiles)
 
 
 ###############################################################################
