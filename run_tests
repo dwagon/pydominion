@@ -8,7 +8,7 @@ numcpu = cpuinfo.get_cpu_info()["count"] + 1
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-cmd = f"pytest -n {numcpu} --cov-report term-missing --cov . tests/*.py dominion/*.py dominion/*/*.py"
+cmd = f"pytest -n {numcpu} --cov-report term-missing --cov . tests/*.py dominion/*.py dominion/*/*.py dominion/*/*/*.py"
 print(f"{cmd=}")
 rc = os.system(cmd)
 sys.exit(rc >> 8)
