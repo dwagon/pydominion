@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import Card
-import Game
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -52,6 +51,7 @@ class Test_Feast(unittest.TestCase):
         self.g = Game.TestGame(
             numplayers=1,
             initcards=["Feast"],
+            oldcards=True,
             badcards=["Den of Sin", "Ghost Town", "Duchess"],
         )
         self.g.start_game()

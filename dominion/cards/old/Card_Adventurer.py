@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-import Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -33,13 +32,13 @@ class Card_Adventurer(Card.Card):
 ###############################################################################
 class Test_Adventurer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Adventurer"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Adventurer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_treasures(self):
-        self.plr.set_deck("Copper", "Silver", "Gold", "Estate")
-        self.plr.set_hand("Adventurer")
+        self.plr.deck.set("Copper", "Silver", "Gold", "Estate")
+        self.plr.hand.set("Adventurer")
         self.plr.play_card(self.plr.hand[0])
         self.assertEqual(
             sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.hand])

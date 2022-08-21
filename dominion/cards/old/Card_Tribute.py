@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+"""http://wiki.dominionstrategy.com/index.php/Tribute """
 
 import unittest
-import Game
-import Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Tribute(Card.Card):
+    """Tribute"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -19,6 +21,7 @@ class Card_Tribute(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
+        """Tribute Special"""
         victim = game.player_to_left(player)
         cards = []
         for _ in range(2):
@@ -27,8 +30,8 @@ class Card_Tribute(Card.Card):
             cards.append(card)
         cardname = None
         for c in cards:
-            player.output("Looking at %s from %s" % (c.name, victim.name))
-            victim.output("%s's Tribute discarded %s" % (player.name, c.name))
+            player.output(f"Looking at {c.name} from {victim.name}")
+            victim.output(f"{player.name}'s Tribute discarded {c.name}")
             victim.add_card(c, "discard")
             if c.name == cardname:
                 player.output("Duplicate - no extra")
@@ -47,8 +50,10 @@ class Card_Tribute(Card.Card):
 
 ###############################################################################
 class Test_Tribute(unittest.TestCase):
+    """Test Tribute"""
+
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Tribute"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Tribute"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Tribute"].remove()
@@ -56,7 +61,7 @@ class Test_Tribute(unittest.TestCase):
 
     def test_play(self):
         """Play a tribute"""
-        self.victim.set_deck("Copper", "Estate")
+        self.victim.deck.set("Copper", "Estate")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
@@ -64,7 +69,7 @@ class Test_Tribute(unittest.TestCase):
 
     def test_same(self):
         """Victim has the same cards for Tribute"""
-        self.victim.set_deck("Tribute", "Tribute")
+        self.victim.deck.set("Tribute", "Tribute")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_coins(), 0)

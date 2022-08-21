@@ -72,7 +72,7 @@ class Card:
         self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
-        self._uuid = uuid.uuid4().hex
+        self.uuid = uuid.uuid4().hex
         self._location = None
         self._player = None
 
@@ -128,7 +128,7 @@ class Card:
 
     ##########################################################################
     def __repr__(self):
-        return f"{self.name} {self._uuid} {self._player}@{self._location}"
+        return f"{self.name} {self.uuid} {self._player}@{self._location}"
 
     ##########################################################################
     def __lt__(self, card):
