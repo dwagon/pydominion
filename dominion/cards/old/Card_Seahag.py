@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 class Card_Seahag(Card.Card):
@@ -10,7 +9,8 @@ class Card_Seahag(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.SEASIDE
-        self.desc = "Each other player discards the top card of his deck, then gains a Curse card, putting it on top of his deck"
+        self.desc = """Each other player discards the top card of his deck, then gains a Curse card,
+            putting it on top of his deck"""
         self.required_cards = ["Curse"]
         self.name = "Sea Hag"
         self.cost = 4
@@ -21,16 +21,18 @@ class Card_Seahag(Card.Card):
         for pl in player.attack_victims():
             c = pl.next_card()
             pl.discard_card(c)
-            pl.output("Discarded your %s" % c.name)
+            pl.output(f"Discarded your {c.name}")
             pl.gain_card("Curse", destination="topdeck")
-            pl.output("Got cursed by %s's Sea Hag" % player.name)
-            player.output("%s got cursed" % pl.name)
+            pl.output(f"Got cursed by {player.name}'s Sea Hag")
+            player.output("{pl.name} got cursed")
 
 
 ###############################################################################
 class Test_Seahag(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Sea Hag", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Sea Hag", "Moat"]
+        )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Sea Hag"].remove()
