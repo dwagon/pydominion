@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Chancellor(Card.Card):
-    """ Chancellor """
+    """Chancellor"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -17,8 +18,8 @@ class Card_Chancellor(Card.Card):
         self.coin = 2
         self.cost = 3
 
-    def special(self, game, player):    # pylint: disable=unused-argument
-        """ Chancellor Special """
+    def special(self, game, player):  # pylint: disable=unused-argument
+        """Chancellor Special"""
         disc = player.plr_choose_options(
             "Discard deck?", ("Don't Discard", False), ("Discard Deck", True)
         )
@@ -30,7 +31,8 @@ class Card_Chancellor(Card.Card):
 
 ###############################################################################
 class Test_Chancellor(unittest.TestCase):
-    """ Test Chancellor """
+    """Test Chancellor"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Chancellor"])
         self.g.start_game()
@@ -40,7 +42,7 @@ class Test_Chancellor(unittest.TestCase):
         self.plr.add_card(self.ccard, "hand")
 
     def test_nodiscard(self):
-        """ Play Chancellor and choose not to discard """
+        """Play Chancellor and choose not to discard"""
         self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.discardpile.set("Estate", "Duchy", "Province")
         self.plr.test_input = ["Don't discard"]
@@ -50,7 +52,7 @@ class Test_Chancellor(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 3)
 
     def test_discard(self):
-        """ Play Chancellor and choose to discard deck """
+        """Play Chancellor and choose to discard deck"""
         self.plr.deck.set("Copper", "Silver", "Gold")
         self.plr.discardpile.set("Estate", "Duchy", "Province")
         self.plr.test_input = ["discard deck"]

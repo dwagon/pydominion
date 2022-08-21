@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Tribute(Card.Card):
-    """ Tribute """
+    """Tribute"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -20,7 +21,7 @@ class Card_Tribute(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        """ Tribute Special """
+        """Tribute Special"""
         victim = game.player_to_left(player)
         cards = []
         for _ in range(2):
@@ -49,7 +50,8 @@ class Card_Tribute(Card.Card):
 
 ###############################################################################
 class Test_Tribute(unittest.TestCase):
-    """ Test Tribute """
+    """Test Tribute"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Tribute"])
         self.g.start_game()

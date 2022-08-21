@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Secretchamber(Card.Card):
-    """ TODO """
+    """TODO"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
@@ -19,15 +20,17 @@ class Card_Secretchamber(Card.Card):
         self.name = "Secret Chamber"
         self.cost = 2
 
-    def special(self, game, player):    # pylint: disable=unused-argument
+    def special(self, game, player):  # pylint: disable=unused-argument
         """Discard any number of cards, +1 coin per card discarded"""
         todiscard = player.plr_discard_cards(
             anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
         )
         player.add_coins(len(todiscard))
 
-    def hook_underAttack(self, game, player, attacker):  # pylint: disable=unused-argument
-        """ TODO """
+    def hook_underAttack(
+        self, game, player, attacker
+    ):  # pylint: disable=unused-argument
+        """TODO"""
         player.output(f"Under attack from {attacker.name}")
         if not self.doRevealCard(player):
             return
@@ -45,7 +48,7 @@ class Card_Secretchamber(Card.Card):
             player.hand.remove(card)
 
     def doRevealCard(self, player):
-        """ TODO """
+        """TODO"""
         options = [
             {"selector": "0", "print": "Do nothing", "reveal": False},
             {
@@ -60,9 +63,12 @@ class Card_Secretchamber(Card.Card):
 
 ###############################################################################
 class Test_Secretchamber(unittest.TestCase):
-    """ Test Secret Chamber """
+    """Test Secret Chamber"""
+
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"])
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"]
+        )
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
         self.card = self.g["Secret Chamber"].remove()

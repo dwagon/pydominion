@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ##########################################################################
@@ -38,7 +37,7 @@ class Card_Pearldiver(Card.Card):
 ###############################################################################
 class Test_Pearldiver(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Pearl Diver"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Pearl Diver"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.pearldiver = self.g["Pearl Diver"].remove()

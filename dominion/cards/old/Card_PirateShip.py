@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -80,7 +79,7 @@ class Card_PirateShip(Card.Card):
 ###############################################################################
 class Test_PirateShip(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Pirate Ship"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Pirate Ship"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Pirate Ship"].remove()

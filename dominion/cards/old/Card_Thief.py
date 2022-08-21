@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Thief(Card.Card):
-    """ Thief """
+    """Thief"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
@@ -19,7 +20,7 @@ class Card_Thief(Card.Card):
         self.name = "Thief"
         self.cost = 4
 
-    def special(self, game, player):    # pylint: disable=unused-argument
+    def special(self, game, player):  # pylint: disable=unused-argument
         """Each other player reveals the top 2 cards of his deck.
         If they revealed any Treasure cards, they trash one them
         that you choose. You may gain any or all of these trashed
@@ -29,7 +30,7 @@ class Card_Thief(Card.Card):
             self.thieveOn(pl, player)
 
     def thieveOn(self, victim, thief):
-        """ Thieve on a victim """
+        """Thieve on a victim"""
         treasures = []
         for _ in range(2):
             c = victim.next_card()
@@ -77,7 +78,8 @@ class Card_Thief(Card.Card):
 
 ###############################################################################
 class Test_Thief(unittest.TestCase):
-    """ Test Thief """
+    """Test Thief"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Thief", "Moat"])
         self.g.start_game()

@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Saboteur(Card.Card):
-    """ Saboteur """
+    """Saboteur"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
@@ -19,7 +20,7 @@ class Card_Saboteur(Card.Card):
         self.name = "Saboteur"
         self.cost = 5
 
-    def special(self, game, player):    # pylint: disable=unused-argument
+    def special(self, game, player):  # pylint: disable=unused-argument
         """Each other player reveals cards from the top of his
         deck until revealing one costing 3 or more. He trashes that
         card and may gain a card costing at most 2 less than it.
@@ -33,7 +34,7 @@ class Card_Saboteur(Card.Card):
             victim.plr_gain_card(card.cost - 2)
 
     def pickCard(self, victim, player):
-        """ Pick Card """
+        """Pick Card"""
         for _ in range(len(victim.all_cards())):
             crd = victim.next_card()
             victim.reveal_card(crd)
@@ -47,8 +48,10 @@ class Card_Saboteur(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, pylint: disable=unused-argument
-    """ Bot response """
+def botresponse(
+    player, kind, args=None, kwargs=None
+):  # pragma: no coverage, pylint: disable=unused-argument
+    """Bot response"""
     toget = []
     for card in kwargs["cardsrc"]:
         if card.name in ("Copper", "Silver", "Gold"):
@@ -60,7 +63,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no coverage, p
 
 ###############################################################################
 class Test_Saboteur(unittest.TestCase):
-    """ Test Saboteur """
+    """Test Saboteur"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,

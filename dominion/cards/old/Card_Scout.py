@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-import Card
+from dominion import Card, Game
 
 
+###############################################################################
 class Card_Scout(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -26,18 +26,18 @@ class Card_Scout(Card.Card):
             player.reveal_card(c)
             if c.isVictory():
                 player.add_card(c, "hand")
-                player.output("Adding %s to hand" % c.name)
+                player.output(f"Adding {c.name} to hand")
             else:
                 cards.append(c)
         for c in cards:
-            player.output("Putting %s back on deck" % c.name)
+            player.output(f"Putting {c.name} back on deck")
             player.add_card(c, "deck")
 
 
 ###############################################################################
 class Test_Scout(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Scout"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Scout"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.scout = self.g["Scout"].remove()
@@ -48,16 +48,16 @@ class Test_Scout(unittest.TestCase):
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_victory(self):
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.scout, "hand")
         self.plr.play_card(self.scout)
         for c in self.plr.hand:
             self.assertTrue(c.isVictory())
 
     def test_deck(self):
-        self.plr.set_hand()
+        self.plr.hand.set()
         self.plr.add_card(self.scout, "hand")
-        self.plr.set_deck("Copper", "Copper", "Copper", "Duchy")
+        self.plr.deck.set("Copper", "Copper", "Copper", "Duchy")
         self.plr.play_card(self.scout)
         self.assertEqual(self.plr.hand[0].name, "Duchy")
         for c in self.plr.deck:

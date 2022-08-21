@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Woodcutter(Card.Card):
-    """ Woodcutter"""
+    """Woodcutter"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -21,7 +22,8 @@ class Card_Woodcutter(Card.Card):
 
 ###############################################################################
 class Test_Woodcutter(unittest.TestCase):
-    """ Test Woodcutter """
+    """Test Woodcutter"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Woodcutter"])
         self.g.start_game()
