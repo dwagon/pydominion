@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# pylint: disable=protected-access, invalid-name
+# pylint: disable=protected-access
 """ Testing player code """
 
 import unittest
@@ -203,6 +203,7 @@ class Test__type_selector(unittest.TestCase):
 
 ###############################################################################
 class Test_plr_trash_card(unittest.TestCase):
+    """ Test plr_trash_card() """
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -233,7 +234,9 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertEqual(self.game.trash_size(), tsize + 1)
         self.assertIn("Gold", [_.name for _ in self.game.trashpile])
 
-    def test_Force(self):
+    def test_force(self):
+        """ Test trashing a card with force """
+        self.game.set_trash()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0", "1"]
         x = self.plr.plr_trash_card(force=True)
@@ -743,17 +746,20 @@ class Test__spendable_selection(unittest.TestCase):
 
 ###############################################################################
 class Test_buy_card(unittest.TestCase):
+    """ Test buy_card() """
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, oldcards=["Embargo"])
+        self.game = Game.TestGame(numplayers=1, cards=["Embargo"], oldcards=True)
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_debt(self):
+        """ Test buying a card when the player has a debt """
         self.plr.debt = 1
         self.plr.buy_card(self.game["Copper"])
         self.assertIn("Must pay off debt first", self.plr.messages)
 
     def test_embargo(self):
+        """ Test buying an embargoed card """
         self.game["Copper"].embargo()
         self.plr.buy_card(self.game["Copper"])
         self.assertIsNotNone(self.plr.discardpile["Curse"])
