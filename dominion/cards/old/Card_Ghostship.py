@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -45,7 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Ghostship(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Ghost Ship"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ghost Ship"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Ghost Ship"].remove()
