@@ -50,7 +50,7 @@ class Card_Ambassador(Card.Card):
 class Test_Ambassador(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=2, initcards=["Ambassador"], badcards=["Duchess"]
+            numplayers=2, initcards=["Ambassador"], badcards=["Duchess"], oldcards=True
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
