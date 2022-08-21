@@ -380,6 +380,9 @@ class Game:  # pylint: disable=too-many-public-methods
             newc = newc.replace(" ", "_")
             if newc.lower() == name.lower():
                 return crd
+            newc = newc.replace(" ", "-")
+            if newc.lower() == name.lower():
+                return crd
         return None
 
     ###########################################################################
