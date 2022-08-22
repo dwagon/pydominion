@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Cobbler"""
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Cobbler(Card.Card):
+    """Cobbler"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
@@ -23,10 +25,12 @@ class Card_Cobbler(Card.Card):
 
 ###############################################################################
 class Test_Cobbler(unittest.TestCase):
+    """Test Cobbler"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
-            initcards=["Cobbler"],
+            initcards=["Cobbler", "Moat"],
             badcards=["Blessed Village", "Cemetery"],
         )
         self.g.start_game()
@@ -34,16 +38,13 @@ class Test_Cobbler(unittest.TestCase):
         self.card = self.g["Cobbler"].remove()
 
     def test_duration(self):
-        try:
-            self.plr.add_card(self.card, "hand")
-            self.plr.play_card(self.card)
-            self.plr.end_turn()
-            self.plr.test_input = ["1"]
-            self.plr.start_turn()
-            self.assertLessEqual(self.plr.discardpile[0].cost, 4)
-        except (AssertionError, IOError, OSError):  # pragma: no cover
-            self.g.print_state()
-            raise
+        """Test Playing Cobbler"""
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.plr.end_turn()
+        self.plr.test_input = ["Get Moat"]
+        self.plr.start_turn()
+        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
 
 
 ###############################################################################
