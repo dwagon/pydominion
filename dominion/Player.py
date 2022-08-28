@@ -926,7 +926,7 @@ class Player:
         if self.exilepile:
             self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
         if self.played:
-            self.output("| Played: {', '.join([_.name for _ in self.played])}")
+            self.output(f"| Played: {', '.join([_.name for _ in self.played])}")
         else:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
