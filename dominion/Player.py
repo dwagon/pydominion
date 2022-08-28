@@ -228,6 +228,7 @@ class Player:
 
     ###########################################################################
     def call_reserve(self, card):
+        """ Call a card from the reserve """
         if isinstance(card, str):
             card = self.reserve[card]
             if not card:
@@ -277,8 +278,8 @@ class Player:
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.next_card()
-        return c
+        crd = self.deck.next_card()
+        return crd
 
     ###########################################################################
     def refill_deck(self):
@@ -925,7 +926,7 @@ class Player:
         if self.exilepile:
             self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
         if self.played:
-            self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
+            self.output("| Played: {', '.join([_.name for _ in self.played])}")
         else:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
@@ -945,6 +946,7 @@ class Player:
 
     ###########################################################################
     def add_score(self, reason, points=1):
+        """ Add score to the player """
         if reason not in self.score:
             self.score[reason] = 0
         self.score[reason] += points
