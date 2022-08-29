@@ -210,6 +210,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_None(self):
+        """ Trash nothing """
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0"]
         x = self.plr.plr_trash_card()
@@ -217,6 +218,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertIsNone(self.game.in_trash("Gold"))
 
     def test_Two(self):
+        """ Trash Two cards """
         self.plr.hand.set("Gold", "Copper", "Silver")
         self.plr.test_input = ["Gold", "Silver", "0"]
         x = self.plr.plr_trash_card(num=2)
@@ -226,13 +228,14 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertIn("Copper", self.plr.hand)
 
     def test_Trash(self):
+        """ Test trashing """
         tsize = self.game.trash_size()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["1"]
         x = self.plr.plr_trash_card()
         self.assertEqual(x[0].name, "Gold")
         self.assertEqual(self.game.trash_size(), tsize + 1)
-        self.assertIn("Gold", [_.name for _ in self.game.trashpile])
+        self.assertIn("Gold", self.game.trashpile)
 
     def test_force(self):
         """ Test trashing a card with force """
@@ -252,11 +255,12 @@ class Test_plr_trash_card(unittest.TestCase):
                 self.fail("Nothing available")
 
     def test_exclude(self):
+        """ Test that the 'exclude' option works by not being able to select """
         self.plr.hand.set("Gold", "Gold", "Copper")
         self.plr.test_input = ["1"]
         x = self.plr.plr_trash_card(exclude=["Gold"])
         self.assertEqual(x[0].name, "Copper")
-        self.assertEqual(self.game.trashpile[-1].name, "Copper")
+        self.assertIn("Copper", self.game.trashpile)
 
 
 ###############################################################################
