@@ -37,7 +37,7 @@ class Card_Mountebank(Card.Card):
 ###############################################################################
 class Test_Mountebank(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Mountebank"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Mountebank"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.mountebank = self.g["Mountebank"].remove()

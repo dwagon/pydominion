@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Loan """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Loan(Card.Card):
+    """Loan"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
@@ -40,8 +42,10 @@ class Card_Loan(Card.Card):
 
 ###############################################################################
 class Test_Loan(unittest.TestCase):
+    """Test Loan"""
+
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Loan"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Loan"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.loan = self.plr.gain_card("Loan", "hand")
