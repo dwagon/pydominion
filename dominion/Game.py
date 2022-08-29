@@ -769,7 +769,9 @@ class Game:  # pylint: disable=too-many-public-methods
             print(
                 f"  {plr.name}'s played: %s" % (", ".join([_.name for _ in plr.played]))
             )
-            print(f"  {plr.name}'s messages: %s" % (plr.messages))
+            print(f"  {plr.name}'s messages:")
+            for msg in plr.messages:
+                print(f"\t{msg}")
             print(
                 f"  {plr.name}'s score: %s %s"
                 % (plr.get_score(), plr.get_score_details())
