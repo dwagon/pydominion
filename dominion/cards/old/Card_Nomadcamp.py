@@ -28,7 +28,7 @@ class Card_NomadCamp(Card.Card):
 ###############################################################################
 class Test_NomadCamp(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Nomad Camp"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Nomad Camp"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Nomad Camp"].remove()
