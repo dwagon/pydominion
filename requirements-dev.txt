@@ -1,3 +1,5 @@
+-r requirements.txt
+black
 pex
 pylint
 pytest>=4.4.0

@@ -33,7 +33,7 @@ class Card_Embassy(Card.Card):
 ###############################################################################
 class Test_Embassy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Embassy"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Embassy"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Embassy"].remove()

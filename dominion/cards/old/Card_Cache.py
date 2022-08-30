@@ -31,7 +31,7 @@ class Card_Cache(Card.Card):
 ###############################################################################
 class Test_Cache(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Cache"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Cache"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.cache = self.g["Cache"].remove()

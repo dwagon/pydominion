@@ -11,7 +11,8 @@ class Card_Duchess(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
-        self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck, and discards it or puts it back."""
+        self.desc = """+2 Coin.  Each player (including you) looks at the top card of his deck,
+            and discards it or puts it back."""
         self.name = "Duchess"
         self.coin = 2
         self.cost = 2
@@ -22,16 +23,16 @@ class Card_Duchess(Card.Card):
             if plr == player:
                 name = "your"
             else:
-                name = "%s's" % player.name
+                name = f"{player.name}'s"
             keep = plr.plr_choose_options(
-                "Due to %s Duchess you can keep or discard the top card" % name,
-                ("Keep %s on top of deck" % card.name, True),
-                ("Discard %s" % card.name, False),
+                f"Due to {name} Duchess you can keep or discard the top card",
+                (f"Keep {card.name} on top of deck", True),
+                (f"Discard {card.name}", False),
             )
             if keep:
                 plr.add_card(card, "topdeck")
             else:
-                plr.output("Discarding %s" % card.name)
+                plr.output(f"Discarding {card.name}")
                 plr.discard_card(card)
 
 
@@ -45,7 +46,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Duchess(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Duchess"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Duchess"].remove()

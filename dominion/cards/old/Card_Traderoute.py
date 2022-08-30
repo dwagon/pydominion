@@ -46,7 +46,7 @@ class Card_Traderoute(Card.Card):
 ###############################################################################
 class Test_Traderoute(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Trade Route"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Trade Route"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.traderoute = self.g["Trade Route"].remove()
