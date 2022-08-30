@@ -640,6 +640,15 @@ class Game:  # pylint: disable=too-many-public-methods
         return actionpiles
 
     ###########################################################################
+    def getTreasurePiles(self):
+        """Return all cardstacks that are treasure cards"""
+        treasurepiles = []
+        for cpile in self.cardpiles.values():
+            if cpile.isTreasure():
+                treasurepiles.append(cpile)
+        return treasurepiles
+
+    ###########################################################################
     def getVictoryPiles(self):
         """Return all cardstacks that are victory cards"""
         victorypiles = []
