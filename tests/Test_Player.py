@@ -752,7 +752,7 @@ class Test__spendable_selection(unittest.TestCase):
 class Test_buy_card(unittest.TestCase):
     """ Test buy_card() """
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, cards=["Embargo"], oldcards=True)
+        self.game = Game.TestGame(numplayers=1, oldcards=True, initcards=["Embargo"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -772,6 +772,7 @@ class Test_buy_card(unittest.TestCase):
 
 ###############################################################################
 class Test_spend_coffer(unittest.TestCase):
+    """ Test spending coffers """
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()

@@ -7,7 +7,8 @@ from dominion import Game, Card
 
 ###############################################################################
 class Card_Embargo(Card.Card):
-    """ Embargo"""
+    """Embargo"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -21,7 +22,7 @@ class Card_Embargo(Card.Card):
         self.cost = 2
 
     def special(self, game, player):
-        """ Embargo Special """
+        """Embargo Special"""
         trash = player.plr_choose_options(
             "Trash this card?",
             ("Keep this card", False),
@@ -38,7 +39,8 @@ class Card_Embargo(Card.Card):
 
 ###############################################################################
 class Test_Embargo(unittest.TestCase):
-    """ Test Embargo"""
+    """Test Embargo"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Embargo"], oldcards=True)
         self.g.start_game()
@@ -46,7 +48,7 @@ class Test_Embargo(unittest.TestCase):
         self.card = self.g["Embargo"].remove()
 
     def test_play(self):
-        """ Test playing Embargo"""
+        """Test playing Embargo"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash", "Select Silver"]
         self.plr.play_card(self.card)

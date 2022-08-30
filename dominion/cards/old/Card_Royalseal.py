@@ -35,7 +35,7 @@ class Card_Royalseal(Card.Card):
 ###############################################################################
 class Test_Royalseal(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Royal Seal"])
+        self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Royal Seal"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Royal Seal"].remove()

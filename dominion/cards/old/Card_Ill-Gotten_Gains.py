@@ -40,7 +40,9 @@ class Card_IGG(Card.Card):
 ###############################################################################
 class Test_IGG(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"])
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Ill-Gotten Gains"].remove()
