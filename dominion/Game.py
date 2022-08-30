@@ -51,7 +51,6 @@ class Game:  # pylint: disable=too-many-public-methods
     """Game class"""
 
     def __init__(self, **kwargs):
-        self.parse_args(**kwargs)
 
         self.players = {}
         self.cardpiles = {}
@@ -74,6 +73,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.current_player = None
         # The _base_cards are in every game
         self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
+        self.parse_args(**kwargs)
         if self.prosperity:
             self._base_cards.append("Colony")
             self._base_cards.append("Platinum")
@@ -88,17 +88,17 @@ class Game:  # pylint: disable=too-many-public-methods
         """Parse the arguments passed to the class"""
         self.allypath = args["allypath"] if "allypath" in args else "dominion/allies"
         self.hexpath = "dominion/hexes"
-        self.numstacks = args["numstacks"] if "numstacks" in args else 10
+        self.numstacks = args.get("numstacks", 10)
         self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
         self.statepath = args["statepath"] if "statepath" in args else "dominion/states"
         self.artifactpath = (
             args["artifactpath"] if "artifactpath" in args else "dominion/artifacts"
         )
         self.prosperity = args["prosperity"] if "prosperity" in args else False
-        self.oldcards = args["oldcards"] if "oldcards" in args else False
+        self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
         self.numplayers = args["numplayers"] if "numplayers" in args else 2
-        self.initcards = args["initcards"] if "initcards" in args else []
+        self.initcards = args.get("initcards", [])
         self.badcards = args["badcards"] if "badcards" in args else []
         self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
@@ -386,14 +386,12 @@ class Game:  # pylint: disable=too-many-public-methods
         return None
 
     ###########################################################################
-    def _load_decks(self, initcards, numstacks):
-        """TODO"""
+    def _load_decks(self, initcards, numstacks: int):
+        """Determine what cards we are using this game"""
         for card in self._base_cards:
             self._use_cardpile(
                 self._base_cards[:], card, force=True, cardtype="BaseCard"
             )
-            # cpile = CardPile(card, self.cardmapping["BaseCard"][card], self)
-            # self.cardpiles[cpile.name] = cpile
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -939,7 +937,7 @@ def parse_cli_args(args=None):
         "--numprojects", type=int, default=0, help="Number of projects to use"
     )
     parser.add_argument(
-        "--oldcards", action="store_true", default=False, help="Use old cards"
+        "--oldcards", action="store_true", default=False, help="Use cards from retired versions"
     )
     parser.add_argument(
         "--project",
@@ -1002,7 +1000,8 @@ def runGame(args):  # pragma: no cover
         for line in args["cardset"]:
             if line.startswith("--prosperity"):
                 args["prosperity"] = True
-                continue
+            if line.startswith("--oldcards"):
+                args["oldcards"] = True
             cards.append(line.strip())
     args["initcards"] = cards
     g = Game(**args)
