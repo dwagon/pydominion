@@ -1038,7 +1038,8 @@ class Player:
             self.currcards.pop()
             if not card.permanent:
                 # Handle case where cards move themselves elsewhere
-                if card.location != "durationpile":
+                if card.location != "duration":
+                    print(f"DBG {card.location=}")
                     continue
                 self.add_card(card, options["dest"])
                 self.durationpile.remove(card)
