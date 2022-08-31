@@ -1719,6 +1719,9 @@ class Player:
                 kwargs["prompt"] = f"Trash {num} cards"
         if len(cardsrc) == 0:
             return None
+        if len(cardsrc) == 0:
+            player.output("No cards to trash")
+            return None
         trash = self.card_sel(
             num=num,
             cardsrc=cardsrc,
