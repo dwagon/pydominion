@@ -104,7 +104,7 @@ class BotPlayer(Player):
         mod = self.getCallingCard()
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)
-        assert False, f"BigMoneyBot can't choopse options from {mod.__name__}"
+        assert False, f"BigMoneyBot can't choose options from {mod.__name__}"
         return None
 
     ###########################################################################

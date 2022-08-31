@@ -46,7 +46,7 @@ is invoked for every card that has been played this turn.
 
 Return the delta. So 0 for no change.
 
-hook_allplayers_gain_card
+hook_allplayers_gain_card(game, player, owner, card)
 ---------------
 If any player gains a card call this for any card in everyone's hand
 
