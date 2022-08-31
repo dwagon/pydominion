@@ -538,7 +538,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self._load_projects()
                 self.output(f"Using projects as required by {card.name}")
         if  self.init_ally and not self.ally:
-            print("Need to specify a Liaison as well as an Ally")
+            print(f"Need to specify a Liaison as well as an Ally {self.init_ally}")
             sys.exit(1)
 
     ###########################################################################
@@ -896,8 +896,7 @@ class TestGame(Game):
     """ Game for testing purposes """
     def __init__(self, **kwargs):
         if "ally" not in kwargs:
-            kwargs["init_ally"] = "noop"
-            kwargs["ally"] = "noop"
+            kwargs["init_ally"] = []
             kwargs["allypath"] = "tests/allies"
         if "quiet" not in kwargs:
             kwargs["quiet"] = True
