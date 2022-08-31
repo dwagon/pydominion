@@ -1018,7 +1018,7 @@ class Player:
         self.hook_start_turn()
         self._duration_start_turn()
         for card in self.deferpile:
-            self.output("Playing deferred %s" % card.name)
+            self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
             self.deferpile.remove(card)
             self.hand.add(card)
@@ -1030,13 +1030,17 @@ class Player:
         """Perform the duration pile at the start of the turn"""
         for card in self.durationpile:
             options = {"dest": "played"}
-            self.output("Playing %s from duration pile" % card.name)
+            self.output(f"Playing {card.name} from duration pile")
             self.currcards.append(card)
             upd_opts = card.duration(game=self.game, player=self)
             if isinstance(upd_opts, dict):
                 options.update(upd_opts)
             self.currcards.pop()
             if not card.permanent:
+                # Handle case where cards move themselves elsewhere
+                if card.location != "duration":
+                    print(f"DBG {card.location=}")
+                    continue
                 self.add_card(card, options["dest"])
                 self.durationpile.remove(card)
 
