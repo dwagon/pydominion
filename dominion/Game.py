@@ -60,6 +60,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.events = {}
         self.ways = {}
         self.landmarks = {}
+        self.init_ally = []
         self.boons = []
         self.discarded_boons = []
         self.retained_boons = []
@@ -122,9 +123,7 @@ class Game:  # pylint: disable=too-many-public-methods
             args["projectpath"] if "projectpath" in args else "dominion/projects"
         )
         self.initprojects = args["initprojects"] if "initprojects" in args else []
-        self.init_ally = args["init_ally"] if "init_ally" in args else []
-        if not self.init_ally:
-            self.init_ally = args["ally"] if "ally" in args else []
+        self.init_ally = args.get("init_ally", args.get("ally", []))
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
@@ -341,6 +340,10 @@ class Game:  # pylint: disable=too-many-public-methods
                 try:
                     if nkc not in self.cardmapping[cardtype]:
                         nkc = self.guess_cardname(nkc, cardtype)
+                        if nkc is None:
+                            sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
+                            sys.exit(1)
+                        print(f"Guessed {nkc}")
                     klass = self.cardmapping[cardtype][nkc]
                     dest[nkc] = cardKlass(nkc, klass)
                     available.remove(nkc)
@@ -383,6 +386,10 @@ class Game:  # pylint: disable=too-many-public-methods
             newc = newc.replace(" ", "-")
             if newc.lower() == name.lower():
                 return crd
+            name = name.replace('_', '')
+            if newc.lower() == name.lower():
+                return crd
+        print(f"Can't guess what card '{name}' is")
         return None
 
     ###########################################################################
@@ -429,7 +436,6 @@ class Game:  # pylint: disable=too-many-public-methods
             if allyname:
                 self.init_ally.append(allyname)
                 continue
-            print(f"Can't guess what card '{crd}' is")
             foundall = False
         if not foundall:
             sys.exit(1)
@@ -459,7 +465,6 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _use_cardpile(self, available, crd, force=False, cardtype="Card") -> int:
         """TODO"""
-        # print(f"DBG _use_cardpile({crd=}, {force=}, {cardtype=})")
         try:
             if available is not None:
                 available.remove(crd)
@@ -532,6 +537,9 @@ class Game:  # pylint: disable=too-many-public-methods
             if card.needsprojects and not self.projects:
                 self._load_projects()
                 self.output(f"Using projects as required by {card.name}")
+        if  self.init_ally and not self.ally:
+            print("Need to specify a Liaison as well as an Ally")
+            sys.exit(1)
 
     ###########################################################################
     def cardTypes(self):
