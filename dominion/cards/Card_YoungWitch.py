@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# pylint: disable=no-member
+""" http://wiki.dominionstrategy.com/index.php/Young_Witch """
+# pylint: disable=no-member, protected-access
 
 import unittest
 import random
@@ -8,6 +9,7 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_YoungWitch(Card.Card):
+    """ Young Witch """
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
@@ -20,7 +22,8 @@ class Card_YoungWitch(Card.Card):
         self.cost = 4
 
     def setup(self, game):
-        """Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply. Cards from that pile are Bane cards."""
+        """Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply.
+        Cards from that pile are Bane cards."""
         banes = []
         for klass in game.cardmapping["Card"].values():
             card = klass()
@@ -49,12 +52,12 @@ class Card_YoungWitch(Card.Card):
 
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
+    """ Test Young Witch """
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
             initcards=["Young Witch"],
-            badcards=["Secret Chamber", "Duchess", "Caravan Guard"],
-            ally="Plateau Shepherds"
+            badcards=["Secret Chamber", "Duchess", "Caravan Guard"]
         )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
