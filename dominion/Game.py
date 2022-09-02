@@ -95,7 +95,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.hexpath = "dominion/hexes"
         self.numstacks = args.get("numstacks", 10)
         self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
-        self.statepath = args["statepath"] if "statepath" in args else "dominion/states"
+        self.statepath = args.get("statepath", "dominion/states")
         self.artifactpath = args.get("artifactpath", "dominion/artifacts")
         self.prosperity = args["prosperity"] if "prosperity" in args else False
         self.oldcards = args.get("oldcards", False)
@@ -406,6 +406,10 @@ class Game:  # pylint: disable=too-many-public-methods
             self.initprojects.append(projectname)
         elif allyname := self.guess_cardname(crd, "Ally"):
             self.init_ally.append(allyname)
+        elif self.guess_cardname(crd, "Artifact"):
+            # Artifacts should be loaded by the requiring card but can still be specified
+            # in a cardset
+            pass
         else:
             print(f"Can't guess what card '{crd}' is")
             return None
