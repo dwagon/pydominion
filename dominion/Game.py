@@ -804,7 +804,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         for pile in self.cardpiles.values():
             total = len(pile)
-            sys.stderr.write(f"{pile.name:9}  " % pile.name)
+            sys.stderr.write(f"{pile.name:9}  ")
             if total:
                 sys.stderr.write(f"pile={total} ")
             for plr in self.player_list():
