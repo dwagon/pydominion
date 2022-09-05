@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-import Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -42,14 +41,14 @@ class Card_Spy(Card.Card):
 ###############################################################################
 class Test_Spy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Spy", "Moat"])
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Spy", "Moat"])
         self.g.start_game()
         self.attacker, self.defender = self.g.player_list()
-        self.attacker.set_deck("Estate", "Province", "Duchy")
-        self.defender.set_deck("Estate", "Gold")
+        self.attacker.deck.set("Estate", "Province", "Duchy")
+        self.defender.deck.set("Estate", "Gold")
 
     def test_moat(self):
-        self.defender.set_hand("Moat")
+        self.defender.hand.set("Moat")
         scard = self.attacker.gain_card("Spy", "hand")
         self.attacker.test_input = ["0"]
         self.attacker.play_card(scard)

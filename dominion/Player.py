@@ -156,9 +156,7 @@ class Player:
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
         dstcp = self._find_cardpile(dst)
-        newcard = self.gain_card(
-            cardpile=dstcp, destination=destination, callhook=False
-        )
+        newcard = self.gain_card(cardpile=dstcp, destination=destination, callhook=False)
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add(src)
@@ -221,13 +219,14 @@ class Player:
         """Return which token(s) are on a cardstack"""
         assert isinstance(pilename, str)
         onstack = []
-        for tk in self.tokens:
-            if self.tokens[tk] == pilename:
-                onstack.append(tk)
+        for token_name, token in self.tokens.items():
+            if token == pilename:
+                onstack.append(token_name)
         return onstack
 
     ###########################################################################
     def call_reserve(self, card):
+        """Call a card from the reserve"""
         if isinstance(card, str):
             card = self.reserve[card]
             if not card:
@@ -243,6 +242,7 @@ class Player:
 
     ###########################################################################
     def reveal_card(self, card):
+        """Reveal a card to everyone"""
         self.game.output(f"{self.name} reveals {card.name}")
         card.hook_revealThisCard(game=self.game, player=self)
 
@@ -277,8 +277,8 @@ class Player:
         if not self.deck:
             self.output("No more cards in deck")
             return None
-        c = self.deck.next_card()
-        return c
+        crd = self.deck.next_card()
+        return crd
 
     ###########################################################################
     def refill_deck(self):
@@ -343,71 +343,62 @@ class Player:
         self.coffer += num
 
     ###########################################################################
-    def remove_card(self, card):
+    def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
         curr_loc = card.location
-        if curr_loc in ("discardpile", "discard"):
-            self.discardpile.remove(card)
-        elif curr_loc == "hand":
-            self.hand.remove(card)
-        elif curr_loc == "deck":
-            self.deck.remove(card)
-        elif curr_loc == "played":
-            self.played.remove(card)
-        elif curr_loc == "duration":
-            self.durationpile.remove(card)
-        elif curr_loc == "reserve":
-            self.reserve.remove(card)
+        piles = {
+                "discard": self.discardpile,
+                "discardpile": self.discardpile,
+                "hand": self.hand,
+                "deck": self.deck,
+                "played": self.played,
+                "duration": self.durationpile,
+                "reserve": self.reserve,
+                "exilepile": self.exilepile,
+                }
+        if curr_loc in piles:
+            piles[curr_loc].remove(card)
+        elif curr_loc == "cardpile":
+            pass
         else:
-            raise AssertionError(
-                f"Trying to remove_card({card=}) from unknown location {curr_loc}"
-            )
+            raise AssertionError(f"Trying to remove_card({card=}) from unknown location: {curr_loc}")
 
     ###########################################################################
-    def move_card(self, card, dest):
+    def move_card(self, card: Card, dest: str) -> Card:
         """Move a card to {dest} cardpile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card, pile="discard"):
+    def add_card(self, card: Card, pile: str = "discard") -> Card:
         """Add an existing card to a new location"""
         if not card:  # pragma: no cover
             return None
         assert isinstance(card, Card.Card)
-        assert pile in (
-            "discard",
-            "hand",
-            "topdeck",
-            "deck",
-            "played",
-            "duration",
-            "reserve",
-            "exile",
-        )
+        piles = {
+                "discard": self.discardpile,
+                "discardpile": self.discardpile,
+                "hand": self.hand,
+                "deck": self.deck,
+                "played": self.played,
+                "duration": self.durationpile,
+                "reserve": self.reserve,
+                "exile": self.exilepile,
+                }
         card.location = pile
         card.player = self
-        if pile == "discard":
-            self.discardpile.add(card)
-        elif pile == "hand":
-            self.hand.add(card)
+        if pile in piles:
+            piles[pile].add(card)
         elif pile == "topdeck":
             card.location = "deck"
             self.deck.addToTop(card)
-        elif pile == "deck":
-            self.deck.add(card)
-        elif pile == "played":
-            self.played.add(card)
-        elif pile == "duration":
-            self.durationpile.add(card)
-        elif pile == "reserve":
-            self.reserve.add(card)
-        elif pile == "exile":
-            self.exile_card(card)
+        else:
+            raise AssertionError(f"Adding card to unknown location: {pile}")
         return card
 
     ###########################################################################
     def discard_card(self, card, source=None, hook=True):
+        """ Discard a card """
         assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
@@ -508,8 +499,8 @@ class Player:
         options = []
         spendable = [c for c in self.hand if c.isTreasure()]
         spendable.sort(key=lambda x: x.name)
-        totcoin = sum([self.hook_spend_value(c) for c in spendable])
-        numpots = sum([1 for c in spendable if c.name == "Potion"])
+        totcoin = sum(self.hook_spend_value(_) for _ in spendable)
+        numpots = sum(1 for _ in spendable if _.name == "Potion")
         potstr = f", {numpots} potions" if numpots else ""
         details = f"{totcoin} coin{potstr}"
         if spendable:
@@ -523,9 +514,7 @@ class Player:
             options.append(o)
 
         if self.coffer:
-            o = Option(
-                selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer"
-            )
+            o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
             options.append(o)
 
         if self.debt and self.coin:
@@ -767,7 +756,7 @@ class Player:
     def turn(self):
         self.turn_number += 1
         self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
-        stats = f"({self.get_score()} points, {self._count_cards()} cards)"
+        stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
             return
@@ -780,7 +769,7 @@ class Player:
 
     ###########################################################################
     def _check(self):
-        """DBG Is everything where it should be?"""
+        """For bug detection: Is everything where it should be?"""
         for stack_name, stack in self.stacklist:
             for card in stack:
                 assert card.location == stack_name.lower(), f"{card} {stack_name=}"
@@ -788,6 +777,7 @@ class Player:
 
     ###########################################################################
     def night_phase(self):
+        """Do the Night Phase"""
         nights = [c for c in self.hand if c.isNight()]
         if not nights:
             return
@@ -909,9 +899,7 @@ class Player:
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
-            self.output(
-                "| Duration: %s" % ", ".join([c.name for c in self.durationpile])
-            )
+            self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
         if self.projects:
             self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.reserve:
@@ -925,26 +913,20 @@ class Player:
         if self.exilepile:
             self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
         if self.played:
-            self.output("| Played: %s" % ", ".join([c.name for c in self.played]))
+            self.output(f"| Played: {', '.join([_.name for _ in self.played])}")
         else:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output(
-                "| Ally: %s: %s"
-                % (self.game.ally.name, self.game.ally.description(self))
-            )
-        self.output(
-            "| Discard: %s" % ", ".join([c.name for c in self.discardpile])
-        )  # Debug
-        self.output(
-            f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}"
-        )  # Debug
+            self.output("| Ally: %s: %s" % (self.game.ally.name, self.game.ally.description(self)))
+        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))  # Debug
+        self.output(f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}")  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
 
     ###########################################################################
     def add_score(self, reason, points=1):
+        """Add score to the player"""
         if reason not in self.score:
             self.score[reason] = 0
         self.score[reason] += points
@@ -1016,7 +998,7 @@ class Player:
         self.hook_start_turn()
         self._duration_start_turn()
         for card in self.deferpile:
-            self.output("Playing deferred %s" % card.name)
+            self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
             self.deferpile.remove(card)
             self.hand.add(card)
@@ -1028,13 +1010,16 @@ class Player:
         """Perform the duration pile at the start of the turn"""
         for card in self.durationpile:
             options = {"dest": "played"}
-            self.output("Playing %s from duration pile" % card.name)
+            self.output(f"Playing {card.name} from duration pile")
             self.currcards.append(card)
             upd_opts = card.duration(game=self.game, player=self)
             if isinstance(upd_opts, dict):
                 options.update(upd_opts)
             self.currcards.pop()
             if not card.permanent:
+                # Handle case where cards move themselves elsewhere
+                if card.location != "duration":
+                    continue
                 self.add_card(card, options["dest"])
                 self.durationpile.remove(card)
 
@@ -1067,7 +1052,8 @@ class Player:
         from supply"""
         if isinstance(card, str):
             card = self.game[card].remove()
-        self.exilepile.add(card)
+        self.move_card(card, "exile")
+        # self.exilepile.add(card)
 
     ###########################################################################
     def end_turn(self):
@@ -1152,17 +1138,29 @@ class Player:
             self.played.remove(card)
 
     ###########################################################################
-    def play_card(self, card, discard=True, costAction=True, postActionHook=True):
+    def _move_after_play(self, card: Card) -> None:
+        """Move the card to its next location after it has been played"""
+        if card.isDuration():
+            self.move_card(card, "duration")
+        elif card.isReserve():
+            self.move_card(card, "reserve")
+        else:
+            self.move_card(card, "played")
+
+    ###########################################################################
+    def play_card(
+        self, card: Card, discard: bool = True, costAction: bool = True, postActionHook: bool = True
+    ) -> None:
+        """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
         if card not in self.hand and options["discard"]:
-            self.output(f"{card.name} is no longer available")
-            return
+            raise AssertionError(f"Playing {card.name} which is not in hand")
         if self.playlimit is not None:
             if self.playlimit <= 0:
                 self.output(f"Can't play {card.name} due to limits in number of plays")
                 return
             self.playlimit -= 1
-        self.output("Playing %s" % card.name)
+        self.output(f"Playing {card.name}")
         self.currcards.append(card)
         if card.isAction():
             options.update(self.hook_all_players_pre_action(card))
@@ -1178,13 +1176,7 @@ class Player:
             return
 
         if options["discard"]:
-            self.hand.remove(card)
-            if card.isDuration():
-                self.add_card(card, "duration")
-            elif card.isReserve():
-                self.add_card(card, "reserve")
-            else:
-                self.add_card(card, "played")
+            self._move_after_play(card)
 
         if not options["skip_card"]:
             self.card_benefits(card)
@@ -1250,9 +1242,7 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
-    def gain_card(
-        self, cardpile=None, destination="discard", newcard=None, callhook=True
-    ):
+    def gain_card(self, cardpile=None, destination="discard", newcard=None, callhook=True):
         """Add a new card to the players set of cards from a cardpile"""
         # Options:
         #   dontadd: True - adding card handled elsewhere
@@ -1273,12 +1263,9 @@ class Player:
         self.output(f"Gained a {newcard.name}")
         newcard.player = self
         if callhook:
-            rc = self.hook_gain_card(newcard)
-            if rc:
+            if rc := self.hook_gain_card(newcard):
                 options.update(rc)
-        if callhook:
-            rc = newcard.hook_gain_this_card(game=self.game, player=self)
-            if rc:
+            if rc := newcard.hook_gain_this_card(game=self.game, player=self):
                 options.update(rc)
 
         # check for un-exiling
@@ -1294,8 +1281,7 @@ class Player:
             else:
                 newcard.player = self
         self.stats["gained"].append(newcard)
-        if options.get("destination"):
-            destination = options["destination"]
+        destination = options.get("destination", destination)
         if callhook:
             self.hook_allplayers_gain_card(newcard)
         if options.get("trash", False):
@@ -1310,28 +1296,27 @@ class Player:
     ###########################################################################
     def check_unexile(self, cardname):
         """Give players option to un-exile card"""
-        num = sum([1 for _ in self.exilepile if _.name == cardname])
+        num = sum(1 for _ in self.exilepile if _.name == cardname)
         choices = [
-            (f"Un-exile {num} x {cardname}", True),
-            (f"Don't un-exile {cardname}", False),
+            (f"Unexile {num} x {cardname}", True),
+            ("Do nothing", False),
         ]
         unex = self.plr_choose_options(f"Un-exile {cardname}", *choices)
         if unex:
             self.unexile(cardname)
 
     ###########################################################################
-    def unexile(self, cardname):
+    def unexile(self, cardname: str) -> int:
         """Un-exile cards
         Return number unexiled"""
         count = 0
         if not self.exilepile:
             return 0
-        for card in self.exilepile[:]:
+        for card in self.exilepile:
             if card is None:
                 break
             if card.name == cardname:
-                self.exilepile.remove(card)
-                self.discardpile.add(card)
+                self.move_card(card, "discard")
                 count += 1
         return count
 
@@ -1380,21 +1365,15 @@ class Player:
     def hook_all_players_buy_card(self, card):
         for player in self.game.player_list():
             for crd in player.durationpile:
-                crd.hook_all_players_buy_card(
-                    game=self.game, player=self, owner=player, card=card
-                )
+                crd.hook_all_players_buy_card(game=self.game, player=self, owner=player, card=card)
         for crd in self.game.landmarks.values():
-            crd.hook_all_players_buy_card(
-                game=self.game, player=self, owner=self, card=card
-            )
+            crd.hook_all_players_buy_card(game=self.game, player=self, owner=self, card=card)
 
     ###########################################################################
     def hook_allplayers_gain_card(self, card):
         for player in self.game.player_list():
             for crd in player.relevant_cards():
-                crd.hook_allplayers_gain_card(
-                    game=self.game, player=self, owner=player, card=card
-                )
+                crd.hook_allplayers_gain_card(game=self.game, player=self, owner=player, card=card)
 
     ###########################################################################
     def add_hook(self, hook_name, hook):
@@ -1650,7 +1629,7 @@ class Player:
         return cards
 
     ###########################################################################
-    def _count_cards(self):
+    def count_cards(self):
         count = {}
         for name, stack in self.stacklist:
             count[name] = len(stack)
@@ -1716,6 +1695,9 @@ class Player:
             else:
                 kwargs["prompt"] = f"Trash {num} cards"
         if len(cardsrc) == 0:
+            return None
+        if len(cardsrc) == 0:
+            player.output("No cards to trash")
             return None
         trash = self.card_sel(
             num=num,
@@ -1853,9 +1835,7 @@ class Player:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
                 kwargs["prompt"] = f"Discard {num} cards"
-        discard = self.card_sel(
-            num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs
-        )
+        discard = self.card_sel(num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs)
         for c in discard:
             self.output(f"Discarding {c.name}")
             self.discard_card(c)

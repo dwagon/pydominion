@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import Game
-import Card
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -26,14 +25,14 @@ class Card_Coppersmith(Card.Card):
 ###############################################################################
 class Test_Coppersmith(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Coppersmith"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Coppersmith"], oldcards=True)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Coppersmith"].remove()
 
     def test_copper(self):
         """Copper should be worth two"""
-        self.plr.set_hand("Copper")
+        self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.plr.play_card(self.plr.hand[0])
@@ -41,7 +40,7 @@ class Test_Coppersmith(unittest.TestCase):
 
     def test_silver(self):
         """Silver should be unchanged and worth two"""
-        self.plr.set_hand("Silver")
+        self.plr.hand.set("Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.plr.play_card(self.plr.hand[0])
