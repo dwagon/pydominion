@@ -1162,8 +1162,7 @@ class Player:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
         if card not in self.hand and options["discard"]:
-            self.output(f"{card.name} is no longer available")
-            return
+            raise AssertionError(f"Playing {card.name} which is not in hand")
         if self.playlimit is not None:
             if self.playlimit <= 0:
                 self.output(f"Can't play {card.name} due to limits in number of plays")
