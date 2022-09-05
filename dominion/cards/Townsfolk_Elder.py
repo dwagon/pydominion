@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Elder"""
 
 import unittest
 from dominion import Game, Card
@@ -6,6 +7,8 @@ from dominion import Game, Card
 
 ###############################################################################
 class Card_Elder(Card.Card):
+    """Elder"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -26,6 +29,8 @@ class Card_Elder(Card.Card):
 
 ###############################################################################
 class Test_Elder(unittest.TestCase):
+    """Test Elder"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Townsfolk"])
         self.g.start_game()
@@ -36,6 +41,7 @@ class Test_Elder(unittest.TestCase):
             if card.name == "Elder":
                 break
         self.card = card
+        self.plr.add_card(self.card, "hand")
 
     def test_play(self):
         """Play an elder"""
