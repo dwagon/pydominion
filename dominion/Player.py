@@ -343,71 +343,62 @@ class Player:
         self.coffer += num
 
     ###########################################################################
-    def remove_card(self, card):
+    def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
         curr_loc = card.location
-        if curr_loc in ("discardpile", "discard"):
-            self.discardpile.remove(card)
-        elif curr_loc == "hand":
-            self.hand.remove(card)
-        elif curr_loc == "deck":
-            self.deck.remove(card)
-        elif curr_loc == "played":
-            self.played.remove(card)
-        elif curr_loc == "duration":
-            self.durationpile.remove(card)
-        elif curr_loc == "reserve":
-            self.reserve.remove(card)
+        piles = {
+                "discard": self.discardpile,
+                "discardpile": self.discardpile,
+                "hand": self.hand,
+                "deck": self.deck,
+                "played": self.played,
+                "duration": self.durationpile,
+                "reserve": self.reserve,
+                "exilepile": self.exilepile,
+                }
+        if curr_loc in piles:
+            piles[curr_loc].remove(card)
         elif curr_loc == "cardpile":
-            pass  # Edge cases
+            pass
         else:
-            raise AssertionError(f"Trying to remove_card({card=}) from unknown location {curr_loc}")
+            raise AssertionError(f"Trying to remove_card({card=}) from unknown location: {curr_loc}")
 
     ###########################################################################
-    def move_card(self, card, dest):
+    def move_card(self, card: Card, dest: str) -> Card:
         """Move a card to {dest} cardpile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card, pile="discard"):
+    def add_card(self, card: Card, pile: str = "discard") -> Card:
         """Add an existing card to a new location"""
         if not card:  # pragma: no cover
             return None
         assert isinstance(card, Card.Card)
-        assert pile in (
-            "discard",
-            "hand",
-            "topdeck",
-            "deck",
-            "played",
-            "duration",
-            "reserve",
-            "exile",
-        )
+        piles = {
+                "discard": self.discardpile,
+                "discardpile": self.discardpile,
+                "hand": self.hand,
+                "deck": self.deck,
+                "played": self.played,
+                "duration": self.durationpile,
+                "reserve": self.reserve,
+                "exile": self.exilepile,
+                }
         card.location = pile
         card.player = self
-        if pile == "discard":
-            self.discardpile.add(card)
-        elif pile == "hand":
-            self.hand.add(card)
+        if pile in piles:
+            piles[pile].add(card)
         elif pile == "topdeck":
             card.location = "deck"
             self.deck.addToTop(card)
-        elif pile == "deck":
-            self.deck.add(card)
-        elif pile == "played":
-            self.played.add(card)
-        elif pile == "duration":
-            self.durationpile.add(card)
-        elif pile == "reserve":
-            self.reserve.add(card)
-        elif pile == "exile":
-            self.exile_card(card)
+        else:
+            raise AssertionError(f"Adding card to unknown location: {pile}")
         return card
 
     ###########################################################################
     def discard_card(self, card, source=None, hook=True):
+        """ Discard a card """
         assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
@@ -1061,7 +1052,8 @@ class Player:
         from supply"""
         if isinstance(card, str):
             card = self.game[card].remove()
-        self.exilepile.add(card)
+        self.move_card(card, "exile")
+        # self.exilepile.add(card)
 
     ###########################################################################
     def end_turn(self):
@@ -1304,28 +1296,27 @@ class Player:
     ###########################################################################
     def check_unexile(self, cardname):
         """Give players option to un-exile card"""
-        num = sum([1 for _ in self.exilepile if _.name == cardname])
+        num = sum(1 for _ in self.exilepile if _.name == cardname)
         choices = [
-            (f"Un-exile {num} x {cardname}", True),
-            (f"Don't un-exile {cardname}", False),
+            (f"Unexile {num} x {cardname}", True),
+            ("Do nothing", False),
         ]
         unex = self.plr_choose_options(f"Un-exile {cardname}", *choices)
         if unex:
             self.unexile(cardname)
 
     ###########################################################################
-    def unexile(self, cardname):
+    def unexile(self, cardname: str) -> int:
         """Un-exile cards
         Return number unexiled"""
         count = 0
         if not self.exilepile:
             return 0
-        for card in self.exilepile[:]:
+        for card in self.exilepile:
             if card is None:
                 break
             if card.name == cardname:
-                self.exilepile.remove(card)
-                self.discardpile.add(card)
+                self.move_card(card, "discard")
                 count += 1
         return count
 

@@ -2,12 +2,12 @@
 """ http://wiki.dominionstrategy.com/index.php/Stockpile """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Stockpile(Card.Card):
+    """ Stockpile """
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -20,11 +20,11 @@ class Card_Stockpile(Card.Card):
 
     def special(self, game, player):
         player.exile_card(self)
-        player.played.remove(self)
 
 
 ###############################################################################
 class Test_Stockpile(unittest.TestCase):
+    """ Test Stockpile """
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Stockpile"])
         self.g.start_game()
@@ -33,6 +33,7 @@ class Test_Stockpile(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
+        """ Play the card """
         self.plr.play_card(self.card)
         self.assertIn("Stockpile", self.plr.exilepile)
         self.assertEqual(self.plr.get_buys(), 2)
