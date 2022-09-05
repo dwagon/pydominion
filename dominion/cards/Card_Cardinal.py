@@ -2,17 +2,19 @@
 """ http://wiki.dominionstrategy.com/index.php/Cardinal """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Cardinal(Card.Card):
+    """Cardinal"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.MENAGERIE
-        self.desc = """Each other player reveals the top 2 cards of their deck, Exiles one costing from 3 to 6, and discards the rest."""
+        self.desc = """Each other player reveals the top 2 cards of their deck,
+            Exiles one costing from 3 to 6, and discards the rest."""
         self.name = "Cardinal"
         self.cost = 4
 
@@ -33,6 +35,8 @@ class Card_Cardinal(Card.Card):
 
 ###############################################################################
 class Test_Cardinal(unittest.TestCase):
+    """Test Cardinal"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Cardinal", "Village"])
         self.g.start_game()
@@ -41,6 +45,7 @@ class Test_Cardinal(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
+        """ Test play """
         self.oth.deck.set("Silver", "Village")
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.oth.discardpile)
