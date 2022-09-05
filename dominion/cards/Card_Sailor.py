@@ -22,7 +22,7 @@ class Card_Sailor(Card.Card):
     def hook_gain_card(self, game, player, card):
         """Once this turn, when you gain a Duration card, you may play it."""
         if not card.isDuration():
-            return
+            return {}
         if player.do_once("Sailor"):
             to_play = player.plr_choose_options(
                 f"Sailor lets you play {card.name} now",
@@ -30,8 +30,11 @@ class Card_Sailor(Card.Card):
                 ("Play now", True),
             )
             if to_play:
+                player.move_card(card, "hand")
+                player.output(f"Playing {card.name} from Sailor effect")
                 player.play_card(card, costAction=False)
-        return
+                return {"dontadd": True}
+        return {}
 
     def duration(self, game, player):
         """At the start of your next turn, +$2 and you may trash a card from your hand."""
@@ -44,7 +47,7 @@ class Test_Sailor(unittest.TestCase):
     """Test Sailor"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Caravan"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Sailor", "Guardian"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sailor"].remove()
@@ -54,17 +57,19 @@ class Test_Sailor(unittest.TestCase):
         """Play a sailor"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
-        self.plr.gain_card("Caravan")
+        self.plr.gain_card("Guardian")
+        self.assertIn("Guardian", self.plr.durationpile)
+        self.assertIn("Sailor", self.plr.durationpile)
         self.plr.end_turn()
         self.plr.hand.set("Gold", "Silver", "Copper")
         self.plr.deck.set("Province")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.g.print_state()
+        self.assertEqual(self.plr.get_coins(), 3)  # 2 for sailor, 1 for guardian
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Caravan", self.plr.durationpile)
-        # Did Caravan get played
-        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Guardian", self.plr.played)
+        self.assertIn("Sailor", self.plr.played)
 
     def test_play_no_duration(self):
         """Play a sailor but don't gain a duration card"""
