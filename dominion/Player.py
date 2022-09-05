@@ -778,7 +778,7 @@ class Player:
 
     ###########################################################################
     def _check(self):
-        """DBG Is everything where it should be?"""
+        """For bug detection: Is everything where it should be?"""
         for stack_name, stack in self.stacklist:
             for card in stack:
                 assert card.location == stack_name.lower(), f"{card} {stack_name=}"
@@ -1289,8 +1289,7 @@ class Player:
             else:
                 newcard.player = self
         self.stats["gained"].append(newcard)
-        if options.get("destination"):
-            destination = options["destination"]
+        destination = options.get("destination", destination)
         if callhook:
             self.hook_allplayers_gain_card(newcard)
         if options.get("trash", False):
