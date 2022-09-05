@@ -739,7 +739,7 @@ class Game:  # pylint: disable=too-many-public-methods
         )
 
     ###########################################################################
-    def print_state(self) -> None:  # pragma: no cover
+    def print_state(self, card_dump=False) -> None:  # pragma: no cover
         """This is used for debugging"""
         print("#" * 40)
         print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
@@ -758,8 +758,9 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f"CardPile {cname}: %d cards {tokens}" % len(cpile))
         for plr in self.player_list():
             self.print_player_state(plr)
-        for v in self._cards.values():
-            print(f"    {v}")
+        if card_dump:
+            for v in self._cards.values():
+                print(f"    {v}")
 
     ###########################################################################
     def player_to_left(self, plr):
@@ -804,7 +805,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         for pile in self.cardpiles.values():
             total = len(pile)
-            sys.stderr.write(f"{pile.name:9}  " % pile.name)
+            sys.stderr.write(f"{pile.name:9}  ")
             if total:
                 sys.stderr.write(f"pile={total} ")
             for plr in self.player_list():
@@ -972,7 +973,7 @@ def runGame(args):  # pragma: no cover
             try:
                 g.turn()
             except Exception:
-                g.print_state()
+                g.print_state(card_dump=True)
                 raise
     except KeyboardInterrupt:
         g.gameover = True
