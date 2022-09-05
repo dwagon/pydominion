@@ -2,19 +2,18 @@
 """ http://wiki.dominionstrategy.com/index.php/Sanctuary """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Sanctuary(Card.Card):
+    """Sanctuary"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
-        self.desc = (
-            """+1 Card; +1 Action; +1 Buy; You may Exile a card from your hand."""
-        )
+        self.desc = """+1 Card; +1 Action; +1 Buy; You may Exile a card from your hand."""
         self.name = "Sanctuary"
         self.cost = 5
         self.cards = 1
@@ -24,12 +23,13 @@ class Card_Sanctuary(Card.Card):
     def special(self, game, player):
         crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
-            player.hand.remove(crd[0])
             player.exile_card(crd[0])
 
 
 ###############################################################################
 class Test_Sanctuary(unittest.TestCase):
+    """Test Sanctuary"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sanctuary"])
         self.g.start_game()

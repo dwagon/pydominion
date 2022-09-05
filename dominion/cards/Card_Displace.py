@@ -2,17 +2,19 @@
 """ http://wiki.dominionstrategy.com/index.php/Displace """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Displace(Card.Card):
+    """Displace"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.MENAGERIE
-        self.desc = """Exile a card from your hand. Gain a differently named card costing up to 2 Coin more than it."""
+        self.desc = """Exile a card from your hand. Gain a differently named card
+            costing up to 2 Coin more than it."""
         self.name = "Displace"
         self.cost = 5
 
@@ -22,13 +24,14 @@ class Card_Displace(Card.Card):
             verbs=("Exile", "Unexile"),
         )
         if crd:
-            player.hand.remove(crd[0])
             player.exile_card(crd[0])
             player.plr_gain_card(cost=crd[0].cost + 2, exclude=[crd[0].name])
 
 
 ###############################################################################
 class Test_Displace(unittest.TestCase):
+    """Test Displace"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Displace"])
         self.g.start_game()

@@ -7,6 +7,8 @@ from dominion import Game, Event
 
 ###############################################################################
 class Event_Banish(Event.Event):
+    """Banish"""
+
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Game.MENAGERIE
@@ -18,9 +20,7 @@ class Event_Banish(Event.Event):
         cardnames = {_.name for _ in player.hand}
         options = [("Exile nothing", None)]
         for cname in cardnames:
-            options.append(
-                ("Exile {} ({} in hand)".format(cname, player.hand.count(cname)), cname)
-            )
+            options.append((f"Exile {cname} ({player.hand.count(cname)} in hand)", cname))
         card = player.plr_choose_options("Pick a card to exile", *options)
         if card is None:
             return
@@ -28,23 +28,23 @@ class Event_Banish(Event.Event):
             for crd in player.hand:
                 if crd.name == card:
                     player.exile_card(crd)
-                    player.hand.remove(crd)
                     break
         else:
             options = []
             for i in range(player.hand.count(card) + 1):
-                options.append(("Exile {} {}".format(i, card), i))
+                options.append((f"Exile {i} {card}", i))
             count = player.plr_choose_options("How many to exile", *options)
             for _ in range(count):
                 for crd in player.hand:
                     if crd.name == card:
                         player.exile_card(crd)
-                        player.hand.remove(crd)
                         break
 
 
 ###############################################################################
 class Test_Banish(unittest.TestCase):
+    """Test Banish"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
