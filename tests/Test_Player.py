@@ -845,10 +845,21 @@ class Test_exile(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_exile_card(self):
+        """ Test exiling a card """
         au_card = self.game["Gold"].remove()
         self.plr.exilepile.empty()
         self.plr.exile_card(au_card)
         self.assertIn("Gold", self.plr.exilepile)
+
+    def test_unexiling_card(self):
+        """ Test un-exiling a card """
+        self.plr.exilepile.set("Gold", "Gold", "Silver")
+        self.plr.test_input = ["Unexile"]
+        self.plr.gain_card("Gold")
+        self.assertEqual(len(self.plr.discardpile), 3)
+        self.assertEqual(len(self.plr.exilepile), 1)
+        self.assertNotIn("Gold", self.plr.exilepile)
+        self.assertIn("Silver", self.plr.exilepile)
 
 
 ###############################################################################
