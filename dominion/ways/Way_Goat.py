@@ -34,7 +34,7 @@ class Test_Goat(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Copper"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.g.in_trash("Copper"))
+        self.assertIn("Copper", self.g.trashpile)
 
 
 ###############################################################################

@@ -66,7 +66,7 @@ class Test_Butcher(unittest.TestCase):
         self.assertEqual(self.plr.get_coffers(), 0)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertIn("Gold", self.g.trashpile)
         for m in self.plr.messages:
             if "Province" in m:
                 break

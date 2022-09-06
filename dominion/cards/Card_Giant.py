@@ -56,7 +56,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 5)
-        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertIn("Gold", self.g.trashpile)
 
     def test_play_journey_untrashed(self):
         """Play a giant - good journey - untrashable victim"""
@@ -66,7 +66,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.journey_token = False
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 5)
-        self.assertIsNone(self.g.in_trash("Copper"))
+        self.assertNotIn("Copper", self.g.trashpile)
         self.assertIn("Curse", self.victim.discardpile)
 
     def test_play_no_journey(self):

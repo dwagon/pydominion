@@ -73,18 +73,18 @@ class Test_Lookout(unittest.TestCase):
         self.plr.add_card(self.lookout, "hand")
         self.plr.test_input = ["Province", "Gold"]
         self.plr.play_card(self.lookout)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
         self.assertIn("Gold", self.plr.discardpile)
         self.assertEqual(self.plr.deck[0].name, "Copper")
         self.assertEqual(self.plr.deck[1].name, "Estate")
 
     def test_nocards(self):
         """Play a lookout when there are no cards available"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.deck.set()
         self.plr.add_card(self.lookout, "hand")
         self.plr.play_card(self.lookout)
-        self.assertEqual(self.g.trash_size(), tsize)
+        self.assertEqual(self.g.trashpile.size(), tsize)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
 

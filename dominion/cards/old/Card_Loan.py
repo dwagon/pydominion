@@ -51,20 +51,20 @@ class Test_Loan(unittest.TestCase):
         self.loan = self.plr.gain_card("Loan", "hand")
 
     def test_discard(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.deck.set("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Discard Gold"]
         self.plr.play_card(self.loan)
         self.assertIn("Gold", self.plr.discardpile)
-        self.assertEqual(self.g.trash_size(), tsize)
+        self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_trash(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.deck.set("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Trash Gold"]
         self.plr.play_card(self.loan)
-        self.assertEqual(self.g.trash_size(), tsize + 1)
-        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertIn("Gold", self.g.trashpile)
         self.assertNotIn("Gold", self.plr.discardpile)
 
 

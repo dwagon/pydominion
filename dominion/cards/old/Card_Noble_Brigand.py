@@ -102,7 +102,7 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.assertIn("Silver", self.vic.discardpile)
         self.assertNotIn("Gold", self.vic.discardpile)
         self.assertIn("Gold", self.plr.discardpile)
-        self.assertIsNone(self.g.in_trash("Gold"))
+        self.assertNotIn("Gold", self.g.trashpile)
 
 
 ###############################################################################

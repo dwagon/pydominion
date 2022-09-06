@@ -72,17 +72,17 @@ class Test_Amulet(unittest.TestCase):
 
     def test_play_trash(self):
         """Play an amulet with trash"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash", "duchy", "finish", "trash", "1", "finish"]
         self.plr.play_card(self.card)
         self.assertNotIn("Silver", self.plr.discardpile)
-        self.assertIsNotNone(self.g.in_trash("Duchy"))
+        self.assertIn("Duchy", self.g.trashpile)
         self.assertEqual(self.plr.get_coins(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.get_coins(), 0)
         self.assertNotIn("Silver", self.plr.discardpile)
-        self.assertEqual(self.g.trash_size(), tsize + 2)
+        self.assertEqual(self.g.trashpile.size(), tsize + 2)
 
 
 ###############################################################################

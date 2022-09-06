@@ -62,11 +62,11 @@ class Test_Lich(unittest.TestCase):
         """Trash the lich"""
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Silver"]
-        self.g.set_trash("Silver")
+        self.g.trashpile.set("Silver")
         self.plr.trash_card(self.card)
         self.g.print_state()
-        self.assertIsNone(self.g.in_trash("Lich"))
-        self.assertIsNone(self.g.in_trash("Silver"))
+        self.assertNotIn("Lich", self.g.trashpile)
+        self.assertNotIn("Silver", self.g.trashpile)
         self.assertIn("Lich", self.plr.discardpile)
         self.assertIn("Silver", self.plr.discardpile)
 

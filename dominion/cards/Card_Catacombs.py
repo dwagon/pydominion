@@ -54,7 +54,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.hand.size(), 8)
-        numgold = sum([1 for c in self.plr.hand if c.name == "Gold"])
+        numgold = sum(1 for c in self.plr.hand if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
@@ -63,11 +63,11 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
         self.assertEqual(self.plr.hand.size(), 8)
-        numgold = sum([1 for c in self.plr.hand if c.name == "Gold"])
+        numgold = sum(1 for c in self.plr.hand if c.name == "Gold")
         self.assertEqual(numgold, 0)
-        numprov = sum([1 for c in self.plr.hand if c.name == "Province"])
+        numprov = sum(1 for c in self.plr.hand if c.name == "Province")
         self.assertEqual(numprov, 3)
-        numgold = sum([1 for c in self.plr.discardpile if c.name == "Gold"])
+        numgold = sum(1 for c in self.plr.discardpile if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
     def test_trash(self):
@@ -75,7 +75,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.trash_card(self.cat)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)
-        self.assertIsNotNone(self.g.in_trash("Catacombs"))
+        self.assertIn("Catacombs", self.g.trashpile)
 
 
 ###############################################################################

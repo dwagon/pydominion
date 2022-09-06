@@ -58,7 +58,7 @@ class Test_Exorcist(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertIn("Imp", self.plr.discardpile)
-        self.assertIsNotNone(self.g.in_trash("Silver"))
+        self.assertIn("Silver", self.g.trashpile)
         self.g.print_state()
 
 

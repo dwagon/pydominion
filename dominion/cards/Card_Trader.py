@@ -47,7 +47,7 @@ class Test_Trader(unittest.TestCase):
 
     def test_play(self):
         """Play a trader - trashing an estate"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["estate", "finish"]
@@ -55,8 +55,8 @@ class Test_Trader(unittest.TestCase):
         self.assertEqual(self.plr.discardpile.size(), 2)
         for i in self.plr.discardpile:
             self.assertEqual(i.name, "Silver")
-        self.assertEqual(self.g.trash_size(), tsize + 1)
-        self.assertIsNotNone(self.g.in_trash("Estate"))
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertIn("Estate", self.g.trashpile)
 
     def test_gain(self):
         self.plr.test_input = ["Instead"]

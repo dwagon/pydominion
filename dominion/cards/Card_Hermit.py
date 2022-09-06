@@ -66,7 +66,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
         self.assertNotIn("Province", self.plr.discardpile)
         self.assertIn("Silver", self.plr.discardpile)
 
@@ -76,7 +76,7 @@ class Test_Hermit(unittest.TestCase):
         self.plr.test_input = ["trash province", "get silver"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
         self.assertNotIn("Province", self.plr.hand)
         self.assertIn("Silver", self.plr.discardpile)
 

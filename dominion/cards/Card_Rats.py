@@ -47,10 +47,10 @@ class Test_Rats(unittest.TestCase):
         self.assertIn("Copper", self.g.trashpile)
 
     def test_trashcard(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.assertEqual(self.g.trash_size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertNotEqual(self.g.trashpile[0].name, "Rats")
 
     def test_gainrats(self):

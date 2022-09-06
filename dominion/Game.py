@@ -206,23 +206,6 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.players.values())[num]
 
     ###########################################################################
-    def in_trash(self, cardname):
-        """Return named card if cardname is in the trash pile"""
-        if hasattr(cardname, "name"):
-            cardname = cardname.name
-        for crd in self.trashpile:
-            if crd.name == cardname:
-                return crd
-        return None
-
-    ###########################################################################
-    def set_trash(self, *cards):
-        """This is mostly used for testing"""
-        self.trashpile.empty()
-        for crd in cards:
-            self.trashpile.add(self[crd].remove())
-
-    ###########################################################################
     def card_setup(self):
         """Run the setup() method for all cards"""
         for cpile in list(self.cardpiles.values()):
@@ -234,7 +217,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def count_cards(self):
         """TODO"""
         count = {}
-        count["trash"] = self.trash_size()
+        count["trash"] = self.trashpile.size()
         for cpile in list(self.cardpiles.values()):
             count[f"pile_{cpile.name}"] = len(cpile)
         for plr in self.player_list():
@@ -247,11 +230,6 @@ class Game:  # pylint: disable=too-many-public-methods
         """Send output to all players"""
         if not self.quiet:
             sys.stdout.write(f"ALL: {msg}\n")
-
-    ###########################################################################
-    def trash_size(self):
-        """TODO"""
-        return len(self.trashpile)
 
     ###########################################################################
     def _load_travellers(self):

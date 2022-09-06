@@ -12,7 +12,8 @@ class Card_Graverobber(Card.Card):
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.DARKAGES
         self.desc = """Choose one: Gain a card from the trash costing from 3 to 6,
-        putting it on top of your deck; or trash an Action card from your hand and gain a card costing up to 3 more than it."""
+            putting it on top of your deck; or trash an Action card from your hand
+            and gain a card costing up to 3 more than it."""
         self.name = "Graverobber"
         self.cost = 5
 
@@ -76,18 +77,18 @@ class Test_Graverobber(unittest.TestCase):
 
     def test_loot(self):
         """Play a grave robber - looting the trash"""
-        self.g.set_trash("Militia")
+        self.g.trashpile.set("Militia")
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trash_size(), 0)
+        self.assertEqual(self.g.trashpile.size(), 0)
         self.assertIn("Militia", self.plr.deck)
 
     def test_loot_empty(self):
         """Play a grave robber - looting the trash that doesn't have anything"""
-        self.g.set_trash("Copper")
+        self.g.trashpile.set("Copper")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trash_size(), 1)
+        self.assertEqual(self.g.trashpile.size(), 1)
 
 
 ###############################################################################

@@ -67,7 +67,7 @@ class Test_Locusts(unittest.TestCase):
         self.plr.deck.set("Estate")
         self.plr.gain_card("Cursed Village")
         self.assertIsNotNone(self.plr.discardpile["Curse"])
-        self.assertIsNotNone(self.g.in_trash("Estate"))
+        self.assertIn("Estate", self.g.trashpile)
 
     def test_gain(self):
         """Locusts to gain a cheaper card"""
@@ -76,7 +76,7 @@ class Test_Locusts(unittest.TestCase):
         self.plr.gain_card("Cursed Village")
         self.assertNotIn("Curse", self.plr.discardpile)
         self.assertIsNotNone(self.plr.discardpile["Estate"])
-        self.assertIsNotNone(self.g.in_trash("Duchy"))
+        self.assertIn("Duchy", self.g.trashpile)
 
 
 ###############################################################################

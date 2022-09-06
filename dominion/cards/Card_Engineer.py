@@ -44,7 +44,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
         self.assertIn("Moat", self.plr.discardpile)
-        self.assertIsNotNone(self.g.in_trash("Engineer"))
+        self.assertIn("Engineer", self.g.trashpile)
 
     def test_play_keep(self):
         """Play an Engineer and keep it"""
@@ -53,7 +53,7 @@ class Test_Engineer(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
         self.assertIn("Engineer", self.plr.played)
-        self.assertIsNone(self.g.in_trash("Engineer"))
+        self.assertNotIn("Engineer", self.g.trashpile)
 
 
 ###############################################################################

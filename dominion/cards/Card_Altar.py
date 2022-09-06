@@ -38,7 +38,7 @@ class Test_Altar(unittest.TestCase):
         self.plr.test_input = ["Province", "Moat"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.plr.discardpile)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
 
 
 ###############################################################################
