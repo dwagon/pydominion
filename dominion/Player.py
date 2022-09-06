@@ -1,5 +1,6 @@
 """ All the Player based stuff """
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes, too-many-public-methods
+from __future__ import annotations
 import operator
 import sys
 from collections import defaultdict
@@ -16,7 +17,8 @@ from dominion.ProjectPile import ProjectPile
 ###############################################################################
 ###############################################################################
 class Player:
-    def __init__(self, game, name, heirlooms=None):
+    """ All things player - generally subclassed for interface reasons """
+    def __init__(self, game, name, heirlooms=None, use_shelters=False):
         self.game = game
         self.name = name
         self.currcards = []
@@ -49,7 +51,7 @@ class Player:
         self.forbidden_to_buy = []
         self.played_events = PlayArea("played_events", game=self.game)
         self.played_ways = []
-        self._initial_deck(heirlooms)
+        self._initial_deck(heirlooms, use_shelters)
         self._initial_tokens()
         self.once = {}
         self.turn_number = 0
@@ -132,7 +134,7 @@ class Player:
         return dstcp
 
     ###########################################################################
-    def replace_traveller(self, src, dst, **kwargs):
+    def replace_traveller(self, src, dst):
         """For traveller cards replace the src card with a copy of the
         dst card"""
         assert isinstance(src, Card.Card)
@@ -168,6 +170,7 @@ class Player:
 
     ###########################################################################
     def flip_journey_token(self):
+        """ Flip a journey token - and return its new state """
         if self.journey_token:
             self.journey_token = False
         else:
@@ -176,6 +179,7 @@ class Player:
 
     ###########################################################################
     def receive_hex(self, hx=None):
+        """ Receive a hex """
         if hx is None:
             hx = self.game.receive_hex()
         self.output(f"Received {hx} as a hex")
@@ -190,6 +194,7 @@ class Player:
 
     ###########################################################################
     def receive_boon(self, boon=None, discard=True):
+        """ Receive a boon """
         if boon is None:
             boon = self.game.receive_boon()
         self.output(f"Received {boon} as a boon")
@@ -365,7 +370,7 @@ class Player:
         elif curr_loc == "cardpile":
             pass
         else:
-            raise AssertionError(f"Trying to remove_card({card=}) from unknown location: {curr_loc}")
+            raise AssertionError(f"Trying to remove_card {card} from unknown location: {curr_loc}")
 
     ###########################################################################
     def move_card(self, card: Card, dest: str) -> Card:
@@ -738,6 +743,12 @@ class Player:
         op, index = self._landmark_selection(index)
         options.extend(op)
 
+        prompt = self._generate_prompt()
+        return options, prompt
+
+    ###########################################################################
+    def _generate_prompt(self) -> str:
+        """ Return the prompt to give to the user """
         status = f"Actions={self.actions} Buys={self.buys}"
         if self.coin:
             status += f" Coins={self.coin}"
@@ -754,12 +765,13 @@ class Player:
         if self.playlimit is not None:
             status += f" Play Limit={self.playlimit}"
         prompt = f"What to do ({status})?"
-        return options, prompt
+        return prompt
 
     ###########################################################################
     def turn(self):
+        """ Have a turn as the player """
         self.turn_number += 1
-        self.output(f"%s Turn {self.turn_number} %s" % ("#" * 20, "#" * 20))
+        self.output(f"{'#' * 20} Turn {self.turn_number} {'#' * 20}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
@@ -782,7 +794,7 @@ class Player:
     ###########################################################################
     def night_phase(self):
         """Do the Night Phase"""
-        nights = [c for c in self.hand if c.isNight()]
+        nights = [_ for _ in self.hand if _.isNight()]
         if not nights:
             return
         self.output("************ Night Phase ************")
@@ -889,7 +901,7 @@ class Player:
         tknoutput = []
         for tkn in self.tokens:
             if self.tokens[tkn]:
-                tknoutput.append("{tkn}: {self.tokens[tkn]}")
+                tknoutput.append(f"{tkn}: {self.tokens[tkn]}")
         if self.card_token:
             tknoutput.append("-1 Card")
         if self.coin_token:
@@ -1214,6 +1226,7 @@ class Player:
 
     ###########################################################################
     def card_benefits(self, card):
+        """ Gain the benefits of the card being played - including special() """
         self.add_actions(card.actions)
         self.coin += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
@@ -1418,13 +1431,14 @@ class Player:
         return options
 
     ###########################################################################
-    def has_defense(self, attacker, verbose=True):
+    def has_defense(self, attacker: Player, verbose=True):
+        """ Does this player have a defense against attack """
         assert isinstance(attacker, Player)
         for c in self.hand:
             c.hook_underAttack(game=self.game, player=self, attacker=attacker)
             if c.has_defense():
                 if verbose:
-                    attacker.output("Player %s is defended" % self.name)
+                    attacker.output(f"Player {self.name} is defended")
                 return True
         return False
 
@@ -1537,7 +1551,8 @@ class Player:
         return True
 
     ###########################################################################
-    def perform_event(self, evnt):
+    def perform_event(self, evnt: EventPile) -> bool:
+        """ Perform an event """
         try:
             assert isinstance(evnt, EventPile)
         except AssertionError:
@@ -1550,13 +1565,13 @@ class Player:
         if self.debt != 0:
             self.output("Must pay off debt first")
         if self.coin < evnt.cost:
-            self.output("Need %d coins to perform this event" % evnt.cost)
+            self.output(f"Need {evnt.cost} coins to perform this event")
             return False
         self.buys -= 1
         self.coin -= evnt.cost
         self.debt += evnt.debtcost
         self.buys += evnt.buys
-        self.output("Using event %s" % evnt.name)
+        self.output(f"Using event {evnt}")
         self.currcards.append(evnt)
         evnt.special(game=self.game, player=self)
         self.currcards.pop()
@@ -1634,6 +1649,7 @@ class Player:
 
     ###########################################################################
     def count_cards(self):
+        """ How many cards does the player have """
         count = {}
         for name, stack in self.stacklist:
             count[name] = len(stack)
@@ -1701,7 +1717,7 @@ class Player:
         if len(cardsrc) == 0:
             return None
         if len(cardsrc) == 0:
-            player.output("No cards to trash")
+            self.output("No cards to trash")
             return None
         trash = self.card_sel(
             num=num,

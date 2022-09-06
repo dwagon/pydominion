@@ -6,6 +6,7 @@ from dominion import Card
 
 ###############################################################################
 class PlayArea:
+    """ Area of play - such as a deck of cards """
     def __init__(self, name="", game=None, initial=None):
         self.name = name
         self.game = game
@@ -51,15 +52,18 @@ class PlayArea:
 
     ###########################################################################
     def add(self, card):
+        """ Add a carx to the area """
         self._cards.insert(0, card)
 
     ###########################################################################
     def remove(self, card):
+        """ Remove a card from the area """
         try:
             self._cards.remove(card)
         except ValueError:
             sys.stderr.write(
-                f"Trying to remove a card ({card.name}) that doesn't exist. Contents of {self.name} are: {', '.join([_.name for _ in self._cards])}\n"
+                f"Trying to remove a card ({card.name}) that doesn't exist."
+                "Contents of {self.name} are: {', '.join([_.name for _ in self._cards])}\n"
             )
             raise
 
