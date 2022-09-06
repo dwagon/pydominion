@@ -75,6 +75,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.trashpile = PlayArea("trash", game=self)
         self.gameover = False
         self._heirlooms = []
+        self._allow_shelters = True
         self.current_player = None
         # The _base_cards are in every game
         self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
@@ -91,18 +92,18 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
-        self.allypath = args["allypath"] if "allypath" in args else "dominion/allies"
+        self.allypath = args.get("allypath", "dominion/allies")
         self.hexpath = "dominion/hexes"
         self.numstacks = args.get("numstacks", 10)
-        self.boonpath = args["boonpath"] if "boonpath" in args else "dominion/boons"
+        self.boonpath = args.get("boonpath", "dominion/boons")
         self.statepath = args.get("statepath", "dominion/states")
         self.artifactpath = args.get("artifactpath", "dominion/artifacts")
         self.prosperity = args["prosperity"] if "prosperity" in args else False
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
         self.numplayers = args["numplayers"] if "numplayers" in args else 2
-        self.initcards = args.get("initcards", [])
-        self.badcards = args["badcards"] if "badcards" in args else []
+        self._initcards = args.get("initcards", [])
+        self.badcards = args.get("badcards", [])
         self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
         self.bot = args["bot"] if "bot" in args else False
@@ -119,6 +120,31 @@ class Game:  # pylint: disable=too-many-public-methods
         self.projectpath = args.get("projectpath", "dominion/projects")
         self.initprojects = args["initprojects"] if "initprojects" in args else []
         self.init_ally = args.get("init_ally", args.get("ally", []))
+        self._allow_shelters = args.get("shelters", True)
+
+    ###########################################################################
+    def _use_shelters(self):
+        """ Should we use shelters """
+        use_shelters = False
+
+        if "shelters" in [_.lower() for _ in self._initcards]:
+            use_shelters = True
+        elif not self._allow_shelters:
+            return False
+
+        # Pick a card to see if it is a darkages
+        halfway = int(len(self.cardpiles) / 2)
+        card = list(self.cardpiles.values())[halfway]
+        if card.base == DARKAGES:
+            use_shelters = True
+
+        if use_shelters:
+            shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
+            for crd in shelters:
+                cpile = CardPile(crd, self.cardmapping["Shelter"][crd], self)
+                self.cardpiles[cpile.name] = cpile
+        # todo = determine randomly as per rules
+        return use_shelters
 
     ###########################################################################
     def start_game(self, playernames=None, plrKlass=TextPlayer):
@@ -126,7 +152,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if playernames is None:
             playernames = []
         names = playerNames[:]
-        self._load_decks(self.initcards, self.numstacks)
+        self._load_decks(self._initcards, self.numstacks)
         self._load_events()
         self._load_ways()
         self._load_landmarks()
@@ -136,6 +162,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.hexes or self.boons:
             self._load_states()
         self._check_card_requirements()
+        use_shelters = self._use_shelters()
 
         for plrnum in range(self.numplayers):
             try:
@@ -150,6 +177,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     quiet=self.quiet,
                     name=f"{name}Bot",
                     heirlooms=self._heirlooms,
+                    use_shelters=use_shelters
                 )
                 self.bot = False
             else:
@@ -159,6 +187,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     name=name,
                     number=plrnum,
                     heirlooms=self._heirlooms,
+                    use_shelters=use_shelters
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
@@ -410,6 +439,9 @@ class Game:  # pylint: disable=too-many-public-methods
             # Artifacts should be loaded by the requiring card but can still be specified
             # in a cardset
             pass
+        elif crd.lower() == "shelters":
+            # Use of shelters handled elsewhere
+            pass
         else:
             print(f"Can't guess what card '{crd}' is")
             return None
@@ -560,6 +592,7 @@ class Game:  # pylint: disable=too-many-public-methods
             "PrizeCard",
             "Castle",
             "Heirloom",
+            "Shelter"
         ):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, "cards", "Card_")
             if self.oldcards:
@@ -857,6 +890,7 @@ class TestGame(Game):
         if "ally" not in kwargs:
             kwargs["init_ally"] = []
             kwargs["allypath"] = "tests/allies"
+            kwargs["shelters"] = False  # Can cause lots of bad interactions
         if "quiet" not in kwargs:
             kwargs["quiet"] = True
         super().__init__(**kwargs)
@@ -883,6 +917,7 @@ def parse_cli_args(args=None):
         default=[],
         help="Do not include card in lineup",
     )
+    parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
     parser.add_argument("--numevents", type=int, default=0, help="Number of events to use")
     parser.add_argument(
         "--events", action="append", dest="eventcards", default=[], help="Include event"
