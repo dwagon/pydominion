@@ -76,7 +76,7 @@ class Player:
         game.output(f"Player {name} is at the table")
 
     ###########################################################################
-    def _initial_deck(self, heirlooms=None):
+    def _initial_deck(self, heirlooms=None, use_shelters=False):
         """Provide the initial deck - cards don't come from the piles
         hence add them back
         """
@@ -93,8 +93,12 @@ class Player:
             card.player = self
             self.add_card(card, "deck")
 
-        for _ in range(3):
-            card = self.game["Estate"].remove()
+        if use_shelters:
+            estates = ("Overgrown Estate", "Hovel", "Necropolis")
+        else:
+            estates = ("Estate", "Estate", "Estate")
+        for cardname in estates:
+            card = self.game[cardname].remove()
             card.player = self
             self.add_card(card, "deck")
 
