@@ -56,7 +56,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 1)
-        self.assertIsNotNone(self.g.in_trash("Duchy"))
+        self.assertIn("Duchy", self.g.trashpile)
         self.assertIn("Curse", self.victim.discardpile)
 
     def test_play_treasure(self):
@@ -66,7 +66,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Copper"))
+        self.assertIn("Copper", self.g.trashpile)
         self.assertEqual(self.victim.hand.size(), 3)
 
 

@@ -37,7 +37,7 @@ class Test_Ritual(unittest.TestCase):
         self.plr.test_input = ["Gold"]
         self.plr.perform_event(self.event)
         self.assertEqual(self.plr.get_score_details()["Ritual"], 6)
-        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertIn("Gold", self.g.trashpile)
         self.assertIsNotNone(self.plr.discardpile["Curse"])
 
 

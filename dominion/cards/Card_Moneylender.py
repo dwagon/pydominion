@@ -39,30 +39,30 @@ class Test_Moneylender(unittest.TestCase):
         self.card = self.g["Money Lender"].remove()
 
     def test_nocopper(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trash_size(), tsize)
+        self.assertEqual(self.g.trashpile.size(), tsize)
         self.assertEqual(self.plr.get_coins(), 0)
 
     def test_trash_copper(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.test_input = ["1"]
         self.plr.hand.set("Copper", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Copper"))
-        self.assertEqual(self.g.trash_size(), tsize + 1)
+        self.assertIn("Copper", self.g.trashpile)
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertEqual(self.plr.get_coins(), 3)
 
     def test_dont_trash_copper(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Copper", "Copper", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trash_size(), tsize)
+        self.assertEqual(self.g.trashpile.size(), tsize)
         self.assertEqual(self.plr.get_coins(), 0)
 
 

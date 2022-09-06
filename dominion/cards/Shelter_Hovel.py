@@ -46,7 +46,7 @@ class Test_Hovel(unittest.TestCase):
         self.plr.hand.set("Hovel")
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")
-        self.assertIsNotNone(self.g.in_trash("Hovel"))
+        self.assertIn("Hovel", self.g.trashpile)
 
 
 ###############################################################################

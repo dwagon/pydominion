@@ -71,6 +71,7 @@ class Test_guess_cardname(unittest.TestCase):
 
 ###############################################################################
 class Test_game_over(unittest.TestCase):
+    """ Test detecting when the game is over """
     def setUp(self):
         self.g = Game.TestGame(numplayers=2)
         self.g.start_game()
@@ -107,31 +108,6 @@ class Test_game_over(unittest.TestCase):
             self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertFalse(over)
-
-
-###############################################################################
-class Test_in_trash(unittest.TestCase):
-    def setUp(self):
-        self.g = Game.TestGame(numplayers=1)
-        self.g.start_game()
-        self.plr = self.g.player_list(0)
-        self.plr.hand.set("Copper")
-        self.plr.trash_card(self.plr.hand[0])
-
-    def test_intrash(self):
-        """Test card is in trash"""
-        self.assertTrue(self.g.in_trash("Copper"))
-        self.assertEqual(self.g.in_trash("Copper").name, "Copper")
-
-    def test_intrash_with_card(self):
-        """Test card is in trash passing a card"""
-        cu = self.g["Copper"].remove()
-        self.assertTrue(self.g.in_trash(cu))
-        self.assertEqual(self.g.in_trash(cu).name, "Copper")
-
-    def test_notintrash(self):
-        """Test card that isn't in trash"""
-        self.assertFalse(self.g.in_trash("Estate"))
 
 
 ###############################################################################

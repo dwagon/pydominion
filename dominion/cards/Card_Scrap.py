@@ -72,7 +72,7 @@ class Test_Scrap(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Copper"))
+        self.assertIn("Copper", self.g.trashpile)
 
     def test_playcard_cost3(self):
         """Play a scrap and trash something worth 3"""
@@ -92,7 +92,7 @@ class Test_Scrap(unittest.TestCase):
         self.assertIn("Province", self.plr.hand)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_coins(), 1)
-        self.assertIsNotNone(self.g.in_trash("Silver"))
+        self.assertIn("Silver", self.g.trashpile)
 
     def test_playcard_cost6(self):
         """Play a scrap and trash something worth more than 4"""
@@ -115,7 +115,7 @@ class Test_Scrap(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIn("Copper", self.plr.hand)
         self.assertEqual(self.plr.get_buys(), 2)

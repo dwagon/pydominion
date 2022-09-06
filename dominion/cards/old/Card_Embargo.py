@@ -54,7 +54,7 @@ class Test_Embargo(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 2)
         self.assertEqual(self.g["Silver"].embargo_level, 1)
-        self.assertIsNotNone(self.g.in_trash("Embargo"))
+        self.assertIn("Embargo", self.g.trashpile)
 
 
 ###############################################################################

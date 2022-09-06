@@ -66,7 +66,7 @@ class Test_Research(unittest.TestCase):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertIsNotNone(self.g.in_trash("Moat"))
+        self.assertIn("Moat", self.g.trashpile)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertIn("Silver", self.plr.hand)

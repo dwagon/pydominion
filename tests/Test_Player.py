@@ -35,7 +35,7 @@ class TestPlayer(unittest.TestCase):
         card = self.plr.hand[0]
         self.plr.trash_card(card)
         self.assertEqual(num_cards, self.game.count_cards())
-        self.assertIsNotNone(self.game.in_trash(card))
+        self.assertIn(card, self.game.trashpile)
 
     def test_trashcard_played(self):
         """Test that trashing a card from played works"""
@@ -43,7 +43,7 @@ class TestPlayer(unittest.TestCase):
         num_cards = self.game.count_cards()
         card = self.plr.played[0]
         self.plr.trash_card(card)
-        self.assertIsNotNone(self.game.in_trash(card))
+        self.assertIn(card, self.game.trashpile)
         self.assertEqual(num_cards, self.game.count_cards())
 
     def test_deckorder(self):
@@ -215,7 +215,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.plr.test_input = ["0"]
         x = self.plr.plr_trash_card()
         self.assertEqual(x, [])
-        self.assertIsNone(self.game.in_trash("Gold"))
+        self.assertNotIn("Gold", self.game.trashpile)
 
     def test_Two(self):
         """ Trash Two cards """
@@ -223,23 +223,23 @@ class Test_plr_trash_card(unittest.TestCase):
         self.plr.test_input = ["Gold", "Silver", "0"]
         x = self.plr.plr_trash_card(num=2)
         self.assertEqual(len(x), 2)
-        self.assertIsNotNone(self.game.in_trash("Gold"))
-        self.assertIsNotNone(self.game.in_trash("Silver"))
+        self.assertIn("Gold", self.game.trashpile)
+        self.assertIn("Silver", self.game.trashpile)
         self.assertIn("Copper", self.plr.hand)
 
     def test_Trash(self):
         """ Test trashing """
-        tsize = self.game.trash_size()
+        tsize = self.game.trashpile.size()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["1"]
         x = self.plr.plr_trash_card()
         self.assertEqual(x[0].name, "Gold")
-        self.assertEqual(self.game.trash_size(), tsize + 1)
+        self.assertEqual(self.game.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.game.trashpile)
 
     def test_force(self):
         """ Test trashing a card with force """
-        self.game.set_trash()
+        self.game.trashpile.set()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0", "1"]
         x = self.plr.plr_trash_card(force=True)
@@ -265,6 +265,7 @@ class Test_plr_trash_card(unittest.TestCase):
 
 ###############################################################################
 class Test_plrDiscardCard(unittest.TestCase):
+    """ Test the plr_discard_cards() function """
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()

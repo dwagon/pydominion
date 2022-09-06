@@ -69,7 +69,7 @@ class Test_Stonemason(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Province"))
+        self.assertIn("Province", self.g.trashpile)
         self.assertIn("Gold", self.plr.discardpile)
         self.assertIn("Silver", self.plr.discardpile)
 

@@ -55,7 +55,7 @@ class Test_FarmersMarket(unittest.TestCase):
         self.plr.add_card(self.c2, "hand")
         self.plr.play_card(self.c2)
         self.assertEqual(self.plr.get_score_details()["Farmers' Market"], 4)
-        self.assertIsNotNone(self.g.in_trash("Farmers' Market"))
+        self.assertIn("Farmers' Market", self.g.trashpile)
 
 
 ###############################################################################

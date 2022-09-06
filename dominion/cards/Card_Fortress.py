@@ -52,7 +52,7 @@ class Test_Fortress(unittest.TestCase):
         self.plr.trash_card(self.card)
         self.g.print_state()
         self.assertIn("Fortress", self.plr.hand)
-        self.assertIsNone(self.g.in_trash("Fortress"))
+        self.assertNotIn("Fortress", self.g.trashpile)
 
 
 ###############################################################################

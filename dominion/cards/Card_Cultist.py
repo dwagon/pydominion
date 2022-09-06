@@ -97,7 +97,7 @@ class Test_Cultist(unittest.TestCase):
         """Trashing a cultist should give 3 more cards"""
         self.plr.add_card(self.card, "hand")
         self.plr.trash_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Cultist"))
+        self.assertIn("Cultist", self.g.trashpile)
         self.assertEqual(self.plr.hand.size(), 8)
 
 

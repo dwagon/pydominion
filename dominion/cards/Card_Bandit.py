@@ -78,7 +78,7 @@ class Test_Bandit(unittest.TestCase):
         self.thief.test_input = ["trash gold"]
         self.thief.play_card(self.card)
         # Make sure the gold ends up in the trashpile and not in the victims deck
-        self.assertIsNotNone(self.g.in_trash("Gold"))
+        self.assertIn("Gold", self.g.trashpile)
         for c in self.vic.deck:
             self.assertNotEqual(c.name, "Gold")
         self.assertEqual(self.vic.discardpile[0].name, "Silver")

@@ -47,7 +47,7 @@ class Test_Develop(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.g.in_trash("Duchy"))
+        self.assertIn("Duchy", self.g.trashpile)
         self.assertIn("Gold", self.plr.deck)
         self.assertIn("Smithy", self.plr.deck)
 

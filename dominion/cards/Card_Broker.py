@@ -66,7 +66,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
-        self.assertEqual(self.g.trash_size(), 0)
+        self.assertEqual(self.g.trashpile.size(), 0)
 
     def test_play_action(self):
         """Play the card - gain action"""

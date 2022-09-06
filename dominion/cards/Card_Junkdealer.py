@@ -34,11 +34,11 @@ class Test_Junkdealer(unittest.TestCase):
         self.plr.add_card(self.jd, "hand")
 
     def test_trash(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.jd)
         self.assertEqual(self.plr.hand.size(), 4)
-        self.assertEqual(self.g.trash_size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
 
 ###############################################################################

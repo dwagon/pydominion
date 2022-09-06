@@ -38,7 +38,7 @@ class Test_Donate(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Donate"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Gold", "Estate", "Copper", "Copper")
         self.plr.discardpile.set("Province", "Estate", "Copper", "Copper")
         self.plr.deck.set("Silver", "Estate", "Copper", "Copper")
@@ -47,11 +47,11 @@ class Test_Donate(unittest.TestCase):
         self.plr.test_input = ["Gold", "Province", "Silver", "finish"]
         self.plr.end_turn()
         self.g.print_state()
-        self.assertIsNotNone(self.g.in_trash("Gold"))
-        self.assertIsNotNone(self.g.in_trash("Province"))
-        self.assertIsNotNone(self.g.in_trash("Silver"))
+        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Silver", self.g.trashpile)
         self.assertNotIn("Gold", self.plr.deck)
-        self.assertEqual(self.g.trash_size(), tsize + 3)
+        self.assertEqual(self.g.trashpile.size(), tsize + 3)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)
 

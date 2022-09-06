@@ -58,22 +58,22 @@ class Test_Steward(unittest.TestCase):
         self.assertEqual(self.plr.get_coins(), 2)
 
     def test_trash(self):
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.test_input = ["2", "1", "2", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.g.trash_size(), tsize + 2)
+        self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 3)
 
     def test_trash_smallhand(self):
         """Trash two when there are less than two to trash"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["2", "1", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.g.trash_size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertEqual(self.plr.hand.size(), 0)
 
 
