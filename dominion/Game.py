@@ -98,7 +98,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.boonpath = args.get("boonpath", "dominion/boons")
         self.statepath = args.get("statepath", "dominion/states")
         self.artifactpath = args.get("artifactpath", "dominion/artifacts")
-        self.prosperity = args["prosperity"] if "prosperity" in args else False
+        self.prosperity = args.get("prosperity", False)
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
         self.numplayers = args["numplayers"] if "numplayers" in args else 2
@@ -112,8 +112,8 @@ class Game:  # pylint: disable=too-many-public-methods
         self.eventpath = "dominion/events"
         self.numevents = args["numevents"] if "numevents" in args else 0
         self.waypath = "dominion/ways"
-        self.numways = args["numways"] if "numways" in args else 0
-        self.landmarkcards = args["landmarkcards"] if "landmarkcards" in args else []
+        self.numways = args.get("numways", 0)
+        self.landmarkcards = args.get("landmarkcards", [])
         self.landmarkpath = args.get("landmarkpath", "dominion/landmarks")
         self.numlandmarks = args["numlandmarks"] if "numlandmarks" in args else 0
         self.numprojects = args["numprojects"] if "numprojects" in args else 0
@@ -143,7 +143,6 @@ class Game:  # pylint: disable=too-many-public-methods
             for crd in shelters:
                 cpile = CardPile(crd, self.cardmapping["Shelter"][crd], self)
                 self.cardpiles[cpile.name] = cpile
-        # todo = determine randomly as per rules
         return use_shelters
 
     ###########################################################################
@@ -434,6 +433,9 @@ class Game:  # pylint: disable=too-many-public-methods
         unfilled = numstacks
         foundall = True
         for crd in initcards:
+            # These cards get loaded by other things
+            if crd in ("Boons", ):
+                continue
             result = self._place_init_card(crd, available)
             if result is None:
                 foundall = False

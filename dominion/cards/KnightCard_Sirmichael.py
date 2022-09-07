@@ -28,12 +28,12 @@ class Card_Sirmichael(KnightCard):
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Knight"], badcards=["Pooka", "Fool"]
+            quiet=True, numplayers=2, initcards=["Knights"], badcards=["Pooka", "Fool"]
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:
-            self.card = self.g["Knight"].remove()
+            self.card = self.g["Knights"].remove()
             if self.card.name == "Sir Michael":
                 break
 

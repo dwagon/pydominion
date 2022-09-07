@@ -27,11 +27,11 @@ class Card_Dame_Molly(KnightCard):
 ###############################################################################
 class Test_Dame_Molly(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knight"])
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g["Knight"].remove()
+            self.card = self.g["Knights"].remove()
             if self.card.name == "Dame Molly":
                 break
 
