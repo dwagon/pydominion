@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" Test suite for Tokens """
 
 import unittest
 from dominion import Game
@@ -6,6 +7,7 @@ from dominion import Game
 
 ###############################################################################
 class TestToken(unittest.TestCase):
+    """ Test suite for Tokens """
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
@@ -50,13 +52,13 @@ class TestToken(unittest.TestCase):
 
     def test_trashing_token(self):
         """Does the Trashing token work"""
-        tsize = self.g.trash_size()
+        tsize = self.g.trashpile.size()
         self.plr.hand.set("Gold", "Province", "Duchy")
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
         self.plr.set_coins(5)
         self.plr.buy_card(self.g["Moat"])
-        self.assertEqual(self.g.trash_size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
     def test_cost_token(self):
         """Does the -Cost token work"""
