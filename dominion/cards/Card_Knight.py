@@ -9,7 +9,7 @@ from dominion import Card, CardPile, Game
 class Card_Knight(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.name = "Knight"
+        self.name = "Knights"
         self.base = Game.DARKAGES
 
     def setup(self, game):
