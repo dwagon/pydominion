@@ -13,7 +13,7 @@ class Card_Knight(Card.Card):
         self.base = Game.DARKAGES
 
     def setup(self, game):
-        game.cardpiles["Knight"] = KnightCardPile(game)
+        game.cardpiles["Knights"] = KnightCardPile(game)
 
 
 ###############################################################################
@@ -96,15 +96,15 @@ class KnightCard(Card.Card):
 ###############################################################################
 class Test_Knight(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Knight"])
+        self.g = Game.TestGame(numplayers=2, initcards=["Knights"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = None
-        self.card = self.g["Knight"].remove()
+        self.card = self.g["Knights"].remove()
 
         # Makes testing harder due to card actions
         while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
-            self.card = self.g["Knight"].remove()
+            self.card = self.g["Knights"].remove()
 
         self.plr.hand.set("Silver", "Gold")
         self.plr.add_card(self.card, "hand")
