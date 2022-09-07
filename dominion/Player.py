@@ -1433,25 +1433,26 @@ class Player:
     ###########################################################################
     def has_defense(self, attacker: Player, verbose=True):
         """ Does this player have a defense against attack """
-        assert isinstance(attacker, Player)
-        for c in self.hand:
-            c.hook_underAttack(game=self.game, player=self, attacker=attacker)
-            if c.has_defense():
+        for crd in self.hand:
+            if crd.has_defense():
                 if verbose:
                     attacker.output(f"Player {self.name} is defended")
                 return True
         return False
 
     ###########################################################################
-    def get_potions(self):
+    def get_potions(self) -> int:
+        """ Return the number of potions the player has """
         return self.potions
 
     ###########################################################################
-    def get_coins(self):
+    def get_coins(self) -> int:
+        """ Return the number of coins the player has """
         return self.coin
 
     ###########################################################################
-    def get_coffers(self):
+    def get_coffers(self) -> int:
+        """ Return the number of coffers the player has """
         return self.coffer
 
     ###########################################################################
@@ -1688,13 +1689,16 @@ class Player:
         for plr in list(self.game.players.values()):
             if plr == self:
                 continue
+            for crd in plr.hand:
+                crd.hook_underAttack(game=self.game, player=plr, attacker=self)
             if plr.has_defense(self):
                 continue
             victims.append(plr)
         return victims
 
     ###########################################################################
-    def coststr(self, card):
+    def coststr(self, card) -> str:
+        """ Generate the string showing the cost of the card """
         cost = []
         cost.append(f"{self.card_cost(card)} Coins")
         if card.debtcost:
