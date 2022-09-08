@@ -4,6 +4,7 @@ from __future__ import annotations
 import operator
 import sys
 from collections import defaultdict
+from typing import Union
 
 from dominion import Card
 from dominion.PlayArea import PlayArea
@@ -354,7 +355,6 @@ class Player:
     ###########################################################################
     def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
-        curr_loc = card.location
         piles = {
                 "discard": self.discardpile,
                 "discardpile": self.discardpile,
@@ -365,6 +365,7 @@ class Player:
                 "reserve": self.reserve,
                 "exilepile": self.exilepile,
                 }
+        curr_loc = card.location
         if curr_loc in piles:
             piles[curr_loc].remove(card)
         elif curr_loc == "cardpile":
@@ -373,17 +374,14 @@ class Player:
             raise AssertionError(f"Trying to remove_card {card} from unknown location: {curr_loc}")
 
     ###########################################################################
-    def move_card(self, card: Card, dest: str) -> Card:
+    def move_card(self, card: Card, dest: Union[str, PlayArea]) -> Card:
         """Move a card to {dest} cardpile"""
         self.remove_card(card)
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: str = "discard") -> Card:
+    def add_card(self, card: Card, pile: Union[str, PlayArea] = "discard") -> Card:
         """Add an existing card to a new location"""
-        if not card:  # pragma: no cover
-            return None
-        assert isinstance(card, Card.Card)
         piles = {
                 "discard": self.discardpile,
                 "discardpile": self.discardpile,
@@ -393,9 +391,16 @@ class Player:
                 "duration": self.durationpile,
                 "reserve": self.reserve,
                 "exile": self.exilepile,
-                }
-        card.location = pile
+        }
+        if not card:  # pragma: no cover
+            return None
         card.player = self
+        if isinstance(pile, PlayArea):
+            card.location = pile.name
+            pile.add(card)
+            return card
+
+        card.location = pile
         if pile in piles:
             piles[pile].add(card)
         elif pile == "topdeck":
