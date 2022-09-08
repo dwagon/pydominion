@@ -10,7 +10,9 @@ class State_Envious(State.State):
         State.State.__init__(self)
         self.cardtype = Card.TYPE_STATE
         self.base = Game.NOCTURNE
-        self.desc = "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
+        self.desc = (
+            "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
+        )
         self.name = "Envious"
 
     def hook_pre_buy(self, game, player):

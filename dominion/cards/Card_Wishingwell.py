@@ -71,7 +71,7 @@ class Test_Wishingwell(unittest.TestCase):
         self.plr.deck.set("Province", "Copper")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Gold",  self.plr.hand)
+        self.assertNotIn("Gold", self.plr.hand)
         self.assertNotIn("Province", self.plr.hand)
 
 

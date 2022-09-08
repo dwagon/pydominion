@@ -8,7 +8,8 @@ from dominion import Game
 
 ###############################################################################
 class Test_args(unittest.TestCase):
-    """ Test argument parsing """
+    """Test argument parsing"""
+
     def setUp(self):
         pass
 
@@ -44,7 +45,7 @@ class Test_args(unittest.TestCase):
         self.assertIn("Alms", g.events)
 
     def test_old_cards(self):
-        """ Can we access old cards """
+        """Can we access old cards"""
         g = Game.TestGame(cardpath="tests/cards", oldcards=True)
         g.start_game()
         self.assertIn("OldCard", g.cardpiles)
@@ -62,16 +63,15 @@ class Test_guess_cardname(unittest.TestCase):
         """TODO"""
         self.assertEqual(self.g.guess_cardname("moat"), "Moat")
         self.assertEqual(self.g.guess_cardname("grandmarket"), "Grand Market")
-        self.assertEqual(
-            self.g.guess_cardname("philosophersstone"), "Philosopher's Stone"
-        )
+        self.assertEqual(self.g.guess_cardname("philosophersstone"), "Philosopher's Stone")
         self.assertEqual(self.g.guess_cardname("colony", prefix="BaseCard"), "Colony")
         self.assertIsNone(self.g.guess_cardname("nosuchcard"))
 
 
 ###############################################################################
 class Test_game_over(unittest.TestCase):
-    """ Test detecting when the game is over """
+    """Test detecting when the game is over"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2)
         self.g.start_game()

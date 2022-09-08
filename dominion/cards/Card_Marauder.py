@@ -10,9 +10,7 @@ class Card_Marauder(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_LOOTER]
         self.base = Game.DARKAGES
-        self.desc = (
-            "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
-        )
+        self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
         self.name = "Marauder"
         self.cost = 4
         self.required_cards = ["Spoils"]

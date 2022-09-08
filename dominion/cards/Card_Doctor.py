@@ -72,9 +72,7 @@ class Card_Doctor(Card.Card):
                     Card.TYPE_ACTION: "discard",
                 }
             )
-            o = player.user_input(
-                options, "What to do with the top card %s?" % card.name
-            )
+            o = player.user_input(options, "What to do with the top card %s?" % card.name)
             if o[Card.TYPE_ACTION] == "trash":
                 player.trash_card(card)
                 player.output("Trashing %s" % card.name)

@@ -37,9 +37,7 @@ class Landmark_MountainPass(Landmark.Landmark):
             if winning_plr:
                 winning_plr.debt += curbid
                 winning_plr.add_score("Mountain Pass", 8)
-                game.output(
-                    "%s won with a bid of %d for 8VP" % (winning_plr.name, curbid)
-                )
+                game.output("%s won with a bid of %d for 8VP" % (winning_plr.name, curbid))
                 self._state = "done"
             else:
                 game.output("No one bid for Mountain Pass")

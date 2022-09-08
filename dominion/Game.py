@@ -124,7 +124,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _use_shelters(self):
-        """ Should we use shelters """
+        """Should we use shelters"""
         use_shelters = False
 
         if "shelters" in [_.lower() for _ in self._initcards]:
@@ -176,7 +176,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     quiet=self.quiet,
                     name=f"{name}Bot",
                     heirlooms=self._heirlooms,
-                    use_shelters=use_shelters
+                    use_shelters=use_shelters,
                 )
                 self.bot = False
             else:
@@ -186,7 +186,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     name=name,
                     number=plrnum,
                     heirlooms=self._heirlooms,
-                    use_shelters=use_shelters
+                    use_shelters=use_shelters,
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
@@ -434,7 +434,7 @@ class Game:  # pylint: disable=too-many-public-methods
         foundall = True
         for crd in initcards:
             # These cards get loaded by other things
-            if crd in ("Boons", ):
+            if crd in ("Boons",):
                 continue
             result = self._place_init_card(crd, available)
             if result is None:
@@ -572,7 +572,7 @@ class Game:  # pylint: disable=too-many-public-methods
             "PrizeCard",
             "Castle",
             "Heirloom",
-            "Shelter"
+            "Shelter",
         ):
             mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, "cards", "Card_")
             if self.oldcards:

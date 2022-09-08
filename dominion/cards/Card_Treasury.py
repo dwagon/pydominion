@@ -42,9 +42,7 @@ class Card_Treasury(Card.Card):
 ###############################################################################
 class Test_Treasury(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Treasury"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Treasury"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Treasury"].remove()

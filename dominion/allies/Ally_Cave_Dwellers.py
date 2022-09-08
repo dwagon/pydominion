@@ -16,10 +16,10 @@ class Ally_CaveDwellers(Ally.Ally):
     def hook_start_turn(self, game, player):
         for _ in range(player.get_favors()):
             doit = player.plr_choose_options(
-                    "Cave Dwellers:",
-                    ("Do nothing", False),
-                    ("Spend a favor to discard and draw a card?", True)
-                    )
+                "Cave Dwellers:",
+                ("Do nothing", False),
+                ("Spend a favor to discard and draw a card?", True),
+            )
             if doit:
                 player.plr_discard_cards()
                 player.pickup_card()
@@ -36,11 +36,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_CaveDwellers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1,
-            ally="Cave Dwellers",
-            initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Cave Dwellers", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

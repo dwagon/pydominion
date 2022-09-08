@@ -9,7 +9,9 @@ class Project_Sewers(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
-        self.desc = "When you trash a card other than with this, you may trash a card from your hand."
+        self.desc = (
+            "When you trash a card other than with this, you may trash a card from your hand."
+        )
         self.name = "Sewers"
         self.cost = 3
 
@@ -20,9 +22,7 @@ class Project_Sewers(Project.Project):
 ###############################################################################
 class Test_Sewers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initprojects=["Sewers"], initcards=["Chapel"]
-        )
+        self.g = Game.TestGame(numplayers=1, initprojects=["Sewers"], initcards=["Chapel"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Chapel"].remove()

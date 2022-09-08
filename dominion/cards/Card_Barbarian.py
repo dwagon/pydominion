@@ -38,7 +38,7 @@ class Card_Barbarian(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    """ If we need to pick up cards - pick up the best """
+    """If we need to pick up cards - pick up the best"""
     picked = []
     for card in kwargs["cardsrc"]:
         if card.name == "Province":

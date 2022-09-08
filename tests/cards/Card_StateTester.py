@@ -3,7 +3,8 @@ from dominion import Card
 
 ###############################################################################
 class Card_StateTester(Card.Card):
-    """ Test states """
+    """Test states"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]

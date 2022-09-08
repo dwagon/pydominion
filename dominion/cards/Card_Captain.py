@@ -25,9 +25,7 @@ class Card_Captain(Card.Card):
 
     def special_sauce(self, game, player):
         actionpiles = [
-            _
-            for _ in game.getActionPiles(4)
-            if not _.isDuration() and not _.isCommand()
+            _ for _ in game.getActionPiles(4) if not _.isDuration() and not _.isCommand()
         ]
         actions = player.card_sel(
             prompt="What action card do you want to imitate?", cardsrc=actionpiles
@@ -39,9 +37,7 @@ class Card_Captain(Card.Card):
 ###############################################################################
 class Test_Captain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Captain"].remove()

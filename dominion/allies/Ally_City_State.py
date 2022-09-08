@@ -10,7 +10,9 @@ class Ally_CityState(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Game.ALLIES
-        self.desc = """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
+        self.desc = (
+            """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
+        )
         self.name = "City State"
 
     def hook_gain_card(self, game, player, card):
@@ -36,11 +38,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_CityState(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1,
-            ally="City State",
-            initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="City State", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

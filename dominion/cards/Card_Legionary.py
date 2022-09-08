@@ -22,9 +22,7 @@ class Card_Legionary(Card.Card):
         if au:
             player.reveal_card(au)
             for plr in player.attack_victims():
-                plr.output(
-                    "%s's Legionary forces you to discard down to 2" % player.name
-                )
+                plr.output("%s's Legionary forces you to discard down to 2" % player.name)
                 plr.plr_discard_down_to(2)
                 plr.pickup_card()
 

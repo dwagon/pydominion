@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Stockpile(Card.Card):
-    """ Stockpile """
+    """Stockpile"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -24,7 +25,8 @@ class Card_Stockpile(Card.Card):
 
 ###############################################################################
 class Test_Stockpile(unittest.TestCase):
-    """ Test Stockpile """
+    """Test Stockpile"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Stockpile"])
         self.g.start_game()
@@ -33,7 +35,7 @@ class Test_Stockpile(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        """ Play the card """
+        """Play the card"""
         self.plr.play_card(self.card)
         self.assertIn("Stockpile", self.plr.exilepile)
         self.assertEqual(self.plr.get_buys(), 2)

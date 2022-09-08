@@ -11,7 +11,9 @@ class Card_Highway(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.HINTERLANDS
-        self.desc = "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
+        self.desc = (
+            "+1 Card +1 Action. While this is in play, cards cost 1 less, but not less than 0."
+        )
         self.name = "Highway"
         self.cards = 1
         self.actions = 1

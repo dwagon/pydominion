@@ -67,7 +67,7 @@ class test_discard_hand(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_discard(self):
-        """ Test discard_hand() """
+        """Test discard_hand()"""
         self.plr.hand.set("Copper", "Silver")
         self.plr.played.set("Estate", "Duchy")
         self.plr.discard_hand()
@@ -78,21 +78,22 @@ class test_discard_hand(unittest.TestCase):
 
 ###############################################################################
 class Test_next_card(unittest.TestCase):
-    """ Test next_card() """
+    """Test next_card()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_emptyDeck(self):
-        """ test empty deck """
+        """test empty deck"""
         self.plr.deck.empty()
         self.plr.discardpile.set("Gold")
         c = self.plr.next_card()
         self.assertEqual(c.name, "Gold")
 
     def test_noCards(self):
-        """ Test that an empty deck has no cards """
+        """Test that an empty deck has no cards"""
         self.plr.deck.empty()
         self.plr.discardpile.empty()
         c = self.plr.next_card()
@@ -108,7 +109,8 @@ class Test_next_card(unittest.TestCase):
 
 ###############################################################################
 class Test_playonce(unittest.TestCase):
-    """ Test the play once capability """
+    """Test the play once capability"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -203,14 +205,15 @@ class Test__type_selector(unittest.TestCase):
 
 ###############################################################################
 class Test_plr_trash_card(unittest.TestCase):
-    """ Test plr_trash_card() """
+    """Test plr_trash_card()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_None(self):
-        """ Trash nothing """
+        """Trash nothing"""
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0"]
         x = self.plr.plr_trash_card()
@@ -218,7 +221,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertNotIn("Gold", self.game.trashpile)
 
     def test_Two(self):
-        """ Trash Two cards """
+        """Trash Two cards"""
         self.plr.hand.set("Gold", "Copper", "Silver")
         self.plr.test_input = ["Gold", "Silver", "0"]
         x = self.plr.plr_trash_card(num=2)
@@ -228,7 +231,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertIn("Copper", self.plr.hand)
 
     def test_Trash(self):
-        """ Test trashing """
+        """Test trashing"""
         tsize = self.game.trashpile.size()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["1"]
@@ -238,7 +241,7 @@ class Test_plr_trash_card(unittest.TestCase):
         self.assertIn("Gold", self.game.trashpile)
 
     def test_force(self):
-        """ Test trashing a card with force """
+        """Test trashing a card with force"""
         self.game.trashpile.set()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0", "1"]
@@ -255,7 +258,7 @@ class Test_plr_trash_card(unittest.TestCase):
                 self.fail("Nothing available")
 
     def test_exclude(self):
-        """ Test that the 'exclude' option works by not being able to select """
+        """Test that the 'exclude' option works by not being able to select"""
         self.plr.hand.set("Gold", "Gold", "Copper")
         self.plr.test_input = ["1"]
         x = self.plr.plr_trash_card(exclude=["Gold"])
@@ -265,7 +268,8 @@ class Test_plr_trash_card(unittest.TestCase):
 
 ###############################################################################
 class Test_plrDiscardCard(unittest.TestCase):
-    """ Test the plr_discard_cards() function """
+    """Test the plr_discard_cards() function"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -461,9 +465,7 @@ class Test_misc(unittest.TestCase):
 ###############################################################################
 class Test__display_overview(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -517,9 +519,7 @@ class Test__display_overview(unittest.TestCase):
 ###############################################################################
 class Test__buyable_selection(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Coppersmith"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
         self.moat = self.game["Moat"].remove()
@@ -751,20 +751,21 @@ class Test__spendable_selection(unittest.TestCase):
 
 ###############################################################################
 class Test_buy_card(unittest.TestCase):
-    """ Test buy_card() """
+    """Test buy_card()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1, oldcards=True, initcards=["Embargo"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_debt(self):
-        """ Test buying a card when the player has a debt """
+        """Test buying a card when the player has a debt"""
         self.plr.debt = 1
         self.plr.buy_card(self.game["Copper"])
         self.assertIn("Must pay off debt first", self.plr.messages)
 
     def test_embargo(self):
-        """ Test buying an embargoed card """
+        """Test buying an embargoed card"""
         self.game["Copper"].embargo()
         self.plr.buy_card(self.game["Copper"])
         self.assertIsNotNone(self.plr.discardpile["Curse"])
@@ -773,7 +774,8 @@ class Test_buy_card(unittest.TestCase):
 
 ###############################################################################
 class Test_spend_coffer(unittest.TestCase):
-    """ Test spending coffers """
+    """Test spending coffers"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -846,14 +848,14 @@ class Test_exile(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_exile_card(self):
-        """ Test exiling a card """
+        """Test exiling a card"""
         au_card = self.game["Gold"].remove()
         self.plr.exilepile.empty()
         self.plr.exile_card(au_card)
         self.assertIn("Gold", self.plr.exilepile)
 
     def test_unexiling_card(self):
-        """ Test un-exiling a card """
+        """Test un-exiling a card"""
         self.plr.exilepile.set("Gold", "Gold", "Silver")
         self.plr.test_input = ["Unexile"]
         self.plr.gain_card("Gold")

@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Collection(Card.Card):
-    """ Collection """
+    """Collection"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
@@ -25,7 +26,8 @@ class Card_Collection(Card.Card):
 
 ###############################################################################
 class Test_Collection(unittest.TestCase):
-    """ Test Collection """
+    """Test Collection"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Collection", "Moat"])
         self.g.start_game()
@@ -34,7 +36,7 @@ class Test_Collection(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
-        """ Play Collection """
+        """Play Collection"""
         score = self.plr.get_score()
         self.plr.play_card(self.card)
         self.plr.gain_card("Moat")

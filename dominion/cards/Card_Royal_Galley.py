@@ -7,7 +7,8 @@ from dominion import Game, Card, PlayArea
 
 ###############################################################################
 class Card_Royal_Galley(Card.Card):
-    """ Royal Galley """
+    """Royal Galley"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
@@ -41,7 +42,8 @@ class Card_Royal_Galley(Card.Card):
 
 ###############################################################################
 class Test_Royal_Galley(unittest.TestCase):
-    """ Test Royal Galley """
+    """Test Royal Galley"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Royal Galley", "Moat"])
         self.g.start_game()
@@ -59,7 +61,7 @@ class Test_Royal_Galley(unittest.TestCase):
         self.assertIn("Moat", self.card.reserve)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2)   # Initial = Moat
+        self.assertEqual(self.plr.hand.size(), 5 + 2)  # Initial = Moat
         self.assertIn("Moat", self.plr.played)
 
 

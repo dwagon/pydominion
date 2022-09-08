@@ -30,9 +30,7 @@ class Card_Taxman(Card.Card):
             if vic.hand.size() >= 5:
                 viccard = vic.hand[card.name]
                 if viccard:
-                    vic.output(
-                        "Discarding %s due to %s's Taxman" % (viccard.name, player.name)
-                    )
+                    vic.output("Discarding %s due to %s's Taxman" % (viccard.name, player.name))
                     player.output("%s discarded a %s" % (vic.name, viccard.name))
                     vic.discard_card(viccard)
                 else:
@@ -46,9 +44,7 @@ class Card_Taxman(Card.Card):
 ###############################################################################
 class Test_Taxman(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Taxman"], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Taxman"].remove()

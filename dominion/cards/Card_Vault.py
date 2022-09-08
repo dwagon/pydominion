@@ -28,8 +28,7 @@ class Card_Vault(Card.Card):
         for plr in game.player_list():
             if plr != player:
                 plr.output(
-                    "Due to %s's Vault you may discard two cards. If you do, draw one"
-                    % player.name
+                    "Due to %s's Vault you may discard two cards. If you do, draw one" % player.name
                 )
                 plrdiscards = plr.plr_discard_cards(num=2)
                 if len(plrdiscards) == 2:

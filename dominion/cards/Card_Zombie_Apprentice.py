@@ -11,9 +11,7 @@ class Card_Zombie_Apprentice(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ZOMBIE]
         self.base = Game.NOCTURNE
-        self.desc = (
-            "You may trash an Action card from your hand for +3 Cards and +1 Action."
-        )
+        self.desc = "You may trash an Action card from your hand for +3 Cards and +1 Action."
         self.name = "Zombie Apprentice"
         self.cost = 3
         self.insupply = False

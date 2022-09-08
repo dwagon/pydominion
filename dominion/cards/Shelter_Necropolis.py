@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Necropolis(Card.Card):
-    """ Necropolis """
+    """Necropolis"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SHELTER]
@@ -22,14 +23,15 @@ class Card_Necropolis(Card.Card):
 
 ###############################################################################
 class Test_Necropolis(unittest.TestCase):
-    """ Test Necropolis """
+    """Test Necropolis"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shelters"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        """ Test Play """
+        """Test Play"""
         self.plr.hand.set("Necropolis", "Estate")
         card = self.plr.hand["Necropolis"]
         self.assertEqual(self.plr.get_actions(), 1)

@@ -12,9 +12,7 @@ class Card_OpulentCastle(CastleCard):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
         self.base = Game.EMPIRES
         self.cost = 7
-        self.desc = (
-            """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
-        )
+        self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
         self.victory = 3
         self.name = "Opulent Castle"
 

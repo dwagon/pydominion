@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Tide_Pools(Card.Card):
-    """ Tide_Pools """
+    """Tide_Pools"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
@@ -25,7 +26,8 @@ class Card_Tide_Pools(Card.Card):
 
 ###############################################################################
 class Test_Tide_Pools(unittest.TestCase):
-    """ Test Tide_Pools """
+    """Test Tide_Pools"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Tide Pools"])
         self.g.start_game()

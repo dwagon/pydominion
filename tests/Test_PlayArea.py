@@ -42,7 +42,7 @@ class Test_PlayArea(unittest.TestCase):
         self.assertNotEqual(s, ["a"])
 
     def test_top_card(self):
-        """ Test the top_card() method"""
+        """Test the top_card() method"""
         s = PlayArea.PlayArea("name", "game", ["a", "b", "c"])
         s.addToTop("z")
         self.assertEqual(s.top_card(), "z")
@@ -50,7 +50,7 @@ class Test_PlayArea(unittest.TestCase):
         self.assertEqual(nxt, "z")
 
     def test_iter(self):
-        """ Test the iterator """
+        """Test the iterator"""
         bits = ["a", "b", "c", "d"]
         s = PlayArea.PlayArea("name", "game", bits)
         found = set()

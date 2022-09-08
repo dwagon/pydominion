@@ -19,10 +19,10 @@ class Card_Modify(Card.Card):
         tc = player.plr_trash_card(force=True)
         cost = tc[0].cost + 2
         choice = player.plr_choose_options(
-                "Pick one?",
-                ("+1 Card and +1 Action", "card"),
-                (f"Gain a card costing up to {cost}", "gain")
-                )
+            "Pick one?",
+            ("+1 Card and +1 Action", "card"),
+            (f"Gain a card costing up to {cost}", "gain"),
+        )
         if choice == "card":
             player.pickup_card()
             player.add_actions(1)

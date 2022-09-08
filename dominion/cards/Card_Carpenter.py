@@ -33,7 +33,7 @@ class Card_Carpenter(Card.Card):
             player.plr_gain_card(4)
         else:
             tr = player.plr_trash_card()
-            player.plr_gain_card(tr[0].cost+2)
+            player.plr_gain_card(tr[0].cost + 2)
 
 
 ###############################################################################

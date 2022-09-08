@@ -11,7 +11,9 @@ class Way_Butterfly(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = "You may return this to its pile to gain a card costing exactly $1 more than it."
+        self.desc = (
+            "You may return this to its pile to gain a card costing exactly $1 more than it."
+        )
         self.name = "Way of the Butterfly"
 
     def special_way(self, game, player, card):

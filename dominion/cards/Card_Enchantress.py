@@ -32,9 +32,7 @@ class Card_Enchantress(Card.Card):
 ###############################################################################
 class Test_Enchantress(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Enchantress", "Remodel", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Enchantress"].remove()

@@ -14,7 +14,9 @@ class Card_Vassal(Card.Card):
         self.name = "Vassal"
         self.coin = 2
         self.cost = 3
-        self.desc = "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
+        self.desc = (
+            "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
+        )
 
     def special(self, game, player):
         card = player.next_card()

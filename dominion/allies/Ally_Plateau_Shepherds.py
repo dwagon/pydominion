@@ -23,16 +23,12 @@ class Ally_Plateau_Shepherds(Ally.Ally):
 ###############################################################################
 class Test_Plateau_Shepherds(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1,
-            ally="Plateau Shepherds",
-            initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Plateau Shepherds", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_score_less(self):
-        """ When we have less cards than favors """
+        """When we have less cards than favors"""
         self.plr.hand.set("Estate", "Estate")
         self.plr.deck.set("Silver", "Silver")
         self.plr.discardpile.set()
@@ -41,7 +37,7 @@ class Test_Plateau_Shepherds(unittest.TestCase):
         self.assertEqual(score["Plateau Shepherds"], 4)
 
     def test_score_more(self):
-        """ When we have more cards than favors """
+        """When we have more cards than favors"""
         self.plr.hand.set("Estate", "Estate", "Estate", "Estate")
         self.plr.deck.set("Silver", "Silver")
         self.plr.discardpile.set()

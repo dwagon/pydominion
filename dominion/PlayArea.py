@@ -6,7 +6,8 @@ from dominion import Card
 
 ###############################################################################
 class PlayArea:
-    """ Area of play - such as a deck of cards """
+    """Area of play - such as a deck of cards"""
+
     def __init__(self, name="", game=None, initial=None):
         self.name = name
         self.game = game
@@ -52,12 +53,12 @@ class PlayArea:
 
     ###########################################################################
     def add(self, card):
-        """ Add a carx to the area """
+        """Add a carx to the area"""
         self._cards.insert(0, card)
 
     ###########################################################################
     def remove(self, card):
-        """ Remove a card from the area """
+        """Remove a card from the area"""
         try:
             self._cards.remove(card)
         except ValueError:

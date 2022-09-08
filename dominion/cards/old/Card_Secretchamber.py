@@ -27,9 +27,7 @@ class Card_Secretchamber(Card.Card):
         )
         player.add_coins(len(todiscard))
 
-    def hook_underAttack(
-        self, game, player, attacker
-    ):  # pylint: disable=unused-argument
+    def hook_underAttack(self, game, player, attacker):  # pylint: disable=unused-argument
         """TODO"""
         player.output(f"Under attack from {attacker.name}")
         if not self.doRevealCard(player):
@@ -66,9 +64,7 @@ class Test_Secretchamber(unittest.TestCase):
     """Test Secret Chamber"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"]
-        )
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Secret Chamber", "Militia"])
         self.g.start_game()
         self.plr, self.att = self.g.player_list()
         self.card = self.g["Secret Chamber"].remove()

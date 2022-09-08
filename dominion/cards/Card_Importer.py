@@ -27,9 +27,7 @@ class Card_Importer(Card.Card):
 class Test_Importer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1,
-            initcards=["Importer", "moat"],
-            ally="Plateau Shepherds"
+            numplayers=1, initcards=["Importer", "moat"], ally="Plateau Shepherds"
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
@@ -38,9 +36,7 @@ class Test_Importer(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.assertEqual(
-            self.plr.get_favors(), 1 + 4
-        )  # One for using liaison, 4 for this card
+        self.assertEqual(self.plr.get_favors(), 1 + 4)  # One for using liaison, 4 for this card
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.plr.start_turn()
