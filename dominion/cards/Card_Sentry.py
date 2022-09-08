@@ -22,9 +22,7 @@ class Card_Sentry(Card.Card):
 
     def special(self, game, player):
         cards = [player.next_card() for _ in range(2)]
-        player.output(
-            "Look at the top two cards of your deck. Trash, discard or move to deck"
-        )
+        player.output("Look at the top two cards of your deck. Trash, discard or move to deck")
         player.output(f"Trash any/all of {self.names(cards)}")
         to_trash = player.plr_trash_card(cardsrc=cards, num=2)
         cards = [_ for _ in cards if _ not in to_trash]

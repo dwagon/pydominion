@@ -11,18 +11,14 @@ class Card_Shepherd(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.NOCTURNE
-        self.desc = (
-            "+1 action; Discard any number of victory cards +2 cards per card discarded"
-        )
+        self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = "Shepherd"
         self.cost = 2
         self.actions = 1
         self.heirloom = "Pasture"
 
     def special(self, game, player):
-        todiscard = player.plr_discard_cards(
-            num=0, anynum=True, types={Card.TYPE_VICTORY: True}
-        )
+        todiscard = player.plr_discard_cards(num=0, anynum=True, types={Card.TYPE_VICTORY: True})
         player.pickup_cards(2 * len(todiscard))
 
 

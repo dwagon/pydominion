@@ -11,7 +11,9 @@ class Card_Traderoute(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.PROSPERITY
-        self.desc = "+1 Buy; Trash a card from your hand. +1 Coin per Coin token on the Trade Route mat."
+        self.desc = (
+            "+1 Buy; Trash a card from your hand. +1 Coin per Coin token on the Trade Route mat."
+        )
         self.name = "Trade Route"
         self.cost = 3
         self.buys = 1

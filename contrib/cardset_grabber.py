@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 
 ##############################################################################
 def get_html(url: str) -> str:
-    """ Get the HTML from the url """
+    """Get the HTML from the url"""
     req = requests.get(url)
     req.raise_for_status()
     return req.text
@@ -17,10 +17,10 @@ def get_html(url: str) -> str:
 
 ##############################################################################
 def get_set_name(item) -> Optional[str]:
-    """ Get the name of the set """
+    """Get the name of the set"""
     for kid in item.descendants:
         if kid.name is None:
-            if kid.startswith(' ') and kid.endswith(' '):
+            if kid.startswith(" ") and kid.endswith(" "):
                 return kid.text.strip()
     print(f"Couldn't find set name in {item}", file=sys.stderr)
     return None
@@ -28,13 +28,13 @@ def get_set_name(item) -> Optional[str]:
 
 ##############################################################################
 def get_card_name(item) -> Optional[str]:
-    """ Get the card name """
+    """Get the card name"""
     return item.text.strip()
 
 
 ##############################################################################
 def save_set(name, cards):
-    """ Save the set """
+    """Save the set"""
     fname = name.replace(" ", "_")
     fname = name.replace("&", "_and_")
     fname = name.replace("'", "")
@@ -44,18 +44,18 @@ def save_set(name, cards):
             card = card.strip()
             if not card:
                 continue
-            if card in ("images", ):
+            if card in ("images",):
                 continue
             outfh.write(f"{card}\n")
 
 
 ##############################################################################
 def parse_table(table):
-    """ Parse the table recommended sets of 10 section """
+    """Parse the table recommended sets of 10 section"""
     cards = []
     set_name = None
     for item in table.children:
-        if not set_name and item.name == 'tr':
+        if not set_name and item.name == "tr":
             set_name = get_set_name(item)
     if not set_name:
         return
@@ -66,7 +66,7 @@ def parse_table(table):
 
 ##############################################################################
 def get_setname():
-    """ Process args to get setname """
+    """Process args to get setname"""
     parser = argparse.ArgumentParser(description="Get Recommended Sets")
     parser.add_argument("setname")
     args = parser.parse_args()
@@ -75,7 +75,7 @@ def get_setname():
 
 ##############################################################################
 def main():
-    """ Main """
+    """Main"""
     setname = get_setname()
     url = f"http://wiki.dominionstrategy.com/index.php/{setname.title()}"
     try:
@@ -85,12 +85,12 @@ def main():
         return
 
     soup = BeautifulSoup(html, "html.parser")
-    for h2 in soup.find_all('h2'):
+    for h2 in soup.find_all("h2"):
         if "Recommended sets " in h2.text:
             for item in h2.next_elements:
                 if item.name == "table":
                     parse_table(item)
-                if item.name == 'h2':
+                if item.name == "h2":
                     break
 
 

@@ -45,7 +45,7 @@ class Test_Distant_Shore(unittest.TestCase):
         actions = self.plr.get_actions()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsz+2)
+        self.assertEqual(self.plr.hand.size(), hndsz + 2)
         self.assertEqual(self.plr.get_actions(), actions)
         self.assertIn("Estate", self.plr.discardpile)
         self.assertEqual(self.plr.get_score_details()["Distant Shore"], 2)

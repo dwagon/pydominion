@@ -42,17 +42,13 @@ class Card_Noble_Brigand(Card.Card):
             for card in cards:
                 if card == ans:
                     victim.trash_card(card)
-                    victim.output(
-                        f"{player.name}'s Noble Brigand trashed your {card.name}"
-                    )
+                    victim.output(f"{player.name}'s Noble Brigand trashed your {card.name}")
                     player.output(f"Stole {card.name} from {victim.name}")
                     game.trashpile.remove(ans)
                     card.player = player
                     player.add_card(ans)
                 else:
-                    victim.output(
-                        f"{player.name}'s Noble Brigand discarded your {card.name}"
-                    )
+                    victim.output(f"{player.name}'s Noble Brigand discarded your {card.name}")
                     victim.discard_card(card)
 
     @classmethod

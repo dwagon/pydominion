@@ -60,7 +60,7 @@ class Test_Broker(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 2 + 2)
 
     def test_play_nothing(self):
-        """ Play but select nothing to trash """
+        """Play but select nothing to trash"""
         self.plr.hand.set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]

@@ -20,9 +20,7 @@ class Card_SecretCave(Card.Card):
         self._discarded = False
 
     def special(self, game, player):
-        dcs = player.plr_discard_cards(
-            num=3, prompt="If you discard 3 cards next turn gain 3 Coin"
-        )
+        dcs = player.plr_discard_cards(num=3, prompt="If you discard 3 cards next turn gain 3 Coin")
         if dcs:
             self._discarded = True
 

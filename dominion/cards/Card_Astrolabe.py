@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Astrolabe(Card.Card):
-    """ Astrolabe """
+    """Astrolabe"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_DURATION]
@@ -26,7 +27,8 @@ class Card_Astrolabe(Card.Card):
 
 ###############################################################################
 class Test_Astrolabe(unittest.TestCase):
-    """ Test Astrolabe """
+    """Test Astrolabe"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Astrolabe"])
         self.g.start_game()

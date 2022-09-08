@@ -62,9 +62,7 @@ class KnightCard(Card.Card):
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)
             else:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
                 victim.discard_card(crd)
         if not cards:
             return
@@ -87,9 +85,7 @@ class KnightCard(Card.Card):
 
         for crd in cards:
             if crd != to_trash:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
                 victim.discard_card(crd)
 
 

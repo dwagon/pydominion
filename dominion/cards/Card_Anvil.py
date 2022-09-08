@@ -44,7 +44,7 @@ class Test_Anvil(unittest.TestCase):
         self.card = self.g["Anvil"].remove()
 
     def test_gaincard(self):
-        """ Gain a card """
+        """Gain a card"""
         self.plr.hand.set("Copper", "Gold", "Estate")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard Copper", "Get Moat"]

@@ -10,9 +10,7 @@ class Way_Turtle(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = (
-            "Set this aside. If you did, play it at the start of your next turn."
-        )
+        self.desc = "Set this aside. If you did, play it at the start of your next turn."
         self.name = "Way of the Turtle"
         self.actions = 2
 

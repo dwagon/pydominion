@@ -24,8 +24,7 @@ class Card_Contraband(Card.Card):
         for cp in cps:
             options.append((cp, cp))
         forbid = plr.plr_choose_options(
-            "Contraband: Pick a stack that %s can't buy this turn" % player.name,
-            *options
+            "Contraband: Pick a stack that %s can't buy this turn" % player.name, *options
         )
         player.output("Forbidden to buy %s" % forbid)
         player.forbidden_to_buy.append(forbid)

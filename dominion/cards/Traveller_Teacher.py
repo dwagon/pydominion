@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Teacher(Card.Card):
-    """ Teacher """
+    """Teacher"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
@@ -34,13 +35,14 @@ class Card_Teacher(Card.Card):
                 player.place_token(tkn, stacks[0].name)
 
     def which_stacks(self, game, player):
-        """ Action piles which don't have the token """
+        """Action piles which don't have the token"""
         return [ap for ap in game.getActionPiles() if not player.which_token(ap.name)]
 
 
 ###############################################################################
 class Test_Teacher(unittest.TestCase):
-    """ Test Teacher """
+    """Test Teacher"""
+
     def setUp(self):
         initcards = [
             "Page",
@@ -60,7 +62,7 @@ class Test_Teacher(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        """ Play the card """
+        """Play the card"""
         self.plr.test_input = ["Select Cellar", "Select Chapel", "Select Moat", "Select Village"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.tokens["+1 Card"], "Cellar")
@@ -69,7 +71,7 @@ class Test_Teacher(unittest.TestCase):
         self.assertEqual(self.plr.tokens["+1 Coin"], "Village")
 
     def test_which_stacks(self):
-        """ Test which_stacks() """
+        """Test which_stacks()"""
         orig_output = self.card.which_stacks(self.g, self.plr)
         for c in orig_output:
             if c.name == "Gardens":

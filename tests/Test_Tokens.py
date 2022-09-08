@@ -7,7 +7,8 @@ from dominion import Game
 
 ###############################################################################
 class TestToken(unittest.TestCase):
-    """ Test suite for Tokens """
+    """Test suite for Tokens"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()

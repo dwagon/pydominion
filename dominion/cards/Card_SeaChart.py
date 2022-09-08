@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Sea_Chart(Card.Card):
-    """ Sea Chart"""
+    """Sea Chart"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
@@ -20,19 +21,20 @@ class Card_Sea_Chart(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        """ Sea Chart Special"""
+        """Sea Chart Special"""
         nextcard = player.deck.top_card()
         player.reveal_card(nextcard)
         if nextcard.name in player.played:
             player.output(f"Next card is {nextcard.name}, same as played so moving to hand")
-            player.move_card(nextcard, 'hand')
+            player.move_card(nextcard, "hand")
         else:
             player.output(f"Next card is {nextcard.name} which hasn't been played")
 
 
 ###############################################################################
 class Test_Sea_Chart(unittest.TestCase):
-    """ Test Sea_Chart """
+    """Test Sea_Chart"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sea Chart", "Moat"])
         self.g.start_game()

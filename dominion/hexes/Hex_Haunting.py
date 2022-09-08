@@ -10,9 +10,7 @@ class Hex_Haunting(Hex.Hex):
         Hex.Hex.__init__(self)
         self.cardtype = Card.TYPE_HEX
         self.base = Game.NOCTURNE
-        self.desc = (
-            "If you have at least 4 cards in hand, put one of them onto your deck."
-        )
+        self.desc = "If you have at least 4 cards in hand, put one of them onto your deck."
         self.name = "Haunting"
         self.purchasable = False
 

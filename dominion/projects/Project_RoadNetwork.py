@@ -17,9 +17,7 @@ class Project_RoadNetwork(Project.Project):
         if card.isVictory() and owner != player:
             owner.pickup_cards(1)
             owner.output(
-                "Road Network gives card due to {} picking up {}".format(
-                    player.name, card.name
-                )
+                "Road Network gives card due to {} picking up {}".format(player.name, card.name)
             )
 
 

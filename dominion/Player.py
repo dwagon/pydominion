@@ -18,7 +18,8 @@ from dominion.ProjectPile import ProjectPile
 ###############################################################################
 ###############################################################################
 class Player:
-    """ All things player - generally subclassed for interface reasons """
+    """All things player - generally subclassed for interface reasons"""
+
     def __init__(self, game, name, heirlooms=None, use_shelters=False):
         self.game = game
         self.name = name
@@ -171,7 +172,7 @@ class Player:
 
     ###########################################################################
     def flip_journey_token(self):
-        """ Flip a journey token - and return its new state """
+        """Flip a journey token - and return its new state"""
         if self.journey_token:
             self.journey_token = False
         else:
@@ -180,7 +181,7 @@ class Player:
 
     ###########################################################################
     def receive_hex(self, hx=None):
-        """ Receive a hex """
+        """Receive a hex"""
         if hx is None:
             hx = self.game.receive_hex()
         self.output(f"Received {hx} as a hex")
@@ -195,7 +196,7 @@ class Player:
 
     ###########################################################################
     def receive_boon(self, boon=None, discard=True):
-        """ Receive a boon """
+        """Receive a boon"""
         if boon is None:
             boon = self.game.receive_boon()
         self.output(f"Received {boon} as a boon")
@@ -356,15 +357,15 @@ class Player:
     def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
         piles = {
-                "discard": self.discardpile,
-                "discardpile": self.discardpile,
-                "hand": self.hand,
-                "deck": self.deck,
-                "played": self.played,
-                "duration": self.durationpile,
-                "reserve": self.reserve,
-                "exilepile": self.exilepile,
-                }
+            "discard": self.discardpile,
+            "discardpile": self.discardpile,
+            "hand": self.hand,
+            "deck": self.deck,
+            "played": self.played,
+            "duration": self.durationpile,
+            "reserve": self.reserve,
+            "exilepile": self.exilepile,
+        }
         curr_loc = card.location
         if curr_loc in piles:
             piles[curr_loc].remove(card)
@@ -383,14 +384,14 @@ class Player:
     def add_card(self, card: Card, pile: Union[str, PlayArea] = "discard") -> Card:
         """Add an existing card to a new location"""
         piles = {
-                "discard": self.discardpile,
-                "discardpile": self.discardpile,
-                "hand": self.hand,
-                "deck": self.deck,
-                "played": self.played,
-                "duration": self.durationpile,
-                "reserve": self.reserve,
-                "exile": self.exilepile,
+            "discard": self.discardpile,
+            "discardpile": self.discardpile,
+            "hand": self.hand,
+            "deck": self.deck,
+            "played": self.played,
+            "duration": self.durationpile,
+            "reserve": self.reserve,
+            "exile": self.exilepile,
         }
         if not card:  # pragma: no cover
             return None
@@ -412,7 +413,7 @@ class Player:
 
     ###########################################################################
     def discard_card(self, card, source=None, hook=True):
-        """ Discard a card """
+        """Discard a card"""
         assert isinstance(card, Card.Card)
         if card in self.hand:
             self.hand.remove(card)
@@ -753,7 +754,7 @@ class Player:
 
     ###########################################################################
     def _generate_prompt(self) -> str:
-        """ Return the prompt to give to the user """
+        """Return the prompt to give to the user"""
         status = f"Actions={self.actions} Buys={self.buys}"
         if self.coin:
             status += f" Coins={self.coin}"
@@ -774,7 +775,7 @@ class Player:
 
     ###########################################################################
     def turn(self):
-        """ Have a turn as the player """
+        """Have a turn as the player"""
         self.turn_number += 1
         self.output(f"{'#' * 20} Turn {self.turn_number} {'#' * 20}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
@@ -1231,7 +1232,7 @@ class Player:
 
     ###########################################################################
     def card_benefits(self, card):
-        """ Gain the benefits of the card being played - including special() """
+        """Gain the benefits of the card being played - including special()"""
         self.add_actions(card.actions)
         self.coin += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
@@ -1437,7 +1438,7 @@ class Player:
 
     ###########################################################################
     def has_defense(self, attacker: Player, verbose=True):
-        """ Does this player have a defense against attack """
+        """Does this player have a defense against attack"""
         for crd in self.hand:
             if crd.has_defense():
                 if verbose:
@@ -1447,17 +1448,17 @@ class Player:
 
     ###########################################################################
     def get_potions(self) -> int:
-        """ Return the number of potions the player has """
+        """Return the number of potions the player has"""
         return self.potions
 
     ###########################################################################
     def get_coins(self) -> int:
-        """ Return the number of coins the player has """
+        """Return the number of coins the player has"""
         return self.coin
 
     ###########################################################################
     def get_coffers(self) -> int:
-        """ Return the number of coffers the player has """
+        """Return the number of coffers the player has"""
         return self.coffer
 
     ###########################################################################
@@ -1558,7 +1559,7 @@ class Player:
 
     ###########################################################################
     def perform_event(self, evnt: EventPile) -> bool:
-        """ Perform an event """
+        """Perform an event"""
         try:
             assert isinstance(evnt, EventPile)
         except AssertionError:
@@ -1655,7 +1656,7 @@ class Player:
 
     ###########################################################################
     def count_cards(self):
-        """ How many cards does the player have """
+        """How many cards does the player have"""
         count = {}
         for name, stack in self.stacklist:
             count[name] = len(stack)
@@ -1703,7 +1704,7 @@ class Player:
 
     ###########################################################################
     def coststr(self, card) -> str:
-        """ Generate the string showing the cost of the card """
+        """Generate the string showing the cost of the card"""
         cost = []
         cost.append(f"{self.card_cost(card)} Coins")
         if card.debtcost:

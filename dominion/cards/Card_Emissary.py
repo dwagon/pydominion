@@ -11,7 +11,9 @@ class Card_Emissary(Card.Card):
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
         self.base = Game.ALLIES
         self.name = "Emissary"
-        self.desc = "+3 Cards; If this made you shuffle (at least one card), +1 Action and +2 Favors."
+        self.desc = (
+            "+3 Cards; If this made you shuffle (at least one card), +1 Action and +2 Favors."
+        )
         self.cards = 3
         self.cost = 5
 

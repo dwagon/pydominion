@@ -19,15 +19,11 @@ class Hex_Locusts(Hex.Hex):
     def special(self, game, player):
         nxt = player.next_card()
         if nxt.name in ("Copper", "Estate"):
-            player.output(
-                "Gaining a curse because your next card is {}".format(nxt.name)
-            )
+            player.output("Gaining a curse because your next card is {}".format(nxt.name))
             player.gain_card("Curse")
         else:
             player.output(
-                "Gain a card costing {} because your next card is {}".format(
-                    nxt.cost - 1, nxt.name
-                )
+                "Gain a card costing {} because your next card is {}".format(nxt.cost - 1, nxt.name)
             )
             types = {
                 Card.TYPE_VICTORY: nxt.isVictory(),

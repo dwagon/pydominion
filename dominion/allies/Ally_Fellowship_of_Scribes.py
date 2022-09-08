@@ -37,9 +37,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 class Test_Fellowship_of_Scribes(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1,
-            ally="Fellowship of Scribes",
-            initcards=["Festival", "Underling"]
+            numplayers=1, ally="Fellowship of Scribes", initcards=["Festival", "Underling"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)

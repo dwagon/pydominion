@@ -88,13 +88,9 @@ class Card:
         if hasattr(self, "coins"):
             raise NotImplementedError(f"{self.__class__.__name__} has coins not coin")
         if hasattr(self, "action"):
-            raise NotImplementedError(
-                f"{self.__class__.__name__} has action not actions"
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has action not actions")
         if hasattr(self, "potions"):
-            raise NotImplementedError(
-                f"{self.__class__.__name__} has potions not potion"
-            )
+            raise NotImplementedError(f"{self.__class__.__name__} has potions not potion")
         if hasattr(self, "card"):
             raise NotImplementedError(f"{self.__class__.__name__} has card not cards")
         if hasattr(self, "buy"):

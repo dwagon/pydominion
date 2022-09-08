@@ -11,9 +11,7 @@ class Card_Hoard(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.PROSPERITY
-        self.desc = (
-            "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
-        )
+        self.desc = "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
         self.name = "Hoard"
         self.playable = False
         self.coin = 2

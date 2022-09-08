@@ -30,8 +30,7 @@ class Card_Swindler(Card.Card):
                 prompt="Pick which card %s will get" % victim.name,
             )
             victim.output(
-                "%s picked a %s to replace your trashed %s"
-                % (player.name, c.name, card.name)
+                "%s picked a %s to replace your trashed %s" % (player.name, c.name, card.name)
             )
 
 

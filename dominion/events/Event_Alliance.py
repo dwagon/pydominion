@@ -9,9 +9,7 @@ class Event_Alliance(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = (
-            "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
-        )
+        self.desc = "Gain a Province, a Duchy, an Estate, a Gold, a Silver, and a Copper."
         self.name = "Alliance"
         self.cost = 10
 
@@ -27,9 +25,7 @@ class Event_Alliance(Event.Event):
 ###############################################################################
 class Test_Alliance(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, eventcards=["Alliance"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=1, eventcards=["Alliance"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g.events["Alliance"]

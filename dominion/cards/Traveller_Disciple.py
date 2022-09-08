@@ -11,9 +11,7 @@ class Card_Disciple(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
         self.base = Game.ADVENTURE
-        self.desc = (
-            """You may play an Action card from your hand twice. Gain a copy of it"""
-        )
+        self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = "Disciple"
         self.purchasable = False
         self.numcards = 5

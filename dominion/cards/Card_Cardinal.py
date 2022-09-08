@@ -45,7 +45,7 @@ class Test_Cardinal(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        """ Test play """
+        """Test play"""
         self.oth.deck.set("Silver", "Village")
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.oth.discardpile)

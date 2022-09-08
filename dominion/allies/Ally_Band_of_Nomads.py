@@ -37,9 +37,7 @@ class Ally_Band_Nomads(Ally.Ally):
 ###############################################################################
 class Test_Band_Nomads(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, ally="Band of Nomads", initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Band of Nomads", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

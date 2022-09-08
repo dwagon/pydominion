@@ -136,9 +136,7 @@ class BotPlayer(Player):
         sys.stderr.write(
             f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}"
         )
-        sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
-        )
+        sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n")
 
 
 # EOF

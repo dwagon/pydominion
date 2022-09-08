@@ -10,7 +10,9 @@ class Ally_Circle_of_Witches(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Game.ALLIES
-        self.desc = "After playing a Liaison, you may spend 3 Favors to have each other player gain a curse"
+        self.desc = (
+            "After playing a Liaison, you may spend 3 Favors to have each other player gain a curse"
+        )
         self.required_cards = ["Curse"]
         self.name = "Circle of Witches"
 

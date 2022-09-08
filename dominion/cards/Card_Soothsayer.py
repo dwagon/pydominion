@@ -11,7 +11,9 @@ class Card_Soothsayer(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
         self.base = Game.GUILDS
-        self.desc = "Gain a Gold. Each other player gains a Curse. Each player who did draws a card."
+        self.desc = (
+            "Gain a Gold. Each other player gains a Curse. Each player who did draws a card."
+        )
         self.required_cards = ["Curse"]
         self.name = "Soothsayer"
         self.cost = 5

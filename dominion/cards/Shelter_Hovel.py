@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Hovel(Card.Card):
-    """ Hovel """
+    """Hovel"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_REACTION, Card.TYPE_SHELTER]
@@ -27,14 +28,17 @@ class Card_Hovel(Card.Card):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
-    """ botresponse """
+def botresponse(
+    player, kind, args=None, kwargs=None
+):  # pragma: no cover, pylint: disable=unused-argument
+    """botresponse"""
     return True
 
 
 ###############################################################################
 class Test_Hovel(unittest.TestCase):
-    """ Test Hovel """
+    """Test Hovel"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shelters"])
         self.g.start_game()
@@ -42,7 +46,7 @@ class Test_Hovel(unittest.TestCase):
         self.card = self.g["Hovel"].remove()
 
     def test_trash(self):
-        """ Test Trashing """
+        """Test Trashing"""
         self.plr.hand.set("Hovel")
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")

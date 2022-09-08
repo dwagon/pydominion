@@ -39,9 +39,7 @@ class Card_Messenger(Card.Card):
             for plr in game.player_list():
                 if plr != player:
                     plr.gain_card(newcard=c)
-                    plr.output(
-                        "Gained a %s from %s's Messenger" % (c.name, player.name)
-                    )
+                    plr.output("Gained a %s from %s's Messenger" % (c.name, player.name))
 
 
 ###############################################################################

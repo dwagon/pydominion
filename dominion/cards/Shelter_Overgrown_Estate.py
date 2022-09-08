@@ -7,7 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Overgrown_Estate(Card.Card):
-    """ Overgrown Estate """
+    """Overgrown Estate"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_SHELTER]
@@ -24,14 +25,15 @@ class Card_Overgrown_Estate(Card.Card):
 
 ###############################################################################
 class Test_Overgrown_Estate(unittest.TestCase):
-    """ Test Overgrown Estate """
+    """Test Overgrown Estate"""
+
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shelters"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        """ Test Play """
+        """Test Play"""
         self.plr.deck.set("Province")
         self.plr.hand.set("Overgrown Estate")
         card = self.plr.hand["Overgrown Estate"]

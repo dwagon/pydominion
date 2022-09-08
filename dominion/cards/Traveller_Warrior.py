@@ -33,15 +33,11 @@ class Card_Warrior(Card.Card):
             for _ in range(count):
                 c = victim.next_card()
                 if c.cost in (3, 4) and not c.potcost:
-                    victim.output(
-                        "Trashing %s due to %s's Warrior" % (c.name, player.name)
-                    )
+                    victim.output("Trashing %s due to %s's Warrior" % (c.name, player.name))
                     player.output("Trashing %s from %s" % (c.name, victim.name))
                     victim.trash_card(c)
                 else:
-                    victim.output(
-                        "Discarding %s due to %s's Warrior" % (c.name, player.name)
-                    )
+                    victim.output("Discarding %s due to %s's Warrior" % (c.name, player.name))
                     victim.add_card(c, "discard")
 
     def hook_discard_this_card(self, game, player, source):

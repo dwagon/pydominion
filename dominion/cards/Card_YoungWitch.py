@@ -9,7 +9,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_YoungWitch(Card.Card):
-    """ Young Witch """
+    """Young Witch"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
@@ -52,12 +53,13 @@ class Card_YoungWitch(Card.Card):
 
 ###############################################################################
 class Test_YoungWitch(unittest.TestCase):
-    """ Test Young Witch """
+    """Test Young Witch"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
             initcards=["Young Witch"],
-            badcards=["Secret Chamber", "Duchess", "Caravan Guard"]
+            badcards=["Secret Chamber", "Duchess", "Caravan Guard"],
         )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()

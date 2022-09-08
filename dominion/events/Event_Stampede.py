@@ -9,9 +9,7 @@ class Event_Stampede(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = (
-            "If you have 5 or fewer cards in play, gain 5 Horses onto your deck."
-        )
+        self.desc = "If you have 5 or fewer cards in play, gain 5 Horses onto your deck."
         self.name = "Stampede"
         self.cost = 5
         self.required_cards = [("Card", "Horse")]

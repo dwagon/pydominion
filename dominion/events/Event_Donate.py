@@ -21,9 +21,7 @@ class Event_Donate(Event.Event):
             for card in area:
                 player.add_card(card, "hand")
                 area.remove(card)
-        player.plr_trash_card(
-            anynum=True, prompt="Donate allows you to trash any cards"
-        )
+        player.plr_trash_card(anynum=True, prompt="Donate allows you to trash any cards")
         player.discard_hand()
         player.pickup_cards(5)
 
