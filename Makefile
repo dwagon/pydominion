@@ -4,7 +4,7 @@ VENV_HOME := ${WORKON_HOME}/pydominion
 
 all:
 
-pex:    
+pex:
 	python3 ./setup.py bdist_pex --pex-args '-vv'
 
 
@@ -15,4 +15,3 @@ venv:
 
 clean:
 	/bin/rm -rf ${VENV_HOME}
-

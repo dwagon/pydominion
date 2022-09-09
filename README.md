@@ -47,7 +47,7 @@ optional arguments:
 
 To play a random game:
 ```
-./Game.py 
+./Game.py
 ```
 
 or try one of the official cardsets
