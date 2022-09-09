@@ -1,5 +1,6 @@
 -r requirements.txt
 black
+pre-commit
 pex
 pylint
 pytest>=4.4.0
