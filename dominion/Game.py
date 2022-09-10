@@ -304,7 +304,9 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.artifacts:
             return
-        self.artifacts = self._load_non_kingdom_cards("Artifact", None, None, ArtifactPile)
+        self.artifacts = self._load_non_kingdom_cards(
+            "Artifact", None, None, ArtifactPile
+        )
 
     ###########################################################################
     def _load_projects(self):
@@ -428,7 +430,9 @@ class Game:  # pylint: disable=too-many-public-methods
     def _load_decks(self, initcards, numstacks: int):
         """Determine what cards we are using this game"""
         for card in self._base_cards:
-            self._use_cardpile(self._base_cards[:], card, force=True, cardtype="BaseCard")
+            self._use_cardpile(
+                self._base_cards[:], card, force=True, cardtype="BaseCard"
+            )
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -574,25 +578,37 @@ class Game:  # pylint: disable=too-many-public-methods
             "Heirloom",
             "Shelter",
         ):
-            mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, "cards", "Card_")
+            mapping[prefix] = self.getSetCardClasses(
+                prefix, self.cardpath, "cards", "Card_"
+            )
             if self.oldcards:
                 oldpath = os.path.join(self.cardpath, "old")
-                mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, "cards", "Card_"))
-        mapping["Event"] = self.getSetCardClasses("Event", self.eventpath, "events", "Event_")
+                mapping[prefix].update(
+                    self.getSetCardClasses(prefix, oldpath, "cards", "Card_")
+                )
+        mapping["Event"] = self.getSetCardClasses(
+            "Event", self.eventpath, "events", "Event_"
+        )
         mapping["Way"] = self.getSetCardClasses("Way", self.waypath, "ways", "Way_")
         mapping["Landmark"] = self.getSetCardClasses(
             "Landmark", self.landmarkpath, "landmarks", "Landmark_"
         )
-        mapping["Boon"] = self.getSetCardClasses("Boon", self.boonpath, "boons", "Boon_")
+        mapping["Boon"] = self.getSetCardClasses(
+            "Boon", self.boonpath, "boons", "Boon_"
+        )
         mapping["Hex"] = self.getSetCardClasses("Hex", self.hexpath, "hexes", "Hex_")
-        mapping["State"] = self.getSetCardClasses("State", self.statepath, "states", "State_")
+        mapping["State"] = self.getSetCardClasses(
+            "State", self.statepath, "states", "State_"
+        )
         mapping["Artifact"] = self.getSetCardClasses(
             "Artifact", self.artifactpath, "artifacts", "Artifact_"
         )
         mapping["Project"] = self.getSetCardClasses(
             "Project", self.projectpath, "projects", "Project_"
         )
-        mapping["Ally"] = self.getSetCardClasses("Ally", self.allypath, "allies", "Ally_")
+        mapping["Ally"] = self.getSetCardClasses(
+            "Ally", self.allypath, "allies", "Ally_"
+        )
         return mapping
 
     ###########################################################################
@@ -726,30 +742,30 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def print_player_state(self, plr: Player) -> None:
         """Print the player state for debugging"""
-        print(f"\n{plr.name}'s state: %s" % (", ".join([s.name for s in plr.states])))
-        print(f"  {plr.name}'s artifacts: %s" % (", ".join([_.name for _ in plr.artifacts])))
-        print(f"  {plr.name}'s projects: %s" % (", ".join([_.name for _ in plr.projects])))
-        print(f"  {plr.name}'s hand: %s" % (", ".join([_.name for _ in plr.hand])))
-        print(f"  {plr.name}'s deck: %s" % (", ".join([_.name for _ in plr.deck])))
-        print(f"  {plr.name}'s discard: %s" % (", ".join([_.name for _ in plr.discardpile])))
-        print(f"  {plr.name}'s defer: %s" % (", ".join([_.name for _ in plr.deferpile])))
-        print(f"  {plr.name}'s duration: %s" % (", ".join([_.name for _ in plr.durationpile])))
-        print(f"  {plr.name}'s exile: %s" % (", ".join([_.name for _ in plr.exilepile])))
-        print(f"  {plr.name}'s reserve: %s" % (", ".join([_.name for _ in plr.reserve])))
-        print(f"  {plr.name}'s played: %s" % (", ".join([_.name for _ in plr.played])))
-        print(f"  {plr.name}'s messages:")
+        print("\n")
+        print(f"{plr.name} --------------------------")
+        print(f"  state: {', '.join([_.name for _ in plr.states])}")
+        print(f"  artifacts: {', '.join([_.name for _ in plr.artifacts])}")
+        print(f"  projects: {', '.join([_.name for _ in plr.projects])}")
+        print(f"  hand: {', '.join([_.name for _ in plr.hand])}")
+        print(f"  deck: {', '.join([_.name for _ in plr.deck])}")
+        print(f"  discard: {', '.join([_.name for _ in plr.discardpile])}")
+        print(f"  defer: {', '.join([_.name for _ in plr.deferpile])}")
+        print(f"  duration: {', '.join([_.name for _ in plr.durationpile])}")
+        print(f"  exile: {', '.join([_.name for _ in plr.exilepile])}")
+        print(f"  reserve: {', '.join([_.name for _ in plr.reserve])}")
+        print(f"  played: {', '.join([_.name for _ in plr.played])}")
+        print("  messages:")
         for msg in plr.messages:
             print(f"\t{msg}")
-        print(f"  {plr.name}'s score: %s %s" % (plr.get_score(), plr.get_score_details()))
-        print(f"  {plr.name}'s tokens: %s" % (plr.tokens))
+        print(f"  score: {plr.get_score()} {plr.get_score_details()}")
+        print(f"  tokens: {plr.tokens}")
+        print(f"  phase: {plr.phase}")
         print(
-            f"  {plr.name}'s turn: coin={plr.coin} debt={plr.debt} actions={plr.actions}"
+            f"  turn: coin={plr.coin} debt={plr.debt} actions={plr.actions}"
             f" buys={plr.buys} favors={plr.favors}"
         )
-        print(
-            f"  {plr.name}: coffers=%d villagers=%d potions=%d"
-            % (plr.coffer, plr.villager, plr.potions)
-        )
+        print(f"  coffers={plr.coffer} villagers={plr.villager} potions={plr.potions}")
 
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
@@ -898,14 +914,20 @@ def parse_cli_args(args=None):
         help="Do not include card in lineup",
     )
     parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
-    parser.add_argument("--numevents", type=int, default=0, help="Number of events to use")
+    parser.add_argument(
+        "--numevents", type=int, default=0, help="Number of events to use"
+    )
     parser.add_argument(
         "--events", action="append", dest="eventcards", default=[], help="Include event"
     )
     parser.add_argument("--numways", type=int, default=0, help="Number of ways to use")
-    parser.add_argument("--ways", action="append", dest="waycards", default=[], help="Include way")
+    parser.add_argument(
+        "--ways", action="append", dest="waycards", default=[], help="Include way"
+    )
 
-    parser.add_argument("--numlandmarks", type=int, default=0, help="Number of landmarks to use")
+    parser.add_argument(
+        "--numlandmarks", type=int, default=0, help="Number of landmarks to use"
+    )
     parser.add_argument(
         "--landmark",
         action="append",
@@ -913,9 +935,13 @@ def parse_cli_args(args=None):
         default=[],
         help="Include landmark",
     )
-    parser.add_argument("--landmarkpath", default="dominion/landmarks", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--landmarkpath", default="dominion/landmarks", help=argparse.SUPPRESS
+    )
 
-    parser.add_argument("--numprojects", type=int, default=0, help="Number of projects to use")
+    parser.add_argument(
+        "--numprojects", type=int, default=0, help="Number of projects to use"
+    )
     parser.add_argument(
         "--oldcards",
         action="store_true",
@@ -929,7 +955,9 @@ def parse_cli_args(args=None):
         default=[],
         help="Include project",
     )
-    parser.add_argument("--projectpath", default="dominion/projects", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--projectpath", default="dominion/projects", help=argparse.SUPPRESS
+    )
     parser.add_argument(
         "--ally",
         dest="init_ally",
@@ -948,7 +976,9 @@ def parse_cli_args(args=None):
     parser.add_argument(
         "--cardpath", default="dominion/cards", help="Where to find card definitions"
     )
-    parser.add_argument("--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS
+    )
     parser.add_argument("--boonpath", default="dominion/boons", help=argparse.SUPPRESS)
     parser.add_argument("--numstacks", default=10, help=argparse.SUPPRESS)
     parser.add_argument(
@@ -957,7 +987,9 @@ def parse_cli_args(args=None):
         action="store_true",
         help="Use colonies and platinums",
     )
-    parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
+    parser.add_argument(
+        "--bot", action="store_true", dest="bot", default=False, help="Bot Player"
+    )
     parser.add_argument(
         "--quiet",
         action="store_true",
