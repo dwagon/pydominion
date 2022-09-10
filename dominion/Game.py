@@ -886,7 +886,7 @@ class TestGame(Game):
         if "ally" not in kwargs:
             kwargs["init_ally"] = []
             kwargs["allypath"] = "tests/allies"
-            kwargs["shelters"] = False  # Can cause lots of bad interactions
+        kwargs["shelters"] = False  # Can cause lots of bad interactions
         if "quiet" not in kwargs:
             kwargs["quiet"] = True
         super().__init__(**kwargs)
