@@ -42,7 +42,7 @@ class Card_Courtier(Card.Card):
             if opt == "buy":
                 player.add_buys(1)
             if opt == "coin":
-                player.add_coins(3)
+                player.coins.add(3)
             if opt == "gold":
                 player.gain_card("Gold")
 
@@ -62,7 +62,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 0)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Gold", self.plr.discardpile)
 
     def test_play_buy(self):
@@ -71,7 +71,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
         self.assertNotIn("Gold", self.plr.discardpile)
 
     def test_play_gold(self):
@@ -80,7 +80,7 @@ class Test_Courtier(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 0)
         self.assertEqual(self.plr.get_buys(), 1 + 0)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertIn("Gold", self.plr.discardpile)
 
 

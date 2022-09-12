@@ -22,7 +22,7 @@ class Card_Poorhouse(Card.Card):
             if card.isTreasure():
                 coins -= 1
         player.output("Gaining %d coins" % max(coins, 0))
-        player.add_coins(max(coins, 0))
+        player.coins.add(max(coins, 0))
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class Test_Poorhouse(unittest.TestCase):
         self.plr.hand.set("Estate", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 4 - 1)
+        self.assertEqual(self.plr.coins.get(), 4 - 1)
 
 
 ###############################################################################

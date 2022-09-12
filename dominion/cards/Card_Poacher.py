@@ -41,7 +41,7 @@ class Test_Poacher(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.get_actions(), 1)
 
     def test_empty(self):

@@ -47,7 +47,7 @@ class Test_Legionary(unittest.TestCase):
         self.victim.test_input = ["1", "2", "3", "0"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
         self.assertEqual(self.victim.hand.size(), 3)
         self.assertEqual(self.victim.discardpile.size(), 3)
 

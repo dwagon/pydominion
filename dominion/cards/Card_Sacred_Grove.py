@@ -61,7 +61,7 @@ class Test_SacredGrove(unittest.TestCase):
         self.g.boons = [myboon]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.get_coins(), 3 + 1)
+            self.assertEqual(self.plr.coins.get(), 3 + 1)
             self.assertEqual(self.plr.get_buys(), 1 + 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
@@ -76,7 +76,7 @@ class Test_SacredGrove(unittest.TestCase):
         self.vic.test_input = ["Accept"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.get_coins(), 3)
+            self.assertEqual(self.plr.coins.get(), 3)
             self.assertEqual(self.plr.get_buys(), 1 + 1)
             self.assertEqual(self.vic.hand.size(), 5 + 1)
         except AssertionError:  # pragma: no cover

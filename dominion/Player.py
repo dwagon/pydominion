@@ -39,7 +39,7 @@ class Player:
         self.reserve = PlayArea("reserve", game=self.game)
         self.buys = 1
         self.actions = 1
-        self.coin = 0
+        self.coins = Counter("Coins", 0)
         self.potions = Counter("Potions", 0)
         self.villagers = Counter("Villager", 0)
         self.debt = Counter("Debt", 0)
@@ -191,7 +191,7 @@ class Player:
             self.pickup_card()
         self.add_actions(hx.actions)
         self.buys += hx.buys
-        self.coin += self.hook_spend_value(hx, actual=True)
+        self.coins += self.hook_spend_value(hx, actual=True)
         hx.special(game=self.game, player=self)
         self.game.discard_hex(hx)
 
@@ -206,7 +206,7 @@ class Player:
             self.pickup_card()
         self.add_actions(boon.actions)
         self.buys += boon.buys
-        self.coin += self.hook_spend_value(boon, actual=True)
+        self.coins += self.hook_spend_value(boon, actual=True)
         boon.special(game=self.game, player=self)
         if discard:
             self.game.discard_boon(boon)
@@ -525,7 +525,7 @@ class Player:
             o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
             options.append(o)
 
-        if self.debt and self.coin:
+        if self.debt and self.coins:
             o = Option(selector="3", verb="Payback Debt", card=None, action="payback")
             options.append(o)
 
@@ -608,7 +608,7 @@ class Player:
         options = []
         for op in self.game.projects.values():
             index += 1
-            if (op.cost <= self.coin and self.buys) and (op not in self.projects):
+            if (op.cost <= self.coins.get() and self.buys) and (op not in self.projects):
                 sel = chr(ord("a") + index)
                 action = "project"
             else:
@@ -633,7 +633,7 @@ class Player:
         options = []
         for op in self.game.events.values():
             index += 1
-            if op.cost <= self.coin and self.buys:
+            if op.cost <= self.coins.get() and self.buys:
                 sel = chr(ord("a") + index)
                 action = "event"
             else:
@@ -669,7 +669,7 @@ class Player:
     def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
-        buyable = self.cards_under(coin=self.coin, num_potions=self.potions.get())
+        buyable = self.cards_under(coin=self.coins.get(), num_potions=self.potions.get())
         for card in all_cards:
             if not self.hook_allowed_to_buy(card):
                 if card in buyable:
@@ -749,8 +749,8 @@ class Player:
     def _generate_prompt(self) -> str:
         """Return the prompt to give to the user"""
         status = f"Actions={self.actions} Buys={self.buys}"
-        if self.coin:
-            status += f" Coins={self.coin}"
+        if self.coins:
+            status += f" Coins={self.coins.get()}"
         if self.debt:
             status += f" Debt={self.debt.get()}"
         if self.potions:
@@ -858,9 +858,9 @@ class Player:
 
     ###########################################################################
     def payback(self):
-        payback = min(self.coin, self.debt.get())
+        payback = min(self.coins.get(), self.debt.get())
         self.output("Paying back {payback}%d debt")
-        self.coin -= payback
+        self.coins -= payback
         self.debt -= payback
 
     ###########################################################################
@@ -1004,7 +1004,7 @@ class Player:
         self.played.empty()
         self.buys = 1
         self.actions = 1
-        self.coin = 0
+        self.coins.set(0)
         self.potions.set(0)
         self.played_ways = []
         self.misc = {"is_start": True, "cleaned": False}
@@ -1050,7 +1050,7 @@ class Player:
         if self.coffers.get() <= 0:
             return
         self.coffers -= 1
-        self.coin += 1
+        self.coins += 1
         self.output("Spent a coffer")
 
     ###########################################################################
@@ -1128,7 +1128,7 @@ class Player:
             self.output("Picked up %s from +1 Card token" % c.name)
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
-            self.coin += 1
+            self.coins += 1
         if "+1 Buy" in tkns:
             self.output("Gaining buy from +1 Buy token")
             self.buys += 1
@@ -1231,7 +1231,7 @@ class Player:
     def card_benefits(self, card):
         """Gain the benefits of the card being played - including special()"""
         self.add_actions(card.actions)
-        self.coin += self.hook_spend_value(card, actual=True)
+        self.coins += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
         self.favors += card.favors
         self.potions += card.potion
@@ -1343,11 +1343,11 @@ class Player:
     ###########################################################################
     def overpay(self, card):
         options = []
-        for i in range(self.coin + 1):
+        for i in range(self.coins.get() + 1):
             options.append(("Spend %d more" % i, i))
         ans = self.plr_choose_options("How much do you wish to overpay?", *options)
         card.hook_overpay(game=self.game, player=self, amount=ans)
-        self.coin -= ans
+        self.coins -= ans
 
     ###########################################################################
     def buy_card(self, card):
@@ -1361,11 +1361,11 @@ class Player:
         cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
-        if self.coin < cost:
+        if self.coins.get() < cost:
             self.output("You can't afford this")
             return
-        self.coin -= cost
-        if card.overpay and self.coin:
+        self.coins -= cost
+        if card.overpay and self.coins.get():
             self.overpay(card)
         newcard = self.gain_card(card)
         if card.embargo_level:
@@ -1444,21 +1444,6 @@ class Player:
         return False
 
     ###########################################################################
-    def get_coins(self) -> int:
-        """Return the number of coins the player has"""
-        return self.coin
-
-    ###########################################################################
-    def add_coins(self, num=1):
-        assert isinstance(num, int)
-        self.coin += num
-
-    ###########################################################################
-    def set_coins(self, num=1):
-        assert isinstance(num, int)
-        self.coin = num
-
-    ###########################################################################
     def get_actions(self):
         return self.actions
 
@@ -1512,11 +1497,11 @@ class Player:
         if self.debt:
             self.output("Must pay off debt first")
             return False
-        if self.coin < project.cost:
+        if self.coins.get() < project.cost:
             self.output(f"Need {project.cost} coins to buy this project")
             return False
         self.buys -= 1
-        self.coin -= project.cost
+        self.coins -= project.cost
         self.debt += project.debtcost
         self.buys += project.buys
         self.assign_project(project.name)
@@ -1536,11 +1521,11 @@ class Player:
             return False
         if self.debt != 0:
             self.output("Must pay off debt first")
-        if self.coin < evnt.cost:
+        if self.coins < evnt.cost:
             self.output(f"Need {evnt.cost} coins to perform this event")
             return False
         self.buys -= 1
-        self.coin -= evnt.cost
+        self.coins -= evnt.cost
         self.debt += evnt.debtcost
         self.buys += evnt.buys
         self.output(f"Using event {evnt}")

@@ -62,7 +62,7 @@ class BotPlayer(Player):
             return opts["spendall"]
         if self.get_buys() == 0:
             return opts["quit"]
-        coin = self.get_coins()
+        coin = self.coins.get()
         self.output(f"Have {coin} coins")
         if coin >= 11 and "colony" in opts:
             return opts["colony"]

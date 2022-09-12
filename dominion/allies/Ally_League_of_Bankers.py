@@ -16,7 +16,7 @@ class Ally_League_Bankers(Ally.Ally):
     def hook_pre_buy(self, game, player):
         cash = int(player.favors.get() / 4)
         player.output(f"League of Bankers gives you {cash} coin")
-        player.add_coins(cash)
+        player.coins.add(cash)
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ class Test_League_Bankers(unittest.TestCase):
         self.plr.favors.set(5)
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
 
 ###############################################################################

@@ -27,7 +27,7 @@ class Card_Town_Crier(Card.Card):
             ("+1 Card and +1 action", "card"),
         )
         if opt == "cash":
-            player.add_coins(2)
+            player.coins.add(2)
         elif opt == "silver":
             player.gain_card("Silver")
         elif opt == "card":
@@ -57,9 +57,9 @@ class Test_Town_Crier(unittest.TestCase):
     def test_play_rotate_cash(self):
         """Play a town crier - rotate, but get cash"""
         self.plr.test_input = ["+$2", "Rotate"]
-        cns = self.plr.get_coins()
+        cns = self.plr.coins.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), cns + 2)
+        self.assertEqual(self.plr.coins.get(), cns + 2)
         card = self.g["Townsfolk"].remove()
         self.assertEqual(card.name, "Blacksmith")
 

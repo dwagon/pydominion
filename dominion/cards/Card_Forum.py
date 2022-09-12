@@ -46,7 +46,7 @@ class Test_Forum(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 2)
 
     def test_buy(self):
-        self.plr.set_coins(5)
+        self.plr.coins.set(5)
         self.plr.buy_card(self.g["Forum"])
         self.assertEqual(self.plr.get_buys(), 1)
 

@@ -42,7 +42,7 @@ class Card_Traderoute(Card.Card):
         supply pile. When a card is gained from that pile move the
         token to the trade route map"""
         player.plr_trash_card()
-        player.add_coins(self.isWorth())
+        player.coins.add(self.isWorth())
 
 
 ###############################################################################
@@ -57,21 +57,21 @@ class Test_Traderoute(unittest.TestCase):
     def test_playZero(self):
         self.plr.test_input = ["finish selecting"]
         self.plr.play_card(self.traderoute)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
 
     def test_playOne(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
         self.plr.play_card(self.traderoute)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
         self.g["Province"].remove()
         self.plr.play_card(self.traderoute)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

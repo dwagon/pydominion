@@ -25,7 +25,7 @@ class Card_Secretchamber(Card.Card):
         todiscard = player.plr_discard_cards(
             anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
         )
-        player.add_coins(len(todiscard))
+        player.coins.add(len(todiscard))
 
     def hook_underAttack(self, game, player, attacker):  # pylint: disable=unused-argument
         """TODO"""
@@ -75,7 +75,7 @@ class Test_Secretchamber(unittest.TestCase):
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_play_three(self):
         """Play the Secret Chamber - discard three"""
@@ -89,7 +89,7 @@ class Test_Secretchamber(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
 
     def test_underattack(self):
         """Secret chamber is under attack - use it"""

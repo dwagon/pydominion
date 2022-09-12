@@ -32,7 +32,7 @@ class Test_Alliance(unittest.TestCase):
 
     def test_play(self):
         """Perform a Alliance"""
-        self.plr.add_coins(10)
+        self.plr.coins.add(10)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.discardpile["Province"])
         self.assertIsNotNone(self.plr.discardpile["Gold"])

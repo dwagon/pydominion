@@ -30,7 +30,7 @@ class Card_Mercenary(Card.Card):
             return
         player.plr_trash_card(2, force=True)
         player.pickup_cards(2)
-        player.add_coins(2)
+        player.coins.add(2)
         for plr in player.attack_victims():
             plr.plr_discard_down_to(3)
 
@@ -80,7 +80,7 @@ class Test_Mercenary(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.victim.hand.size(), 3)
 
 

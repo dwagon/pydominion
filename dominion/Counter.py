@@ -49,5 +49,12 @@ class Counter:
     def __bool__(self):
         return self._value != 0
 
+    def __lt__(self, obj):
+        if isinstance(obj, int):
+            return self._value < obj
+        if hasattr(obj, "get"):
+            return self._value < obj.get()
+        raise NotImplementedError(f"Counter __sub__({obj=}) {type(obj)}")
+
 
 # EOF

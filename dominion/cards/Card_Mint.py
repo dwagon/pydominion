@@ -37,7 +37,7 @@ class Card_Mint(Card.Card):
         """Trash all Treasures you have in play"""
         totrash = [c for c in player.played if c.isTreasure()]
         for c in totrash:
-            player.output("Mint trashing %s" % c.name)
+            player.output(f"Mint trashing {c.name}")
             player.trash_card(c)
 
 
@@ -60,7 +60,7 @@ class Test_Mint(unittest.TestCase):
 
     def test_buy(self):
         tsize = self.g.trashpile.size()
-        self.plr.coin = 5
+        self.plr.coins.set(5)
         self.plr.hand.set("Gold", "Estate")
         self.plr.played.set("Copper", "Silver", "Estate", "Moat")
         self.plr.buy_card(self.g["Mint"])

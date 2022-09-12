@@ -31,7 +31,7 @@ class Card_Amulet(Card.Card):
             ("Gain a silver", "silver"),
         )
         if choice == "coin":
-            player.add_coins(1)
+            player.coins.add(1)
         if choice == "trash":
             player.plr_trash_card(num=1)
         if choice == "silver":
@@ -52,11 +52,11 @@ class Test_Amulet(unittest.TestCase):
         """Play an amulet with coin"""
         self.plr.test_input = ["coin", "coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertNotIn("Silver", self.plr.discardpile)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertNotIn("Silver", self.plr.discardpile)
 
     def test_play_silver(self):
@@ -64,10 +64,10 @@ class Test_Amulet(unittest.TestCase):
         self.plr.test_input = ["silver", "silver"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertIn("Silver", self.plr.discardpile)
 
     def test_play_trash(self):
@@ -77,10 +77,10 @@ class Test_Amulet(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertNotIn("Silver", self.plr.discardpile)
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Silver", self.plr.discardpile)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
 

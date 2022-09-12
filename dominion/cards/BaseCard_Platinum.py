@@ -32,7 +32,7 @@ class Test_Platinum(unittest.TestCase):
     def test_play(self):
         """Play a platinum"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
 
 
 ###############################################################################

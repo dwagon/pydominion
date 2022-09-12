@@ -27,7 +27,7 @@ class Card_Moneylender(Card.Card):
         )
         if trash:
             player.trash_card(copper)
-            player.add_coins(3)
+            player.coins.add(3)
 
 
 ###############################################################################
@@ -44,7 +44,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_trash_copper(self):
         tsize = self.g.trashpile.size()
@@ -54,7 +54,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
 
     def test_dont_trash_copper(self):
         tsize = self.g.trashpile.size()
@@ -63,7 +63,7 @@ class Test_Moneylender(unittest.TestCase):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
 
 ###############################################################################

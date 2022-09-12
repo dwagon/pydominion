@@ -42,7 +42,7 @@ class Card_Ironmonger(Card.Card):
             player.add_actions(1)
         if card.isTreasure():
             player.output("Gaining a coin as %s was a treasure card" % card.name)
-            player.add_coins(1)
+            player.coins.add(1)
 
 
 ###############################################################################
@@ -72,7 +72,7 @@ class Test_Ironmonger(unittest.TestCase):
         self.plr.deck.set("Copper", "Gold")
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_action(self):
         self.plr.test_input = ["put back"]

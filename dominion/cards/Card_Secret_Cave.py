@@ -27,7 +27,7 @@ class Card_SecretCave(Card.Card):
     def duration(self, game, player):
         if self._discarded:
             player.output("Gained 3 Coin from Secret Cave")
-            player.add_coins(3)
+            player.coins.add(3)
 
 
 ###############################################################################
@@ -55,7 +55,7 @@ class Test_SecretCave(unittest.TestCase):
             self.assertEqual(self.plr.hand.size(), 5 + 1 - 3)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.get_coins(), 3)
+            self.assertEqual(self.plr.coins.get(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

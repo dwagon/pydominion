@@ -42,7 +42,7 @@ class Card_Tribute(Card.Card):
                 player.add_actions(2)
             elif c.isTreasure():
                 player.output("Gained two coin")
-                player.add_coins(2)
+                player.coins.add(2)
             elif c.isVictory():
                 player.output("Gained two cards")
                 player.pickup_cards(2)
@@ -63,7 +63,7 @@ class Test_Tribute(unittest.TestCase):
         """Play a tribute"""
         self.victim.deck.set("Copper", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.hand.size(), 7)
         self.assertEqual(self.victim.discardpile.size(), 2)
 
@@ -72,7 +72,7 @@ class Test_Tribute(unittest.TestCase):
         self.victim.deck.set("Tribute", "Tribute")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
 

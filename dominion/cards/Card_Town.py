@@ -25,7 +25,7 @@ class Card_Town(Card.Card):
             player.add_actions(2)
         elif choice == "buy":
             player.add_buys(1)
-            player.add_coins(2)
+            player.coins.add(2)
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class Test_Town(unittest.TestCase):
         """Play the card and buy + coin"""
         self.plr.test_input = ["buy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
 
 

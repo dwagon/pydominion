@@ -99,7 +99,7 @@ class Test_Rogue(unittest.TestCase):
         try:
             self.plr.add_card(self.card, "hand")
             self.plr.play_card(self.card)
-            self.assertEqual(self.plr.get_coins(), 2)
+            self.assertEqual(self.plr.coins.get(), 2)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

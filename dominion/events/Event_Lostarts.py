@@ -35,11 +35,11 @@ class Test_Lostarts(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Lost Arts"""
-        self.plr.add_coins(6)
+        self.plr.coins.add(6)
         self.plr.test_input = ["moat"]
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.tokens["+1 Action"], "Moat")
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
 
 ###############################################################################

@@ -30,9 +30,9 @@ class Card_Storyteller(Card.Card):
         )
         for card in toplay:
             player.play_card(card)
-        player.output("Converting %d coin to cards" % player.coin)
-        player.pickup_cards(player.coin)
-        player.coin = 0
+        player.output("Converting %d coin to cards" % player.coins.get())
+        player.pickup_cards(player.coins.get())
+        player.coins.set(0)
 
 
 ###############################################################################

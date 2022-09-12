@@ -40,14 +40,14 @@ class Test_Philosophersstone(unittest.TestCase):
         self.plr.deck.set("Estate")
         self.plr.discardpile.set("Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_play_value(self):
         """Play a philosophers stone with the full Nicholas Flamel"""
         self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Silver")
         self.plr.discardpile.set("Estate", "Estate", "Estate", "Estate", "Silver")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

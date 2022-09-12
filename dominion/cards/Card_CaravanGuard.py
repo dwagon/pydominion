@@ -24,7 +24,7 @@ class Card_CaravanGuard(Card.Card):
         player.pickup_cards(1)
 
     def duration(self, game, player):
-        player.add_coins(1)
+        player.coins.add(1)
 
     def hook_underAttack(self, game, player, attacker):
         player.output(f"Under attack from {attacker.name}")
@@ -49,10 +49,10 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_attack(self):
         """Test being attacked"""

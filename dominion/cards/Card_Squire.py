@@ -53,7 +53,7 @@ class Test_Squire(unittest.TestCase):
         self.plr.test_input = [Card.TYPE_ACTION]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.get_actions(), 2)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertNotIn("Silver", self.plr.discardpile)

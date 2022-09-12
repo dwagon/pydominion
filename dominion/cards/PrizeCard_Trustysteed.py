@@ -41,7 +41,7 @@ class Card_Trustysteed(Card.Card):
             elif choice == "actions":
                 player.add_actions(2)
             elif choice == "coins":
-                player.add_coins(2)
+                player.coins.add(2)
             elif choice == "silvers":
                 for _ in range(4):
                     player.gain_card("Silver")
@@ -60,7 +60,7 @@ class Test_Trustysteed(unittest.TestCase):
         self.plr.test_input = ["cards", "coin"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_b(self):
         self.plr.test_input = [Card.TYPE_ACTION, "silver"]

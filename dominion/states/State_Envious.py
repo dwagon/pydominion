@@ -44,9 +44,9 @@ class Test_Envious(unittest.TestCase):
         self.plr.assign_state("Envious")
         self.plr.hand.set("Silver", "Gold")
         self.plr.play_card(self.plr.hand[0])
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.plr.play_card(self.plr.hand[0])
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

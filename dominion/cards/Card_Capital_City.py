@@ -26,15 +26,15 @@ class Card_Capital_City(Card.Card):
         if ch1:
             discard = player.plr_discard_cards(num=2)
             if len(discard) == 2:
-                player.add_coins(2)
-        if player.get_coins() >= 2:
+                player.coins.add(2)
+        if player.coins.get() >= 2:
             ch2 = player.plr_choose_options(
                 "Pay $2 to gain 2 cards?",
                 ("Do nothing", False),
                 ("Gain 2 Cards", True),
             )
             if ch2:
-                player.add_coins(-2)
+                player.coins.add(-2)
                 player.pickup_cards(2)
 
 
@@ -53,7 +53,7 @@ class Test_Capital_City(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "Gain"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2 + 2)
         self.assertNotIn("Duchy", self.plr.hand)
         self.assertIn("Silver", self.plr.hand)
@@ -65,7 +65,7 @@ class Test_Capital_City(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "nothing"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2)
         self.assertNotIn("Duchy", self.plr.hand)
         self.assertNotIn("Silver", self.plr.hand)

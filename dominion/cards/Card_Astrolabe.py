@@ -21,7 +21,7 @@ class Card_Astrolabe(Card.Card):
 
     def duration(self, game, player):
         """+1 coin, +1 buy"""
-        player.add_coins(1)
+        player.coins.add(1)
         player.add_buys(1)
 
 
@@ -40,11 +40,11 @@ class Test_Astrolabe(unittest.TestCase):
         """Play an astrolabe"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.durationpile.size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.durationpile.size(), 0)
         self.assertEqual(self.plr.played.size(), 1)
         self.assertEqual(self.plr.played[-1].name, "Astrolabe")

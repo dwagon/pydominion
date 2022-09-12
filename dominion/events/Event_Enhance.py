@@ -45,7 +45,7 @@ class Test_Enhance(unittest.TestCase):
 
     def test_play(self):
         """Perform a Enhance"""
-        self.plr.add_coins(3)
+        self.plr.coins.add(3)
         self.plr.hand.set("Copper", "Silver", "Estate")
         self.plr.test_input = ["Trash Silver", "Get Festival"]
         self.plr.perform_event(self.card)

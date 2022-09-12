@@ -14,7 +14,7 @@ class Artifact_Key(Artifact.Artifact):
         self.name = "Key"
 
     def hook_start_turn(self, game, player):
-        player.add_coins(1)
+        player.coins.add(1)
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class Test_Key(unittest.TestCase):
     def test_flag(self):
         self.plr.assign_artifact("Key")
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
 
 ###############################################################################

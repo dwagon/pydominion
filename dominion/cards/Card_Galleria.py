@@ -31,9 +31,9 @@ class Test_Galleria(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        coins = self.plr.get_coins()
+        coins = self.plr.coins.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), coins + 3)
+        self.assertEqual(self.plr.coins.get(), coins + 3)
 
     def test_gain(self):
         """Gain a card"""

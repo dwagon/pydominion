@@ -24,7 +24,7 @@ class Card_Ironworks(Card.Card):
         if c.isAction():
             player.add_actions(1)
         if c.isTreasure():
-            player.add_coins(1)
+            player.coins.add(1)
 
 
 ###############################################################################
@@ -55,7 +55,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Mill")
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_silver(self):
@@ -64,7 +64,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Silver")
         self.assertEqual(self.plr.get_actions(), 0)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_ironworks(self):
@@ -73,7 +73,7 @@ class Test_Ironworks(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile[-1].name, "Iron Works")
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
 

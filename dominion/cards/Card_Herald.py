@@ -63,7 +63,7 @@ class Test_Herald(unittest.TestCase):
 
     def test_buy(self):
         """Buy a Herald"""
-        self.plr.coin = 5
+        self.plr.coins.set(5)
         self.plr.test_input = ["1", "moat"]
         self.plr.discardpile.set("Estate", "Moat", "Copper")
         self.plr.buy_card(self.g["Herald"])

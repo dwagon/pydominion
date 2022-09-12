@@ -46,7 +46,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.vic.hand.set("Silver", "Duchy", "Province")
         self.plr.play_card(self.card)
         self.plr.end_turn()
-        self.vic.set_coins(6)
+        self.vic.coins.set(6)
         self.vic.buy_card(self.g["Gold"])
         self.assertIn("Silver", self.vic.deck)
         self.assertIn("Duchy", self.vic.deck)

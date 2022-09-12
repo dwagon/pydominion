@@ -359,7 +359,7 @@ class Test__spend_all_cards(unittest.TestCase):
         """Spend all cards in hand"""
         self.plr.hand.set("Gold", "Silver", "Estate", "Moat")
         self.plr._spend_all_cards()
-        self.assertEqual(self.plr.get_coins(), 3 + 2)
+        self.assertEqual(self.plr.coins.get(), 3 + 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
@@ -526,7 +526,7 @@ class Test__buyable_selection(unittest.TestCase):
         self.moat = self.game["Moat"].remove()
 
     def test_buy_moat(self):
-        self.plr.add_coins(3)
+        self.plr.coins.add(3)
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -539,7 +539,7 @@ class Test__buyable_selection(unittest.TestCase):
             self.fail("Moat not buyable")
 
     def test_buy_copper(self):
-        self.plr.coin = 0
+        self.plr.coins.set(0)
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -556,7 +556,7 @@ class Test__buyable_selection(unittest.TestCase):
             self.fail("Copper not buyable")
 
     def test_buy_token(self):
-        self.plr.add_coins(2)
+        self.plr.coins.add(2)
         self.plr.place_token("+1 Card", "Moat")
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
@@ -643,7 +643,7 @@ class Test__choice_selection(unittest.TestCase):
         self.plr.actions = 3
         self.plr.buys = 7
         self.plr.potions = Counter("Potions", 9)
-        self.plr.coin = 5
+        self.plr.coins.set(5)
         self.plr.coffers = Counter("Coffer", 1)
         self.plr.phase = "buy"
         self.plr.debt = Counter("Debt", 2)
@@ -660,7 +660,7 @@ class Test__choice_selection(unittest.TestCase):
         self.plr.actions = 0
         self.plr.buys = 0
         self.plr.potions = Counter("Potions", 0)
-        self.plr.coin = 0
+        self.plr.coins.set(0)
         self.plr.coffers = Counter("Coffer", 0)
         self.plr.phase = "buy"
         _, prompt = self.plr._choice_selection()
@@ -740,7 +740,7 @@ class Test__spendable_selection(unittest.TestCase):
     def test_debt(self):
         self.plr.hand.set("Copper")
         self.plr.debt = Counter("Debt", 1)
-        self.plr.coin = 1
+        self.plr.coins.set(1)
         self.plr.coffers = Counter("Coffer", 0)
         try:
             opts = self.plr._spendable_selection()
@@ -749,7 +749,6 @@ class Test__spendable_selection(unittest.TestCase):
             self.assertEqual(opts[1]["verb"], "Payback Debt")
             self.assertIsNone(opts[1]["card"])
         except AssertionError:  # pragma: no cover
-            print("debt")
             self.game.print_state()
             raise
 
@@ -791,14 +790,14 @@ class Test_spend_coffer(unittest.TestCase):
         self.plr.coffers = Counter("Coffer", 1)
         self.plr.spend_coffer()
         self.assertEqual(self.plr.coffers.get(), 0)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_spendNothing(self):
         """Spend a coffer that the player doesn't have"""
         self.plr.coffers = Counter("Coffer", 0)
         self.plr.spend_coffer()
         self.assertEqual(self.plr.coffers.get(), 0)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
 
 ###############################################################################

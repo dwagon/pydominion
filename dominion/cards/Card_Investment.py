@@ -30,7 +30,7 @@ class Card_Investment(Card.Card):
             ),
         )
         if cash_opt:
-            player.add_coins(1)
+            player.coins.add(1)
             return
         player.trash_card(self)
         player.output(f"Gaining {num_treas} victory points")
@@ -51,18 +51,18 @@ class Test_Investment(unittest.TestCase):
 
     def test_donttrash(self):
         """Play but don't trash"""
-        cash = self.plr.get_coins()
+        cash = self.plr.coins.get()
         self.plr.test_input = ["Trash Copper", "Coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), cash + 1)
+        self.assertEqual(self.plr.coins.get(), cash + 1)
 
     def test_trash(self):
         """Play and trash"""
-        cash = self.plr.get_coins()
+        cash = self.plr.coins.get()
         score = self.plr.get_score()
         self.plr.test_input = ["Trash Copper", "Trash this"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), cash)
+        self.assertEqual(self.plr.coins.get(), cash)
         self.assertIn("Investment", self.g.trashpile)
         self.assertEqual(self.plr.get_score(), score + 2)
 

@@ -22,7 +22,7 @@ class Card_Bounty_Hunter(Card.Card):
         crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
             if crd[0] not in player.exilepile:
-                player.add_coins(3)
+                player.coins.add(3)
             player.move_card(crd[0], "exile")
 
 
@@ -41,7 +41,7 @@ class Test_Bounty_Hunter(unittest.TestCase):
         self.plr.test_input = ["Exile Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
 
 
 ###############################################################################

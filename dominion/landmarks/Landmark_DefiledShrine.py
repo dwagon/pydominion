@@ -46,7 +46,7 @@ class Test_DefiledShrine(unittest.TestCase):
     def test_use(self):
         """Use Defiled Shrine"""
         self.plr.set_buys(2)
-        self.plr.set_coins(5)
+        self.plr.coins.set(5)
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 2)
         self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 1)

@@ -31,7 +31,7 @@ class Card_Gladiator(Card.Card):
         leftycard = lefty.hand[mycard[0].name]
         if not leftycard:
             player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
-            player.add_coins(1)
+            player.coins.add(1)
             c = game["Gladiator"].remove()
             player.trash_card(c)
         else:
@@ -54,7 +54,7 @@ class Test_Gladiator(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertIn("Gladiator", self.g.trashpile)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
 
     def test_play_has(self):
         """Play a Gladiator - something the other player has"""
@@ -64,7 +64,7 @@ class Test_Gladiator(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertNotIn("Gladiator", self.g.trashpile)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

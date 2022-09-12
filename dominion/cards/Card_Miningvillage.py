@@ -26,7 +26,7 @@ class Card_Miningvillage(Card.Card):
         )
         if trash:
             player.output("Trashing mining village")
-            player.add_coins(2)
+            player.coins.add(2)
             player.trash_card(self)
 
 
@@ -45,7 +45,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Mining Village", self.g.trashpile)
         self.assertEqual(self.plr.played[-1].name, "Mining Village")
 
@@ -56,7 +56,7 @@ class Test_Miningvillage(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertTrue(self.plr.played.is_empty())
         self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Mining Village", self.g.trashpile)
 
 

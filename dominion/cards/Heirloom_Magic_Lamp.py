@@ -44,7 +44,7 @@ class Test_MagicLamp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.played.set("Copper", "Silver", "Gold", "Duchy", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Wish", self.plr.discardpile)
 
     def test_play_fail(self):
@@ -52,7 +52,7 @@ class Test_MagicLamp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.played.set("Copper", "Silver", "Gold", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertNotIn("Wish", self.plr.discardpile)
 
 

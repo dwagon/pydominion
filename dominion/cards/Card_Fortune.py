@@ -22,7 +22,7 @@ class Card_Fortune(Card.Card):
 
     def special(self, game, player):
         if player.do_once("Fortune"):
-            player.coin *= 2
+            player.coins.set(player.coins.get() * 2)
 
     def hook_gain_this_card(self, game, player):
         num_gladiators = sum([1 for c in player.played if c.name == "Gladiator"])

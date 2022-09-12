@@ -30,9 +30,9 @@ class Test_Guildmaster(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        coin = self.plr.get_coins()
+        coin = self.plr.coins.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), coin + 3)
+        self.assertEqual(self.plr.coins.get(), coin + 3)
         favs = self.plr.favors.get()
         self.plr.gain_card("Copper")
         self.assertEqual(self.plr.favors.get(), favs + 1)

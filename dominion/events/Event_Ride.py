@@ -31,7 +31,7 @@ class Test_Ride(unittest.TestCase):
 
     def test_Ride(self):
         """Use Ride"""
-        self.plr.add_coins(2)
+        self.plr.coins.add(2)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.discardpile["Horse"])
 

@@ -74,7 +74,7 @@ class Test_Stonemason(unittest.TestCase):
         self.assertIn("Silver", self.plr.discardpile)
 
     def test_buy(self):
-        self.plr.coin = 5
+        self.plr.coins.set(5)
         self.plr.test_input = ["3", "Moat", "Stonemason"]
         self.plr.buy_card(self.g["Stonemason"])
         self.assertIn("Moat", self.plr.discardpile)

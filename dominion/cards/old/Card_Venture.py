@@ -27,7 +27,7 @@ class Card_Venture(Card.Card):
                 player.play_card(c)
                 break
             player.output("Picked up and discarded %s" % c.name)
-            player.add_coins(c.coin)  # Compensate for not keeping card
+            player.coins.add(c.coin)  # Compensate for not keeping card
             player.discard_card(c)
 
 
@@ -44,7 +44,7 @@ class Test_Venture(unittest.TestCase):
         """Play a Venture"""
         self.plr.deck.set("Gold")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 3)  # Gold
+        self.assertEqual(self.plr.coins.get(), 3)  # Gold
         for c in self.plr.played:
             if c.name == "Gold":
                 break
@@ -56,7 +56,7 @@ class Test_Venture(unittest.TestCase):
         """Make sure we discard non-treasures"""
         self.plr.deck.set("Gold", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 3)  # Gold
+        self.assertEqual(self.plr.coins.get(), 3)  # Gold
         for c in self.plr.played:
             if c.name == "Gold":
                 break

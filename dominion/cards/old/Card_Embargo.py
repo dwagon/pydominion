@@ -52,7 +52,7 @@ class Test_Embargo(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash", "Select Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.g["Silver"].embargo_level, 1)
         self.assertIn("Embargo", self.g.trashpile)
 

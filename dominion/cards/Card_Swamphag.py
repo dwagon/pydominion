@@ -19,7 +19,7 @@ class Card_Swamphag(Card.Card):
         pass
 
     def duration(self, game, player):
-        player.add_coins(3)
+        player.coins.add(3)
 
     def hook_all_players_buy_card(self, game, player, owner, card):
         if player == owner:
@@ -46,7 +46,7 @@ class Test_Swamphag(unittest.TestCase):
         self.assertIn("Curse", self.victim.discardpile)
         self.attacker.start_turn()
         self.assertIn("Swamp Hag", self.attacker.played)
-        self.assertEqual(self.attacker.get_coins(), 3)
+        self.assertEqual(self.attacker.coins.get(), 3)
 
 
 ###############################################################################
