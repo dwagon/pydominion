@@ -3,8 +3,8 @@
 """ Testing player code """
 
 import unittest
-from dominion import Card
-from dominion import Game
+from dominion.Counter import Counter
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -125,6 +125,8 @@ class Test_playonce(unittest.TestCase):
 
 ###############################################################################
 class Test_cards_affordable(unittest.TestCase):
+    """Test the cards_affordable functionality"""
+
     def setUp(self):
         self.game = Game.TestGame(
             numplayers=1,
@@ -144,6 +146,7 @@ class Test_cards_affordable(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_under(self):
+        """Test cards under a cost"""
         price = 4
         ans = self.plr.cards_under(price, types={Card.TYPE_ACTION: True})
         for a in ans:
@@ -156,6 +159,7 @@ class Test_cards_affordable(unittest.TestCase):
                 raise
 
     def test_worth(self):
+        """Test cards equal to a cost"""
         price = 5
         ans = self.plr.cards_worth(price, types={Card.TYPE_VICTORY: True})
         for a in ans:
@@ -163,10 +167,11 @@ class Test_cards_affordable(unittest.TestCase):
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
+        """Test with no cost"""
         ans = self.plr.cards_affordable(
             "less",
             coin=None,
-            potions=0,
+            num_potions=0,
             types={
                 Card.TYPE_VICTORY: True,
                 Card.TYPE_ACTION: True,
@@ -412,7 +417,9 @@ class Test_pickup_card(unittest.TestCase):
 ###############################################################################
 class Test_misc(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, initcards=["Golem", "Witch", "Engineer"])
+        self.game = Game.TestGame(
+            numplayers=1, initcards=["Golem", "Witch", "Engineer"]
+        )
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -444,10 +451,6 @@ class Test_misc(unittest.TestCase):
         self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
         self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
 
-    def test_get_potions(self):
-        self.plr.potions = 3
-        self.assertEqual(self.plr.get_potions(), 3)
-
     def test_durationpile_size(self):
         copper = self.game["Copper"].remove()
         self.assertEqual(self.plr.durationpile.size(), 0)
@@ -465,7 +468,9 @@ class Test_misc(unittest.TestCase):
 ###############################################################################
 class Test__display_overview(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"])
+        self.game = Game.TestGame(
+            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
+        )
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -519,7 +524,9 @@ class Test__display_overview(unittest.TestCase):
 ###############################################################################
 class Test__buyable_selection(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Coppersmith"])
+        self.game = Game.TestGame(
+            numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
+        )
         self.game.start_game()
         self.plr = self.game.player_list(0)
         self.moat = self.game["Moat"].remove()
@@ -638,9 +645,10 @@ class Test__choice_selection(unittest.TestCase):
         self.assertEqual(opts[2][Card.TYPE_ACTION], "spend")
 
     def test_prompt(self):
+        """Test prompt generation"""
         self.plr.actions = 3
         self.plr.buys = 7
-        self.plr.potions = 9
+        self.plr.potions = Counter("Potions", 9)
         self.plr.coin = 5
         self.plr.coffer = 1
         self.plr.phase = "buy"
@@ -654,9 +662,10 @@ class Test__choice_selection(unittest.TestCase):
         self.assertIn("Coffer=1", prompt)
 
     def test_nothing_prompt(self):
+        """Test that if we don't have something it doesn't appear in the prompt"""
         self.plr.actions = 0
         self.plr.buys = 0
-        self.plr.potions = 0
+        self.plr.potions = Counter("Potions", 0)
         self.plr.coin = 0
         self.plr.coffer = 0
         self.plr.phase = "buy"

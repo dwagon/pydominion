@@ -7,6 +7,7 @@ from collections import defaultdict
 from typing import Union
 
 from dominion import Card
+from dominion.Counter import Counter
 from dominion.PlayArea import PlayArea
 from dominion.Option import Option
 from dominion.CardPile import CardPile
@@ -42,7 +43,7 @@ class Player:
         self.buys = 1
         self.actions = 1
         self.coin = 0
-        self.potions = 0
+        self.potions = Counter("Potions")
         self.favors = 0
         self.newhandsize = 5
         self.playlimit = None
@@ -164,7 +165,9 @@ class Player:
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
         dstcp = self._find_cardpile(dst)
-        newcard = self.gain_card(cardpile=dstcp, destination=destination, callhook=False)
+        newcard = self.gain_card(
+            cardpile=dstcp, destination=destination, callhook=False
+        )
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add(src)
@@ -372,7 +375,9 @@ class Player:
         elif curr_loc == "cardpile":
             pass
         else:
-            raise AssertionError(f"Trying to remove_card {card} from unknown location: {curr_loc}")
+            raise AssertionError(
+                f"Trying to remove_card {card} from unknown location: {curr_loc}"
+            )
 
     ###########################################################################
     def move_card(self, card: Card, dest: Union[str, PlayArea]) -> Card:
@@ -529,7 +534,9 @@ class Player:
             options.append(o)
 
         if self.coffer:
-            o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
+            o = Option(
+                selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer"
+            )
             options.append(o)
 
         if self.debt and self.coin:
@@ -676,7 +683,7 @@ class Player:
     def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
-        buyable = self.cards_under(coin=self.coin, potions=self.potions)
+        buyable = self.cards_under(coin=self.coin, num_potions=self.potions.get())
         for card in all_cards:
             if not self.hook_allowed_to_buy(card):
                 if card in buyable:
@@ -921,7 +928,9 @@ class Player:
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
-            self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
+            self.output(
+                "| Duration: %s" % ", ".join([c.name for c in self.durationpile])
+            )
         if self.projects:
             self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.reserve:
@@ -940,9 +949,16 @@ class Player:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output("| Ally: %s: %s" % (self.game.ally.name, self.game.ally.description(self)))
-        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))  # Debug
-        self.output(f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}")  # Debug
+            self.output(
+                "| Ally: %s: %s"
+                % (self.game.ally.name, self.game.ally.description(self))
+            )
+        self.output(
+            "| Discard: %s" % ", ".join([c.name for c in self.discardpile])
+        )  # Debug
+        self.output(
+            f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}"
+        )  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
 
@@ -1012,7 +1028,7 @@ class Player:
         self.buys = 1
         self.actions = 1
         self.coin = 0
-        self.potions = 0
+        self.potions.set(0)
         self.played_ways = []
         self.misc = {"is_start": True, "cleaned": False}
         self.stats = {"gained": [], "bought": [], "trashed": []}
@@ -1171,7 +1187,11 @@ class Player:
 
     ###########################################################################
     def play_card(
-        self, card: Card, discard: bool = True, costAction: bool = True, postActionHook: bool = True
+        self,
+        card: Card,
+        discard: bool = True,
+        costAction: bool = True,
+        postActionHook: bool = True,
     ) -> None:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
@@ -1265,7 +1285,9 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
-    def gain_card(self, cardpile=None, destination="discard", newcard=None, callhook=True):
+    def gain_card(
+        self, cardpile=None, destination="discard", newcard=None, callhook=True
+    ):
         """Add a new card to the players set of cards from a cardpile"""
         # Options:
         #   dontadd: True - adding card handled elsewhere
@@ -1388,15 +1410,21 @@ class Player:
     def hook_all_players_buy_card(self, card):
         for player in self.game.player_list():
             for crd in player.durationpile:
-                crd.hook_all_players_buy_card(game=self.game, player=self, owner=player, card=card)
+                crd.hook_all_players_buy_card(
+                    game=self.game, player=self, owner=player, card=card
+                )
         for crd in self.game.landmarks.values():
-            crd.hook_all_players_buy_card(game=self.game, player=self, owner=self, card=card)
+            crd.hook_all_players_buy_card(
+                game=self.game, player=self, owner=self, card=card
+            )
 
     ###########################################################################
     def hook_allplayers_gain_card(self, card):
         for player in self.game.player_list():
             for crd in player.relevant_cards():
-                crd.hook_allplayers_gain_card(game=self.game, player=self, owner=player, card=card)
+                crd.hook_allplayers_gain_card(
+                    game=self.game, player=self, owner=player, card=card
+                )
 
     ###########################################################################
     def add_hook(self, hook_name, hook):
@@ -1445,11 +1473,6 @@ class Player:
                     attacker.output(f"Player {self.name} is defended")
                 return True
         return False
-
-    ###########################################################################
-    def get_potions(self) -> int:
-        """Return the number of potions the player has"""
-        return self.potions
 
     ###########################################################################
     def get_coins(self) -> int:
@@ -1599,8 +1622,10 @@ class Player:
         return True
 
     ###########################################################################
-    def cards_affordable(self, oper, coin, potions, types):
-        """Return the list of cards for under cost"""
+    def cards_affordable(self, oper, coin, num_potions, types):
+        """Return the list of cards for under cost
+        {coin} {num_potions} are the resources contraints we have
+        """
         affordable = PlayArea("affordable")
         for c in self.game.cardTypes():
             if not c:
@@ -1622,7 +1647,7 @@ class Player:
             if c.debtcost and not c.cost:
                 affordable.add(c)
                 continue
-            if oper(cost, coin) and oper(c.potcost, potions):
+            if oper(cost, coin) and oper(c.potcost, num_potions):
                 affordable.add(c)
                 continue
         affordable.sort(key=self.card_cost)
@@ -1630,20 +1655,20 @@ class Player:
         return affordable
 
     ###########################################################################
-    def cards_under(self, coin, potions=0, types=None):
+    def cards_under(self, coin, num_potions=0, types=None):
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
         types = self._type_selector(types)
-        return self.cards_affordable(operator.le, coin, potions, types)
+        return self.cards_affordable(operator.le, coin, num_potions, types)
 
     ###########################################################################
-    def cards_worth(self, coin, potions=0, types=None):
+    def cards_worth(self, coin, num_potions=0, types=None):
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
         types = self._type_selector(types)
-        return self.cards_affordable(operator.eq, coin, potions, types)
+        return self.cards_affordable(operator.eq, coin, num_potions, types)
 
     ###########################################################################
     def get_cards(self):
@@ -1865,7 +1890,9 @@ class Player:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
                 kwargs["prompt"] = f"Discard {num} cards"
-        discard = self.card_sel(num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs)
+        discard = self.card_sel(
+            num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs
+        )
         for c in discard:
             self.output(f"Discarding {c.name}")
             self.discard_card(c)
