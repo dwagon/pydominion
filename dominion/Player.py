@@ -44,7 +44,7 @@ class Player:
         self.villagers = Counter("Villager", 0)
         self.debt = Counter("Debt", 0)
         self.coffers = Counter("Coffers", 0)
-        self.favors = 0
+        self.favors = Counter("Favors", 0)
         self.newhandsize = 5
         self.playlimit = None
         self.card_token = False
@@ -756,7 +756,7 @@ class Player:
         if self.potions:
             status += " Potion"
         if self.favors:
-            status += f" Favours={self.favors}"
+            status += f" Favours={self.favors.get()}"
         if self.coffers:
             status += f" Coffer={self.coffers.get()}"
         if self.villagers:
@@ -1447,20 +1447,6 @@ class Player:
     def get_coins(self) -> int:
         """Return the number of coins the player has"""
         return self.coin
-
-    ###########################################################################
-    def add_favors(self, num=1):
-        assert isinstance(num, int)
-        self.favors += num
-
-    ###########################################################################
-    def set_favors(self, num=1):
-        assert isinstance(num, int)
-        self.favors = num
-
-    ###########################################################################
-    def get_favors(self):
-        return self.favors
 
     ###########################################################################
     def add_coins(self, num=1):

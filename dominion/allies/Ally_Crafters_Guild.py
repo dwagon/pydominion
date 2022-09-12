@@ -14,12 +14,12 @@ class Ally_Crafters_Guild(Ally.Ally):
         self.name = "Crafters Guild"
 
     def hook_start_turn(self, game, player):
-        if player.get_favors() < 2:
+        if player.favors.get() < 2:
             return
         player.output("Crafters' Guild lets you gain a card for 2 favours")
         card = player.plr_gain_card(4, destination="deck")
         if card:
-            player.add_favors(-2)
+            player.favors.add(-2)
 
 
 ###############################################################################
@@ -30,10 +30,10 @@ class Test_Crafters_Guild(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_flag(self):
-        self.plr.set_favors(5)
+        self.plr.favors.set(5)
         self.plr.test_input = ["Get Silver"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_favors(), 3)
+        self.assertEqual(self.plr.favors.get(), 3)
         self.assertIn("Silver", self.plr.deck)
 
 

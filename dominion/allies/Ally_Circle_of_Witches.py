@@ -17,7 +17,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
         self.name = "Circle of Witches"
 
     def hook_post_action(self, game, player, card):
-        if player.get_favors() < 3:
+        if player.favors.get() < 3:
             return
         if not card.isLiaison():
             return
@@ -27,7 +27,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
             ("Curse them", True),
         )
         if chc:
-            player.add_favors(-3)
+            player.favors.add(-3)
             for plr in game.player_list():
                 if plr != player:
                     plr.output(f"{player.name}'s {self.name} cursed you")
@@ -45,13 +45,13 @@ class Test_Circle_of_Witches(unittest.TestCase):
 
     def test_play_card(self):
         """Play a liaison and curse"""
-        self.plr.set_favors(4)
+        self.plr.favors.set(4)
         card = self.g["Underling"].remove()
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Curse"]
         self.plr.play_card(card)
         self.assertIn("Curse", self.vic.discardpile)
-        self.assertEqual(self.plr.get_favors(), 1 + 1)  # +1 for playing underling
+        self.assertEqual(self.plr.favors.get(), 1 + 1)  # +1 for playing underling
 
 
 ###############################################################################

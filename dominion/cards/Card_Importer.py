@@ -20,7 +20,7 @@ class Card_Importer(Card.Card):
     def setup(self, game):
         """Each player gets 4 favors"""
         for plr in game.player_list():
-            plr.add_favors(4)
+            plr.favors.add(4)
 
 
 ###############################################################################
@@ -36,7 +36,7 @@ class Test_Importer(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.assertEqual(self.plr.get_favors(), 1 + 4)  # One for using liaison, 4 for this card
+        self.assertEqual(self.plr.favors.get(), 1 + 4)  # One for using liaison, 4 for this card
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.plr.start_turn()

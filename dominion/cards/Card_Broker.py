@@ -36,7 +36,7 @@ class Card_Broker(Card.Card):
         elif dc == "cash":
             player.add_coins(cost)
         elif dc == "favor":
-            player.add_favors(cost)
+            player.favors.add(cost)
 
 
 ###############################################################################
@@ -86,12 +86,12 @@ class Test_Broker(unittest.TestCase):
 
     def test_play_favor(self):
         """Play the card - gain favor"""
-        self.plr.set_favors(0)
+        self.plr.favors.set(0)
         self.plr.hand.set("Copper", "Estate", "Duchy", "Copper", "Province", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "favor"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), 2)
+        self.assertEqual(self.plr.favors.get(), 2)
 
 
 ###############################################################################

@@ -15,7 +15,7 @@ class Ally_Market_Towns(Ally.Ally):
 
     def hook_pre_buy(self, game, player):
         acts = [_ for _ in player.hand if _.playable and _.isAction()]
-        while player.get_favors() and acts:
+        while player.favors.get() and acts:
             opts = [("Do Nothing", None)]
             for act in acts:
                 opts.append((f"Play {act.name}", act))
@@ -23,7 +23,7 @@ class Ally_Market_Towns(Ally.Ally):
             if chc:
                 player.play_card(chc, costAction=False)
                 acts.remove(chc)
-                player.add_favors(-1)
+                player.favors.add(-1)
             else:
                 break
 
@@ -38,13 +38,13 @@ class Test_Market_Towns(unittest.TestCase):
     def test_play(self):
         """Play a Market Town"""
         self.plr.hand.set("Moat", "Copper", "Silver", "Gold")
-        self.plr.set_favors(3)
+        self.plr.favors.set(3)
         self.plr.test_input = ["Play Moat", "End Phase"]
         hndsz = self.plr.hand.size()
         self.plr.buy_phase()
         self.assertIn("Moat", self.plr.played)
         self.assertNotIn("Moat", self.plr.hand)
-        self.assertEqual(self.plr.get_favors(), 2)
+        self.assertEqual(self.plr.favors.get(), 2)
         self.assertEqual(self.plr.hand.size(), hndsz + 2 - 1)  # Moat - played
 
 

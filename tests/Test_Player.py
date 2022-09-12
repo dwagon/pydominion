@@ -893,35 +893,6 @@ class Test_plr_discard_down_to(unittest.TestCase):
 
 
 ###############################################################################
-class Test_Favor(unittest.TestCase):
-    """Favor testing"""
-
-    def setUp(self):
-        self.game = Game.TestGame(numplayers=1)
-        self.game.start_game()
-        self.plr = self.game.player_list(0)
-
-    def test_setfavor(self):
-        """plr.set_favors()"""
-        self.plr.favors = 0
-        self.plr.set_favors(3)
-        self.assertEqual(self.plr.favors, 3)
-
-    def test_addfavor(self):
-        """plr.add_favors()"""
-        self.plr.favors = 0
-        self.plr.add_favors()
-        self.assertEqual(self.plr.favors, 1)
-        self.plr.add_favors(1)
-        self.assertEqual(self.plr.favors, 2)
-
-    def test_getfavor(self):
-        """plr.get_favors()"""
-        self.plr.favors = 3
-        self.assertEqual(self.plr.get_favors(), 3)
-
-
-###############################################################################
 class Test_Add_Card(unittest.TestCase):
     """Test add_card()"""
 

@@ -25,7 +25,7 @@ class Ally_Band_Nomads(Ally.Ally):
         )
         if chc == "nothing":
             return
-        player.add_favors(-1)
+        player.favors.add(-1)
         if chc == "card":
             player.pickup_card()
         elif chc == "action":
@@ -43,7 +43,7 @@ class Test_Band_Nomads(unittest.TestCase):
 
     def test_play_card(self):
         """Play and gain a card"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         hndsz = self.plr.hand.size()
         self.plr.test_input = ["+1 Card"]
         self.plr.gain_card("Silver")
@@ -51,7 +51,7 @@ class Test_Band_Nomads(unittest.TestCase):
 
     def test_play_actions(self):
         """Play and gain an action"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         acts = self.plr.get_actions()
         self.plr.test_input = ["+1 Action"]
         self.plr.gain_card("Silver")
@@ -59,7 +59,7 @@ class Test_Band_Nomads(unittest.TestCase):
 
     def test_play_buys(self):
         """Play and gain a buys"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         bys = self.plr.get_buys()
         self.plr.test_input = ["+1 Buy"]
         self.plr.gain_card("Silver")

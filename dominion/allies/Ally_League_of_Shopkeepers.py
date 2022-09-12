@@ -17,9 +17,9 @@ class Ally_League_Shopkeepers(Ally.Ally):
     def hook_post_action(self, game, player, card):  # pylint: disable=no-self-use
         if not card.isLiaison():
             return
-        if player.get_favors() >= 5:
+        if player.favors.get() >= 5:
             player.add_coins(1)
-        if player.get_favors() >= 10:
+        if player.favors.get() >= 10:
             player.add_actions(1)
             player.add_buys(1)
 
@@ -34,7 +34,7 @@ class Test_League_Shopkeepers(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_one(self):
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         cns = self.plr.get_coins()
         acts = self.plr.get_actions()
         buys = self.plr.get_buys()
@@ -44,7 +44,7 @@ class Test_League_Shopkeepers(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), buys)
 
     def test_play_six(self):
-        self.plr.set_favors(6)
+        self.plr.favors.set(6)
         cns = self.plr.get_coins()
         acts = self.plr.get_actions()
         buys = self.plr.get_buys()
@@ -54,7 +54,7 @@ class Test_League_Shopkeepers(unittest.TestCase):
         self.assertEqual(self.plr.get_buys(), buys)
 
     def test_play_eleven(self):
-        self.plr.set_favors(11)
+        self.plr.favors.set(11)
         cns = self.plr.get_coins()
         acts = self.plr.get_actions()
         buys = self.plr.get_buys()

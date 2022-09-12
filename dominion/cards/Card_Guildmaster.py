@@ -16,7 +16,7 @@ class Card_Guildmaster(Card.Card):
         self.cost = 5
 
     def hook_gain_card(self, game, player, card):
-        player.add_favors()
+        player.favors.add(1)
 
 
 ###############################################################################
@@ -33,9 +33,9 @@ class Test_Guildmaster(unittest.TestCase):
         coin = self.plr.get_coins()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_coins(), coin + 3)
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.gain_card("Copper")
-        self.assertEqual(self.plr.get_favors(), favs + 1)
+        self.assertEqual(self.plr.favors.get(), favs + 1)
 
 
 ###############################################################################
