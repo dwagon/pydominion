@@ -36,7 +36,7 @@ class Test_Tragic_Hero(unittest.TestCase):
         self.plr.hand.set("Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 1 + 3)
 
     def test_gainsomething(self):

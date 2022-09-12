@@ -32,7 +32,7 @@ class Test_Princess(unittest.TestCase):
 
     def test_play(self):
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.card_cost(self.g["Gold"]), 4)
 
 

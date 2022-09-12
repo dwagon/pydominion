@@ -39,14 +39,14 @@ class Test_Spices(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.coffers.set(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.coffers.get(), 0)
 
     def test_gain_card(self):
         self.plr.coffers.set(0)
         self.plr.gain_card("Spices")
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.coffers.get(), 2)
 

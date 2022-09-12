@@ -44,7 +44,7 @@ class Test_Baron(unittest.TestCase):
         self.plr.add_card(self.baron, "hand")
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.baron)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
     def test_noestate(self):
         self.plr.hand.set("Copper", "Copper", "Copper")

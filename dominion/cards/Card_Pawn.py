@@ -43,7 +43,7 @@ class Card_Pawn(Card.Card):
             elif choice == Card.TYPE_ACTION:
                 player.add_actions(1)
             elif choice == "buy":
-                player.add_buys(1)
+                player.buys.add(1)
             elif choice == "coin":
                 player.coins.add(1)
 
@@ -63,7 +63,7 @@ class Test_Pawn(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_play_buy(self):
@@ -72,7 +72,7 @@ class Test_Pawn(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
 
 

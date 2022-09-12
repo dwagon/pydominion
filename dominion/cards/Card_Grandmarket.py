@@ -40,7 +40,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.play_card(self.gm)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_nobuy(self):

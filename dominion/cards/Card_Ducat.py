@@ -47,7 +47,7 @@ class Test_Ducat(unittest.TestCase):
         self.plr.add_card(card, "hand")
         self.plr.play_card(card)
         self.assertEqual(self.plr.coffers.get(), 1)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
 
     def test_gain_trash(self):
         self.plr.test_input = ["Copper"]

@@ -48,7 +48,7 @@ class Card_Scrap(Card.Card):
             if opt == "action":
                 player.add_actions(1)
             if opt == "buy":
-                player.add_buys(1)
+                player.buys.add(1)
             if opt == "coin":
                 player.coins.add(1)
             if opt == "silver":
@@ -116,9 +116,9 @@ class Test_Scrap(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertIn("Copper", self.plr.hand)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Silver", self.plr.discardpile)
         self.assertIn("Horse", self.plr.discardpile)

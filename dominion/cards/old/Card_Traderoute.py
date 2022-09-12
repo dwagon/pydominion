@@ -58,7 +58,7 @@ class Test_Traderoute(unittest.TestCase):
         self.plr.test_input = ["finish selecting"]
         self.plr.play_card(self.traderoute)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
     def test_playOne(self):
         self.plr.test_input = ["finish selecting"]

@@ -421,16 +421,6 @@ class Test_misc(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
-    def test_get_buys(self):
-        self.plr.buys = 3
-        numbuys = self.plr.get_buys()
-        self.assertEqual(numbuys, 3)
-
-    def test_add_buys(self):
-        self.plr.buys = 3
-        self.plr.add_buys(2)
-        self.assertEqual(self.plr.buys, 5)
-
     def test_coststr(self):
         witch = self.game["Witch"].remove()
         golem = self.game["Golem"].remove()
@@ -631,10 +621,10 @@ class Test__choice_selection(unittest.TestCase):
     def test_prompt(self):
         """Test prompt generation"""
         self.plr.actions.set(3)
-        self.plr.buys = 7
-        self.plr.potions = Counter("Potions", 9)
+        self.plr.buys.set(7)
+        self.plr.potions.set(9)
         self.plr.coins.set(5)
-        self.plr.coffers = Counter("Coffer", 1)
+        self.plr.coffers.set(1)
         self.plr.phase = "buy"
         self.plr.debt = Counter("Debt", 2)
         _, prompt = self.plr._choice_selection()
@@ -648,10 +638,10 @@ class Test__choice_selection(unittest.TestCase):
     def test_nothing_prompt(self):
         """Test that if we don't have something it doesn't appear in the prompt"""
         self.plr.actions.set(0)
-        self.plr.buys = 0
-        self.plr.potions = Counter("Potions", 0)
+        self.plr.buys.set(0)
+        self.plr.potions.set(0)
         self.plr.coins.set(0)
-        self.plr.coffers = Counter("Coffer", 0)
+        self.plr.coffers.set(0)
         self.plr.phase = "buy"
         _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=0", prompt)

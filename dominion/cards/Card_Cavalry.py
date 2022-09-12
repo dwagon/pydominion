@@ -29,7 +29,7 @@ class Card_Cavalry(Card.Card):
         if player.phase == "buy":
             player.phase = Card.TYPE_ACTION
         player.pickup_cards(2)
-        player.add_buys(1)
+        player.buys.add(1)
 
 
 ###############################################################################
@@ -43,14 +43,14 @@ class Test_Cavalry(unittest.TestCase):
     def test_play(self):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertIn("Horse", self.plr.discardpile)
 
     def test_gain(self):
         self.plr.phase = "buy"
         self.plr.gain_card("Cavalry")
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
 

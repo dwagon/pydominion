@@ -31,7 +31,7 @@ class Ally_Band_Nomads(Ally.Ally):
         elif chc == "action":
             player.add_actions(1)
         elif chc == "buy":
-            player.add_buys(1)
+            player.buys.add(1)
 
 
 ###############################################################################
@@ -60,10 +60,10 @@ class Test_Band_Nomads(unittest.TestCase):
     def test_play_buys(self):
         """Play and gain a buys"""
         self.plr.favors.set(1)
-        bys = self.plr.get_buys()
+        bys = self.plr.buys.get()
         self.plr.test_input = ["+1 Buy"]
         self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_buys(), bys + 1)
+        self.assertEqual(self.plr.buys.get(), bys + 1)
 
 
 ###############################################################################

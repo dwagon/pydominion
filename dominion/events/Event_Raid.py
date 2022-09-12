@@ -41,7 +41,7 @@ class Test_Raid(unittest.TestCase):
         self.plr.hand.set("Silver", "Silver")
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.buys, 0)
+        self.assertEqual(self.plr.buys.get(), 0)
         self.assertEqual(self.plr.discardpile.size(), 2)
         for c in self.plr.discardpile:
             self.assertEqual(c.name, "Silver")

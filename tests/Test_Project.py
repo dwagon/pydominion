@@ -81,11 +81,11 @@ class Test_buy_project(unittest.TestCase):
     def test_buy(self):
         """Test Buying a project"""
         PA = self.g.projects["ProjectA"]
-        self.plr.set_buys(1)
+        self.plr.buys.set(1)
         self.plr.coins.set(3)
         rc = self.plr.buy_project(PA)
         self.assertTrue(rc)
-        self.assertEqual(self.plr.get_buys(), 0)
+        self.assertEqual(self.plr.buys.get(), 0)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.projects[0].name, "ProjectA")
 

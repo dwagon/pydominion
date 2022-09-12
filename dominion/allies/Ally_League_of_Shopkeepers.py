@@ -21,7 +21,7 @@ class Ally_League_Shopkeepers(Ally.Ally):
             player.coins.add(1)
         if player.favors.get() >= 10:
             player.add_actions(1)
-            player.add_buys(1)
+            player.buys.add(1)
 
 
 ###############################################################################
@@ -37,31 +37,31 @@ class Test_League_Shopkeepers(unittest.TestCase):
         self.plr.favors.set(1)
         cns = self.plr.coins.get()
         acts = self.plr.actions.get()
-        buys = self.plr.get_buys()
+        buys = self.plr.buys.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns)
         self.assertEqual(self.plr.actions.get(), acts)
-        self.assertEqual(self.plr.get_buys(), buys)
+        self.assertEqual(self.plr.buys.get(), buys)
 
     def test_play_six(self):
         self.plr.favors.set(6)
         cns = self.plr.coins.get()
         acts = self.plr.actions.get()
-        buys = self.plr.get_buys()
+        buys = self.plr.buys.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns + 1)
         self.assertEqual(self.plr.actions.get(), acts)
-        self.assertEqual(self.plr.get_buys(), buys)
+        self.assertEqual(self.plr.buys.get(), buys)
 
     def test_play_eleven(self):
         self.plr.favors.set(11)
         cns = self.plr.coins.get()
         acts = self.plr.actions.get()
-        buys = self.plr.get_buys()
+        buys = self.plr.buys.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns + 1)
         self.assertEqual(self.plr.actions.get(), acts + 1)
-        self.assertEqual(self.plr.get_buys(), buys + 1)
+        self.assertEqual(self.plr.buys.get(), buys + 1)
 
 
 ###############################################################################

@@ -35,7 +35,7 @@ class Test_Woodcutter(unittest.TestCase):
         """Play the woodcutter"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
 
 ###############################################################################

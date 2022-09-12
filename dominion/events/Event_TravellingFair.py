@@ -38,7 +38,7 @@ class Test_TravellingFair(unittest.TestCase):
         self.plr.perform_event(self.card)
         self.plr.test_input = ["Discard"]
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
         self.assertNotIn("Gold", self.plr.deck)
 
@@ -49,7 +49,7 @@ class Test_TravellingFair(unittest.TestCase):
         self.plr.test_input = ["Put"]
         self.plr.gain_card("Gold")
         self.g.print_state()
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertNotIn("Gold", self.plr.discardpile)
         self.assertIn("Gold", self.plr.deck)
 

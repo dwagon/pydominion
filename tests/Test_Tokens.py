@@ -93,9 +93,9 @@ class TestToken(unittest.TestCase):
         self.plr.place_token("+1 Buy", "Moat")
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.plr.play_card(moat)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
     def test_journey_token(self):
         """Does the Journey token work"""

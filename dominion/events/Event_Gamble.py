@@ -40,11 +40,11 @@ class Test_Gamble(unittest.TestCase):
         """Perform a Gamble with a treasure"""
         self.plr.coins.add(2)
         self.plr.deck.set("Gold")
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
 
     def test_play_action(self):
         """Perform a Gamble with an action"""
@@ -54,7 +54,7 @@ class Test_Gamble(unittest.TestCase):
         self.assertIsNotNone(self.plr.discardpile["Moat"])
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
 
 
 ###############################################################################

@@ -25,7 +25,7 @@ class Card_Forum(Card.Card):
         player.plr_discard_cards(num=2, force=True)
 
     def hook_buy_this_card(self, game, player):
-        player.add_buys(1)
+        player.buys.add(1)
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class Test_Forum(unittest.TestCase):
     def test_buy(self):
         self.plr.coins.set(5)
         self.plr.buy_card(self.g["Forum"])
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
 
 
 ###############################################################################

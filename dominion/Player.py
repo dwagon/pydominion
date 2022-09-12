@@ -37,7 +37,7 @@ class Player:
         self.played = PlayArea("played", game=self.game)
         self.discardpile = PlayArea("discardpile", game=self.game)
         self.reserve = PlayArea("reserve", game=self.game)
-        self.buys = 1
+        self.buys = Counter("Buys", 1)
         self.actions = Counter("Actions", 1)
         self.coins = Counter("Coins", 0)
         self.potions = Counter("Potions", 0)
@@ -748,7 +748,7 @@ class Player:
     ###########################################################################
     def _generate_prompt(self) -> str:
         """Return the prompt to give to the user"""
-        status = f"Actions={self.actions.get()} Buys={self.buys}"
+        status = f"Actions={self.actions.get()} Buys={self.buys.get()}"
         if self.coins:
             status += f" Coins={self.coins.get()}"
         if self.debt:
@@ -1002,7 +1002,7 @@ class Player:
     def start_turn(self):
         self.phase = "start"
         self.played.empty()
-        self.buys = 1
+        self.buys.set(1)
         self.actions.set(1)
         self.coins.set(0)
         self.potions.set(0)
@@ -1450,20 +1450,6 @@ class Player:
             self.output("No more additional actions allowed")
         else:
             self.actions += num
-
-    ###########################################################################
-    def get_buys(self):
-        return self.buys
-
-    ###########################################################################
-    def add_buys(self, num=1):
-        assert isinstance(num, int)
-        self.buys += num
-
-    ###########################################################################
-    def set_buys(self, num=1):
-        assert isinstance(num, int)
-        self.buys = num
 
     ###########################################################################
     def gain_prize(self):

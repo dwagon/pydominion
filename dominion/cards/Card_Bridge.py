@@ -36,7 +36,7 @@ class Test_Bridge(unittest.TestCase):
 
     def test_play(self):
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_costreduction(self):

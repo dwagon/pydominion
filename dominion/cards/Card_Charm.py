@@ -28,7 +28,7 @@ class Card_Charm(Card.Card):
             ),
         )
         if ans:
-            player.add_buys(1)
+            player.buys.add(1)
             player.coins.add(2)
         else:
             self.buytrigger = True
@@ -53,13 +53,13 @@ class Test_Charm(unittest.TestCase):
     def test_play_choose_one(self):
         self.plr.test_input = ["+1 Buy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_choose_two(self):
         self.plr.test_input = ["next time"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.test_input = ["Get Duchy"]
         self.plr.coins.set(5)

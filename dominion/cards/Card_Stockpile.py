@@ -38,7 +38,7 @@ class Test_Stockpile(unittest.TestCase):
         """Play the card"""
         self.plr.play_card(self.card)
         self.assertIn("Stockpile", self.plr.exilepile)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 3)
 
 

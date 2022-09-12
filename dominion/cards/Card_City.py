@@ -25,7 +25,7 @@ class Card_City(Card.Card):
             player.pickup_card()
         if empties >= 2:
             player.coins.add(1)
-            player.add_buys(1)
+            player.buys.add(1)
 
 
 ###############################################################################
@@ -67,7 +67,7 @@ class Test_City(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
         # 1 default + 1 for city
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         # 5 for hand, 1 for city, 1 for one stack
         self.assertEqual(self.plr.hand.size(), 7)
 
