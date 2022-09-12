@@ -46,22 +46,22 @@ class Test_CityState(unittest.TestCase):
         """Play card"""
         self.plr.hand.set()
         self.plr.favors.set(2)
-        self.plr.set_actions(0)
+        self.plr.actions.set(0)
         self.plr.test_input = ["Play"]
         self.plr.gain_card("Underling")
         self.assertEqual(self.plr.favors.get(), 2 - 2 + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
 
     def test_dont_play(self):
         """Dont play card"""
         self.plr.hand.set()
         self.plr.favors.set(2)
-        self.plr.set_actions(0)
+        self.plr.actions.set(0)
         self.plr.test_input = ["nothing"]
         self.plr.gain_card("Underling")
         self.assertEqual(self.plr.favors.get(), 2)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
 
 

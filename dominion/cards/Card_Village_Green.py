@@ -69,18 +69,18 @@ class Test_Village_Green(unittest.TestCase):
         """Play Card with effect this turn"""
         self.plr.test_input = ["Now"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_play_next_turn(self):
         """Play Card with effect next turn"""
         self.plr.test_input = ["Next"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_actions(), 2 + 1)
+        self.assertEqual(self.plr.actions.get(), 2 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
     def test_discard(self):
@@ -89,7 +89,7 @@ class Test_Village_Green(unittest.TestCase):
         self.plr.phase = "buy"
         self.plr.test_input = ["Reveal", "Now"]
         self.plr.discard_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertIn("Village Green", self.plr.durationpile)
 

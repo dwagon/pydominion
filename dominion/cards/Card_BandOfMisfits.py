@@ -47,7 +47,7 @@ class Test_BandOfMisfits(unittest.TestCase):
         self.plr.test_input = ["Select Village"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
 
 ###############################################################################

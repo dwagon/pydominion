@@ -58,7 +58,7 @@ class Test_Conclave(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################

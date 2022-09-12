@@ -52,7 +52,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.g.trashpile)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.get_buys(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
 
@@ -66,7 +66,7 @@ class Test_SpiceMerchant(unittest.TestCase):
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.g.trashpile)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
 

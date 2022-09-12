@@ -49,7 +49,7 @@ class Test_Cavalry(unittest.TestCase):
     def test_gain(self):
         self.plr.phase = "buy"
         self.plr.gain_card("Cavalry")
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.get_buys(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
         self.assertEqual(self.plr.phase, Card.TYPE_ACTION)

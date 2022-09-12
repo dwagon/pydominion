@@ -41,12 +41,12 @@ class Test_Coinoftherealm(unittest.TestCase):
 
     def test_call(self):
         """Call from Reserve"""
-        self.plr.actions = 0
+        self.plr.actions.set(0)
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         c = self.plr.call_reserve("Coin of the Realm")
         self.assertEqual(c.name, "Coin of the Realm")
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
 
 ###############################################################################

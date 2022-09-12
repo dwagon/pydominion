@@ -43,7 +43,7 @@ class Test_WilloWisp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Copper", self.plr.hand)
         self.assertIn("Estate", self.plr.hand)
 
@@ -53,7 +53,7 @@ class Test_WilloWisp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertNotIn("Gold", self.plr.hand)
         self.assertIn("Gold", self.plr.deck)
         self.assertIn("Estate", self.plr.hand)

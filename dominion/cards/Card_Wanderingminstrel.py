@@ -47,7 +47,7 @@ class Test_Wanderingminstrel(unittest.TestCase):
         """Wandering Minstrel"""
         self.plr.deck.set("Duchy", "Moat", "Silver", "Gold")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.hand.size(), 6)
         self.assertIn("Moat", self.plr.deck)
         self.assertIn("Duchy", self.plr.discardpile)

@@ -56,7 +56,7 @@ class Test_Magpie(unittest.TestCase):
         self.plr.deck.set("Duchy", "Copper")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         # Hand of 5, the card gained
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertNotIn("Duchy", self.plr.hand)

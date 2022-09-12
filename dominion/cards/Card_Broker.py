@@ -70,7 +70,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.g.trashpile.size(), 0)
 
     def test_play_action(self):
@@ -79,7 +79,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "actions"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_play_cash(self):
         """Play the card - gain cash"""

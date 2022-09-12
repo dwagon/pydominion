@@ -46,7 +46,7 @@ class Test_Plaza(unittest.TestCase):
             self.plr.add_card(self.card, "hand")
             self.plr.play_card(self.card)
             self.assertEqual(self.plr.coffers.get(), 1)
-            self.assertEqual(self.plr.get_actions(), 2)
+            self.assertEqual(self.plr.actions.get(), 2)
             self.assertEqual(self.plr.hand.size(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()

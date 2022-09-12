@@ -42,7 +42,7 @@ class Test_Forum(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy", "province", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3 - 2)
 
     def test_buy(self):

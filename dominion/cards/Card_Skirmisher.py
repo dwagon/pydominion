@@ -45,7 +45,7 @@ class Test_Skirmisher(unittest.TestCase):
         """Play the card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_gain_plain(self):

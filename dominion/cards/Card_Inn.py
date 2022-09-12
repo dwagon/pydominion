@@ -63,7 +63,7 @@ class Test_Inn(unittest.TestCase):
         self.plr.test_input = ["Duchy", "Province", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_gain(self):
         self.plr.discardpile.set("Moat", "Gold")

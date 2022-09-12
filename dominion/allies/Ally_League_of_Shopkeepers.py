@@ -36,31 +36,31 @@ class Test_League_Shopkeepers(unittest.TestCase):
     def test_play_one(self):
         self.plr.favors.set(1)
         cns = self.plr.coins.get()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         buys = self.plr.get_buys()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns)
-        self.assertEqual(self.plr.get_actions(), acts)
+        self.assertEqual(self.plr.actions.get(), acts)
         self.assertEqual(self.plr.get_buys(), buys)
 
     def test_play_six(self):
         self.plr.favors.set(6)
         cns = self.plr.coins.get()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         buys = self.plr.get_buys()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns + 1)
-        self.assertEqual(self.plr.get_actions(), acts)
+        self.assertEqual(self.plr.actions.get(), acts)
         self.assertEqual(self.plr.get_buys(), buys)
 
     def test_play_eleven(self):
         self.plr.favors.set(11)
         cns = self.plr.coins.get()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         buys = self.plr.get_buys()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cns + 1)
-        self.assertEqual(self.plr.get_actions(), acts + 1)
+        self.assertEqual(self.plr.actions.get(), acts + 1)
         self.assertEqual(self.plr.get_buys(), buys + 1)
 
 

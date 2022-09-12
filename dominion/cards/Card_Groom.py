@@ -51,7 +51,7 @@ class Test_Groom(unittest.TestCase):
         self.plr.test_input = ["Get Estate"]
         self.plr.play_card(self.card)
         self.assertNotIn("Horse", self.plr.discardpile)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
 

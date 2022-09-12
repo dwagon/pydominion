@@ -44,7 +44,7 @@ class Test_Sanctuary(unittest.TestCase):
         self.plr.test_input = ["Exile Copper"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.get_buys(), 2)
         self.assertIn("Copper", self.plr.exilepile)
 

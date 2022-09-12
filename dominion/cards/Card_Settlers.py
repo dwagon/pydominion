@@ -44,7 +44,7 @@ class Test_Settlers(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.plr.hand)
         self.assertNotIn("Copper", self.plr.discardpile)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 2 + 1 + 1)
 
     def test_play_nocopper(self):

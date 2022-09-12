@@ -47,10 +47,10 @@ class Test_Carpenter(unittest.TestCase):
     def test_play_full(self):
         """Play the card with no empties"""
         self.plr.add_card(self.card, "hand")
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), acts)
+        self.assertEqual(self.plr.actions.get(), acts)
         self.assertIn("Silver", self.plr.discardpile)
 
     def test_play_empty(self):

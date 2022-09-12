@@ -40,7 +40,7 @@ class Test_Bounty_Hunter(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Exile Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 3)
 
 

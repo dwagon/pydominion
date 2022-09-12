@@ -56,7 +56,7 @@ class Test_Lich(unittest.TestCase):
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.hand.size(), hndsz + 6)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_trash(self):
         """Trash the lich"""

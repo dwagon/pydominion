@@ -75,10 +75,10 @@ class Test_Town_Crier(unittest.TestCase):
         """Play a town crier - don't rotate, but get card and action"""
         self.plr.test_input = ["card", "Don't"]
         hndsze = self.plr.hand.size()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), hndsze + 1 - 1)
-        self.assertEqual(self.plr.get_actions(), acts + 1 - 1)
+        self.assertEqual(self.plr.actions.get(), acts + 1 - 1)
 
 
 ###############################################################################

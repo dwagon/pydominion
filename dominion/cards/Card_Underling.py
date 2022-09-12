@@ -33,7 +33,7 @@ class Test_Underling(unittest.TestCase):
         favs = self.plr.favors.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), favs + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
 

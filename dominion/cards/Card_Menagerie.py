@@ -41,14 +41,14 @@ class Test_Menagerie(unittest.TestCase):
         self.plr.hand.set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
     def test_play_non_unique(self):
         self.plr.hand.set("Copper", "Copper", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
 
 

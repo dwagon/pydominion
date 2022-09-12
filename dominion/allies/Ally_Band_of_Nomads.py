@@ -52,10 +52,10 @@ class Test_Band_Nomads(unittest.TestCase):
     def test_play_actions(self):
         """Play and gain an action"""
         self.plr.favors.set(1)
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.test_input = ["+1 Action"]
         self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_actions(), acts + 1)
+        self.assertEqual(self.plr.actions.get(), acts + 1)
 
     def test_play_buys(self):
         """Play and gain a buys"""

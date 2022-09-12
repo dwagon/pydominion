@@ -38,7 +38,7 @@ class Player:
         self.discardpile = PlayArea("discardpile", game=self.game)
         self.reserve = PlayArea("reserve", game=self.game)
         self.buys = 1
-        self.actions = 1
+        self.actions = Counter("Actions", 1)
         self.coins = Counter("Coins", 0)
         self.potions = Counter("Potions", 0)
         self.villagers = Counter("Villager", 0)
@@ -748,7 +748,7 @@ class Player:
     ###########################################################################
     def _generate_prompt(self) -> str:
         """Return the prompt to give to the user"""
-        status = f"Actions={self.actions} Buys={self.buys}"
+        status = f"Actions={self.actions.get()} Buys={self.buys}"
         if self.coins:
             status += f" Coins={self.coins.get()}"
         if self.debt:
@@ -1003,7 +1003,7 @@ class Player:
         self.phase = "start"
         self.played.empty()
         self.buys = 1
-        self.actions = 1
+        self.actions.set(1)
         self.coins.set(0)
         self.potions.set(0)
         self.played_ways = []
@@ -1188,8 +1188,8 @@ class Player:
 
         if card.isAction() and costAction and self.phase != "night":
             self.actions -= 1
-        if self.actions < 0:  # pragma: no cover
-            self.actions = 0
+        if self.actions.get() < 0:  # pragma: no cover
+            self.actions.set(0)
             self.currcards.pop()
             self.output("Not enough actions")
             return
@@ -1211,8 +1211,8 @@ class Player:
         opts = {"discard": True}
         self.currcards.append(way)
         self.actions -= 1
-        if self.actions < 0:  # pragma: no cover
-            self.actions = 0
+        if self.actions.get() < 0:  # pragma: no cover
+            self.actions.set(0)
             self.currcards.pop()
             self.output("Not enough actions")
             return
@@ -1442,14 +1442,6 @@ class Player:
                     attacker.output(f"Player {self.name} is defended")
                 return True
         return False
-
-    ###########################################################################
-    def get_actions(self):
-        return self.actions
-
-    ###########################################################################
-    def set_actions(self, num=1):
-        self.actions = num
 
     ###########################################################################
     def add_actions(self, num=1):

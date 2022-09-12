@@ -44,7 +44,7 @@ class Test_Horse(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertNotIn("Horse", self.plr.played)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################

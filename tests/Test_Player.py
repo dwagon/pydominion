@@ -421,16 +421,6 @@ class Test_misc(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
-    def test_get_actions(self):
-        self.plr.actions = 3
-        numactions = self.plr.get_actions()
-        self.assertEqual(numactions, 3)
-
-    def test_add_actions(self):
-        self.plr.actions = 3
-        self.plr.add_actions(2)
-        self.assertEqual(self.plr.actions, 5)
-
     def test_get_buys(self):
         self.plr.buys = 3
         numbuys = self.plr.get_buys()
@@ -640,7 +630,7 @@ class Test__choice_selection(unittest.TestCase):
 
     def test_prompt(self):
         """Test prompt generation"""
-        self.plr.actions = 3
+        self.plr.actions.set(3)
         self.plr.buys = 7
         self.plr.potions = Counter("Potions", 9)
         self.plr.coins.set(5)
@@ -657,7 +647,7 @@ class Test__choice_selection(unittest.TestCase):
 
     def test_nothing_prompt(self):
         """Test that if we don't have something it doesn't appear in the prompt"""
-        self.plr.actions = 0
+        self.plr.actions.set(0)
         self.plr.buys = 0
         self.plr.potions = Counter("Potions", 0)
         self.plr.coins.set(0)
@@ -814,14 +804,14 @@ class Test_spend_villager(unittest.TestCase):
         self.plr.villagers.set(1)
         self.plr.spend_villager()
         self.assertEqual(self.plr.villagers.get(), 0)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_spendNothing(self):
         """Spend a Villager that the player doesn't have"""
         self.plr.villagers.set(0)
         self.plr.spend_villager()
         self.assertEqual(self.plr.villagers.get(), 0)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################

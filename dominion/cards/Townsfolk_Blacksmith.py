@@ -61,10 +61,10 @@ class Test_Blacksmith(unittest.TestCase):
     def test_play_action(self):
         self.plr.test_input = ["Action"]
         hndsze = self.plr.hand.size()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), hndsze + 1 - 1)
-        self.assertEqual(self.plr.get_actions(), acts + 1 - 1)
+        self.assertEqual(self.plr.actions.get(), acts + 1 - 1)
 
 
 ###############################################################################

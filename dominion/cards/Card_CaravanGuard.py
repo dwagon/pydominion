@@ -48,7 +48,7 @@ class Test_CaravanGuard(unittest.TestCase):
         """Test playing the caravan guard"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()

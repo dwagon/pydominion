@@ -44,7 +44,7 @@ class Test_Modify(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash estate", "action"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
         self.assertIn("Estate", self.g.trashpile)
 
@@ -54,7 +54,7 @@ class Test_Modify(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["trash estate", "gain", "get silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertIn("Silver", self.plr.discardpile)
 

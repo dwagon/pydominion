@@ -50,7 +50,7 @@ class Test_SecretCave(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.get_actions(), 1)
+            self.assertEqual(self.plr.actions.get(), 1)
             self.assertEqual(self.plr.discardpile.size(), 3)
             self.assertEqual(self.plr.hand.size(), 5 + 1 - 3)
             self.plr.end_turn()
