@@ -627,7 +627,7 @@ class Test__choice_selection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.hand.set("Copper")
         self.plr.phase = "buy"
-        self.plr.coffer = 0  # Stop card _choice_selection breaking test
+        self.plr.coffers = Counter("Coffer", 0)  # Stop card _choice_selection breaking test
         opts, _ = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
@@ -644,7 +644,7 @@ class Test__choice_selection(unittest.TestCase):
         self.plr.buys = 7
         self.plr.potions = Counter("Potions", 9)
         self.plr.coin = 5
-        self.plr.coffer = 1
+        self.plr.coffers = Counter("Coffer", 1)
         self.plr.phase = "buy"
         self.plr.debt = Counter("Debt", 2)
         _, prompt = self.plr._choice_selection()
@@ -661,7 +661,7 @@ class Test__choice_selection(unittest.TestCase):
         self.plr.buys = 0
         self.plr.potions = Counter("Potions", 0)
         self.plr.coin = 0
-        self.plr.coffer = 0
+        self.plr.coffers = Counter("Coffer", 0)
         self.plr.phase = "buy"
         _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=0", prompt)
@@ -713,7 +713,7 @@ class Test__spendable_selection(unittest.TestCase):
         self.plr.hand.set("Copper", "Estate")
         self.plr.add_card(self.potion, "hand")
         self.plr.add_card(self.moat, "hand")
-        self.plr.add_coffer(1)
+        self.plr.coffers.add(1)
         self.plr.villagers.add(1)
         opts = self.plr._spendable_selection()
         self.assertEqual(opts[0]["selector"], "1")
@@ -741,7 +741,7 @@ class Test__spendable_selection(unittest.TestCase):
         self.plr.hand.set("Copper")
         self.plr.debt = Counter("Debt", 1)
         self.plr.coin = 1
-        self.plr.coffer = 0
+        self.plr.coffers = Counter("Coffer", 0)
         try:
             opts = self.plr._spendable_selection()
             self.assertEqual(opts[1]["selector"], "3")
@@ -788,16 +788,16 @@ class Test_spend_coffer(unittest.TestCase):
 
     def test_spend_coffer(self):
         """Spend a coffer that the player has"""
-        self.plr.coffer = 1
+        self.plr.coffers = Counter("Coffer", 1)
         self.plr.spend_coffer()
-        self.assertEqual(self.plr.get_coffers(), 0)
+        self.assertEqual(self.plr.coffers.get(), 0)
         self.assertEqual(self.plr.get_coins(), 1)
 
     def test_spendNothing(self):
         """Spend a coffer that the player doesn't have"""
-        self.plr.coffer = 0
+        self.plr.coffers = Counter("Coffer", 0)
         self.plr.spend_coffer()
-        self.assertEqual(self.plr.get_coffers(), 0)
+        self.assertEqual(self.plr.coffers.get(), 0)
         self.assertEqual(self.plr.get_coins(), 0)
 
 

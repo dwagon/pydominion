@@ -20,7 +20,7 @@ class Project_Pageant(Project.Project):
         for num in range(player.coin + 1):
             options.append((f"Buy {num} Coffers for {num} Coin", num))
         pick = player.plr_choose_options("Exchange coin for coffers", *options)
-        player.add_coffer(pick)
+        player.coffers.add(pick)
         player.coin -= pick
 
 
@@ -32,12 +32,12 @@ class Test_Pageant(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.get_coffers()
+        numc = self.plr.coffers.get()
         self.plr.assign_project("Pageant")
         self.plr.set_coins(5)
         self.plr.test_input = ["End Phase", "4"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.get_coffers(), numc + 4)
+        self.assertEqual(self.plr.coffers.get(), numc + 4)
         self.assertEqual(self.plr.get_coins(), 1)
 
 

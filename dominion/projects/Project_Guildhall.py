@@ -15,7 +15,7 @@ class Project_Guildhall(Project.Project):
 
     def hook_gain_card(self, game, player, card):
         if card.isTreasure():
-            player.add_coffer()
+            player.coffers.add(1)
 
 
 ###############################################################################
@@ -26,10 +26,10 @@ class Test_Guildhall(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.get_coffers()
+        numc = self.plr.coffers.get()
         self.plr.assign_project("Guildhall")
         self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_coffers(), numc + 1)
+        self.assertEqual(self.plr.coffers.get(), numc + 1)
 
 
 ###############################################################################

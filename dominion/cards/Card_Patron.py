@@ -20,7 +20,7 @@ class Card_Patron(Card.Card):
         player.villagers.add(1)
 
     def hook_revealThisCard(self, game, player):
-        player.add_coffer()
+        player.coffers.add(1)
 
 
 ###############################################################################
@@ -38,9 +38,9 @@ class Test_Patron(unittest.TestCase):
         self.assertEqual(self.plr.villagers.get(), 1)
 
     def test_reveal(self):
-        num = self.plr.get_coffers()
+        num = self.plr.coffers.get()
         self.plr.reveal_card(self.card)
-        self.assertEqual(self.plr.get_coffers(), num + 1)
+        self.assertEqual(self.plr.coffers.get(), num + 1)
 
 
 ###############################################################################

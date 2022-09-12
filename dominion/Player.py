@@ -26,7 +26,6 @@ class Player:
         self.name = name
         self.currcards = []
         self.score = {}
-        self.coffer = 0
         self.had_cards = []
         self.messages = []
         self.hooks = {}
@@ -44,6 +43,7 @@ class Player:
         self.potions = Counter("Potions", 0)
         self.villagers = Counter("Villager", 0)
         self.debt = Counter("Debt", 0)
+        self.coffers = Counter("Coffers", 0)
         self.favors = 0
         self.newhandsize = 5
         self.playlimit = None
@@ -347,11 +347,6 @@ class Player:
                 break
 
     ###########################################################################
-    def add_coffer(self, num=1):
-        """Gain a number of coffer"""
-        self.coffer += num
-
-    ###########################################################################
     def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
         piles = {
@@ -526,7 +521,7 @@ class Player:
             )
             options.append(o)
 
-        if self.coffer:
+        if self.coffers:
             o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
             options.append(o)
 
@@ -762,8 +757,8 @@ class Player:
             status += " Potion"
         if self.favors:
             status += f" Favours={self.favors}"
-        if self.coffer:
-            status += f" Coffer={self.coffer}"
+        if self.coffers:
+            status += f" Coffer={self.coffers.get()}"
         if self.villagers:
             status += f" Villager={self.villagers.get()}"
         if self.playlimit is not None:
@@ -1052,9 +1047,9 @@ class Player:
 
     ###########################################################################
     def spend_coffer(self):
-        if self.coffer <= 0:
+        if self.coffers.get() <= 0:
             return
-        self.coffer -= 1
+        self.coffers -= 1
         self.coin += 1
         self.output("Spent a coffer")
 
@@ -1452,15 +1447,6 @@ class Player:
     def get_coins(self) -> int:
         """Return the number of coins the player has"""
         return self.coin
-
-    ###########################################################################
-    def get_coffers(self) -> int:
-        """Return the number of coffers the player has"""
-        return self.coffer
-
-    ###########################################################################
-    def set_coffers(self, num=0):
-        self.coffer = num
 
     ###########################################################################
     def add_favors(self, num=1):
