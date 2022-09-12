@@ -35,7 +35,7 @@ class Test_Triumph(unittest.TestCase):
         self.assertIsNotNone(self.plr.discardpile["Estate"])
         scores = self.plr.get_score_details()
         self.assertEqual(scores["Triumph"], 2)
-        self.assertEqual(self.plr.debt, 5)
+        self.assertEqual(self.plr.debt.get(), 5)
 
 
 ###############################################################################

@@ -32,7 +32,7 @@ class Test_Wedding(unittest.TestCase):
         self.plr.add_coins(4)
         self.plr.perform_event(self.card)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertEqual(self.plr.debt, 3)
+        self.assertEqual(self.plr.debt.get(), 3)
         self.assertEqual(self.plr.get_score_details()["Wedding"], 1)
 
 

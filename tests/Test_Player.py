@@ -417,9 +417,7 @@ class Test_pickup_card(unittest.TestCase):
 ###############################################################################
 class Test_misc(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Golem", "Witch", "Engineer"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Golem", "Witch", "Engineer"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -468,9 +466,7 @@ class Test_misc(unittest.TestCase):
 ###############################################################################
 class Test__display_overview(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
@@ -524,9 +520,7 @@ class Test__display_overview(unittest.TestCase):
 ###############################################################################
 class Test__buyable_selection(unittest.TestCase):
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], badcards=["Coppersmith"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Coppersmith"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
         self.moat = self.game["Moat"].remove()
@@ -652,7 +646,7 @@ class Test__choice_selection(unittest.TestCase):
         self.plr.coin = 5
         self.plr.coffer = 1
         self.plr.phase = "buy"
-        self.plr.debt = 2
+        self.plr.debt = Counter("Debt", 2)
         _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=3", prompt)
         self.assertIn("Coins=5", prompt)
@@ -745,7 +739,7 @@ class Test__spendable_selection(unittest.TestCase):
 
     def test_debt(self):
         self.plr.hand.set("Copper")
-        self.plr.debt = 1
+        self.plr.debt = Counter("Debt", 1)
         self.plr.coin = 1
         self.plr.coffer = 0
         try:
@@ -771,7 +765,7 @@ class Test_buy_card(unittest.TestCase):
 
     def test_debt(self):
         """Test buying a card when the player has a debt"""
-        self.plr.debt = 1
+        self.plr.debt = Counter("Debt", 1)
         self.plr.buy_card(self.game["Copper"])
         self.assertIn("Must pay off debt first", self.plr.messages)
 

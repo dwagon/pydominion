@@ -40,6 +40,9 @@ class Counter:
             raise NotImplementedError(f"Counter __sub__({obj=}) {type(obj)}")
         return Counter(self._name, self._value)
 
+    def __int__(self):
+        return self._value
+
     def __repr__(self):
         return f"<{self._name}={self._value}>"
 
