@@ -765,7 +765,7 @@ class Game:  # pylint: disable=too-many-public-methods
             f"  turn: coin={plr.coin} debt={plr.debt} actions={plr.actions}"
             f" buys={plr.buys} favors={plr.favors}"
         )
-        print(f"  coffers={plr.coffer} villagers={plr.villager} potions={plr.potions}")
+        print(f"  coffers={plr.coffer} villagers={plr.villagers} potions={plr.potions}")
 
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover

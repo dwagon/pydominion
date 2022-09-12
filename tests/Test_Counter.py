@@ -35,6 +35,14 @@ class Test_Counter(unittest.TestCase):
         cntr += Counter("Bar", 1)
         self.assertEqual(cntr.get(), 9)
 
+    def test_sub_dunder(self):
+        """Test __sub__()"""
+        cntr = Counter("Foo", 5)
+        cntr -= 2
+        self.assertEqual(cntr.get(), 3)
+        cntr -= Counter("Bar", 1)
+        self.assertEqual(cntr.get(), 2)
+
     def test_bool(self):
         """Test __bool__"""
         self.assertTrue(Counter("Foo", 1))

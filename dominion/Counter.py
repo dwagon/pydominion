@@ -31,6 +31,15 @@ class Counter:
             raise NotImplementedError(f"Counter __add__({obj=}) {type(obj)}")
         return Counter(self._name, self._value)
 
+    def __sub__(self, obj):
+        if isinstance(obj, int):
+            self._value -= obj
+        elif hasattr(obj, "get"):
+            self._value -= obj.get()
+        else:
+            raise NotImplementedError(f"Counter __sub__({obj=}) {type(obj)}")
+        return Counter(self._name, self._value)
+
     def __repr__(self):
         return f"<{self._name}={self._value}>"
 

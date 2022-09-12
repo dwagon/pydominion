@@ -11,7 +11,9 @@ class Card_Recruiter(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_ACTION
         self.base = Game.RENAISSANCE
-        self.desc = """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""
+        self.desc = (
+            """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""
+        )
         self.name = "Recruiter"
         self.cards = 2
         self.cost = 5
@@ -19,7 +21,7 @@ class Card_Recruiter(Card.Card):
     ###########################################################################
     def special(self, game, player):
         cards = player.plr_trash_card(force=True, num=1)
-        player.add_villager(cards[0].cost)
+        player.villagers.add(cards[0].cost)
 
 
 ###############################################################################
@@ -36,7 +38,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.test_input = ["Trash Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
-        self.assertEqual(self.plr.get_villagers(), 3)
+        self.assertEqual(self.plr.villagers.get(), 3)
         self.assertIn("Silver", self.g.trashpile)
 
 

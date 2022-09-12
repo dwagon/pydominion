@@ -702,6 +702,8 @@ class Test__night_selection(unittest.TestCase):
 
 ###############################################################################
 class Test__spendable_selection(unittest.TestCase):
+    """Test _spendable_selection()"""
+
     def setUp(self):
         self.game = Game.TestGame(
             numplayers=1,
@@ -718,7 +720,7 @@ class Test__spendable_selection(unittest.TestCase):
         self.plr.add_card(self.potion, "hand")
         self.plr.add_card(self.moat, "hand")
         self.plr.add_coffer(1)
-        self.plr.add_villager(1)
+        self.plr.villagers.add(1)
         opts = self.plr._spendable_selection()
         self.assertEqual(opts[0]["selector"], "1")
         self.assertEqual(opts[0][Card.TYPE_ACTION], "spendall")
@@ -807,6 +809,8 @@ class Test_spend_coffer(unittest.TestCase):
 
 ###############################################################################
 class Test_spend_villager(unittest.TestCase):
+    """Test spend_villager()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -814,16 +818,16 @@ class Test_spend_villager(unittest.TestCase):
 
     def test_spend_villager(self):
         """Spend a Villager that the player has"""
-        self.plr.villager = 1
+        self.plr.villagers.set(1)
         self.plr.spend_villager()
-        self.assertEqual(self.plr.get_villagers(), 0)
+        self.assertEqual(self.plr.villagers.get(), 0)
         self.assertEqual(self.plr.get_actions(), 2)
 
     def test_spendNothing(self):
         """Spend a Villager that the player doesn't have"""
-        self.plr.villager = 0
+        self.plr.villagers.set(0)
         self.plr.spend_villager()
-        self.assertEqual(self.plr.get_villagers(), 0)
+        self.assertEqual(self.plr.villagers.get(), 0)
         self.assertEqual(self.plr.get_actions(), 1)
 
 

@@ -9,9 +9,7 @@ class Project_Exploration(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Game.RENAISSANCE
-        self.desc = (
-            "At the end of your Buy phase, if you didn't buy any cards, +1 Coffers and +1 Villager."
-        )
+        self.desc = "At the end of your Buy phase, if you didn't buy any cards, +1 Coffers and +1 Villager."
         self.name = "Exploration"
         self.cost = 4
 
@@ -19,7 +17,7 @@ class Project_Exploration(Project.Project):
         if player.stats["bought"]:
             return
         player.add_coffer(1)
-        player.add_villager(1)
+        player.villagers += 1
 
 
 ###############################################################################
@@ -35,7 +33,7 @@ class Test_Exploration(unittest.TestCase):
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_coffers(), numc + 1)
-        self.assertEqual(self.plr.get_villagers(), 1)
+        self.assertEqual(self.plr.villagers.get(), 1)
 
 
 ###############################################################################

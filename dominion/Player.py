@@ -27,7 +27,6 @@ class Player:
         self.currcards = []
         self.score = {}
         self.coffer = 0
-        self.villager = 0
         self.had_cards = []
         self.messages = []
         self.hooks = {}
@@ -43,7 +42,8 @@ class Player:
         self.buys = 1
         self.actions = 1
         self.coin = 0
-        self.potions = Counter("Potions")
+        self.potions = Counter("Potions", 0)
+        self.villagers = Counter("Villager", 0)
         self.favors = 0
         self.newhandsize = 5
         self.playlimit = None
@@ -296,6 +296,7 @@ class Player:
 
     ###########################################################################
     def refill_deck(self):
+        """Refill the player deck - shuffling if required"""
         self._shuffle_discard()
         while self.discardpile:
             self.add_card(self.discardpile.next_card(), "deck")
@@ -305,6 +306,7 @@ class Player:
 
     ###########################################################################
     def pickup_cards(self, num, verbose=True, verb="Picked up"):
+        """Pickup multiple cards into players hand"""
         cards = []
         for _ in range(num):
             cards.append(self.pickup_card(verbose=verbose, verb=verb))
@@ -345,11 +347,6 @@ class Player:
             if not c:
                 self.output("Not enough cards to fill hand")
                 break
-
-    ###########################################################################
-    def add_villager(self, num=1):
-        """Gain a number of villager"""
-        self.villager += num
 
     ###########################################################################
     def add_coffer(self, num=1):
@@ -451,7 +448,7 @@ class Player:
     def _playable_selection(self, index):
         options = []
         playable = [c for c in self.hand if c.playable and c.isAction()]
-        if self.villager:
+        if self.villagers:
             o = Option(
                 selector="1",
                 verb="Spend Villager (1 action)",
@@ -730,7 +727,7 @@ class Player:
         options = [o]
 
         if self.phase == "action":
-            if self.actions or self.villager:
+            if self.actions or self.villagers:
                 op, index = self._playable_selection(index)
                 options.extend(op)
 
@@ -773,8 +770,8 @@ class Player:
             status += f" Favours={self.favors}"
         if self.coffer:
             status += f" Coffer={self.coffer}"
-        if self.villager:
-            status += f" Villager={self.villager}"
+        if self.villagers:
+            status += f" Villager={self.villagers.get()}"
         if self.playlimit is not None:
             status += f" Play Limit={self.playlimit}"
         prompt = f"What to do ({status})?"
@@ -1078,9 +1075,9 @@ class Player:
 
     ###########################################################################
     def spend_villager(self):
-        if self.villager <= 0:
+        if self.villagers.get() <= 0:
             return
-        self.villager -= 1
+        self.villagers -= 1
         self.add_actions(1)
         self.output("Spent a villager")
 
@@ -1487,10 +1484,6 @@ class Player:
     ###########################################################################
     def set_coffers(self, num=0):
         self.coffer = num
-
-    ###########################################################################
-    def get_villagers(self):
-        return self.villager
 
     ###########################################################################
     def add_favors(self, num=1):
