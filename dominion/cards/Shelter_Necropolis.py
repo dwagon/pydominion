@@ -34,9 +34,9 @@ class Test_Necropolis(unittest.TestCase):
         """Test Play"""
         self.plr.hand.set("Necropolis", "Estate")
         card = self.plr.hand["Necropolis"]
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.plr.play_card(card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
 
 ###############################################################################

@@ -46,7 +46,7 @@ class Test_Wheelwright(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.plr.discardpile)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################

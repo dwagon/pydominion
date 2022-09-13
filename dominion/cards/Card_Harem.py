@@ -34,7 +34,7 @@ class Test_Harem(unittest.TestCase):
     def test_play(self):
         """Play a Harem"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_score(self):
         """Score the harem"""

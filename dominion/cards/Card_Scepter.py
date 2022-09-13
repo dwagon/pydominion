@@ -25,7 +25,7 @@ class Card_Scepter(Card.Card):
             get_coin = True
             player.output("No suitable cards - gaining coin")
         if get_coin:
-            player.add_coins(2)
+            player.coins.add(2)
         else:
             card = player.card_sel(cardsrc=acts)
             player.add_card(card[0], "hand")
@@ -45,13 +45,13 @@ class Test_Scepter(unittest.TestCase):
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_replay(self):
         self.plr.played.set("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 

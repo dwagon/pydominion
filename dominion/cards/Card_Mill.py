@@ -21,7 +21,7 @@ class Card_Mill(Card.Card):
     def special(self, game, player):
         dc = player.plr_discard_cards(num=2)
         if len(dc) == 2:
-            player.add_coins(2)
+            player.coins.add(2)
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class Test_Mill(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 1 + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.get_score_details()["Mill"], 1)
         self.assertIn("Gold", self.plr.discardpile)
 
@@ -48,7 +48,7 @@ class Test_Mill(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.discardpile)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

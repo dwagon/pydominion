@@ -19,7 +19,7 @@ class Card_Guardian(Card.Card):
         self.cost = 2
 
     def duration(self, game, player):
-        player.add_coins(1)
+        player.coins.add(1)
 
     def hook_gain_this_card(self, game, player):
         return {"destination": "hand"}
@@ -42,7 +42,7 @@ class Test_Guardian(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
 
 ###############################################################################

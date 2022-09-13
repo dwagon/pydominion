@@ -47,7 +47,7 @@ class Test_Swap(unittest.TestCase):
         self.plr.test_input = ["Select Moat", "Get Swap"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2 + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Swap", self.plr.discardpile)
 
 

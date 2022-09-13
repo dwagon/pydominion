@@ -14,7 +14,7 @@ class Ally_Mountain_Folk(Ally.Ally):
         self.name = "Mountain Folk"
 
     def hook_start_turn(self, game, player):
-        if player.get_favors() < 5:
+        if player.favors.get() < 5:
             return
         opt = player.plr_choose_options(
             "Spend 5 favours for +3 cards?",
@@ -22,7 +22,7 @@ class Ally_Mountain_Folk(Ally.Ally):
             ("Spend favors", True),
         )
         if opt:
-            player.add_favors(-5)
+            player.favors.add(-5)
             player.pickup_cards(3)
 
 
@@ -35,11 +35,11 @@ class Test_Mountain_Folk(unittest.TestCase):
 
     def test_play(self):
         """Play and gain a card"""
-        self.plr.set_favors(6)
+        self.plr.favors.set(6)
         hndsz = self.plr.hand.size()
         self.plr.test_input = ["Spend favors"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_favors(), 1)
+        self.assertEqual(self.plr.favors.get(), 1)
         self.assertEqual(self.plr.hand.size(), hndsz + 3)
 
 

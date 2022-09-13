@@ -38,7 +38,7 @@ class Card_Sailor(Card.Card):
 
     def duration(self, game, player):
         """At the start of your next turn, +$2 and you may trash a card from your hand."""
-        player.add_coins(2)
+        player.coins.add(2)
         player.plr_trash_card(num=1)
 
 
@@ -66,7 +66,7 @@ class Test_Sailor(unittest.TestCase):
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
         self.g.print_state()
-        self.assertEqual(self.plr.get_coins(), 3)  # 2 for sailor, 1 for guardian
+        self.assertEqual(self.plr.coins.get(), 3)  # 2 for sailor, 1 for guardian
         self.assertIn("Copper", self.g.trashpile)
         self.assertIn("Guardian", self.plr.played)
         self.assertIn("Sailor", self.plr.played)
@@ -80,7 +80,7 @@ class Test_Sailor(unittest.TestCase):
         self.plr.hand.set("Gold", "Silver", "Copper")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Copper", self.g.trashpile)
 
 

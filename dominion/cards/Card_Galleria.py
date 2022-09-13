@@ -17,7 +17,7 @@ class Card_Galleria(Card.Card):
 
     def hook_gain_card(self, game, player, card):
         if card.cost in (3, 4):
-            player.add_buys(1)
+            player.buys.add(1)
 
 
 ###############################################################################
@@ -31,21 +31,21 @@ class Test_Galleria(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        coins = self.plr.get_coins()
+        coins = self.plr.coins.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), coins + 3)
+        self.assertEqual(self.plr.coins.get(), coins + 3)
 
     def test_gain(self):
         """Gain a card"""
-        buys = self.plr.get_buys()
+        buys = self.plr.buys.get()
         self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.get_buys(), buys + 1)
+        self.assertEqual(self.plr.buys.get(), buys + 1)
 
     def test_no_gain(self):
         """Gain a card that doesn't cost correctly"""
-        buys = self.plr.get_buys()
+        buys = self.plr.buys.get()
         self.plr.gain_card("Copper")
-        self.assertEqual(self.plr.get_buys(), buys)
+        self.assertEqual(self.plr.buys.get(), buys)
 
 
 ###############################################################################

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Broker """
 
 import unittest
 from dominion import Card, Game
@@ -6,6 +7,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Broker(Card.Card):
+    """Broker"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
@@ -34,13 +37,15 @@ class Card_Broker(Card.Card):
         elif dc == "action":
             player.add_actions(cost)
         elif dc == "cash":
-            player.add_coins(cost)
+            player.coins.add(cost)
         elif dc == "favor":
-            player.add_favors(cost)
+            player.favors.add(cost)
 
 
 ###############################################################################
 class Test_Broker(unittest.TestCase):
+    """Test Broker"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -65,7 +70,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.g.trashpile.size(), 0)
 
     def test_play_action(self):
@@ -74,7 +79,7 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "actions"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_play_cash(self):
         """Play the card - gain cash"""
@@ -82,16 +87,16 @@ class Test_Broker(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "coins"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_favor(self):
         """Play the card - gain favor"""
-        self.plr.set_favors(0)
+        self.plr.favors.set(0)
         self.plr.hand.set("Copper", "Estate", "Duchy", "Copper", "Province", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Estate", "favor"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), 2)
+        self.assertEqual(self.plr.favors.get(), 2)
 
 
 ###############################################################################

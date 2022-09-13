@@ -39,14 +39,14 @@ class Test_Nobles(unittest.TestCase):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 8)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
 
     def test_actions(self):
         """Play the Nobles - chosing actions"""
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_score(self):
         """Score the nobles"""

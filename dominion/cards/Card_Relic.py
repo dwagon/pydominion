@@ -37,7 +37,7 @@ class Test_Relic(unittest.TestCase):
         self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertTrue(self.victim.card_token)
 
 

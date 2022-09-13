@@ -18,7 +18,7 @@ class Card_Salvager(Card.Card):
     def special(self, game, player):
         card = player.plr_trash_card(force=True)
         player.output(f"Gained {card[0].cost} coin")
-        player.add_coins(card[0].cost)
+        player.coins.add(card[0].cost)
 
 
 ###############################################################################
@@ -35,9 +35,9 @@ class Test_Salvager(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
 
 
 ###############################################################################

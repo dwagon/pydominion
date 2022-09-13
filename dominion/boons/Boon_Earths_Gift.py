@@ -49,7 +49,7 @@ class Test_Earths_Gift(unittest.TestCase):
         self.plr.test_input = ["Discard Copper", "Get Silver"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.get_coins(), 2 + 2)  # Boon + Bard
+            self.assertEqual(self.plr.coins.get(), 2 + 2)  # Boon + Bard
             self.assertIsNotNone(self.plr.discardpile["Silver"])
             self.assertIsNotNone(self.plr.discardpile["Copper"])
         except AssertionError:  # pragma: no cover

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Band_of_misfits"""
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_BandOfMisfits(Card.Card):
+    """Band of Misfits"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.TYPE_ACTION, Card.TYPE_COMMAND]
@@ -26,6 +28,8 @@ class Card_BandOfMisfits(Card.Card):
 
 ###############################################################################
 class Test_BandOfMisfits(unittest.TestCase):
+    """Test Band of Misfits"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -44,10 +48,10 @@ class Test_BandOfMisfits(unittest.TestCase):
 
     def test_play_feast(self):
         """Make the Band of Misfits be a Village"""
-        self.plr.test_input = ["Select Village"]
+        self.plr.test_input = ["Select Village -"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
 
 ###############################################################################

@@ -17,7 +17,7 @@ class Card_Villain(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.add_coffer(2)
+        player.coffers.add(2)
         for vic in player.attack_victims():
             if vic.hand.size() >= 5:
                 from_cards = []
@@ -58,11 +58,11 @@ class Test_Villain(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_card(self):
-        sc = self.plr.get_coffers()
+        sc = self.plr.coffers.get()
         self.vic.hand.set("Gold", "Province", "Copper", "Copper", "Copper")
         self.vic.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coffers(), sc + 2)
+        self.assertEqual(self.plr.coffers.get(), sc + 2)
         self.assertIn("Province", self.vic.discardpile)
 
 

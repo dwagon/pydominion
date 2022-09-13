@@ -22,7 +22,7 @@ class Card_Animal_Fair(Card.Card):
 
     def special(self, game, player):
         empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
-        player.add_buys(empties)
+        player.buys.add(empties)
 
     def todo_hook_buy_this_card(self, game, player):
         actions = [_ for _ in player.hand if _.isAction()]
@@ -49,8 +49,8 @@ class Test_Animal_Fair(unittest.TestCase):
         while c:
             c = self.g["Moat"].remove()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 4)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.coins.get(), 4)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
 
 
 ###############################################################################

@@ -27,7 +27,7 @@ class Card_Steward(Card.Card):
             player.pickup_cards(2)
             return
         if choice == "coin":
-            player.add_coins(2)
+            player.coins.add(2)
             return
         if choice == "trash":
             player.output("Trash two cards")
@@ -49,19 +49,19 @@ class Test_Steward(unittest.TestCase):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_gold(self):
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_trash(self):
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["2", "1", "2", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertEqual(self.plr.hand.size(), 3)
 
@@ -72,7 +72,7 @@ class Test_Steward(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["2", "1", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertEqual(self.plr.hand.size(), 0)
 

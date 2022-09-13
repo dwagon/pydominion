@@ -45,7 +45,7 @@ class Test_Scout(unittest.TestCase):
     def test_play(self):
         self.plr.add_card(self.scout, "hand")
         self.plr.play_card(self.scout)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
     def test_victory(self):
         self.plr.hand.set()

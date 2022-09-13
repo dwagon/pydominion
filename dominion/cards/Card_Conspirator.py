@@ -38,16 +38,16 @@ class Test_Conspirator(unittest.TestCase):
     def test_play(self):
         """Play the conspirator with not enough actions"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.coins.get(), 2)
+        self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_actions(self):
         """Play the conspirator with enough actions"""
         self.plr.played.set("Witch", "Witch", "Witch")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
 

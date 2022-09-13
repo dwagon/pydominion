@@ -19,7 +19,7 @@ class Card_Emissary(Card.Card):
 
     def hook_post_shuffle(self, game, player):
         player.add_actions(1)
-        player.add_favors(2)
+        player.favors.add(2)
 
 
 ###############################################################################
@@ -35,11 +35,11 @@ class Test_Emissary(unittest.TestCase):
         """Play the card"""
         self.plr.deck.set("Copper", "Copper")
         self.plr.discardpile.set("Estate", "Estate", "Estate", "Duchy")
-        favs = self.plr.get_favors()
-        acts = self.plr.get_actions()
+        favs = self.plr.favors.get()
+        acts = self.plr.actions.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), favs + 2)
-        self.assertEqual(self.plr.get_actions(), acts - 1 + 1)
+        self.assertEqual(self.plr.favors.get(), favs + 2)
+        self.assertEqual(self.plr.actions.get(), acts - 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
 
 

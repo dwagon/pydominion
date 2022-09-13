@@ -26,7 +26,7 @@ class Card_ChariotRace(Card.Card):
         othercard = other.next_card()
         if card.cost > othercard.cost:
             player.output(f"Your {card.name} costs more than {other.name}'s {othercard.name}")
-            player.add_coins()
+            player.coins.add(1)
             player.add_score("Chariot Race")
         else:
             player.output(
@@ -49,8 +49,8 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.deck.set("Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Gold", self.plr.hand)
         self.assertEqual(self.plr.score["Chariot Race"], 1)
 
@@ -61,8 +61,8 @@ class Test_ChariotRace(unittest.TestCase):
         self.vic.deck.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.score["Chariot Race"], 0)
 

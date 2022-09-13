@@ -27,21 +27,21 @@ class Test_Expedition(unittest.TestCase):
 
     def test_playonce(self):
         """Use Expedition once"""
-        self.plr.coin = 3
+        self.plr.coins.set(3)
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.assertEqual(self.plr.hand.size(), 7)
 
     def test_playtwice(self):
         """Use Expedition twice"""
-        self.plr.coin = 7
-        self.plr.add_buys(1)
+        self.plr.coins.set(7)
+        self.plr.buys.add(1)
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.get_coins(), 4)
+        self.assertEqual(self.plr.coins.get(), 4)
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
-        self.assertEqual(self.plr.get_buys(), 0)
+        self.assertEqual(self.plr.coins.get(), 1)
+        self.assertEqual(self.plr.buys.get(), 0)
         self.plr.end_turn()
         self.assertEqual(self.plr.hand.size(), 9)
 

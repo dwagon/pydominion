@@ -23,7 +23,7 @@ class Card_OpulentCastle(CastleCard):
             cardsrc=victcards,
             prompt="Discard any number of Victory cards. +2 Coin per card discarded",
         )
-        player.add_coins(len(cards) * 2)
+        player.coins.add(len(cards) * 2)
 
 
 ###############################################################################
@@ -44,7 +44,7 @@ class Test_OpulentCastle(unittest.TestCase):
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Opulent Castle"], 3)
-        self.assertEqual(self.plr.get_coins(), 6)
+        self.assertEqual(self.plr.coins.get(), 6)
 
 
 ###############################################################################

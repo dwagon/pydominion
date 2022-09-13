@@ -19,13 +19,13 @@ When you gain or trash this, +2 Favors."""
     def special(self, game, player):
         disc = player.plr_discard_cards(num=3, force=True)
         if disc:
-            player.add_coins(3)
+            player.coins.add(3)
 
     def hook_gain_this_card(self, game, player):
-        player.add_favors(2)
+        player.favors.add(2)
 
     def hook_trashThisCard(self, game, player):
-        player.add_favors(2)
+        player.favors.add(2)
 
 
 ###############################################################################
@@ -42,21 +42,21 @@ class Test_Sycophant(unittest.TestCase):
 
     def test_gain(self):
         """Gain the card"""
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.gain_card("Sycophant")
-        self.assertEqual(self.plr.get_favors(), favs + 2)
+        self.assertEqual(self.plr.favors.get(), favs + 2)
 
     def test_trash(self):
         """Test trashing the card"""
         self.plr.add_card(self.card, "hand")
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.trash_card(self.card)
-        self.assertEqual(self.plr.get_favors(), favs + 2)
+        self.assertEqual(self.plr.favors.get(), favs + 2)
 
     def test_play(self):
         """Play the card"""
-        favs = self.plr.get_favors()
-        coin = self.plr.get_coins()
+        favs = self.plr.favors.get()
+        coin = self.plr.coins.get()
         self.plr.hand.set("Estate", "Duchy", "Province", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [
@@ -66,8 +66,8 @@ class Test_Sycophant(unittest.TestCase):
             "Finish",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), favs)
-        self.assertEqual(self.plr.get_coins(), coin + 3)
+        self.assertEqual(self.plr.favors.get(), favs)
+        self.assertEqual(self.plr.coins.get(), coin + 3)
         self.assertNotIn("Province", self.plr.hand)
 
 

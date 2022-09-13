@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" Event based tests """
 
 import unittest
 from dominion import Game
@@ -6,6 +7,8 @@ from dominion import Game
 
 ###############################################################################
 class Test_perform_event(unittest.TestCase):
+    """Test performing an event"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Raid"])
         self.g.start_game()
@@ -14,30 +17,30 @@ class Test_perform_event(unittest.TestCase):
 
     def test_perform(self):
         """Perform an event"""
-        self.plr.buys = 1
-        self.plr.coin = 5
+        self.plr.buys.set(1)
+        self.plr.coins.set(5)
         sc = self.plr.perform_event(self.card)
         self.assertTrue(sc)
-        self.assertEqual(self.plr.get_buys(), 0)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.buys.get(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_no_buy(self):
         """Perform an event without a buy"""
-        self.plr.buys = 0
-        self.plr.coin = 2
+        self.plr.buys.set(0)
+        self.plr.coins.set(2)
         sc = self.plr.perform_event(self.card)
         self.assertFalse(sc)
-        self.assertEqual(self.plr.get_buys(), 0)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.buys.get(), 0)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_no_coin(self):
         """Perform an event without enough coins"""
-        self.plr.coin = 2
-        self.plr.buys = 1
+        self.plr.coins.set(2)
+        self.plr.buys.set(1)
         sc = self.plr.perform_event(self.card)
         self.assertFalse(sc)
-        self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.buys.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################
@@ -48,7 +51,7 @@ class Test__event_selection(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_events(self):
-        self.plr.coin = 4
+        self.plr.coins.set(4)
         output, index = self.plr._event_selection(3)
         self.assertEqual(index, 6)
         self.assertEqual(len(output), 3)

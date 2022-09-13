@@ -33,7 +33,7 @@ class Test_Bagofgold(unittest.TestCase):
     def test_play(self):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################

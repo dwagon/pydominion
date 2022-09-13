@@ -35,13 +35,13 @@ class Test_SnowyVillage(unittest.TestCase):
     def test_play(self):
         """Play a card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 4)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.actions.get(), 4)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 4 - 1)  # -1 for playing card
-        self.assertEqual(self.plr.get_buys(), 1 + 1 + 1)
+        self.assertEqual(self.plr.actions.get(), 4 - 1)  # -1 for playing card
+        self.assertEqual(self.plr.buys.get(), 1 + 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 

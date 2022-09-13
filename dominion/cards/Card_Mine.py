@@ -56,9 +56,9 @@ class Test_Mine(unittest.TestCase):
         self.assertEqual(self.plr.hand[0].name, "Silver")
         self.assertTrue(self.plr.discardpile.is_empty())
         self.assertEqual(self.plr.hand.size(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
+        self.assertEqual(self.plr.buys.get(), 1)
+        self.assertEqual(self.plr.actions.get(), 0)
 
     def test_convnothing(self):
         self.plr.hand.set("Copper")

@@ -57,7 +57,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Province", self.plr.deck)
         self.assertNotIn("Province", self.plr.discardpile)
 
@@ -67,7 +67,7 @@ class Test_Duchess(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertNotIn("Province", self.plr.deck)
         self.assertIn("Province", self.plr.discardpile)
 

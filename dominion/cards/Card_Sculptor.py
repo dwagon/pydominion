@@ -20,7 +20,7 @@ class Card_Sculptor(Card.Card):
         card = player.plr_gain_card(4, destination="hand", force=True)
         if card.isTreasure():
             player.output("Gained  villager")
-            player.add_villager()
+            player.villagers.add(1)
 
 
 ###############################################################################
@@ -39,14 +39,14 @@ class Test_Sculptor(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.discardpile.size(), 0)
         self.assertIn("Moat", self.plr.hand)
-        self.assertLessEqual(self.plr.get_villagers(), 1)
+        self.assertLessEqual(self.plr.villagers.get(), 1)
 
     def test_gaintreasure(self):
         self.plr.deck.set("Silver")
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.hand)
-        self.assertLessEqual(self.plr.get_villagers(), 1)
+        self.assertLessEqual(self.plr.villagers.get(), 1)
 
 
 ###############################################################################

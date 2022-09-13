@@ -70,7 +70,7 @@ class Test_ScryingPool(unittest.TestCase):
         self.vic.deck.set("Duchy")
         self.plr.test_input = ["discard", "putback"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Duchy", self.vic.discardpile)
         self.assertIn("Gold", self.plr.hand)
         self.assertIn("Moat", self.plr.hand)

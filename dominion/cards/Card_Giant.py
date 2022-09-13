@@ -21,7 +21,7 @@ class Card_Giant(Card.Card):
 
     def special(self, game, player):
         if player.flip_journey_token():
-            player.add_coins(5)
+            player.coins.add(5)
             for victim in player.attack_victims():
                 c = victim.next_card()
                 victim.reveal_card(c)
@@ -36,7 +36,7 @@ class Card_Giant(Card.Card):
                     victim.add_card(c, "discard")
                     victim.gain_card("Curse")
         else:
-            player.add_coins(1)
+            player.coins.add(1)
 
 
 ###############################################################################
@@ -54,7 +54,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
         self.assertIn("Gold", self.g.trashpile)
 
     def test_play_journey_untrashed(self):
@@ -64,7 +64,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = False
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
         self.assertNotIn("Copper", self.g.trashpile)
         self.assertIn("Curse", self.victim.discardpile)
 
@@ -74,7 +74,7 @@ class Test_Giant(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.journey_token = True
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
 
 ###############################################################################

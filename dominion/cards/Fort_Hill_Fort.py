@@ -45,20 +45,20 @@ class Test_Hill_Fort(unittest.TestCase):
     def test_play_hand(self):
         self.plr.test_input = ["put it", "Get Silver"]
         hndsz = self.plr.hand.size()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), hndsz)
-        self.assertEqual(self.plr.get_actions(), acts - 1)
+        self.assertEqual(self.plr.actions.get(), acts - 1)
 
     def test_play_disc(self):
         self.plr.test_input = ["card", "Get Silver"]
         hndsz = self.plr.hand.size()
-        acts = self.plr.get_actions()
+        acts = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.assertNotIn("Silver", self.plr.hand)
         self.assertEqual(self.plr.hand.size(), hndsz + 1 - 1)
-        self.assertEqual(self.plr.get_actions(), acts - 1 + 1)
+        self.assertEqual(self.plr.actions.get(), acts - 1 + 1)
 
 
 ###############################################################################

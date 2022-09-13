@@ -61,7 +61,7 @@ class Test_Trader(unittest.TestCase):
     def test_gain(self):
         self.plr.test_input = ["Instead"]
         self.plr.add_card(self.card, "hand")
-        self.plr.set_coins(6)
+        self.plr.coins.set(6)
         self.plr.buy_card(self.g["Gold"])
         self.assertIn("Silver", self.plr.discardpile)
         self.assertNotIn("Gold", self.plr.discardpile)

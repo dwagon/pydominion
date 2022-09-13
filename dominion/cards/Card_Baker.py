@@ -19,12 +19,12 @@ class Card_Baker(Card.Card):
 
     def special(self, game, player):
         """Take a Coin Token"""
-        player.add_coffer(1)
+        player.coffers.add(1)
 
     def setup(self, game):
         """Each Player takes a coin token"""
         for plr in game.player_list():
-            plr.add_coffer(1)
+            plr.coffers.add(1)
 
 
 ###############################################################################
@@ -38,14 +38,14 @@ class Test_Baker(unittest.TestCase):
 
     def test_setup(self):
         """Test each player having a coin"""
-        self.assertEqual(self.plr.get_coffers(), 1)
+        self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_play(self):
         """Play a baker"""
-        self.plr.coffer = 0
+        self.plr.coffers.set(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coffers(), 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coffers.get(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 6)
 
 

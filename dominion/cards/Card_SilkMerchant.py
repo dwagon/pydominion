@@ -18,13 +18,13 @@ class Card_SilkMerchant(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        player.add_villager()
-        player.add_coffer()
+        player.villagers.add(1)
+        player.coffers.add(1)
 
     ###########################################################################
     def hook_trashThisCard(self, game, player):
-        player.add_villager()
-        player.add_coffer()
+        player.villagers.add(1)
+        player.coffers.add(1)
 
 
 ###############################################################################
@@ -37,26 +37,26 @@ class Test_SilkMerchant(unittest.TestCase):
         self.plr.hand.set()
 
     def test_gain_card(self):
-        self.plr.set_coffers(0)
+        self.plr.coffers.set(0)
         self.plr.gain_card("Silk Merchant")
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertEqual(self.plr.get_villagers(), 1)
-        self.assertEqual(self.plr.get_coffers(), 1)
+        self.assertEqual(self.plr.villagers.get(), 1)
+        self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_trash_card(self):
-        self.plr.set_coffers(0)
+        self.plr.coffers.set(0)
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.hand.size(), 0)
-        self.assertEqual(self.plr.get_villagers(), 1)
-        self.assertEqual(self.plr.get_coffers(), 1)
+        self.assertEqual(self.plr.villagers.get(), 1)
+        self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_play_card(self):
         self.plr.add_card(self.card, "hand")
-        self.plr.set_coffers(0)
+        self.plr.coffers.set(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_villagers(), 0)
-        self.assertEqual(self.plr.get_coffers(), 0)
+        self.assertEqual(self.plr.villagers.get(), 0)
+        self.assertEqual(self.plr.coffers.get(), 0)
 
 
 ###############################################################################

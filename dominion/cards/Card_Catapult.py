@@ -53,7 +53,7 @@ class Test_Catapult(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Duchy", self.g.trashpile)
         self.assertIn("Curse", self.victim.discardpile)
 

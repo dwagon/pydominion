@@ -54,7 +54,7 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertEqual(self.plr.discardpile[0].name, "Mine")
         self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.get_actions(), 0)
+        self.assertEqual(self.plr.actions.get(), 0)
 
     def test_donothing(self):
         self.plr.hand.set("Copper", "Mine")

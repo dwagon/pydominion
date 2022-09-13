@@ -26,7 +26,7 @@ class Card_Sacrifice(Card.Card):
             player.pickup_cards(2)
             player.add_actions(2)
         if card.isTreasure():
-            player.add_coins(2)
+            player.coins.add(2)
         if card.isVictory():
             player.add_score("Sacrifice", 2)
 
@@ -45,7 +45,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertIn("Moat", self.g.trashpile)
 
@@ -55,7 +55,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_victory(self):
         """Sacrifice a Victory"""

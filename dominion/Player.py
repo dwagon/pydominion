@@ -7,6 +7,7 @@ from collections import defaultdict
 from typing import Union
 
 from dominion import Card
+from dominion.Counter import Counter
 from dominion.PlayArea import PlayArea
 from dominion.Option import Option
 from dominion.CardPile import CardPile
@@ -25,8 +26,6 @@ class Player:
         self.name = name
         self.currcards = []
         self.score = {}
-        self.coffer = 0
-        self.villager = 0
         self.had_cards = []
         self.messages = []
         self.hooks = {}
@@ -37,13 +36,15 @@ class Player:
         self.deck = PlayArea("deck", game=self.game)
         self.played = PlayArea("played", game=self.game)
         self.discardpile = PlayArea("discardpile", game=self.game)
-        self.debt = 0
         self.reserve = PlayArea("reserve", game=self.game)
-        self.buys = 1
-        self.actions = 1
-        self.coin = 0
-        self.potions = 0
-        self.favors = 0
+        self.buys = Counter("Buys", 1)
+        self.actions = Counter("Actions", 1)
+        self.coins = Counter("Coins", 0)
+        self.potions = Counter("Potions", 0)
+        self.villagers = Counter("Villager", 0)
+        self.debt = Counter("Debt", 0)
+        self.coffers = Counter("Coffers", 0)
+        self.favors = Counter("Favors", 0)
         self.newhandsize = 5
         self.playlimit = None
         self.card_token = False
@@ -190,7 +191,7 @@ class Player:
             self.pickup_card()
         self.add_actions(hx.actions)
         self.buys += hx.buys
-        self.coin += self.hook_spend_value(hx, actual=True)
+        self.coins += self.hook_spend_value(hx, actual=True)
         hx.special(game=self.game, player=self)
         self.game.discard_hex(hx)
 
@@ -205,7 +206,7 @@ class Player:
             self.pickup_card()
         self.add_actions(boon.actions)
         self.buys += boon.buys
-        self.coin += self.hook_spend_value(boon, actual=True)
+        self.coins += self.hook_spend_value(boon, actual=True)
         boon.special(game=self.game, player=self)
         if discard:
             self.game.discard_boon(boon)
@@ -293,6 +294,7 @@ class Player:
 
     ###########################################################################
     def refill_deck(self):
+        """Refill the player deck - shuffling if required"""
         self._shuffle_discard()
         while self.discardpile:
             self.add_card(self.discardpile.next_card(), "deck")
@@ -302,6 +304,7 @@ class Player:
 
     ###########################################################################
     def pickup_cards(self, num, verbose=True, verb="Picked up"):
+        """Pickup multiple cards into players hand"""
         cards = []
         for _ in range(num):
             cards.append(self.pickup_card(verbose=verbose, verb=verb))
@@ -342,16 +345,6 @@ class Player:
             if not c:
                 self.output("Not enough cards to fill hand")
                 break
-
-    ###########################################################################
-    def add_villager(self, num=1):
-        """Gain a number of villager"""
-        self.villager += num
-
-    ###########################################################################
-    def add_coffer(self, num=1):
-        """Gain a number of coffer"""
-        self.coffer += num
 
     ###########################################################################
     def remove_card(self, card: Card) -> None:
@@ -446,7 +439,7 @@ class Player:
     def _playable_selection(self, index):
         options = []
         playable = [c for c in self.hand if c.playable and c.isAction()]
-        if self.villager:
+        if self.villagers:
             o = Option(
                 selector="1",
                 verb="Spend Villager (1 action)",
@@ -528,11 +521,11 @@ class Player:
             )
             options.append(o)
 
-        if self.coffer:
+        if self.coffers:
             o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
             options.append(o)
 
-        if self.debt and self.coin:
+        if self.debt and self.coins:
             o = Option(selector="3", verb="Payback Debt", card=None, action="payback")
             options.append(o)
 
@@ -615,7 +608,7 @@ class Player:
         options = []
         for op in self.game.projects.values():
             index += 1
-            if (op.cost <= self.coin and self.buys) and (op not in self.projects):
+            if (op.cost <= self.coins.get() and self.buys) and (op not in self.projects):
                 sel = chr(ord("a") + index)
                 action = "project"
             else:
@@ -640,7 +633,7 @@ class Player:
         options = []
         for op in self.game.events.values():
             index += 1
-            if op.cost <= self.coin and self.buys:
+            if op.cost <= self.coins.get() and self.buys:
                 sel = chr(ord("a") + index)
                 action = "event"
             else:
@@ -676,7 +669,7 @@ class Player:
     def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
-        buyable = self.cards_under(coin=self.coin, potions=self.potions)
+        buyable = self.cards_under(coin=self.coins.get(), num_potions=self.potions.get())
         for card in all_cards:
             if not self.hook_allowed_to_buy(card):
                 if card in buyable:
@@ -723,7 +716,7 @@ class Player:
         options = [o]
 
         if self.phase == "action":
-            if self.actions or self.villager:
+            if self.actions or self.villagers:
                 op, index = self._playable_selection(index)
                 options.extend(op)
 
@@ -755,19 +748,19 @@ class Player:
     ###########################################################################
     def _generate_prompt(self) -> str:
         """Return the prompt to give to the user"""
-        status = f"Actions={self.actions} Buys={self.buys}"
-        if self.coin:
-            status += f" Coins={self.coin}"
+        status = f"Actions={self.actions.get()} Buys={self.buys.get()}"
+        if self.coins:
+            status += f" Coins={self.coins.get()}"
         if self.debt:
-            status += f" Debt={self.debt}"
+            status += f" Debt={self.debt.get()}"
         if self.potions:
             status += " Potion"
         if self.favors:
-            status += f" Favours={self.favors}"
-        if self.coffer:
-            status += f" Coffer={self.coffer}"
-        if self.villager:
-            status += f" Villager={self.villager}"
+            status += f" Favours={self.favors.get()}"
+        if self.coffers:
+            status += f" Coffer={self.coffers.get()}"
+        if self.villagers:
+            status += f" Villager={self.villagers.get()}"
         if self.playlimit is not None:
             status += f" Play Limit={self.playlimit}"
         prompt = f"What to do ({status})?"
@@ -865,9 +858,9 @@ class Player:
 
     ###########################################################################
     def payback(self):
-        payback = min(self.coin, self.debt)
+        payback = min(self.coins.get(), self.debt.get())
         self.output("Paying back {payback}%d debt")
-        self.coin -= payback
+        self.coins -= payback
         self.debt -= payback
 
     ###########################################################################
@@ -1009,10 +1002,10 @@ class Player:
     def start_turn(self):
         self.phase = "start"
         self.played.empty()
-        self.buys = 1
-        self.actions = 1
-        self.coin = 0
-        self.potions = 0
+        self.buys.set(1)
+        self.actions.set(1)
+        self.coins.set(0)
+        self.potions.set(0)
         self.played_ways = []
         self.misc = {"is_start": True, "cleaned": False}
         self.stats = {"gained": [], "bought": [], "trashed": []}
@@ -1054,17 +1047,17 @@ class Player:
 
     ###########################################################################
     def spend_coffer(self):
-        if self.coffer <= 0:
+        if self.coffers.get() <= 0:
             return
-        self.coffer -= 1
-        self.coin += 1
+        self.coffers -= 1
+        self.coins += 1
         self.output("Spent a coffer")
 
     ###########################################################################
     def spend_villager(self):
-        if self.villager <= 0:
+        if self.villagers.get() <= 0:
             return
-        self.villager -= 1
+        self.villagers -= 1
         self.add_actions(1)
         self.output("Spent a villager")
 
@@ -1135,7 +1128,7 @@ class Player:
             self.output("Picked up %s from +1 Card token" % c.name)
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
-            self.coin += 1
+            self.coins += 1
         if "+1 Buy" in tkns:
             self.output("Gaining buy from +1 Buy token")
             self.buys += 1
@@ -1171,7 +1164,11 @@ class Player:
 
     ###########################################################################
     def play_card(
-        self, card: Card, discard: bool = True, costAction: bool = True, postActionHook: bool = True
+        self,
+        card: Card,
+        discard: bool = True,
+        costAction: bool = True,
+        postActionHook: bool = True,
     ) -> None:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
@@ -1191,8 +1188,8 @@ class Player:
 
         if card.isAction() and costAction and self.phase != "night":
             self.actions -= 1
-        if self.actions < 0:  # pragma: no cover
-            self.actions = 0
+        if self.actions.get() < 0:  # pragma: no cover
+            self.actions.set(0)
             self.currcards.pop()
             self.output("Not enough actions")
             return
@@ -1214,8 +1211,8 @@ class Player:
         opts = {"discard": True}
         self.currcards.append(way)
         self.actions -= 1
-        if self.actions < 0:  # pragma: no cover
-            self.actions = 0
+        if self.actions.get() < 0:  # pragma: no cover
+            self.actions.set(0)
             self.currcards.pop()
             self.output("Not enough actions")
             return
@@ -1234,7 +1231,7 @@ class Player:
     def card_benefits(self, card):
         """Gain the benefits of the card being played - including special()"""
         self.add_actions(card.actions)
-        self.coin += self.hook_spend_value(card, actual=True)
+        self.coins += self.hook_spend_value(card, actual=True)
         self.buys += card.buys
         self.favors += card.favors
         self.potions += card.potion
@@ -1346,29 +1343,29 @@ class Player:
     ###########################################################################
     def overpay(self, card):
         options = []
-        for i in range(self.coin + 1):
+        for i in range(self.coins.get() + 1):
             options.append(("Spend %d more" % i, i))
         ans = self.plr_choose_options("How much do you wish to overpay?", *options)
         card.hook_overpay(game=self.game, player=self, amount=ans)
-        self.coin -= ans
+        self.coins -= ans
 
     ###########################################################################
     def buy_card(self, card):
         assert isinstance(card, CardPile)
         if not self.buys:  # pragma: no cover
             return
-        if self.debt != 0:
+        if self.debt:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
         cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
-        if self.coin < cost:
+        if self.coins.get() < cost:
             self.output("You can't afford this")
             return
-        self.coin -= cost
-        if card.overpay and self.coin:
+        self.coins -= cost
+        if card.overpay and self.coins.get():
             self.overpay(card)
         newcard = self.gain_card(card)
         if card.embargo_level:
@@ -1447,81 +1444,12 @@ class Player:
         return False
 
     ###########################################################################
-    def get_potions(self) -> int:
-        """Return the number of potions the player has"""
-        return self.potions
-
-    ###########################################################################
-    def get_coins(self) -> int:
-        """Return the number of coins the player has"""
-        return self.coin
-
-    ###########################################################################
-    def get_coffers(self) -> int:
-        """Return the number of coffers the player has"""
-        return self.coffer
-
-    ###########################################################################
-    def set_coffers(self, num=0):
-        self.coffer = num
-
-    ###########################################################################
-    def get_villagers(self):
-        return self.villager
-
-    ###########################################################################
-    def add_favors(self, num=1):
-        assert isinstance(num, int)
-        self.favors += num
-
-    ###########################################################################
-    def set_favors(self, num=1):
-        assert isinstance(num, int)
-        self.favors = num
-
-    ###########################################################################
-    def get_favors(self):
-        return self.favors
-
-    ###########################################################################
-    def add_coins(self, num=1):
-        assert isinstance(num, int)
-        self.coin += num
-
-    ###########################################################################
-    def set_coins(self, num=1):
-        assert isinstance(num, int)
-        self.coin = num
-
-    ###########################################################################
-    def get_actions(self):
-        return self.actions
-
-    ###########################################################################
-    def set_actions(self, num=1):
-        self.actions = num
-
-    ###########################################################################
     def add_actions(self, num=1):
         assert isinstance(num, int)
         if self.misc.get("no_actions"):
             self.output("No more additional actions allowed")
         else:
             self.actions += num
-
-    ###########################################################################
-    def get_buys(self):
-        return self.buys
-
-    ###########################################################################
-    def add_buys(self, num=1):
-        assert isinstance(num, int)
-        self.buys += num
-
-    ###########################################################################
-    def set_buys(self, num=1):
-        assert isinstance(num, int)
-        self.buys = num
 
     ###########################################################################
     def gain_prize(self):
@@ -1544,14 +1472,14 @@ class Player:
         if not self.buys:
             self.output("Need a buy to buy a project")
             return False
-        if self.debt != 0:
+        if self.debt:
             self.output("Must pay off debt first")
             return False
-        if self.coin < project.cost:
+        if self.coins.get() < project.cost:
             self.output(f"Need {project.cost} coins to buy this project")
             return False
         self.buys -= 1
-        self.coin -= project.cost
+        self.coins -= project.cost
         self.debt += project.debtcost
         self.buys += project.buys
         self.assign_project(project.name)
@@ -1571,11 +1499,11 @@ class Player:
             return False
         if self.debt != 0:
             self.output("Must pay off debt first")
-        if self.coin < evnt.cost:
+        if self.coins < evnt.cost:
             self.output(f"Need {evnt.cost} coins to perform this event")
             return False
         self.buys -= 1
-        self.coin -= evnt.cost
+        self.coins -= evnt.cost
         self.debt += evnt.debtcost
         self.buys += evnt.buys
         self.output(f"Using event {evnt}")
@@ -1599,8 +1527,10 @@ class Player:
         return True
 
     ###########################################################################
-    def cards_affordable(self, oper, coin, potions, types):
-        """Return the list of cards for under cost"""
+    def cards_affordable(self, oper, coin, num_potions, types):
+        """Return the list of cards for under cost
+        {coin} {num_potions} are the resources contraints we have
+        """
         affordable = PlayArea("affordable")
         for c in self.game.cardTypes():
             if not c:
@@ -1622,7 +1552,7 @@ class Player:
             if c.debtcost and not c.cost:
                 affordable.add(c)
                 continue
-            if oper(cost, coin) and oper(c.potcost, potions):
+            if oper(cost, coin) and oper(c.potcost, num_potions):
                 affordable.add(c)
                 continue
         affordable.sort(key=self.card_cost)
@@ -1630,20 +1560,20 @@ class Player:
         return affordable
 
     ###########################################################################
-    def cards_under(self, coin, potions=0, types=None):
+    def cards_under(self, coin, num_potions=0, types=None):
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
         types = self._type_selector(types)
-        return self.cards_affordable(operator.le, coin, potions, types)
+        return self.cards_affordable(operator.le, coin, num_potions, types)
 
     ###########################################################################
-    def cards_worth(self, coin, potions=0, types=None):
+    def cards_worth(self, coin, num_potions=0, types=None):
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
         types = self._type_selector(types)
-        return self.cards_affordable(operator.eq, coin, potions, types)
+        return self.cards_affordable(operator.eq, coin, num_potions, types)
 
     ###########################################################################
     def get_cards(self):

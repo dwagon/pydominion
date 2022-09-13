@@ -32,7 +32,7 @@ class Card_Miser(Card.Card):
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)
-            player.add_coins(coins)
+            player.coins.add(coins)
 
 
 ###############################################################################
@@ -69,7 +69,7 @@ class Test_Miser(unittest.TestCase):
         self.plr.test_input = ["coins from mat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.reserve.size(), 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

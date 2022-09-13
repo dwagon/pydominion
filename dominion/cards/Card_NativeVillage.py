@@ -64,7 +64,7 @@ class Test_NativeVillage(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Set aside"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr._native_map[0].name, "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Put all"]

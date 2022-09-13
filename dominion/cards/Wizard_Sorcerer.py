@@ -64,7 +64,7 @@ class Test_Sorcerer(unittest.TestCase):
         self.vic.test_input = ["Duchy"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.hand.size(), hndsz)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertNotIn("Curse", self.vic.discardpile)
 
     def test_play_miss(self):
@@ -78,7 +78,7 @@ class Test_Sorcerer(unittest.TestCase):
         self.vic.test_input = ["Estate"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.hand.size(), hndsz)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Curse", self.vic.discardpile)
 
 

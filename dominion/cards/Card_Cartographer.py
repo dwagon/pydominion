@@ -48,7 +48,7 @@ class Test_Cartographer(unittest.TestCase):
         self.plr.test_input = ["Province", "Duchy", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertIn("Silver", self.plr.deck)
         self.assertIn("Gold", self.plr.deck)
         self.assertIn("Province", self.plr.discardpile)

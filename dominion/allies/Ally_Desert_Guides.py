@@ -15,18 +15,18 @@ class Ally_Desert_Guides(Ally.Ally):
 
     def hook_start_turn(self, game, player):
         while True:
-            if not player.get_favors():
+            if not player.favors.get():
                 return
             choice = player.plr_choose_options(
                 "Spend a favor to discard your hand and draw 5 cards? ",
                 ("Do nothing", False),
-                (f"Spend favor (You have {player.get_favors()} favors)", True),
+                (f"Spend favor (You have {player.favors.get()} favors)", True),
             )
             if not choice:
                 return
             player.discard_hand()
             player.pickup_cards(5)
-            player.add_favors(-1)
+            player.favors.add(-1)
 
 
 ###############################################################################
@@ -43,19 +43,19 @@ class Test_Desert_Guides(unittest.TestCase):
 
     def test_play_nothing(self):
         """Play but do nothing"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         self.plr.test_input = ["Do nothing"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_favors(), 1)
+        self.assertEqual(self.plr.favors.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 0)
 
     def test_play_discard(self):
         """Play and discard hand"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         self.plr.test_input = ["Spend favor"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_favors(), 0)
+        self.assertEqual(self.plr.favors.get(), 0)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertEqual(self.plr.discardpile.size(), 5)
 

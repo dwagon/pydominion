@@ -55,23 +55,23 @@ class Test_Messenger(unittest.TestCase):
         """Play a Messenger - do nothing"""
         self.plr.test_input = ["No"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_discard(self):
         """Play a messenger and discard the deck"""
         decksize = self.plr.deck.size()
         self.plr.test_input = ["Yes"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.deck.size(), 0)
         self.assertEqual(self.plr.discardpile.size(), decksize)
 
     def test_buy(self):
         """Buy a messenger"""
         self.plr.test_input = ["get silver"]
-        self.plr.set_coins(4)
+        self.plr.coins.set(4)
         self.plr.buy_card(self.g["Messenger"])
         for plr in self.g.player_list():
             self.assertIn("Silver", plr.discardpile)

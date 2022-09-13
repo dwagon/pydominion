@@ -30,7 +30,7 @@ class Test_Trade(unittest.TestCase):
 
     def test_play(self):
         """Perform a Trade"""
-        self.plr.add_coins(5)
+        self.plr.coins.add(5)
         self.plr.hand.set("Copper", "Estate", "Gold")
         self.plr.test_input = ["copper", "estate", "finish"]
         self.plr.perform_event(self.card)

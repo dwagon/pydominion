@@ -27,7 +27,7 @@ class Card_Priest(Card.Card):
     def hook_trash_card(self, game, player, card):
         if not self.in_special:
             player.output("Adding 2 from Priest")
-            player.add_coins(2)
+            player.coins.add(2)
 
 
 ###############################################################################
@@ -46,10 +46,10 @@ class Test_Priest(unittest.TestCase):
     def test_play_card(self):
         self.plr.test_input = ["Trash Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Moat", self.g.trashpile)
         self.plr.trash_card(self.gold)
-        self.assertEqual(self.plr.get_coins(), 4)
+        self.assertEqual(self.plr.coins.get(), 4)
 
 
 ###############################################################################

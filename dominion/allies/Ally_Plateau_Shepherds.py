@@ -15,7 +15,7 @@ class Ally_Plateau_Shepherds(Ally.Ally):
 
     def special_score(self, game, player):
         twos = [_.name for _ in player.all_cards() if _.cost == 2]
-        score = min(len(twos), player.get_favors()) * 2
+        score = min(len(twos), player.favors.get()) * 2
         player.output(f"Gaining {score} from cards {', '.join(twos)})")
         return score
 
@@ -32,7 +32,7 @@ class Test_Plateau_Shepherds(unittest.TestCase):
         self.plr.hand.set("Estate", "Estate")
         self.plr.deck.set("Silver", "Silver")
         self.plr.discardpile.set()
-        self.plr.set_favors(4)
+        self.plr.favors.set(4)
         score = self.plr.get_score_details()
         self.assertEqual(score["Plateau Shepherds"], 4)
 
@@ -41,7 +41,7 @@ class Test_Plateau_Shepherds(unittest.TestCase):
         self.plr.hand.set("Estate", "Estate", "Estate", "Estate")
         self.plr.deck.set("Silver", "Silver")
         self.plr.discardpile.set()
-        self.plr.set_favors(3)
+        self.plr.favors.set(3)
         score = self.plr.get_score_details()
         self.assertEqual(score["Plateau Shepherds"], 6)
 

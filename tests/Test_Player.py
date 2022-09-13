@@ -3,8 +3,8 @@
 """ Testing player code """
 
 import unittest
-from dominion import Card
-from dominion import Game
+from dominion.Counter import Counter
+from dominion import Card, Game
 
 
 ###############################################################################
@@ -125,6 +125,8 @@ class Test_playonce(unittest.TestCase):
 
 ###############################################################################
 class Test_cards_affordable(unittest.TestCase):
+    """Test the cards_affordable functionality"""
+
     def setUp(self):
         self.game = Game.TestGame(
             numplayers=1,
@@ -144,6 +146,7 @@ class Test_cards_affordable(unittest.TestCase):
         self.plr = self.game.player_list(0)
 
     def test_under(self):
+        """Test cards under a cost"""
         price = 4
         ans = self.plr.cards_under(price, types={Card.TYPE_ACTION: True})
         for a in ans:
@@ -156,6 +159,7 @@ class Test_cards_affordable(unittest.TestCase):
                 raise
 
     def test_worth(self):
+        """Test cards equal to a cost"""
         price = 5
         ans = self.plr.cards_worth(price, types={Card.TYPE_VICTORY: True})
         for a in ans:
@@ -163,10 +167,11 @@ class Test_cards_affordable(unittest.TestCase):
             self.assertTrue(a.isVictory())
 
     def test_nocost(self):
+        """Test with no cost"""
         ans = self.plr.cards_affordable(
             "less",
             coin=None,
-            potions=0,
+            num_potions=0,
             types={
                 Card.TYPE_VICTORY: True,
                 Card.TYPE_ACTION: True,
@@ -354,7 +359,7 @@ class Test__spend_all_cards(unittest.TestCase):
         """Spend all cards in hand"""
         self.plr.hand.set("Gold", "Silver", "Estate", "Moat")
         self.plr._spend_all_cards()
-        self.assertEqual(self.plr.get_coins(), 3 + 2)
+        self.assertEqual(self.plr.coins.get(), 3 + 2)
         self.assertEqual(self.plr.hand.size(), 2)
         self.assertEqual(len(self.plr.played), 2)
         for c in self.plr.played:
@@ -416,26 +421,6 @@ class Test_misc(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
-    def test_get_actions(self):
-        self.plr.actions = 3
-        numactions = self.plr.get_actions()
-        self.assertEqual(numactions, 3)
-
-    def test_add_actions(self):
-        self.plr.actions = 3
-        self.plr.add_actions(2)
-        self.assertEqual(self.plr.actions, 5)
-
-    def test_get_buys(self):
-        self.plr.buys = 3
-        numbuys = self.plr.get_buys()
-        self.assertEqual(numbuys, 3)
-
-    def test_add_buys(self):
-        self.plr.buys = 3
-        self.plr.add_buys(2)
-        self.assertEqual(self.plr.buys, 5)
-
     def test_coststr(self):
         witch = self.game["Witch"].remove()
         golem = self.game["Golem"].remove()
@@ -443,10 +428,6 @@ class Test_misc(unittest.TestCase):
         self.assertEqual(self.plr.coststr(witch), "3 Coins")
         self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
         self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
-
-    def test_get_potions(self):
-        self.plr.potions = 3
-        self.assertEqual(self.plr.get_potions(), 3)
 
     def test_durationpile_size(self):
         copper = self.game["Copper"].remove()
@@ -525,7 +506,7 @@ class Test__buyable_selection(unittest.TestCase):
         self.moat = self.game["Moat"].remove()
 
     def test_buy_moat(self):
-        self.plr.add_coins(3)
+        self.plr.coins.add(3)
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -538,7 +519,7 @@ class Test__buyable_selection(unittest.TestCase):
             self.fail("Moat not buyable")
 
     def test_buy_copper(self):
-        self.plr.coin = 0
+        self.plr.coins.set(0)
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
         for i in opts:
@@ -555,7 +536,7 @@ class Test__buyable_selection(unittest.TestCase):
             self.fail("Copper not buyable")
 
     def test_buy_token(self):
-        self.plr.add_coins(2)
+        self.plr.coins.add(2)
         self.plr.place_token("+1 Card", "Moat")
         opts, ind = self.plr._buyable_selection(1)
         self.assertEqual(ind, 1 + len(opts))
@@ -626,7 +607,7 @@ class Test__choice_selection(unittest.TestCase):
     def test_buy_phase(self):
         self.plr.hand.set("Copper")
         self.plr.phase = "buy"
-        self.plr.coffer = 0  # Stop card _choice_selection breaking test
+        self.plr.coffers = Counter("Coffer", 0)  # Stop card _choice_selection breaking test
         opts, _ = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
@@ -638,13 +619,14 @@ class Test__choice_selection(unittest.TestCase):
         self.assertEqual(opts[2][Card.TYPE_ACTION], "spend")
 
     def test_prompt(self):
-        self.plr.actions = 3
-        self.plr.buys = 7
-        self.plr.potions = 9
-        self.plr.coin = 5
-        self.plr.coffer = 1
+        """Test prompt generation"""
+        self.plr.actions.set(3)
+        self.plr.buys.set(7)
+        self.plr.potions.set(9)
+        self.plr.coins.set(5)
+        self.plr.coffers.set(1)
         self.plr.phase = "buy"
-        self.plr.debt = 2
+        self.plr.debt = Counter("Debt", 2)
         _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=3", prompt)
         self.assertIn("Coins=5", prompt)
@@ -654,11 +636,12 @@ class Test__choice_selection(unittest.TestCase):
         self.assertIn("Coffer=1", prompt)
 
     def test_nothing_prompt(self):
-        self.plr.actions = 0
-        self.plr.buys = 0
-        self.plr.potions = 0
-        self.plr.coin = 0
-        self.plr.coffer = 0
+        """Test that if we don't have something it doesn't appear in the prompt"""
+        self.plr.actions.set(0)
+        self.plr.buys.set(0)
+        self.plr.potions.set(0)
+        self.plr.coins.set(0)
+        self.plr.coffers.set(0)
         self.plr.phase = "buy"
         _, prompt = self.plr._choice_selection()
         self.assertIn("Actions=0", prompt)
@@ -693,6 +676,8 @@ class Test__night_selection(unittest.TestCase):
 
 ###############################################################################
 class Test__spendable_selection(unittest.TestCase):
+    """Test _spendable_selection()"""
+
     def setUp(self):
         self.game = Game.TestGame(
             numplayers=1,
@@ -708,8 +693,8 @@ class Test__spendable_selection(unittest.TestCase):
         self.plr.hand.set("Copper", "Estate")
         self.plr.add_card(self.potion, "hand")
         self.plr.add_card(self.moat, "hand")
-        self.plr.add_coffer(1)
-        self.plr.add_villager(1)
+        self.plr.coffers.add(1)
+        self.plr.villagers.add(1)
         opts = self.plr._spendable_selection()
         self.assertEqual(opts[0]["selector"], "1")
         self.assertEqual(opts[0][Card.TYPE_ACTION], "spendall")
@@ -734,9 +719,9 @@ class Test__spendable_selection(unittest.TestCase):
 
     def test_debt(self):
         self.plr.hand.set("Copper")
-        self.plr.debt = 1
-        self.plr.coin = 1
-        self.plr.coffer = 0
+        self.plr.debt = Counter("Debt", 1)
+        self.plr.coins.set(1)
+        self.plr.coffers = Counter("Coffer", 0)
         try:
             opts = self.plr._spendable_selection()
             self.assertEqual(opts[1]["selector"], "3")
@@ -744,7 +729,6 @@ class Test__spendable_selection(unittest.TestCase):
             self.assertEqual(opts[1]["verb"], "Payback Debt")
             self.assertIsNone(opts[1]["card"])
         except AssertionError:  # pragma: no cover
-            print("debt")
             self.game.print_state()
             raise
 
@@ -760,7 +744,7 @@ class Test_buy_card(unittest.TestCase):
 
     def test_debt(self):
         """Test buying a card when the player has a debt"""
-        self.plr.debt = 1
+        self.plr.debt = Counter("Debt", 1)
         self.plr.buy_card(self.game["Copper"])
         self.assertIn("Must pay off debt first", self.plr.messages)
 
@@ -783,21 +767,23 @@ class Test_spend_coffer(unittest.TestCase):
 
     def test_spend_coffer(self):
         """Spend a coffer that the player has"""
-        self.plr.coffer = 1
+        self.plr.coffers = Counter("Coffer", 1)
         self.plr.spend_coffer()
-        self.assertEqual(self.plr.get_coffers(), 0)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coffers.get(), 0)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_spendNothing(self):
         """Spend a coffer that the player doesn't have"""
-        self.plr.coffer = 0
+        self.plr.coffers = Counter("Coffer", 0)
         self.plr.spend_coffer()
-        self.assertEqual(self.plr.get_coffers(), 0)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coffers.get(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
 
 ###############################################################################
 class Test_spend_villager(unittest.TestCase):
+    """Test spend_villager()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1)
         self.game.start_game()
@@ -805,17 +791,17 @@ class Test_spend_villager(unittest.TestCase):
 
     def test_spend_villager(self):
         """Spend a Villager that the player has"""
-        self.plr.villager = 1
+        self.plr.villagers.set(1)
         self.plr.spend_villager()
-        self.assertEqual(self.plr.get_villagers(), 0)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.villagers.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 2)
 
     def test_spendNothing(self):
         """Spend a Villager that the player doesn't have"""
-        self.plr.villager = 0
+        self.plr.villagers.set(0)
         self.plr.spend_villager()
-        self.assertEqual(self.plr.get_villagers(), 0)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.villagers.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
 
 
 ###############################################################################
@@ -883,35 +869,6 @@ class Test_plr_discard_down_to(unittest.TestCase):
         self.plr.plr_discard_down_to(3)
         self.assertEqual(self.plr.discardpile.size(), 1)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
-
-
-###############################################################################
-class Test_Favor(unittest.TestCase):
-    """Favor testing"""
-
-    def setUp(self):
-        self.game = Game.TestGame(numplayers=1)
-        self.game.start_game()
-        self.plr = self.game.player_list(0)
-
-    def test_setfavor(self):
-        """plr.set_favors()"""
-        self.plr.favors = 0
-        self.plr.set_favors(3)
-        self.assertEqual(self.plr.favors, 3)
-
-    def test_addfavor(self):
-        """plr.add_favors()"""
-        self.plr.favors = 0
-        self.plr.add_favors()
-        self.assertEqual(self.plr.favors, 1)
-        self.plr.add_favors(1)
-        self.assertEqual(self.plr.favors, 2)
-
-    def test_getfavor(self):
-        """plr.get_favors()"""
-        self.plr.favors = 3
-        self.assertEqual(self.plr.get_favors(), 3)
 
 
 ###############################################################################

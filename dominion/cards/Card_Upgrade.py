@@ -43,7 +43,7 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_trash(self):
@@ -54,7 +54,7 @@ class Test_Upgrade(unittest.TestCase):
         self.plr.test_input = ["Duchy", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Duchy", self.g.trashpile)
         self.assertEqual(self.plr.discardpile.size(), 1)

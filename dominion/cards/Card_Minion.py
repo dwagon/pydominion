@@ -33,7 +33,7 @@ class Card_Minion(Card.Card):
         if attack:
             self.attack(game, player)
         else:
-            player.add_coins(2)
+            player.coins.add(2)
 
     def attack(self, game, player):
         self.dropAndDraw(player)
@@ -60,16 +60,16 @@ class Test_Minion(unittest.TestCase):
         """Play a minion and gain two gold"""
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
 
     def test_play_discard(self):
         """Play a minion and discard hand"""
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coins.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
         self.assertEqual(self.plr.discardpile.size(), 5 + 1)
@@ -81,8 +81,8 @@ class Test_Minion(unittest.TestCase):
         self.victim.hand.set("Estate", "Estate", "Estate", "Estate")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coins.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
         self.assertEqual(self.plr.discardpile.size(), 5 + 1)
@@ -94,8 +94,8 @@ class Test_Minion(unittest.TestCase):
         self.victim.hand.set("Estate", "Estate", "Estate", "Estate", "Moat")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.coins.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 4)
         # Discard the 5 cards + the minion we added
         self.assertEqual(self.plr.discardpile.size(), 5 + 1)

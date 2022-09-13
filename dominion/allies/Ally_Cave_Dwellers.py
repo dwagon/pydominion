@@ -14,7 +14,7 @@ class Ally_CaveDwellers(Ally.Ally):
         self.name = "Cave Dwellers"
 
     def hook_start_turn(self, game, player):
-        for _ in range(player.get_favors()):
+        for _ in range(player.favors.get()):
             doit = player.plr_choose_options(
                 "Cave Dwellers:",
                 ("Do nothing", False),
@@ -23,7 +23,7 @@ class Ally_CaveDwellers(Ally.Ally):
             if doit:
                 player.plr_discard_cards()
                 player.pickup_card()
-                player.add_favors(-1)
+                player.favors.add(-1)
             else:
                 break
 
@@ -44,10 +44,10 @@ class Test_CaveDwellers(unittest.TestCase):
         """Play card"""
         self.plr.deck.set("Copper", "Copper", "Copper", "Copper")
         self.plr.hand.set("Estate", "Duchy", "Gold")
-        self.plr.set_favors(2)
+        self.plr.favors.set(2)
         self.plr.test_input = ["Spend", "Discard Estate", "Spend", "Discard Duchy"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.get_favors(), 2 - 2)
+        self.assertEqual(self.plr.favors.get(), 2 - 2)
         self.assertNotIn("Estate", self.plr.hand)
         self.assertIsNotNone(self.plr.discardpile["Duchy"])
 

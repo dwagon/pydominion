@@ -18,7 +18,7 @@ class Card_Raider(Card.Card):
         self.cost = 6
 
     def duration(self, game, player):
-        player.add_coins(3)
+        player.coins.add(3)
 
     def night(self, game, player):
         inplay = {_.name for _ in player.played}
@@ -64,7 +64,7 @@ class Test_Raider(unittest.TestCase):
         self.plr.end_turn()
         self.plr.start_turn()
         try:
-            self.assertEqual(self.plr.get_coins(), 3)
+            self.assertEqual(self.plr.coins.get(), 3)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

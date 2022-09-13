@@ -37,7 +37,7 @@ class Test_NomadCamp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 7)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
     def test_gain(self):
         self.plr.gain_card("Nomad Camp")

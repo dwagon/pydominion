@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
+from dominion.Counter import Counter
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_MerchantGuild(Card.Card):
 
     def hook_buy_card(self, game, player, card):
         player.output("Gaining Coin token from Merchant Guild")
-        player.add_coffer()
+        player.coffers.add(1)
 
 
 ###############################################################################
@@ -34,16 +34,16 @@ class Test_MerchantGuild(unittest.TestCase):
     def test_play(self):
         """Play the card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 2)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.buys.get(), 2)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_buy(self):
         """Play the card"""
-        self.plr.coffer = 0
+        self.plr.coffers = Counter("C", 0)
         self.plr.play_card(self.card)
-        self.plr.set_coins(3)
+        self.plr.coins.set(3)
         self.plr.buy_card(self.g["Estate"])
-        self.assertEqual(self.plr.get_coffers(), 1)
+        self.assertEqual(self.plr.coffers.get(), 1)
 
 
 ###############################################################################

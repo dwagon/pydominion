@@ -26,7 +26,7 @@ class Card_Stronghold(Card.Card):
             "Choose One: ", ("+$3", "cash"), ("+3 cards next turn", "cards")
         )
         if choice == "cash":
-            player.add_coins(3)
+            player.coins.add(3)
         else:
             self._choice = True
 
@@ -52,11 +52,11 @@ class Test_Stronghold(unittest.TestCase):
 
     def test_play(self):
         """Play a stronghold"""
-        cns = self.plr.get_coins()
+        cns = self.plr.coins.get()
         self.plr.test_input = ["+$3"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Stronghold"], 2)
-        self.assertEqual(self.plr.get_coins(), cns + 3)
+        self.assertEqual(self.plr.coins.get(), cns + 3)
 
     def test_next(self):
         """Three cards next turn"""

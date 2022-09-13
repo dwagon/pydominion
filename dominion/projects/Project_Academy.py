@@ -16,21 +16,23 @@ class Project_Academy(Project.Project):
     def hook_gain_card(self, game, player, card):
         if card.isAction():
             player.output("Gained a villager from Academy")
-            player.add_villager()
+            player.villagers += 1
 
 
 ###############################################################################
 class Test_Academy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Academy"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Academy"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_have(self):
-        self.assertEqual(self.plr.get_villagers(), 0)
+        self.assertEqual(self.plr.villagers.get(), 0)
         self.plr.assign_project("Academy")
         self.plr.gain_card("Moat")
-        self.assertEqual(self.plr.get_villagers(), 1)
+        self.assertEqual(self.plr.villagers.get(), 1)
 
 
 ###############################################################################

@@ -36,7 +36,7 @@ class Card_Deathcart(Card.Card):
             player.trash_card(self)
             trash = True
         if trash:
-            player.add_coins(5)
+            player.coins.add(5)
 
     def hook_gain_this_card(self, game, player):
         for _ in range(2):
@@ -61,7 +61,7 @@ class Test_Deathcart(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Do nothing"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Death Cart", self.g.trashpile)
 
     def test_play_trash_action(self):
@@ -70,7 +70,7 @@ class Test_Deathcart(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash an Action", "Trash Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
         self.assertIn("Moat", self.g.trashpile)
         self.assertNotIn("Death Cart", self.g.trashpile)
 
@@ -80,7 +80,7 @@ class Test_Deathcart(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash this Death"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 5)
+        self.assertEqual(self.plr.coins.get(), 5)
         self.assertNotIn("Moat", self.g.trashpile)
         self.assertIn("Death Cart", self.g.trashpile)
 

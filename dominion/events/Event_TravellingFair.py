@@ -34,22 +34,22 @@ class Test_TravellingFair(unittest.TestCase):
 
     def test_play_discard(self):
         """Perform a Travelling Fair"""
-        self.plr.add_coins(2)
+        self.plr.coins.add(2)
         self.plr.perform_event(self.card)
         self.plr.test_input = ["Discard"]
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertIsNotNone(self.plr.discardpile["Gold"])
         self.assertNotIn("Gold", self.plr.deck)
 
     def test_play_deck(self):
         """Perform a Travelling Fair and deck the card"""
-        self.plr.add_coins(2)
+        self.plr.coins.add(2)
         self.plr.perform_event(self.card)
         self.plr.test_input = ["Put"]
         self.plr.gain_card("Gold")
         self.g.print_state()
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertNotIn("Gold", self.plr.discardpile)
         self.assertIn("Gold", self.plr.deck)
 

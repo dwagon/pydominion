@@ -24,7 +24,7 @@ class Card_Harvest(Card.Card):
             player.output("Revealed a %s" % c.name)
             player.add_card(c, "discard")
         player.output("Gaining %d coins" % len(cards))
-        player.add_coins(len(cards))
+        player.coins.add(len(cards))
 
 
 ###############################################################################
@@ -40,7 +40,7 @@ class Test_Harvest(unittest.TestCase):
         """Harvest"""
         self.plr.deck.set("Duchy", "Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
         self.assertIn("Silver", self.plr.discardpile)
         self.assertIn("Copper", self.plr.discardpile)
         self.assertNotIn("Duchy", self.plr.deck)

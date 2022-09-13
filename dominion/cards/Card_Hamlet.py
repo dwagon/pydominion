@@ -23,7 +23,7 @@ class Card_Hamlet(Card.Card):
             player.add_actions(1)
         c = player.plr_discard_cards(prompt="Discard card to gain a buy")
         if c:
-            player.add_buys(1)
+            player.buys.add(1)
 
 
 ###############################################################################
@@ -41,15 +41,15 @@ class Test_Hamlet(unittest.TestCase):
         self.plr.test_input = ["finish selecting", "finish selecting"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 3)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
     def test_discard_action(self):
         """Play a hamlet and discard to gain an action"""
         self.plr.test_input = ["discard silver", "finish selecting"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_actions(), 2)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.actions.get(), 2)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertNotIn("Silver", self.plr.hand)
 
     def test_discard_buy(self):
@@ -57,8 +57,8 @@ class Test_Hamlet(unittest.TestCase):
         self.plr.test_input = ["finish selecting", "discard gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.buys.get(), 2)
         self.assertNotIn("Gold", self.plr.hand)
 
 

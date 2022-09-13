@@ -37,7 +37,7 @@ class Test_Turtle(unittest.TestCase):
         """Perform a Turtle"""
         self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.get_actions(), 2)
+        self.assertEqual(self.plr.actions.get(), 2)
 
 
 ###############################################################################

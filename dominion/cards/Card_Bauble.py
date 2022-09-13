@@ -53,11 +53,11 @@ class Card_Bauble(Card.Card):
             chosen.append(choice)
         for choice in chosen:
             if choice == "buy":
-                player.add_buys(1)
+                player.buys.add(1)
             elif choice == "cash":
-                player.add_coins(1)
+                player.coins.add(1)
             elif choice == "favor":
-                player.add_favors(1)
+                player.favors.add(1)
             elif choice == "deck":
                 self._gain_hook = True
             else:
@@ -76,18 +76,18 @@ class Test_Bauble(unittest.TestCase):
     def test_play_buy_cash(self):
         """Play the card and gain a buy and cash"""
         self.plr.test_input = ["buy", "cash"]
-        self.plr.set_buys(0)
+        self.plr.buys.set(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_play_cash_favor(self):
         """Play the card and gain a cash and favor"""
         self.plr.test_input = ["favor", "cash"]
-        self.plr.set_favors(0)
+        self.plr.favors.set(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.favors.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_play_deck_deck(self):
         """Play the card and put next card on to deck"""

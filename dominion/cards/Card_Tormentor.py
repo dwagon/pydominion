@@ -45,7 +45,7 @@ class Test_Tormentor(unittest.TestCase):
         """Play tormentor with no other cards being played"""
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Imp", self.plr.discardpile)
 
     def test_play_hex(self):

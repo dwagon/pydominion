@@ -51,8 +51,8 @@ class Test_Aqueduct(unittest.TestCase):
 
     def test_gain_silver(self):
         """Use Aqueduct gaining Silver"""
-        self.plr.add_buys(2)
-        self.plr.set_coins(20)
+        self.plr.buys.add(2)
+        self.plr.coins.set(20)
         self.plr.buy_card(self.g["Silver"])
         self.assertEqual(self.g.landmarks["Aqueduct"]._vp, 1)
         self.assertEqual(self.g.landmarks["Aqueduct"]._silvervp, 7)
@@ -61,8 +61,8 @@ class Test_Aqueduct(unittest.TestCase):
 
     def test_gain_gold(self):
         """Use Aqueduct gaining Gold"""
-        self.plr.add_buys(2)
-        self.plr.set_coins(20)
+        self.plr.buys.add(2)
+        self.plr.coins.set(20)
         self.plr.buy_card(self.g["Gold"])
         self.assertEqual(self.g.landmarks["Aqueduct"]._vp, 1)
         self.assertEqual(self.g.landmarks["Aqueduct"]._goldvp, 7)

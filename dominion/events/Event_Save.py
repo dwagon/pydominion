@@ -45,7 +45,7 @@ class Test_Save(unittest.TestCase):
 
     def test_play(self):
         """Use Save"""
-        self.plr.coin = 1
+        self.plr.coins.set(1)
         self.plr.hand.set("Gold")
         self.plr.test_input = ["Gold"]
         self.plr.perform_event(self.card)

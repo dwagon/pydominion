@@ -47,9 +47,9 @@ class TestToken(unittest.TestCase):
         self.plr.place_token("+1 Action", "Moat")
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.plr.play_card(moat)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
     def test_trashing_token(self):
         """Does the Trashing token work"""
@@ -57,16 +57,16 @@ class TestToken(unittest.TestCase):
         self.plr.hand.set("Gold", "Province", "Duchy")
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
-        self.plr.set_coins(5)
+        self.plr.coins.set(5)
         self.plr.buy_card(self.g["Moat"])
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
     def test_cost_token(self):
         """Does the -Cost token work"""
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.place_token("-Cost", "Moat")
         self.plr.buy_card(self.g["Moat"])
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
 
     def test_card_token(self):
         """Does the +1 Card token work"""
@@ -84,18 +84,18 @@ class TestToken(unittest.TestCase):
         self.plr.place_token("+1 Coin", "Moat")
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.plr.play_card(moat)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_buy_token(self):
         """Does the +1 Buy token work"""
         self.plr.place_token("+1 Buy", "Moat")
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.plr.play_card(moat)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.buys.get(), 2)
 
     def test_journey_token(self):
         """Does the Journey token work"""

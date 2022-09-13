@@ -59,7 +59,7 @@ class Test_Annex(unittest.TestCase):
             "Finish",
         ]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.debt, 8)
+        self.assertEqual(self.plr.debt.get(), 8)
         self.assertIsNotNone(self.plr.discardpile["Duchy"])
         self.assertNotIn("Gold", self.plr.discardpile)
         self.assertIn("Gold", self.plr.deck)

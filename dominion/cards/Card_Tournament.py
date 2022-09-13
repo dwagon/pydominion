@@ -33,7 +33,7 @@ class Card_Tournament(Card.Card):
             player.gain_prize()
         if not found:
             player.output("No Province revealed")
-            player.add_coins(1)
+            player.coins.add(1)
             player.pickup_card()
 
 
@@ -49,7 +49,7 @@ class Test_Tournament(unittest.TestCase):
         """Play a tournament - no provinces"""
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
 
     def test_play_have_province(self):
         """Play a tournament - self provinces"""
@@ -57,8 +57,8 @@ class Test_Tournament(unittest.TestCase):
         self.plr.hand.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.hand.size(), 1)
         self.assertIn("Bag of Gold", self.plr.discardpile)
 
@@ -69,8 +69,8 @@ class Test_Tournament(unittest.TestCase):
         self.plr.hand.set("Province")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 0)
         self.assertIn("Bag of Gold", self.plr.discardpile)
 

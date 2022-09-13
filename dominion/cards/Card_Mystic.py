@@ -57,8 +57,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_good(self):
         """When the guess is good the card should move to the hand"""
@@ -66,8 +66,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.deck.set("Province")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Province", self.plr.hand)
         self.assertTrue(self.plr.deck.is_empty())
 
@@ -77,8 +77,8 @@ class Test_Mystic(unittest.TestCase):
         self.plr.deck.set("Province")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertNotIn("Gold", self.plr.hand)
         self.assertNotIn("Province", self.plr.hand)
         self.assertEqual(self.plr.deck[-1].name, "Province")

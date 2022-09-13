@@ -14,7 +14,7 @@ class Way_Seal(Way.Way):
         self.name = "Way of the Seal"
 
     def special(self, game, player):
-        player.add_coins(1)
+        player.coins.add(1)
         player.add_hook("gain_card", self.gain_card)
 
     def gain_card(self, game, player, card):

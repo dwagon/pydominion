@@ -12,9 +12,7 @@ class Event_Bargain(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Game.MENAGERIE
-        self.desc = (
-            "Gain a non-Victory card costing up to $5. Each other player gains a Horse."
-        )
+        self.desc = "Gain a non-Victory card costing up to $5. Each other player gains a Horse."
         self.name = "Bargain"
         self.cost = 4
         self.required_cards = [("Card", "Horse")]
@@ -46,7 +44,7 @@ class Test_Bargain(unittest.TestCase):
 
     def test_use(self):
         """Use Bargain"""
-        self.plr.set_coins(4)
+        self.plr.coins.set(4)
         self.plr.test_input = ["Moat"]
         self.plr.perform_event(self.card)
         self.g.print_state()

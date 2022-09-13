@@ -14,7 +14,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
         self.name = "Trappers Lodge"
 
     def hook_gain_card(self, game, player, card):
-        if not player.get_favors():
+        if not player.favors.get():
             return {}
         opt = player.plr_choose_options(
             "Use Trappers Lodge to put it onto your deck for a favour?",
@@ -22,7 +22,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
             ("Put on to deck", True),
         )
         if opt:
-            player.add_favors(-1)
+            player.favors.add(-1)
             return {"destination": "topdeck"}
         return {}
 
@@ -42,21 +42,21 @@ class Test_Trappers_Lodge(unittest.TestCase):
     def test_gain_card(self):
         """Add to top deck"""
         self.plr.deck.set("Copper", "Copper")
-        self.plr.set_favors(2)
+        self.plr.favors.set(2)
         self.plr.test_input = ["Put on to deck"]
         self.plr.gain_card("Estate")
         self.assertEqual(self.plr.deck.top_card().name, "Estate")
-        self.assertEqual(self.plr.get_favors(), 1)
+        self.assertEqual(self.plr.favors.get(), 1)
 
     def test_keep(self):
         """Do nothing"""
         self.plr.deck.set("Copper", "Copper")
-        self.plr.set_favors(2)
+        self.plr.favors.set(2)
         self.plr.test_input = ["Do nothing"]
         self.plr.gain_card("Estate")
         self.assertNotEqual(self.plr.deck.top_card().name, "Estate")
         self.assertIn("Estate", self.plr.discardpile)
-        self.assertEqual(self.plr.get_favors(), 2)
+        self.assertEqual(self.plr.favors.get(), 2)
 
 
 ###############################################################################

@@ -62,7 +62,7 @@ class Test_Urchin(unittest.TestCase):
         self.victim.test_input = ["1", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.victim.hand.size(), 4)
 
     def test_merc(self):

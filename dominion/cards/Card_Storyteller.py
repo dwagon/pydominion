@@ -30,9 +30,9 @@ class Card_Storyteller(Card.Card):
         )
         for card in toplay:
             player.play_card(card)
-        player.output("Converting %d coin to cards" % player.coin)
-        player.pickup_cards(player.coin)
-        player.coin = 0
+        player.output("Converting %d coin to cards" % player.coins.get())
+        player.pickup_cards(player.coins.get())
+        player.coins.set(0)
 
 
 ###############################################################################
@@ -49,7 +49,7 @@ class Test_Storyteller(unittest.TestCase):
         self.plr.test_input = ["1", "2", "silver", "finish"]
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         # 1 from existing, 1 + story, 2 for two coppers and 2 for a silver
         self.assertEqual(self.plr.hand.size(), 1 + 1 + 2 + 2)
 

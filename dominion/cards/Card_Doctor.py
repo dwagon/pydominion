@@ -104,7 +104,7 @@ class Test_Doctor(unittest.TestCase):
 
     def test_buy(self):
         """Buy a Doctor"""
-        self.plr.coin = 6
+        self.plr.coins.set(6)
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.deck.set("Silver", "Province", "Duchy")
         self.plr.buy_card(self.g["Doctor"])

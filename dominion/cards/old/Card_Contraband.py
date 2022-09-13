@@ -1,42 +1,50 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Contraband"""
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Contraband(Card.Card):
+    """Contraband"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.TYPE_TREASURE
         self.base = Game.PROSPERITY
-        self.desc = "+3 Coin +1 Buy. When you play this, the player to your left names a card. You can't buy that card this turn."
+        self.desc = """+3 Coin +1 Buy. When you play this, the player to your left names a card.
+            You can't buy that card this turn."""
         self.name = "Contraband"
         self.cost = 5
         self.coin = 3
         self.buys = 1
 
     def special(self, game, player):
+        """When you play this, the player to your left names a card.
+        You can't buy that card this turn."""
         plr = game.player_to_left(player)
         cps = [_ for _ in game.cardpiles if game.cardpiles[_].purchasable]
         options = []
         for cp in cps:
             options.append((cp, cp))
         forbid = plr.plr_choose_options(
-            "Contraband: Pick a stack that %s can't buy this turn" % player.name, *options
+            f"Contraband: Pick a stack that {player.name} can't buy this turn", *options
         )
-        player.output("Forbidden to buy %s" % forbid)
+        player.output(f"Forbidden to buy {forbid}")
         player.forbidden_to_buy.append(forbid)
 
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+    """Bot response"""
     return "Province"
 
 
 ###############################################################################
 class Test_Contraband(unittest.TestCase):
+    """Test Contraband"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2, oldcards=True, initcards=["Contraband"], badcards=["Fool's Gold"]
@@ -47,16 +55,17 @@ class Test_Contraband(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
+        """Test play"""
         self.nbr.test_input = ["Gold"]
-        self.plr.coins = 6
+        self.plr.coins.set(6)
         self.plr.play_card(self.card)
         self.plr.phase = "buy"
-        options, _ = self.plr._choice_selection()
+        options, _ = self.plr._choice_selection()  # pylint: disable=protected-access
         for msg in options:
             if "Buy Gold" in msg["line"]:
                 self.fail("Allowed to buy Gold")
-        self.assertEqual(self.plr.get_coins(), 3)
-        self.assertEqual(self.plr.get_buys(), 2)
+        self.assertEqual(self.plr.coins.get(), 6 + 3)
+        self.assertEqual(self.plr.buys.get(), 2)
 
 
 ###############################################################################

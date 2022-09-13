@@ -30,10 +30,10 @@ class Test_Underling(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_favors(), favs + 1)
-        self.assertEqual(self.plr.get_actions(), 1)
+        self.assertEqual(self.plr.favors.get(), favs + 1)
+        self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
 
 

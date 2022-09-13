@@ -31,7 +31,7 @@ class Card_Student(Card.Card):
             game["Wizards"].rotate()
         trshd = player.plr_trash_card(prompt="Pick a card to trash", num=1, force=True)
         if trshd[0].isTreasure():
-            player.add_favors(1)
+            player.favors.add(1)
             player.played.remove(self)
             player.add_card(self, "deck")
 
@@ -52,11 +52,11 @@ class Test_Student(unittest.TestCase):
         self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Don't change", "Trash Copper"]
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.play_card(card)
         self.assertIn("Copper", self.g.trashpile)
         self.assertIn("Student", self.plr.deck)
-        self.assertEqual(self.plr.get_favors(), favs + 1)
+        self.assertEqual(self.plr.favors.get(), favs + 1)
 
     def test_play_trash_non_treas(self):
         """Play a student - don't rotate, but trash a non treasure"""
@@ -67,11 +67,11 @@ class Test_Student(unittest.TestCase):
         self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, "hand")
         self.plr.test_input = ["Don't change", "Trash Estate"]
-        favs = self.plr.get_favors()
+        favs = self.plr.favors.get()
         self.plr.play_card(card)
         self.assertIn("Estate", self.g.trashpile)
         self.assertNotIn("Student", self.plr.deck)
-        self.assertEqual(self.plr.get_favors(), favs)
+        self.assertEqual(self.plr.favors.get(), favs)
 
     def test_play_trash_rotate(self):
         """Play a student - rotate, and trash a non treasure"""

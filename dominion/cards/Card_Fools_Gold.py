@@ -20,10 +20,10 @@ class Card_Fools_Gold(Card.Card):
         count = sum([1 for c in player.played if c.name == "Fool's Gold"])
         if count > 1:
             player.output("Gained 4 Coin")
-            player.add_coins(4)
+            player.coins.add(4)
         else:
             player.output("Gained 1 Coin")
-            player.add_coins(1)
+            player.coins.add(1)
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.name != "Province":
@@ -52,13 +52,13 @@ class Test_Fools_Gold(unittest.TestCase):
     def test_play_once(self):
         """Play the Fools_Gold"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_play_twice(self):
         """Play the Fools_Gold again"""
         self.plr.played.set("Fool's Gold")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 4)
+        self.assertEqual(self.plr.coins.get(), 4)
 
     def test_gain_province(self):
         tsize = self.g.trashpile.size()

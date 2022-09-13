@@ -40,11 +40,11 @@ class Test_Masterpiece(unittest.TestCase):
         """Play a Masterpiece"""
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_buy(self):
         """Buy a Masterpiece"""
-        self.plr.coin = 5
+        self.plr.coins.set(5)
         self.plr.test_input = ["1"]
         self.plr.buy_card(self.g["Masterpiece"])
         self.assertIn("Silver", self.plr.discardpile)

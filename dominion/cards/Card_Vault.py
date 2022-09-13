@@ -23,7 +23,7 @@ class Card_Vault(Card.Card):
             anynum=True,
             prompt="Discard any number of cards. +1 Coin per card discarded",
         )
-        player.add_coins(len(discards))
+        player.coins.add(len(discards))
         player.output("Gaining %d coins" % len(discards))
         for plr in game.player_list():
             if plr != player:
@@ -56,7 +56,7 @@ class Test_Vault(unittest.TestCase):
         self.plr.test_input = ["Duchy", "Province", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.other.hand.size(), 3 - 2 + 1)
 
 

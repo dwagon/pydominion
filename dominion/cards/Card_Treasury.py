@@ -52,12 +52,12 @@ class Test_Treasury(unittest.TestCase):
         """Play a trader - trashing an estate"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.get_actions(), 1)
-        self.assertEqual(self.plr.get_coins(), 1)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.coins.get(), 1)
 
     def test_buy_topdeck(self):
         self.plr.test_input = ["put on top"]
-        self.plr.set_coins(5)
+        self.plr.coins.set(5)
         self.plr.buy_card(self.g["Duchy"])
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.deck[-1].name, "Treasury")

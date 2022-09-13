@@ -28,7 +28,7 @@ class Card_Soldier(Card.Card):
                 continue
             if c.isAttack():
                 count += 1
-        player.add_coins(count)
+        player.coins.add(count)
         player.output("Gained %d extra coins" % count)
         for plr in player.attack_victims():
             if plr.hand.size() >= 4:
@@ -58,7 +58,7 @@ class Test_Soldier(unittest.TestCase):
         """Play a soldier with no extra attacks"""
         self.vic.hand.set("Copper")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 2)
+        self.assertEqual(self.plr.coins.get(), 2)
 
     def test_soldier_more(self):
         """Play a soldier with no extra attacks"""
@@ -66,7 +66,7 @@ class Test_Soldier(unittest.TestCase):
         mil = self.g["Militia"].remove()
         self.plr.add_card(mil, "played")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_coins(), 3)
+        self.assertEqual(self.plr.coins.get(), 3)
 
     def test_soldier_attack(self):
         """Play a soldier with more than 4 cards"""

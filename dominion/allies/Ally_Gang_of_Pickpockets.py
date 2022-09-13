@@ -14,7 +14,7 @@ class Ally_Gang_Pickpockets(Ally.Ally):
         self.name = "Gang of Pickpockets"
 
     def hook_start_turn(self, game, player):
-        if not player.get_favors():
+        if not player.favors.get():
             player.plr_discard_down_to(4)
             return
         choice = player.plr_choose_options(
@@ -23,7 +23,7 @@ class Ally_Gang_Pickpockets(Ally.Ally):
             ("Discard down to 4", False),
         )
         if choice:
-            player.add_favors(-1)
+            player.favors.add(-1)
         else:
             player.plr_discard_down_to(4)
 
@@ -37,20 +37,20 @@ class Test_Gang_Pickpockets(unittest.TestCase):
 
     def test_spend_favor(self):
         """Spend a favor"""
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         self.plr.test_input = ["Spend"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.get_favors(), 0)
+        self.assertEqual(self.plr.favors.get(), 0)
 
     def test_discard(self):
         """Discard"""
         self.plr.hand.set("Estate", "Duchy", "Silver", "Gold", "Copper")
-        self.plr.set_favors(1)
+        self.plr.favors.set(1)
         self.plr.test_input = ["Discard", "Discard Duchy"]
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 4)
-        self.assertEqual(self.plr.get_favors(), 1)
+        self.assertEqual(self.plr.favors.get(), 1)
 
 
 ###############################################################################

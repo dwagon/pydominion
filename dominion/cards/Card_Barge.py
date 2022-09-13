@@ -25,7 +25,7 @@ class Card_Barge(Card.Card):
         )
         if choice == "now":
             player.pickup_cards(3)
-            player.add_buys(1)
+            player.buys.add(1)
             self._choice = "now"
         else:
             self._choice = "then"
@@ -33,7 +33,7 @@ class Card_Barge(Card.Card):
     def duration(self, game, player):
         if self._choice == "then":
             player.pickup_cards(3)
-            player.add_buys(1)
+            player.buys.add(1)
         self._choice = "undef"
 
 
@@ -50,17 +50,17 @@ class Test_Barge(unittest.TestCase):
         self.plr.test_input = ["now"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
 
     def test_play_next_turn(self):
         self.plr.test_input = ["next"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.get_buys(), 1)
+        self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.hand.size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertEqual(self.plr.get_buys(), 1 + 1)
+        self.assertEqual(self.plr.buys.get(), 1 + 1)
 
 
 ###############################################################################

@@ -43,7 +43,7 @@ class Test_Hero(unittest.TestCase):
         self.plr.test_input = ["get gold"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.get_coins(), 2)
+            self.assertEqual(self.plr.coins.get(), 2)
             self.assertIn("Gold", self.plr.discardpile)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
