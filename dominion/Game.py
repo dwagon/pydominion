@@ -746,11 +746,12 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"  tokens: {plr.tokens}")
         print(f"  phase: {plr.phase}")
         print(
-            f"  turn: coin={plr.coins.get()} debt={plr.debt} actions={plr.actions.get()}"
+            f"  turn: coin={plr.coins.get()} debt={plr.debt.get()} actions={plr.actions.get()}"
             f" buys={plr.buys.get()} favors={plr.favors.get()}"
         )
         print(
-            f"  coffers={plr.coffers.get()} villagers={plr.villagers.get()} potions={plr.potions.get()}"
+            f"  coffers={plr.coffers.get()} "
+            f"villagers={plr.villagers.get()} potions={plr.potions.get()}"
         )
 
     ###########################################################################
