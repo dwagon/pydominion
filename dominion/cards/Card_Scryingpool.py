@@ -41,6 +41,8 @@ class Card_Scryingpool(Card.Card):
         else:
             name = (victim.name, "%s's" % victim.name)
         topcard = victim.next_card()
+        if topcard is None:
+            return
         victim.reveal_card(topcard)
         putback = player.plr_choose_options(
             "For %s which one?" % name[0],
