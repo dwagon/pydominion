@@ -255,6 +255,8 @@ class Player:
     ###########################################################################
     def reveal_card(self, card):
         """Reveal a card to everyone"""
+        if not card:
+            return
         self.game.output(f"{self.name} reveals {card.name}")
         card.hook_revealThisCard(game=self.game, player=self)
 
