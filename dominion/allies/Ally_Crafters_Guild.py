@@ -11,7 +11,7 @@ class Ally_Crafters_Guild(Ally.Ally):
         Ally.Ally.__init__(self)
         self.base = Game.ALLIES
         self.desc = """At the start of your turn, you may spend 2 Favors to gain a card costing up to $4 onto your deck."""
-        self.name = "Crafters Guild"
+        self.name = "Crafters' Guild"
 
     def hook_start_turn(self, game, player):
         if player.favors.get() < 2:
@@ -25,7 +25,7 @@ class Ally_Crafters_Guild(Ally.Ally):
 ###############################################################################
 class Test_Crafters_Guild(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Crafters Guild", initcards=["Underling"])
+        self.g = Game.TestGame(numplayers=1, ally="Crafters' Guild", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
