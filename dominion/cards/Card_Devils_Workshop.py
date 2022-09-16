@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -41,7 +42,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_0(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         try:
             self.assertIn("Gold", self.plr.discardpile)
@@ -50,7 +51,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_1(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.gain_card("Copper")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
@@ -61,7 +62,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_2(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.gain_card("Copper")
         self.plr.gain_card("Estate")
         self.plr.play_card(self.card)

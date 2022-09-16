@@ -4,6 +4,7 @@ import unittest
 from dominion import Game
 from dominion import Card
 from dominion import PlayArea
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -60,7 +61,7 @@ class Test_Crypt(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.played.set("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)

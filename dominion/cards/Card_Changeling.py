@@ -2,6 +2,7 @@
 
 import unittest
 from dominion import Card, Game
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -53,13 +54,13 @@ class Test_Changeling(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_keep(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.test_input = ["Keep Changeling"]
         self.plr.play_card(self.card)
         self.assertIn("Changeling", self.plr.played)
 
     def test_play_swap(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.played.set("Gold")
         self.plr.test_input = ["Exchange for Gold"]
         self.plr.play_card(self.card)

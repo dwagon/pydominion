@@ -4,6 +4,7 @@ import unittest
 from dominion import Card
 from dominion import PlayArea
 from dominion import Game
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -64,7 +65,7 @@ class Test_Ghost(unittest.TestCase):
         try:
             self.plr.deck.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.discardpile.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.phase = "night"
+            self.plr.phase = Phase.NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
