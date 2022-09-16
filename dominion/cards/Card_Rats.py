@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Rats(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 Card, +1 Action, Gain a Rats.
             Trash a card from your hand other than a Rats (or reveal a hand of all Rats).
             When you trash this, +1 Card."""

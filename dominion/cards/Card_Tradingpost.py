@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Tradingpost(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "Trash 2 cards for a silver"
         self.name = "Trading Post"
         self.cost = 5

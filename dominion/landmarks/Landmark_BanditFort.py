@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Landmark
+from dominion import Card, Game, Landmark
 
 
 ###############################################################################
 class Landmark_BanditFort(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """When scoring, -2VP for each Silver and each Gold you have."""
         self.name = "Bandit Fort"
 

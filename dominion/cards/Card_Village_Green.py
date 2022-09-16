@@ -11,10 +11,10 @@ class Card_Village_Green(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION, Card.TYPE_REACTION]
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
         self.cost = 4
         self.name = "Village Green"
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Either now or at the start of your next turn, +1 Card and +2 Actions.
             When you discard this other than during Clean-up, you may reveal it to play it."""
         self._choice = "undef"

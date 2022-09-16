@@ -9,8 +9,8 @@ from dominion import Game, Card
 class Card_Scrap(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Trash a card from your hand.
             Choose a different thing per coin it costs: +1 Card; +1 Action; +1 Buy;
             +1 Coin; gain a Silver; gain a Horse."""

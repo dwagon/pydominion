@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Guildmaster(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Guildmaster"
         self.coin = 3
         self.desc = "+$3; This turn, when you gain a card, +1 Favor."

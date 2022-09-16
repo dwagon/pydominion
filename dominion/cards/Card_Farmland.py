@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Farmland(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """2VP; When you buy this, trash a card from your hand.
             Gain a card costing exactly 2 more than the trashed card."""
         self.name = "Farmland"

@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Project
+from dominion import Card, Game, Project
 
 
 ###############################################################################
 class Project_Innovation(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "The first time you gain an Action card in each of your turns, you may set it aside. If you do, play it."
         self.name = "Innovation"
         self.cost = 6

@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Conquest(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "Gain 2 Silvers. +1 VP per Silver you've gained this turn."
         self.name = "Conquest"
         self.cost = 6

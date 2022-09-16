@@ -11,8 +11,8 @@ class Card_Monkey(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """Until your next turn, when the player to your right gains a card,
             +1 Card.  At the start of your next turn, +1 Card."""
         self.name = "Monkey"

@@ -9,8 +9,8 @@ from dominion import Card, Game
 class Card_Innkeeper(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Innkeeper"
         self.desc = """+1 Action; Choose one: +1 Card;
             or +3 Cards, then discard 3 cards; or +5 Cards, then discard 6 cards."""

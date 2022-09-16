@@ -9,8 +9,8 @@ import dominion.Game as Game
 class Card_Fortune(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """+1 Buy
         When you play this, double your Coin if you haven't yet this turn.
         When you gain this, gain a Gold per Gladiator you have in play."""

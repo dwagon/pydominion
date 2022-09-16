@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Banditcamp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "+1 Card +2 Actions. Gain a Spoils from the Spoils pile."
         self.name = "Bandit Camp"
         self.required_cards = ["Spoils"]

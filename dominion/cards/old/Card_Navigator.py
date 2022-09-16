@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Navigator(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.SEASIDE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+2 coin. Look at the top 5 cards of your deck.
             Either discard all of them, or put them back on top of your deck
             in any order"""

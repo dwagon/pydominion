@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Hamlet(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.CORNUCOPIA
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = "+1 Card +1 Action. You may discard a card; if you do, +1 Action.  You may discard a card; if you do, +1 Buy."
         self.name = "Hamlet"
         self.cards = 1

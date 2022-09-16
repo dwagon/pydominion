@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Pilgrimage(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """Once per turn: Turn your Journey token over; then if it's face up,
         choose up to 3 differently named cards you have in play and gain a copy of each."""
         self.name = "Pilgrimage"

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Artifact
 
@@ -9,7 +10,7 @@ from dominion import Artifact
 class Artifact_Lantern(Artifact.Artifact):
     def __init__(self):
         Artifact.Artifact.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "Your Border Guards reveal 3 cards and discard 2. (It takes all 3 being Actions to take the Horn.)"
         self.name = "Lantern"
 

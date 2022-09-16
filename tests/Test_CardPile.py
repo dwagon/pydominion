@@ -2,7 +2,7 @@
 
 import unittest
 
-from dominion import Game, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################

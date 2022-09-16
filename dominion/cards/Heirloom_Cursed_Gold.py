@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_CursedGold(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "3 Coin; When you play this, gain a curse"
         self.required_cards = ["Curse"]
         self.name = "Cursed Gold"

@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Barge(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Either now or at the start of your next turn, +3 Cards and +1 Buy."
         self.name = "Barge"
         self.cost = 5

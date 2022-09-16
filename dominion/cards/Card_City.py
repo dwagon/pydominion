@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_City(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = """+1 card, +2 action; If there are one or more empty Supply
             piles, +1 card. If there are two or more, +1 coin, +1 buy """
         self.name = "City"

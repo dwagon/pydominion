@@ -8,7 +8,7 @@ from dominion import Card, Game, Event
 class Event_Advance(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "You may trash an Action card from your hand. If you do, gain an Action card costing up to 6."
         self.name = "Advance"
         self.cost = 0
@@ -19,7 +19,7 @@ class Event_Advance(Event.Event):
             prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
         )
         if trash:
-            player.plr_gain_card(6, types={Card.TYPE_ACTION: True})
+            player.plr_gain_card(6, types={Card.CardType.ACTION: True})
 
 
 ###############################################################################

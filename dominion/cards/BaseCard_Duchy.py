@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Duchy(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "3 VP"
         self.playable = False
         self.basecard = True

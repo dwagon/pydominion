@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Peaceful_Cult """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Peaceful_Cult(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your Buy phase, you may spend
             any number of Favors to trash that many cards from your hand."""
         self.name = "Peaceful Cult"

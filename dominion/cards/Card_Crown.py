@@ -8,15 +8,15 @@ from dominion import Card, Game
 class Card_Crown(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TREASURE]
-        self.base = Game.EMPIRES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.TREASURE]
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """If it's your Action phase, you may play an Action from your hand twice.
         If it's your Buy phase, you may play a Treasure from your hand twice."""
         self.name = "Crown"
         self.cost = 5
 
     def special(self, game, player):
-        if player.phase == Card.TYPE_ACTION:
+        if player.phase == Card.CardType.ACTION:
             cards = [_ for _ in player.hand if _.isAction()]
             self.do_twice(player, cards)
         if player.phase == "buy":
@@ -55,14 +55,14 @@ class Test_Crown(unittest.TestCase):
         """Play a crown with no suitable actions"""
         self.plr.hand.set("Duchy", "Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.phase = Card.TYPE_ACTION
+        self.plr.phase = Card.CardType.ACTION
         self.plr.play_card(self.card)
 
     def test_action(self):
         """Play a crown with a suitable action"""
         self.plr.hand.set("Estate", "Duchy", "Copper", "Gold", "Moat")
         self.plr.add_card(self.card, "hand")
-        self.plr.phase = Card.TYPE_ACTION
+        self.plr.phase = Card.CardType.ACTION
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)

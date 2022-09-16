@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Galleria(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Galleria"
         self.coin = 3
         self.desc = "+$3; This turn, when you gain a card costing $3 or $4, +1 Buy."

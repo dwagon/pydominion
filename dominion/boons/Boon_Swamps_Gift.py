@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Swamps_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Gain a Will-o'-Wisp from its pile."
         self.name = "The Swamp's Gift"
         self.purchasable = False

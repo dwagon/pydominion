@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Stables(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """You may discard a Treasure. If you do, +3 Cards and +1 Action."""
         self.name = "Stables"
         self.cost = 5

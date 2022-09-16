@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Hero(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+2 Coin, Gain a Treasure; Discard to replace with Champion"
         self.name = "Hero"
         self.purchasable = False
@@ -20,7 +20,7 @@ class Card_Hero(Card.Card):
 
     def special(self, game, player):
         """Gain a treasure"""
-        player.plr_gain_card(cost=None, types={Card.TYPE_TREASURE: True})
+        player.plr_gain_card(cost=None, types={Card.CardType.TREASURE: True})
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Champion"""

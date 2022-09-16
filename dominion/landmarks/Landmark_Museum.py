@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Landmark
+from dominion import Card, Game, Landmark
 
 
 ###############################################################################
 class Landmark_Museum(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "When scoring, 2VP per differently named card you have."
         self.name = "Museum"
 

@@ -8,7 +8,7 @@ class Card_OldCard(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
         self.base = "TEST"
         self.desc = "Test old cards"
         self.name = "OldCard"

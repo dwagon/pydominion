@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Shepherd(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
         self.name = "Shepherd"
         self.cost = 2
@@ -18,7 +18,9 @@ class Card_Shepherd(Card.Card):
         self.heirloom = "Pasture"
 
     def special(self, game, player):
-        todiscard = player.plr_discard_cards(num=0, anynum=True, types={Card.TYPE_VICTORY: True})
+        todiscard = player.plr_discard_cards(
+            num=0, anynum=True, types={Card.CardType.VICTORY: True}
+        )
         player.pickup_cards(2 * len(todiscard))
 
 

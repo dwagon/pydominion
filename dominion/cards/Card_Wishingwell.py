@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Wishingwell(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "+1 Card +1 Action; Name a card, then reveal the top card of your deck. If it's the named card, put it into your hand."
         self.name = "Wishing Well"
         self.actions = 1

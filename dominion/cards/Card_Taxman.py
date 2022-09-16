@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Taxman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.GUILDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.GUILDS
         self.desc = """You may trash a Treasure from your hand.
         Each other player with 5 or more cards in hand discards a copy of it (or reveals a hand without it).
         Gain a Treasure card costing up to 3 more than the trashed card, putting it on top of your deck."""
@@ -38,7 +38,7 @@ class Card_Taxman(Card.Card):
                     for c in vic.hand:
                         vic.reveal_card(c)
         cardcost = player.card_cost(card) + 3
-        player.plr_gain_card(cost=cardcost, types={Card.TYPE_TREASURE: True})
+        player.plr_gain_card(cost=cardcost, types={Card.CardType.TREASURE: True})
 
 
 ###############################################################################

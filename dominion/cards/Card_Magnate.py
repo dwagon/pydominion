@@ -11,8 +11,8 @@ class Card_Magnate(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "Reveal your hand. +1 Card per Treasure in it."
         self.name = "Magnate"
         self.cost = 5

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Rebuild(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 action. Name a card. Reveal cards from the top
         of your deck until you reveal a Victory card that is
         not the named card.  Discard the other cards.
@@ -43,7 +43,7 @@ class Card_Rebuild(Card.Card):
                 player.output("Found and trashing a %s" % card.name)
                 player.trash_card(card)
                 player.plr_gain_card(
-                    card.cost + 3, modifier="less", types={Card.TYPE_VICTORY: True}
+                    card.cost + 3, modifier="less", types={Card.CardType.VICTORY: True}
                 )
                 break
             player.output("Drew and discarded %s" % card.name)

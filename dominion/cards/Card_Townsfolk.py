@@ -9,10 +9,9 @@ class Card_Townsfolk(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Townsfolk"
-        self.base = Game.ALLIES
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
+        self.base = Card.CardExpansion.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
         self.required_cards = ["Curse"]
-        Card.TYPE_TOWNSFOLK = "townsfolk"
 
     @classmethod
     def cardpile_setup(cls, game):

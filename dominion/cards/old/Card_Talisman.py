@@ -8,8 +8,8 @@ import dominion.Card as Card
 class Card_Talisman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "+1 coin. Gain copy of non-victory cards you buy"
         self.name = "Talisman"
         self.playable = False

@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Specialist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Specialist"
         self.desc = "You may play an Action or Treasure from your hand. Choose one: play it again; or gain a copy of it."
         self.cost = 5

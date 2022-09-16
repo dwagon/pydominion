@@ -11,8 +11,8 @@ class Card_Overgrown_Estate(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_SHELTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.VICTORY, Card.CardType.SHELTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "0VP; When you trash this, +1 Card."
         self.name = "Overgrown Estate"
         self.cost = 1

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Spoils(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "+3 coin. When you play this, return it to the Spoils pile."
         self.basecard = True
         self.purchasable = False

@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Hunting_Lodge(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+1 Card; +2 Actions; You may discard your hand for +5 Cards."
         self.name = "Hunting Lodge"
         self.cards = 1

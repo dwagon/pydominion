@@ -11,8 +11,8 @@ class Card_Tide_Pools(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = "+3 Cards; +1 Action; At the start of your next turn, discard 2 cards."
         self.name = "Tide Pools"
         self.cards = 3

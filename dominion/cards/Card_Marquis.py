@@ -9,8 +9,8 @@ from dominion import Game, Card
 class Card_Marquis(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Marquis"
         self.buys = 1
         self.desc = "+1 Buy; +1 Card per card in your hand. Discard down to 10 cards in hand."

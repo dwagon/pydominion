@@ -11,8 +11,8 @@ class Card_Sea_Chart(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.SEASIDE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+1 Card; +1 Action; Reveal the top card of your deck.
             If you have a copy of it in play, put it into your hand."""
         self.name = "Sea Chart"

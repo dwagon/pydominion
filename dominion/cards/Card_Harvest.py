@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Harvest(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.CORNUCOPIA
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = """Reveal the top 4 cards of your deck, then discard them. Coin per differently named card revealed."""
         self.name = "Harvest"
         self.cost = 5

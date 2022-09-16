@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Skirmisher(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Skirmisher"
         self.cards = 1
         self.actions = 1

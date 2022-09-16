@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Stonemason(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.name = "Stonemason"
         self.overpay = True
         self.cost = 2
@@ -40,13 +40,13 @@ class Card_Stonemason(Card.Card):
             player.plr_gain_card(
                 amount,
                 "less",
-                types={Card.TYPE_ACTION: True},
+                types={Card.CardType.ACTION: True},
                 prompt="Gain a card costing up to %s" % amount,
             )
             player.plr_gain_card(
                 amount,
                 "less",
-                types={Card.TYPE_ACTION: True},
+                types={Card.CardType.ACTION: True},
                 prompt="Gain another card costing up to %s" % amount,
             )
 

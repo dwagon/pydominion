@@ -10,8 +10,8 @@ from dominion import Game
 class Card_CargoShip(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.RENAISSANCE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Cargo Ship"
         self.desc = """+2 Coin; Once this turn, when you gain a card, you may
             set it aside face up (on this). At the start of your next turn,

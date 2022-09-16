@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Wanderingminstrel(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 Card, +2 Actions. Reveal the top 3 cards of your deck.
             Put the Actions back on top in any order and discard the rest."""
         self.name = "Wandering Minstrel"

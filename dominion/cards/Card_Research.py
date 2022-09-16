@@ -10,8 +10,8 @@ from dominion import Game
 class Card_Research(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.RENAISSANCE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Research"
         self.desc = """+1 Action; Trash a card from your hand.
             Per coin it costs, set aside a card from your deck face down.

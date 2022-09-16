@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Sentry(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = """+1 Card; +1 Action; Look at the top 2 cards of your deck.
             Trash and/or discard any number of them. Put the rest back on top
             in any order."""

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Banish """
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
@@ -11,7 +11,7 @@ class Event_Banish(Event.Event):
 
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Exile any number of cards with the same name from your hand."
         self.name = "Banish"
         self.cost = 4

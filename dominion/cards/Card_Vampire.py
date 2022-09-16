@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Vampire(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_ATTACK, Card.TYPE_DOOM]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.NIGHT, Card.CardType.ATTACK, Card.CardType.DOOM]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Each other player receives the next Hex.  Gain a card costing up to 5 other than a Vampire.  Exchange this for a Bat."
         self.name = "Vampire"
         self.cost = 5
@@ -39,7 +39,7 @@ class Test_Vampire(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["Get Duchy"]
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.play_card(self.card)
         self.assertTrue(self.vic.has_state("Deluded"))
         self.assertIn("Duchy", self.plr.discardpile)

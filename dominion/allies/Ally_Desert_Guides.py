@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Desert_Guides """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Desert_Guides(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, you may spend a Favor to discard your hand and draw 5 cards. Repeat as desired."""
         self.name = "Desert Guides"
 

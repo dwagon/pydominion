@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Delve """
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
@@ -11,7 +11,7 @@ class Event_Delve(Event.Event):
 
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "+1 Buy. Gain a Silver."
         self.name = "Delve"
         self.cost = 2

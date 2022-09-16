@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Giant(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """ Turn your Journey token over (it starts face up). If it's face
             down, +1 Coin. If it's face up, +5 Coin, and each other player
             reveals the top card of his deck, trashes it if it costs

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Spices(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Spices"
         self.coin = 2
         self.buys = 1

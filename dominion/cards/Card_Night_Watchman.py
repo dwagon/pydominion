@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_NightWatchman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_NIGHT]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.NIGHT]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Look at the top 5 cards of your deck, discard any number, and put the rest back in any order."
         self.name = "Night Watchman"
         self.cost = 3
@@ -45,7 +45,7 @@ class Test_NightWatchman(unittest.TestCase):
         self.card = self.g["Night Watchman"].remove()
 
     def test_play(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.deck.set("Gold", "Province", "Gold", "Duchy", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [

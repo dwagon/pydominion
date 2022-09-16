@@ -9,11 +9,11 @@ import dominion.Card as Card
 class Card_Embassy(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = Card.CardType.ACTION
         self.desc = "+5 Cards, Discard 3. Everyone gets a silver on purchase"
         self.name = "Embassy"
         self.cost = 5
-        self.base = Game.HINTERLANDS
+        self.base = Card.CardExpansion.HINTERLANDS
         self.cards = 5
 
     def special(self, game, player):

@@ -11,8 +11,8 @@ import dominion.Card as Card
 class Card_Margrave(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """+3 Card; +1 Buy; Each other player draws a card, then
             discards down to 3 cards in hand."""
         self.name = "Margrave"

@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/League_of_Bankers"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_League_Bankers(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your Buy phase, +$1 per 4 Favors you have (round down).  """
         self.name = "League of Bankers"
 

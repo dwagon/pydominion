@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Way
 
@@ -9,7 +10,7 @@ from dominion import Way
 class Way_Monkey(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+1 Buy; +1 Coin"
         self.name = "Way of the Monkey"
         self.buys = 1

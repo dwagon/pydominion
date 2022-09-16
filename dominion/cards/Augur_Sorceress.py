@@ -10,11 +10,8 @@ from dominion import Game, Card
 class Card_Sorceress(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_AUGUR,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.AUGUR]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 5
         self.actions = 1
         self.required_cards = ["Curse"]

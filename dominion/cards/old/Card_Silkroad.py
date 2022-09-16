@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Silkroad(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = "num victory cards / 4 VP"
         self.name = "Silk Road"
         self.playable = False

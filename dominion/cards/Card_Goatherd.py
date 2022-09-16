@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Goatherd(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+1 Action; You may trash a card from your hand.
             +1 Card per card the player to your right trashed on their last turn."""
         self.name = "Goatherd"

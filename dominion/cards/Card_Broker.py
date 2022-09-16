@@ -11,8 +11,8 @@ class Card_Broker(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Broker"
         self.desc = """Trash a card from your hand and choose one:
             +1 Card per $1 it costs; or +1 Action per $1 it costs;

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Pawn(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "Choose two: +1 card, +1 action, +1 buy, +1 coin"
         self.name = "Pawn"
         self.cost = 2
@@ -20,7 +20,7 @@ class Card_Pawn(Card.Card):
         choices must be different)"""
         selectable = [
             ("card", "+1 card"),
-            (Card.TYPE_ACTION, "+1 action"),
+            (Card.CardType.ACTION, "+1 action"),
             ("buy", "+1 buy"),
             ("coin", "+1 coin"),
         ]
@@ -40,7 +40,7 @@ class Card_Pawn(Card.Card):
         for choice in chosen:
             if choice == "card":
                 player.pickup_card()
-            elif choice == Card.TYPE_ACTION:
+            elif choice == Card.CardType.ACTION:
                 player.add_actions(1)
             elif choice == "buy":
                 player.buys.add(1)

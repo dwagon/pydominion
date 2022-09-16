@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from enum import auto
 from dominion import Card, Game, CardPile
 
 
@@ -9,10 +10,9 @@ class Card_Wizards(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Wizards"
-        self.base = Game.ALLIES
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
+        self.base = Card.CardExpansion.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
         self.required_cards = ["Curse"]
-        Card.TYPE_WIZARD = "wizard"
 
     @classmethod
     def cardpile_setup(cls, game):

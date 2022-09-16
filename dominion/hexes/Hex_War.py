@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_War(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Reveal cards from your deck until revealing one costing 3 or 4. Trash it and discard the rest."
         self.name = "War"
         self.purchasable = False

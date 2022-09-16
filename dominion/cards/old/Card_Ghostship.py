@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Ghostship(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+2 Cards. Each other player with 4 or more cards in
             hand puts cards from his hand on top of his deck until
             he has 3 cards in his hand."""

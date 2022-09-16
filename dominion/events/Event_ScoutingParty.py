@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_ScoutingParty(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+1 Buy, Look at the top 5 cards of your deck. Discard 3 of them and put the rest back in any order"
         self.name = "Scouting Party"
         self.buys = 1

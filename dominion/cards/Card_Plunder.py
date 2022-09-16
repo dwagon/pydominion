@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Plunder(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """+2 Coin, +1VP"""
         self.name = "Plunder"
         self.coin = 2

@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Deathcart(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LOOTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LOOTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """You may trash this or an Action card from your hand, for +5 Coin.
             When you gain this, gain 2 Ruins."""
         self.name = "Death Cart"

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_RuinedMarket(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RUIN]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.RUIN]
+        self.base = Card.CardExpansion.DARKAGES
         self.name = "Ruined Market"
         self.desc = "+1 Buy"
         self.purchasable = False

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Patrol(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """+3 Cards; Reveal the top 4 cards of your deck.
             Put the Victory cards and Curses into your hand.
             Put the rest back in any order."""

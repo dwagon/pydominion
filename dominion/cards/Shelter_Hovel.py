@@ -11,8 +11,8 @@ class Card_Hovel(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_REACTION, Card.TYPE_SHELTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.REACTION, Card.CardType.SHELTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "When you gain a Victory card, you may trash this from your hand."
         self.name = "Hovel"
         self.cost = 1

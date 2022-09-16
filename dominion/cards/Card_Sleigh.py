@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Sleigh(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Gain 2 Horses. When you gain a card, you may discard this,
             to put that card into your hand or onto your deck."""
         self.name = "Sleigh"

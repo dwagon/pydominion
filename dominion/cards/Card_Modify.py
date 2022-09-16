@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Modify(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Modify"
         self.desc = """Trash a card from your hand. Choose one: +1 Card and +1 Action;
             or gain a card costing up to $2 more than the trashed card."""

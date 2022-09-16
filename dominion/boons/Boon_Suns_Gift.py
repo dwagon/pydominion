@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Suns_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Look at the top 4 cards of your deck. Discard any number of them and put the rest back in any order."
         self.name = "The Sun's Gift"
         self.purchasable = False

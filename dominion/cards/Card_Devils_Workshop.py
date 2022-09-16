@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Devils_Workshop(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_NIGHT
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.NIGHT
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """If the number of cards you've gained this turn is: 2+,
             gain an Imp from its pile; 1, gain a card costing up to 4;
             0, gain a Gold."""
@@ -41,7 +41,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_0(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.play_card(self.card)
         try:
             self.assertIn("Gold", self.plr.discardpile)
@@ -50,7 +50,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_1(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.gain_card("Copper")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
@@ -61,7 +61,7 @@ class Test_Devils_Workshop(unittest.TestCase):
             raise
 
     def test_play_2(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.gain_card("Copper")
         self.plr.gain_card("Estate")
         self.plr.play_card(self.card)

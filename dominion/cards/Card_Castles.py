@@ -11,7 +11,7 @@ class Card_Castles(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Castles"
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
 
     def setup(self, game):
         game.cardpiles["Castles"] = CastleCardPile(game)

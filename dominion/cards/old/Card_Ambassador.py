@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Ambassador(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """Reveal a card from your hand. Return up to 2 copies of it
         from your hand to the Supply. Then each other player gains a copy of it."""
         self.name = "Ambassador"

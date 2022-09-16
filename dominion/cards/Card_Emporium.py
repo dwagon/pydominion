@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Emporium(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.name = "Emporium"
         self.coin = 1
         self.actions = 1
@@ -19,7 +19,7 @@ class Card_Emporium(Card.Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == Card.TYPE_ACTION:
+        if player.phase == Card.CardType.ACTION:
             return "+1 Card, +1 Action, +1 Coin"
         return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
 

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Festival(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+2 actions, +1 buys, +2 coin"
         self.name = "Festival"
         self.actions = 2

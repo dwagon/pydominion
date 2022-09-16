@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Rat """
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Way
 
@@ -10,7 +11,7 @@ from dominion import Way
 class Way_Rat(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "You may discard a Treasure to gain a copy of this."
         self.name = "Way of the Rat"
 

@@ -9,11 +9,11 @@ class Card_Sorcerer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_WIZARD,  # pylint: disable=no-member
-            Card.TYPE_ATTACK,
+            Card.CardType.ACTION,
+            Card.CardType.WIZARD,  # pylint: disable=no-member
+            Card.CardType.ATTACK,
         ]
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 5
         self.cards = 1
         self.required_cards = ["Curse"]

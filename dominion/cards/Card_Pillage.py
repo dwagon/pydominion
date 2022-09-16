@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Pillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """Trash this. Each other player with 5 or more cards in hand
         reveals their hand and discards a card that you choose. Gain 2 Spoils
         from the Spoils pile."""

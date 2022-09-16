@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Mountebank(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.PROSPERITY
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "+2 coin. Each other player may discard a Curse. If he doesn't, he gains a Curse and a Copper."
         self.name = "Mountebank"
         self.required_cards = ["Curse"]

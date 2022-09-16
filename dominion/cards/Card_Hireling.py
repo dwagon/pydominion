@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Hireling(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+1 Card forever"
         self.name = "Hireling"
         self.cost = 6

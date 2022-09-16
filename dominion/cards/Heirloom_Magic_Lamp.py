@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_MagicLamp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_HEIRLOOM]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.HEIRLOOM]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """+1 Coin; When you play this, if there are at least 6 cards
             that you have exactly 1 copy of in play, trash this. If you do,
             gain 3 Wishes from their pile."""

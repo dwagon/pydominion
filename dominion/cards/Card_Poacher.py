@@ -11,8 +11,8 @@ class Card_Poacher(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+1 Card, +1 Action, +1 Coin. Discard a card per empty supply pile."
         self.name = "Poacher"
         self.cards = 1

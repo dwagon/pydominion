@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_Delusion(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "If you don't have Deluded or Envious, take Deluded."
         self.name = "Delusion"
         self.purchasable = False

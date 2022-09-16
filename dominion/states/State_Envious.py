@@ -8,8 +8,8 @@ from dominion import Card, Game, State
 class State_Envious(State.State):
     def __init__(self):
         State.State.__init__(self)
-        self.cardtype = Card.TYPE_STATE
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.STATE
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = (
             "At the start of your Buy phase, return this, and Silver and Gold make 1 this turn."
         )

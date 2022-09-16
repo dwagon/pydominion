@@ -13,8 +13,8 @@ class Card_YoungWitch(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = """+2 Cards, Discard 2 cards. Each other player may reveal
             a Bane card from his hand. If he doesn't, he gains a Curse."""
         self.required_cards = ["Curse"]

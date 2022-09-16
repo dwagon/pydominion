@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_Plague(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Gain a Curse to your hand."
         self.name = "Plague"
         self.purchasable = False

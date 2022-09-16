@@ -9,8 +9,8 @@ from dominion import Card, Game
 class Card_Carpenter(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Carpenter"
         self.cost = 4
 

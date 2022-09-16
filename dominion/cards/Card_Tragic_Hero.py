@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Tragic_Hero(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+3 Cards; +1 Buys; If you have 8 or more cards in hand (after drawing), trash this and gain a Treasure."
         self.name = "Tragic Hero"
         self.cost = 5
@@ -20,7 +20,7 @@ class Card_Tragic_Hero(Card.Card):
     def special(self, game, player):
         if player.hand.size() >= 8:
             player.trash_card(self)
-            player.plr_gain_card(cost=None, types={Card.TYPE_TREASURE: True})
+            player.plr_gain_card(cost=None, types={Card.CardType.TREASURE: True})
 
 
 ###############################################################################

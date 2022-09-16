@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Pooka(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "You may trash a Treasure other than Cursed Gold from your hand, for +4 Cards."
         self.name = "Pooka"
         self.cost = 5

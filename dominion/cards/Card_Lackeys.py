@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Lackeys(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Lackeys"
         self.cards = 2
         self.cost = 2

@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_Poverty(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Discard down to 3 cards in hand"
         self.name = "Poverty"
         self.purchasable = False

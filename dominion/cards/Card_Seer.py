@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Seer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """+1 Card; +1 Action; Reveal the top 3 cards of your deck.
             Put the ones costing from 2 to 4 into your hand. Put the rest back in any order."""
         self.cards = 1

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Crossroads(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """Reveal your hand. +1 Card per Victory card revealed.
             If this is the first time you played a Crossroads this turn, +3 Actions."""
         self.name = "Crossroads"

@@ -10,10 +10,10 @@ import dominion.Card as Card
 class Card_Groom(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = Card.CardType.ACTION
         self.cost = 4
         self.name = "Groom"
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Gain a card costing up to 4 Coin. If it's an...
             Action card, gain a Horse;
             Treasure card, gain a Silver;

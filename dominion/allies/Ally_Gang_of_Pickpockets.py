@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Gang_of_Pickpockets"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Gang_Pickpockets(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, discard down to 4 cards in hand unless you spend a Favor."""
         self.name = "Gang of Pickpockets"
 

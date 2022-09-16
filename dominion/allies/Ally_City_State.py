@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/City-state """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_CityState(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = (
             """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
         )

@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_Haunting(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "If you have at least 4 cards in hand, put one of them onto your deck."
         self.name = "Haunting"
         self.purchasable = False

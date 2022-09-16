@@ -9,9 +9,9 @@ import dominion.Card as Card
 class Card_Venture(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
+        self.cardtype = Card.CardType.TREASURE
         self.desc = "+1 coin, get next treasure from deck"
-        self.base = Game.PROSPERITY
+        self.base = Card.CardExpansion.PROSPERITY
         self.name = "Venture"
         self.cost = 5
 

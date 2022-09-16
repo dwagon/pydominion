@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Scavenger(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+2 Coin. You may put your deck into your discard pile.
             Look through your discard pile and put one card from it on top of
             your deck."""

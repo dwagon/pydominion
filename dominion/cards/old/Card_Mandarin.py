@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Mandarin(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Mandarin"
         self.coin = 3
         self.cost = 5

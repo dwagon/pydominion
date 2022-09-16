@@ -11,8 +11,8 @@ class Card_Loan(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = """+1 Coin; When you play this, reveal cards from your
             deck until you reveal a Treasure. Discard it or trash it. Discard
             the other cards."""

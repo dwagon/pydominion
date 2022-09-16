@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Huntinggrounds(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+4 Cards; When you trash this, gain a Duchy or 3 Estates."""
         self.name = "Hunting Grounds"
         self.cards = 4

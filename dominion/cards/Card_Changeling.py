@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Changeling(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_NIGHT]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.NIGHT]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """Trash this. Gain a copy of a card you have in play.
 In games using this, when you gain a card costing 3 or more, you may exchange it for a Changeling."""
         self.name = "Changeling"
@@ -53,13 +53,13 @@ class Test_Changeling(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
 
     def test_play_keep(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.test_input = ["Keep Changeling"]
         self.plr.play_card(self.card)
         self.assertIn("Changeling", self.plr.played)
 
     def test_play_swap(self):
-        self.plr.phase = Card.TYPE_NIGHT
+        self.plr.phase = "night"
         self.plr.played.set("Gold")
         self.plr.test_input = ["Exchange for Gold"]
         self.plr.play_card(self.card)

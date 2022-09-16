@@ -9,11 +9,8 @@ from dominion import Game, Card
 class Card_Old_Map(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_ODYSSEY,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ODYSSEY]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 3
         self.name = "Old Map"
         self.cards = 1

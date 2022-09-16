@@ -9,11 +9,11 @@ import dominion.Card as Card
 class Card_Watchtower(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
         self.desc = """Draw until you have 6 cards in hand.
             When you gain a card, you may reveal this from your hand. If you do,
             either trash that card, or put it on top of your deck."""
-        self.base = Game.PROSPERITY
+        self.base = Card.CardExpansion.PROSPERITY
         self.name = "Watchtower"
         self.cost = 3
 

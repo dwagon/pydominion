@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Mountains_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Gain a silver"
         self.name = "The Mountain's Gift"
         self.purchasable = False

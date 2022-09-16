@@ -8,8 +8,8 @@ import dominion.Card as Card
 class Card_Apprentice(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALCHEMY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = (
             "+1 action, Trash a card, +1 card per coin it costs, +2 cards if it has a potion cost"
         )

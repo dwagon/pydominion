@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Black_Cat(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_REACTION]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+2 Cards; If it isn't your turn, each other player gains a
             Curse. When another player gains a Victory card, you may play this
             from your hand."""

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Idol(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_ATTACK, Card.TYPE_FATE]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.ATTACK, Card.CardType.FATE]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """2 Coin; When you play this, if you then have an odd number
             of Idols in play, receive a Boon; if an even number, each other player
             gains a Curse."""

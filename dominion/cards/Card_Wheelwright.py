@@ -11,8 +11,8 @@ class Card_Wheelwright(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """+1 Card; +1 Action; You may discard a card to gain an
             Action card costing as much as it or less."""
         self.name = "Wheelwright"
@@ -24,7 +24,7 @@ class Card_Wheelwright(Card.Card):
         disc = player.plr_discard_cards(num=1)
         if not disc:
             return
-        player.plr_gain_card(cost=disc[0].cost, types={Card.TYPE_ACTION: True})
+        player.plr_gain_card(cost=disc[0].cost, types={Card.CardType.ACTION: True})
 
 
 ###############################################################################

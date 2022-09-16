@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Hostelry(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.name = "Hostelry"
         self.cards = 1
         self.actions = 2

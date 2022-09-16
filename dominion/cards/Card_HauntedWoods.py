@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_HauntedWoods(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DURATION]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """Until you next turn, when any other player buys a card,
             he puts his hand on top of his deck in any order.
             At the start of your next turn: +3 Cards"""

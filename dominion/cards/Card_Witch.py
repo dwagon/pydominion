@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Witch(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DOMINION
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+2 cards; Each other player gains a Curse card."
         self.required_cards = ["Curse"]
         self.name = "Witch"

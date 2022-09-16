@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Village(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+1 cards, +2 actions"
         self.name = "Village"
         self.cards = 1

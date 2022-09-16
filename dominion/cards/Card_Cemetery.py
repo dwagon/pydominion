@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Cemetery(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+2 VP; When you gain this, trash up to 4 cards from your hand."
         self.name = "Cemetery"
         self.cost = 4

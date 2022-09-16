@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Nobles(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "2VP, choose +3 cards or +2 actions"
         self.name = "Nobles"
         self.victory = 2

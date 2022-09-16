@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Swap(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.cards = 1
         self.actions = 1
         self.name = "Swap"

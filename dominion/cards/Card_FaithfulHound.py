@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_FaithfulHound(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """+2 Cards; When you discard this other than during Clean-up,
             you may set it aside, and put it into your hand at end of turn."""
         self.name = "Faithful Hound"

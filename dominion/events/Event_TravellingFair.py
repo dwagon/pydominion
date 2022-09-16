@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Travelling_Fair """
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_TravellingFair(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+2 Buys; When you gain a card this turn, you may put it onto your deck."
         self.name = "Travelling Fair"
         self.cost = 2

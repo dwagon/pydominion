@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Trappers%27_Lodge"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Trappers_Lodge(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """When you gain a card, you may spend a Favor to put it onto your deck."""
         self.name = "Trappers Lodge"
 

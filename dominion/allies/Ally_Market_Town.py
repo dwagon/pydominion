@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Market_Towns """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Market_Towns(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = "At the start of your Buy phase, you may spend a Favor to play an Action card from your hand. Repeat as desired."
         self.name = "Market Towns"
 

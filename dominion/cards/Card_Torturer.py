@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Torturer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "+3 cards; Other players discard 2 cards or gain a curse"
         self.required_cards = ["Curse"]
         self.name = "Torturer"

@@ -9,8 +9,8 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_OpulentCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_CASTLE]
-        self.base = Game.EMPIRES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.base = Card.CardExpansion.EMPIRES
         self.cost = 7
         self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
         self.victory = 3

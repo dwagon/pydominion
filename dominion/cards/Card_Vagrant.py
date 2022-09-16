@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Vagrant(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 card, +1 action, Reveal the top card of your deck.
             If it's a Curse, Ruins, Shelter or Victory card, put it into your hand"""
         self.name = "Vagrant"

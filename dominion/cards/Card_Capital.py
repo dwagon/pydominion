@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Capital(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "+6 Coin, +1 Buy. When you discard this from play, take 6 Debt"
         self.name = "Capital"
         self.coin = 6

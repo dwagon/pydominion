@@ -11,8 +11,8 @@ class Card_Witchs_Hut(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """+4 Cards; Discard 2 cards, revealed.
             If they're both Actions, each other player gains a Curse."""
         self.name = "Witch's Hut"

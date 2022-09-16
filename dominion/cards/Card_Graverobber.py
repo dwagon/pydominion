@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Graverobber(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """Choose one: Gain a card from the trash costing from 3 to 6,
             putting it on top of your deck; or trash an Action card from your hand
             and gain a card costing up to 3 more than it."""

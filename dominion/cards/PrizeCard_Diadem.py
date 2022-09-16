@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Diadem(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_PRIZE]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.PRIZE]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.name = "Diadem"
         self.purchasable = False
         self.cost = 0

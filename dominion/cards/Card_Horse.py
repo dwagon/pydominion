@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Horse(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
         self.name = "Horse"
         self.purchasable = False

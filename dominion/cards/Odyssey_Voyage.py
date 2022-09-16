@@ -9,12 +9,8 @@ from dominion import Game, Card
 class Card_Voyage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_DURATION,
-            Card.TYPE_ODYSSEY,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.ODYSSEY]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 4
         self.actions = 1
         self.name = "Voyage"

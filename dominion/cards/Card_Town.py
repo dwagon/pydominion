@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Town(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Town"
         self.desc = """Choose one: +1 Card and +2 Actions; or +1 Buy and +$2."""
         self.cost = 4

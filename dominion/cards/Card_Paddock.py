@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Paddock(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+2 Coin; Gain 2 Horses. +1 Action per empty Supply pile."""
         self.name = "Paddock"
         self.coin = 2

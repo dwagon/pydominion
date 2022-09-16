@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Mercenary(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """You may trash 2 cards from your hand.
         If you do, +2 Cards, +2 Coin, and each other player discards down to 3 cards in hand."""
         self.name = "Mercenary"

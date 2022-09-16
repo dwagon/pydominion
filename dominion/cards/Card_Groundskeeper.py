@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Groundskeeper(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "+1 Card. +1 Action. While this is in play, when you gain a Victory card, +1VP"
         self.name = "Groundskeeper"
         self.cards = 1

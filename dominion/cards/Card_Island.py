@@ -10,8 +10,8 @@ from dominion import Game
 class Card_Island(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_VICTORY]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""
         self.name = "Island"
         self.cost = 4

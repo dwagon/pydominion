@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Oasis(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = "+1 card, +1 action, +1 coin, discard 1 card"
         self.name = "Oasis"
         self.cards = 1

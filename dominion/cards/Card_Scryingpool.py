@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Scryingpool(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.ALCHEMY
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = """+1 Action. Each player (including you) reveals the top card of
         his deck and either discards it or puts it back, your choice.
         Then reveal cards from the top of your deck until you reveal one that is not an Action.

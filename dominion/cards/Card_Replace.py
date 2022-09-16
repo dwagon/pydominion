@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Replace(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """Trash a card from your hand. Gain a card costing up to 2 more
             than it. If the gained card is an Action or Treasure, put it onto your deck;
             if it's a Victory card, each other player gains a Curse."""

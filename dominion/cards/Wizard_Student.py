@@ -9,11 +9,11 @@ class Card_Student(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_WIZARD,  # pylint: disable=no-member
-            Card.TYPE_LIAISON,
+            Card.CardType.ACTION,
+            Card.CardType.WIZARD,  # pylint: disable=no-member
+            Card.CardType.LIAISON,
         ]
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 3
         self.name = "Student"
         self.actions = 1

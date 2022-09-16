@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_Locusts(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = """Trash the top card of your deck. If it's Copper or Estate,
             gain a Curse. Otherwise, gain a cheaper card that shares a type with it."""
         self.name = "Locusts"
@@ -26,9 +26,9 @@ class Hex_Locusts(Hex.Hex):
                 "Gain a card costing {} because your next card is {}".format(nxt.cost - 1, nxt.name)
             )
             types = {
-                Card.TYPE_VICTORY: nxt.isVictory(),
-                Card.TYPE_TREASURE: nxt.isTreasure(),
-                Card.TYPE_ACTION: nxt.isAction(),
+                Card.CardType.VICTORY: nxt.isVictory(),
+                Card.CardType.TREASURE: nxt.isTreasure(),
+                Card.CardType.ACTION: nxt.isAction(),
             }
             player.plr_gain_card(cost=nxt.cost - 1, types=types)
         player.output("Trashing your {}".format(nxt.name))

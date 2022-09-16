@@ -11,8 +11,8 @@ class Card_Anvil(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "$1; You may discard a Treasure to gain a card costing up to $4."
         self.coin = 1
         self.name = "Anvil"

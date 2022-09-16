@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Library(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = """Draw until you have 7 cards in hand. You may set aside
             any Action cards drawn this way, as you draw them; discard the set
             aside cards after you finish drawing"""
