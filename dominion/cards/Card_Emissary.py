@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Emissary(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Emissary"
         self.desc = (
             "+3 Cards; If this made you shuffle (at least one card), +1 Action and +2 Favors."

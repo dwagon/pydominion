@@ -8,11 +8,8 @@ from dominion import Game, Card
 class Card_Miller(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_TOWNSFOLK,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.TOWNSFOLK]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 4
         self.actions = 1
         self.name = "Miller"

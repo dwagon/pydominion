@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Fools_Gold(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_REACTION]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """If this is the first time you played a Fool's Gold this turn, this is worth 1 Coin, otherwise it's worth 4 Coin.
         When another player gains a Province, you may trash this from your hand. If you do, gain a Gold, putting it on your deck."""
         self.name = "Fool's Gold"

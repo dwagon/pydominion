@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Ironworks(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "Gain a card costing up to 4. If it is an ... Action card, +1 Action; Treasure card, +1 Coin; Victory card, +1 Card"
         self.name = "Iron Works"
         self.cost = 4

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Tracker(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Coin, Receive a boon; While this is in play, when you gain a card, you may put that card onto your deck"
         self.name = "Tracker"
         self.cost = 2

@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Spy(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DOMINION
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+1 action, +1 cards, reveal next card and optionally discard it"
         self.name = "Spy"
         self.cards = 1

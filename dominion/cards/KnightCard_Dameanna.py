@@ -10,8 +10,8 @@ from dominion.cards.Card_Knight import KnightCard
 class Card_Dame_Anna(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_KNIGHT]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.KNIGHT]
+        self.base = Card.CardExpansion.DARKAGES
         self.name = "Dame Anna"
         self.desc = """You may trash up to 2 cards from your hand.
         Each other player reveals the top 2 cards of his deck, trashes one of them

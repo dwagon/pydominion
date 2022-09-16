@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_MarketSquare(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 Card, +1 Action, +1 Buy.
         When one of your cards is trashed, you may discard this from your hand. If you do, gain a Gold."""
         self.name = "Market Square"

@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Landmark
+from dominion import Card, Game, Landmark
 
 
 ###############################################################################
 class Landmark_Keep(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """When scoring, 5VP per differently named Treasure you have,
         that you have more copies of than each other player, or tied for most."""
         self.name = "Keep"

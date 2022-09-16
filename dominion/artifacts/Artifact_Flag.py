@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Artifact
 
@@ -9,7 +10,7 @@ from dominion import Artifact
 class Artifact_Flag(Artifact.Artifact):
     def __init__(self):
         Artifact.Artifact.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "When drawing your hand, +1 Card"
         self.name = "Flag"
 

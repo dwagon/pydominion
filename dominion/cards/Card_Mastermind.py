@@ -9,8 +9,8 @@ from dominion import Card, Game
 class Card_Mastermind(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """At the start of your next turn, you may play an Action card from your hand three times."""
         self.name = "Mastermind"
         self.cost = 5

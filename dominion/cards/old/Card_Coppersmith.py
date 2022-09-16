@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Coppersmith(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = "Copper produces an extra +1 this turn"
         self.name = "Coppersmith"
         self.cost = 4

@@ -8,7 +8,7 @@ from dominion import Card, Game, Event
 class Event_Summon(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.PROMO
+        self.base = Card.CardExpansion.PROMO
         self.desc = """Gain an Action card costing up to 4. Set it asidee
             If you do, then at the start of your next turn, play it"""
         self.name = "Summon"
@@ -17,7 +17,7 @@ class Event_Summon(Event.Event):
 
     def special(self, game, player):
         """Gain an Action card costing up to 4"""
-        player.plr_gain_card(4, types={Card.TYPE_ACTION: True}, destination="duration")
+        player.plr_gain_card(4, types={Card.ACTION: True}, destination="duration")
         print("Unimplemented")
 
 

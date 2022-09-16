@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Bauble(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Bauble"
         self.desc = """Choose two different options: +1 Buy; +$1; +1 Favor;
                        this turn, when you gain a card, you may put it onto your deck."""

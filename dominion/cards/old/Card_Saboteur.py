@@ -11,8 +11,8 @@ class Card_Saboteur(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """Each other player reveals cards from the top of his deck
             until revealing one costing 3 Coin or more. He trashes that card
             and may gain a card costing at most 2 Coin less than it. He discards

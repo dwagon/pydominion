@@ -9,11 +9,8 @@ from dominion import Game, Card
 class Card_Herb_Gatherer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_AUGUR,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.AUGUR]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 3
         self.buys = 1
         self.name = "Herb Gatherer"

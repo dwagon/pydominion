@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Disciple(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = "Disciple"
         self.purchasable = False

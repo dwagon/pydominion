@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Den_of_Sin(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.NOCTURNE
         self.name = "Den of Sin"
         self.cost = 2
 

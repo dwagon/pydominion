@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Treasure_Trove(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.ADVENTURE
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+2 Coin. When you play this, gain a Gold and a Copper"
         self.name = "Treasure Trove"
         self.coin = 2

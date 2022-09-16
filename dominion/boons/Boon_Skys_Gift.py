@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Skys_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "You may discard 3 cards to gain a Gold."
         self.name = "The Sky's Gift"
         self.purchasable = False

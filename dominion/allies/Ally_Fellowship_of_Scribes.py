@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Fellowship_of_Scribes """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Fellowship_of_Scribes(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
         self.name = "Fellowship of Scribes"
 

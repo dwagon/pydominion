@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Rogue(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+2 coin; If there are any cards in the trash costing from 3 to
             6, gain one of them. Otherwise, each other player reveals
             the top 2 cards of his deck, trashes one of the costing

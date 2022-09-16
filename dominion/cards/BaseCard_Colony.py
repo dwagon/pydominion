@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Colony(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "+10 VP"
         self.basecard = True
         self.name = "Colony"

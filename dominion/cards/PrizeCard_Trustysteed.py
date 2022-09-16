@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Trustysteed(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_PRIZE]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.PRIZE]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.name = "Trusty Steed"
         self.purchasable = False
         self.cost = 0
@@ -63,7 +63,7 @@ class Test_Trustysteed(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_b(self):
-        self.plr.test_input = [Card.TYPE_ACTION, "silver"]
+        self.plr.test_input = ["action", "silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.discardpile.size(), 4)

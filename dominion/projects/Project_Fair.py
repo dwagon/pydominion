@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Project
+from dominion import Card, Game, Project
 
 
 ###############################################################################
 class Project_Fair(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "At the start of your turn, +1 Buy."
         self.name = "Fair"
         self.cost = 4

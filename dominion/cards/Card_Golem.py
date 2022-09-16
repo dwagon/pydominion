@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Golem(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALCHEMY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = "Dig through deck for 2 action cards and play them"
         self.name = "Golem"
         self.cost = 4

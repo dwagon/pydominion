@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Temple(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_GATHERING]
-        self.base = Game.EMPIRES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.GATHERING]
+        self.base = Card.CardExpansion.EMPIRES
         self.name = "Temple"
         self.cost = 4
 

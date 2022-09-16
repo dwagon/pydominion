@@ -8,8 +8,8 @@ import dominion.Card as Card
 class Card_University(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALCHEMY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = "Gain an action card costing up to 5"
         self.name = "University"
         self.cost = 2
@@ -18,7 +18,7 @@ class Card_University(Card.Card):
 
     def special(self, game, player):
         """Gain an action card costing up to 5"""
-        c = player.plr_gain_card(5, types={Card.TYPE_ACTION: True})
+        c = player.plr_gain_card(5, types={Card.CardType.ACTION: True})
         if c:
             player.output("Gained %s from university" % c.name)
 

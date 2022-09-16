@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Warehouse(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.SEASIDE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = "+3 cards, +1 action, discard 3 cards"
         self.name = "Warehouse"
         self.cards = 3

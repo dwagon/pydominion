@@ -11,8 +11,8 @@ class Card_Astrolabe(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = "Now and at the start of your next turn: $1, +1 Buy"
         self.name = "Astrolabe"
         self.buys = 1

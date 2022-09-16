@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Jester(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = """+2 Coin. Each other player discards the top card of his deck.
             If it's a Victory card he gains a Curse. Otherwise either he gains a
             copy of the discarded card or you do, your choice."""

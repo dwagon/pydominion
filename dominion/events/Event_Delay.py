@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################

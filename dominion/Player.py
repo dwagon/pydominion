@@ -1518,13 +1518,13 @@ class Player:
     ###########################################################################
     @classmethod
     def select_by_type(cls, card, types):
-        if card.isAction() and not types[Card.TYPE_ACTION]:
+        if card.isAction() and not types[Card.CardType.ACTION]:
             return False
-        if card.isVictory() and not types[Card.TYPE_VICTORY]:
+        if card.isVictory() and not types[Card.CardType.VICTORY]:
             return False
-        if card.isTreasure() and not types[Card.TYPE_TREASURE]:
+        if card.isTreasure() and not types[Card.CardType.TREASURE]:
             return False
-        if card.isNight() and not types[Card.TYPE_NIGHT]:
+        if card.isNight() and not types[Card.CardType.NIGHT]:
             return False
         return True
 
@@ -1602,20 +1602,25 @@ class Player:
         if types is None:
             types = {}
         assert set(types.keys()) <= set(
-            [Card.TYPE_ACTION, Card.TYPE_VICTORY, Card.TYPE_TREASURE, Card.TYPE_NIGHT]
+            [
+                Card.CardType.ACTION,
+                Card.CardType.VICTORY,
+                Card.CardType.TREASURE,
+                Card.CardType.NIGHT,
+            ]
         )
         if not types:
             return {
-                Card.TYPE_ACTION: True,
-                Card.TYPE_VICTORY: True,
-                Card.TYPE_TREASURE: True,
-                Card.TYPE_NIGHT: True,
+                Card.CardType.ACTION: True,
+                Card.CardType.VICTORY: True,
+                Card.CardType.TREASURE: True,
+                Card.CardType.NIGHT: True,
             }
         _types = {
-            Card.TYPE_ACTION: False,
-            Card.TYPE_VICTORY: False,
-            Card.TYPE_TREASURE: False,
-            Card.TYPE_NIGHT: False,
+            Card.CardType.ACTION: False,
+            Card.CardType.VICTORY: False,
+            Card.CardType.TREASURE: False,
+            Card.CardType.NIGHT: False,
         }
         _types.update(types)
         return _types

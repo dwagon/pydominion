@@ -11,8 +11,8 @@ class Card_BandOfMisfits(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_COMMAND]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """Play a non-Command Action card from the Supply that costs
             less than this, leaving it there."""
         self.name = "Band of Misfits"

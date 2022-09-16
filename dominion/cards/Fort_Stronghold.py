@@ -9,12 +9,12 @@ class Card_Stronghold(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_VICTORY,
-            Card.TYPE_DURATION,
-            Card.TYPE_FORT,  # pylint: disable=no-member
+            Card.CardType.ACTION,
+            Card.CardType.VICTORY,
+            Card.CardType.DURATION,
+            Card.CardType.FORT,  # pylint: disable=no-member
         ]
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 6
         self.victory = 2
         self.name = "Stronghold"

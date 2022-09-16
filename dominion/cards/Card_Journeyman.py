@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Journeyman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.desc = """Name a card.
         Reveal cards from the top of your deck until you reveal 3 cards that are not the named card.
         Put those cards into your hand and discard the rest."""

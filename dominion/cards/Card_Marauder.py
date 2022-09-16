@@ -8,8 +8,8 @@ import dominion.Card as Card
 class Card_Marauder(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_LOOTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.LOOTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
         self.name = "Marauder"
         self.cost = 4

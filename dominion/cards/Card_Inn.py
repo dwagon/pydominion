@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Inn(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.name = "Inn"
         self.cards = 2
         self.actions = 2

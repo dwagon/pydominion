@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Courtier(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """Reveal a card from your hand. For each type it has
         (Action, Attack, etc.), choose one: +1 Action; or +1 Buy; or +3 Coin;
         or gain a Gold. The choices must be different."""
@@ -20,10 +20,10 @@ class Card_Courtier(Card.Card):
         cards = player.card_sel()
         if not cards:
             return
-        if isinstance(cards[0].cardtype, str):
-            num_types = 1
-        else:
+        if isinstance(cards[0].cardtype, list):
             num_types = len(cards[0].cardtype)
+        else:
+            num_types = 1
         chosen = []
         for _ in range(num_types):
             choices = []
@@ -37,7 +37,7 @@ class Card_Courtier(Card.Card):
                 choices.append(("Gain Gold", "gold"))
             opt = player.plr_choose_options("Select one", *choices)
             chosen.append(opt)
-            if opt == Card.TYPE_ACTION:
+            if opt == "action":
                 player.add_actions(1)
             if opt == "buy":
                 player.buys.add(1)

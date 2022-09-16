@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Imp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SPIRIT]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.SPIRIT]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+2 Cards; You may play an Action card from your hand that you don't have a copy of in play."
         self.name = "Imp"
         self.purchasable = False

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Sage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 Action. Reveal cards from the top of your deck
         until you reveal one costing 3 or more.
         Put that card into your hand and discard the rest."""

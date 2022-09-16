@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Winds_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+2 Cards; Discard 2 cards."
         self.name = "The Wind's Gift"
         self.cards = 2

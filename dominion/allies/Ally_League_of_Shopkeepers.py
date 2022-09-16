@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/League_of_Shopkeepers"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_League_Shopkeepers(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """After playing a Liaison, if you have 5 or more Favors, +$1;
             and if 10 or more, +1 Action and +1 Buy."""
         self.name = "League of Shopkeepers"

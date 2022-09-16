@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Warrior(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_TRAVELLER]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.TRAVELLER]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards
         the top card of his deck and trashes it if it

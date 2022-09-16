@@ -9,10 +9,10 @@ import dominion.Card as Card
 class Card_Bazaar(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = Card.CardType.ACTION
         self.desc = "+1 cards, +2 action, +1 coin"
         self.name = "Bazaar"
-        self.base = Game.SEASIDE
+        self.base = Card.CardExpansion.SEASIDE
         self.cards = 1
         self.actions = 2
         self.coin = 1

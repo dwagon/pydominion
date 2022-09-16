@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Project
+from dominion import Card, Game, Project
 
 
 ###############################################################################
 class Project_Academy(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "When you gain an Action card, +1 Villager."
         self.name = "Academy"
         self.cost = 5
@@ -22,9 +22,7 @@ class Project_Academy(Project.Project):
 ###############################################################################
 class Test_Academy(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initprojects=["Academy"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initprojects=["Academy"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

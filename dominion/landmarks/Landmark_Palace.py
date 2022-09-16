@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Landmark
+from dominion import Card, Game, Landmark
 
 
 ###############################################################################
 class Landmark_Palace(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """When scoring, 3VP per set you have of Copper - Silver - Gold."""
         self.name = "Palace"
 

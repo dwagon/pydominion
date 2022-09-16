@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Followers(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_PRIZE]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.PRIZE]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.name = "Followers"
         self.purchasable = False
         self.required_cards = ["Curse"]

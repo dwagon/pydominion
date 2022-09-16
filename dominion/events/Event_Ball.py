@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Ball(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Take -1 Coin token; Gain 2 cards each costing up to 4 Coin"
         self.name = "Ball"
         self.cost = 5

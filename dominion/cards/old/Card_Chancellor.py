@@ -11,8 +11,8 @@ class Card_Chancellor(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+2 Coin; You may immediately put your deck into your discard pile."
         self.name = "Chancellor"
         self.coin = 2

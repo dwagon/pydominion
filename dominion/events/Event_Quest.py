@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Quest(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Discard stuff to gain a gold"
         self.name = "Quest"
         self.cost = 0

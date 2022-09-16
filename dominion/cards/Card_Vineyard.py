@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Vineyard(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_VICTORY
-        self.base = Game.ALCHEMY
+        self.cardtype = Card.CardType.VICTORY
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = "num action cards / 3 VP"
         self.name = "Vineyard"
         self.playable = False

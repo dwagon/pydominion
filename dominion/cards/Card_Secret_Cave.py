@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_SecretCave(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Card; +1 Action; You may discard 3 cards. If you did, then at the start of your next turn, +3 Coin"
         self.name = "Secret Cave"
         self.cost = 3

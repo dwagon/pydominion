@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Plaza(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.desc = (
             "+1 Card, +2 Actions. You may discard a Treasure card. If you do, take a Coffer."
         )

@@ -9,8 +9,8 @@ import dominion.Game as Game
 class Card_Sacrifice(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """Trash a card from your hand. If it's an ...
             Action card: +2 Cards, +2 Actions; Treasure card: +2 Coin;
             Victory card: +2VP"""

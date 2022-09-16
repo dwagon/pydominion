@@ -10,8 +10,8 @@ from dominion import Game
 class Card_Necromancer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Play a non-Duration Action card from the trash, leaving it there."
         self.name = "Necromancer"
         self.cost = 4

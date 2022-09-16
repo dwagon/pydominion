@@ -11,8 +11,8 @@ class Card_Necropolis(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SHELTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.SHELTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = "0VP; +2 Actions"
         self.name = "Necropolis"
         self.cost = 1

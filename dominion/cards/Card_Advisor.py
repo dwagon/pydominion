@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Advisor(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.desc = "+1 action, +3 cards, plr to left discards one of them"
         self.name = "Advisor"
         self.actions = 1

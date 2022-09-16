@@ -9,8 +9,8 @@ from dominion.Counter import Counter
 class Card_MerchantGuild(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.desc = """+1 Buy +1 Coin. While this is in play, when you buy a card, take a Coffer."""
         self.name = "Merchant Guild"
         self.coin = 1

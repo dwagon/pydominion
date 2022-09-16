@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Cave_Dwellers """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_CaveDwellers(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, you may spend a Favor to discard a card, then draw a card. Repeat as desired."""
         self.name = "Cave Dwellers"
 

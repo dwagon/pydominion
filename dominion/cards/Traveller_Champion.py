@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Champion(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "For the rest of the game +1 Action / Action; Defense"
         self.name = "Champion"
         self.permanent = True
@@ -33,7 +33,7 @@ class Test_Champion(unittest.TestCase):
 
     def test_champion(self):
         """Play a champion"""
-        self.plr.add_card(self.card, Card.TYPE_DURATION)
+        self.plr.add_card(self.card, "duration")
         self.assertEqual(self.plr.actions.get(), 1)
         moat = self.g["Moat"].remove()
         self.plr.add_card(moat, "hand")

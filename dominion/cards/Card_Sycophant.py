@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Sycophant(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Sycophant"
         self.actions = 1
         self.desc = """+1 Action; Discard 3 cards. If you discarded at least one, +$3.

@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Raze(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ADVENTURE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+1 Action; Trash this or a card from your hand. Look at a number
             of cards from the top of your deck equal to the cost in Coin of the
             trashed card. Put one into your hand and discard the rest """

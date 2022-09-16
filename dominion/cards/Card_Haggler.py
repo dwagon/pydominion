@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Haggler(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = "+2 Coin. While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."
         self.name = "Haggler"
         self.coin = 2
@@ -20,7 +20,7 @@ class Card_Haggler(Card.Card):
         cost = card.cost - 1
         player.plr_gain_card(
             cost=cost,
-            types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True},
+            types={Card.CardType.ACTION: True, Card.CardType.TREASURE: True},
             prompt="Gain a non-Victory card costing under %s" % cost,
         )
 

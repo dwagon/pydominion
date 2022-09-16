@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_SacredGrove(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Buy; +3 Coin; Receive a Boon. If it doesn't give +1 Coin, each other player may receive it."
         self.name = "Sacred Grove"
         self.cost = 5

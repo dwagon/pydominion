@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Conspirator(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.INTRIGUE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """+2 coin. If you've played 3 or more actions this turn (counting
             this); +1 card, +1 action """
         self.name = "Conspirator"

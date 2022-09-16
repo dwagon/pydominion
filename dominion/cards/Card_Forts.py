@@ -10,9 +10,8 @@ class Card_Forts(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.name = "Forts"
-        self.base = Game.ALLIES
-        self.cardtype = Card.TYPE_ACTION
-        Card.TYPE_FORT = "fort"
+        self.base = Card.CardExpansion.ALLIES
+        self.cardtype = Card.CardType.ACTION
 
     def setup(self, game):
         game.cardpiles["Forts"] = FortCardPile(game)

@@ -9,8 +9,8 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_KingsCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
-        self.base = Game.EMPIRES
+        self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.base = Card.CardExpansion.EMPIRES
         self.cost = 10
         self.desc = "Worth 2VP per Castle you have."
         self.name = "King's Castle"

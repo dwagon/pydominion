@@ -11,8 +11,8 @@ class Card_Diplomat(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """+2 Cards; If you have 5 or fewer cards in hand (after drawing), +2 Actions.
             When another player plays an Attack card, you may first reveal this from a hand of
             5 or more cards, to draw 2 cards then discard 3."""

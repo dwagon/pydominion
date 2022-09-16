@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Swashbuckler(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """+3 Cards. If your discard pile has any cards in it:
             +1 Coffers, then if you have at least 4 Coffers tokens, take the
             Treasure Chest."""

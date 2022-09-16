@@ -11,8 +11,8 @@ class Card_Investment(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = """Trash a card from your hand.  Choose one: +$1;
             or trash this to reveal your hand for +1 VP per differently named Treasure there."""
         self.name = "Investment"

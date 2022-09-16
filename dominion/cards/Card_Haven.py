@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Haven(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = "+1 cards, +1 action; play a card next turn"
         self.name = "Haven"
         self.cards = 1
@@ -21,7 +21,7 @@ class Card_Haven(Card.Card):
         """Set aside a card from your hand face down. At the start of
         your next turn, put it into your hand."""
         c = player.plr_pick_card(force=True, prompt="Pick card to put into hand next turn")
-        player.add_card(c, Card.TYPE_DURATION)
+        player.add_card(c, "duration")
         player.hand.remove(c)
         self.savedHavenCard = c
 
@@ -34,7 +34,7 @@ class Card_Haven(Card.Card):
             player.played.remove(c)
         elif c in player.durationpile:
             player.durationpile.remove(c)
-        player.output("Pulling %s out of from haven" % c)
+        player.output(f"Pulling {c.name} out of from haven")
         del self.savedHavenCard
 
 

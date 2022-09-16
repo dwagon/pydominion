@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Dominate(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "Gain a Province. If you do, +9VP."
         self.name = "Dominate"
         self.cost = 14

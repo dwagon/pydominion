@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_SnowyVillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+1 Card; +4 Actions; +1 Buy; Ignore any further +Actions you get this turn."
         self.name = "Snowy Village"
         self.cost = 3

@@ -8,7 +8,7 @@ from dominion import Card, Game, Event
 class Event_Banquet(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Gain 2 Coppers and a non-Victory card costing up to 5"
         self.name = "Banquet"
         self.cost = 3
@@ -19,9 +19,9 @@ class Event_Banquet(Event.Event):
         player.plr_gain_card(
             5,
             types={
-                Card.TYPE_ACTION: True,
-                Card.TYPE_TREASURE: True,
-                Card.TYPE_VICTORY: False,
+                Card.CardType.ACTION: True,
+                Card.CardType.TREASURE: True,
+                Card.CardType.VICTORY: False,
             },
         )
 

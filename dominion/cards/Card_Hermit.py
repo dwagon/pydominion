@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Hermit(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """Look through your discard pile. You may trash a card from
             your discard pile or hand that is not a Treasure.  Gain a card
             costing up to 3.  When you discard this from play, if you did not

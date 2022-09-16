@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Experiment(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.name = "Experiment"
         self.desc = """+2 Cards; +1 Action; Return this to the Supply. When you
             gain this, gain another Experiment (that doesn't come with another)."""

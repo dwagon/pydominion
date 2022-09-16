@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Animal_Fair(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+4 Coin; +1 Buy per empty supply pile.
             Instead of paying this card's cost, you may trash an Action card
             from your hand."""

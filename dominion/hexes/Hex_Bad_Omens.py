@@ -8,8 +8,8 @@ from dominion import Card, Game, Hex
 class Hex_BadOmens(Hex.Hex):
     def __init__(self):
         Hex.Hex.__init__(self)
-        self.cardtype = Card.TYPE_HEX
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.HEX
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Put your deck into your discard pile. Look through it and put 2 Coppers from it onto your deck"
         self.name = "Bad Omens"
         self.purchasable = False

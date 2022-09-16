@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Skulk(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_DOOM]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.DOOM]
+        self.base = Card.CardExpansion.NOCTURNE
         self.name = "Skulk"
         self.buys = 1
         self.cost = 4

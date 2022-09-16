@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Herald(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.GUILDS
         self.name = "Herald"
         self.overpay = True
         self.cards = 1

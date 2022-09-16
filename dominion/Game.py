@@ -14,6 +14,7 @@ from dominion.Ally import AllyPile
 from dominion.ArtifactPile import ArtifactPile
 from dominion.BoonPile import BoonPile
 from dominion.BotPlayer import BotPlayer
+from dominion.Card import CardExpansion
 from dominion.CardPile import CardPile
 from dominion.Event import EventPile
 from dominion.HexPile import HexPile
@@ -26,24 +27,6 @@ from dominion.RuinCardPile import RuinCardPile
 from dominion.StatePile import StatePile
 from dominion.TextPlayer import TextPlayer
 from dominion.WayPile import WayPile
-
-# Source of the various cards
-ADVENTURE = "adventure"
-ALCHEMY = "alchemy"
-ALLIES = "allies"
-CORNUCOPIA = "cornucopia"
-DARKAGES = "darkages"
-DOMINION = "dominion"
-EMPIRES = "empires"
-GUILDS = "guilds"
-HINTERLANDS = "hinterlands"
-INTRIGUE = "intrigue"
-MENAGERIE = "menagerie"
-NOCTURNE = "nocturne"
-PROMO = "promo"
-PROSPERITY = "prosperity"
-RENAISSANCE = "renaissance"
-SEASIDE = "seaside"
 
 
 ###############################################################################
@@ -135,7 +118,7 @@ class Game:  # pylint: disable=too-many-public-methods
         # Pick a card to see if it is a darkages
         halfway = int(len(self.cardpiles) / 2)
         card = list(self.cardpiles.values())[halfway]
-        if card.base == DARKAGES:
+        if card.base == CardExpansion.DARKAGES:
             use_shelters = True
 
         if use_shelters:

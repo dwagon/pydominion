@@ -8,11 +8,11 @@ from dominion import Card, Game
 class Card_Explorer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
+        self.cardtype = Card.CardType.ACTION
         self.desc = """You may reveal a Province from your hand. If you do,
             gain a Gold to your hand. If you don't, gain a Silver to your hand."""
         self.name = "Explorer"
-        self.base = Game.SEASIDE
+        self.base = Card.CardExpansion.SEASIDE
         self.cost = 5
 
     def special(self, game, player):

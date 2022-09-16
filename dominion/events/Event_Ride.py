@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Ride(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Gain a Horse."
         self.name = "Ride"
         self.cost = 2

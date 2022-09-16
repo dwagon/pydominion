@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_PirateShip(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """Choose one: Each other player reveals the top 2 cards of his deck,
             trashes a revealed Treasure that you choose, discards the rest,
             and if anyone trashed a Treasure you take a Coin token;

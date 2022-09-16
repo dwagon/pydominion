@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Madman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+2 Actions. Return this to the Madman pile. If you do, +1 Card per card in your hand."""
         self.name = "Madman"
         self.insupply = False

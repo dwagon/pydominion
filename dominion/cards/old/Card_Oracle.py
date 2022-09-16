@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Oracle(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """Each player (including you) reveals the top 2 cards of his deck, and you choose one:
         either he discards them or he puts them back on top in an order he chooses.  +2 cards """
         self.name = "Oracle"

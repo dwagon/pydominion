@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Coven(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+1 Action; +2 Coin; Each other player Exiles a Curse
             from the Supply. If they can't, they discard their Exiled Curses."""
         self.name = "Coven"

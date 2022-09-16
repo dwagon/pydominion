@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Noble_Brigand(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """+1 Coin. When you buy this or play it, each other player reveals
             the top 2 cards of his deck, trashes a revealed Silver or Gold you choose,
             and discards the rest. If he didn't reveal a Treasure, he gains a Copper.

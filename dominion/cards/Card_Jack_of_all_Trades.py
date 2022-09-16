@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Jack_of_all_Trades(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """Gain a Silver.
             Look at the top card of your deck; discard it or put it back.
             Draw until you have 5 cards in your hand.

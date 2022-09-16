@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Messenger(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ADVENTURE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ADVENTURE
         self.name = "Messenger"
         self.buys = 1
         self.coin = 2

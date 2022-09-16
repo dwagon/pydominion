@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Storeroom(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+1 Buy; Discard any number of cards. +1 Card per card
             discarded. Discard any number of cards. +1 Coin per card discarded
             the second time """

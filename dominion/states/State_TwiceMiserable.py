@@ -8,8 +8,8 @@ from dominion import Card, Game, State
 class State_Twice_Miserable(State.State):
     def __init__(self):
         State.State.__init__(self)
-        self.cardtype = Card.TYPE_STATE
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.STATE
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "-4 VP"
         self.name = "Twice Miserable"
         self.victory = -4

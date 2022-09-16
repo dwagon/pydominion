@@ -11,8 +11,8 @@ class Card_Pirate(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION, Card.TYPE_REACTION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """At the start of your next turn, gain a Treasure costing up
             to $6 to your hand.
             When any player gains a Treasure, you may play this from your hand."""
@@ -23,7 +23,7 @@ class Card_Pirate(Card.Card):
         """gain a Treasure costing up to $6 to your hand"""
         # Discard first to avoid the gained card triggering the pirate again
         player.move_card(self, "played")
-        player.plr_gain_card(cost=6, types={Card.TYPE_TREASURE: True}, destination="hand")
+        player.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         """When any player gains a Treasure, you may play this from your hand"""
@@ -40,7 +40,7 @@ class Card_Pirate(Card.Card):
         if not gain:
             return
         owner.move_card(self, "played")
-        owner.plr_gain_card(cost=6, types={Card.TYPE_TREASURE: True}, destination="hand")
+        owner.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
 
 
 ###############################################################################

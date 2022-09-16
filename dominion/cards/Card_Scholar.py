@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Scholar(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """Discard your hand. +7 Cards."""
         self.name = "Scholar"
         self.cost = 5

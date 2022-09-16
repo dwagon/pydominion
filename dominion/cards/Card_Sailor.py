@@ -11,8 +11,8 @@ class Card_Sailor(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+1 Action; Once this turn, when you gain a Duration card, you may play it.
             At the start of your next turn, +$2 and you may trash a card from your hand."""
         self.actions = 1

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Merchantship(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.SEASIDE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = "+2 coins; +2 coins next turn"
         self.name = "Merchant Ship"
         self.coin = 2

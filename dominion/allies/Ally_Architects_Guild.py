@@ -7,9 +7,11 @@ from dominion import Card, Game, Ally
 
 ###############################################################################
 class Ally_Architects_Guild(Ally.Ally):
+    """Architects Guild"""
+
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = (
             "When you gain a card, you may spend 2 Favors to gain a cheaper non-Victory card."
         )
@@ -21,7 +23,7 @@ class Ally_Architects_Guild(Ally.Ally):
         player.favors.add(-2)  # To stop re-triggering before favors are spent
         crd = player.plr_gain_card(
             cost=card.cost - 1,
-            types={Card.TYPE_ACTION: True, Card.TYPE_TREASURE: True},
+            types={Card.CardType.ACTION: True, Card.CardType.TREASURE: True},
             prompt=f"Spend 2 favors to gain a card worth {card.cost-1} or less",
         )
         if not crd:
@@ -30,6 +32,8 @@ class Ally_Architects_Guild(Ally.Ally):
 
 ###############################################################################
 class Test_Architects_Guild(unittest.TestCase):
+    """Test Architects Guild"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, ally="Architects Guild", initcards=["Underling"])
         self.g.start_game()

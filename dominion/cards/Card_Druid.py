@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# pylint: disable=protected-access
 
 import unittest
 import random
@@ -9,10 +10,12 @@ from dominion import Game
 
 ###############################################################################
 class Card_Druid(Card.Card):
+    """Druid"""
+
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_FATE]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.FATE]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Buy; Receive one of the set-aside Boons"
         self.name = "Druid"
         self.buys = 1
@@ -27,16 +30,18 @@ class Card_Druid(Card.Card):
     def special(self, game, player):
         options = []
         for i in range(3):
-            sel = "%d" % i
+            sel = f"{i}"
             bn = list(game._druid_area)[i]
             toprint = f"Receive {bn.name}: {bn.description(player)}"
-            options.append({"selector": sel, "print": toprint, Card.TYPE_BOON: bn})
+            options.append({"selector": sel, "print": toprint, "boon": bn})
         b = player.user_input(options, "Which boon? ")
-        player.receive_boon(boon=b[Card.TYPE_BOON], discard=False)
+        player.receive_boon(boon=b["boon"], discard=False)
 
 
 ###############################################################################
 class Test_Druid(unittest.TestCase):
+    """Test Druid"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Druid", "Moat"])
         self.g.start_game()

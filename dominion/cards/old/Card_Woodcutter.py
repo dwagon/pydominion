@@ -11,8 +11,8 @@ class Card_Woodcutter(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+1 buys, +2 coin"
         self.name = "Woodcutter"
         self.buys = 1

@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Destrier(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+2 Cards; +1 Action; During your turns, this costs 1 less per card you've gained this turn."
         self.name = "Destrier"
         self.cards = 2

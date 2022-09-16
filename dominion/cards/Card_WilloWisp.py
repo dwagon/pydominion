@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_WilloWisp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_SPIRIT]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.SPIRIT]
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Card; +1 Action; Reveal the top card of your deck. If it costs 2 or less, put it into your hand."
         self.name = "Will-o'-Wisp"
         self.purchasable = False

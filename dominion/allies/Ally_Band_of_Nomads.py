@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Band_of_Nomads"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Band_Nomads(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = "When you gain a card costing $3 or more, you may spend a Favor, for +1 Card, or +1 Action, or +1 Buy."
         self.name = "Band of Nomads"
 

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Farmingvillage(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.CORNUCOPIA
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = """+2 actions. Reveal cards from the top of your deck until
             you reveal an Action or Treasure card. Put that card into your hand
             and discard the other cards."""

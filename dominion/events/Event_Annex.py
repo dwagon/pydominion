@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Annex(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.ADVENTURE
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Look through your discard pile. Shuffle all but up to 5 cards from it into your deck. Gain a Duchy."
         self.name = "Annex"
         self.debtcost = 8

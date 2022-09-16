@@ -11,8 +11,8 @@ class Card_Collection(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_TREASURE
-        self.base = Game.PROSPERITY
+        self.cardtype = Card.CardType.TREASURE
+        self.base = Card.CardExpansion.PROSPERITY
         self.desc = "$2; +1 Buy; This turn, when you gain an Action card, +1 VP."
         self.name = "Collection"
         self.buys = 1

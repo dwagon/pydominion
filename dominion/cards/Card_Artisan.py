@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Artisan(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "Gain a card to your hand costing up to 5 Coin. Put a card from your hand onto your deck."
         self.name = "Artisan"
         self.cost = 6

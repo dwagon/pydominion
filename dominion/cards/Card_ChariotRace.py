@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_ChariotRace(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """+1 Action
         Reveal the top card of your deck and put it into your hand.
         The player to your left reveals the top card of their deck.

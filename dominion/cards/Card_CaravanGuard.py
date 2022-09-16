@@ -11,8 +11,8 @@ class Card_CaravanGuard(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION, Card.TYPE_REACTION]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+1 Card, +1 Action. At the start of your next turn, +1 Coin.
             When another player plays an Attack card, you may play this from
             your hand. (+1 Action has no effect if it's not your turn.)"""

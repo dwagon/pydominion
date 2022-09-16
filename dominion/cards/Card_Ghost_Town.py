@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Ghost_Town(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_NIGHT, Card.TYPE_DURATION]
-        self.base = Game.NOCTURNE
+        self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.NOCTURNE
         self.name = "Ghost Town"
         self.cost = 3
 

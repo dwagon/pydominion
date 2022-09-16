@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Underling(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Underling"
         self.cards = 1
         self.actions = 1

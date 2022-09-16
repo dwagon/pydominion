@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Coinoftherealm(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_RESERVE]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.RESERVE]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+1 Coin; Call for +2 Actions"
         self.name = "Coin of the Realm"
         self.coin = 1

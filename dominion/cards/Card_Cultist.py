@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Cultist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK, Card.TYPE_LOOTER]
-        self.base = Game.DARKAGES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.LOOTER]
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """+2 Cards; Each other player gains a Ruins. You may play
             a Cultist from your hand.  When you trash this, +3 Cards."""
         self.name = "Cultist"

@@ -9,8 +9,8 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_SprawlingCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.TYPE_VICTORY, Card.TYPE_CASTLE]
-        self.base = Game.EMPIRES
+        self.cardtype = [Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.base = Card.CardExpansion.EMPIRES
         self.cost = 8
         self.desc = """4VP. When you gain this, gain a Duchy or 3 Estates."""
         self.victory = 4

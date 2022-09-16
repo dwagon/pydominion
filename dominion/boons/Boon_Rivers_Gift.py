@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Rivers_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Card at the end of this turn."
         self.name = "The River's Gift"
         self.purchasable = False

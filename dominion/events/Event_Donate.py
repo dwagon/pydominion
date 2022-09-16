@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Donate(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """After this turn, put all cards from your deck and discard
             pile into your hand, trash any number, shuffle your hand into your
             deck, then draw 5 cards."""

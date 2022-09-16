@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Triumph(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = "Gain an Estate. If you did, +1VP per card you've gained this turn."
         self.name = "Triumph"
         self.debtcost = 5

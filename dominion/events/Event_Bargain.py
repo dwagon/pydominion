@@ -11,7 +11,7 @@ class Event_Bargain(Event.Event):
 
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Gain a non-Victory card costing up to $5. Each other player gains a Horse."
         self.name = "Bargain"
         self.cost = 4
@@ -21,9 +21,9 @@ class Event_Bargain(Event.Event):
         player.plr_gain_card(
             5,
             types={
-                Card.TYPE_ACTION: True,
-                Card.TYPE_TREASURE: True,
-                Card.TYPE_NIGHT: True,
+                Card.CardType.ACTION: True,
+                Card.CardType.TREASURE: True,
+                Card.CardType.NIGHT: True,
             },
         )
         for plr in game.player_list():

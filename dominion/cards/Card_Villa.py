@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Villa(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.name = "Villa"
         self.cost = 4
         self.actions = 2
@@ -18,7 +18,7 @@ class Card_Villa(Card.Card):
         self.coin = 1
 
     def desc(self, player):
-        if player.phase == Card.TYPE_ACTION:
+        if player.phase == Card.CardType.ACTION:
             return "+2 Actions; +1 Buy; +1 Coin"
         return """+2 Actions; +1 Buy; +1 Coin; When you gain this, put it into
             your hand, +1 Action, and if it's your Buy phase return to your
@@ -26,7 +26,7 @@ class Card_Villa(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         if player.phase == "buy":
-            player.phase = Card.TYPE_ACTION
+            player.phase = Card.CardType.ACTION
         player.add_actions(1)
         return {"destination": "hand"}
 
@@ -50,7 +50,7 @@ class Test_Villa(unittest.TestCase):
         self.plr.phase = "buy"
         self.plr.gain_card("Villa")
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.phase, Card.TYPE_ACTION)
+        self.assertEqual(self.plr.phase, Card.CardType.ACTION)
         self.assertIn("Villa", self.plr.hand)
 
 

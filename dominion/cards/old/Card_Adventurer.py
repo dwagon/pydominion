@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Adventurer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DOMINION
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "Dig through deck for two treasures"
         self.name = "Adventurer"
         self.cost = 6

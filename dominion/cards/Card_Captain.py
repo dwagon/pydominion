@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Captain(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION, Card.TYPE_COMMAND]
-        self.base = Game.PROMO
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION, Card.CardType.COMMAND]
+        self.base = Card.CardExpansion.PROMO
         self.desc = """Now and at the start of your next turn:
             Play a non-Duration, non-Command Action card from the Supply costing
             up to 4 Coin, leaving it there."""

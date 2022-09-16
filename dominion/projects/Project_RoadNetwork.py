@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Project
+from dominion import Card, Game, Project
 
 
 ###############################################################################
 class Project_RoadNetwork(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "When another player gains a Victory card, +1 Card."
         self.name = "Road Network"
         self.cost = 5

@@ -11,8 +11,8 @@ class Card_Royal_Galley(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_DURATION]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
+        self.base = Card.CardExpansion.ALLIES
         self.cards = 1
         self.name = "Royal Galley"
         self.desc = """+1 Card; You may play a non-Duration Action card from your hand.

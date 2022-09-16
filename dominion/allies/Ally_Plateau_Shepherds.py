@@ -2,14 +2,14 @@
 """  http://wiki.dominionstrategy.com/index.php/Plateau_Shepherds"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Plateau_Shepherds(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """When scoring, pair up your Favors with cards you have costing $2, for 2VP per pair. """
         self.name = "Plateau Shepherds"
 

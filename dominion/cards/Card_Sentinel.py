@@ -9,8 +9,8 @@ from dominion import Game, Card
 class Card_Sentinel(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALLIES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Sentinel"
         self.desc = "Look at the top 5 cards of your deck. You may trash up to 2 of them. Put the rest back in any order."
         self.cost = 3

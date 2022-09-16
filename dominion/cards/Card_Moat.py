@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Moat(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.DOMINION
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.DOMINION
         self.desc = "+2 cards, defense"
         self.name = "Moat"
         self.defense = True

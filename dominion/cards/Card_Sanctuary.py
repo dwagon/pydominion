@@ -11,8 +11,8 @@ class Card_Sanctuary(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.MENAGERIE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+1 Card; +1 Action; +1 Buy; You may Exile a card from your hand."""
         self.name = "Sanctuary"
         self.cost = 5

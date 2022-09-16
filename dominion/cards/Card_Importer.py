@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Importer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_DURATION, Card.TYPE_ACTION, Card.TYPE_LIAISON]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.DURATION, Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.base = Card.CardExpansion.ALLIES
         self.name = "Importer"
         self.desc = "At the start of your next turn, gain a card costing up to $5."
         self.cost = 3

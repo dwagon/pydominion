@@ -9,9 +9,9 @@ import dominion.Card as Card
 class Card_Catapult(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.required_cards = ["Curse"]
-        self.base = Game.EMPIRES
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """+1 Coin; Trash a card from your hand.
             If it costs 3 or more, each other player gains a Curse.
             If it's a Treasure, each other player discards down to 3 cards in hand."""

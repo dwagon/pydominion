@@ -11,8 +11,8 @@ class Card_Cauldron(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_TREASURE, Card.TYPE_ATTACK]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """$2; +1 Buy; The third time you gain an Action this turn,
             each other player gains a Curse."""
         self.name = "Cauldron"

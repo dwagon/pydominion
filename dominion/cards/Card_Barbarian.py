@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Barbarian """
 
 import unittest
 from dominion import Card, Game
@@ -7,10 +8,12 @@ from dominion import Card, Game
 ###############################################################################
 ###############################################################################
 class Card_Barbarian(Card.Card):
+    """Barbarian"""
+
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """+$2; Each other player trashes the top card of their deck.
             If it costs $3 or more they gain a cheaper card sharing a type with it;
             otherwise they gain a Curse."""
@@ -29,11 +32,20 @@ class Card_Barbarian(Card.Card):
                 return
             cards = []
             for cp in game.cardTypes():
-                if set(cp.cardtype).intersection(set(crd.cardtype)):
+                if self._cardtypes(cp).intersection(self._cardtypes(crd)):
                     if cp.cost < crd.cost:
                         cards.append(cp)
-            gained = plr.card_sel(prompt="Gain a cheaper card", cardsrc=cards)
-            plr.gain_card(gained[0], "discard")
+            if cards:
+                gained = plr.card_sel(prompt="Gain a cheaper card", cardsrc=cards)
+                plr.gain_card(gained[0], "discard")
+            else:
+                plr.output("No suitable cards")
+
+    def _cardtypes(self, crd):
+        """Return a set of the cards cartypes"""
+        if isinstance(crd.cardtype, list):
+            return set(crd.cardtype)
+        return set([crd.cardtype])
 
 
 ###############################################################################
@@ -59,6 +71,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 ###############################################################################
 class Test_Barbarian(unittest.TestCase):
+    """Test Barbarian"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Barbarian"])
         self.g.start_game()
@@ -76,11 +90,11 @@ class Test_Barbarian(unittest.TestCase):
     def test_expense(self):
         """Test trashing an expensive card"""
         self.victim.deck.set("Province")
-        self.victim.test_input = ["Select Gold"]
+        self.victim.test_input = ["Select Duchy"]
         self.attacker.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
         self.assertNotIn("Curse", self.victim.discardpile)
-        self.assertIn("Gold", self.victim.discardpile)
+        self.assertIn("Duchy", self.victim.discardpile)
 
 
 ###############################################################################

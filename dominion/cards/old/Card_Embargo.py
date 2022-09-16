@@ -11,8 +11,8 @@ class Card_Embargo(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.SEASIDE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+2 Coin; Trash this. If you did, add an Embargo token
             to a Supply pile. (For the rest of the game, when a player buys a
             card from that pile, they gain a Curse.)"""

@@ -10,8 +10,8 @@ from dominion import Game
 class Boon_Moons_Gift(Boon.Boon):
     def __init__(self):
         Boon.Boon.__init__(self)
-        self.cardtype = Card.TYPE_BOON
-        self.base = Game.NOCTURNE
+        self.cardtype = Card.CardType.BOON
+        self.base = Card.CardExpansion.NOCTURNE
         self.desc = "Look through your discard pile. You may put a card from it onto your deck"
         self.name = "The Moon's Gift"
         self.purchasable = False

@@ -2,14 +2,14 @@
 """http://wiki.dominionstrategy.com/index.php/Crafters%27_Guild"""
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Crafters_Guild(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your turn, you may spend 2 Favors to gain a card costing up to $4 onto your deck."""
         self.name = "Crafters' Guild"
 

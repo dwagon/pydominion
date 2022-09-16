@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Hideout(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """+1 Card; +2 Actions; Trash a card from your hand. If it's a Victory card, gain a Curse."""
         self.name = "Hideout"
         self.required_cards = ["Curse"]

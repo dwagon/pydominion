@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Artifact
 
@@ -9,7 +10,7 @@ from dominion import Artifact
 class Artifact_Horn(Artifact.Artifact):
     def __init__(self):
         Artifact.Artifact.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "Once per turn, when you discard a Border Guard from play, you may put it onto your deck."
         self.name = "Horn"
 

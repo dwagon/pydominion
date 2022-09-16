@@ -11,8 +11,8 @@ class Card_Secretchamber(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """Discard any number of cards; +1 coin per card discarded.
             When another player plays an Attack card, you may reveal
             this from you hand. If you do +2 cards, then put 2 cards

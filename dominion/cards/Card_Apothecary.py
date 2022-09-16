@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Apothecary(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ALCHEMY
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ALCHEMY
         self.desc = "+1 card, +1 action, Take coppers and potions out of top 4 of deck"
         self.name = "Apothecary"
         self.cards = 1

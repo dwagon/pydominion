@@ -2,6 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Mole """
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Way
 
@@ -10,7 +11,7 @@ from dominion import Way
 class Way_Mole(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+1 Action; Discard your hand. +3 Cards."
         self.actions = 1
         self.name = "Way of the Mole"

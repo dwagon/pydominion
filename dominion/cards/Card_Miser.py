@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Miser(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.ADVENTURE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Put a copper onto your mat or +1 coin per copper on mat"
         self.name = "Miser"
         self.cost = 4
@@ -28,7 +28,7 @@ class Card_Miser(Card.Card):
             )
             if deposit:
                 cu = player.hand["Copper"]
-                player.add_card(cu, Card.TYPE_RESERVE)
+                player.add_card(cu, "reserve")
                 player.hand.remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)

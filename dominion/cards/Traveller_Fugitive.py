@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Fugitive(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_TRAVELLER]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = "+1 Action, +2 Cards; Discard a card"
         self.name = "Fugitive"
         self.purchasable = False

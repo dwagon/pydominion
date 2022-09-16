@@ -5,7 +5,7 @@ from dominion import Card
 class Ally(Card.Card):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.cardtype = Card.TYPE_ALLY
+        self.cardtype = Card.CardType.ALLY
 
 
 ###############################################################################

@@ -8,8 +8,8 @@ from dominion import Card, Game
 class Card_Trader(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.HINTERLANDS
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """Trash a card from your hand. Gain a number of Silvers equal to its cost in coins.
         When you would gain a card, you may reveal this from your hand. If you do, instead, gain a Silver."""
         self.name = "Trader"

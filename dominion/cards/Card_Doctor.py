@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Doctor(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.name = "Doctor"
         self.overpay = True
         self.cost = 3
@@ -55,31 +55,31 @@ class Card_Doctor(Card.Card):
                 {
                     "selector": "0",
                     "print": "Put %s back on top" % card.name,
-                    Card.TYPE_ACTION: "put back",
+                    "action": "put back",
                 }
             )
             options.append(
                 {
                     "selector": "1",
                     "print": "Trash %s" % card.name,
-                    Card.TYPE_ACTION: "trash",
+                    "action": "trash",
                 }
             )
             options.append(
                 {
                     "selector": "2",
                     "print": "Discard %s" % card.name,
-                    Card.TYPE_ACTION: "discard",
+                    "action": "discard",
                 }
             )
             o = player.user_input(options, "What to do with the top card %s?" % card.name)
-            if o[Card.TYPE_ACTION] == "trash":
+            if o["action"] == "trash":
                 player.trash_card(card)
                 player.output("Trashing %s" % card.name)
-            elif o[Card.TYPE_ACTION] == "discard":
+            elif o["action"] == "discard":
                 player.add_card(card, "discard")
                 player.output("Discarding %s" % card.name)
-            elif o[Card.TYPE_ACTION] == "put back":
+            elif o["action"] == "put back":
                 player.add_card(card, "topdeck")
                 player.output("Putting %s back" % card.name)
 

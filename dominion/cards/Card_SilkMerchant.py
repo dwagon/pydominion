@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_SilkMerchant(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.RENAISSANCE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = """+2 Cards; +1 Buy; When you gain or trash this, +1 Coffers and +1 Villager."""
         self.name = "Silk Merchant"
         self.cards = 2

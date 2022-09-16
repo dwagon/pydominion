@@ -10,8 +10,8 @@ import dominion.Card as Card
 class Card_Falconer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.MENAGERIE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """Gain a card to your hand costing less than this. When any
             player gains a card with 2 or more types (Action, Attack, etc.), you
             may play this from your hand."""

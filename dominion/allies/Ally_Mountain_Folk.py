@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Mountain_Folk """
 
 import unittest
-from dominion import Game, Ally
+from dominion import Card, Game, Ally
 
 
 ###############################################################################
 class Ally_Mountain_Folk(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.desc = "At the start of your turn, you may spend 5 Favors for +3 Cards."
         self.name = "Mountain Folk"
 

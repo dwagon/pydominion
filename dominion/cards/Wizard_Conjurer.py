@@ -9,11 +9,11 @@ class Card_Conjurer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
-            Card.TYPE_ACTION,
-            Card.TYPE_WIZARD,  # pylint: disable=no-member
-            Card.TYPE_DURATION,
+            Card.CardType.ACTION,
+            Card.CardType.WIZARD,  # pylint: disable=no-member
+            Card.CardType.DURATION,
         ]
-        self.base = Game.ALLIES
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 4
         self.name = "Conjurer"
         self.desc = """Gain a card costing up to $4.

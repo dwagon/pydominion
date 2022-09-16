@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Project
+from dominion import Card, Game, Project
 
 
 ###############################################################################
 class Project_Pageant(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
-        self.base = Game.RENAISSANCE
+        self.base = Card.CardExpansion.RENAISSANCE
         self.desc = "At the end of your Buy phase, you may pay 1 Coin for +1 Coffers."
         self.name = "Pageant"
         self.cost = 3

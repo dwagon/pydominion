@@ -9,8 +9,8 @@ from dominion import Game
 class Card_Encampment(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.EMPIRES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.EMPIRES
         self.desc = """+2 Cards; +2 Actions; You may reveal a Gold or Plunder
             from your hand. If you do not, set this aside, and return it to the
             Supply at the start of Clean-up."""

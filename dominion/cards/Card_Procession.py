@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Procession(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.DARKAGES
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.DARKAGES
         self.desc = """You may play a non-Duration Action card from your
             hand twice. Trash it. Gain an Action
             card costing exactly 1 more than it."""
@@ -32,7 +32,7 @@ class Card_Procession(Card.Card):
             player.play_card(card, discard=False, costAction=False)
         player.trash_card(card)
         cost = player.card_cost(card) + 1
-        player.plr_gain_card(cost, modifier="equal", types={Card.TYPE_ACTION: True})
+        player.plr_gain_card(cost, modifier="equal", types={Card.CardType.ACTION: True})
 
 
 ###############################################################################

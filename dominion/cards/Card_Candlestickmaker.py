@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Candlestickmaker(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.GUILDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.GUILDS
         self.desc = "+1 action, +1 buy, +1 coffer"
         self.name = "Candlestick Maker"
         self.actions = 1

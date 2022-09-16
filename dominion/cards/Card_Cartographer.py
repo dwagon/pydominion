@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Cartographer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.HINTERLANDS
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.HINTERLANDS
         self.desc = """+1 Card; +1 Action; Look at the top 4 cards of your deck.
             Discard any number of them. Put the rest back on top in any order."""
         self.name = "Cartographer"

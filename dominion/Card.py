@@ -2,36 +2,69 @@
 # pylint: disable=no-member
 
 import uuid
+from enum import Enum, auto
 
-TYPE_ACTION = "action"
-TYPE_ALLY = "ally"
-TYPE_ARTIFACT = "artifact"
-TYPE_ATTACK = "attack"
-TYPE_BOON = "boon"
-TYPE_CASTLE = "castle"
-TYPE_COMMAND = "command"
-TYPE_DOOM = "doom"
-TYPE_DURATION = "duration"
-TYPE_FATE = "fate"
-TYPE_GATHERING = "gathering"
-TYPE_HEIRLOOM = "heirloom"
-TYPE_HEX = "hex"
-TYPE_KNIGHT = "knight"
-TYPE_LIAISON = "liaison"
-TYPE_LOOTER = "looter"
-TYPE_NIGHT = "night"
-TYPE_PRIZE = "prize"
-TYPE_PROJECT = "project"
-TYPE_REACTION = "reaction"
-TYPE_RESERVE = "reserve"
-TYPE_RUIN = "ruin"
-TYPE_SHELTER = "shelter"
-TYPE_SPIRIT = "spirit"
-TYPE_STATE = "state"
-TYPE_TRAVELLER = "traveller"
-TYPE_TREASURE = "treasure"
-TYPE_VICTORY = "victory"
-TYPE_ZOMBIE = "zombie"
+
+###############################################################################
+class CardExpansion(Enum):
+    """Source of the various cards"""
+
+    ADVENTURE = auto()
+    ALCHEMY = auto()
+    ALLIES = auto()
+    CORNUCOPIA = auto()
+    DARKAGES = auto()
+    DOMINION = auto()
+    EMPIRES = auto()
+    GUILDS = auto()
+    HINTERLANDS = auto()
+    INTRIGUE = auto()
+    MENAGERIE = auto()
+    NOCTURNE = auto()
+    PROMO = auto()
+    PROSPERITY = auto()
+    RENAISSANCE = auto()
+    SEASIDE = auto()
+
+
+###############################################################################
+class CardType(Enum):
+    """Type of card"""
+
+    ACTION = auto()
+    ALLY = auto()
+    ARTIFACT = auto()
+    ATTACK = auto()
+    AUGUR = auto()
+    BOON = auto()
+    CASTLE = auto()
+    COMMAND = auto()
+    DOOM = auto()
+    DURATION = auto()
+    FATE = auto()
+    FORT = auto()
+    GATHERING = auto()
+    HEIRLOOM = auto()
+    HEX = auto()
+    KNIGHT = auto()
+    LIAISON = auto()
+    LOOTER = auto()
+    NIGHT = auto()
+    ODYSSEY = auto()
+    PRIZE = auto()
+    PROJECT = auto()
+    REACTION = auto()
+    RESERVE = auto()
+    RUIN = auto()
+    SHELTER = auto()
+    SPIRIT = auto()
+    STATE = auto()
+    TOWNSFOLK = auto()
+    TRAVELLER = auto()
+    TREASURE = auto()
+    VICTORY = auto()
+    WIZARD = auto()
+    ZOMBIE = auto()
 
 
 ##############################################################################
@@ -116,11 +149,16 @@ class Card:
 
     ##########################################################################
     def get_cardtype_repr(self):
-        if isinstance(self.cardtype, str):
-            ct = [self.cardtype]
-        else:
+        if isinstance(self.cardtype, list):
             ct = self.cardtype[:]
-        return ", ".join([_.title() for _ in ct])
+        else:
+            ct = [self.cardtype]
+        try:
+            return ", ".join([_.name.title() for _ in ct])
+        except AttributeError:
+            print(f"DBG {self}")
+            print(f"DBG {ct}")
+            raise
 
     ##########################################################################
     def __repr__(self):
@@ -175,28 +213,20 @@ class Card:
     def isLiaison(self):
         """Is this card a Liaison
         http://wiki.dominionstrategy.com/index.php/Liaison"""
-        if TYPE_LIAISON in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.LIAISON)
 
     ##########################################################################
     def isGathering(self):
-        if TYPE_GATHERING in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.GATHERING)
 
     ##########################################################################
     def isCommand(self):
         """http://wiki.dominionstrategy.com/index.php/Command"""
-        if TYPE_COMMAND in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.COMMAND)
 
     ##########################################################################
     def isDuration(self):
-        if TYPE_DURATION in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.DURATION)
 
     ##########################################################################
     def isDebt(self):
@@ -204,93 +234,87 @@ class Card:
 
     ##########################################################################
     def isTreasure(self):
-        if TYPE_TREASURE in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.TREASURE)
 
     ##########################################################################
     def isNight(self):
-        if TYPE_NIGHT in self.cardtype:
-            return True
-        return False
+        return self._is_type(CardType.NIGHT)
 
     ##########################################################################
     def isFate(self):
-        if TYPE_FATE in self.cardtype:
-            return True
-        return False
+        """Is the card a Fate"""
+        return self._is_type(CardType.FATE)
 
     ##########################################################################
     def isDoom(self):
-        if TYPE_DOOM in self.cardtype:
-            return True
-        return False
+        """Is the card a Doom"""
+        return self._is_type(CardType.DOOM)
 
     ##########################################################################
     def isLooter(self):
-        if TYPE_LOOTER in self.cardtype:
-            return True
+        """Is the card a Looter"""
+        return self._is_type(CardType.LOOTER)
+
+    ##########################################################################
+    def _is_type(self, ctype):
+        """Is the card a specific type"""
+        if isinstance(self.cardtype, list):
+            if ctype in self.cardtype:
+                return True
+        else:
+            if ctype == self.cardtype:
+                return True
         return False
 
     ##########################################################################
     def isAction(self):
-        if TYPE_ACTION in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Action"""
+        return self._is_type(CardType.ACTION)
 
     ##########################################################################
     def isShelter(self):
-        if TYPE_SHELTER in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Shelter"""
+        return self._is_type(CardType.SHELTER)
 
     ##########################################################################
     def isRuin(self):
-        if TYPE_RUIN in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Ruin"""
+        return self._is_type(CardType.RUIN)
 
     ##########################################################################
     def isTraveller(self):
-        if TYPE_TRAVELLER in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Traveller"""
+        return self._is_type(CardType.TRAVELLER)
 
     ##########################################################################
     def isVictory(self):
-        if TYPE_VICTORY in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Victory"""
+        return self._is_type(CardType.VICTORY)
 
     ##########################################################################
     def isReaction(self):
-        if TYPE_REACTION in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Reaction"""
+        return self._is_type(CardType.REACTION)
 
     ##########################################################################
     def isCastle(self):
-        if TYPE_CASTLE in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Castle"""
+        return self._is_type(CardType.CASTLE)
 
     ##########################################################################
     def isKnight(self):
-        if TYPE_KNIGHT in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Knight"""
+        return self._is_type(CardType.KNIGHT)
 
     ##########################################################################
     def isAttack(self):
-        if TYPE_ATTACK in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Attack"""
+        return self._is_type(CardType.ATTACK)
 
     ##########################################################################
     def isReserve(self):
-        if TYPE_RESERVE in self.cardtype:
-            return True
-        return False
+        """http://wiki.dominionstrategy.com/index.php/Reserve"""
+        return self._is_type(CardType.RESERVE)
 
     ##########################################################################
     def special_score(self, game, player):  # pylint: disable=no-self-use

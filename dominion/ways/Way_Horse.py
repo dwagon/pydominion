@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Card
 from dominion import Game
 from dominion import Way
 
@@ -9,7 +10,7 @@ from dominion import Way
 class Way_Horse(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = "+2 Cards; +1 Action; Return this to its pile."
         self.name = "Way of the Horse"
         self.cards = 2

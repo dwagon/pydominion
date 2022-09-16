@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Horsetraders(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_REACTION]
-        self.base = Game.CORNUCOPIA
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
+        self.base = Card.CardExpansion.CORNUCOPIA
         self.desc = """+1 Buy. +3 Coins. Discard 2 cards.
         When another player plays an Attack card, you may set this aside from your hand.
         If you do, then at the start of your next turn, +1 Card and return this to your hand."""

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Transmogrify(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+1 Action; At the start of your turn, you may call this,
             to trash a card from your hand, gain a card costing up to 1 coin more
             than it, and put that card into your hand"""

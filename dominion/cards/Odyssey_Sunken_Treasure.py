@@ -9,11 +9,8 @@ from dominion import Game, Card
 class Card_Sunken_Treasure(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [
-            Card.TYPE_TREASURE,
-            Card.TYPE_ODYSSEY,  # pylint: disable=no-member
-        ]
-        self.base = Game.ALLIES
+        self.cardtype = [Card.CardType.TREASURE, Card.CardType.ODYSSEY]
+        self.base = Card.CardExpansion.ALLIES
         self.cost = 5
         self.name = "Sunken Treasure"
         self.desc = """Gain an Action card you don't have a copy of in play."""

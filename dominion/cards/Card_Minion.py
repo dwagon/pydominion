@@ -8,8 +8,8 @@ from dominion import Game, Card
 class Card_Minion(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_ATTACK]
-        self.base = Game.INTRIGUE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
+        self.base = Card.CardExpansion.INTRIGUE
         self.desc = """+1 Action; Choose one: +2 Coin; or discard your hand,
             +4 Cards, and each other player with at least 5 cards in hand discards
             his hand and draws 4 cards."""

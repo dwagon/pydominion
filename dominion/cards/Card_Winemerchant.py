@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Winemerchant(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.TYPE_ACTION, Card.TYPE_RESERVE]
-        self.base = Game.ADVENTURE
+        self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE]
+        self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+1 Buy, +4 Coin, Put this on your Tavern mat; At the
             end of your Buy phase, if you have at least 2 Coin unspent, you
             may discard this from your Tavern mat."""

@@ -9,8 +9,8 @@ import dominion.Card as Card
 class Card_Treasury(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = Card.TYPE_ACTION
-        self.base = Game.SEASIDE
+        self.cardtype = Card.CardType.ACTION
+        self.base = Card.CardExpansion.SEASIDE
         self.desc = """+1 Card +1 Action +1 Coin; When you discard this from play,
             if you didn't buy a Victory card this turn, you may put this on top
             of your deck."""

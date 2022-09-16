@@ -2,14 +2,14 @@
 """ http://wiki.dominionstrategy.com/index.php/Gamble """
 
 import unittest
-from dominion import Game, Event
+from dominion import Card, Game, Event
 
 
 ###############################################################################
 class Event_Gamble(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
-        self.base = Game.MENAGERIE
+        self.base = Card.CardExpansion.MENAGERIE
         self.desc = """+1 Buy; Reveal the top card of your deck. If it's a Treasure
             or Action, you may play it. Otherwise, discard it."""
         self.name = "Gamble"
