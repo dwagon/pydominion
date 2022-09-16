@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -33,7 +34,7 @@ class Test_Monastery(unittest.TestCase):
 
     def test_play_card(self):
         """Play Monastery"""
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.hand.set("Duchy")
         self.plr.add_card(self.monastery, "hand")
         self.plr.gain_card("Silver")
@@ -43,14 +44,14 @@ class Test_Monastery(unittest.TestCase):
 
     def test_play_no_gained(self):
         """Play Monastery when you didn't gain a card"""
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.hand.set("Duchy")
         self.plr.add_card(self.monastery, "hand")
         self.plr.play_card(self.monastery)
 
     def test_play_copper(self):
         """Play Monastery when you have a copper"""
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.hand.set("Duchy")
         self.plr.played.set("Copper")
         self.plr.add_card(self.monastery, "hand")

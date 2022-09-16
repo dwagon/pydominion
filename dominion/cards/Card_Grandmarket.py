@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -47,7 +48,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.hand.set("Copper", "Gold", "Gold")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
-        self.plr.phase = "buy"
+        self.plr.phase = Phase.BUY
         options, _ = self.plr._choice_selection()
         for opt in options:
             if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
@@ -58,7 +59,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.played.set("Copper")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
-        self.plr.phase = "buy"
+        self.plr.phase = Phase.BUY
         options, _ = self.plr._choice_selection()
         for opt in options:
             if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover
@@ -68,7 +69,7 @@ class Test_Grandmarket(unittest.TestCase):
         self.plr.hand.set("Gold", "Gold", "Gold")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
-        self.plr.phase = "buy"
+        self.plr.phase = Phase.BUY
         options, _ = self.plr._choice_selection()
         for opt in options:
             if opt["name"] == "Grand Market" and opt["verb"] == "Buy":  # pragma: no cover

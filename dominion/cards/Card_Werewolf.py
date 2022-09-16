@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -50,7 +51,7 @@ class Test_Werewolf(unittest.TestCase):
         self.assertFalse(self.vic.has_state("Deluded"))
 
     def test_play_night(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5)
         self.assertTrue(self.vic.has_state("Deluded"))

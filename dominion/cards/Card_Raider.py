@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -49,7 +50,7 @@ class Test_Raider(unittest.TestCase):
 
     def test_play(self):
         """Play a Raider"""
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.played.set("Gold", "Silver")
         self.vic.hand.set("Silver", "Gold", "Estate", "Copper", "Copper")
         self.plr.play_card(self.card)

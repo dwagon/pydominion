@@ -5,6 +5,7 @@
 import unittest
 from dominion.Counter import Counter
 from dominion import Card, Game
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -594,7 +595,7 @@ class Test__choice_selection(unittest.TestCase):
 
     def test_action_phase(self):
         self.plr.hand.set("Moat")
-        self.plr.phase = "action"
+        self.plr.phase = Phase.ACTION
         opts, _ = self.plr._choice_selection()
 
         self.assertEqual(opts[0]["verb"], "End Phase")
@@ -611,7 +612,7 @@ class Test__choice_selection(unittest.TestCase):
 
     def test_buy_phase(self):
         self.plr.hand.set("Copper")
-        self.plr.phase = "buy"
+        self.plr.phase = Phase.BUY
         self.plr.coffers = Counter("Coffer", 0)  # Stop card _choice_selection breaking test
         opts, _ = self.plr._choice_selection()
 

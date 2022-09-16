@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -54,7 +55,7 @@ class Test_Exorcist(unittest.TestCase):
         self.card = self.g["Exorcist"].remove()
 
     def test_play(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.hand.set("Silver", "Gold", "Province")
         self.plr.test_input = ["Silver", "Imp"]
         self.plr.add_card(self.card, "hand")

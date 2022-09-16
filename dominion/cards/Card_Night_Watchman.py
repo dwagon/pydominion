@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -45,7 +46,7 @@ class Test_NightWatchman(unittest.TestCase):
         self.card = self.g["Night Watchman"].remove()
 
     def test_play(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.deck.set("Gold", "Province", "Gold", "Duchy", "Silver")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = [

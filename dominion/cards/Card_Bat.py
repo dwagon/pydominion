@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -32,7 +33,7 @@ class Test_Bat(unittest.TestCase):
         self.card = self.g["Bat"].remove()
 
     def test_play(self):
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.hand.set("Duchy", "Silver", "Gold")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Trash Silver", "Trash Gold", "Finish"]

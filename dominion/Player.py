@@ -5,6 +5,7 @@ import operator
 import sys
 from collections import defaultdict
 from typing import Union
+from enum import Enum, auto
 
 from dominion import Card
 from dominion.Counter import Counter
@@ -13,6 +14,18 @@ from dominion.Option import Option
 from dominion.CardPile import CardPile
 from dominion.Event import EventPile
 from dominion.ProjectPile import ProjectPile
+
+
+###############################################################################
+class Phase(Enum):
+    """Phases of a players turn"""
+
+    NONE = auto()
+    START = auto()
+    ACTION = auto()
+    BUY = auto()
+    NIGHT = auto()
+    CLEANUP = auto()
 
 
 ###############################################################################
@@ -62,7 +75,7 @@ class Player:
         self.pick_up_hand()
         self.secret_count = 0  # Hack to count cards that aren't anywhere normal
         self.end_of_game_cards = []
-        self.phase = None
+        self.phase = Phase.NONE
         self.misc = {"is_start": False, "cleaned": False}
         self.states = []
         self.artifacts = []
@@ -717,12 +730,12 @@ class Player:
         o = Option(selector="0", verb="End Phase", card=None, action="quit")
         options = [o]
 
-        if self.phase == "action":
+        if self.phase == Phase.ACTION:
             if self.actions or self.villagers:
                 op, index = self._playable_selection(index)
                 options.extend(op)
 
-        if self.phase == "buy":
+        if self.phase == Phase.BUY:
             op = self._spendable_selection()
             options.extend(op)
             op, index = self._buyable_selection(index)
@@ -733,7 +746,7 @@ class Player:
             if op:
                 options.extend(op)
 
-        if self.phase == "night":
+        if self.phase == Phase.NIGHT:
             op, index = self._night_selection(index)
             options.extend(op)
 
@@ -799,7 +812,7 @@ class Player:
         if not nights:
             return
         self.output("************ Night Phase ************")
-        self.phase = "night"
+        self.phase = Phase.NIGHT
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
@@ -811,7 +824,7 @@ class Player:
     ###########################################################################
     def action_phase(self):
         self.output("************ Action Phase ************")
-        self.phase = "action"
+        self.phase = Phase.ACTION
         while True:
             self._display_overview()
             options, prompt = self._choice_selection()
@@ -823,7 +836,7 @@ class Player:
     ###########################################################################
     def buy_phase(self):
         self.output("************ Buy Phase ************")
-        self.phase = "buy"
+        self.phase = Phase.BUY
         self.hook_pre_buy()
         while True:
             self._display_overview()
@@ -849,7 +862,7 @@ class Player:
             + self.game.landmarks
             + self.durationpile
         )
-        self.phase = "cleanup"
+        self.phase = Phase.CLEANUP
         self.game.cleanup_boons()
         for card in self.played + self.reserve + self.artifacts:
             card.hook_cleanup(self.game, self)
@@ -1002,7 +1015,7 @@ class Player:
 
     ###########################################################################
     def start_turn(self):
-        self.phase = "start"
+        self.phase = Phase.START
         self.played.empty()
         self.buys.set(1)
         self.actions.set(1)
@@ -1086,7 +1099,7 @@ class Player:
         self.messages = []
         self.forbidden_to_buy = []
         self.once = {}
-        self.phase = None
+        self.phase = Phase.NONE
         self.had_cards = []
 
     ###########################################################################
@@ -1188,7 +1201,7 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if card.isAction() and costAction and self.phase != "night":
+        if card.isAction() and costAction and self.phase != Phase.NIGHT:
             self.actions -= 1
         if self.actions.get() < 0:  # pragma: no cover
             self.actions.set(0)
@@ -1247,7 +1260,7 @@ class Player:
         for _ in range(card.cards + modif):
             self.pickup_card()
 
-        if self.phase == "night":
+        if self.phase == Phase.NIGHT:
             card.night(game=self.game, player=self)
         else:
             card.special(game=self.game, player=self)

@@ -3,6 +3,7 @@
 import unittest
 import dominion.Game as Game
 import dominion.Card as Card
+from dominion.Player import Phase
 
 
 ###############################################################################
@@ -39,7 +40,7 @@ class Test_Vampire(unittest.TestCase):
 
     def test_play(self):
         self.plr.test_input = ["Get Duchy"]
-        self.plr.phase = "night"
+        self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         self.assertTrue(self.vic.has_state("Deluded"))
         self.assertIn("Duchy", self.plr.discardpile)
