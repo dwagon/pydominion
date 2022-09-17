@@ -1702,7 +1702,12 @@ class Player:
         **kwargs,
     ):
         """Gain a card up to cost coin
-        if recipient defined then that player gets the card"""
+        if recipient defined then that player gets the card
+        kwargs:
+            prompt = prompt
+            ignore_debt - normally you can't gain a card with a debt cost
+            ignore_potcost - normally you can't gain a card with a potion cost
+        """
         if types is None:
             types = {}
         assert modifier in ("less", "equal")
@@ -1719,10 +1724,12 @@ class Player:
                 prompt += f"costing exactly {cost}"
             buyable = self.cards_worth(cost, types=types)
         buyable = [_ for _ in buyable if _.purchasable]
-        buyable = [_ for _ in buyable if not _.debtcost]
+        if not kwargs.get("ignore_debt", False):
+            buyable = [_ for _ in buyable if not _.debtcost]
+        if not kwargs.get("ignore_potcost", False):
+            buyable = [_ for _ in buyable if not _.potcost]
         buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
-        if "prompt" not in kwargs:
-            kwargs["prompt"] = prompt
+        kwargs["prompt"] = kwargs.get("prompt", prompt)
         cards = self.card_sel(
             cardsrc=buyable,
             recipient=recipient,
