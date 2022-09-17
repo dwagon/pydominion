@@ -14,7 +14,7 @@ class Ally_Woodworkers_Guild(Ally.Ally):
         self.base = Card.CardExpansion.ALLIES
         self.desc = """At the start of your Buy phase, you may spend a Favor to
         trash an Action card from your hand. If you did, gain an Action card."""
-        self.name = "Woodworkers Guild"
+        self.name = "Woodworkers' Guild"
 
     def hook_pre_buy(self, game, player):
         if player.favors.get() == 0:
@@ -53,7 +53,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
 
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=1, ally="Woodworkers Guild", initcards=["Underling", "Moat"]
+            numplayers=1, ally="Woodworkers' Guild", initcards=["Underling", "Moat"]
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
