@@ -38,6 +38,7 @@ class CardType(Enum):
     AUGUR = auto()
     BOON = auto()
     CASTLE = auto()
+    CLASH = auto()
     COMMAND = auto()
     DOOM = auto()
     DURATION = auto()
