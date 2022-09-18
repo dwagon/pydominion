@@ -222,7 +222,7 @@ class TextPlayer(Player):
         index = 0
         options = []
         for prnt, ans in choices:
-            options.append(Option(selector="%s" % index, verb=prnt, answer=ans))
+            options.append(Option(selector=f"{index}", verb=prnt, answer=ans))
             index += 1
         o = self.user_input(options, prompt)
         return o["answer"]
