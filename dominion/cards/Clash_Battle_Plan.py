@@ -35,16 +35,14 @@ class Card_Battle_Plan(Card.Card):
                 player.reveal_card(reveal)
                 player.pickup_card()
         # Rotate pile selection
-        opt = player.plr_choose_options(
-            "Do you wish to rotate a pile?", ("Don't do anything", False), ("Rotate", True)
-        )
+        piles = list(game.cardpiles.keys())
+        piles.sort()
+        options = [("Don't do anything", False)]
+        for pile in piles:
+            options.append((f"Rotate {pile}", pile))
+        opt = player.plr_choose_options("Rotate a pile?", *options)
         if opt:
-            piles = list(game.cardpiles.values())
-            piles.sort()
-            print(f"DBG {piles=}")
-            pile = player.card_sel(cardsrc=piles, prompt="Which stack to rotate")
-            if pile:
-                game[pile[0]].rotate()
+            game[opt].rotate()
 
 
 ###############################################################################
@@ -65,7 +63,7 @@ class Test_Battle_Plan(unittest.TestCase):
         self.plr.deck.set("Gold")
         self.plr.hand.set("Estate", "Militia")
         self.plr.add_card(card, "hand")
-        self.plr.test_input = ["Reveal Militia", "Rotate", "Battle"]
+        self.plr.test_input = ["Reveal Militia", "Rotate Clashes"]
         self.plr.play_card(card)
         self.assertIn("Gold", self.plr.hand)
         next_card = self.g["Clashes"].remove()
