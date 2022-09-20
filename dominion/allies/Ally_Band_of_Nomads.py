@@ -7,14 +7,17 @@ from dominion import Card, Game, Ally
 
 ###############################################################################
 class Ally_Band_Nomads(Ally.Ally):
+    """Band of Nomads"""
+
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = "When you gain a card costing $3 or more, you may spend a Favor, for +1 Card, or +1 Action, or +1 Buy."
+        self.desc = """When you gain a card costing $3 or more, you may spend a Favor,
+            for +1 Card, or +1 Action, or +1 Buy."""
         self.name = "Band of Nomads"
 
     def hook_gain_card(self, game, player, card):
-        if card.cost < 3:
+        if card.cost < 3 or player.favors.get() <= 0:
             return
         chc = player.plr_choose_options(
             "Spend a favor to choose One: ",
@@ -35,7 +38,15 @@ class Ally_Band_Nomads(Ally.Ally):
 
 
 ###############################################################################
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
+    """Bot Response"""
+    return "nothing"
+
+
+###############################################################################
 class Test_Band_Nomads(unittest.TestCase):
+    """Test Band of Nomads"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, ally="Band of Nomads", initcards=["Underling"])
         self.g.start_game()
