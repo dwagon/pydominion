@@ -27,9 +27,11 @@ class Card_Contract(Card.Card):
         acts = [_ for _ in player.hand if _.isAction()]
         if not acts:
             return
-        card = player.card_sel(cardsrc=acts, prompt="Set aside an action to play next turn")[0]
-        self._contract_reserve.add(card)
-        player.hand.remove(card)
+        card = player.card_sel(
+            cardsrc=acts, prompt="Contract: Set aside an action to play next turn"
+        )
+        self._contract_reserve.add(card[0])
+        player.hand.remove(card[0])
         player.secret_count += 1
 
     def duration(self, game, player):
