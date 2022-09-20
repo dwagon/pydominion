@@ -924,12 +924,12 @@ class Player:
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
-        self.output(f"| Phase: {self.phase}")
+        self.output(f"| Phase: {self.phase.name.title()}")
         self.output(f"| Tokens: {'; '.join(tknoutput)}")
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
-            self.output("| Duration: %s" % ", ".join([c.name for c in self.durationpile]))
+            self.output(f"| Duration: {', '.join([_.name for _ in self.durationpile])}")
         if self.projects:
             self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.reserve:

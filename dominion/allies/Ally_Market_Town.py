@@ -7,10 +7,13 @@ from dominion import Card, Game, Ally
 
 ###############################################################################
 class Ally_Market_Towns(Ally.Ally):
+    """Market Towns"""
+
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = "At the start of your Buy phase, you may spend a Favor to play an Action card from your hand. Repeat as desired."
+        self.desc = """At the start of your Buy phase, you may spend a Favor to
+            play an Action card from your hand. Repeat as desired."""
         self.name = "Market Towns"
 
     def hook_pre_buy(self, game, player):
@@ -30,6 +33,8 @@ class Ally_Market_Towns(Ally.Ally):
 
 ###############################################################################
 class Test_Market_Towns(unittest.TestCase):
+    """Test Market Towns"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, ally="Market Towns", initcards=["Underling", "Moat"])
         self.g.start_game()
