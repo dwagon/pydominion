@@ -924,7 +924,7 @@ class Player:
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
-        self.output(f"| Phase: {self.phase}")
+        self.output(f"| Phase: {self.phase.name.title()}")
         self.output(f"| Tokens: {'; '.join(tknoutput)}")
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
