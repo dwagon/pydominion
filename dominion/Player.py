@@ -598,23 +598,8 @@ class Player:
         return options, index
 
     ###########################################################################
-    def _landmark_selection(self, index):
-        options = []
-        for lm in self.game.landmarks.values():
-            o = Option(
-                selector="-",
-                desc=lm.description(self),
-                name=lm.name,
-                card=lm,
-                action=None,
-                details="Landmark",
-            )
-            options.append(o)
-
-        return options, index
-
-    ###########################################################################
     def _project_selection(self, index):
+        """Allow player to select projects"""
         if not self.game.projects:
             return None, index
         # Can only have two projects
@@ -753,9 +738,6 @@ class Player:
         if self.reserve.size():
             op, index = self._reserve_selection(index)
             options.extend(op)
-
-        op, index = self._landmark_selection(index)
-        options.extend(op)
 
         prompt = self._generate_prompt()
         return options, prompt
@@ -910,12 +892,12 @@ class Player:
         self.misc["is_start"] = False
 
     ###########################################################################
-    def _display_overview(self):  # pylint: disable=too-many-branches
-        self.output("-" * 50)
+    def _display_tokens(self) -> str:
+        """Generate the overview display for tokens"""
         tknoutput = []
-        for tkn in self.tokens:
-            if self.tokens[tkn]:
-                tknoutput.append(f"{tkn}: {self.tokens[tkn]}")
+        for tkn, tkv in self.tokens.items():
+            if tkv:
+                tknoutput.append(f"{tkn}: {tkv}")
         if self.card_token:
             tknoutput.append("-1 Card")
         if self.coin_token:
@@ -924,8 +906,16 @@ class Player:
             tknoutput.append("Journey Faceup")
         else:
             tknoutput.append("Journey Facedown")
+        return "; ".join(tknoutput)
+
+    ###########################################################################
+    def _display_overview(self) -> None:
+        """Display turn summary overview to player"""
+        self.output("-" * 50)
         self.output(f"| Phase: {self.phase.name.title()}")
-        self.output(f"| Tokens: {'; '.join(tknoutput)}")
+        for lndmark in self.game.landmarks.values():
+            self.output(f"| Landmark {lndmark.name}: {lndmark.description(self)}")
+        self.output(f"| Tokens: {self._display_tokens()}")
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
@@ -933,23 +923,23 @@ class Player:
         if self.projects:
             self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.reserve:
-            self.output("| Reserve: %s" % ", ".join([c.name for c in self.reserve]))
+            self.output(f"| Reserve: {', '.join([_.name for _ in self.reserve])}")
         if self.hand:
-            self.output("| Hand: %s" % ", ".join([c.name for c in self.hand]))
+            self.output(f"| Hand: {', '.join([_.name for _ in self.hand])}")
         else:
             self.output("| Hand: <EMPTY>")
         if self.artifacts:
             self.output(f"| Artifacts: {', '.join([_.name for _ in self.artifacts])}")
         if self.exilepile:
-            self.output("| Exile: %s" % ", ".join([c.name for c in self.exilepile]))
+            self.output(f"| Exile: {', '.join([_.name for _ in self.exilepile])}")
         if self.played:
             self.output(f"| Played: {', '.join([_.name for _ in self.played])}")
         else:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output("| Ally: %s: %s" % (self.game.ally.name, self.game.ally.description(self)))
-        self.output("| Discard: %s" % ", ".join([c.name for c in self.discardpile]))  # Debug
+            self.output(f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}")
+        self.output(f"| Discard: {', '.join([_.name for _ in self.discardpile])}")  # Debug
         self.output(f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}")  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
@@ -976,7 +966,8 @@ class Player:
         return x
 
     ###########################################################################
-    def get_score_details(self, verbose=False):
+    def get_score_details(self) -> dict:
+        """Calculate score of the player from all factors"""
         scr = {}
         for c in self.all_cards():
             scr[c.name] = scr.get(c.name, 0) + c.victory
@@ -990,7 +981,7 @@ class Player:
 
     ###########################################################################
     def get_score(self, verbose=False):
-        scr = self.get_score_details(verbose)
+        scr = self.get_score_details()
         vp = sum(scr.values())
         if verbose:
             self.game.output(f"{self.name}: {scr}")
