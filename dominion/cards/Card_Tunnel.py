@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +16,7 @@ class Card_Tunnel(Card.Card):
         self.victory = 2
 
     def hook_discard_this_card(self, game, player, source):
-        if player.phase == "cleanup":
+        if player.phase == Player.Phase.CLEANUP:
             return
         gain = player.plr_choose_options(
             "Gain a Gold from your Tunnel?", ("No thanks", False), ("Gain Gold?", True)

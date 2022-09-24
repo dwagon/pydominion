@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,10 +16,10 @@ class Card_Crown(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        if player.phase == Card.CardType.ACTION:
+        if player.phase == Player.Phase.ACTION:
             cards = [_ for _ in player.hand if _.isAction()]
             self.do_twice(player, cards)
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             cards = [_ for _ in player.hand if _.isTreasure()]
             self.do_twice(player, cards)
 
@@ -30,7 +30,7 @@ class Card_Crown(Card.Card):
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
         for c in cards:
-            sel = "%d" % index
+            sel = f"{index}"
             pr = f"Play {c.name} twice"
             options.append({"selector": sel, "print": pr, "card": c})
             index += 1
@@ -55,14 +55,14 @@ class Test_Crown(unittest.TestCase):
         """Play a crown with no suitable actions"""
         self.plr.hand.set("Duchy", "Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.phase = Card.CardType.ACTION
+        self.plr.phase = Player.Phase.ACTION
         self.plr.play_card(self.card)
 
     def test_action(self):
         """Play a crown with a suitable action"""
         self.plr.hand.set("Estate", "Duchy", "Copper", "Gold", "Moat")
         self.plr.add_card(self.card, "hand")
-        self.plr.phase = Card.CardType.ACTION
+        self.plr.phase = Player.Phase.ACTION
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)
@@ -71,7 +71,7 @@ class Test_Crown(unittest.TestCase):
         """Play a crown in a buy phase"""
         self.plr.hand.set("Estate", "Duchy", "Copper", "Gold")
         self.plr.add_card(self.card, "hand")
-        self.plr.phase = "buy"
+        self.plr.phase = Player.Phase.BUY
         self.plr.test_input = ["gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3 * 2)

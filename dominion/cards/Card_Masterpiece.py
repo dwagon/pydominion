@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +16,7 @@ class Card_Masterpiece(Card.Card):
         self.cost = 3
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """+1 Coin. When you buy this, you may overpay for it.
                 If you do, gain a Silver per coin you overpaid."""
         return "+1 Coin"

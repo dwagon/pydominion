@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +16,7 @@ class Card_Lackeys(Card.Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+2 Cards; When you gain this, +2 Villagers."
         return "+2 Cards"
 

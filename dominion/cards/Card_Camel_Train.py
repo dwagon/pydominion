@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Camel_Train """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,7 +15,7 @@ class Card_Camel_Train(Card.Card):
         self.cost = 3
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """Exile a non-Victory card from the Supply. When you gain this, Exile a Gold from the Supply."""
         return "Exile a non-Victory card from the Supply."
 

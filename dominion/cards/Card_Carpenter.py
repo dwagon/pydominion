@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Carpenter """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Carpenter(Card.Card):
 
     @classmethod
     def desc(cls, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """If no Supply piles are empty, +1 Action and gain a card
                 costing up to $4.  Otherwise, trash a card from your hand and
                 gain a card costing up to $2 more than it."""

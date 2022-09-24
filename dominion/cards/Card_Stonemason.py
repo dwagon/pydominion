@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,7 +15,7 @@ class Card_Stonemason(Card.Card):
         self.cost = 2
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """Trash a card from your hand. Gain 2 cards each costing less
                 than it.  When you buy this, you may overpay for it. If you do,
                 gain 2 Actions each costing the amount you overpaid."""

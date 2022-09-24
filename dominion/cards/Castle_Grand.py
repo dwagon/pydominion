@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Card, Game, Player
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -16,7 +16,7 @@ class Card_GrandCastle(CastleCard):
         self.name = "Grand Castle"
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """5VP. When you gain this, reveal your hand. 1VP per Victory card in your hand and/or in play."""
         return "5VP"
 

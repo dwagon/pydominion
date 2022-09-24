@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +16,7 @@ class Card_Forum(Card.Card):
         self.cost = 5
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+3 Cards, +1 Action, Discard 2 cards. When you buy this, +1 Buy."
         return "+3 Cards, +1 Action, Discard 2 cards."
 

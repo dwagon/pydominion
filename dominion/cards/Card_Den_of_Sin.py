@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -15,7 +14,7 @@ class Card_Den_of_Sin(Card.Card):
         self.cost = 2
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "At the start of your next turn, +2 Cards; This is gained to your hand (instead of your discard pile)."
         return "At the start of your next turn, +2 Cards"
 
