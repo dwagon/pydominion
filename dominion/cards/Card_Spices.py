@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -18,7 +17,7 @@ class Card_Spices(Card.Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+2 Coin; +1 Buy; When you gain this, +2 Coffers."
         return "+2 Coin; +1 Buy"
 

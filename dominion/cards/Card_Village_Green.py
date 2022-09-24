@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Village_Green """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -42,7 +42,7 @@ class Card_Village_Green(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         """When you discard this other than during Clean-up, you may reveal it to play it."""
-        if player.phase == "cleanup":
+        if player.phase == Player.Phase.CLEANUP:
             return
         play = player.plr_choose_options(
             "Reveal this card to play it?",
@@ -86,7 +86,7 @@ class Test_Village_Green(unittest.TestCase):
     def test_discard(self):
         """Discard when not cleanup"""
         self.plr.deck.set("Duchy")
-        self.plr.phase = "buy"
+        self.plr.phase = Player.Phase.BUY
         self.plr.test_input = ["Reveal", "Now"]
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)

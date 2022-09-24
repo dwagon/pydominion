@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -19,7 +18,7 @@ class Card_Emporium(Card.Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == Card.CardType.ACTION:
+        if player.phase == Player.Phase.ACTION:
             return "+1 Card, +1 Action, +1 Coin"
         return "+1 Card, +1 Action, +1 Coin. When you gain this, if you have at least 5 Action cards in play, +2VP."
 

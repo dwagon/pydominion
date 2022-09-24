@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Hostelry """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -19,7 +18,7 @@ class Card_Hostelry(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+1 Card; +2 Actions; When you gain this, you may discard any number of Treasures, revealed, to gain that many Horses."
         return "+1 Card; +2 Actions"
 

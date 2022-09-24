@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -14,7 +14,7 @@ class Card_Temple(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return f"""+1 VP. Trash from 1 to 3 differently named cards from your
                 hand.  Add 1 VP to the Temple Supply pile. When you gain this,
                 take the VP from the Temple Supply pile ({player.game["Temple"].getVP()} VP)."""

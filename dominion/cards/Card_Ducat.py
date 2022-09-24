@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +16,7 @@ class Card_Ducat(Card.Card):
 
     ###########################################################################
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+1 Coffers; +1 Buy; When you gain this, you may trash a Copper from your hand."
         return "+1 Coffers; +1 Buy"
 

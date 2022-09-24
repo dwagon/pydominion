@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -15,7 +14,7 @@ class Card_Ghost_Town(Card.Card):
         self.cost = 3
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """At the start of your next turn, +1 Card and +1 Action. This
                 is gained to your hand (instead of your discard pile)."""
         return "At the start of your next turn, +1 Card and +1 Action."

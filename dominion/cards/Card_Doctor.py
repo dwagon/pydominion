@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,7 +15,7 @@ class Card_Doctor(Card.Card):
         self.cost = 3
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """Name a card. Reveal the top 3 cards of your deck.
                 Trash the matches. Put the rest back on top in any order.
                 When you buy this, you may overpay for it. For each 1 you overpaid,

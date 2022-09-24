@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -18,7 +17,7 @@ class Card_Herald(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.
                 If it is an Action, play it.  When you buy this, you may overpay
                 for it. For each Coin you overpaid, look through your discard pile

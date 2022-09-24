@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Card as Card
-import dominion.Game as Game
+from dominion import Card, Player, Game
 
 
 ###############################################################################
@@ -16,7 +15,7 @@ class Card_Cavalry(Card.Card):
         self.required_cards = [("Card", "Horse")]
 
     def desc(self, player):
-        if player.phase == Card.CardType.ACTION:
+        if player.phase == Player.Phase.ACTION:
             return "Gain 2 Horses."
         return """Gain 2 Horses. When you gain this, +2 Cards, +1 Buy,
             and if it's your Buy phase return to your Action phase."""
@@ -26,8 +25,8 @@ class Card_Cavalry(Card.Card):
         player.gain_card("Horse")
 
     def hook_gain_this_card(self, game, player):
-        if player.phase == "buy":
-            player.phase = Card.CardType.ACTION
+        if player.phase == Player.Phase.BUY:
+            player.phase = Player.Phase.ACTION
         player.pickup_cards(2)
         player.buys.add(1)
 
@@ -47,12 +46,12 @@ class Test_Cavalry(unittest.TestCase):
         self.assertIn("Horse", self.plr.discardpile)
 
     def test_gain(self):
-        self.plr.phase = "buy"
+        self.plr.phase = Player.Phase.BUY
         self.plr.gain_card("Cavalry")
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.plr.phase, Card.CardType.ACTION)
+        self.assertEqual(self.plr.phase, Player.Phase.ACTION)
 
 
 ###############################################################################

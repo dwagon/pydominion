@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Messenger(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
                 When this is your first buy in a turn, gain a card costing up to 4,
                 and each other player gains a copy of it."""

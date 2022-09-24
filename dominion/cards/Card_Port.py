@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Card_Port(Card.Card):
         self.numcards = 12
 
     def desc(self, player):
-        if player.phase == "buy":
+        if player.phase == Player.Phase.BUY:
             return "+1 Card, +2 Actions; When you buy this, gain another Port"
         return "+1 Card, +2 Actions"
 

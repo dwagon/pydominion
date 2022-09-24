@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Player
 
 
 ###############################################################################
@@ -17,8 +16,9 @@ class Card_BlessedVillage(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        if player.phase == "buy":
-            return "+1 Card; +2 Actions; When you gain this, take a Boon. Receive it now or at the start of your next turn."
+        if player.phase == Player.Phase.BUY:
+            return """+1 Card; +2 Actions; When you gain this, take a Boon.
+                Receive it now or at the start of your next turn."""
         return "+1 Card; +2 Actions"
 
     def hook_gain_this_card(self, game, player):
