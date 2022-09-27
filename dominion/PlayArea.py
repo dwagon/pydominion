@@ -64,7 +64,7 @@ class PlayArea:
         except ValueError:
             sys.stderr.write(
                 f"Trying to remove a card ({card.name}) that doesn't exist."
-                "Contents of {self.name} are: {', '.join([_.name for _ in self._cards])}\n"
+                f" Contents of {self.name} are: {', '.join([_.name for _ in self._cards])}\n"
             )
             raise
 
