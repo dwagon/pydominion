@@ -8,6 +8,8 @@ from dominion import Way
 
 ###############################################################################
 class Way_Horse(Way.Way):
+    """Way of the Horse"""
+
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
@@ -18,11 +20,14 @@ class Way_Horse(Way.Way):
 
     def special_way(self, game, player, card):
         game[card.name].add(card)
+        player.hand.remove(card)
         return {"discard": False}
 
 
 ###############################################################################
 class Test_Horse(unittest.TestCase):
+    """Test Way of the Horse"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

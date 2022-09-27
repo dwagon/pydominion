@@ -7,13 +7,14 @@ from collections import defaultdict
 from typing import Union
 from enum import Enum, auto
 
-from dominion import Card
-from dominion.Counter import Counter
-from dominion.PlayArea import PlayArea
-from dominion.Option import Option
+from dominion.Card import Card, CardType
 from dominion.CardPile import CardPile
+from dominion.Counter import Counter
 from dominion.Event import EventPile
+from dominion.Option import Option
+from dominion.PlayArea import PlayArea
 from dominion.ProjectPile import ProjectPile
+from dominion.Way import Way
 
 
 ###############################################################################
@@ -153,7 +154,7 @@ class Player:
     def replace_traveller(self, src, dst):
         """For traveller cards replace the src card with a copy of the
         dst card"""
-        assert isinstance(src, Card.Card)
+        assert isinstance(src, Card)
         assert isinstance(dst, str)
         dstcp = self._find_cardpile(dst)
 
@@ -256,7 +257,7 @@ class Player:
             card = self.reserve[card]
             if not card:
                 return None
-        assert isinstance(card, Card.Card)
+        assert isinstance(card, Card)
         self.output(f"Calling {card.name} from Reserve")
         self.currcards.append(card)
         card.hook_call_reserve(game=self.game, player=self)
@@ -276,7 +277,7 @@ class Player:
     ###########################################################################
     def trash_card(self, card, **kwargs):
         """Take a card out of the game"""
-        assert isinstance(card, Card.Card)
+        assert isinstance(card, Card)
         self.stats["trashed"].append(card)
         trashopts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
@@ -333,7 +334,7 @@ class Player:
             if not card:
                 self.output("No more cards to pickup")
                 return None
-        assert isinstance(card, Card.Card)
+        assert isinstance(card, Card)
         self.add_card(card, "hand")
         if verbose:
             self.output(f"{verb} {card.name}")
@@ -349,6 +350,7 @@ class Player:
 
     ###########################################################################
     def pick_up_hand(self, handsize=None):
+        """Replenish hand from deck"""
         if handsize is None:
             handsize = self.newhandsize
         if self.card_token:
@@ -365,6 +367,7 @@ class Player:
     def remove_card(self, card: Card) -> None:
         """Remove a card from wherever it is"""
         piles = {
+            "deferpile": self.deferpile,
             "discard": self.discardpile,
             "discardpile": self.discardpile,
             "hand": self.hand,
@@ -373,6 +376,7 @@ class Player:
             "duration": self.durationpile,
             "reserve": self.reserve,
             "exilepile": self.exilepile,
+            "exile": self.exilepile,
         }
         curr_loc = card.location
         if curr_loc in piles:
@@ -400,6 +404,7 @@ class Player:
             "duration": self.durationpile,
             "reserve": self.reserve,
             "exile": self.exilepile,
+            "deferpile": self.deferpile,
         }
         if not card:  # pragma: no cover
             return None
@@ -422,7 +427,7 @@ class Player:
     ###########################################################################
     def discard_card(self, card, source=None, hook=True):
         """Discard a card"""
-        assert isinstance(card, Card.Card)
+        assert isinstance(card, Card)
         if card in self.hand:
             self.hand.remove(card)
         self.add_card(card, "discard")
@@ -1016,13 +1021,17 @@ class Player:
         self.misc = {"is_start": True, "cleaned": False}
         self.stats = {"gained": [], "bought": [], "trashed": []}
         self._display_overview()
-        self.hook_start_turn()
+        self._hook_start_turn()
         self._duration_start_turn()
+        self._defer_start_turn()
+
+    ###########################################################################
+    def _defer_start_turn(self):
+        """Perform the defer pile cards at the start of the turn"""
         for card in self.deferpile:
             self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
-            self.deferpile.remove(card)
-            self.hand.add(card)
+            self.move_card(card, "hand")
             self.play_card(card, costAction=False)
             self.currcards.pop()
 
@@ -1045,7 +1054,8 @@ class Player:
                 self.durationpile.remove(card)
 
     ###########################################################################
-    def hook_start_turn(self):
+    def _hook_start_turn(self):
+        """Start of turn hook"""
         for c in self.hand + self.states + self.projects + self.artifacts:
             c.hook_start_turn(self.game, self)
         if self.game.ally:
@@ -1053,6 +1063,7 @@ class Player:
 
     ###########################################################################
     def spend_coffer(self):
+        """Spend a coffer to gain a coin"""
         if self.coffers.get() <= 0:
             return
         self.coffers -= 1
@@ -1061,6 +1072,7 @@ class Player:
 
     ###########################################################################
     def spend_villager(self):
+        """Spend a villager to gain an action"""
         if self.villagers.get() <= 0:
             return
         self.villagers -= 1
@@ -1078,6 +1090,7 @@ class Player:
 
     ###########################################################################
     def end_turn(self):
+        """End of turn"""
         if not self.misc["cleaned"]:
             self.cleanup_phase()
         self.playlimit = None
@@ -1131,7 +1144,7 @@ class Player:
             self.add_actions(1)
         if "+1 Card" in tkns:
             c = self.pickup_card()
-            self.output("Picked up %s from +1 Card token" % c.name)
+            self.output(f"Picked up {c.name} from +1 Card token")
         if "+1 Coin" in tkns:
             self.output("Gaining coin from +1 Coin token")
             self.coins += 1
@@ -1162,11 +1175,9 @@ class Player:
         return options
 
     ###########################################################################
-    def defer_card(self, card):
+    def defer_card(self, card: Card) -> None:
         """Set a non-duration card to be played in its entirety next turn"""
-        self.deferpile.add(card)
-        if self.played[card.name]:
-            self.played.remove(card)
+        self.move_card(card, "deferpile")
 
     ###########################################################################
     def _move_after_play(self, card: Card) -> None:
@@ -1223,24 +1234,23 @@ class Player:
                     crd.hook_post_action(game=self.game, player=self, card=card)
 
     ###########################################################################
-    def perform_way(self, way, card):
+    def perform_way(self, way: Way, card: Card) -> None:
         """Perform a way"""
         opts = {"discard": True}
         self.currcards.append(way)
         self.actions -= 1
-        if self.actions.get() < 0:  # pragma: no cover
+        if self.actions.get() < 0:
             self.actions.set(0)
             self.currcards.pop()
             self.output("Not enough actions")
             return
-        self.hand.remove(card)
-        self.output(f"Playing {card.name} through {way.name}")
+        self.output(f"Playing {way.name} instead of {card.name}")
         self.card_benefits(way)
         newopts = way.special_way(game=self.game, player=self, card=card)
         if isinstance(newopts, dict):
             opts.update(newopts)
         if opts["discard"]:
-            self.add_card(card, "played")
+            self.move_card(card, "played")
         self.played_ways.append((way, card))
         self.currcards.pop()
 
@@ -1269,7 +1279,7 @@ class Player:
 
     ###########################################################################
     def card_cost(self, card):
-        assert isinstance(card, (Card.Card, CardPile, EventPile, ProjectPile))
+        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
         cost = card.cost
         if "-Cost" in self.which_token(card.name):
             cost -= 2
@@ -1300,7 +1310,7 @@ class Player:
         self.output(f"Gained a {newcard.name}")
         newcard.player = self
         if callhook:
-            if rc := self.hook_gain_card(newcard):
+            if rc := self._hook_gain_card(newcard):
                 options.update(rc)
             if rc := newcard.hook_gain_this_card(game=self.game, player=self):
                 options.update(rc)
@@ -1359,15 +1369,17 @@ class Player:
 
     ###########################################################################
     def overpay(self, card):
+        """http://wiki.dominionstrategy.com/index.php/Overpay"""
         options = []
         for i in range(self.coins.get() + 1):
-            options.append(("Spend %d more" % i, i))
+            options.append((f"Spend {i} more", i))
         ans = self.plr_choose_options("How much do you wish to overpay?", *options)
         card.hook_overpay(game=self.game, player=self, amount=ans)
         self.coins -= ans
 
     ###########################################################################
     def buy_card(self, card):
+        """Buy a card"""
         assert isinstance(card, CardPile)
         if not self.buys:  # pragma: no cover
             return
@@ -1434,9 +1446,9 @@ class Player:
         )
 
     ###########################################################################
-    def hook_gain_card(self, card):
+    def _hook_gain_card(self, card):
         """Hook which is fired by a card being obtained by a player"""
-        assert isinstance(card, Card.Card)
+        assert isinstance(card, Card)
         options = {}
         if self.hooks.get("gain_card"):
             o = self.hooks["gain_card"](game=self.game, player=self, card=card)
@@ -1533,13 +1545,13 @@ class Player:
     ###########################################################################
     @classmethod
     def select_by_type(cls, card, types):
-        if card.isAction() and not types[Card.CardType.ACTION]:
+        if card.isAction() and not types[CardType.ACTION]:
             return False
-        if card.isVictory() and not types[Card.CardType.VICTORY]:
+        if card.isVictory() and not types[CardType.VICTORY]:
             return False
-        if card.isTreasure() and not types[Card.CardType.TREASURE]:
+        if card.isTreasure() and not types[CardType.TREASURE]:
             return False
-        if card.isNight() and not types[Card.CardType.NIGHT]:
+        if card.isNight() and not types[CardType.NIGHT]:
             return False
         return True
 
@@ -1618,24 +1630,24 @@ class Player:
             types = {}
         assert set(types.keys()) <= set(
             [
-                Card.CardType.ACTION,
-                Card.CardType.VICTORY,
-                Card.CardType.TREASURE,
-                Card.CardType.NIGHT,
+                CardType.ACTION,
+                CardType.VICTORY,
+                CardType.TREASURE,
+                CardType.NIGHT,
             ]
         )
         if not types:
             return {
-                Card.CardType.ACTION: True,
-                Card.CardType.VICTORY: True,
-                Card.CardType.TREASURE: True,
-                Card.CardType.NIGHT: True,
+                CardType.ACTION: True,
+                CardType.VICTORY: True,
+                CardType.TREASURE: True,
+                CardType.NIGHT: True,
             }
         _types = {
-            Card.CardType.ACTION: False,
-            Card.CardType.VICTORY: False,
-            Card.CardType.TREASURE: False,
-            Card.CardType.NIGHT: False,
+            CardType.ACTION: False,
+            CardType.VICTORY: False,
+            CardType.TREASURE: False,
+            CardType.NIGHT: False,
         }
         _types.update(types)
         return _types
@@ -1697,9 +1709,7 @@ class Player:
         self,
         cost,
         modifier="less",
-        types=None,
         recipient=None,
-        force=False,
         destination="discard",
         **kwargs,
     ):
@@ -1710,8 +1720,7 @@ class Player:
             ignore_debt - normally you can't gain a card with a debt cost
             ignore_potcost - normally you can't gain a card with a potion cost
         """
-        if types is None:
-            types = {}
+        types = kwargs.get("types", {})
         assert modifier in ("less", "equal")
         if recipient is None:
             recipient = self
@@ -1736,7 +1745,6 @@ class Player:
             cardsrc=buyable,
             recipient=recipient,
             verbs=("Get", "Unget"),
-            force=force,
             **kwargs,
         )
         if cards:

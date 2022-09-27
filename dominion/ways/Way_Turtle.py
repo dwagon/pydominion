@@ -1,19 +1,19 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Way_of_the_Turtle"""
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way
 
 
 ###############################################################################
 class Way_Turtle(Way.Way):
+    """Turtle"""
+
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
         self.desc = "Set this aside. If you did, play it at the start of your next turn."
         self.name = "Way of the Turtle"
-        self.actions = 2
 
     def special_way(self, game, player, card):
         player.defer_card(card)
@@ -22,6 +22,8 @@ class Way_Turtle(Way.Way):
 
 ###############################################################################
 class Test_Turtle(unittest.TestCase):
+    """Test Turtle"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -38,7 +40,9 @@ class Test_Turtle(unittest.TestCase):
         """Perform a Turtle"""
         self.plr.add_card(self.card, "hand")
         self.plr.perform_way(self.way, self.card)
-        self.assertEqual(self.plr.actions.get(), 2)
+        self.plr.end_turn()
+        self.plr.start_turn()
+        self.assertEqual(len(self.plr.hand), 5 + 2)
 
 
 ###############################################################################
