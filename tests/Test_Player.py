@@ -422,12 +422,15 @@ class Test_pickup_card(unittest.TestCase):
 
 ###############################################################################
 class Test_misc(unittest.TestCase):
+    """Test misc functions"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1, initcards=["Golem", "Witch", "Engineer"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_coststr(self):
+        """Test coststr()"""
         witch = self.game["Witch"].remove()
         golem = self.game["Golem"].remove()
         eng = self.game["Engineer"].remove()
@@ -450,13 +453,92 @@ class Test_misc(unittest.TestCase):
 
 
 ###############################################################################
-class Test__display_overview(unittest.TestCase):
+class Test_score(unittest.TestCase):
+    """Test score related functions"""
+
     def setUp(self):
-        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"])
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game.start_game()
+        self.plr = self.game.player_list(0)
+
+    def test_add_score(self):
+        """Test add_score()"""
+        self.plr.add_score("Bunny", 3)
+        self.assertEqual(self.plr.score["Bunny"], 3)
+
+    def test_get_score(self):
+        """Test get_score()"""
+        pre = self.plr.get_score()
+        self.plr.discardpile.set("Province")
+        self.assertEqual(self.plr.get_score(), pre + 6)
+
+    def test_get_score_details(self):
+        """Test get_score_details()"""
+        self.assertEqual(self.plr.get_score_details()["Estate"], 3)
+        self.plr.add_score("Bunny", 5)
+        self.assertEqual(self.plr.get_score_details()["Bunny"], 5)
+
+
+###############################################################################
+class Test_start_turn(unittest.TestCase):
+    """Test the start_turn()"""
+
+    def setUp(self):
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game.start_game()
+        self.plr = self.game.player_list(0)
+
+    def test_start_turn_changes(self):
+        """Make sure lots of changes are reset"""
+        self.plr.phase = Phase.NONE
+        self.plr.coins.set(5)
+        self.plr.start_turn()
+        self.assertEqual(self.plr.phase, Phase.START)
+        self.assertEqual(self.plr.coins.get(), 0)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.stats["gained"], [])
+        self.assertEqual(self.plr.stats["bought"], [])
+
+
+###############################################################################
+class Test_defer(unittest.TestCase):
+    """Test deferring cards"""
+
+    def setUp(self):
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
+        self.game.start_game()
+        self.plr = self.game.player_list(0)
+
+    def test_defer_card(self):
+        """Test defer_card()"""
+        moat = self.game["Moat"].remove()
+        self.plr.defer_card(moat)
+        self.assertIn("Moat", self.plr.deferpile)
+
+    def test_defer_start_turn(self):
+        """Make sure we run the deferpile"""
+        moat = self.game["Moat"].remove()
+        self.plr.defer_card(moat)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.plr._defer_start_turn()
+        self.assertIn("Moat", self.plr.played)
+        self.assertEqual(self.plr.actions.get(), 1)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+
+
+###############################################################################
+class Test__display_overview(unittest.TestCase):
+    """Test the display overview at the start of every user input"""
+
+    def setUp(self):
+        self.game = Game.TestGame(
+            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"], landmarkcards=["Baths"]
+        )
         self.game.start_game()
         self.plr = self.game.player_list(0)
 
     def test_empty(self):
+        """When we have empty hands"""
         self.plr.messages = []
         self.plr.hand.set()
         self.plr.played.set()
@@ -465,6 +547,7 @@ class Test__display_overview(unittest.TestCase):
         self.assertIn("| Played: <NONE>", self.plr.messages)
 
     def test_non_empty(self):
+        """Test not empty hand"""
         self.plr.messages = []
         self.plr.hand.set("Copper", "Estate")
         self.plr.played.set("Moat")
@@ -473,34 +556,57 @@ class Test__display_overview(unittest.TestCase):
         self.assertIn("| Played: Moat", self.plr.messages)
 
     def test_reserve(self):
+        """Test cards in reserve"""
         self.plr.messages = []
         self.plr.reserve.set("Copper")
         self.plr._display_overview()
         self.assertIn("| Reserve: Copper", self.plr.messages)
 
     def test_duration(self):
+        """Test cards in duration"""
         self.plr.messages = []
         self.plr.durationpile.add(self.game["Copper"].remove())
         self.plr._display_overview()
         self.assertIn("| Duration: Copper", self.plr.messages)
 
+    def test_exiled(self):
+        """Test cards in exile"""
+        self.plr.messages = []
+        self.plr.exilepile.set("Province")
+        self.plr._display_overview()
+        self.assertIn("| Exile: Province", self.plr.messages)
+
     def test_discards(self):
+        """Test cards in discards"""
         self.plr.messages = []
         self.plr.discardpile.set("Copper")
         self.plr._display_overview()
         self.assertIn("| 1 cards in discard pile", self.plr.messages)
 
     def test_project(self):
+        """Test having a project"""
         self.plr.messages = []
         self.plr.assign_project("Cathedral")
         self.plr._display_overview()
         self.assertIn("| Project: Cathedral", self.plr.messages)
 
     def test_artifact(self):
+        """Test artifact display"""
         self.plr.messages = []
         self.plr.assign_artifact("Horn")
         self.plr._display_overview()
         self.assertIn("| Artifacts: Horn", self.plr.messages)
+
+    def test_landmark(self):
+        """Test landmark display"""
+        self.plr.messages = []
+        self.plr.assign_artifact("Horn")
+        self.plr._display_overview()
+        for line in self.plr.messages:
+            if line.startswith("| Landmark Baths"):
+                break
+        else:
+            self.fail("Landmark message not in display")
 
 
 ###############################################################################
@@ -927,6 +1033,42 @@ class Test_Remove_Card(unittest.TestCase):
         card.location = "played"
         self.plr.remove_card(card)
         self.assertNotIn("Gold", self.plr.played)
+
+
+###############################################################################
+class Test_Way(unittest.TestCase):
+    """Test way related functions"""
+
+    def setUp(self):
+        self.game = Game.TestGame(numplayers=1, waycards=["Way of the Otter"], initcards=["Cellar"])
+        self.game.start_game()
+        self.plr = self.game.player_list(0)
+        self.way = self.game.ways["Way of the Otter"]
+        self.card = self.game["Cellar"]
+        self.plr.add_card(self.card, "hand")
+
+    def test_perform_way(self):
+        """Test perform_way()"""
+        self.plr.actions.set(1)
+        self.assertEqual(len(self.plr.played_ways), 0)
+        self.plr.perform_way(self.way, self.card)
+        self.assertEqual(self.plr.actions.get(), 0)
+        self.assertNotIn("Cellar", self.plr.hand)
+        self.assertEqual(len(self.plr.played_ways), 1)
+
+    def test_perform_way_no_action(self):
+        """Test perform_way() with insufficient actions"""
+        self.plr.actions.set(0)
+        self.assertEqual(len(self.plr.played_ways), 0)
+        self.plr.perform_way(self.way, self.card)
+        self.assertEqual(self.plr.actions.get(), 0)
+        self.assertIn("Cellar", self.plr.hand)
+        self.assertEqual(len(self.plr.played_ways), 0)
+
+    def test_relevant_way(self):
+        """Is the way in the relevant cards"""
+        rel = self.plr.relevant_cards()
+        self.assertIn(self.way, rel)
 
 
 ###############################################################################
