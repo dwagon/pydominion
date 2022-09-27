@@ -1,11 +1,14 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Delay"""
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Game, Event
 
 
 ###############################################################################
 class Event_Delay(Event.Event):
+    """Delay"""
+
     def __init__(self):
         Event.Event.__init__(self)
         self.base = "menagerie"
@@ -26,11 +29,12 @@ class Event_Delay(Event.Event):
             prompt="Set aside an action card to play next turn", cardsrc=actions
         )
         player.defer_card(delay[0])
-        player.hand.remove(delay[0])
 
 
 ###############################################################################
 class Test_Delay(unittest.TestCase):
+    """Test Delay"""
+
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
