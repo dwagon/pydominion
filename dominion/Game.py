@@ -3,6 +3,7 @@
 # pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 import argparse
 import glob
+import json
 import imp
 import os
 import random
@@ -92,7 +93,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
         self.bot = args["bot"] if "bot" in args else False
-        self.randobot = args.get("randobot", False)
+        self.randobot = args.get("randobot", 0)
         self.eventcards = args["eventcards"] if "eventcards" in args else []
         self.waycards = args["waycards"] if "waycards" in args else []
         self.eventpath = "dominion/events"
@@ -173,7 +174,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     heirlooms=self._heirlooms,
                     use_shelters=use_shelters,
                 )
-                self.randobot = False
+                self.randobot -= 1
             else:
                 self.players[the_uuid] = plrKlass(
                     game=self,
@@ -655,16 +656,18 @@ class Game:  # pylint: disable=too-many-public-methods
         return victorypiles
 
     ###########################################################################
-    def isGameOver(self):
-        """TODO"""
-        numEmpty = 0
+    def isGameOver(self) -> bool:
+        """is the game over"""
+        empties = []
         for cpil in self.cardpiles:
             if self[cpil].is_empty():
-                numEmpty += 1
-        if numEmpty >= 3:
+                empties.append(cpil)
+        if len(empties) >= 3:
+            self.output(f"Game Over: {', '.join(empties)} piles are empty")
             return True
 
         if self["Province"].is_empty():
+            self.output("Game Over: Province pile is empty")
             return True
         return False
 
@@ -795,7 +798,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.output("Scores:")
         for plr in self.player_list():
             scores[plr.name] = plr.get_score(verbose=True)
-        self.output(scores)
+        self.output(json.dumps(scores, indent=2))
         self.output("")
         for plr in self.player_list():
             self.output(f"Cards of {plr.name}:")
@@ -846,8 +849,7 @@ class Game:  # pylint: disable=too-many-public-methods
             assert self._init_cardset == current_cardset
         except AssertionError:
             self.count_all_cards()
-            print(f"current = {self.count_cards()}\n", file=sys.stderr)
-            sys.stderr.write(f"original = {self._total_cards}\n")
+            print(f"current={self.count_cards()} original={self._total_cards}\n", file=sys.stderr)
             raise
         self.current_player = self.player_to_left(self.current_player)
         self.current_player.start_turn()
@@ -957,7 +959,7 @@ def parse_cli_args(args=None):
     )
     parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
     parser.add_argument(
-        "--randobot", action="store_true", dest="randobot", default=False, help="Rando Bot Player"
+        "--randobot", type=int, dest="randobot", default=0, help="Num Rando Bot Players"
     )
     parser.add_argument(
         "--quiet",
