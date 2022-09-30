@@ -77,7 +77,7 @@ class TextPlayer(Player):
         if o["name"]:
             output.append(o["name"])
         if o["details"]:
-            output.append("(%s)" % o["details"])
+            output.append(f"({o['details']})")
         if o["name"] and not o["details"] and o["desc"]:
             output.append("-")
         if o["notes"]:
@@ -95,6 +95,7 @@ class TextPlayer(Player):
 
     ###########################################################################
     def user_input(self, options, prompt):
+        """Get input from the user"""
         for o in options:
             line = self.selectorLine(o)
             o["line"] = line
@@ -103,7 +104,7 @@ class TextPlayer(Player):
         while True:
             if self.test_input:
                 inp = self.test_input.pop(0)
-                self.output("Using '%s' test input" % inp)
+                self.output(f"Using '{inp}' test input")
             else:
                 try:
                     inp = raw_input()
@@ -119,7 +120,7 @@ class TextPlayer(Player):
                         matching.append(o)
                 if len(matching) == 1:
                     return matching[0]
-            self.output("Invalid Option (%s)" % inp)
+            self.output(f"Invalid Option ({inp})")
 
     ###########################################################################
     def card_selSource(self, **kwargs):

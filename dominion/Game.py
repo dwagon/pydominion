@@ -14,6 +14,7 @@ from dominion.Ally import AllyPile
 from dominion.ArtifactPile import ArtifactPile
 from dominion.BoonPile import BoonPile
 from dominion.BotPlayer import BotPlayer
+from dominion.RandobotPlayer import RandobotPlayer
 from dominion.Card import CardExpansion
 from dominion.CardPile import CardPile
 from dominion.Event import EventPile
@@ -39,6 +40,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
         self.players = {}
         self.bot = False
+        self.randobot = False
         self.cardpiles = {}
         self.states = {}
         self.artifacts = {}
@@ -90,6 +92,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
         self.bot = args["bot"] if "bot" in args else False
+        self.randobot = args.get("randobot", False)
         self.eventcards = args["eventcards"] if "eventcards" in args else []
         self.waycards = args["waycards"] if "waycards" in args else []
         self.eventpath = "dominion/events"
@@ -162,6 +165,15 @@ class Game:  # pylint: disable=too-many-public-methods
                     use_shelters=use_shelters,
                 )
                 self.bot = False
+            elif self.randobot:
+                self.players[the_uuid] = RandobotPlayer(
+                    game=self,
+                    quiet=self.quiet,
+                    name=f"{name}RandoBot",
+                    heirlooms=self._heirlooms,
+                    use_shelters=use_shelters,
+                )
+                self.randobot = False
             else:
                 self.players[the_uuid] = plrKlass(
                     game=self,
@@ -944,6 +956,9 @@ def parse_cli_args(args=None):
         help="Use colonies and platinums",
     )
     parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
+    parser.add_argument(
+        "--randobot", action="store_true", dest="randobot", default=False, help="Rando Bot Player"
+    )
     parser.add_argument(
         "--quiet",
         action="store_true",
