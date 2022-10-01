@@ -7,6 +7,8 @@ import dominion.Game as Game
 
 ###############################################################################
 class Card_Remake(Card.Card):
+    """Remake"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -24,6 +26,8 @@ class Card_Remake(Card.Card):
 
 ###############################################################################
 class Test_Remake(unittest.TestCase):
+    """Test Remake"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Remake", "Moat"])
         self.g.start_game()
