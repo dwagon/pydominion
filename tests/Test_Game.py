@@ -165,46 +165,6 @@ class Test_whowon(unittest.TestCase):
 
 
 ###############################################################################
-class Test_parse_args(unittest.TestCase):
-    def test_defaults(self):
-        args = Game.parse_cli_args([])
-        self.assertEqual(args.numplayers, 2)
-        self.assertEqual(args.cardbase, None)
-        self.assertEqual(args.prosperity, False)
-        self.assertEqual(args.initcards, [])
-
-    def test_prosperity(self):
-        args = Game.parse_cli_args(["--prosperity"])
-        self.assertEqual(args.prosperity, True)
-
-    def test_numplayers(self):
-        args = Game.parse_cli_args(["--numplayers", "4"])
-        self.assertEqual(args.numplayers, 4)
-
-    def test_events(self):
-        args = Game.parse_cli_args(["--events", "Alms"])
-        self.assertEqual(args.eventcards, ["Alms"])
-
-    def test_use_events(self):
-        args = Game.parse_cli_args(["--quiet", "--events", "Alms"])
-        g = Game.TestGame(**vars(args))
-        g.start_game()
-        self.assertIn("Alms", g.events)
-
-    def test_use_card(self):
-        args = Game.parse_cli_args(["--quiet", "--card", "Moat"])
-        g = Game.TestGame(**vars(args))
-        g.start_game()
-        self.assertIn("Moat", g.cardpiles)
-
-    def test_use_landmark(self):
-        args = Game.parse_cli_args(["--quiet", "--landmark", "Aqueduct"])
-        g = Game.TestGame(**vars(args))
-        g.start_game()
-        self.assertIn("Aqueduct", g.landmarks)
-
-
-###############################################################################
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 
