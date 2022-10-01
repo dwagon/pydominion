@@ -1,6 +1,7 @@
 """ All the Player based stuff """
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
+import json
 import operator
 import sys
 from collections import defaultdict
@@ -861,7 +862,7 @@ class Player:
     ###########################################################################
     def payback(self):
         payback = min(self.coins.get(), self.debt.get())
-        self.output("Paying back {payback}%d debt")
+        self.output(f"Paying back {payback} debt")
         self.coins -= payback
         self.debt -= payback
 
@@ -986,10 +987,11 @@ class Player:
 
     ###########################################################################
     def get_score(self, verbose=False):
+        """Return the scores - print them if {verbose} is True"""
         scr = self.get_score_details()
         vp = sum(scr.values())
         if verbose:
-            self.game.output(f"{self.name}: {scr}")
+            self.game.output(f"{self.name} (Turn {self.turn_number}): {json.dumps(scr, indent=2)}")
         return vp
 
     ###########################################################################
@@ -1085,8 +1087,10 @@ class Player:
         from supply"""
         if isinstance(card, str):
             card = self.game[card].remove()
+            if card is None:
+                self.output(f"No more {card} in supply")
+                return
         self.move_card(card, "exile")
-        # self.exilepile.add(card)
 
     ###########################################################################
     def end_turn(self):
@@ -1132,8 +1136,10 @@ class Player:
 
     ###########################################################################
     def _spend_all_cards(self):
+        """Spend all treasure cards in hand"""
         for card in self.hand:
-            if card.isTreasure():
+            # Contents of hand can change as they are played
+            if card.isTreasure() and card in self.hand:
                 self.play_card(card)
 
     ###########################################################################
@@ -1397,6 +1403,9 @@ class Player:
         if card.overpay and self.coins.get():
             self.overpay(card)
         newcard = self.gain_card(card)
+        if not newcard:
+            self.output("Couldn't buy card")
+            return
         if card.embargo_level:
             for _ in range(card.embargo_level):
                 self.gain_card("Curse")
@@ -1740,6 +1749,9 @@ class Player:
         if not kwargs.get("ignore_potcost", False):
             buyable = [_ for _ in buyable if not _.potcost]
         buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
+        if not buyable:
+            self.output("Nothing suitable to gain")
+            return
         kwargs["prompt"] = kwargs.get("prompt", prompt)
         cards = self.card_sel(
             cardsrc=buyable,

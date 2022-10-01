@@ -92,7 +92,10 @@ class PlayArea:
     ###########################################################################
     def top_card(self):
         """Return the next card - but don't move it"""
-        return self._cards[-1]
+        try:
+            return self._cards[-1]
+        except IndexError:
+            return None
 
     ###########################################################################
     def empty(self):

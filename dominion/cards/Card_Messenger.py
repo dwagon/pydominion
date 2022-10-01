@@ -6,6 +6,8 @@ from dominion import Card, Game, Player
 
 ###############################################################################
 class Card_Messenger(Card.Card):
+    """Messenger"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -16,6 +18,7 @@ class Card_Messenger(Card.Card):
         self.cost = 4
 
     def desc(self, player):
+        """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """+1 Buy, +2 Coin, You may put your deck into your discard pile;
                 When this is your first buy in a turn, gain a card costing up to 4,
@@ -23,27 +26,29 @@ class Card_Messenger(Card.Card):
         return "+1 Buy, +2 Coin, You may put your deck into your discard pile"
 
     def special(self, game, player):
-        o = player.plr_choose_options(
+        opt = player.plr_choose_options(
             "Put entire deck into discard pile?",
             ("No - keep it as it is", False),
             ("Yes - dump it", True),
         )
-        if o:
-            for c in player.deck:
-                player.add_card(c, "discard")
-                player.deck.remove(c)
+        if opt:
+            for crd in player.deck:
+                player.add_card(crd, "discard")
+                player.deck.remove(crd)
 
     def hook_buy_this_card(self, game, player):
         if len(player.stats["bought"]) == 1:
-            c = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
+            crd = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
             for plr in game.player_list():
                 if plr != player:
-                    plr.gain_card(newcard=c)
-                    plr.output("Gained a %s from %s's Messenger" % (c.name, player.name))
+                    plr.gain_card(newcard=crd)
+                    plr.output(f"Gained a {crd.name} from {player.name}'s Messenger")
 
 
 ###############################################################################
 class Test_Messenger(unittest.TestCase):
+    """Test Messenger"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Messenger"])
         self.g.start_game()

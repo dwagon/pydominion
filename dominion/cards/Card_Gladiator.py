@@ -21,6 +21,8 @@ class Card_Gladiator(Card.Card):
         self.split = "Fortune"
 
     def special(self, game, player):
+        if not player.hand:
+            return
         mycard = player.card_sel(
             num=1,
             force=True,

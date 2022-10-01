@@ -7,6 +7,8 @@ import dominion.Card as Card
 
 ###############################################################################
 class Card_Swindler(Card.Card):
+    """Swindler"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -21,21 +23,24 @@ class Card_Swindler(Card.Card):
         for victim in player.attack_victims():
             card = victim.pickup_card()
             victim.trash_card(card)
-            victim.output("%s's Swindler trashed your %s" % (player.name, card.name))
-            c = player.plr_gain_card(
+            victim.output(f"{player.name}'s Swindler trashed your {card.name}")
+            crd = player.plr_gain_card(
                 card.cost,
                 modifier="equal",
                 recipient=victim,
                 force=True,
-                prompt="Pick which card %s will get" % victim.name,
+                prompt=f"Pick which card {victim.name} will get",
             )
-            victim.output(
-                "%s picked a %s to replace your trashed %s" % (player.name, c.name, card.name)
-            )
+            if crd:
+                victim.output(
+                    f"{player.name} picked a {crd.name} to replace your trashed {card.name}"
+                )
 
 
 ###############################################################################
 class Test_Swindler(unittest.TestCase):
+    """Test Swindler"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Swindler", "Moat"])
         self.g.start_game()

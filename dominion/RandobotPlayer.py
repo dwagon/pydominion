@@ -1,5 +1,4 @@
 """ Player is a non-interactive bot of no intelligence - randomly select option """
-import inspect
 import sys
 import random
 import colorama
@@ -17,7 +16,7 @@ class RandobotPlayer(Player):
 
     def __init__(self, game, name="", quiet=False, **kwargs):
         colorama.init()
-        self.colour = f"{colorama.Back.BLACK}{colorama.Fore.RED}"
+        self.colour = f"{colorama.Back.BLACK}{colorama.Fore.MAGENTA}"
         self.quiet = quiet
         Player.__init__(self, game, name, **kwargs)
 
@@ -49,14 +48,22 @@ class RandobotPlayer(Player):
     ###########################################################################
     def user_input(self, options, prompt):
         """Handle user input"""
-        print(f"{options=}")
         for opt in options:
+            if "action" not in opt:
+                break
             if opt["action"] == "spendall":
+                print(f"{opt=}")
+                return opt
+            if opt["action"] == "payback":
                 print(f"{opt=}")
                 return opt
 
         # Do anything but quit
-        avail = [_ for _ in options if _["selector"] != "-" and _["action"] != "quit"]
+        try:
+            avail = [_ for _ in options if _["selector"] != "-" and _.get("action") != "quit"]
+        except KeyError:
+            print(f"{options=}")
+            raise
         if avail:
             opt = random.choice(avail)
             print(f"{opt=}")
@@ -75,6 +82,7 @@ class RandobotPlayer(Player):
         cards = self.card_selSource(**kwargs)
         print(f"card_sel {cards=}")
         card = random.choice(cards)
+        print(f"card_sel {card=}")
         return [card]
 
     ###########################################################################

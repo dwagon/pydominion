@@ -23,6 +23,9 @@ class Card_Sea_Chart(Card.Card):
     def special(self, game, player):
         """Sea Chart Special"""
         nextcard = player.deck.top_card()
+        if not nextcard:
+            player.output("No cards on deck")
+            return
         player.reveal_card(nextcard)
         if nextcard.name in player.played:
             player.output(f"Next card is {nextcard.name}, same as played so moving to hand")
