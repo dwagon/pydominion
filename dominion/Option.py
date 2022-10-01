@@ -32,7 +32,13 @@ class Option:
         return self.data[key]
 
     def __repr__(self):
-        return "<Option: %s>" % self.data
+        return f"<Option: {self.data}>"
+
+    def get(self, key, default=None):
+        """dictionary.get()"""
+        if key in self.data:
+            return self[key]
+        return default
 
 
 # EOF
