@@ -71,6 +71,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
         self.cardmapping = self._get_available_card_classes()
         self._total_cards = 0
+        self._original = {}
         self.loaded_travellers = False  # For testing purposes
         self._cards = {}
 
@@ -185,12 +186,18 @@ class Game:  # pylint: disable=too-many-public-methods
                 )
             self.players[the_uuid].uuid = the_uuid
         self.card_setup()
-        self._total_cards = self.count_cards()
-        self._init_cardset = set(self._cards.keys())
         self.current_player = self.player_list(0)
         if self.ally:
             for plr in self.player_list():
                 plr.favors.add(1)
+        self._save_original()
+
+    ###########################################################################
+    def _save_original(self):
+        """Save original card state for debugging purposes"""
+        self._init_cardset = set(self._cards.keys())
+        self._total_cards = self.count_cards()
+        self._original = self._count_all_cards()
 
     ###########################################################################
     def player_list(self, num=None):
@@ -814,30 +821,48 @@ class Game:  # pylint: disable=too-many-public-methods
             return False
 
     ###########################################################################
-    def count_all_cards(self):  # pragma: no cover
-        """TODO"""
+    def _count_all_cards(self) -> dict:  # pragma: no cover
+        """Return where all the cards are"""
+        tmp = {}
         for pile in self.cardpiles.values():
+            tmp[pile.name] = {}
             total = len(pile)
-            sys.stderr.write(f"{pile.name:9}  ")
-            if total:
-                sys.stderr.write(f"pile={total} ")
+            tmp[pile.name]["pile"] = total
             for plr in self.player_list():
                 for stackname, stack in plr.stacklist:
                     count = 0
                     for card in stack:
                         if card.name == pile.name:
                             count += 1
-                    total += count
                     if count:
-                        sys.stderr.write(f"{plr.name}:{stackname}={count} ")
+                        tmp[pile.name][f"{plr.name}:{stackname}"] = count
+                        total += count
             count = 0
             for card in self.trashpile:
                 if card.name == pile.name:
                     count += 1
             if count:
-                sys.stderr.write(f"Trash={count} ")
-            total += count
-            sys.stderr.write(f" = {total}\n")
+                tmp[pile.name]["trash"] = count
+                total += count
+            tmp[pile.name]["total"] = total
+        return tmp
+
+    ###########################################################################
+    def _card_loc_debug(self):
+        """Dump info to help debug card location errors"""
+        now = self._count_all_cards()
+        print(f"{'- -' * 20}", file=sys.stderr)
+        print(f"current={self.count_cards()} original={self._total_cards}\n", file=sys.stderr)
+        for pile in self.cardpiles.values():
+            card = pile.name
+            if self._original[card]["total"] == now[card]["total"]:
+                continue
+            print(f"{card} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)
+            print(f" {card} Original:")
+            print(json.dumps(self._original[card], indent=2), file=sys.stderr)
+            print(f" {card} Now:")
+            print(json.dumps(now[card], indent=2), file=sys.stderr)
+        print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################
     def turn(self):
@@ -847,8 +872,7 @@ class Game:  # pylint: disable=too-many-public-methods
             current_cardset = set(self._cards.keys())
             assert self._init_cardset == current_cardset
         except AssertionError:
-            self.count_all_cards()
-            print(f"current={self.count_cards()} original={self._total_cards}\n", file=sys.stderr)
+            self._card_loc_debug()
             raise
         self.current_player = self.player_to_left(self.current_player)
         self.current_player.start_turn()
