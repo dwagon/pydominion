@@ -5,7 +5,7 @@ import json
 import operator
 import sys
 from collections import defaultdict
-from typing import Union
+from typing import Union, Optional
 from enum import Enum, auto
 
 from dominion.Card import Card, CardType
@@ -276,7 +276,7 @@ class Player:
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
-    def trash_card(self, card, **kwargs):
+    def trash_card(self, card: Card, **kwargs):
         """Take a card out of the game"""
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
@@ -285,7 +285,8 @@ class Player:
         if rc:
             trashopts.update(rc)
         if trashopts.get("trash", True):
-            self.remove_card(card)
+            if card.location:
+                self.remove_card(card)
             self.game.trashpile.add(card)
             card.player = None
             card.location = "trash"
@@ -296,14 +297,25 @@ class Player:
                     trashopts.update(rc)
 
     ###########################################################################
-    def next_card(self):
-        """Return the next card from the deck, but don't pick it up"""
+    def next_card(self) -> Optional[Card]:
+        """Pick up and return the next card from the deck"""
         if not self.deck:
             self.refill_deck()
         if not self.deck:
             self.output("No more cards in deck")
             return None
         crd = self.deck.next_card()
+        return crd
+
+    ###########################################################################
+    def top_card(self) -> Optional[Card]:
+        """Return the top card from the deck but don't pick it up"""
+        if not self.deck:
+            self.refill_deck()
+        if not self.deck:
+            self.output("No more cards in deck")
+            return None
+        crd = self.deck.top_card()
         return crd
 
     ###########################################################################
