@@ -285,13 +285,10 @@ class Player:
         if rc:
             trashopts.update(rc)
         if trashopts.get("trash", True):
+            self.remove_card(card)
             self.game.trashpile.add(card)
             card.player = None
             card.location = "trash"
-            if card in self.played:
-                self.played.remove(card)
-            elif card in self.hand:
-                self.hand.remove(card)
         for crd in self.relevant_cards():
             if crd.name not in kwargs.get("exclude_hook", []):
                 rc = crd.hook_trash_card(game=self.game, player=self, card=card)
@@ -790,8 +787,8 @@ class Player:
         """For bug detection: Is everything where it should be?"""
         for stack_name, stack in self.stacklist:
             for card in stack:
-                assert card.location == stack_name.lower(), f"{card} {stack_name=}"
-                assert card.player == self, f"{card} {self}"
+                assert card.location == stack_name.lower(), f"{card} location not {stack_name=}"
+                assert card.player == self, f"{card} player not {self}"
 
     ###########################################################################
     def night_phase(self):
@@ -837,7 +834,7 @@ class Player:
 
     ###########################################################################
     def hook_end_buy_phase(self):
-        for card in self.projects:
+        for card in self.played + self.projects:
             card.hook_end_buy_phase(game=self.game, player=self)
 
     ###########################################################################
@@ -1314,7 +1311,6 @@ class Player:
             self.output(f"No more {cardpile}")
             return None
         self.output(f"Gained a {newcard.name}")
-        newcard.player = self
         if callhook:
             if rc := self._hook_gain_card(newcard):
                 options.update(rc)
