@@ -6,6 +6,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_Salvager(Card.Card):
+    """Salvager"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -23,6 +25,8 @@ class Card_Salvager(Card.Card):
 
 ###############################################################################
 class Test_Salvager(unittest.TestCase):
+    """Test Salvager"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Salvager"])
         self.g.start_game()
