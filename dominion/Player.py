@@ -1150,7 +1150,7 @@ class Player:
         for card in self.hand:
             # Contents of hand can change as they are played
             if card.isTreasure() and card in self.hand:
-                self.play_card(card)
+                self.play_card(card, costAction=False)
 
     ###########################################################################
     def _play_card_tokens(self, card):
