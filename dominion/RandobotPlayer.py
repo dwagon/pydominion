@@ -3,9 +3,24 @@ import sys
 import random
 import colorama
 from dominion.Player import Player
+from dominion.Option import Option
 
-if sys.version[0] == "3":  # pragma: no cover
-    raw_input = input
+
+colours = [
+    colorama.Fore.RED,
+    colorama.Fore.GREEN,
+    colorama.Fore.YELLOW,
+    colorama.Fore.BLUE,
+    colorama.Fore.MAGENTA,
+    colorama.Fore.CYAN,
+    colorama.Fore.WHITE,
+    colorama.Fore.LIGHTBLUE_EX,
+    colorama.Fore.LIGHTCYAN_EX,
+    colorama.Fore.LIGHTGREEN_EX,
+    colorama.Fore.LIGHTMAGENTA_EX,
+    colorama.Fore.LIGHTRED_EX,
+    colorama.Fore.LIGHTYELLOW_EX,
+]
 
 
 ###############################################################################
@@ -16,7 +31,7 @@ class RandobotPlayer(Player):
 
     def __init__(self, game, name="", quiet=False, **kwargs):
         colorama.init()
-        self.colour = f"{colorama.Back.BLACK}{colorama.Fore.MAGENTA}"
+        self.colour = f"{colorama.Back.BLACK}" + random.choice(colours)
         self.quiet = quiet
         Player.__init__(self, game, name, **kwargs)
 
@@ -46,8 +61,36 @@ class RandobotPlayer(Player):
         return selectfrom
 
     ###########################################################################
+    def selectorLine(self, o):
+        """User friendly representation of option"""
+        output = []
+        if isinstance(o, dict):
+            verb = o["print"]
+            del o["print"]
+            newopt = Option(verb=verb, **o)
+            o = newopt
+        elif isinstance(o, Option):
+            pass
+        output.append(o["selector"])
+        if o["verb"]:
+            output.append(o["verb"])
+        if o["name"]:
+            output.append(o["name"])
+        if o["details"]:
+            output.append(f"({o['details']})")
+        if o["name"] and not o["details"] and o["desc"]:
+            output.append("-")
+        if o["notes"]:
+            output.append(o["notes"])
+
+        output.append(o["desc"])
+        return " ".join(output)
+
+    ###########################################################################
     def user_input(self, options, prompt):
         """Handle user input"""
+        for opt in options:
+            print(self.selectorLine(opt))
         for opt in options:
             if "action" not in opt:
                 break
@@ -74,6 +117,10 @@ class RandobotPlayer(Player):
             if opt["action"] == "quit":
                 print(f"{opt=}")
                 return opt
+
+        # How did we get here?
+        print(f"user_input - failuse {options=}")
+        return None
 
     ###########################################################################
     def card_sel(self, num=1, **kwargs):
@@ -118,9 +165,8 @@ class RandobotPlayer(Player):
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
-        sys.stderr.write(
-            f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}"
-        )
+        hand = ", ".join([_.name for _ in self.hand])
+        sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {hand}")
         sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n")
 
 
