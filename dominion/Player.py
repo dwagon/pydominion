@@ -1196,7 +1196,7 @@ class Player:
         self.move_card(card, "deferpile")
 
     ###########################################################################
-    def _move_after_play(self, card: Card) -> None:
+    def move_after_play(self, card: Card) -> None:
         """Move the card to its next location after it has been played"""
         if card.isDuration():
             self.move_card(card, "duration")
@@ -1239,7 +1239,7 @@ class Player:
             return
 
         if options["discard"]:
-            self._move_after_play(card)
+            self.move_after_play(card)
 
         if not options["skip_card"]:
             self.card_benefits(card)

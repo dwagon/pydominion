@@ -41,10 +41,10 @@ class Card_Crown(Card.Card):
         o = player.user_input(options, "Play which card twice?")
         if not o["card"]:
             return
+        player.move_after_play(o["card"])
         for i in range(1, 3):
             player.output(f"Number {i} play of {o['card'].name}")
             player.play_card(o["card"], discard=False, costAction=False)
-        player.discard_card(o["card"])
 
 
 ###############################################################################
