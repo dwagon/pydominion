@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Gladiator(Card.Card):
+    """Gladiator"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -32,17 +33,20 @@ class Card_Gladiator(Card.Card):
         lefty = game.player_to_left(player)
         leftycard = lefty.hand[mycard[0].name]
         if not leftycard:
-            player.output("%s doesn't have a %s" % (lefty.name, mycard[0].name))
+            player.output(f"{lefty.name} doesn't have a {mycard[0].name}")
             player.coins.add(1)
             c = game["Gladiator"].remove()
-            player.trash_card(c)
+            if c:
+                player.trash_card(c)
         else:
-            player.output("%s has a %s" % (lefty.name, mycard[0].name))
+            player.output(f"{lefty.name} has a {mycard[0].name}")
             lefty.reveal_card(leftycard)
 
 
 ###############################################################################
 class Test_Gladiator(unittest.TestCase):
+    """Test Gladiator"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Gladiator", "Moat"])
         self.g.start_game()
