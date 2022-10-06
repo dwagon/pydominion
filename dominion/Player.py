@@ -1706,9 +1706,13 @@ class Player:
                 kwargs["prompt"] = "Trash any cards"
             else:
                 kwargs["prompt"] = f"Trash {num} cards"
-        if len(cardsrc) == 0:
-            return None
-        if len(cardsrc) == 0:
+        if isinstance(cardsrc, str):
+            for pname, pile in self.stacklist:
+                if pname.lower() == cardsrc.lower():
+                    if len(pile) == 0:
+                        self.output(f"No cards to trash from {cardsrc}")
+                        return None
+        if isinstance(cardsrc, PlayArea) and len(cardsrc) == 0:
             self.output("No cards to trash")
             return None
         trash = self.card_sel(
