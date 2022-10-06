@@ -6,6 +6,8 @@ from dominion import Card, Game, Player
 
 ###############################################################################
 class Card_Temple(Card.Card):
+    """Temple"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.GATHERING]
@@ -14,6 +16,7 @@ class Card_Temple(Card.Card):
         self.cost = 4
 
     def desc(self, player):
+        """Variable Description"""
         if player.phase == Player.Phase.BUY:
             return f"""+1 VP. Trash from 1 to 3 differently named cards from your
                 hand.  Add 1 VP to the Temple Supply pile. When you gain this,
@@ -38,6 +41,8 @@ class Card_Temple(Card.Card):
 
 ###############################################################################
 class Test_Temple(unittest.TestCase):
+    """Test Temple"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Temple"])
         self.g.start_game()
