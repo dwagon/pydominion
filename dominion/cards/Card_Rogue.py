@@ -37,6 +37,7 @@ class Card_Rogue(Card.Card):
             victim.reveal_card(c)
             if 3 <= c.cost <= 6:
                 cards.append(c)
+                c.location = None
             else:
                 victim.output(f"{player.name}'s Rogue discarded {c.name} as unsuitable")
                 victim.add_card(c, "discard")
@@ -46,7 +47,7 @@ class Card_Rogue(Card.Card):
         options = []
         index = 1
         for c in cards:
-            sel = "%d" % index
+            sel = str(index)
             index += 1
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
         o = player.user_input(options, "Trash which card from %s?" % victim.name)

@@ -17,7 +17,7 @@ class Hex_Locusts(Hex.Hex):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        nxt = player.next_card()
+        nxt = player.top_card()
         if nxt.name in ("Copper", "Estate"):
             player.output("Gaining a curse because your next card is {}".format(nxt.name))
             player.gain_card("Curse")
@@ -31,7 +31,7 @@ class Hex_Locusts(Hex.Hex):
                 Card.CardType.ACTION: nxt.isAction(),
             }
             player.plr_gain_card(cost=nxt.cost - 1, types=types)
-        player.output("Trashing your {}".format(nxt.name))
+        player.output(f"Trashing your {nxt.name}")
         player.trash_card(nxt)
 
 

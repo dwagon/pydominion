@@ -6,6 +6,8 @@ from dominion import Card, Game, Player
 
 ###############################################################################
 class Card_Doctor(Card.Card):
+    """Doctor"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -15,20 +17,22 @@ class Card_Doctor(Card.Card):
         self.cost = 3
 
     def desc(self, player):
+        """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """Name a card. Reveal the top 3 cards of your deck.
                 Trash the matches. Put the rest back on top in any order.
                 When you buy this, you may overpay for it. For each 1 you overpaid,
                 look at the top card of your deck; trash it, discard it,
                 or put it back."""
-        return "Name a card. Reveal the top 3 cards of your deck. Trash the matches. Put the rest back on top in any order."
+        return """Name a card. Reveal the top 3 cards of your deck.
+            Trash the matches. Put the rest back on top in any order."""
 
     def special(self, game, player):
         options = []
         index = 1
         for c in sorted(game.cardTypes()):
-            sel = "%s" % index
-            options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
+            sel = f"{index}"
+            options.append({"selector": sel, "print": f"Guess {c.name}", "card": c})
             index += 1
         o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
@@ -39,52 +43,58 @@ class Card_Doctor(Card.Card):
         for card in cards:
             player.reveal_card(card)
             if card.name == o["card"].name:
-                player.output("Trashing %s" % card.name)
+                player.output(f"Trashing {card.name}")
+                card.location = None
                 player.trash_card(card)
             else:
-                player.output("Putting %s back" % card.name)
+                player.output(f"Putting {card.name} back")
                 player.add_card(card, "topdeck")
 
     def hook_overpay(self, game, player, amount):
+        """For each 1 you overpaid, look at the top card of your deck; trash it,
+        discard it, or put it back."""
         for i in range(amount):
-            player.output("Doctoring %d/%d" % (i + 1, amount))
+            player.output(f"Doctoring {i+1}/{amount}")
             card = player.next_card()
             options = []
             options.append(
                 {
                     "selector": "0",
-                    "print": "Put %s back on top" % card.name,
+                    "print": "Put {card.name} back on top",
                     "action": "put back",
                 }
             )
             options.append(
                 {
                     "selector": "1",
-                    "print": "Trash %s" % card.name,
+                    "print": "Trash {card.name}",
                     "action": "trash",
                 }
             )
             options.append(
                 {
                     "selector": "2",
-                    "print": "Discard %s" % card.name,
+                    "print": f"Discard {card.name}",
                     "action": "discard",
                 }
             )
-            o = player.user_input(options, "What to do with the top card %s?" % card.name)
+            o = player.user_input(options, f"What to do with the top card {card.name}?")
             if o["action"] == "trash":
+                card.location = None
                 player.trash_card(card)
-                player.output("Trashing %s" % card.name)
+                player.output(f"Trashing {card.name}")
             elif o["action"] == "discard":
                 player.add_card(card, "discard")
-                player.output("Discarding %s" % card.name)
+                player.output(f"Discarding {card.name}")
             elif o["action"] == "put back":
                 player.add_card(card, "topdeck")
-                player.output("Putting %s back" % card.name)
+                player.output(f"Putting {card.name} back")
 
 
 ###############################################################################
 class Test_Doctor(unittest.TestCase):
+    """Test Doctor"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Doctor"])
         self.g.start_game()

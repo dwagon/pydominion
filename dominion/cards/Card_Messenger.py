@@ -39,10 +39,13 @@ class Card_Messenger(Card.Card):
     def hook_buy_this_card(self, game, player):
         if len(player.stats["bought"]) == 1:
             crd = player.plr_gain_card(4, prompt="Pick a card for everyone to gain")
+            if not crd:
+                return
             for plr in game.player_list():
                 if plr != player:
-                    plr.gain_card(newcard=crd)
-                    plr.output(f"Gained a {crd.name} from {player.name}'s Messenger")
+                    card = plr.gain_card(cardpile=crd.name)
+                    if card:
+                        plr.output(f"Gained a {card.name} from {player.name}'s Messenger")
 
 
 ###############################################################################
@@ -80,6 +83,8 @@ class Test_Messenger(unittest.TestCase):
         self.plr.buy_card(self.g["Messenger"])
         for plr in self.g.player_list():
             self.assertIn("Silver", plr.discardpile)
+            ag = plr.discardpile["Silver"]
+            self.assertEqual(ag.player.name, plr.name)
 
 
 ###############################################################################

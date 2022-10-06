@@ -30,25 +30,25 @@ class Card_Lookout(Card.Card):
             return
         player.output("Pulled %s from deck" % ", ".join([c.name for c in cards]))
         player.output("Trash a card, Discard a card, put a card on your deck")
-        tc = self.trash(player, cards)
+        tc = self._trash(player, cards)
         cards.remove(tc)
-        cd = self.discard(player, cards)
+        cd = self._discard(player, cards)
         cards.remove(cd)
         player.output("Putting %s on top of deck" % cards[0].name)
         player.add_card(cards[0], "topdeck")
 
-    def trash(self, player, cards):
+    def _trash(self, player, cards):
         index = 1
         options = []
         for c in cards:
-            sel = "%d" % index
+            sel = str(index)
             index += 1
             options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
         o = player.user_input(options, "Select a card to trash")
         player.trash_card(o["card"])
         return o["card"]
 
-    def discard(self, player, cards):
+    def _discard(self, player, cards):
         index = 1
         options = []
         for c in cards:

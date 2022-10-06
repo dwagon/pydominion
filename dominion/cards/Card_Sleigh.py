@@ -2,12 +2,13 @@
 """ http://wiki.dominionstrategy.com/index.php/Sleigh """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Sleigh(Card.Card):
+    """Sleigh"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -41,6 +42,8 @@ class Card_Sleigh(Card.Card):
 
 ###############################################################################
 class Test_Sleigh(unittest.TestCase):
+    """Test Sleigh"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sleigh"])
         self.g.start_game()

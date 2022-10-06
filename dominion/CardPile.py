@@ -77,10 +77,12 @@ class CardPile:
 
     ###########################################################################
     def is_empty(self):
+        """Is the card pile empty"""
         return not self._cards
 
     ###########################################################################
     def remove(self):
+        """Remove a card from the cardpile"""
         try:
             return self._cards.pop()
         except IndexError:

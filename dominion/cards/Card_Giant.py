@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Giant"""
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Giant(Card.Card):
+    """Giant"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -23,16 +25,14 @@ class Card_Giant(Card.Card):
         if player.flip_journey_token():
             player.coins.add(5)
             for victim in player.attack_victims():
-                c = victim.next_card()
+                c = victim.top_card()
                 victim.reveal_card(c)
                 if c.cost >= 3 and c.cost <= 6:
                     victim.trash_card(c)
-                    victim.output("%s's Giant trashed your %s" % (player.name, c.name))
-                    player.output("Trashed %s's %s" % (victim.name, c.name))
+                    victim.output(f"{player.name}'s Giant trashed your {c.name}")
+                    player.output(f"Trashed {victim.name}'s {c.name}")
                 else:
-                    victim.output(
-                        "%s's Giant discarded your %s and cursed you" % (player.name, c.name)
-                    )
+                    victim.output(f"{player.name}'s Giant discarded your {c.name} and cursed you")
                     victim.add_card(c, "discard")
                     victim.gain_card("Curse")
         else:
@@ -41,6 +41,8 @@ class Card_Giant(Card.Card):
 
 ###############################################################################
 class Test_Giant(unittest.TestCase):
+    """Test Giant"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Giant"])
         self.g.start_game()

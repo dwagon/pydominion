@@ -1,59 +1,47 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Hermit(Card.Card):
+    """Hermit"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """Look through your discard pile. You may trash a card from
-            your discard pile or hand that is not a Treasure.  Gain a card
-            costing up to 3.  When you discard this from play, if you did not
-            buy any cards this turn, trash this and gain a Madman from the Madman pile."""
+        self.desc = """Look through your discard pile. You may trash a non-Treasure
+            from it or from your hand. Gain a card costing up to $3.
+            At the end of your Buy phase this turn, if you didn't gain any cards in it
+            exchange this for a Madman."""
         self.name = "Hermit"
         self.required_cards = [("Card", "Madman")]
         self.cost = 3
 
     def special(self, game, player):
-        # Look through your discard pile. You may trash a card from your
-        # discard pile or hand that is not a Treasure.
-        to_trash = []
-        for card in player.discardpile + player.hand:
-            if not card.isTreasure():
-                to_trash.append(card)
-        choice = player.card_sel(
-            prompt="Trash one of these?", cardsrc=to_trash, verbs=("Trash", "Untrash")
-        )
-        if choice:
-            if player.discardpile[choice[0].name]:
-                player.discardpile.remove(choice[0])
-            else:
-                player.hand.remove(choice[0])
-            player.trash_card(choice[0])
+        """Look through your discard pile. You may trash a non-Treasure
+        from it or from your hand. Gain a card costing up to $3."""
+        to_trash = [_ for _ in player.discardpile + player.hand if not _.isTreasure()]
+        player.plr_trash_card(cardsrc=to_trash, prompt="Trash one of these?")
         # Gain a card costing up to 3.
         player.plr_gain_card(3)
 
-    def hook_discard_this_card(self, game, player, source):
-        # When you discard this from play, if you did not buy any cards this turn,
-        # trash this and gain a Madman from the Madman pile
-        if not player.stats["bought"]:
-            trash = player.plr_choose_options(
-                "Trash this to gain a madman",
-                ("Keep Hermit", False),
-                ("Gain Madman", True),
-            )
-            if trash:
-                player.trash_card(self)
-                player.gain_card("Madman")
+    def hook_end_buy_phase(self, game, player):
+        """At the end of your Buy phase this turn, if you didn't gain any cards in it
+        exchange this for a Madman."""
+        if player.stats["bought"]:
+            return
+        card = player.played.remove(self)
+        game["Hermit"].add(card)
+        player.gain_card("Madman")
 
 
 ###############################################################################
 class Test_Hermit(unittest.TestCase):
+    """Test Hermit"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Hermit"])
         self.g.start_game()
@@ -82,8 +70,9 @@ class Test_Hermit(unittest.TestCase):
 
     def test_discard(self):
         """Discard a Hermit and gain a Madman"""
-        self.plr.test_input = ["madman"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.test_input = ["End Phase"]
+        self.plr.add_card(self.card, "played")
+        self.plr.buy_phase()
         self.plr.discard_hand()
         self.assertIn("Madman", self.plr.discardpile)
         self.assertNotIn("Hermit", self.plr.hand)
