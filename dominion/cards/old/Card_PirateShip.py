@@ -6,6 +6,8 @@ from dominion import Card, Game
 
 ###############################################################################
 class Card_PirateShip(Card.Card):
+    """Pirate Ship"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -55,7 +57,7 @@ class Card_PirateShip(Card.Card):
                 victim.add_card(card, "discard")
         if cards:
             to_trash = player.plr_trash_card(
-                prompt="Trash a card from %s" % victim.name, cardsrc=cards
+                prompt=f"Trash a card from {victim.name}", cardsrc=cards
             )
             trashed = True
             for card in cards:
@@ -76,6 +78,8 @@ class Card_PirateShip(Card.Card):
 
 ###############################################################################
 class Test_PirateShip(unittest.TestCase):
+    """Test Pirate Ship"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Pirate Ship"])
         self.g.start_game()

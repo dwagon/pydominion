@@ -17,14 +17,14 @@ class Hex_War(Hex.Hex):
     def special(self, game, player):
         count = player.discardpile.size() + player.deck.size()
         while count:
-            c = player.next_card()
+            c = player.top_card()
             if not c:
                 break
             if c.cost in (3, 4):
-                player.output("Trashing {}".format(c.name))
+                player.output(f"Trashing {c.name}")
                 player.trash_card(c)
                 break
-            player.output("Discarding {}".format(c.name))
+            player.output(f"Discarding {c.name}")
             player.discard_card(c)
             count -= 1
         else:

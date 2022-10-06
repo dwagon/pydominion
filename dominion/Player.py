@@ -305,6 +305,7 @@ class Player:
             self.output("No more cards in deck")
             return None
         crd = self.deck.next_card()
+        crd.location = None  # We don't know where it is going yet
         return crd
 
     ###########################################################################

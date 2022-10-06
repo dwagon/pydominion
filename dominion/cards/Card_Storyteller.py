@@ -1,27 +1,29 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Storyteller """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Storyteller(Card.Card):
+    """Storyteller"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "+1 Action, +1 Coin; Play up to 3 Treasures from your hand. Pay all of your Coins; +1 Card per Coin paid"
+        self.desc = """+1 Action, +1 Coin; Play up to 3 Treasures from your hand.
+            Pay all of your Coins; +1 Card per Coin paid"""
         self.name = "Storyteller"
         self.actions = 1
         self.coin = 1
         self.cost = 5
 
     def special(self, game, player):
-        treasures = []
-        for card in player.hand:
-            if card.isTreasure():
-                treasures.append(card)
+        treasures = [_ for _ in player.hand if _.isTreasure()]
+        if not treasures:
+            return
         toplay = player.card_sel(
             num=3,
             cardsrc=treasures,
@@ -30,13 +32,15 @@ class Card_Storyteller(Card.Card):
         )
         for card in toplay:
             player.play_card(card)
-        player.output("Converting %d coin to cards" % player.coins.get())
+        player.output(f"Converting {player.coins.get()} coin to cards")
         player.pickup_cards(player.coins.get())
         player.coins.set(0)
 
 
 ###############################################################################
 class Test_Storyteller(unittest.TestCase):
+    """Test Storyteller"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Storyteller"])
         self.g.start_game()

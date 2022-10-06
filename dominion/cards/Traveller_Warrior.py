@@ -31,13 +31,13 @@ class Card_Warrior(Card.Card):
                 count += 1
         for victim in player.attack_victims():
             for _ in range(count):
-                c = victim.next_card()
+                c = victim.top_card()
                 if c.cost in (3, 4) and not c.potcost:
-                    victim.output("Trashing %s due to %s's Warrior" % (c.name, player.name))
-                    player.output("Trashing %s from %s" % (c.name, victim.name))
+                    victim.output(f"Trashing {c.name} due to {player.name}'s Warrior")
+                    player.output(f"Trashing {c.name} from {victim.name}")
                     victim.trash_card(c)
                 else:
-                    victim.output("Discarding %s due to %s's Warrior" % (c.name, player.name))
+                    victim.output(f"Discarding {c.name} due to {player.name}'s Warrior")
                     victim.add_card(c, "discard")
 
     def hook_discard_this_card(self, game, player, source):
