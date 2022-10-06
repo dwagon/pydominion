@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Treasury(Card.Card):
+    """Treasury"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -32,15 +33,13 @@ class Card_Treasury(Card.Card):
                 ("Put on top of your deck", True),
             )
             if topdeck:
-                player.add_card(self, "topdeck")
-                if self in player.played:
-                    player.played.remove(self)
-                elif self in player.discardpile:
-                    player.discardpile.remove(self)
+                player.move_card(self, "topdeck")
 
 
 ###############################################################################
 class Test_Treasury(unittest.TestCase):
+    """Test Treasury"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Treasury"], badcards=["Duchess"])
         self.g.start_game()
