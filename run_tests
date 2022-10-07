@@ -26,6 +26,7 @@ if not rc:
             f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} --cardset {cs_str}"
         )
         if grc:
+            print(f"Broke playing with {cs_str}")
             break
 
 sys.exit(rc >> 8)
