@@ -69,9 +69,10 @@ class Test_Broker(unittest.TestCase):
         self.plr.hand.set("Copper", "Estate", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["finish"]
+        tsize = self.g.trashpile.size()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.g.trashpile.size(), 0)
+        self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_play_action(self):
         """Play the card - gain action"""
