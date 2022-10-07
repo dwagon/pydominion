@@ -2,12 +2,13 @@
 """ http://wiki.dominionstrategy.com/index.php/Sheepdog """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Sheepdog(Card.Card):
+    """Sheepdog"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -18,11 +19,14 @@ class Card_Sheepdog(Card.Card):
         self.cost = 3
 
     def hook_gain_card(self, game, player, card):
-        player.play_card(self, costAction=False)
+        if self in player.hand:
+            player.play_card(self, costAction=False)
 
 
 ###############################################################################
 class Test_Sheepdog(unittest.TestCase):
+    """Test Sheepdog"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sheepdog"])
         self.g.start_game()
@@ -38,7 +42,13 @@ class Test_Sheepdog(unittest.TestCase):
     def test_gain(self):
         """Gain a card"""
         self.plr.gain_card("Estate")
-        self.g.print_state()
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+
+    def test_gain_twice(self):
+        """Gain a card twice"""
+        self.plr.gain_card("Estate")
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.plr.gain_card("Estate")
         self.assertEqual(self.plr.hand.size(), 5 + 2)
 
 
