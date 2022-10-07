@@ -24,7 +24,6 @@ class Card_Territory(Card.Card):
     def hook_gain_this_card(self, game, player):
         """When you gain this, gain a Gold per empty Supply pile."""
         empties = sum(1 for st in game.cardpiles if game[st].is_empty())
-        print(empties)
         for _ in range(empties):
             player.gain_card("Gold")
 
