@@ -21,7 +21,9 @@ if not rc:
     for cardset in os.listdir("cardset"):
         cs_str = f"cardset/{cardset}"
         print(f"Playing with {cs_str}")
-        grc = os.system(f"./dominion/rungame.py --randobot 4 --numplayers 4 --cardset {cs_str}")
+        grc = os.system(
+            f"PYTHONPATH=. ./dominion/rungame.py --randobot 4 --numplayers 4 --cardset {cs_str}"
+        )
         if grc:
             break
 
