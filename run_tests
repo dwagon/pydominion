@@ -16,19 +16,6 @@ print(f"{cmd=}")
 rc = os.system(cmd)
 os.system("coverage html")
 
-# Now try running example games
-if not rc:
-    for cardset in os.listdir("cardset"):
-        cs_str = f"cardset/{cardset}"
-        players = "--randobot 4 --numplayers 4"
-        print(f"Playing with {cs_str}")
-        grc = os.system(
-            f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} --cardset {cs_str}"
-        )
-        if grc:
-            print(f"Broke playing with {cs_str}")
-            break
-
 sys.exit(rc >> 8)
 
 # EOF
