@@ -20,9 +20,10 @@ os.system("coverage html")
 if not rc:
     for cardset in os.listdir("cardset"):
         cs_str = f"cardset/{cardset}"
+        players = "--randobot 4 --numplayers 4"
         print(f"Playing with {cs_str}")
         grc = os.system(
-            f"PYTHONPATH=. ./dominion/rungame.py --randobot 4 --numplayers 4 --cardset {cs_str}"
+            f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} --cardset {cs_str}"
         )
         if grc:
             break
