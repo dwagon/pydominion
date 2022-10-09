@@ -6,6 +6,8 @@ from dominion import Card, Game, Hex
 
 ###############################################################################
 class Hex_War(Hex.Hex):
+    """War"""
+
     def __init__(self):
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
@@ -17,15 +19,16 @@ class Hex_War(Hex.Hex):
     def special(self, game, player):
         count = player.discardpile.size() + player.deck.size()
         while count:
-            c = player.top_card()
-            if not c:
+            card = player.next_card()
+            if not card:
                 break
-            if c.cost in (3, 4):
-                player.output(f"Trashing {c.name}")
-                player.trash_card(c)
+            player.reveal_card(card)
+            if card.cost in (3, 4):
+                player.output(f"Trashing {card.name}")
+                player.trash_card(card)
                 break
-            player.output(f"Discarding {c.name}")
-            player.discard_card(c)
+            player.output(f"Discarding {card.name}")
+            player.discard_card(card)
             count -= 1
         else:
             player.output("No cards costing 3 or 4 in deck")
@@ -33,6 +36,8 @@ class Hex_War(Hex.Hex):
 
 ###############################################################################
 class Test_War(unittest.TestCase):
+    """Test War"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
