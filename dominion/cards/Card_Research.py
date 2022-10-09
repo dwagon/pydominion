@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game
+from dominion import Card, Game, PlayArea
 
 
 ###############################################################################
 class Card_Research(Card.Card):
+    """Research"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -18,11 +18,10 @@ class Card_Research(Card.Card):
             At the start of your next turn, put those cards into your hand."""
         self.cost = 4
         self.actions = 1
+        self._research = PlayArea.PlayArea([])
 
     ###########################################################################
     def special(self, game, player):
-        if not hasattr(player, "_research"):
-            player._research = PlayArea.PlayArea([])
         tc = player.plr_trash_card(num=1, force=True, printcost=True)
         cost = tc[0].cost
         if cost == 0:
@@ -34,24 +33,26 @@ class Card_Research(Card.Card):
             cardsrc="hand",
         )
         for card in cards:
-            player._research.add(card)
+            self._research.add(card)
             player.hand.remove(card)
             player.secret_count += 1
 
     ###########################################################################
     def duration(self, game, player):
         cards = []
-        for card in player._research:
+        for card in self._research:
             cards.append(card)
         for card in cards:
             player.output(f"Bringing {card.name} out from research")
             player.add_card(card, "hand")
-            player._research.remove(card)
+            self._research.remove(card)
             player.secret_count -= 1
 
 
 ###############################################################################
 class Test_Research(unittest.TestCase):
+    """Test Research"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Research", "Moat"])
         self.g.start_game()
