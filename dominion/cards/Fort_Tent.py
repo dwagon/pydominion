@@ -6,6 +6,8 @@ from dominion import Game, Card
 
 ###############################################################################
 class Card_Tent(Card.Card):
+    """Tent"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.FORT]  # pylint: disable=no-member
@@ -30,12 +32,13 @@ class Card_Tent(Card.Card):
             "How to discard the Tent?", ("Discard as normal", False), ("Put it on to deck", True)
         )
         if opt:
-            player.add_card(self, "topdeck")
-            player.played.remove(self)
+            player.move_card(self, "topdeck")
 
 
 ###############################################################################
 class Test_Tent(unittest.TestCase):
+    """Test Tent"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Forts"])
         self.g.start_game()
