@@ -6,51 +6,53 @@ from dominion import Card, Game, Project
 
 ###############################################################################
 class Project_Innovation(Project.Project):
+    """Innovation"""
+
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = "The first time you gain an Action card in each of your turns, you may set it aside. If you do, play it."
+        self.desc = """The first time you gain an Action card in each of your turns,
+            you may set it aside. If you do, play it."""
         self.name = "Innovation"
         self.cost = 6
 
     def hook_gain_card(self, game, player, card):
+        """Gain a card"""
         if player.stats["gained"]:
             return {}
         if not card.isAction():
             return {}
         ch = player.plr_choose_options(
-            "Play {} through Innovation?".format(card.name),
+            f"Play {card.name} through Innovation?",
             ("Play card", True),
             ("Don't play", False),
         )
         if ch:
             player.add_card(card, "hand")
-            player.play_card(card, discard=False, costAction=False)
-            # There are circumstances where playing the card can lead
-            # to its removal from the player hand
-            if card in player.hand:
-                player.hand.remove(card)
-            return {"destination": "hand"}
+            player.play_card(card, costAction=False)
         return {}
 
 
 ###############################################################################
 class Test_Innovation(unittest.TestCase):
+    """Test Innovation"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["Innovation"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
+        """Play a card through innovation"""
         self.plr.assign_project("Innovation")
         self.plr.test_input = ["Play card"]
         self.plr.start_turn()
         self.plr.gain_card("Moat")
-        self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)
-        self.assertIn("Moat", self.plr.hand)
-        self.assertNotIn("Moat", self.plr.discardpile)
+        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertIn("Moat", self.plr.discardpile)
 
     def test_dontplay(self):
+        """Don't play a card through innovation"""
         self.plr.assign_project("Innovation")
         self.plr.test_input = ["Don't play"]
         self.plr.start_turn()
