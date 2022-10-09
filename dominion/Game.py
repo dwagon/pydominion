@@ -761,7 +761,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
         """This is used for debugging"""
-        print("#" * 40)
+        print("#" * 80)
         print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
         print(f"Boons: {', '.join([_.name for _ in self.boons])}")
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
@@ -775,7 +775,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 if tkns:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
-            print(f"CardPile {cname}: %d cards {tokens}" % len(cpile))
+            print(f"CardPile {cname}: {len(cpile)} cards {tokens}")
         for plr in self.player_list():
             self.print_player_state(plr)
         if card_dump:
