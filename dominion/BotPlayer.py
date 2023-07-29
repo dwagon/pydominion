@@ -49,6 +49,7 @@ class BotPlayer(Player):
                     opts["quit"] = opt
                 if opt["action"] == "spendall":
                     opts["spendall"] = opt
+            print(f"{opts=}")
             return opts
         except KeyError as exc:  # pragma: no cover
             print(f"Options={options}")

@@ -119,7 +119,7 @@ class RandobotPlayer(Player):
                 return opt
 
         # How did we get here?
-        print(f"user_input - failuse {options=}")
+        print(f"user_input - fail. {options=}")
         return None
 
     ###########################################################################
@@ -127,6 +127,8 @@ class RandobotPlayer(Player):
         """Select a card at random"""
         print(f"card_sel {kwargs=}")
         cards = self.card_selSource(**kwargs)
+        if not cards:
+            return None
         print(f"card_sel {cards=}")
         card = random.choice(cards)
         print(f"card_sel {card=}")
