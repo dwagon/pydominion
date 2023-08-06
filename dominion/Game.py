@@ -3,7 +3,7 @@
 # pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 import glob
 import json
-import imp
+import importlib
 import os
 import random
 import sys
@@ -571,24 +571,24 @@ class Game:  # pylint: disable=too-many-public-methods
             "Heirloom",
             "Shelter",
         ):
-            mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, "cards", "Card_")
+            mapping[prefix] = self.get_card_classes(prefix, self.cardpath, "Card_")
             if self.oldcards:
                 oldpath = os.path.join(self.cardpath, "old")
-                mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, "cards", "Card_"))
-        mapping["Event"] = self.getSetCardClasses("Event", self.eventpath, "events", "Event_")
-        mapping["Way"] = self.getSetCardClasses("Way", self.waypath, "ways", "Way_")
-        mapping["Landmark"] = self.getSetCardClasses("Landmark", self.landmarkpath, "landmarks", "Landmark_")
-        mapping["Boon"] = self.getSetCardClasses("Boon", self.boonpath, "boons", "Boon_")
-        mapping["Hex"] = self.getSetCardClasses("Hex", self.hexpath, "hexes", "Hex_")
-        mapping["State"] = self.getSetCardClasses("State", self.statepath, "states", "State_")
-        mapping["Artifact"] = self.getSetCardClasses("Artifact", self.artifactpath, "artifacts", "Artifact_")
-        mapping["Project"] = self.getSetCardClasses("Project", self.projectpath, "projects", "Project_")
-        mapping["Ally"] = self.getSetCardClasses("Ally", self.allypath, "allies", "Ally_")
+                mapping[prefix].update(self.get_card_classes(prefix, oldpath, "Card_"))
+        mapping["Event"] = self.get_card_classes("Event", self.eventpath, "Event_")
+        mapping["Way"] = self.get_card_classes("Way", self.waypath, "Way_")
+        mapping["Landmark"] = self.get_card_classes("Landmark", self.landmarkpath, "Landmark_")
+        mapping["Boon"] = self.get_card_classes("Boon", self.boonpath, "Boon_")
+        mapping["Hex"] = self.get_card_classes("Hex", self.hexpath, "Hex_")
+        mapping["State"] = self.get_card_classes("State", self.statepath, "State_")
+        mapping["Artifact"] = self.get_card_classes("Artifact", self.artifactpath, "Artifact_")
+        mapping["Project"] = self.get_card_classes("Project", self.projectpath, "Project_")
+        mapping["Ally"] = self.get_card_classes("Ally", self.allypath, "Ally_")
         return mapping
 
     ###########################################################################
     @classmethod
-    def getSetCardClasses(cls, prefix, path, defdir, class_prefix):
+    def get_card_classes(cls, prefix, path, class_prefix):
         """Import all the modules to determine the real name of the card
         This is slow, but it is the only way that I can think of
 
@@ -600,16 +600,15 @@ class Game:  # pylint: disable=too-many-public-methods
         files = glob.glob(f"{path}/{prefix}_*.py")
         for fname in [os.path.basename(_) for _ in files]:
             fname = fname.replace(".py", "")
-            fp, pathname, desc = imp.find_module(fname, [path, defdir])
-            mod = imp.load_module(fname, fp, pathname, desc)
-            fp.close()
+            mod = importlib.import_module(f"{path.replace('/', '.')}.{fname}")
+
             classes = dir(mod)
             for kls in classes:
                 if kls.startswith(class_prefix):
                     klass = getattr(mod, kls)
                     break
             else:  # pragma: no cover
-                sys.stderr.write(f"Couldn't find {prefix} Class in {pathname}\n")
+                raise ImportError(f"Couldn't find {prefix} Class in {path}\n")
             mapping[klass().name] = klass
             klass().check()
         return mapping
