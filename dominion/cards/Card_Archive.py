@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game
+from dominion import Card, Game, PlayArea
 
 
 ###############################################################################
 class Card_Archive(Card.Card):
+    """Archive"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
@@ -18,35 +18,36 @@ class Card_Archive(Card.Card):
         self.name = "Archive"
         self.actions = 1
         self.cost = 5
+        self._archive_reserve = PlayArea.PlayArea([])
 
     def special(self, game, player):
-        if not hasattr(player, "_archive_reserve"):
-            player._archive_reserve = PlayArea.PlayArea([])
         for _ in range(3):
             card = player.next_card()
             player.output(f"Putting {card.name} in the archive")
-            player._archive_reserve.add(card)
+            self._archive_reserve.add(card)
             player.secret_count += 1
         self.permanent = True
 
     def duration(self, game, player):
         options = []
         index = 0
-        for card in player._archive_reserve:
+        for card in self._archive_reserve:
             sel = f"{index}"
             toprint = f"Bring back {card.name}"
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.user_input(options, "What card to bring back from the Archive?")
         player.add_card(o["card"], "hand")
-        player._archive_reserve.remove(o["card"])
+        self._archive_reserve.remove(o["card"])
         player.secret_count -= 1
-        if player._archive_reserve.is_empty():
+        if self._archive_reserve.is_empty():
             self.permanent = False
 
 
 ###############################################################################
 class Test_Archive(unittest.TestCase):
+    """Test Archive"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Archive"])
         self.g.start_game()
@@ -63,7 +64,7 @@ class Test_Archive(unittest.TestCase):
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
         self.assertIn("Gold", self.plr.hand)
-        self.assertEqual(len(self.plr._archive_reserve), 2)
+        self.assertEqual(len(self.card._archive_reserve), 2)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()

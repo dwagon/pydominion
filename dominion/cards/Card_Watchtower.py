@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Watchtower(Card.Card):
+    """Watchtower"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION]
@@ -28,8 +29,8 @@ class Card_Watchtower(Card.Card):
         act = player.plr_choose_options(
             "What to do with Watchtower?",
             ("Do nothing", "nothing"),
-            ("Trash %s" % card.name, "trash"),
-            ("Put %s on top of deck" % card.name, "topdeck"),
+            (f"Trash {card.name}", "trash"),
+            (f"Put {card.name} on top of deck", "topdeck"),
         )
         if act == "trash":
             options = {"trash": True}
@@ -42,8 +43,10 @@ class Card_Watchtower(Card.Card):
 
 ###############################################################################
 class Test_Watchtower(unittest.TestCase):
+    """Test Watchtower"""
+
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower"])
+        self.g = Game.TestGame(numplayers=1, initcards=["Watchtower"], badcards=["Necromancer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Watchtower"].remove()

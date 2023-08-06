@@ -33,7 +33,7 @@ class Card_Throneroom(Card.Card):
             return
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, o["card"].name))
-            player.play_card(o["card"], discard=False, costAction=False)
+            player.play_card(o["card"], discard=False, cost_action=False)
         player.discard_card(o["card"])
 
 

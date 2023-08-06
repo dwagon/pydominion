@@ -52,9 +52,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
     """Test Woodworkers Guild"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, ally="Woodworkers' Guild", initcards=["Underling", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Woodworkers' Guild", initcards=["Underling", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

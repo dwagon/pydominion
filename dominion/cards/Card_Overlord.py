@@ -13,9 +13,7 @@ class Card_Overlord(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = (
-            "Play a non-Command Action card from the Supply costing up to $5, leaving it there."
-        )
+        self.desc = "Play a non-Command Action card from the Supply costing up to $5, leaving it there."
         self.name = "Overlord"
         self.debtcost = 8
 
@@ -23,7 +21,7 @@ class Card_Overlord(Card.Card):
         cards = [_ for _ in player.cards_under(5) if _.isAction() and not _.isCommand()]
         opts = [(f"Play {_.name}", _) for _ in cards]
         choice = player.plr_choose_options("Play which action card from supply?", *opts)
-        player.play_card(choice, discard=False, costAction=False)
+        player.play_card(choice, discard=False, cost_action=False)
 
 
 ###############################################################################

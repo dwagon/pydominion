@@ -11,7 +11,11 @@ class Card_Pirate(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.DURATION,
+            Card.CardType.REACTION,
+        ]
         self.base = Card.CardExpansion.SEASIDE
         self.desc = """At the start of your next turn, gain a Treasure costing up
             to $6 to your hand.

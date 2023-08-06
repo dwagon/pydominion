@@ -33,7 +33,7 @@ class Card_Counterfeit(Card.Card):
         if not o["card"]:
             return
         for _ in range(2):
-            player.play_card(o["card"], costAction=False, discard=False)
+            player.play_card(o["card"], cost_action=False, discard=False)
         player.trash_card(o["card"])
 
 

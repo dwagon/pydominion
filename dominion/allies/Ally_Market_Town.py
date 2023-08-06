@@ -24,7 +24,7 @@ class Ally_Market_Towns(Ally.Ally):
                 opts.append((f"Play {act.name}", act))
             chc = player.plr_choose_options("Spend an favor to play an action?", *opts)
             if chc:
-                player.play_card(chc, costAction=False)
+                player.play_card(chc, cost_action=False)
                 acts.remove(chc)
                 player.favors.add(-1)
             else:

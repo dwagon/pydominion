@@ -11,9 +11,7 @@ class Card_Zombie_Mason(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
-        )
+        self.desc = "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
         self.name = "Zombie Mason"
         self.cost = 3
         self.insupply = False
@@ -41,7 +39,7 @@ class Test_Zombie_Mason(unittest.TestCase):
     def test_play(self):
         self.plr.deck.set("Estate")
         self.plr.test_input = ["Guide"]
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertIn("Estate", self.g.trashpile)
         self.assertIn("Guide", self.plr.discardpile)
 

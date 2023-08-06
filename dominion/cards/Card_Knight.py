@@ -24,9 +24,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.getSetCardClasses(
-            "KnightCard", game.cardpath, "dominion/cards", "Card_"
-        )
+        self.mapping = game.getSetCardClasses("KnightCard", game.cardpath, "dominion/cards", "Card_")
         super().__init__(
             cardname="Knight",
             klass=None,
@@ -77,10 +75,7 @@ class KnightCard(Card.Card):
         player.output("%s trashed a %s" % (victim.name, to_trash.name))
 
         if to_trash.isKnight():
-            player.output(
-                "%s trashed a knight: %s - trashing your %s"
-                % (victim.name, to_trash.name, self.name)
-            )
+            player.output("%s trashed a knight: %s - trashing your %s" % (victim.name, to_trash.name, self.name))
             player.trash_card(self)
 
         for crd in cards:

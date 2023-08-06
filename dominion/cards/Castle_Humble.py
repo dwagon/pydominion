@@ -9,7 +9,11 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_HumbleCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.CardType.TREASURE, Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.cardtype = [
+            Card.CardType.TREASURE,
+            Card.CardType.VICTORY,
+            Card.CardType.CASTLE,
+        ]
         self.base = Card.CardExpansion.EMPIRES
         self.cost = 3
         self.desc = "+1 Coin; Worth 1VP per Castle you have."

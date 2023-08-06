@@ -49,6 +49,7 @@ class BotPlayer(Player):
                     opts["quit"] = opt
                 if opt["action"] == "spendall":
                     opts["spendall"] = opt
+            print(f"{opts=}")
             return opts
         except KeyError as exc:  # pragma: no cover
             print(f"Options={options}")
@@ -133,9 +134,7 @@ class BotPlayer(Player):
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
-        sys.stderr.write(
-            f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}"
-        )
+        sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}")
         sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n")
 
 

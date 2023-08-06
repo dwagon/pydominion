@@ -23,7 +23,7 @@ class Card_Secretchamber(Card.Card):
     def special(self, game, player):  # pylint: disable=unused-argument
         """Discard any number of cards, +1 coin per card discarded"""
         todiscard = player.plr_discard_cards(
-            anynum=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
+            any_number=True, prompt="Select which card(s) to discard (+1 coin per discard)?"
         )
         player.coins.add(len(todiscard))
 

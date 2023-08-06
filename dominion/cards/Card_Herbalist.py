@@ -35,9 +35,7 @@ class Card_Herbalist(Card.Card):
                     player.played.remove(o["card"])
                     player.add_card(o["card"], "topdeck")
             else:
-                player.output(
-                    "No suitable treasures = %s" % ",".join([c.name for c in player.played])
-                )
+                player.output("No suitable treasures = %s" % ",".join([c.name for c in player.played]))
 
 
 ###############################################################################

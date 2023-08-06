@@ -9,7 +9,10 @@ from dominion import Game, Card
 class Card_Hill_Fort(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.FORT]  # pylint: disable=no-member
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.FORT,
+        ]  # pylint: disable=no-member
         self.base = Card.CardExpansion.ALLIES
         self.cost = 5
         self.name = "Hill Fort"

@@ -28,9 +28,7 @@ class Card_Contraband(Card.Card):
         options = []
         for cp in cps:
             options.append((cp, cp))
-        forbid = plr.plr_choose_options(
-            f"Contraband: Pick a stack that {player.name} can't buy this turn", *options
-        )
+        forbid = plr.plr_choose_options(f"Contraband: Pick a stack that {player.name} can't buy this turn", *options)
         player.output(f"Forbidden to buy {forbid}")
         player.forbidden_to_buy.append(forbid)
 
@@ -47,7 +45,10 @@ class Test_Contraband(unittest.TestCase):
 
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Contraband"], badcards=["Fool's Gold"]
+            numplayers=2,
+            oldcards=True,
+            initcards=["Contraband"],
+            badcards=["Fool's Gold"],
         )
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()

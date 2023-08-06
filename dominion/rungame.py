@@ -29,9 +29,7 @@ def parse_cli_args(args=None):
     )
     parser.add_argument("--shelters", type=bool, default=True, help="Allow shelters")
     parser.add_argument("--numevents", type=int, default=0, help="Number of events to use")
-    parser.add_argument(
-        "--events", action="append", dest="eventcards", default=[], help="Include event"
-    )
+    parser.add_argument("--events", action="append", dest="eventcards", default=[], help="Include event")
     parser.add_argument("--numways", type=int, default=0, help="Number of ways to use")
     parser.add_argument("--ways", action="append", dest="waycards", default=[], help="Include way")
 
@@ -72,12 +70,8 @@ def parse_cli_args(args=None):
         type=argparse.FileType("r"),
         help="File containing list of cards to use",
     )
-    parser.add_argument(
-        "--cardbase", action="append", help="Include only cards from the specified base"
-    )
-    parser.add_argument(
-        "--cardpath", default="dominion/cards", help="Where to find card definitions"
-    )
+    parser.add_argument("--cardbase", action="append", help="Include only cards from the specified base")
+    parser.add_argument("--cardpath", default="dominion/cards", help="Where to find card definitions")
     parser.add_argument("--artifactpath", default="dominion/artifacts", help=argparse.SUPPRESS)
     parser.add_argument("--boonpath", default="dominion/boons", help=argparse.SUPPRESS)
     parser.add_argument("--numstacks", default=10, help=argparse.SUPPRESS)
@@ -88,9 +82,7 @@ def parse_cli_args(args=None):
         help="Use colonies and platinums",
     )
     parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
-    parser.add_argument(
-        "--randobot", type=int, dest="randobot", default=0, help="Num Rando Bot Players"
-    )
+    parser.add_argument("--randobot", type=int, dest="randobot", default=0, help="Num Rando Bot Players")
     parser.add_argument(
         "--quiet",
         action="store_true",

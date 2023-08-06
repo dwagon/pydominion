@@ -11,9 +11,7 @@ class Card_Inventor(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = (
-            "Gain a card costing up to 4, then cards cost 1 less this turn (but not less than 0)."
-        )
+        self.desc = "Gain a card costing up to 4, then cards cost 1 less this turn (but not less than 0)."
         self.name = "Inventor"
         self.cost = 4
 

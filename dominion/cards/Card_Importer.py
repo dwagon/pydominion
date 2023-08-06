@@ -8,7 +8,11 @@ from dominion import Game, Card
 class Card_Importer(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.DURATION, Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.cardtype = [
+            Card.CardType.DURATION,
+            Card.CardType.ACTION,
+            Card.CardType.LIAISON,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.name = "Importer"
         self.desc = "At the start of your next turn, gain a card costing up to $5."
@@ -26,9 +30,7 @@ class Card_Importer(Card.Card):
 ###############################################################################
 class Test_Importer(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Importer", "moat"], ally="Plateau Shepherds"
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Importer", "moat"], ally="Plateau Shepherds")
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Importer"].remove()

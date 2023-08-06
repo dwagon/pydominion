@@ -29,7 +29,7 @@ class Card_Procession(Card.Card):
 
         for i in range(1, 3):
             player.output("Play %d of %s" % (i, card.name))
-            player.play_card(card, discard=False, costAction=False)
+            player.play_card(card, discard=False, cost_action=False)
         player.trash_card(card)
         cost = player.card_cost(card) + 1
         player.plr_gain_card(cost, modifier="equal", types={Card.CardType.ACTION: True})

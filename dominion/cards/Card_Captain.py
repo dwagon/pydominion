@@ -9,7 +9,11 @@ import dominion.Card as Card
 class Card_Captain(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.REACTION, Card.CardType.COMMAND]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.REACTION,
+            Card.CardType.COMMAND,
+        ]
         self.base = Card.CardExpansion.PROMO
         self.desc = """Now and at the start of your next turn:
             Play a non-Duration, non-Command Action card from the Supply costing
@@ -24,12 +28,8 @@ class Card_Captain(Card.Card):
         self.special_sauce(game, player)
 
     def special_sauce(self, game, player):
-        actionpiles = [
-            _ for _ in game.getActionPiles(4) if not _.isDuration() and not _.isCommand()
-        ]
-        actions = player.card_sel(
-            prompt="What action card do you want to imitate?", cardsrc=actionpiles
-        )
+        actionpiles = [_ for _ in game.getActionPiles(4) if not _.isDuration() and not _.isCommand()]
+        actions = player.card_sel(prompt="What action card do you want to imitate?", cardsrc=actionpiles)
         if actions:
             player.card_benefits(actions[0])
 

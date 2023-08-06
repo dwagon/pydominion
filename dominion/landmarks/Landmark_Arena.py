@@ -29,9 +29,7 @@ class Landmark_Arena(Landmark.Landmark):
                 actions.append(card)
         if not actions:
             return
-        disc = player.plr_discard_cards(
-            prompt="Arena: Discard an action to gain 2VP", cardsrc=actions
-        )
+        disc = player.plr_discard_cards(prompt="Arena: Discard an action to gain 2VP", cardsrc=actions)
         if disc:
             player.output("Gained 2 VP from Arena")
             self._vp -= 2

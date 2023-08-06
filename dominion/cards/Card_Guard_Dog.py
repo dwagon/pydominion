@@ -25,7 +25,7 @@ class Card_Guard_Dog(Card.Card):
 
     def hook_underAttack(self, game, player, attacker):
         player.output(f"Playing Guard Dog as under attack by {attacker.name}")
-        player.play_card(self, costAction=False)
+        player.play_card(self, cost_action=False)
 
 
 ###############################################################################

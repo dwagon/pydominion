@@ -22,9 +22,7 @@ class Card_Stronghold(Card.Card):
         self._choice = False
 
     def special(self, game, player):
-        choice = player.plr_choose_options(
-            "Choose One: ", ("+$3", "cash"), ("+3 cards next turn", "cards")
-        )
+        choice = player.plr_choose_options("Choose One: ", ("+$3", "cash"), ("+3 cards next turn", "cards"))
         if choice == "cash":
             player.coins.add(3)
         else:

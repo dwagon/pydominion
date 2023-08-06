@@ -12,7 +12,9 @@ class Boon_Suns_Gift(Boon.Boon):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "Look at the top 4 cards of your deck. Discard any number of them and put the rest back in any order."
+        self.desc = (
+            "Look at the top 4 cards of your deck. Discard any number of them and put the rest back in any order."
+        )
         self.name = "The Sun's Gift"
         self.purchasable = False
 
@@ -24,7 +26,7 @@ class Boon_Suns_Gift(Boon.Boon):
                 cards.append(c)
         todisc = player.plr_discard_cards(
             prompt="Discard any number and the rest go back on the top of the deck",
-            anynum=True,
+            any_number=True,
             cardsrc=cards,
         )
         for card in cards:

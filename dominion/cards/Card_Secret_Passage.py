@@ -11,18 +11,14 @@ class Card_SecretPassage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = (
-            """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""
-        )
+        self.desc = """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""
         self.name = "Secret Passage"
         self.cost = 4
         self.actions = 1
         self.cards = 2
 
     def special(self, game, player):
-        card = player.card_sel(
-            prompt="Take a card from your hand and put into your deck", cardsrc="hand"
-        )
+        card = player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc="hand")
         if card:
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",

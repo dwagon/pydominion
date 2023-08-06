@@ -25,9 +25,7 @@ class Card_Bureaucrat(Card.Card):
                 if c.isVictory():
                     pl.reveal_card(c)
                     pl.move_card(c, "topdeck")
-                    pl.output(
-                        "Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name)
-                    )
+                    pl.output("Moved %s to deck due to Bureaucrat played by %s" % (c.name, player.name))
                     player.output("Player %s moved a %s to the top" % (pl.name, c.name))
                     break
             else:

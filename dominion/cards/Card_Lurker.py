@@ -11,7 +11,9 @@ class Card_Lurker(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = "+1 Action; Choose one: Trash an Action card from the Supply, or gain an Action card from the trash."
+        self.desc = (
+            "+1 Action; Choose one: Trash an Action card from the Supply, or gain an Action card from the trash."
+        )
         self.name = "Lurker"
         self.cost = 2
         self.actions = 1

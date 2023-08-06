@@ -33,7 +33,12 @@ class OdysseyCardPile(CardPile.CardPile):
         from dominion.cards.Odyssey_Distant_Shore import Card_Distant_Shore
 
         self._cards = []
-        for crd in (Card_Old_Map, Card_Voyage, Card_Sunken_Treasure, Card_Distant_Shore):
+        for crd in (
+            Card_Old_Map,
+            Card_Voyage,
+            Card_Sunken_Treasure,
+            Card_Distant_Shore,
+        ):
             for _ in range(4):
                 self._cards.insert(0, crd())
 

@@ -11,9 +11,7 @@ class Card_Zombie_Spy(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
-        )
+        self.desc = "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
         self.name = "Zombie Spy"
         self.cost = 3
         self.insupply = False
@@ -50,7 +48,7 @@ class Test_Zombie_Spy(unittest.TestCase):
     def test_play_keep(self):
         self.plr.test_input = ["Keep"]
         self.plr.deck.set("Province", "Estate")
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertIn("Province", self.plr.deck)
@@ -58,7 +56,7 @@ class Test_Zombie_Spy(unittest.TestCase):
     def test_play_discard(self):
         self.plr.test_input = ["Discard"]
         self.plr.deck.set("Province", "Estate")
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertNotIn("Province", self.plr.deck)

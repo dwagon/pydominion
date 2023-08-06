@@ -16,9 +16,7 @@ class Card_Skulk(Card.Card):
 
     def desc(self, player):
         if player.phase == Player.Phase.BUY:
-            return (
-                "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
-            )
+            return "+1 Buy; Each other player receives the next Hex; When you gain this, gain a Gold."
         return "+1 Buy; Each other player receives the next Hex."
 
     def hook_gain_this_card(self, game, player):

@@ -25,7 +25,7 @@ class Event_Toil(Event.Event):
             prompt="Plan an action card?",
         )
         if action:
-            player.play_card(action[0], costAction=False)
+            player.play_card(action[0], cost_action=False)
 
 
 ###############################################################################

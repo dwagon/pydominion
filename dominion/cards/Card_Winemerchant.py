@@ -7,6 +7,8 @@ import dominion.Card as Card
 
 ###############################################################################
 class Card_Winemerchant(Card.Card):
+    """Wine Merchant"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE]
@@ -21,7 +23,7 @@ class Card_Winemerchant(Card.Card):
         self.callable = False
 
     def hook_cleanup(self, game, player):
-        if player.coin >= 2:
+        if player.coins.get() >= 2:
             player.output("Discarding Wine Merchant")
             player.reserve.remove(self)
             player.add_card(self, "discard")
@@ -29,6 +31,8 @@ class Card_Winemerchant(Card.Card):
 
 ###############################################################################
 class Test_Winemerchant(unittest.TestCase):
+    """Test Wine Merchant"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wine Merchant"])
         self.g.start_game()
@@ -45,7 +49,7 @@ class Test_Winemerchant(unittest.TestCase):
 
     def test_recover(self):
         """Recover a wine merchant"""
-        self.plr.coin = 2
+        self.plr.coins.set(2)
         self.plr.reserve.set("Wine Merchant")
         for crd in self.plr.reserve:
             crd.player = self.plr

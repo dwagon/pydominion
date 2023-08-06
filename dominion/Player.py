@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """ All the Player based stuff """
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
@@ -180,7 +181,9 @@ class Player:
         destination = kwargs["destination"] if "destination" in kwargs else "discard"
 
         dstcp = self._find_cardpile(dst)
-        newcard = self.gain_card(cardpile=dstcp, destination=destination, callhook=False)
+        newcard = self.gain_card(
+            cardpile=dstcp, destination=destination, callhook=False
+        )
         if newcard:
             cardpile = self.game.cardpiles[src.name]
             cardpile.add(src)
@@ -395,7 +398,9 @@ class Player:
         elif curr_loc == "cardpile":
             pass
         else:
-            raise AssertionError(f"Trying to remove_card {card} from unknown location: {curr_loc}")
+            raise AssertionError(
+                f"Trying to remove_card {card} from unknown location: {curr_loc}"
+            )
 
     ###########################################################################
     def move_card(self, card: Card, dest: Union[str, PlayArea]) -> Card:
@@ -404,7 +409,9 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Union[str, PlayArea] = "discard") -> Card:
+    def add_card(
+        self, card: Card, pile: Union[str, PlayArea] = "discard"
+    ) -> Optional[Card]:
         """Add an existing card to a new location"""
         piles = {
             "discard": self.discardpile,
@@ -553,7 +560,9 @@ class Player:
             options.append(o)
 
         if self.coffers:
-            o = Option(selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer")
+            o = Option(
+                selector="2", verb="Spend Coffer (1 coin)", card=None, action="coffer"
+            )
             options.append(o)
 
         if self.debt and self.coins:
@@ -624,7 +633,9 @@ class Player:
         options = []
         for op in self.game.projects.values():
             index += 1
-            if (op.cost <= self.coins.get() and self.buys) and (op not in self.projects):
+            if (op.cost <= self.coins.get() and self.buys) and (
+                op not in self.projects
+            ):
                 sel = chr(ord("a") + index)
                 action = "project"
             else:
@@ -678,14 +689,16 @@ class Player:
                 continue
             all_cards.add(c)
         all_cards.sort(key=self.card_cost)
-        all_cards.sort(key=lambda c: c.basecard)
+        all_cards.sort(key=lambda x: x.basecard)
         return all_cards
 
     ###########################################################################
     def _buyable_selection(self, index):
         options = []
         all_cards = self._get_all_purchasable()
-        buyable = self.cards_under(coin=self.coins.get(), num_potions=self.potions.get())
+        buyable = self.cards_under(
+            coin=self.coins.get(), num_potions=self.potions.get()
+        )
         for card in all_cards:
             if not self.hook_allowed_to_buy(card):
                 if card in buyable:
@@ -800,7 +813,9 @@ class Player:
         """For bug detection: Is everything where it should be?"""
         for stack_name, stack in self.stacklist:
             for card in stack:
-                assert card.location == stack_name.lower(), f"{card} location not {stack_name=}"
+                assert (
+                    card.location == stack_name.lower()
+                ), f"{card} location not {stack_name=}"
                 assert card.player == self, f"{card} player not {self}"
 
     ###########################################################################
@@ -954,9 +969,15 @@ class Player:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output(f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}")
-        self.output(f"| Discard: {', '.join([_.name for _ in self.discardpile])}")  # Debug
-        self.output(f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}")  # Debug
+            self.output(
+                f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}"
+            )
+        self.output(
+            f"| Discard: {', '.join([_.name for _ in self.discardpile])}"
+        )  # Debug
+        self.output(
+            f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}"
+        )  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)
 
@@ -1001,7 +1022,9 @@ class Player:
         scr = self.get_score_details()
         vp = sum(scr.values())
         if verbose:
-            self.game.output(f"{self.name} (Turn {self.turn_number}): {json.dumps(scr, indent=2)}")
+            self.game.output(
+                f"{self.name} (Turn {self.turn_number}): {json.dumps(scr, indent=2)}"
+            )
         return vp
 
     ###########################################################################
@@ -1039,12 +1062,12 @@ class Player:
 
     ###########################################################################
     def _defer_start_turn(self):
-        """Perform the defer pile cards at the start of the turn"""
+        """Perform the defer-pile cards at the start of the turn"""
         for card in self.deferpile:
             self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
             self.move_card(card, "hand")
-            self.play_card(card, costAction=False)
+            self.play_card(card, cost_action=False)
             self.currcards.pop()
 
     ###########################################################################
@@ -1150,7 +1173,7 @@ class Player:
         for card in self.hand:
             # Contents of hand can change as they are played
             if card.isTreasure() and card in self.hand:
-                self.play_card(card)
+                self.play_card(card, cost_action=False)
 
     ###########################################################################
     def _play_card_tokens(self, card):
@@ -1196,7 +1219,7 @@ class Player:
         self.move_card(card, "deferpile")
 
     ###########################################################################
-    def _move_after_play(self, card: Card) -> None:
+    def move_after_play(self, card: Card) -> None:
         """Move the card to its next location after it has been played"""
         if card.isDuration():
             self.move_card(card, "duration")
@@ -1210,8 +1233,8 @@ class Player:
         self,
         card: Card,
         discard: bool = True,
-        costAction: bool = True,
-        postActionHook: bool = True,
+        cost_action: bool = True,
+        post_action_hook: bool = True,
     ) -> None:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
@@ -1230,7 +1253,7 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if card.isAction() and costAction and self.phase != Phase.NIGHT:
+        if card.isAction() and cost_action and self.phase != Phase.NIGHT:
             self.actions -= 1
         if self.actions.get() < 0:  # pragma: no cover
             self.actions.set(0)
@@ -1239,12 +1262,12 @@ class Player:
             return
 
         if options["discard"]:
-            self._move_after_play(card)
+            self.move_after_play(card)
 
         if not options["skip_card"]:
             self.card_benefits(card)
         self.currcards.pop()
-        if postActionHook and card.isAction():
+        if post_action_hook and card.isAction():
             for crd in self.relevant_cards():
                 if hasattr(crd, "hook_post_action"):
                     crd.hook_post_action(game=self.game, player=self, card=card)
@@ -1305,7 +1328,9 @@ class Player:
         return max(0, cost)
 
     ###########################################################################
-    def gain_card(self, cardpile=None, destination="discard", newcard=None, callhook=True):
+    def gain_card(
+        self, cardpile=None, destination="discard", newcard=None, callhook=True
+    ):
         """Add a new card to the players set of cards from a cardpile"""
         # Options:
         #   dontadd: True - adding card handled elsewhere
@@ -1432,15 +1457,21 @@ class Player:
     def hook_all_players_buy_card(self, card):
         for player in self.game.player_list():
             for crd in player.durationpile:
-                crd.hook_all_players_buy_card(game=self.game, player=self, owner=player, card=card)
+                crd.hook_all_players_buy_card(
+                    game=self.game, player=self, owner=player, card=card
+                )
         for crd in self.game.landmarks.values():
-            crd.hook_all_players_buy_card(game=self.game, player=self, owner=self, card=card)
+            crd.hook_all_players_buy_card(
+                game=self.game, player=self, owner=self, card=card
+            )
 
     ###########################################################################
     def hook_allplayers_gain_card(self, card):
         for player in self.game.player_list():
             for crd in player.relevant_cards():
-                crd.hook_allplayers_gain_card(game=self.game, player=self, owner=player, card=card)
+                crd.hook_allplayers_gain_card(
+                    game=self.game, player=self, owner=player, card=card
+                )
 
     ###########################################################################
     def add_hook(self, hook_name, hook):
@@ -1603,7 +1634,7 @@ class Player:
                 affordable.add(c)
                 continue
         affordable.sort(key=self.card_cost)
-        affordable.sort(key=lambda c: c.basecard)
+        affordable.sort(key=lambda x: x.basecard)
         return affordable
 
     ###########################################################################
@@ -1646,14 +1677,12 @@ class Player:
     def _type_selector(cls, types=None):
         if types is None:
             types = {}
-        assert set(types.keys()) <= set(
-            [
-                CardType.ACTION,
-                CardType.VICTORY,
-                CardType.TREASURE,
-                CardType.NIGHT,
-            ]
-        )
+        assert set(types.keys()) <= {
+            CardType.ACTION,
+            CardType.VICTORY,
+            CardType.TREASURE,
+            CardType.NIGHT,
+        }
         if not types:
             return {
                 CardType.ACTION: True,
@@ -1687,8 +1716,7 @@ class Player:
     ###########################################################################
     def coststr(self, card) -> str:
         """Generate the string showing the cost of the card"""
-        cost = []
-        cost.append(f"{self.card_cost(card)} Coins")
+        cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")
         if card.potcost:
@@ -1699,16 +1727,22 @@ class Player:
         return cststr.strip()
 
     ###########################################################################
-    def plr_trash_card(self, num=1, anynum=False, cardsrc="hand", **kwargs):
+    def plr_trash_card(
+        self, num=1, anynum=False, cardsrc="hand", **kwargs
+    ) -> Optional[Card]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             if anynum:
                 kwargs["prompt"] = "Trash any cards"
             else:
                 kwargs["prompt"] = f"Trash {num} cards"
-        if len(cardsrc) == 0:
-            return None
-        if len(cardsrc) == 0:
+        if isinstance(cardsrc, str):
+            for pname, pile in self.stacklist:
+                if pname.lower() == cardsrc.lower():
+                    if len(pile) == 0:
+                        self.output(f"No cards to trash from {cardsrc}")
+                        return None
+        if isinstance(cardsrc, PlayArea) and len(cardsrc) == 0:
             self.output("No cards to trash")
             return None
         trash = self.card_sel(
@@ -1718,6 +1752,8 @@ class Player:
             verbs=("Trash", "Untrash"),
             **kwargs,
         )
+        if trash is None:
+            return None
         for crd in trash:
             self.trash_card(crd, **kwargs)
         return trash
@@ -1742,6 +1778,7 @@ class Player:
         assert modifier in ("less", "equal")
         if recipient is None:
             recipient = self
+        buyable = []
         prompt = "Gain a card "
         types = self._type_selector(types)
         if modifier == "less":
@@ -1846,14 +1883,18 @@ class Player:
         self.artifacts.remove([_ for _ in self.artifacts if _.name == name][0])
 
     ###########################################################################
-    def plr_discard_cards(self, num=1, anynum=False, **kwargs):
+    def plr_discard_cards(self, num=1, any_number=False, **kwargs):
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
-            if anynum:
+            if any_number:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
                 kwargs["prompt"] = f"Discard {num} cards"
-        discard = self.card_sel(num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs)
+        discard = self.card_sel(
+            num=num, anynum=any_number, verbs=("Discard", "Undiscard"), **kwargs
+        )
+        if discard is None:
+            return None
         for c in discard:
             self.output(f"Discarding {c.name}")
             self.discard_card(c)

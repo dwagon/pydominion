@@ -10,7 +10,9 @@ class Card_Alchemist(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
+        self.desc = (
+            "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
+        )
         self.name = "Alchemist"
         self.cards = 2
         self.actions = 1

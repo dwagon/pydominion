@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Crown """
 
 import unittest
 from dominion import Card, Game, Player
@@ -6,6 +7,8 @@ from dominion import Card, Game, Player
 
 ###############################################################################
 class Card_Crown(Card.Card):
+    """Crown"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TREASURE]
@@ -18,33 +21,36 @@ class Card_Crown(Card.Card):
     def special(self, game, player):
         if player.phase == Player.Phase.ACTION:
             cards = [_ for _ in player.hand if _.isAction()]
-            self.do_twice(player, cards)
+            self._do_twice(player, cards)
         if player.phase == Player.Phase.BUY:
             cards = [_ for _ in player.hand if _.isTreasure()]
-            self.do_twice(player, cards)
+            self._do_twice(player, cards)
 
-    def do_twice(self, player, cards):
+    def _do_twice(self, player, cards):
+        """Do something twice"""
         if not cards:
             player.output("No suitable cards")
             return
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for c in cards:
+        for crd in cards:
             sel = f"{index}"
-            pr = f"Play {c.name} twice"
-            options.append({"selector": sel, "print": pr, "card": c})
+            pr = f"Play {crd.name} twice"
+            options.append({"selector": sel, "print": pr, "card": crd})
             index += 1
         o = player.user_input(options, "Play which card twice?")
         if not o["card"]:
             return
+        player.move_after_play(o["card"])
         for i in range(1, 3):
             player.output(f"Number {i} play of {o['card'].name}")
-            player.play_card(o["card"], discard=False, costAction=False)
-        player.discard_card(o["card"])
+            player.play_card(o["card"], discard=False, cost_action=False)
 
 
 ###############################################################################
 class Test_Crown(unittest.TestCase):
+    """Test Crown"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Crown", "Moat"])
         self.g.start_game()

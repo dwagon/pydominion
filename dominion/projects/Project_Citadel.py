@@ -16,7 +16,7 @@ class Project_Citadel(Project.Project):
     def hook_post_action(self, game, player, card):
         if player.played.size() == 1:
             player.output("Citadel plays {} again".format(card.name))
-            player.play_card(card, discard=False, costAction=False, postActionHook=False)
+            player.play_card(card, discard=False, cost_action=False, post_action_hook=False)
 
 
 ###############################################################################

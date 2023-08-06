@@ -10,9 +10,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = (
-            "After playing a Liaison, you may spend 3 Favors to have each other player gain a curse"
-        )
+        self.desc = "After playing a Liaison, you may spend 3 Favors to have each other player gain a curse"
         self.required_cards = ["Curse"]
         self.name = "Circle of Witches"
 
@@ -37,9 +35,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
 ###############################################################################
 class Test_Circle_of_Witches(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, ally="Circle of Witches", initcards=["Underling", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=2, ally="Circle of Witches", initcards=["Underling", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

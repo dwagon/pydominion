@@ -39,7 +39,7 @@ class Card_Imp(Card.Card):
             index += 1
         o = player.user_input(options, "What card do you want to play?")
         if o["card"]:
-            player.play_card(o["card"], costAction=False)
+            player.play_card(o["card"], cost_action=False)
 
 
 ###############################################################################

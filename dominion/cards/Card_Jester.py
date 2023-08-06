@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Jester(Card.Card):
+    """Jester"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -22,27 +23,32 @@ class Card_Jester(Card.Card):
     def special(self, game, player):
         for plr in player.attack_victims():
             card = plr.next_card()
+            if not card:
+                player.output(f"{plr.name} has no cards!")
+                continue
             plr.discard_card(card)
-            plr.output("%s's Jester discarded your %s" % (player.name, card.name))
+            plr.output(f"{player.name}'s Jester discarded your {card.name}")
             if card.isVictory():
-                plr.output("%s's Jester cursed you" % player.name)
-                player.output("Cursed %s" % plr.name)
+                plr.output(f"{player.name}'s Jester cursed you")
+                player.output(f"Cursed {plr.name}")
                 plr.gain_card("Curse")
                 continue
             getcard = player.plr_choose_options(
-                "Who should get a copy of %s's %s" % (plr.name, card.name),
-                ("You get a %s" % card.name, True),
-                ("%s gets a %s" % (plr.name, card.name), False),
+                f"Who should get a copy of {plr.name}'s {card.name}",
+                (f"You get a {card.name}", True),
+                ("{plr.name} gets a {card.name}", False),
             )
             if getcard:
                 player.gain_card(card.name)
             else:
-                plr.output("%s's Jester gave you a %s" % (player.name, card.name))
+                plr.output(f"{player.name}'s Jester gave you a {card.name}")
                 plr.gain_card(card.name)
 
 
 ###############################################################################
 class Test_Jester(unittest.TestCase):
+    """Test Jester"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Jester"])
         self.g.start_game()

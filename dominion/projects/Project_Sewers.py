@@ -9,9 +9,7 @@ class Project_Sewers(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = (
-            "When you trash a card other than with this, you may trash a card from your hand."
-        )
+        self.desc = "When you trash a card other than with this, you may trash a card from your hand."
         self.name = "Sewers"
         self.cost = 3
 

@@ -10,9 +10,7 @@ class State_Deluded(State.State):
         State.State.__init__(self)
         self.cardtype = Card.CardType.STATE
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "At the start of your Buy phase, return this, and you can't buy Actions this turn."
-        )
+        self.desc = "At the start of your Buy phase, return this, and you can't buy Actions this turn."
         self.name = "Deluded"
 
     def hook_pre_buy(self, game, player):

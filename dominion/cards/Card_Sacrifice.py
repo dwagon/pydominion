@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Card as Card
-import dominion.Game as Game
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Sacrifice(Card.Card):
+    """Sacrifice"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -33,6 +34,8 @@ class Card_Sacrifice(Card.Card):
 
 ###############################################################################
 class Test_Sacrifice(unittest.TestCase):
+    """Test Sacrifice"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sacrifice", "Moat"])
         self.g.start_game()

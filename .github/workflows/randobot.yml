@@ -1,5 +1,5 @@
 ---
-name: run_tests
+name: randobot
 on: push
 
 jobs:
@@ -12,6 +12,4 @@ jobs:
       - name: Install dependencies
         run: python3 -m pip install -r requirements-dev.txt
       - name: Run Tests
-        run: ./run_tests
-      - name: Coveralls
-        uses: AndreMiras/coveralls-python-action@develop
+        run: ./run_randobot

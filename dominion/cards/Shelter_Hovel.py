@@ -28,9 +28,7 @@ class Card_Hovel(Card.Card):
 
 
 ###############################################################################
-def botresponse(
-    player, kind, args=None, kwargs=None
-):  # pragma: no cover, pylint: disable=unused-argument
+def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
     """botresponse"""
     return True
 

@@ -11,7 +11,11 @@ from dominion.Player import Phase
 class Card_Ghost(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION, Card.CardType.SPIRIT]
+        self.cardtype = [
+            Card.CardType.NIGHT,
+            Card.CardType.DURATION,
+            Card.CardType.SPIRIT,
+        ]
         self.base = Card.CardExpansion.NOCTURNE
         self.desc = """Reveal cards from your deck until you reveal an Action.
             Discard the other cards and set aside the Action. At the start of
@@ -41,7 +45,7 @@ class Card_Ghost(Card.Card):
         for card in self._ghost_reserve:
             player.output(f"Ghost playing {card.name}")
             for _ in range(2):
-                player.play_card(card, discard=False, costAction=False)
+                player.play_card(card, discard=False, cost_action=False)
             self._ghost_reserve.remove(card)
             player.secret_count -= 1
 

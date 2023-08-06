@@ -9,7 +9,11 @@ import dominion.Card as Card
 class Card_Cultist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.LOOTER]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.LOOTER,
+        ]
         self.base = Card.CardExpansion.DARKAGES
         self.desc = """+2 Cards; Each other player gains a Ruins. You may play
             a Cultist from your hand.  When you trash this, +3 Cards."""
@@ -31,7 +35,7 @@ class Card_Cultist(Card.Card):
                 ("Play another cultist", True),
             )
             if ans:
-                player.play_card(cultist, costAction=False)
+                player.play_card(cultist, cost_action=False)
 
     def hook_trashThisCard(self, game, player):
         """When you trash this, +3 cards"""

@@ -276,16 +276,16 @@ class Test_plr_trash_card(unittest.TestCase):
         """Trash nothing"""
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0"]
-        x = self.plr.plr_trash_card()
-        self.assertEqual(x, [])
+        trashed = self.plr.plr_trash_card()
+        self.assertEqual(trashed, [])
         self.assertNotIn("Gold", self.game.trashpile)
 
     def test_Two(self):
         """Trash Two cards"""
         self.plr.hand.set("Gold", "Copper", "Silver")
         self.plr.test_input = ["Gold", "Silver", "0"]
-        x = self.plr.plr_trash_card(num=2)
-        self.assertEqual(len(x), 2)
+        trashed = self.plr.plr_trash_card(num=2)
+        self.assertEqual(len(trashed), 2)
         self.assertIn("Gold", self.game.trashpile)
         self.assertIn("Silver", self.game.trashpile)
         self.assertIn("Copper", self.plr.hand)
@@ -295,8 +295,8 @@ class Test_plr_trash_card(unittest.TestCase):
         tsize = self.game.trashpile.size()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["1"]
-        x = self.plr.plr_trash_card()
-        self.assertEqual(x[0].name, "Gold")
+        trashed = self.plr.plr_trash_card()
+        self.assertEqual(trashed[0].name, "Gold")
         self.assertEqual(self.game.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.game.trashpile)
 
@@ -305,8 +305,8 @@ class Test_plr_trash_card(unittest.TestCase):
         self.game.trashpile.set()
         self.plr.hand.set("Gold")
         self.plr.test_input = ["0", "1"]
-        x = self.plr.plr_trash_card(force=True)
-        self.assertEqual(x[0].name, "Gold")
+        trashed = self.plr.plr_trash_card(force=True)
+        self.assertEqual(trashed[0].name, "Gold")
         self.assertEqual(self.game.trashpile[-1].name, "Gold")
         for m in self.plr.messages:
             if "Invalid Option" in m:
@@ -321,9 +321,15 @@ class Test_plr_trash_card(unittest.TestCase):
         """Test that the 'exclude' option works by not being able to select"""
         self.plr.hand.set("Gold", "Gold", "Copper")
         self.plr.test_input = ["1"]
-        x = self.plr.plr_trash_card(exclude=["Gold"])
-        self.assertEqual(x[0].name, "Copper")
+        trashed = self.plr.plr_trash_card(exclude=["Gold"])
+        self.assertEqual(trashed[0].name, "Copper")
         self.assertIn("Copper", self.game.trashpile)
+
+    def test_from_nothing(self):
+        """Trash when there are no cards to trash"""
+        self.plr.hand.set()
+        trashed = self.plr.plr_trash_card()
+        self.assertIs(trashed, None)
 
 
 ###############################################################################
@@ -355,7 +361,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def test_discardAnynum(self):
         self.plr.hand.set("Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["1", "0"]
-        x = self.plr.plr_discard_cards(0, anynum=True)
+        x = self.plr.plr_discard_cards(0, any_number=True)
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
@@ -589,9 +595,7 @@ class Test__display_overview(unittest.TestCase):
     """Test the display overview at the start of every user input"""
 
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"], landmarkcards=["Baths"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"], landmarkcards=["Baths"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 

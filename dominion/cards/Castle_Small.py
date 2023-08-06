@@ -9,7 +9,11 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_SmallCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.VICTORY,
+            Card.CardType.CASTLE,
+        ]
         self.base = Card.CardExpansion.EMPIRES
         self.cost = 5
         self.desc = "Trash this or a Castle from your hand. If you do, gain a Castle. 2VP"

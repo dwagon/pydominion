@@ -11,7 +11,11 @@ class Card_Contract(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION, Card.CardType.LIAISON]
+        self.cardtype = [
+            Card.CardType.TREASURE,
+            Card.CardType.DURATION,
+            Card.CardType.LIAISON,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.name = "Contract"
         self.desc = """$2; +1 Favor; You may set aside an Action from your hand
@@ -27,9 +31,7 @@ class Card_Contract(Card.Card):
         acts = [_ for _ in player.hand if _.isAction()]
         if not acts:
             return
-        card = player.card_sel(
-            cardsrc=acts, prompt="Contract: Set aside an action to play next turn"
-        )
+        card = player.card_sel(cardsrc=acts, prompt="Contract: Set aside an action to play next turn")
         self._contract_reserve.add(card[0])
         player.hand.remove(card[0])
         player.secret_count += 1

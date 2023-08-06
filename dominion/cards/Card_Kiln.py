@@ -13,9 +13,7 @@ class Card_Kiln(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = (
-            """+$2; The next time you play a card this turn, you may first gain a copy of it."""
-        )
+        self.desc = """+$2; The next time you play a card this turn, you may first gain a copy of it."""
         self.name = "Kiln"
         self.coin = 2
         self.cost = 5
@@ -23,7 +21,9 @@ class Card_Kiln(Card.Card):
     def hook_pre_action(self, game, player, card):  # pylint: disable=unused-argument
         """The next time you play a card this turn, you may first gain a copy of it."""
         opt = player.plr_choose_options(
-            f"Gain a copy of {card.name}?", ("Do nothing", False), (f"Gain {card.name}", True)
+            f"Gain a copy of {card.name}?",
+            ("Do nothing", False),
+            (f"Gain {card.name}", True),
         )
         if opt:
             player.gain_card(card.name)

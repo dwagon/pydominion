@@ -10,7 +10,11 @@ from dominion.cards.Card_Knight import KnightCard
 class Card_Dame_Natalie(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.KNIGHT]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.KNIGHT,
+        ]
         self.base = Card.CardExpansion.DARKAGES
         self.name = "Dame Natalie"
         self.desc = """You may gain a card costing up to 3.

@@ -39,7 +39,7 @@ class Card_Golem(Card.Card):
         # TODO - let the player choose the order
         for card in actions:
             player.output(f"Golem playing {card.name}")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
 
 
 ###############################################################################
@@ -60,9 +60,7 @@ class Test_Golem(unittest.TestCase):
             sorted(["Golem", "Moat", "Village"]),
             sorted([c.name for c in self.plr.played]),
         )
-        self.assertEqual(
-            sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.discardpile])
-        )
+        self.assertEqual(sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.discardpile]))
 
     def test_golem(self):
         """Ensure golem isn't picked up"""

@@ -10,7 +10,11 @@ from dominion.cards.Card_Knight import KnightCard
 class Card_Sirmichael(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.KNIGHT]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.KNIGHT,
+        ]
         self.base = Card.CardExpansion.DARKAGES
         self.name = "Sir Michael"
         self.desc = """Each other player discards down to 3 cards in hand.
@@ -27,9 +31,7 @@ class Card_Sirmichael(KnightCard):
 ###############################################################################
 class Test_Sir_Michael(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Knights"], badcards=["Pooka", "Fool"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Knights"], badcards=["Pooka", "Fool"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         while True:

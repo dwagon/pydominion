@@ -14,6 +14,8 @@ targets = "tests/*.py dominion/*.py dominion/*/*.py dominion/*/*/*.py"
 cmd = f"pytest -n {numcpu} {coverage} {targets}"
 print(f"{cmd=}")
 rc = os.system(cmd)
+os.system("coverage html")
+
 sys.exit(rc >> 8)
 
 # EOF

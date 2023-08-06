@@ -42,9 +42,7 @@ class Card_Rebuild(Card.Card):
             if card.isVictory() and guess.name != card.name:
                 player.output("Found and trashing a %s" % card.name)
                 player.trash_card(card)
-                player.plr_gain_card(
-                    card.cost + 3, modifier="less", types={Card.CardType.VICTORY: True}
-                )
+                player.plr_gain_card(card.cost + 3, modifier="less", types={Card.CardType.VICTORY: True})
                 break
             player.output("Drew and discarded %s" % card.name)
             discards.append(card)

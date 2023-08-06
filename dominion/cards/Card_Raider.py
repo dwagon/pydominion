@@ -10,7 +10,11 @@ from dominion.Player import Phase
 class Card_Raider(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION, Card.CardType.ATTACK]
+        self.cardtype = [
+            Card.CardType.NIGHT,
+            Card.CardType.DURATION,
+            Card.CardType.ATTACK,
+        ]
         self.base = Card.CardExpansion.NOCTURNE
         self.desc = """Each other player with 5 or more cards in hand discards
             a copy of a card you have in play (or reveals they can't). At the

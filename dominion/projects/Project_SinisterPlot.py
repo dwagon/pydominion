@@ -20,9 +20,7 @@ class Project_SinisterPlot(Project.Project):
             "Sinister Plot Action? ",
             ("Add a token here?", True),
             (
-                "Remove {} tokens for {} cards?".format(
-                    self._token[player.name], self._token[player.name]
-                ),
+                "Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]),
                 False,
             ),
         )

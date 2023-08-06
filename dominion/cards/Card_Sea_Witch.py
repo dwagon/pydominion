@@ -11,7 +11,11 @@ class Card_SeaWitch(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.ATTACK]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.DURATION,
+            Card.CardType.ATTACK,
+        ]
         self.base = Card.CardExpansion.SEASIDE
         self.desc = """+2 Cards; Each other player gains a Curse.
             At the start of your next turn, +2 Cards, then discard 2 cards."""

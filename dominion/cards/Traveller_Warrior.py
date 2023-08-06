@@ -1,15 +1,21 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Warrior """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game
 
 
 ###############################################################################
 class Card_Warrior(Card.Card):
+    """Warrior"""
+
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.TRAVELLER]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.TRAVELLER,
+        ]
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards
@@ -31,7 +37,7 @@ class Card_Warrior(Card.Card):
                 count += 1
         for victim in player.attack_victims():
             for _ in range(count):
-                c = victim.top_card()
+                c = victim.next_card()
                 if c.cost in (3, 4) and not c.potcost:
                     victim.output(f"Trashing {c.name} due to {player.name}'s Warrior")
                     player.output(f"Trashing {c.name} from {victim.name}")
@@ -47,10 +53,10 @@ class Card_Warrior(Card.Card):
 
 ###############################################################################
 class Test_Warrior(unittest.TestCase):
+    """Test Warrior"""
+
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Warrior"].remove()

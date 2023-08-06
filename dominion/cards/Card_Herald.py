@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" http://wiki.dominionstrategy.com/index.php/Herald"""
 
 import unittest
 from dominion import Card, Game, Player
@@ -6,6 +7,8 @@ from dominion import Card, Game, Player
 
 ###############################################################################
 class Card_Herald(Card.Card):
+    """Herald"""
+
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
@@ -17,6 +20,7 @@ class Card_Herald(Card.Card):
         self.cost = 4
 
     def desc(self, player):
+        """Variable descrition"""
         if player.phase == Player.Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.
                 If it is an Action, play it.  When you buy this, you may overpay
@@ -25,13 +29,14 @@ class Card_Herald(Card.Card):
         return "+1 Card +1 Action. Reveal the top card of your deck. If it is an Action, play it."
 
     def special(self, game, player):
-        card = player.next_card()
+        card = player.top_card()
         player.reveal_card(card)
         if card.isAction():
             player.add_card(card, "hand")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
 
-    def hook_overpay(self, game, player, amount):
+    def hook_overpay(self, game, player, amount):  # pylint: disable=unused-argument
+        """If we overpay"""
         for _ in range(amount):
             card = player.card_sel(
                 num=1,
@@ -45,20 +50,32 @@ class Card_Herald(Card.Card):
 
 ###############################################################################
 class Test_Herald(unittest.TestCase):
+    """Test Herald"""
+
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Herald", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Herald"].remove()
 
-    def test_play(self):
-        """Play a Herald"""
-        self.plr.deck.set("Moat", "Copper")
+    def test_play_action(self):
+        """Play a Herald  - action top card"""
+        self.plr.deck.set("Province", "Estate", "Copper", "Moat", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
         self.assertEqual(self.plr.actions.get(), 1 + 1)
+        self.assertIn("Duchy", self.plr.hand)
         self.assertIn("Moat", self.plr.played)
+
+    def test_play_nonaction(self):
+        """Play a Herald - non-action top card"""
+        self.plr.deck.set("Gold", "Copper")
+        self.plr.add_card(self.card, "hand")
+        self.plr.play_card(self.card)
+        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.actions.get(), 1 + 1)
+        self.assertIn("Gold", self.plr.deck)
 
     def test_buy(self):
         """Buy a Herald"""

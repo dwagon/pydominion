@@ -22,9 +22,7 @@ class Hex_Locusts(Hex.Hex):
             player.output("Gaining a curse because your next card is {}".format(nxt.name))
             player.gain_card("Curse")
         else:
-            player.output(
-                "Gain a card costing {} because your next card is {}".format(nxt.cost - 1, nxt.name)
-            )
+            player.output("Gain a card costing {} because your next card is {}".format(nxt.cost - 1, nxt.name))
             types = {
                 Card.CardType.VICTORY: nxt.isVictory(),
                 Card.CardType.TREASURE: nxt.isTreasure(),

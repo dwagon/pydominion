@@ -12,7 +12,9 @@ class Card_Island(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY]
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""
+        self.desc = (
+            """Set aside this and another card from your hand. Return them to your deck at the end of the game.  2VP"""
+        )
         self.name = "Island"
         self.cost = 4
         self.victory = 2

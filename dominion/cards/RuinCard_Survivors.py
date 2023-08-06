@@ -14,9 +14,7 @@ class Card_Survivors(Card.Card):
         self.base = Card.CardExpansion.DARKAGES
         self.purchasable = False
         self.cost = 0
-        self.desc = (
-            "Look at the top 2 cards of your deck. Discard them or put them back in any order."
-        )
+        self.desc = "Look at the top 2 cards of your deck. Discard them or put them back in any order."
         self.name = "Survivors"
 
     def special(self, game, player):

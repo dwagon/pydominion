@@ -11,9 +11,7 @@ class Card_OldWitch(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = (
-            """+3 Cards; Each other player gains a Curse and may trash a Curse from their hand."""
-        )
+        self.desc = """+3 Cards; Each other player gains a Curse and may trash a Curse from their hand."""
         self.required_cards = ["Curse"]
         self.cards = 3
         self.name = "Old Witch"

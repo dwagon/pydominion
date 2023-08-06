@@ -8,20 +8,20 @@ from dominion import Game, Card
 class Card_Merchant_Camp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.DURATION, Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.cardtype = [
+            Card.CardType.DURATION,
+            Card.CardType.ACTION,
+            Card.CardType.LIAISON,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.name = "Merchant Camp"
         self.actions = 2
         self.coin = 1
-        self.desc = (
-            "+2 Actions; +$1; When you discard this from play, you may put it onto your deck."
-        )
+        self.desc = "+2 Actions; +$1; When you discard this from play, you may put it onto your deck."
         self.cost = 3
 
     def hook_discard_this_card(self, game, player, source):
-        opt = player.plr_choose_options(
-            "Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False)
-        )
+        opt = player.plr_choose_options("Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False))
         if opt:
             player.move_card(self, "topdeck")
 
@@ -29,9 +29,7 @@ class Card_Merchant_Camp(Card.Card):
 ###############################################################################
 class Test_Merchant_Camp(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Merchant Camp", "moat"], ally="Plateau Shepherds"
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Merchant Camp", "moat"], ally="Plateau Shepherds")
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Merchant Camp"].remove()

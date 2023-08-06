@@ -11,7 +11,11 @@ class Card_Village_Green(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.DURATION,
+            Card.CardType.REACTION,
+        ]
         self.cost = 4
         self.name = "Village Green"
         self.base = Card.CardExpansion.MENAGERIE

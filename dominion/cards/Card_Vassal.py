@@ -14,16 +14,14 @@ class Card_Vassal(Card.Card):
         self.name = "Vassal"
         self.coin = 2
         self.cost = 3
-        self.desc = (
-            "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
-        )
+        self.desc = "+2 Coin; Discard the top card of your deck. If it is an Action card, you may play it."
 
     def special(self, game, player):
         card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
             player.add_card(card, "hand")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
         else:
             player.add_card(card, "discard")
 

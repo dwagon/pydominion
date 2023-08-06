@@ -24,9 +24,7 @@ class Card_Treasurehunter(Card.Card):
         """Gain a Silver per card the player to your right gained in his last turn"""
         righty = game.playerToRight(player)
         numsilver = len(righty.stats["gained"])
-        player.output(
-            "Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver)
-        )
+        player.output("Gaining %d silvers as %s gained %d cards" % (numsilver, righty.name, numsilver))
         for _ in range(numsilver):
             player.gain_card("Silver")
 
