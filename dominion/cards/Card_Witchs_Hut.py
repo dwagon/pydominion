@@ -38,7 +38,9 @@ class Test_Witchs_Hut(unittest.TestCase):
     """Test Witchs Hut"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Witch's Hut", "Moat", "Chapel"])
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Witch's Hut", "Moat", "Chapel"]
+        )
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Witch's Hut"].remove()

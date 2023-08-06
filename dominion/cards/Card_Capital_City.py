@@ -51,7 +51,13 @@ class Test_Capital_City(unittest.TestCase):
         self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
         self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "Gain"]
+        self.plr.test_input = [
+            "Discard",
+            "Discard Estate",
+            "Discard Duchy",
+            "Finish",
+            "Gain",
+        ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2 + 2)
@@ -63,7 +69,13 @@ class Test_Capital_City(unittest.TestCase):
         self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
         self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
         self.plr.add_card(self.card, "hand")
-        self.plr.test_input = ["Discard", "Discard Estate", "Discard Duchy", "Finish", "nothing"]
+        self.plr.test_input = [
+            "Discard",
+            "Discard Estate",
+            "Discard Duchy",
+            "Finish",
+            "nothing",
+        ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.hand.size(), 4 + 1 - 2)

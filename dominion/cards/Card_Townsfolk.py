@@ -24,7 +24,9 @@ class TownsfolkCardPile(CardPile.CardPile):
         self.mapping = game.getSetCardClasses(
             "Townsfolk", game.cardpath, "dominions/cards", "Card_"
         )
-        super().__init__(cardname="Townsfolk", klass=None, game=game, pile_size=pile_size)
+        super().__init__(
+            cardname="Townsfolk", klass=None, game=game, pile_size=pile_size
+        )
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel

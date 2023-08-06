@@ -13,9 +13,7 @@ class Card_Overlord(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.COMMAND]
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = (
-            "Play a non-Command Action card from the Supply costing up to $5, leaving it there."
-        )
+        self.desc = "Play a non-Command Action card from the Supply costing up to $5, leaving it there."
         self.name = "Overlord"
         self.debtcost = 8
 

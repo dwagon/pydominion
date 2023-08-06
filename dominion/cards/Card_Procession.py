@@ -22,7 +22,9 @@ class Card_Procession(Card.Card):
         if not actcards:
             player.output("No suitable action cards")
             return
-        cards = player.card_sel(prompt="Select a card to play twice, then trash", cardsrc=actcards)
+        cards = player.card_sel(
+            prompt="Select a card to play twice, then trash", cardsrc=actcards
+        )
         if not cards:
             return
         card = cards[0]

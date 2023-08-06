@@ -12,9 +12,7 @@ class Ally_Architects_Guild(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = (
-            "When you gain a card, you may spend 2 Favors to gain a cheaper non-Victory card."
-        )
+        self.desc = "When you gain a card, you may spend 2 Favors to gain a cheaper non-Victory card."
         self.name = "Architects Guild"
 
     def hook_gain_card(self, game, player, card):
@@ -35,7 +33,9 @@ class Test_Architects_Guild(unittest.TestCase):
     """Test Architects Guild"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Architects Guild", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Architects Guild", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

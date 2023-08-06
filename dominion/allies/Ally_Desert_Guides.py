@@ -37,7 +37,9 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_Desert_Guides(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Desert Guides", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Desert Guides", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

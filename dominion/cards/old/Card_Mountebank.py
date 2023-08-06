@@ -27,7 +27,9 @@ class Card_Mountebank(Card.Card):
                     break
             else:
                 player.output("Player %s gained a curse and a copper" % plr.name)
-                plr.output("Gained a Curse and Copper due to %s's Mountebank" % player.name)
+                plr.output(
+                    "Gained a Curse and Copper due to %s's Mountebank" % player.name
+                )
                 plr.add_card(game["Curse"].remove())
                 plr.add_card(game["Copper"].remove())
 

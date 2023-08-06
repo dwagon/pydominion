@@ -14,7 +14,9 @@ class Project_Cathedral(Project.Project):
         self.cost = 3
 
     def hook_start_turn(self, game, player):
-        player.plr_trash_card(num=1, force=True, prompt="Cathedral forces you to trash a card")
+        player.plr_trash_card(
+            num=1, force=True, prompt="Cathedral forces you to trash a card"
+        )
 
 
 ###############################################################################

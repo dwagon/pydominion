@@ -67,7 +67,9 @@ class Test_Golem(unittest.TestCase):
     def test_golem(self):
         """Ensure golem isn't picked up"""
         self.plr.hand.set()
-        self.plr.deck.set("Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper")
+        self.plr.deck.set(
+            "Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper"
+        )
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
         self.assertEqual(

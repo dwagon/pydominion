@@ -18,7 +18,9 @@ class Project_StarChart(Project.Project):
         choices = []
         for name in names:
             choices.append(("Put {} on top".format(name), name))
-        opt = player.plr_choose_options("Pick a card to put on top of your deck", *choices)
+        opt = player.plr_choose_options(
+            "Pick a card to put on top of your deck", *choices
+        )
         card = player.discardpile[opt]
         player.move_card(card, "topdeck")
 

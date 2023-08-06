@@ -11,7 +11,9 @@ class Card_Fortress(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = """+1 Card +2 Actions. When you trash this, put it into your hand."""
+        self.desc = (
+            """+1 Card +2 Actions. When you trash this, put it into your hand."""
+        )
         self.name = "Fortress"
         self.cards = 1
         self.actions = 2

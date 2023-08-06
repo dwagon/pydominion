@@ -11,9 +11,7 @@ class Card_Livery(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = (
-            """+3 Coins; This turn, when you gain a card costing 4 Coins or more, gain a Horse."""
-        )
+        self.desc = """+3 Coins; This turn, when you gain a card costing 4 Coins or more, gain a Horse."""
         self.name = "Livery"
         self.coin = 3
         self.cost = 5

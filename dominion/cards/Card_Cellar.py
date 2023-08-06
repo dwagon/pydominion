@@ -11,7 +11,9 @@ class Card_Cellar(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
-        self.desc = "+1 Action; Discard any number of cards. +1 card per card discarded."
+        self.desc = (
+            "+1 Action; Discard any number of cards. +1 card per card discarded."
+        )
         self.name = "Cellar"
         self.actions = 1
         self.cost = 2

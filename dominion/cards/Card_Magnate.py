@@ -44,7 +44,9 @@ class Test_Magnate(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         orig = self.plr.hand.size()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), orig + 2 - 1)  # 2 for magnate, -1 for played
+        self.assertEqual(
+            self.plr.hand.size(), orig + 2 - 1
+        )  # 2 for magnate, -1 for played
 
 
 ###############################################################################

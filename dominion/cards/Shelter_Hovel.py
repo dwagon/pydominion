@@ -22,7 +22,9 @@ class Card_Hovel(Card.Card):
     def hook_gain_card(self, game, player, card):
         if not card.isVictory():
             return
-        to_trash = player.plr_choose_options("Trash Hovel?", ("Trash it", True), ("Keep it", False))
+        to_trash = player.plr_choose_options(
+            "Trash Hovel?", ("Trash it", True), ("Keep it", False)
+        )
         if to_trash:
             player.trash_card(self)
 

@@ -46,7 +46,9 @@ class Test_Patrol(unittest.TestCase):
     def test_play(self):
         self.plr.hand.set()
         self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold")
+        self.plr.deck.set(
+            "Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold"
+        )
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertIn("Province", self.plr.hand)

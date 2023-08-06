@@ -30,7 +30,9 @@ class TextPlayer(Player):
     ###########################################################################
     def output(self, msg, end="\n"):
         if not self.quiet:
-            sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
+            sys.stdout.write(
+                "%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL)
+            )
             try:
                 sys.stdout.write("%s: " % (self.currcards[0].name))
             except IndexError:
@@ -141,7 +143,9 @@ class TextPlayer(Player):
         return selectfrom
 
     ###########################################################################
-    def card_sel(self, num=1, **kwargs):  # pylint: disable=too-many-locals, too-many-branches
+    def card_sel(
+        self, num=1, **kwargs
+    ):  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset
         * force
@@ -184,7 +188,11 @@ class TextPlayer(Player):
         types = self._type_selector(types)
         while True:
             options = []
-            if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
+            if (
+                anynum
+                or (force and num == len(selected))
+                or (not force and num >= len(selected))
+            ):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1

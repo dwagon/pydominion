@@ -11,7 +11,9 @@ class Card_Forge(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"
+        self.desc = (
+            "Trash cards from hand and gain one worth the sum of the trashed cards"
+        )
         self.name = "Forge"
         self.cost = 7
 
@@ -27,7 +29,9 @@ class Card_Forge(Card.Card):
         player.output("Costs = %s" % ", ".join(sorted(list(availcosts))))
         tc = player.plr_trash_card(anynum=True, num=0, printcost=True)
         cost = sum(_.cost for _ in tc)
-        player.plr_gain_card(cost=cost, modifier="equal", prompt=f"Gain card worth {cost}")
+        player.plr_gain_card(
+            cost=cost, modifier="equal", prompt=f"Gain card worth {cost}"
+        )
 
 
 ###############################################################################

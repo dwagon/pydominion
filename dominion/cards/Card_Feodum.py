@@ -46,7 +46,9 @@ class Test_Feodum(unittest.TestCase):
     def test_scoreTwo(self):
         self.plr.hand.set("Feodum")
         self.plr.deck.set("Feodum")
-        self.plr.discardpile.set("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
+        self.plr.discardpile.set(
+            "Silver", "Silver", "Silver", "Silver", "Silver", "Silver"
+        )
         self.assertEqual(self.plr.get_score_details()["Feodum"], 4)
 
     def test_trash(self):

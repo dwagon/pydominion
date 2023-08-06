@@ -9,17 +9,25 @@ from dominion.cards.Card_Castles import CastleCard
 class Card_SmallCastle(CastleCard):
     def __init__(self):
         CastleCard.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY, Card.CardType.CASTLE]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.VICTORY,
+            Card.CardType.CASTLE,
+        ]
         self.base = Card.CardExpansion.EMPIRES
         self.cost = 5
-        self.desc = "Trash this or a Castle from your hand. If you do, gain a Castle. 2VP"
+        self.desc = (
+            "Trash this or a Castle from your hand. If you do, gain a Castle. 2VP"
+        )
         self.coin = 1
         self.name = "Small Castle"
         self.victory = 2
 
     def special(self, game, player):
         cards = [c for c in player.hand if c.isCastle()] + [self]
-        tr = player.plr_trash_card(prompt="Trash a Castle to gain another Castle", cardsrc=cards)
+        tr = player.plr_trash_card(
+            prompt="Trash a Castle to gain another Castle", cardsrc=cards
+        )
         if tr:
             newcast = player.gain_card("Castles")
             player.output("Gained %s" % newcast.name)

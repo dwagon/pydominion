@@ -36,7 +36,9 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_CaveDwellers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Cave Dwellers", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Cave Dwellers", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

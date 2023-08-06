@@ -29,7 +29,9 @@ class Card_Catapult(Card.Card):
                 plr.output(f"{player.name}'s Catapult Curses you")
                 plr.gain_card("Curse")
             if card.isTreasure():
-                plr.output(f"{player.name}'s Catapult forces you to discard down to 3 cards")
+                plr.output(
+                    f"{player.name}'s Catapult forces you to discard down to 3 cards"
+                )
                 plr.plr_discard_down_to(3)
 
 

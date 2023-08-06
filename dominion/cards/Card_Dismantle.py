@@ -11,9 +11,7 @@ class Card_Dismantle(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROMO
-        self.desc = (
-            "Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold."
-        )
+        self.desc = "Trash a card from your hand. If it costs 1 or more, gain a cheaper card and a Gold."
         self.name = "Dismantle"
         self.cost = 4
 

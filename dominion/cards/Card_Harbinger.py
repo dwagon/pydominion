@@ -19,7 +19,9 @@ class Card_Harbinger(Card.Card):
 
     def special(self, game, player):
         index = 1
-        options = [{"selector": "0", "print": "Don't look through discard pile", "card": None}]
+        options = [
+            {"selector": "0", "print": "Don't look through discard pile", "card": None}
+        ]
         already = []
         for c in player.discardpile:
             sel = f"{index}"
@@ -32,7 +34,9 @@ class Card_Harbinger(Card.Card):
         if not already:
             player.output("No suitable cards")
             return
-        player.output("Look through your discard pile. You may put a card from it onto your deck.")
+        player.output(
+            "Look through your discard pile. You may put a card from it onto your deck."
+        )
         o = player.user_input(options, "Which Card? ")
         if not o["card"]:
             return

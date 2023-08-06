@@ -23,7 +23,9 @@ class Card_Transmute(Card.Card):
         Victory card, gain a gold"""
         player.output("Trash a card to gain...")
         options = []
-        options.append({"selector": "0", "print": "Trash Nothing", "card": None, "gain": None})
+        options.append(
+            {"selector": "0", "print": "Trash Nothing", "card": None, "gain": None}
+        )
         index = 1
         for c in player.hand:
             sel = "%d" % index
@@ -47,7 +49,9 @@ class Card_Transmute(Card.Card):
 ###############################################################################
 class Test_Transmute(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Transmute"], badcards=["Duchess"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Transmute"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Transmute"].remove()

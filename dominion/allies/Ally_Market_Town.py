@@ -36,7 +36,9 @@ class Test_Market_Towns(unittest.TestCase):
     """Test Market Towns"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Market Towns", initcards=["Underling", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Market Towns", initcards=["Underling", "Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

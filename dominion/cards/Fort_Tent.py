@@ -10,7 +10,10 @@ class Card_Tent(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.FORT]  # pylint: disable=no-member
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.FORT,
+        ]  # pylint: disable=no-member
         self.base = Card.CardExpansion.ALLIES
         self.cost = 3
         self.coin = 2
@@ -29,7 +32,9 @@ class Card_Tent(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         opt = player.plr_choose_options(
-            "How to discard the Tent?", ("Discard as normal", False), ("Put it on to deck", True)
+            "How to discard the Tent?",
+            ("Discard as normal", False),
+            ("Put it on to deck", True),
         )
         if opt:
             player.move_card(self, "topdeck")

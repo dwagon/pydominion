@@ -9,7 +9,11 @@ import dominion.Card as Card
 class Card_Soldier(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.TRAVELLER]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.TRAVELLER,
+        ]
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""
@@ -48,7 +52,9 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class Test_Soldier(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Peasant", "Militia"])
+        self.g = Game.TestGame(
+            quiet=True, numplayers=2, initcards=["Peasant", "Militia"]
+        )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Soldier"].remove()

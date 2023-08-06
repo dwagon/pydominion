@@ -9,7 +9,11 @@ from dominion import Game, Card
 class Card_Distant_Shore(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.VICTORY, Card.CardType.ODYSSEY]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.VICTORY,
+            Card.CardType.ODYSSEY,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.cost = 6
         self.name = "Distant Shore"

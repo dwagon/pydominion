@@ -22,7 +22,9 @@ class Ally_League_Bankers(Ally.Ally):
 ###############################################################################
 class Test_League_Bankers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="League of Bankers", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="League of Bankers", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

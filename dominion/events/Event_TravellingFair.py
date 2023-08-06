@@ -10,7 +10,9 @@ class Event_TravellingFair(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "+2 Buys; When you gain a card this turn, you may put it onto your deck."
+        self.desc = (
+            "+2 Buys; When you gain a card this turn, you may put it onto your deck."
+        )
         self.name = "Travelling Fair"
         self.cost = 2
         self.buys = 2

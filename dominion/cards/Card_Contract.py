@@ -11,7 +11,11 @@ class Card_Contract(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.TREASURE, Card.CardType.DURATION, Card.CardType.LIAISON]
+        self.cardtype = [
+            Card.CardType.TREASURE,
+            Card.CardType.DURATION,
+            Card.CardType.LIAISON,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.name = "Contract"
         self.desc = """$2; +1 Favor; You may set aside an Action from your hand

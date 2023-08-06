@@ -12,7 +12,9 @@ class Event_Bargain(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "Gain a non-Victory card costing up to $5. Each other player gains a Horse."
+        self.desc = (
+            "Gain a non-Victory card costing up to $5. Each other player gains a Horse."
+        )
         self.name = "Bargain"
         self.cost = 4
         self.required_cards = [("Card", "Horse")]

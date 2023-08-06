@@ -9,7 +9,11 @@ import dominion.Card as Card
 class Card_Pasture(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.TREASURE, Card.CardType.VICTORY, Card.CardType.HEIRLOOM]
+        self.cardtype = [
+            Card.CardType.TREASURE,
+            Card.CardType.VICTORY,
+            Card.CardType.HEIRLOOM,
+        ]
         self.base = Card.CardExpansion.NOCTURNE
         self.desc = "+1 Coin; Worth 1VP per Estate you have"
         self.name = "Pasture"

@@ -16,7 +16,9 @@ class Event_Quest(Event.Event):
     def special(self, game, player):
         """You may discard an attack, two curses or six cards. If you do, gain a gold"""
         player.output("Discard any number of cards")
-        player.output("If you discard an Attack Card or Two Curses or Six Cards you gain a Gold")
+        player.output(
+            "If you discard an Attack Card or Two Curses or Six Cards you gain a Gold"
+        )
         discards = player.plr_discard_cards(anynum=True)
         attack_flag = False
         curses = 0

@@ -42,7 +42,9 @@ class Ally_Woodworkers_Guild(Ally.Ally):
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pylint: disable=unused-argument
+def botresponse(
+    player, kind, args=None, kwargs=None
+):  # pylint: disable=unused-argument
     """Bot response - just do nothing"""
     return False
 

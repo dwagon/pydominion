@@ -21,7 +21,9 @@ class Card_NightWatchman(Card.Card):
         for _ in range(5):
             c = player.next_card()
             cards.append(c)
-        player.output("Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards]))
+        player.output(
+            "Top 5 cards on the deck are: %s" % ", ".join([_.name for _ in cards])
+        )
         for c in cards:
             discard = player.plr_choose_options(
                 "What do you want to do?",

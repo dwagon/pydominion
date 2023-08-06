@@ -24,7 +24,9 @@ class Card_Rabble(Card.Card):
             c = victim.next_card()
             victim.reveal_card(c)
             if c.isAction() or c.isTreasure():
-                victim.output("Discarding %s due to %s's rabble" % (c.name, attacker.name))
+                victim.output(
+                    "Discarding %s due to %s's rabble" % (c.name, attacker.name)
+                )
                 attacker.output("%s discarding %s" % (victim.name, c.name))
                 victim.discard_card(c)
             else:

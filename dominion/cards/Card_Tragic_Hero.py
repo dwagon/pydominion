@@ -26,7 +26,9 @@ class Card_Tragic_Hero(Card.Card):
 ###############################################################################
 class Test_Tragic_Hero(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tragic Hero"].remove()

@@ -13,7 +13,9 @@ class Card_Cobbler(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.NIGHT, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "At the start of your next turn, gain a card to your hand costing up to 4."
+        self.desc = (
+            "At the start of your next turn, gain a card to your hand costing up to 4."
+        )
         self.name = "Cobbler"
         self.cost = 5
 

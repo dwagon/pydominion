@@ -23,7 +23,9 @@ class Card_Embassy(Card.Card):
         """When you gain this, each other player gains a Silver"""
         for plr in game.player_list():
             if plr != player:
-                plr.output("Gained a silver from %s's purchase of Embassy" % player.name)
+                plr.output(
+                    "Gained a silver from %s's purchase of Embassy" % player.name
+                )
                 plr.gain_card("Silver")
         return {}
 

@@ -28,7 +28,9 @@ class Card_Animal_Fair(Card.Card):
         actions = [_ for _ in player.hand if _.isAction()]
         if not actions:
             return 0
-        tc = player.plr_trash_card(prompt="Trash card to get Animal Fair for free", cardsrc=actions)
+        tc = player.plr_trash_card(
+            prompt="Trash card to get Animal Fair for free", cardsrc=actions
+        )
         if tc:
             return -7
         return 0

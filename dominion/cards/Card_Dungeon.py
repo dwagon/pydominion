@@ -37,7 +37,9 @@ class Test_Dungeon(unittest.TestCase):
 
     def test_playcard(self):
         """Play a dungeon"""
-        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold")
+        self.plr.deck.set(
+            "Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold"
+        )
         self.plr.hand.set("Province", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["province", "duchy", "finish"]

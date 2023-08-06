@@ -59,7 +59,9 @@ class Card_BorderGuard(Card.Card):
 ###############################################################################
 class Test_BorderGuard(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Border Guard", "Moat", "Guide"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Border Guard", "Moat", "Guide"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Border Guard"].remove()

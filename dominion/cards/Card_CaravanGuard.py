@@ -11,7 +11,11 @@ class Card_CaravanGuard(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION, Card.CardType.REACTION]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.DURATION,
+            Card.CardType.REACTION,
+        ]
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+1 Card, +1 Action. At the start of your next turn, +1 Coin.
             When another player plays an Attack card, you may play this from
@@ -37,7 +41,9 @@ class Test_CaravanGuard(unittest.TestCase):
     """Test Caravan Guard"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Caravan Guard", "Militia", "Moat"]
+        )
         self.g.start_game()
         self.plr, self.attacker = self.g.player_list()
         self.card = self.g["Caravan Guard"].remove()

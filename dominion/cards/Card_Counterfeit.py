@@ -26,7 +26,9 @@ class Card_Counterfeit(Card.Card):
             if c.isTreasure():
                 sel = "%d" % index
                 index += 1
-                options.append({"selector": sel, "print": "Play %s twice" % c.name, "card": c})
+                options.append(
+                    {"selector": sel, "print": "Play %s twice" % c.name, "card": c}
+                )
         if index == 1:
             return
         o = player.user_input(options, "What to do?")

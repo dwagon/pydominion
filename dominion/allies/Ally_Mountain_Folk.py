@@ -29,7 +29,9 @@ class Ally_Mountain_Folk(Ally.Ally):
 ###############################################################################
 class Test_Mountain_Folk(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Mountain Folk", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Mountain Folk", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

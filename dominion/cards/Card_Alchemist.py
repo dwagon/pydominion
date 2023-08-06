@@ -62,7 +62,9 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.alchemist)
         self.plr.discard_hand()
-        self.assertEqual(self.plr.discardpile.size(), 9)  # 5 for hand, +2 cards, alch, pot
+        self.assertEqual(
+            self.plr.discardpile.size(), 9
+        )  # 5 for hand, +2 cards, alch, pot
         self.assertIn("Alchemist", self.plr.discardpile)
 
     def test_keep(self):

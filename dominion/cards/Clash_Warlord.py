@@ -55,7 +55,9 @@ class Test_Warlord(unittest.TestCase):
     """Test Warlord"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, initcards=["Clashes", "Militia"], use_liaisons=True)
+        self.g = Game.TestGame(
+            numplayers=2, initcards=["Clashes", "Militia"], use_liaisons=True
+        )
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
 

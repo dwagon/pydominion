@@ -11,7 +11,11 @@ class Card_Warrior(Card.Card):
 
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.TRAVELLER]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.TRAVELLER,
+        ]
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = """+2 Cards; For each traveller you have in play
         (including this) each other player discards

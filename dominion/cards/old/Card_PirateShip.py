@@ -53,7 +53,9 @@ class Card_PirateShip(Card.Card):
             if card.isTreasure():
                 cards.append(card)
             else:
-                victim.output("%s's Pirate Ship discarded your %s" % (player.name, card.name))
+                victim.output(
+                    "%s's Pirate Ship discarded your %s" % (player.name, card.name)
+                )
                 victim.add_card(card, "discard")
         if cards:
             to_trash = player.plr_trash_card(

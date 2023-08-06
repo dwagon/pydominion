@@ -11,9 +11,7 @@ class Card_Duplicate(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = (
-            "When you gain a card costing up to 6, you may call this to gain a copy of that card"
-        )
+        self.desc = "When you gain a card costing up to 6, you may call this to gain a copy of that card"
         self.name = "Duplicate"
         self.cost = 4
         self.when = ["special"]

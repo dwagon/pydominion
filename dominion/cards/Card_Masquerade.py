@@ -30,7 +30,9 @@ class Card_Masquerade(Card.Card):
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.player_to_left(plr).name
-        cards = plr.card_sel(prompt=f"Which card to give to {leftplr}?", num=1, force=True)
+        cards = plr.card_sel(
+            prompt=f"Which card to give to {leftplr}?", num=1, force=True
+        )
         card = cards[0]
         plr.hand.remove(card)
         plr.output(f"Gave {card.name} to {leftplr}")

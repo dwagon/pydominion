@@ -10,9 +10,7 @@ class Landmark_Orchard(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = (
-            "When scoring, 4VP per differently named Action card you have 3 or more copies of."
-        )
+        self.desc = "When scoring, 4VP per differently named Action card you have 3 or more copies of."
         self.name = "Orchard"
 
     def hook_end_of_game(self, game, player):

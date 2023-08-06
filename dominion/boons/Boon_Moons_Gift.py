@@ -12,7 +12,9 @@ class Boon_Moons_Gift(Boon.Boon):
         Boon.Boon.__init__(self)
         self.cardtype = Card.CardType.BOON
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "Look through your discard pile. You may put a card from it onto your deck"
+        self.desc = (
+            "Look through your discard pile. You may put a card from it onto your deck"
+        )
         self.name = "The Moon's Gift"
         self.purchasable = False
 
@@ -35,7 +37,9 @@ class Boon_Moons_Gift(Boon.Boon):
 ###############################################################################
 class Test_Moons_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
+        self.g = Game.TestGame(
+            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:

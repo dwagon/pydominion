@@ -11,7 +11,9 @@ class Way_Seal(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
+        self.desc = (
+            "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
+        )
         self.name = "Way of the Seal"
 
     def special(self, game, player):

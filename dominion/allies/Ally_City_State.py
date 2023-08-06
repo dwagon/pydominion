@@ -10,9 +10,7 @@ class Ally_CityState(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = (
-            """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
-        )
+        self.desc = """When you gain an Action card during your turn, you may spend 2 Favors to play it."""
         self.name = "City State"
 
     def hook_gain_card(self, game, player, card):

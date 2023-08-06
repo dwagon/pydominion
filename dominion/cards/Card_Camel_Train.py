@@ -20,7 +20,9 @@ class Card_Camel_Train(Card.Card):
         return "Exile a non-Victory card from the Supply."
 
     def special(self, game, player):
-        cards = [_ for _ in game.cardpiles.values() if not _.isVictory() and not _.is_empty()]
+        cards = [
+            _ for _ in game.cardpiles.values() if not _.isVictory() and not _.is_empty()
+        ]
         toex = player.card_sel(prompt="Pick a card to Exile", cardsrc=cards)
         if toex:
             player.exile_card(toex[0].name)

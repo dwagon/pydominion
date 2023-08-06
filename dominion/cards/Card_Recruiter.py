@@ -11,7 +11,9 @@ class Card_Recruiter(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""
+        self.desc = (
+            """+2 Cards; Trash a card from your hand. +1 Villager per coin it costs."""
+        )
         self.name = "Recruiter"
         self.cards = 2
         self.cost = 5

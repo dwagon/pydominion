@@ -22,8 +22,12 @@ class Card_Odysseys(Card.Card):
 ###############################################################################
 class OdysseyCardPile(CardPile.CardPile):
     def __init__(self, game, pile_size=12):
-        self.mapping = game.getSetCardClasses("Odysseys", game.cardpath, "dominions/cards", "Card_")
-        super().__init__(cardname="Odysseys", klass=None, game=game, pile_size=pile_size)
+        self.mapping = game.getSetCardClasses(
+            "Odysseys", game.cardpath, "dominions/cards", "Card_"
+        )
+        super().__init__(
+            cardname="Odysseys", klass=None, game=game, pile_size=pile_size
+        )
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel
@@ -33,7 +37,12 @@ class OdysseyCardPile(CardPile.CardPile):
         from dominion.cards.Odyssey_Distant_Shore import Card_Distant_Shore
 
         self._cards = []
-        for crd in (Card_Old_Map, Card_Voyage, Card_Sunken_Treasure, Card_Distant_Shore):
+        for crd in (
+            Card_Old_Map,
+            Card_Voyage,
+            Card_Sunken_Treasure,
+            Card_Distant_Shore,
+        ):
             for _ in range(4):
                 self._cards.insert(0, crd())
 

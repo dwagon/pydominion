@@ -47,7 +47,10 @@ class Test_Contraband(unittest.TestCase):
 
     def setUp(self):
         self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Contraband"], badcards=["Fool's Gold"]
+            numplayers=2,
+            oldcards=True,
+            initcards=["Contraband"],
+            badcards=["Fool's Gold"],
         )
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()

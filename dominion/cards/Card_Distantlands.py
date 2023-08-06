@@ -9,7 +9,11 @@ import dominion.Card as Card
 class Card_Distantlands(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.RESERVE, Card.CardType.VICTORY]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.RESERVE,
+            Card.CardType.VICTORY,
+        ]
         self.base = Card.CardExpansion.ADVENTURE
         self.desc = "Worth 4 VP if on your tavern mat at the end of the game, else 0"
         self.name = "Distant Lands"

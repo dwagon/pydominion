@@ -73,7 +73,9 @@ class Card_Rogue(Card.Card):
                 picked.add(c.name)
                 sel = "%d" % index
                 index += 1
-                options.append({"selector": sel, "print": "Take %s" % c.name, "card": c})
+                options.append(
+                    {"selector": sel, "print": "Take %s" % c.name, "card": c}
+                )
         if index == 1:
             return False
         o = player.user_input(options, "Pick a card from the trash")

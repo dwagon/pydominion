@@ -11,9 +11,7 @@ class Card_Zombie_Mason(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
-        )
+        self.desc = "Trash the top card of your deck. You may gain a card costing up to 1 more than it."
         self.name = "Zombie Mason"
         self.cost = 3
         self.insupply = False

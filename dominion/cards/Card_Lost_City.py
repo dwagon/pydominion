@@ -28,7 +28,10 @@ class Card_Lost_City(Card.Card):
         for pl in game.player_list():
             if pl != player:
                 c = pl.pickup_card()
-                pl.output("Picking up a %s due to %s playing a Lost City" % (c.name, player.name))
+                pl.output(
+                    "Picking up a %s due to %s playing a Lost City"
+                    % (c.name, player.name)
+                )
         return {}
 
 

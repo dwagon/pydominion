@@ -18,7 +18,9 @@ class Card_Nobles(Card.Card):
 
     def special(self, game, player):
         """Choose one: +3 Cards; or +2 Actions"""
-        cards = player.plr_choose_options("Choose one", ("+3 Cards", True), ("+2 Actions", False))
+        cards = player.plr_choose_options(
+            "Choose one", ("+3 Cards", True), ("+2 Actions", False)
+        )
         if cards:
             player.pickup_cards(3)
         else:

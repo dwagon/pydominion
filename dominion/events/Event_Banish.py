@@ -20,7 +20,9 @@ class Event_Banish(Event.Event):
         cardnames = {_.name for _ in player.hand}
         options = [("Exile nothing", None)]
         for cname in cardnames:
-            options.append((f"Exile {cname} ({player.hand.count(cname)} in hand)", cname))
+            options.append(
+                (f"Exile {cname} ({player.hand.count(cname)} in hand)", cname)
+            )
         card = player.plr_choose_options("Pick a card to exile", *options)
         if card is None:
             return

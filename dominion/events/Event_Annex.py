@@ -49,7 +49,9 @@ class Test_Annex(unittest.TestCase):
 
     def test_play(self):
         """Perform Annex"""
-        self.plr.discardpile.set("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
+        self.plr.discardpile.set(
+            "Gold", "Silver", "Copper", "Province", "Moat", "Estate"
+        )
         self.plr.test_input = [
             "Silver",
             "Copper",

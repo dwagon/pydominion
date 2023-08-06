@@ -21,7 +21,9 @@ class Card_Navigator(Card.Card):
         cards = []
         for _ in range(5):
             cards.append(player.next_card())
-        player.output("Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards]))
+        player.output(
+            "Top 5 cards on the deck are: %s" % ", ".join([c.name for c in cards])
+        )
         discard = player.plr_choose_options(
             "What do you want to do?",
             ("Discard cards", True),

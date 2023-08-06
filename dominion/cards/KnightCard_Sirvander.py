@@ -10,7 +10,11 @@ from dominion.cards.Card_Knight import KnightCard
 class Card_Sirvander(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
-        self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK, Card.CardType.KNIGHT]
+        self.cardtype = [
+            Card.CardType.ACTION,
+            Card.CardType.ATTACK,
+            Card.CardType.KNIGHT,
+        ]
         self.base = Card.CardExpansion.DARKAGES
         self.desc = """Each other player reveals the top 2 cards of his deck,
         trashes one of them costing from 3 to 6, and discards the rest.

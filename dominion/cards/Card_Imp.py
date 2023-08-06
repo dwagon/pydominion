@@ -62,7 +62,9 @@ class Test_Imp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2 + 1)  # 2 for moat, 2 for imp, 1 for hand
+        self.assertEqual(
+            self.plr.hand.size(), 2 + 2 + 1
+        )  # 2 for moat, 2 for imp, 1 for hand
 
 
 ###############################################################################

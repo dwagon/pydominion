@@ -18,7 +18,9 @@ class Card_Stronghold(Card.Card):
         self.cost = 6
         self.victory = 2
         self.name = "Stronghold"
-        self.desc = """Choose one: +$3; or at the start of your next turn, +3 Cards. 2VP"""
+        self.desc = (
+            """Choose one: +$3; or at the start of your next turn, +3 Cards. 2VP"""
+        )
         self._choice = False
 
     def special(self, game, player):

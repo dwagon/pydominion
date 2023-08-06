@@ -9,7 +9,9 @@ class Event_Desperation(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "Once per turn: You may gain a Curse. If you do, +1 Buy and +2 Coin."
+        self.desc = (
+            "Once per turn: You may gain a Curse. If you do, +1 Buy and +2 Coin."
+        )
         self.name = "Desperation"
         self.cost = 0
         self.required_cards = ["Curse"]

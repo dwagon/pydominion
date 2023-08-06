@@ -63,7 +63,9 @@ class Test_Herald(unittest.TestCase):
         self.plr.deck.set("Province", "Estate", "Copper", "Moat", "Duchy")
         self.plr.add_card(self.card, "hand")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
+        self.assertEqual(
+            self.plr.hand.size(), 5 + 1 + 2
+        )  # 5 for hand, 1 for herald, 2 for moat
         self.assertEqual(self.plr.actions.get(), 1 + 1)
         self.assertIn("Duchy", self.plr.hand)
         self.assertIn("Moat", self.plr.played)

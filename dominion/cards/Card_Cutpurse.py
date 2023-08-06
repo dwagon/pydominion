@@ -10,9 +10,7 @@ class Card_Cutpurse(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
-        self.desc = (
-            "+2 coin; Each other player discards a Copper card (or reveals a hand with no Copper)."
-        )
+        self.desc = "+2 coin; Each other player discards a Copper card (or reveals a hand with no Copper)."
         self.name = "Cutpurse"
         self.coin = 2
         self.cost = 4

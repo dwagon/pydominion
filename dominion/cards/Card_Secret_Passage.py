@@ -11,9 +11,7 @@ class Card_SecretPassage(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.INTRIGUE
-        self.desc = (
-            """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""
-        )
+        self.desc = """+2 Cards; +1 Action; Take a card from your hand and put it anywhere in your deck."""
         self.name = "Secret Passage"
         self.cost = 4
         self.actions = 1
@@ -49,7 +47,9 @@ class Test_SecretPassage(unittest.TestCase):
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.actions.get(), 1)
-            self.assertEqual(self.plr.hand.size(), 5 + 2 - 1)  # Hand + SP - back on deck
+            self.assertEqual(
+                self.plr.hand.size(), 5 + 2 - 1
+            )  # Hand + SP - back on deck
             self.assertEqual(self.plr.deck[0].name, "Province")
         except AssertionError:  # pragma: no cover
             self.g.print_state()

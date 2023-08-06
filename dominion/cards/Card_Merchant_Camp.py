@@ -8,14 +8,16 @@ from dominion import Game, Card
 class Card_Merchant_Camp(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
-        self.cardtype = [Card.CardType.DURATION, Card.CardType.ACTION, Card.CardType.LIAISON]
+        self.cardtype = [
+            Card.CardType.DURATION,
+            Card.CardType.ACTION,
+            Card.CardType.LIAISON,
+        ]
         self.base = Card.CardExpansion.ALLIES
         self.name = "Merchant Camp"
         self.actions = 2
         self.coin = 1
-        self.desc = (
-            "+2 Actions; +$1; When you discard this from play, you may put it onto your deck."
-        )
+        self.desc = "+2 Actions; +$1; When you discard this from play, you may put it onto your deck."
         self.cost = 3
 
     def hook_discard_this_card(self, game, player, source):

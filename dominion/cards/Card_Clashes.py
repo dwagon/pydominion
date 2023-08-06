@@ -27,7 +27,9 @@ class ClashCardPile(CardPile.CardPile):
     """Pile of Clashes"""
 
     def __init__(self, game, pile_size=10):
-        self.mapping = game.getSetCardClasses("Clashes", game.cardpath, "dominions/cards", "Clash_")
+        self.mapping = game.getSetCardClasses(
+            "Clashes", game.cardpath, "dominions/cards", "Clash_"
+        )
         super().__init__(cardname="Clashes", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):

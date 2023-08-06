@@ -23,7 +23,10 @@ class Card_NativeVillage(Card.Card):
     def special(self, game, player):
         if not hasattr(player, "_native_map"):
             player._native_map = PlayArea.PlayArea([])
-        player.output("Native Village contains: %s" % ", ".join(c.name for c in player._native_map))
+        player.output(
+            "Native Village contains: %s"
+            % ", ".join(c.name for c in player._native_map)
+        )
         choice = player.plr_choose_options(
             "Choose One",
             (

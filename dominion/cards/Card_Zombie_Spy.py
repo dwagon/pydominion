@@ -11,9 +11,7 @@ class Card_Zombie_Spy(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ZOMBIE]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = (
-            "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
-        )
+        self.desc = "+1 Card; +1 Action; Look at the top card of your deck. Discard it or put it back."
         self.name = "Zombie Spy"
         self.cost = 3
         self.insupply = False
