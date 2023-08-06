@@ -10,3 +10,6 @@ colorama
 py-cpuinfo
 flake8
 pytest-xdist==1.34.0
+
+requests~=2.31.0
+setuptools~=67.6.1

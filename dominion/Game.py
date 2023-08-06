@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """ Dominion Game Code """
 # pylint: disable=too-many-arguments, too-many-branches, too-many-instance-attributes, invalid-name
 import glob
@@ -37,7 +37,6 @@ class Game:  # pylint: disable=too-many-public-methods
     """Game class"""
 
     def __init__(self, **kwargs):
-
         self.players = {}
         self.bot = False
         self.randobot = False
@@ -270,9 +269,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_landmarks(self):
         """TODO"""
-        self.landmarks = self._load_non_kingdom_cards(
-            "Landmark", self.landmarkcards, self.numlandmarks, LandmarkPile
-        )
+        self.landmarks = self._load_non_kingdom_cards("Landmark", self.landmarkcards, self.numlandmarks, LandmarkPile)
 
     ###########################################################################
     def _load_boons(self):
@@ -313,9 +310,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.projects:
             return
-        self.projects = self._load_non_kingdom_cards(
-            "Project", self.initprojects, self.numprojects, ProjectPile
-        )
+        self.projects = self._load_non_kingdom_cards("Project", self.initprojects, self.numprojects, ProjectPile)
 
     ###########################################################################
     def _load_ally(self):
@@ -582,18 +577,12 @@ class Game:  # pylint: disable=too-many-public-methods
                 mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, "cards", "Card_"))
         mapping["Event"] = self.getSetCardClasses("Event", self.eventpath, "events", "Event_")
         mapping["Way"] = self.getSetCardClasses("Way", self.waypath, "ways", "Way_")
-        mapping["Landmark"] = self.getSetCardClasses(
-            "Landmark", self.landmarkpath, "landmarks", "Landmark_"
-        )
+        mapping["Landmark"] = self.getSetCardClasses("Landmark", self.landmarkpath, "landmarks", "Landmark_")
         mapping["Boon"] = self.getSetCardClasses("Boon", self.boonpath, "boons", "Boon_")
         mapping["Hex"] = self.getSetCardClasses("Hex", self.hexpath, "hexes", "Hex_")
         mapping["State"] = self.getSetCardClasses("State", self.statepath, "states", "State_")
-        mapping["Artifact"] = self.getSetCardClasses(
-            "Artifact", self.artifactpath, "artifacts", "Artifact_"
-        )
-        mapping["Project"] = self.getSetCardClasses(
-            "Project", self.projectpath, "projects", "Project_"
-        )
+        mapping["Artifact"] = self.getSetCardClasses("Artifact", self.artifactpath, "artifacts", "Artifact_")
+        mapping["Project"] = self.getSetCardClasses("Project", self.projectpath, "projects", "Project_")
         mapping["Ally"] = self.getSetCardClasses("Ally", self.allypath, "allies", "Ally_")
         return mapping
 
@@ -753,10 +742,7 @@ class Game:  # pylint: disable=too-many-public-methods
             f"  turn: coin={plr.coins.get()} debt={plr.debt.get()} actions={plr.actions.get()}"
             f" buys={plr.buys.get()} favors={plr.favors.get()}"
         )
-        print(
-            f"  coffers={plr.coffers.get()} "
-            f"villagers={plr.villagers.get()} potions={plr.potions.get()}"
-        )
+        print(f"  coffers={plr.coffers.get()} " f"villagers={plr.villagers.get()} potions={plr.potions.get()}")
 
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
@@ -852,7 +838,10 @@ class Game:  # pylint: disable=too-many-public-methods
         """Dump info to help debug card location errors"""
         now = self._count_all_cards()
         print(f"{'- -' * 20}", file=sys.stderr)
-        print(f"current={self.count_cards()} original={self._total_cards}\n", file=sys.stderr)
+        print(
+            f"current={self.count_cards()} original={self._total_cards}\n",
+            file=sys.stderr,
+        )
         for pile in self.cardpiles.values():
             card = pile.name
             if self._original[card]["total"] == now[card]["total"]:

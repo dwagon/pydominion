@@ -75,6 +75,7 @@ class Card:
     """Card class"""
 
     def __init__(self):
+        self.name = ""
         self.basecard = False
         self.cost = -1
         self.debtcost = 0

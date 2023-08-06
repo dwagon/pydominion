@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """ All the Player based stuff """
 # pylint: disable=too-many-instance-attributes, too-many-public-methods
 from __future__ import annotations
@@ -404,7 +405,7 @@ class Player:
         return self.add_card(card, dest)
 
     ###########################################################################
-    def add_card(self, card: Card, pile: Union[str, PlayArea] = "discard") -> Card:
+    def add_card(self, card: Card, pile: Union[str, PlayArea] = "discard") -> Optional[Card]:
         """Add an existing card to a new location"""
         piles = {
             "discard": self.discardpile,
@@ -691,12 +692,7 @@ class Player:
                 if card in buyable:
                     buyable.remove(card)
             sel = chr(ord("a") + index)
-            if (
-                not self.debt
-                and self.buys
-                and card in buyable
-                and card not in self.forbidden_to_buy
-            ):
+            if not self.debt and self.buys and card in buyable and card not in self.forbidden_to_buy:
                 action = "buy"
                 verb = "Buy"
             else:
@@ -853,13 +849,7 @@ class Player:
     ###########################################################################
     def cleanup_phase(self):
         # Save the cards we had so that the hook_end_turn has something to apply against
-        self.had_cards = (
-            self.played
-            + self.reserve
-            + self.played_events
-            + self.game.landmarks
-            + self.durationpile
-        )
+        self.had_cards = self.played + self.reserve + self.played_events + self.game.landmarks + self.durationpile
         self.phase = Phase.CLEANUP
         self.game.cleanup_boons()
         for card in self.played + self.reserve + self.artifacts:
@@ -1183,9 +1173,7 @@ class Player:
         options = {}
         for player in self.game.player_list():
             for crd in player.durationpile:
-                ans = crd.hook_all_players_pre_action(
-                    game=self.game, player=self, owner=player, card=card
-                )
+                ans = crd.hook_all_players_pre_action(game=self.game, player=self, owner=player, card=card)
                 if ans:
                     options.update(ans)
         return options
