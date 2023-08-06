@@ -35,9 +35,7 @@ class Ally_Circle_of_Witches(Ally.Ally):
 ###############################################################################
 class Test_Circle_of_Witches(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, ally="Circle of Witches", initcards=["Underling", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=2, ally="Circle of Witches", initcards=["Underling", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
 

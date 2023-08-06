@@ -20,20 +20,14 @@ class Project_Piazza(Project.Project):
             player.add_card(c, "hand")
             player.play_card(c)
         else:
-            player.output(
-                "Piazza revealed {} but it isn't an action - putting back".format(
-                    c.name
-                )
-            )
+            player.output("Piazza revealed {} but it isn't an action - putting back".format(c.name))
             player.add_card(c, "topdeck")
 
 
 ###############################################################################
 class Test_Piazza(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initprojects=["Piazza"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initprojects=["Piazza"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

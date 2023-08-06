@@ -32,7 +32,7 @@ class Card_Sailor(Card.Card):
             if to_play:
                 player.move_card(card, "hand")
                 player.output(f"Playing {card.name} from Sailor effect")
-                player.play_card(card, costAction=False)
+                player.play_card(card, cost_action=False)
                 return {"dontadd": True}
         return {}
 

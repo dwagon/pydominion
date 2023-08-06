@@ -28,9 +28,7 @@ class Card_Sea_Chart(Card.Card):
             return
         player.reveal_card(nextcard)
         if nextcard.name in player.played:
-            player.output(
-                f"Next card is {nextcard.name}, same as played so moving to hand"
-            )
+            player.output(f"Next card is {nextcard.name}, same as played so moving to hand")
             player.move_card(nextcard, "hand")
         else:
             player.output(f"Next card is {nextcard.name} which hasn't been played")

@@ -14,9 +14,7 @@ class Card_Princess(Card.Card):
         self.name = "Princess"
         self.purchasable = False
         self.cost = 0
-        self.desc = (
-            "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
-        )
+        self.desc = "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
         self.buys = 1
 
     def hook_card_cost(self, game, player, card):

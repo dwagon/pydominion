@@ -48,7 +48,7 @@ class Test_Zombie_Spy(unittest.TestCase):
     def test_play_keep(self):
         self.plr.test_input = ["Keep"]
         self.plr.deck.set("Province", "Estate")
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertIn("Province", self.plr.deck)
@@ -56,7 +56,7 @@ class Test_Zombie_Spy(unittest.TestCase):
     def test_play_discard(self):
         self.plr.test_input = ["Discard"]
         self.plr.deck.set("Province", "Estate")
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertEqual(self.plr.hand.size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertNotIn("Province", self.plr.deck)

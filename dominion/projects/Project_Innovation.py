@@ -29,7 +29,7 @@ class Project_Innovation(Project.Project):
         )
         if ch:
             player.add_card(card, "hand")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
         return {}
 
 
@@ -38,9 +38,7 @@ class Test_Innovation(unittest.TestCase):
     """Test Innovation"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initprojects=["Innovation"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initprojects=["Innovation"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

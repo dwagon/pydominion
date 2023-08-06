@@ -12,9 +12,7 @@ class Card_Salvager(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.SEASIDE
-        self.desc = (
-            """+1 Buy. Trash a card from your hand. Gain Coins equal to its cost."""
-        )
+        self.desc = """+1 Buy. Trash a card from your hand. Gain Coins equal to its cost."""
         self.name = "Salvager"
         self.buys = 1
         self.cost = 4

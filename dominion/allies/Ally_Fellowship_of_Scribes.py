@@ -10,7 +10,9 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
+        self.desc = (
+            """After playing an Action, if you have 4 or fewer cards in hand, you may spend a Favor for +1 Card."""
+        )
         self.name = "Fellowship of Scribes"
 
     def hook_post_action(self, game, player, card):

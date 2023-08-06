@@ -32,9 +32,7 @@ class Card_Giant(Card.Card):
                     victim.output(f"{player.name}'s Giant trashed your {c.name}")
                     player.output(f"Trashed {victim.name}'s {c.name}")
                 else:
-                    victim.output(
-                        f"{player.name}'s Giant discarded your {c.name} and cursed you"
-                    )
+                    victim.output(f"{player.name}'s Giant discarded your {c.name} and cursed you")
                     victim.add_card(c, "discard")
                     victim.gain_card("Curse")
         else:

@@ -10,9 +10,7 @@ class Ally_Trappers_Lodge(Ally.Ally):
     def __init__(self):
         Ally.Ally.__init__(self)
         self.base = Card.CardExpansion.ALLIES
-        self.desc = (
-            """When you gain a card, you may spend a Favor to put it onto your deck."""
-        )
+        self.desc = """When you gain a card, you may spend a Favor to put it onto your deck."""
         self.name = "Trappers Lodge"
 
     def hook_gain_card(self, game, player, card):
@@ -37,9 +35,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 ###############################################################################
 class Test_Trappers_Lodge(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, ally="Trappers Lodge", initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Trappers Lodge", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

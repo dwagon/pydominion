@@ -42,9 +42,7 @@ class Ally_Woodworkers_Guild(Ally.Ally):
 
 
 ###############################################################################
-def botresponse(
-    player, kind, args=None, kwargs=None
-):  # pylint: disable=unused-argument
+def botresponse(player, kind, args=None, kwargs=None):  # pylint: disable=unused-argument
     """Bot response - just do nothing"""
     return False
 
@@ -54,9 +52,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
     """Test Woodworkers Guild"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, ally="Woodworkers' Guild", initcards=["Underling", "Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="Woodworkers' Guild", initcards=["Underling", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

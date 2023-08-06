@@ -11,9 +11,7 @@ class Card_Cellar(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DOMINION
-        self.desc = (
-            "+1 Action; Discard any number of cards. +1 card per card discarded."
-        )
+        self.desc = "+1 Action; Discard any number of cards. +1 card per card discarded."
         self.name = "Cellar"
         self.actions = 1
         self.cost = 2
@@ -21,7 +19,7 @@ class Card_Cellar(Card.Card):
     def special(self, game, player):
         todiscard = player.plr_discard_cards(
             0,
-            anynum=True,
+            any_number=True,
             prompt="Discard any number of cards and gain one per card discarded",
         )
         player.pickup_cards(len(todiscard))

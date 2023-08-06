@@ -26,16 +26,14 @@ class Card_Counterfeit(Card.Card):
             if c.isTreasure():
                 sel = "%d" % index
                 index += 1
-                options.append(
-                    {"selector": sel, "print": "Play %s twice" % c.name, "card": c}
-                )
+                options.append({"selector": sel, "print": "Play %s twice" % c.name, "card": c})
         if index == 1:
             return
         o = player.user_input(options, "What to do?")
         if not o["card"]:
             return
         for _ in range(2):
-            player.play_card(o["card"], costAction=False, discard=False)
+            player.play_card(o["card"], cost_action=False, discard=False)
         player.trash_card(o["card"])
 
 

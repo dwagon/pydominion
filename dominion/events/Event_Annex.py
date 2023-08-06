@@ -9,7 +9,9 @@ class Event_Annex(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Look through your discard pile. Shuffle all but up to 5 cards from it into your deck. Gain a Duchy."
+        self.desc = (
+            "Look through your discard pile. Shuffle all but up to 5 cards from it into your deck. Gain a Duchy."
+        )
         self.name = "Annex"
         self.debtcost = 8
 
@@ -17,9 +19,7 @@ class Event_Annex(Event.Event):
         if player.discardpile.size() <= 5:
             player.output("Not enough cards to choose")
             return
-        cards = player.card_sel(
-            num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile"
-        )
+        cards = player.card_sel(num=5, cardsrc="discard", prompt="Select 5 cards to leave in discard pile")
         keep = []
         for card in player.discardpile:
             if card in cards:
@@ -49,9 +49,7 @@ class Test_Annex(unittest.TestCase):
 
     def test_play(self):
         """Perform Annex"""
-        self.plr.discardpile.set(
-            "Gold", "Silver", "Copper", "Province", "Moat", "Estate"
-        )
+        self.plr.discardpile.set("Gold", "Silver", "Copper", "Province", "Moat", "Estate")
         self.plr.test_input = [
             "Silver",
             "Copper",

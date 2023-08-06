@@ -26,7 +26,7 @@ class Card_Cartographer(Card.Card):
                 cards.append(c)
         todisc = player.plr_discard_cards(
             prompt="Discard any number and the rest go back on the top of the deck",
-            anynum=True,
+            any_number=True,
             cardsrc=cards,
         )
         for card in cards:

@@ -11,7 +11,9 @@ class Card_SecretCave(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.DURATION]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+1 Card; +1 Action; You may discard 3 cards. If you did, then at the start of your next turn, +3 Coin"
+        self.desc = (
+            "+1 Card; +1 Action; You may discard 3 cards. If you did, then at the start of your next turn, +3 Coin"
+        )
         self.name = "Secret Cave"
         self.cost = 3
         self.actions = 1
@@ -20,9 +22,7 @@ class Card_SecretCave(Card.Card):
         self._discarded = False
 
     def special(self, game, player):
-        dcs = player.plr_discard_cards(
-            num=3, prompt="If you discard 3 cards next turn gain 3 Coin"
-        )
+        dcs = player.plr_discard_cards(num=3, prompt="If you discard 3 cards next turn gain 3 Coin")
         if dcs:
             self._discarded = True
 

@@ -24,9 +24,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.getSetCardClasses(
-            "KnightCard", game.cardpath, "dominion/cards", "Card_"
-        )
+        self.mapping = game.getSetCardClasses("KnightCard", game.cardpath, "dominion/cards", "Card_")
         super().__init__(
             cardname="Knight",
             klass=None,
@@ -62,9 +60,7 @@ class KnightCard(Card.Card):
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)
             else:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
                 victim.discard_card(crd)
         if not cards:
             return
@@ -79,17 +75,12 @@ class KnightCard(Card.Card):
         player.output("%s trashed a %s" % (victim.name, to_trash.name))
 
         if to_trash.isKnight():
-            player.output(
-                "%s trashed a knight: %s - trashing your %s"
-                % (victim.name, to_trash.name, self.name)
-            )
+            player.output("%s trashed a knight: %s - trashing your %s" % (victim.name, to_trash.name, self.name))
             player.trash_card(self)
 
         for crd in cards:
             if crd != to_trash:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
                 victim.discard_card(crd)
 
 

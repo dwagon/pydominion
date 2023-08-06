@@ -56,9 +56,7 @@ class Test_Warrior(unittest.TestCase):
     """Test Warrior"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Warrior"].remove()

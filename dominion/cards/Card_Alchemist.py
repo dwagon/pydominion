@@ -10,7 +10,9 @@ class Card_Alchemist(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
+        self.desc = (
+            "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
+        )
         self.name = "Alchemist"
         self.cards = 2
         self.actions = 1
@@ -62,9 +64,7 @@ class Test_Alchemist(unittest.TestCase):
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.alchemist)
         self.plr.discard_hand()
-        self.assertEqual(
-            self.plr.discardpile.size(), 9
-        )  # 5 for hand, +2 cards, alch, pot
+        self.assertEqual(self.plr.discardpile.size(), 9)  # 5 for hand, +2 cards, alch, pot
         self.assertIn("Alchemist", self.plr.discardpile)
 
     def test_keep(self):

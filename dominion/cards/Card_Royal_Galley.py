@@ -36,7 +36,7 @@ class Card_Royal_Galley(Card.Card):
         for card in self.reserve:
             self.reserve.remove(card)
             player.add_card(card, "hand")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
             player.secret_count -= 1
 
 

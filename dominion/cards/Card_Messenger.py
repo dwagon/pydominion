@@ -45,9 +45,7 @@ class Card_Messenger(Card.Card):
                 if plr != player:
                     card = plr.gain_card(cardpile=crd.name)
                     if card:
-                        plr.output(
-                            f"Gained a {card.name} from {player.name}'s Messenger"
-                        )
+                        plr.output(f"Gained a {card.name} from {player.name}'s Messenger")
 
 
 ###############################################################################

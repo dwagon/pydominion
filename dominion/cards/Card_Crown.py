@@ -44,7 +44,7 @@ class Card_Crown(Card.Card):
         player.move_after_play(o["card"])
         for i in range(1, 3):
             player.output(f"Number {i} play of {o['card'].name}")
-            player.play_card(o["card"], discard=False, costAction=False)
+            player.play_card(o["card"], discard=False, cost_action=False)
 
 
 ###############################################################################

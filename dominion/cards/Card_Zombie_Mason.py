@@ -39,7 +39,7 @@ class Test_Zombie_Mason(unittest.TestCase):
     def test_play(self):
         self.plr.deck.set("Estate")
         self.plr.test_input = ["Guide"]
-        self.plr.play_card(self.card, discard=False, costAction=False)
+        self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertIn("Estate", self.g.trashpile)
         self.assertIn("Guide", self.plr.discardpile)
 

@@ -20,9 +20,7 @@ class Project_SinisterPlot(Project.Project):
             "Sinister Plot Action? ",
             ("Add a token here?", True),
             (
-                "Remove {} tokens for {} cards?".format(
-                    self._token[player.name], self._token[player.name]
-                ),
+                "Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]),
                 False,
             ),
         )
@@ -36,9 +34,7 @@ class Project_SinisterPlot(Project.Project):
 ###############################################################################
 class Test_SinisterPlot(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initprojects=["Sinister Plot"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, initprojects=["Sinister Plot"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

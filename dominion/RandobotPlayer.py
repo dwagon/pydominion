@@ -103,9 +103,7 @@ class RandobotPlayer(Player):
 
         # Do anything but quit
         try:
-            avail = [
-                _ for _ in options if _["selector"] != "-" and _.get("action") != "quit"
-            ]
+            avail = [_ for _ in options if _["selector"] != "-" and _.get("action") != "quit"]
         except KeyError:
             print(f"{options=}")
             raise
@@ -171,9 +169,7 @@ class RandobotPlayer(Player):
             return todiscard[:numtodiscard]
         hand = ", ".join([_.name for _ in self.hand])
         sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {hand}")
-        sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
-        )
+        sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n")
 
 
 # EOF

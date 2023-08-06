@@ -28,17 +28,12 @@ class Landmark_Aqueduct(Landmark.Landmark):
             if self._goldvp:
                 self._goldvp -= 1
                 self._vp += 1
-                player.output(
-                    "%d VP left on Gold; %d VP on Aqueduct" % (self._goldvp, self._vp)
-                )
+                player.output("%d VP left on Gold; %d VP on Aqueduct" % (self._goldvp, self._vp))
         if card.name == "Silver":
             if self._silvervp:
                 self._silvervp -= 1
                 self._vp += 1
-                player.output(
-                    "%d VP left on Silver; %d VP on Aqueduct"
-                    % (self._silvervp, self._vp)
-                )
+                player.output("%d VP left on Silver; %d VP on Aqueduct" % (self._silvervp, self._vp))
         if self._vp and card.isVictory():
             player.output("Gained %d VP from Aqueduct" % self._vp)
             player.add_score("Aqueduct", self._vp)
@@ -48,9 +43,7 @@ class Landmark_Aqueduct(Landmark.Landmark):
 ###############################################################################
 class Test_Aqueduct(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, landmarkcards=["Aqueduct"], badcards=["Duchess"]
-        )
+        self.g = Game.TestGame(numplayers=1, landmarkcards=["Aqueduct"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

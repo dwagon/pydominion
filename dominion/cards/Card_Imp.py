@@ -39,7 +39,7 @@ class Card_Imp(Card.Card):
             index += 1
         o = player.user_input(options, "What card do you want to play?")
         if o["card"]:
-            player.play_card(o["card"], costAction=False)
+            player.play_card(o["card"], cost_action=False)
 
 
 ###############################################################################
@@ -62,9 +62,7 @@ class Test_Imp(unittest.TestCase):
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(
-            self.plr.hand.size(), 2 + 2 + 1
-        )  # 2 for moat, 2 for imp, 1 for hand
+        self.assertEqual(self.plr.hand.size(), 2 + 2 + 1)  # 2 for moat, 2 for imp, 1 for hand
 
 
 ###############################################################################

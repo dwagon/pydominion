@@ -21,7 +21,7 @@ class Card_Vassal(Card.Card):
         player.reveal_card(card)
         if card.isAction():
             player.add_card(card, "hand")
-            player.play_card(card, costAction=False)
+            player.play_card(card, cost_action=False)
         else:
             player.add_card(card, "discard")
 

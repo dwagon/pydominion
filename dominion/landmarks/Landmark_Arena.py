@@ -29,9 +29,7 @@ class Landmark_Arena(Landmark.Landmark):
                 actions.append(card)
         if not actions:
             return
-        disc = player.plr_discard_cards(
-            prompt="Arena: Discard an action to gain 2VP", cardsrc=actions
-        )
+        disc = player.plr_discard_cards(prompt="Arena: Discard an action to gain 2VP", cardsrc=actions)
         if disc:
             player.output("Gained 2 VP from Arena")
             self._vp -= 2
@@ -41,9 +39,7 @@ class Landmark_Arena(Landmark.Landmark):
 ###############################################################################
 class Test_Arena(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, landmarkcards=["Arena"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, landmarkcards=["Arena"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

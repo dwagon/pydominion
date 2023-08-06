@@ -269,9 +269,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_landmarks(self):
         """TODO"""
-        self.landmarks = self._load_non_kingdom_cards(
-            "Landmark", self.landmarkcards, self.numlandmarks, LandmarkPile
-        )
+        self.landmarks = self._load_non_kingdom_cards("Landmark", self.landmarkcards, self.numlandmarks, LandmarkPile)
 
     ###########################################################################
     def _load_boons(self):
@@ -305,18 +303,14 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         if self.artifacts:
             return
-        self.artifacts = self._load_non_kingdom_cards(
-            "Artifact", None, None, ArtifactPile
-        )
+        self.artifacts = self._load_non_kingdom_cards("Artifact", None, None, ArtifactPile)
 
     ###########################################################################
     def _load_projects(self):
         """TODO"""
         if self.projects:
             return
-        self.projects = self._load_non_kingdom_cards(
-            "Project", self.initprojects, self.numprojects, ProjectPile
-        )
+        self.projects = self._load_non_kingdom_cards("Project", self.initprojects, self.numprojects, ProjectPile)
 
     ###########################################################################
     def _load_ally(self):
@@ -431,9 +425,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _load_decks(self, initcards, numstacks: int):
         """Determine what cards we are using this game"""
         for card in self._base_cards:
-            self._use_cardpile(
-                self._base_cards[:], card, force=True, cardtype="BaseCard"
-            )
+            self._use_cardpile(self._base_cards[:], card, force=True, cardtype="BaseCard")
         available = self.getAvailableCards()
         unfilled = numstacks
         foundall = True
@@ -579,37 +571,19 @@ class Game:  # pylint: disable=too-many-public-methods
             "Heirloom",
             "Shelter",
         ):
-            mapping[prefix] = self.getSetCardClasses(
-                prefix, self.cardpath, "cards", "Card_"
-            )
+            mapping[prefix] = self.getSetCardClasses(prefix, self.cardpath, "cards", "Card_")
             if self.oldcards:
                 oldpath = os.path.join(self.cardpath, "old")
-                mapping[prefix].update(
-                    self.getSetCardClasses(prefix, oldpath, "cards", "Card_")
-                )
-        mapping["Event"] = self.getSetCardClasses(
-            "Event", self.eventpath, "events", "Event_"
-        )
+                mapping[prefix].update(self.getSetCardClasses(prefix, oldpath, "cards", "Card_"))
+        mapping["Event"] = self.getSetCardClasses("Event", self.eventpath, "events", "Event_")
         mapping["Way"] = self.getSetCardClasses("Way", self.waypath, "ways", "Way_")
-        mapping["Landmark"] = self.getSetCardClasses(
-            "Landmark", self.landmarkpath, "landmarks", "Landmark_"
-        )
-        mapping["Boon"] = self.getSetCardClasses(
-            "Boon", self.boonpath, "boons", "Boon_"
-        )
+        mapping["Landmark"] = self.getSetCardClasses("Landmark", self.landmarkpath, "landmarks", "Landmark_")
+        mapping["Boon"] = self.getSetCardClasses("Boon", self.boonpath, "boons", "Boon_")
         mapping["Hex"] = self.getSetCardClasses("Hex", self.hexpath, "hexes", "Hex_")
-        mapping["State"] = self.getSetCardClasses(
-            "State", self.statepath, "states", "State_"
-        )
-        mapping["Artifact"] = self.getSetCardClasses(
-            "Artifact", self.artifactpath, "artifacts", "Artifact_"
-        )
-        mapping["Project"] = self.getSetCardClasses(
-            "Project", self.projectpath, "projects", "Project_"
-        )
-        mapping["Ally"] = self.getSetCardClasses(
-            "Ally", self.allypath, "allies", "Ally_"
-        )
+        mapping["State"] = self.getSetCardClasses("State", self.statepath, "states", "State_")
+        mapping["Artifact"] = self.getSetCardClasses("Artifact", self.artifactpath, "artifacts", "Artifact_")
+        mapping["Project"] = self.getSetCardClasses("Project", self.projectpath, "projects", "Project_")
+        mapping["Ally"] = self.getSetCardClasses("Ally", self.allypath, "allies", "Ally_")
         return mapping
 
     ###########################################################################
@@ -768,10 +742,7 @@ class Game:  # pylint: disable=too-many-public-methods
             f"  turn: coin={plr.coins.get()} debt={plr.debt.get()} actions={plr.actions.get()}"
             f" buys={plr.buys.get()} favors={plr.favors.get()}"
         )
-        print(
-            f"  coffers={plr.coffers.get()} "
-            f"villagers={plr.villagers.get()} potions={plr.potions.get()}"
-        )
+        print(f"  coffers={plr.coffers.get()} " f"villagers={plr.villagers.get()} potions={plr.potions.get()}")
 
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover

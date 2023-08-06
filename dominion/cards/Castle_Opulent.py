@@ -16,16 +16,14 @@ class Card_OpulentCastle(CastleCard):
         ]
         self.base = Card.CardExpansion.EMPIRES
         self.cost = 7
-        self.desc = (
-            """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
-        )
+        self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
         self.victory = 3
         self.name = "Opulent Castle"
 
     def special(self, game, player):
         victcards = [c for c in player.hand if c.isVictory()]
         cards = player.plr_discard_cards(
-            anynum=True,
+            any_number=True,
             cardsrc=victcards,
             prompt="Discard any number of Victory cards. +2 Coin per card discarded",
         )

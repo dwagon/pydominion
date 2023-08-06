@@ -29,8 +29,7 @@ class Card_PirateShip(Card.Card):
                 "attack",
             ),
             (
-                "+%d = +1 per treasure you've taken with Pirate Ships this game."
-                % player._pirate_ship,
+                "+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship,
                 "spend",
             ),
         )
@@ -53,14 +52,10 @@ class Card_PirateShip(Card.Card):
             if card.isTreasure():
                 cards.append(card)
             else:
-                victim.output(
-                    "%s's Pirate Ship discarded your %s" % (player.name, card.name)
-                )
+                victim.output("%s's Pirate Ship discarded your %s" % (player.name, card.name))
                 victim.add_card(card, "discard")
         if cards:
-            to_trash = player.plr_trash_card(
-                prompt=f"Trash a card from {victim.name}", cardsrc=cards
-            )
+            to_trash = player.plr_trash_card(prompt=f"Trash a card from {victim.name}", cardsrc=cards)
             trashed = True
             for card in cards:
                 if card not in to_trash:

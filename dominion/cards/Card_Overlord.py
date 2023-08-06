@@ -21,7 +21,7 @@ class Card_Overlord(Card.Card):
         cards = [_ for _ in player.cards_under(5) if _.isAction() and not _.isCommand()]
         opts = [(f"Play {_.name}", _) for _ in cards]
         choice = player.plr_choose_options("Play which action card from supply?", *opts)
-        player.play_card(choice, discard=False, costAction=False)
+        player.play_card(choice, discard=False, cost_action=False)
 
 
 ###############################################################################

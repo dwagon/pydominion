@@ -9,9 +9,7 @@ class Project_CropRotation(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = (
-            "At the start of your turn, you may discard a Victory card for +2 Cards."
-        )
+        self.desc = "At the start of your turn, you may discard a Victory card for +2 Cards."
         self.name = "Crop Rotation"
         self.cost = 6
 
@@ -19,9 +17,7 @@ class Project_CropRotation(Project.Project):
         vics = [_ for _ in player.hand if _.isVictory()]
         if not vics:
             return
-        card = player.plr_discard_cards(
-            prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics
-        )
+        card = player.plr_discard_cards(prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics)
         if card:
             player.pickup_cards(2)
 

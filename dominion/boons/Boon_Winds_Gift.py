@@ -24,9 +24,7 @@ class Boon_Winds_Gift(Boon.Boon):
 ###############################################################################
 class Test_Winds_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:

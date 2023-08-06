@@ -17,9 +17,7 @@ class Boon_Skys_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        dc = player.plr_discard_cards(
-            anynum=True, prompt="Discard 3 cards to gain a Gold"
-        )
+        dc = player.plr_discard_cards(any_number=True, prompt="Discard 3 cards to gain a Gold")
         if len(dc) >= 3:
             player.gain_card("Gold")
             player.output("Gained a Gold")
@@ -28,9 +26,7 @@ class Boon_Skys_Gift(Boon.Boon):
 ###############################################################################
 class Test_Skys_Gift(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"]
-        )
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         for b in self.g.boons:

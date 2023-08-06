@@ -27,9 +27,7 @@ class Ally_League_Shopkeepers(Ally.Ally):
 ###############################################################################
 class Test_League_Shopkeepers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, ally="League of Shopkeepers", initcards=["Underling"]
-        )
+        self.g = Game.TestGame(numplayers=1, ally="League of Shopkeepers", initcards=["Underling"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Underling"].remove()

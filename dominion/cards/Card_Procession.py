@@ -22,16 +22,14 @@ class Card_Procession(Card.Card):
         if not actcards:
             player.output("No suitable action cards")
             return
-        cards = player.card_sel(
-            prompt="Select a card to play twice, then trash", cardsrc=actcards
-        )
+        cards = player.card_sel(prompt="Select a card to play twice, then trash", cardsrc=actcards)
         if not cards:
             return
         card = cards[0]
 
         for i in range(1, 3):
             player.output("Play %d of %s" % (i, card.name))
-            player.play_card(card, discard=False, costAction=False)
+            player.play_card(card, discard=False, cost_action=False)
         player.trash_card(card)
         cost = player.card_cost(card) + 1
         player.plr_gain_card(cost, modifier="equal", types={Card.CardType.ACTION: True})

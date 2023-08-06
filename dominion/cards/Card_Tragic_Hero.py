@@ -11,7 +11,9 @@ class Card_Tragic_Hero(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+3 Cards; +1 Buys; If you have 8 or more cards in hand (after drawing), trash this and gain a Treasure."
+        self.desc = (
+            "+3 Cards; +1 Buys; If you have 8 or more cards in hand (after drawing), trash this and gain a Treasure."
+        )
         self.name = "Tragic Hero"
         self.cost = 5
         self.cards = 3
@@ -26,9 +28,7 @@ class Card_Tragic_Hero(Card.Card):
 ###############################################################################
 class Test_Tragic_Hero(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"]
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Tragic Hero"], badcards=["Fool's Gold"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tragic Hero"].remove()

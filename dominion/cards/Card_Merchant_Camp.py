@@ -21,9 +21,7 @@ class Card_Merchant_Camp(Card.Card):
         self.cost = 3
 
     def hook_discard_this_card(self, game, player, source):
-        opt = player.plr_choose_options(
-            "Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False)
-        )
+        opt = player.plr_choose_options("Put Merchant Camp onto deck?", ("Onto deck", True), ("Onto discard", False))
         if opt:
             player.move_card(self, "topdeck")
 
@@ -31,9 +29,7 @@ class Card_Merchant_Camp(Card.Card):
 ###############################################################################
 class Test_Merchant_Camp(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, initcards=["Merchant Camp", "moat"], ally="Plateau Shepherds"
-        )
+        self.g = Game.TestGame(numplayers=1, initcards=["Merchant Camp", "moat"], ally="Plateau Shepherds")
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Merchant Camp"].remove()

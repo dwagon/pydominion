@@ -26,14 +26,9 @@ class Card_Fortuneteller(Card.Card):
                     break
                 if card.isVictory() or card.name == "Curse":
                     plr.add_card(card, "topdeck")
-                    plr.output(
-                        "%s's Fortune Teller put %s on top of your deck"
-                        % (player.name, card.name)
-                    )
+                    plr.output("%s's Fortune Teller put %s on top of your deck" % (player.name, card.name))
                     break
-                plr.output(
-                    "%s's Fortune Teller discarded your %s" % (player.name, card.name)
-                )
+                plr.output("%s's Fortune Teller discarded your %s" % (player.name, card.name))
                 plr.discard_card(card)
 
 

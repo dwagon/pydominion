@@ -26,9 +26,7 @@ class Card_Warlord(Card.Card):
             Until then, other players can't play an Action from their hand that
             they have 2 or more copies of in play."""
 
-    def hook_all_players_pre_action(
-        self, game, player, owner, card
-    ):  # pylint: disable=unused-argument
+    def hook_all_players_pre_action(self, game, player, owner, card):  # pylint: disable=unused-argument
         """Until then, other players can't play an Action from their hand that
         they have 2 or more copies of in play."""
         print(f"DBG hook {player.name=} {owner.name=} {card.name=}")
@@ -39,9 +37,7 @@ class Card_Warlord(Card.Card):
             cntr.update({crd.name: 1})
         print(f"DBG {cntr=}")
         if cntr[card.name] >= 2:
-            player.output(
-                f"{owner.name}'s Warlord prevents you playing {card.name} more than twice"
-            )
+            player.output(f"{owner.name}'s Warlord prevents you playing {card.name} more than twice")
             return {"skip_card": True}
         return {}
 
@@ -55,9 +51,7 @@ class Test_Warlord(unittest.TestCase):
     """Test Warlord"""
 
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Clashes", "Militia"], use_liaisons=True
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Clashes", "Militia"], use_liaisons=True)
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
 

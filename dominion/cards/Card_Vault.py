@@ -20,17 +20,14 @@ class Card_Vault(Card.Card):
 
     def special(self, game, player):
         discards = player.plr_discard_cards(
-            anynum=True,
+            any_number=True,
             prompt="Discard any number of cards. +1 Coin per card discarded",
         )
         player.coins.add(len(discards))
-        player.output("Gaining %d coins" % len(discards))
+        player.output(f"Gaining {len(discards)} coins")
         for plr in game.player_list():
             if plr != player:
-                plr.output(
-                    "Due to %s's Vault you may discard two cards. If you do, draw one"
-                    % player.name
-                )
+                plr.output(f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one")
                 plrdiscards = plr.plr_discard_cards(num=2)
                 if len(plrdiscards) == 2:
                     plr.pickup_card()

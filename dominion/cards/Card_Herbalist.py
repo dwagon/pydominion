@@ -26,9 +26,7 @@ class Card_Herbalist(Card.Card):
             for c in player.played:
                 if c.isTreasure():
                     sel = "%d" % index
-                    options.append(
-                        {"selector": sel, "print": "Put %s" % c.name, "card": c}
-                    )
+                    options.append({"selector": sel, "print": "Put %s" % c.name, "card": c})
                     index += 1
             print("index=%d" % index)
             if index != 1:
@@ -37,10 +35,7 @@ class Card_Herbalist(Card.Card):
                     player.played.remove(o["card"])
                     player.add_card(o["card"], "topdeck")
             else:
-                player.output(
-                    "No suitable treasures = %s"
-                    % ",".join([c.name for c in player.played])
-                )
+                player.output("No suitable treasures = %s" % ",".join([c.name for c in player.played]))
 
 
 ###############################################################################

@@ -27,9 +27,7 @@ class Card_Pirate(Card.Card):
         """gain a Treasure costing up to $6 to your hand"""
         # Discard first to avoid the gained card triggering the pirate again
         player.move_card(self, "played")
-        player.plr_gain_card(
-            cost=6, types={Card.CardType.TREASURE: True}, destination="hand"
-        )
+        player.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         """When any player gains a Treasure, you may play this from your hand"""
@@ -46,9 +44,7 @@ class Card_Pirate(Card.Card):
         if not gain:
             return
         owner.move_card(self, "played")
-        owner.plr_gain_card(
-            cost=6, types={Card.CardType.TREASURE: True}, destination="hand"
-        )
+        owner.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
 
 
 ###############################################################################

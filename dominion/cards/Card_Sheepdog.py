@@ -20,7 +20,7 @@ class Card_Sheepdog(Card.Card):
 
     def hook_gain_card(self, game, player, card):
         if self in player.hand:
-            player.play_card(self, costAction=False)
+            player.play_card(self, cost_action=False)
 
 
 ###############################################################################

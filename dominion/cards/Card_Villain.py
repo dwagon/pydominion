@@ -51,9 +51,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # oragma: no cover
 ###############################################################################
 class Test_Villain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, initcards=["Villain"], numhexes=0, numboons=0
-        )
+        self.g = Game.TestGame(numplayers=2, initcards=["Villain"], numhexes=0, numboons=0)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Villain"].remove()

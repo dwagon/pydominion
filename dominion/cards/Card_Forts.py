@@ -20,9 +20,7 @@ class Card_Forts(Card.Card):
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
     def __init__(self, game, pile_size=10):
-        self.mapping = game.getSetCardClasses(
-            "Fort", game.cardpath, "dominions/cards", "Card_"
-        )
+        self.mapping = game.getSetCardClasses("Fort", game.cardpath, "dominions/cards", "Card_")
         super().__init__(cardname="Forts", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):

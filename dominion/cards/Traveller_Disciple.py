@@ -11,9 +11,7 @@ class Card_Disciple(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = (
-            """You may play an Action card from your hand twice. Gain a copy of it"""
-        )
+        self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
         self.name = "Disciple"
         self.purchasable = False
         self.numcards = 5
@@ -31,7 +29,7 @@ class Card_Disciple(Card.Card):
         card = cards[0]
         for i in range(1, 3):
             player.output("Number %d play of %s" % (i, card.name))
-            player.play_card(card, discard=False, costAction=False)
+            player.play_card(card, discard=False, cost_action=False)
         player.add_card(card, "played")
         player.hand.remove(card)
         if card.purchasable:

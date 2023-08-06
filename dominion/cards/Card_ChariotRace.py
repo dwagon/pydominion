@@ -25,15 +25,11 @@ class Card_ChariotRace(Card.Card):
         other = game.player_to_left(player)
         othercard = other.next_card()
         if card.cost > othercard.cost:
-            player.output(
-                f"Your {card.name} costs more than {other.name}'s {othercard.name}"
-            )
+            player.output(f"Your {card.name} costs more than {other.name}'s {othercard.name}")
             player.coins.add(1)
             player.add_score("Chariot Race")
         else:
-            player.output(
-                f"Your {card.name} costs less than {other.name}'s {othercard.name} - Getting nothing"
-            )
+            player.output(f"Your {card.name} costs less than {other.name}'s {othercard.name} - Getting nothing")
         other.add_card(othercard, "topdeck")
 
 

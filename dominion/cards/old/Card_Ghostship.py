@@ -22,12 +22,9 @@ class Card_Ghostship(Card.Card):
             if vic.hand.size() >= 4:
                 todisc = vic.hand.size() - 3
                 vic.output(
-                    "Select %d cards to put on top of your deck because of %s's Ghost Ship"
-                    % (todisc, player.name)
+                    "Select %d cards to put on top of your deck because of %s's Ghost Ship" % (todisc, player.name)
                 )
-                discard = vic.card_sel(
-                    num=todisc, prompt="Select cards to put on top of deck"
-                )
+                discard = vic.card_sel(num=todisc, prompt="Select cards to put on top of deck")
                 for card in discard:
                     vic.output("Putting %s back on deck" % card.name)
                     vic.hand.remove(card)

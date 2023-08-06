@@ -35,7 +35,7 @@ class Card_Herb_Gatherer(Card.Card):
                     options.append((f"Play {treas.name}?", treas))
             choice = player.plr_choose_options("Play a treasure?", *options)
             player.move_card(choice, "hand")
-            player.play_card(choice, costAction=False)
+            player.play_card(choice, cost_action=False)
 
         opt = player.plr_choose_options(
             "Do you want to rotate the Augurs?",

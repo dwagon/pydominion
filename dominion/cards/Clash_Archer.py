@@ -43,9 +43,7 @@ class Card_Archer(Card.Card):
                 continue
             cards.append(crd)
             victim.reveal_card(crd)
-        disc = player.card_sel(
-            prompt=f"Discard a card from {victim.name}s hand", cardsrc=cards
-        )
+        disc = player.card_sel(prompt=f"Discard a card from {victim.name}s hand", cardsrc=cards)
         victim.discard_card(disc[0])
         victim.output(f"Discarded {disc[0].name}")
 

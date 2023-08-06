@@ -18,9 +18,7 @@ class Card_SecretPassage(Card.Card):
         self.cards = 2
 
     def special(self, game, player):
-        card = player.card_sel(
-            prompt="Take a card from your hand and put into your deck", cardsrc="hand"
-        )
+        card = player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc="hand")
         if card:
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",
@@ -47,9 +45,7 @@ class Test_SecretPassage(unittest.TestCase):
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.actions.get(), 1)
-            self.assertEqual(
-                self.plr.hand.size(), 5 + 2 - 1
-            )  # Hand + SP - back on deck
+            self.assertEqual(self.plr.hand.size(), 5 + 2 - 1)  # Hand + SP - back on deck
             self.assertEqual(self.plr.deck[0].name, "Province")
         except AssertionError:  # pragma: no cover
             self.g.print_state()

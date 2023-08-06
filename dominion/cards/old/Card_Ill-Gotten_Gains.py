@@ -24,9 +24,7 @@ class Card_IGG(Card.Card):
         return "+1 Coin. When you play this, you may gain a Copper, putting it into your hand."
 
     def special(self, game, player):
-        ans = player.plr_choose_options(
-            "Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True)
-        )
+        ans = player.plr_choose_options("Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True))
         if ans:
             player.gain_card("Copper", destination="hand")
 
@@ -40,9 +38,7 @@ class Card_IGG(Card.Card):
 ###############################################################################
 class Test_IGG(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"]
-        )
+        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ill-Gotten Gains"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Ill-Gotten Gains"].remove()

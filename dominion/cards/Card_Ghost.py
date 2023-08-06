@@ -45,7 +45,7 @@ class Card_Ghost(Card.Card):
         for card in self._ghost_reserve:
             player.output(f"Ghost playing {card.name}")
             for _ in range(2):
-                player.play_card(card, discard=False, costAction=False)
+                player.play_card(card, discard=False, cost_action=False)
             self._ghost_reserve.remove(card)
             player.secret_count -= 1
 
@@ -68,9 +68,7 @@ class Test_Ghost(unittest.TestCase):
     def test_duration(self):
         try:
             self.plr.deck.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.discardpile.set(
-                "Silver", "Gold", "Estate", "Silver", "Moat", "Copper"
-            )
+            self.plr.discardpile.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Phase.NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()

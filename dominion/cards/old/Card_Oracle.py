@@ -41,9 +41,7 @@ class Card_Oracle(Card.Card):
         else:
             for card in cards:
                 victim.add_card(card, "topdeck")
-            victim.output(
-                "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
-            )
+            victim.output("%s's Oracle put %s on top of your deck" % (player.name, cardnames))
 
 
 ###############################################################################

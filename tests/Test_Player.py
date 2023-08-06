@@ -361,7 +361,7 @@ class Test_plrDiscardCard(unittest.TestCase):
     def test_discardAnynum(self):
         self.plr.hand.set("Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["1", "0"]
-        x = self.plr.plr_discard_cards(0, anynum=True)
+        x = self.plr.plr_discard_cards(0, any_number=True)
         self.assertEqual(len(x), 1)
         self.assertEqual(len(self.plr.hand), 3)
         self.assertEqual(len(self.plr.discardpile), 1)
@@ -595,9 +595,7 @@ class Test__display_overview(unittest.TestCase):
     """Test the display overview at the start of every user input"""
 
     def setUp(self):
-        self.game = Game.TestGame(
-            numplayers=1, initcards=["Moat"], initprojects=["Cathedral"], landmarkcards=["Baths"]
-        )
+        self.game = Game.TestGame(numplayers=1, initcards=["Moat"], initprojects=["Cathedral"], landmarkcards=["Baths"])
         self.game.start_game()
         self.plr = self.game.player_list(0)
 

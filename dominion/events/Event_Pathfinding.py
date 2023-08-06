@@ -16,9 +16,7 @@ class Event_Pathfinding(Event.Event):
     def special(self, game, player):
         """Move your +1 Card token to an Action Supply Pile"""
         actionpiles = game.getActionPiles()
-        stacks = player.card_sel(
-            num=1, prompt="What stack to add the +1 Card Token to?", cardsrc=actionpiles
-        )
+        stacks = player.card_sel(num=1, prompt="What stack to add the +1 Card Token to?", cardsrc=actionpiles)
         if stacks:
             player.place_token("+1 Card", stacks[0].name)
 
@@ -26,9 +24,7 @@ class Event_Pathfinding(Event.Event):
 ###############################################################################
 class Test_Pathfinding(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, eventcards=["Pathfinding"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, eventcards=["Pathfinding"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Pathfinding"]

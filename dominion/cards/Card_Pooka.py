@@ -17,12 +17,8 @@ class Card_Pooka(Card.Card):
         self.heirloom = "Cursed Gold"
 
     def special(self, game, player):
-        treasures = [
-            _ for _ in player.hand if _.isTreasure() and _.name != "Cursed Gold"
-        ]
-        tr = player.plr_trash_card(
-            prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures
-        )
+        treasures = [_ for _ in player.hand if _.isTreasure() and _.name != "Cursed Gold"]
+        tr = player.plr_trash_card(prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures)
         if tr:
             player.pickup_cards(4)
 

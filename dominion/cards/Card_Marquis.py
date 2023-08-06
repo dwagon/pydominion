@@ -13,9 +13,7 @@ class Card_Marquis(Card.Card):
         self.base = Card.CardExpansion.ALLIES
         self.name = "Marquis"
         self.buys = 1
-        self.desc = (
-            "+1 Buy; +1 Card per card in your hand. Discard down to 10 cards in hand."
-        )
+        self.desc = "+1 Buy; +1 Card per card in your hand. Discard down to 10 cards in hand."
         self.cost = 6
 
     def special(self, game, player):

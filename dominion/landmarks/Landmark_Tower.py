@@ -9,18 +9,12 @@ class Landmark_Tower(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = (
-            "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
-        )
+        self.desc = "When scoring, 1VP per non-Victory card you have from an empty Supply pile."
         self.name = "Tower"
 
     def hook_end_of_game(self, game, player):
         player.add_score("Tower", 0)
-        empties = [
-            st
-            for st in game.cardpiles
-            if game[st].is_empty() and not game[st].isVictory()
-        ]
+        empties = [st for st in game.cardpiles if game[st].is_empty() and not game[st].isVictory()]
         for emp in empties:
             for card in player.all_cards():
                 if card.name == emp:
@@ -30,9 +24,7 @@ class Landmark_Tower(Landmark.Landmark):
 ###############################################################################
 class Test_Tower(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(
-            numplayers=1, landmarkcards=["Tower"], initcards=["Moat"]
-        )
+        self.g = Game.TestGame(numplayers=1, landmarkcards=["Tower"], initcards=["Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

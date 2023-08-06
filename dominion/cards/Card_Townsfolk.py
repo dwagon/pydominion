@@ -21,12 +21,8 @@ class Card_Townsfolk(Card.Card):
 ###############################################################################
 class TownsfolkCardPile(CardPile.CardPile):
     def __init__(self, game, pile_size=10):
-        self.mapping = game.getSetCardClasses(
-            "Townsfolk", game.cardpath, "dominions/cards", "Card_"
-        )
-        super().__init__(
-            cardname="Townsfolk", klass=None, game=game, pile_size=pile_size
-        )
+        self.mapping = game.getSetCardClasses("Townsfolk", game.cardpath, "dominions/cards", "Card_")
+        super().__init__(cardname="Townsfolk", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel

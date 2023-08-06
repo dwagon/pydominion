@@ -14,9 +14,7 @@ class Card_Marauder(Card.Card):
             Card.CardType.LOOTER,
         ]
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = (
-            "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
-        )
+        self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
         self.name = "Marauder"
         self.cost = 4
         self.required_cards = ["Spoils"]

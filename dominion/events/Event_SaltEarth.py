@@ -16,9 +16,7 @@ class Event_SaltEarth(Event.Event):
     def special(self, game, player):
         player.add_score("Salt the Earth", 1)
         stacks = game.getVictoryPiles()
-        cp = player.card_sel(
-            cardsrc=stacks, prompt="Trash a Victory card from the Supply"
-        )
+        cp = player.card_sel(cardsrc=stacks, prompt="Trash a Victory card from the Supply")
         if not cp:
             return
         cd = cp[0].remove()
