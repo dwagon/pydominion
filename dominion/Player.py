@@ -1062,7 +1062,7 @@ class Player:
 
     ###########################################################################
     def _defer_start_turn(self):
-        """Perform the defer pile cards at the start of the turn"""
+        """Perform the defer-pile cards at the start of the turn"""
         for card in self.deferpile:
             self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
@@ -1883,16 +1883,18 @@ class Player:
         self.artifacts.remove([_ for _ in self.artifacts if _.name == name][0])
 
     ###########################################################################
-    def plr_discard_cards(self, num=1, anynum=False, **kwargs):
+    def plr_discard_cards(self, num=1, any_number=False, **kwargs):
         """Get the player to discard exactly num cards"""
         if "prompt" not in kwargs:
-            if anynum:
+            if any_number:
                 kwargs["prompt"] = "Discard any number of cards"
             else:
                 kwargs["prompt"] = f"Discard {num} cards"
         discard = self.card_sel(
-            num=num, anynum=anynum, verbs=("Discard", "Undiscard"), **kwargs
+            num=num, anynum=any_number, verbs=("Discard", "Undiscard"), **kwargs
         )
+        if discard is None:
+            return None
         for c in discard:
             self.output(f"Discarding {c.name}")
             self.discard_card(c)
