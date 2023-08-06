@@ -679,7 +679,7 @@ class Player:
                 continue
             all_cards.add(c)
         all_cards.sort(key=self.card_cost)
-        all_cards.sort(key=lambda c: c.basecard)
+        all_cards.sort(key=lambda x: x.basecard)
         return all_cards
 
     ###########################################################################
@@ -1034,7 +1034,7 @@ class Player:
             self.output(f"Playing deferred {card.name}")
             self.currcards.append(card)
             self.move_card(card, "hand")
-            self.play_card(card, costAction=False)
+            self.play_card(card, cost_action=False)
             self.currcards.pop()
 
     ###########################################################################
@@ -1140,7 +1140,7 @@ class Player:
         for card in self.hand:
             # Contents of hand can change as they are played
             if card.isTreasure() and card in self.hand:
-                self.play_card(card, costAction=False)
+                self.play_card(card, cost_action=False)
 
     ###########################################################################
     def _play_card_tokens(self, card):
@@ -1198,8 +1198,8 @@ class Player:
         self,
         card: Card,
         discard: bool = True,
-        costAction: bool = True,
-        postActionHook: bool = True,
+        cost_action: bool = True,
+        post_action_hook: bool = True,
     ) -> None:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
@@ -1218,7 +1218,7 @@ class Player:
 
         self._play_card_tokens(card)
 
-        if card.isAction() and costAction and self.phase != Phase.NIGHT:
+        if card.isAction() and cost_action and self.phase != Phase.NIGHT:
             self.actions -= 1
         if self.actions.get() < 0:  # pragma: no cover
             self.actions.set(0)
@@ -1232,7 +1232,7 @@ class Player:
         if not options["skip_card"]:
             self.card_benefits(card)
         self.currcards.pop()
-        if postActionHook and card.isAction():
+        if post_action_hook and card.isAction():
             for crd in self.relevant_cards():
                 if hasattr(crd, "hook_post_action"):
                     crd.hook_post_action(game=self.game, player=self, card=card)
@@ -1591,7 +1591,7 @@ class Player:
                 affordable.add(c)
                 continue
         affordable.sort(key=self.card_cost)
-        affordable.sort(key=lambda c: c.basecard)
+        affordable.sort(key=lambda x: x.basecard)
         return affordable
 
     ###########################################################################
@@ -1634,14 +1634,7 @@ class Player:
     def _type_selector(cls, types=None):
         if types is None:
             types = {}
-        assert set(types.keys()) <= set(
-            [
-                CardType.ACTION,
-                CardType.VICTORY,
-                CardType.TREASURE,
-                CardType.NIGHT,
-            ]
-        )
+        assert set(types.keys()) <= {CardType.ACTION, CardType.VICTORY, CardType.TREASURE, CardType.NIGHT}
         if not types:
             return {
                 CardType.ACTION: True,
@@ -1675,8 +1668,7 @@ class Player:
     ###########################################################################
     def coststr(self, card) -> str:
         """Generate the string showing the cost of the card"""
-        cost = []
-        cost.append(f"{self.card_cost(card)} Coins")
+        cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
             cost.append(f"{card.debtcost} Debt")
         if card.potcost:
@@ -1687,7 +1679,7 @@ class Player:
         return cststr.strip()
 
     ###########################################################################
-    def plr_trash_card(self, num=1, anynum=False, cardsrc="hand", **kwargs):
+    def plr_trash_card(self, num=1, anynum=False, cardsrc="hand", **kwargs) -> Optional[Card]:
         """Ask player to trash num cards"""
         if "prompt" not in kwargs:
             if anynum:
@@ -1710,6 +1702,8 @@ class Player:
             verbs=("Trash", "Untrash"),
             **kwargs,
         )
+        if trash is None:
+            return None
         for crd in trash:
             self.trash_card(crd, **kwargs)
         return trash
@@ -1734,6 +1728,7 @@ class Player:
         assert modifier in ("less", "equal")
         if recipient is None:
             recipient = self
+        buyable = []
         prompt = "Gain a card "
         types = self._type_selector(types)
         if modifier == "less":
