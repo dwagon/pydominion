@@ -12,4 +12,3 @@ repos:
     rev: 23.7.0
     hooks:
     -   id: black
-        args: ['-l', '120', '-t', 'py39', '-t', 'py310', '-t', 'py311']
