@@ -956,7 +956,7 @@ class Player:
         if self.reserve:
             self.output(f"| Reserve: {', '.join([_.name for _ in self.reserve])}")
         if self.hand:
-            self.output(f"| Hand: {', '.join([_.name for _ in self.hand])}")
+            self.output(f"| Hand ({len(self.hand)}): {', '.join([_.name for _ in self.hand])}")
         else:
             self.output("| Hand: <EMPTY>")
         if self.artifacts:
@@ -964,19 +964,15 @@ class Player:
         if self.exilepile:
             self.output(f"| Exile: {', '.join([_.name for _ in self.exilepile])}")
         if self.played:
-            self.output(f"| Played: {', '.join([_.name for _ in self.played])}")
+            self.output(f"| Played ({len(self.played)}): {', '.join([_.name for _ in self.played])}")
         else:
             self.output("| Played: <NONE>")
         self.output(f"| Deck Size: {len(self.deck)}")
         if self.game.ally:
-            self.output(
-                f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}"
-            )
+            self.output(f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}")
+        self.output(f"| Discard ({len(self.discardpile)}): {', '.join([_.name for _ in self.discardpile])}")  # Debug
         self.output(
-            f"| Discard: {', '.join([_.name for _ in self.discardpile])}"
-        )  # Debug
-        self.output(
-            f"| Trash: {', '.join([_.name for _ in self.game.trashpile])}"
+            f"| Trash ({len(self.game.trashpile)}): {', '.join([_.name for _ in self.game.trashpile])}"
         )  # Debug
         self.output(f"| {self.discardpile.size()} cards in discard pile")
         self.output("-" * 50)

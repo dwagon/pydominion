@@ -614,8 +614,8 @@ class Test__display_overview(unittest.TestCase):
         self.plr.hand.set("Copper", "Estate")
         self.plr.played.set("Moat")
         self.plr._display_overview()
-        self.assertIn("| Hand: Copper, Estate", self.plr.messages)
-        self.assertIn("| Played: Moat", self.plr.messages)
+        self.assertIn("| Hand (2): Copper, Estate", self.plr.messages)
+        self.assertIn("| Played (1): Moat", self.plr.messages)
 
     def test_reserve(self):
         """Test cards in reserve"""
