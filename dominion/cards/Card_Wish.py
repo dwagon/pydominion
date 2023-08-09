@@ -19,20 +19,19 @@ class Card_Wish(Card.Card):
         self.numcards = 12
 
     def special(self, game, player):
-        dc = player.plr_choose_options(
-            "Return this to gain a card to you hand costing up to 6",
+        return_card = player.plr_choose_options(
+            "Return this to gain a card to your hand costing up to 6",
             ("Return", True),
             ("Keep", False),
         )
-        if dc:
-            player.discard_card(self)
+        if return_card:
             game["Wish"].add(self)
             player.played.remove(self)
             player.plr_gain_card(cost=6)
 
 
 ###############################################################################
-class Test_Wish(unittest.TestCase):
+class TestWish(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wish"])
         self.g.start_game()
@@ -40,11 +39,14 @@ class Test_Wish(unittest.TestCase):
         self.card = self.g["Wish"].remove()
 
     def test_return(self):
+        num_wishes = len(self.g["Wish"])
         self.plr.add_card(self.card, "hand")
         self.plr.test_input = ["Return", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.discardpile)
         self.assertNotIn("Wish", self.plr.played)
+        self.assertNotIn("Wish", self.plr.discardpile)
+        self.assertEqual(len(self.g["Wish"]), num_wishes + 1)
 
     def test_keep(self):
         self.plr.add_card(self.card, "hand")
