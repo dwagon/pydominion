@@ -947,6 +947,8 @@ class Player:
         for lndmark in self.game.landmarks.values():
             self.output(f"| Landmark {lndmark.name}: {lndmark.description(self)}")
         self.output(f"| Tokens: {self._display_tokens()}")
+        if self.states:
+            self.output(f"| States: {', '.join([_.name for _ in self.states])}")
         if self.deferpile:
             self.output(f"| Defer: {', '.join([_.name for _ in self.deferpile])}")
         if self.durationpile:
