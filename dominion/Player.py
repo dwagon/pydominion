@@ -283,12 +283,12 @@ class Player:
         """Take a card out of the game"""
         assert isinstance(card, Card)
         self.stats["trashed"].append(card)
-        trashopts = {}
+        trash_opts = {}
         rc = card.hook_trashThisCard(game=self.game, player=self)
         if rc:
-            trashopts.update(rc)
-        if trashopts.get("trash", True):
-            if card.location:
+            trash_opts.update(rc)
+        if trash_opts.get("trash", True):
+            if card.location and card.location != "trash":
                 self.remove_card(card)
             self.game.trashpile.add(card)
             card.player = None
@@ -297,7 +297,7 @@ class Player:
             if crd.name not in kwargs.get("exclude_hook", []):
                 rc = crd.hook_trash_card(game=self.game, player=self, card=card)
                 if rc:
-                    trashopts.update(rc)
+                    trash_opts.update(rc)
 
     ###########################################################################
     def next_card(self) -> Optional[Card]:
