@@ -20,7 +20,7 @@ class Card_Herald(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        """Variable descrition"""
+        """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.
                 If it is an Action, play it.  When you buy this, you may overpay
@@ -35,7 +35,7 @@ class Card_Herald(Card.Card):
             player.add_card(card, "hand")
             player.play_card(card, cost_action=False)
 
-    def hook_overpay(self, game, player, amount):  # pylint: disable=unused-argument
+    def hook_overpay(self, _, player, amount):  # pylint: disable=unused-argument
         """If we overpay"""
         for _ in range(amount):
             card = player.card_sel(
@@ -44,12 +44,13 @@ class Card_Herald(Card.Card):
                 cardsrc="discard",
                 prompt="Look through your discard pile and put a card from it on top of your deck",
             )
-            player.add_card(card[0], "topdeck")
-            player.discardpile.remove(card[0])
+            if card:
+                player.add_card(card[0], "topdeck")
+                player.discardpile.remove(card[0])
 
 
 ###############################################################################
-class Test_Herald(unittest.TestCase):
+class TestHerald(unittest.TestCase):
     """Test Herald"""
 
     def setUp(self):
@@ -68,7 +69,7 @@ class Test_Herald(unittest.TestCase):
         self.assertIn("Duchy", self.plr.hand)
         self.assertIn("Moat", self.plr.played)
 
-    def test_play_nonaction(self):
+    def test_play_non_action(self):
         """Play a Herald - non-action top card"""
         self.plr.deck.set("Gold", "Copper")
         self.plr.add_card(self.card, "hand")
