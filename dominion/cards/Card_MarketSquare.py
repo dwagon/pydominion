@@ -20,6 +20,9 @@ class Card_MarketSquare(Card.Card):
         self.cost = 3
 
     def hook_trash_card(self, game, player, card):
+        """This should only activate if Market Square is in the hand"""
+        if self.location != "hand":
+            return
         gold = player.plr_choose_options(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),
@@ -31,7 +34,7 @@ class Card_MarketSquare(Card.Card):
 
 
 ###############################################################################
-class Test_MarketSquare(unittest.TestCase):
+class TestMarketSquare(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Market Square"])
         self.g.start_game()
@@ -60,6 +63,14 @@ class Test_MarketSquare(unittest.TestCase):
         self.plr.trash_card(self.plr.hand["Copper"])
         self.assertNotIn("Market Square", self.plr.hand)
         self.assertIn("Gold", self.plr.discardpile)
+
+    def test_trash_in_played(self):
+        """Test trashing a card with MS not in hand"""
+        self.plr.hand.set("Copper")
+        self.plr.played.set("Market Square")
+        self.plr.trash_card(self.plr.hand["Copper"])
+        self.g.print_state()
+        self.assertNotIn("Gold", self.plr.discardpile)
 
 
 ###############################################################################
