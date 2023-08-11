@@ -1414,8 +1414,9 @@ class Player:
         for i in range(self.coins.get() + 1):
             options.append((f"Spend {i} more", i))
         ans = self.plr_choose_options("How much do you wish to overpay?", *options)
-        card.hook_overpay(game=self.game, player=self, amount=ans)
-        self.coins -= ans
+        if ans > 0:
+            card.hook_overpay(game=self.game, player=self, amount=ans)
+            self.coins -= ans
 
     ###########################################################################
     def buy_card(self, card):
