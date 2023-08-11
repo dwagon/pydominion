@@ -16,6 +16,8 @@ class Event_Trade(Event.Event):
     def special(self, game, player):
         """Trash up to 2 cards from your hand. Gain a Silver per card you trashed"""
         trash = player.plr_trash_card(num=2)
+        if not trash:
+            return
         for _ in trash:
             player.gain_card("Silver")
 
@@ -39,6 +41,14 @@ class Test_Trade(unittest.TestCase):
             self.assertEqual(c.name, "Silver")
         self.assertNotIn("Copper", self.plr.hand)
         self.assertNotIn("Estate", self.plr.hand)
+
+    def test_trash_nothing(self):
+        """Trash nothing"""
+        self.plr.coins.add(5)
+        self.plr.hand.set()
+        self.plr.test_input = ["finish"]
+        self.plr.perform_event(self.card)
+        self.assertEqual(self.plr.discardpile.size(), 0)
 
 
 ###############################################################################
