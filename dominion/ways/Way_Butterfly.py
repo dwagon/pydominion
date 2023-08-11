@@ -17,13 +17,14 @@ class Way_Butterfly(Way.Way):
 
     def special_way(self, game, player, card):
         game[card.name].add(card)
+        player.remove_card(card)
         cst = player.card_cost(card)
         player.plr_gain_card(cst + 1, "equal")
         return {"discard": False}
 
 
 ###############################################################################
-class Test_Butterfly(unittest.TestCase):
+class TestButterfly(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -43,6 +44,8 @@ class Test_Butterfly(unittest.TestCase):
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.discardpile["Witch"])
         self.assertEqual(len(self.g["Moat"]), 10)
+        self.assertNotIn("Moat", self.plr.hand)
+        self.g.print_state()
 
 
 ###############################################################################
