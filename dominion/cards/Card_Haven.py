@@ -16,6 +16,7 @@ class Card_Haven(Card.Card):
         self.cards = 1
         self.actions = 1
         self.cost = 4
+        self.savedHavenCard = None
 
     def special(self, game, player):
         """Set aside a card from your hand face down. At the start of
@@ -28,18 +29,18 @@ class Card_Haven(Card.Card):
     def duration(self, game, player):
         c = self.savedHavenCard
         player.add_card(c, "hand")
-        # Can't guarantee the order so it may be in played
-        # or still in durationpile
+        # Can't guarantee the order, so it may be in played
+        # or still in duration pile
         if c in player.played:
             player.played.remove(c)
         elif c in player.durationpile:
             player.durationpile.remove(c)
         player.output(f"Pulling {c.name} out of from haven")
-        del self.savedHavenCard
+        self.savedHavenCard = None
 
 
 ###############################################################################
-class Test_Haven(unittest.TestCase):
+class TestHaven(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Haven"])
         self.g.start_game()

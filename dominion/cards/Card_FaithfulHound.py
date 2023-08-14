@@ -18,11 +18,12 @@ class Card_FaithfulHound(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         if player.phase != Player.Phase.CLEANUP:
-            player.add_card(self, "hand")
+            player.move_card(self, "hand")
+            player.output("Faithful hound returns to your hand")
 
 
 ###############################################################################
-class Test_FaithfulHound(unittest.TestCase):
+class TestFaithfulHound(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Faithful Hound"])
         self.g.start_game()

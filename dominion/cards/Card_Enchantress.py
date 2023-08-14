@@ -34,7 +34,7 @@ class Card_Enchantress(Card.Card):
 
 
 ###############################################################################
-class Test_Enchantress(unittest.TestCase):
+class TestEnchantress(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
@@ -49,11 +49,11 @@ class Test_Enchantress(unittest.TestCase):
         self.plr.play_card(self.card)
         self.vic.add_card(self.r1, "hand")
         self.vic.play_card(self.r1)
-        self.assertEqual(self.vic.hand.size(), 5 + 1)  # Hand + Ench
+        self.assertEqual(self.vic.hand.size(), 5 + 1)  # Hand + Enchantress
         self.assertEqual(self.vic.actions.get(), 1)
         self.vic.add_card(self.m1, "hand")
         self.vic.play_card(self.m1)
-        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Ench + Moat
+        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Enchantress + Moat
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.hand.size(), 5 + 2)

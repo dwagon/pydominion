@@ -44,12 +44,12 @@ class Card_Urchin(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 4
-    return player.pick_to_discard(numtodiscard)
+    num_to_discard = len(player.hand) - 4
+    return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
-class Test_Urchin(unittest.TestCase):
+class TestUrchin(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()
@@ -65,7 +65,7 @@ class Test_Urchin(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.victim.hand.size(), 4)
 
-    def test_merc(self):
+    def test_mercenary(self):
         """Play an Urchin and get a mercenary"""
         self.plr.played.set("Urchin", "Militia")
         for crd in self.plr.played:

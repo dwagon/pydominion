@@ -20,6 +20,8 @@ class Event_Quest(Event.Event):
         discards = player.plr_discard_cards(any_number=True)
         attack_flag = False
         curses = 0
+        if not discards:
+            return
         for c in discards:
             if c.isAttack():
                 attack_flag = True

@@ -79,7 +79,7 @@ def parse_cli_args(args=None):
         "--prosperity",
         default=False,
         action="store_true",
-        help="Use colonies and platinums",
+        help="Use colonies and platinum coins",
     )
     parser.add_argument("--bot", action="store_true", dest="bot", default=False, help="Bot Player")
     parser.add_argument("--randobot", type=int, dest="randobot", default=0, help="Num Rando Bot Players")

@@ -21,70 +21,70 @@ class Card_Rogue(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        if not self.riffleTrash(game, player):
-            self.rifflePlayers(game, player)
+        if not self.riffle_trash(game, player):
+            self.riffle_players(game, player)
 
     ###########################################################################
-    def rifflePlayers(self, game, player):
+    def riffle_players(self, _, player):
         for plr in player.attack_victims():
-            self.riffleVictim(plr, player)
+            self.riffle_victim(plr, player)
 
     ###########################################################################
-    def riffleVictim(self, victim, player):
+    def riffle_victim(self, victim, player):
         cards = []
         for _ in range(2):
-            c = victim.next_card()
-            victim.reveal_card(c)
-            if 3 <= c.cost <= 6:
-                cards.append(c)
-                c.location = None
+            card = victim.next_card()
+            victim.reveal_card(card)
+            if 3 <= card.cost <= 6:
+                cards.append(card)
+                card.location = None
             else:
-                victim.output(f"{player.name}'s Rogue discarded {c.name} as unsuitable")
-                victim.add_card(c, "discard")
+                victim.output(f"{player.name}'s Rogue discarded {card.name} as unsuitable")
+                victim.add_card(card, "discard")
         if not cards:
-            player.output("No suitable cards from %s" % victim.name)
+            player.output(f"No suitable cards from {victim.name}")
             return
         options = []
         index = 1
-        for c in cards:
+        for card in cards:
             sel = str(index)
             index += 1
-            options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
-        o = player.user_input(options, "Trash which card from %s?" % victim.name)
-        victim.output("%s's rogue trashed your %s" % (player.name, o["card"].name))
+            options.append({"selector": sel, "print": f"Trash {card.name}", "card": card})
+        o = player.user_input(options, f"Trash which card from {victim.name}?")
+        victim.output(f"{player.name}'s rogue trashed your {o['card'].name}'")
         victim.trash_card(o["card"])
         # Discard what the rogue didn't trash
-        for c in cards:
-            if c != o["card"]:
-                victim.output("Rogue discarding %s as leftovers" % c.name)
-                victim.discard_card(c)
+        for card in cards:
+            if card != o["card"]:
+                victim.output(f"Rogue discarding {card.name} as leftovers")
+                victim.discard_card(card)
 
     ###########################################################################
-    def riffleTrash(self, game, player):
+    def riffle_trash(self, game, player):
         options = []
         picked = set()
         index = 1
-        for c in game.trashpile:
-            if not c.insupply:
+        for card in game.trashpile:
+            if not card.insupply:
                 continue
-            if c.name in picked:
+            if card.name in picked:
                 continue
-            if 3 <= c.cost <= 6:
-                picked.add(c.name)
-                sel = "%d" % index
+            if 3 <= card.cost <= 6:
+                picked.add(card.name)
+                sel = f"{index}"
                 index += 1
-                options.append({"selector": sel, "print": "Take %s" % c.name, "card": c})
+                options.append({"selector": sel, "print": f"Take {card.name}", "card": card})
         if index == 1:
             return False
         o = player.user_input(options, "Pick a card from the trash")
         game.trashpile.remove(o["card"])
         player.add_card(o["card"])
-        player.output("Took a %s from the trash" % o["card"].name)
+        player.output(f"Took a {o['card'].name} from the trash")
         return True
 
 
 ###############################################################################
-class Test_Rogue(unittest.TestCase):
+class TestRogue(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
