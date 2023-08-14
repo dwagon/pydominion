@@ -35,7 +35,7 @@ class Card_Herald(Card.Card):
             player.add_card(card, "hand")
             player.play_card(card, cost_action=False)
 
-    def hook_overpay(self, _, player, amount):  # pylint: disable=unused-argument
+    def hook_overpay(self, game, player, amount):  # pylint: disable=unused-argument
         """If we overpay"""
         for _ in range(amount):
             card = player.card_sel(
