@@ -428,18 +428,18 @@ class Game:  # pylint: disable=too-many-public-methods
             self._use_cardpile(self._base_cards[:], card, force=True, cardtype="BaseCard")
         available = self.getAvailableCards()
         unfilled = numstacks
-        foundall = True
+        found_all = True
         for crd in initcards:
             # These cards get loaded by other things
             if crd in ("Boons",):
                 continue
             result = self._place_init_card(crd, available)
             if result is None:
-                foundall = False
+                found_all = False
             else:
                 unfilled -= result
 
-        if not foundall:
+        if not found_all:
             sys.exit(1)
 
         while unfilled:
@@ -814,13 +814,13 @@ class Game:  # pylint: disable=too-many-public-methods
             total = len(pile)
             tmp[pile.name]["pile"] = total
             for plr in self.player_list():
-                for stackname, stack in plr.stacklist:
+                for stack_name, stack in plr.stacklist:
                     count = 0
                     for card in stack:
                         if card.name == pile.name:
                             count += 1
                     if count:
-                        tmp[pile.name][f"{plr.name}:{stackname}"] = count
+                        tmp[pile.name][f"{plr.name}:{stack_name}"] = count
                         total += count
             count = 0
             for card in self.trashpile:
@@ -853,8 +853,7 @@ class Game:  # pylint: disable=too-many-public-methods
         print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################
-    def turn(self):
-        """TODO"""
+    def _validate_cards(self):
         try:
             assert self.count_cards() == self._total_cards
             current_cardset = set(self._cards.keys())
@@ -862,10 +861,16 @@ class Game:  # pylint: disable=too-many-public-methods
         except AssertionError:
             self._card_loc_debug()
             raise
+
+    ###########################################################################
+    def turn(self):
+        """TODO"""
+        self._validate_cards()
         self.current_player = self.player_to_left(self.current_player)
         self.current_player.start_turn()
         self.current_player.turn()
         self.current_player.end_turn()
+        self._validate_cards()
         self._turns.append(self.current_player.uuid)
         if self.isGameOver():
             self.gameover = True
