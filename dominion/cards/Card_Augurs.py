@@ -22,7 +22,7 @@ class Card_Augurs(Card.Card):
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
     def __init__(self, game, pile_size=12):
-        self.mapping = game.get_card_classes("Augurs", game.cardpath, "Card_")
+        self.mapping = game.get_card_classes("Augurs", game.paths["cards"], "Card_")
         super().__init__(cardname="Augurs", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):
