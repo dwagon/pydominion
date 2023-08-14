@@ -102,6 +102,7 @@ def runGame(args):  # pragma: no cover
         for line in args["cardset"]:
             if line.startswith("--prosperity"):
                 args["prosperity"] = True
+                continue
             if line.startswith("--oldcards"):
                 args["oldcards"] = True
             cards.append(line.strip())
