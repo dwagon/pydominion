@@ -2,19 +2,22 @@
 
 import unittest
 
-from dominion import Card, Game, CardPile
+from dominion import Game, CardPile
 
 
 ###############################################################################
-class Fake_Card:
-    def __init__(self):
-        self.name = "Fake Card"
+class FakeCard:
+    def __init__(self, name="Fake Card"):
+        self.name = name
+
+    def __str__(self):
+        return f"<{self.name}>"
 
 
 ###############################################################################
-class Test_CardPile(unittest.TestCase):
+class TestCardPile(unittest.TestCase):
     def setUp(self):
-        mock_card = Fake_Card
+        mock_card = FakeCard
         g = Game.Game()
         self.cp = CardPile.CardPile(cardname="test_card", klass=mock_card, game=g, pile_size=5)
 
@@ -22,11 +25,11 @@ class Test_CardPile(unittest.TestCase):
         self.assertEqual(len(self.cp), 5)
         card = self.cp.remove()
         self.assertEqual(len(self.cp), 4)
-        self.assertTrue(isinstance(card, Fake_Card))
+        self.assertTrue(isinstance(card, FakeCard))
 
     def test_add(self):
         self.assertEqual(len(self.cp), 5)
-        self.cp.add(Fake_Card())
+        self.cp.add(FakeCard())
         self.assertEqual(len(self.cp), 6)
 
     def test_empty(self):
@@ -42,6 +45,27 @@ class Test_CardPile(unittest.TestCase):
         self.assertIsNone(self.cp.remove())
         self.assertTrue(self.cp.is_empty())
         self.assertFalse(self.cp)
+
+    def test_rotate(self):
+        """Test rotating a card pile"""
+        while True:
+            card = self.cp.remove()
+            if card is None:
+                break
+        self.cp.add(FakeCard(name="Foo"))
+        self.cp.add(FakeCard(name="Bar"))
+        self.cp.add(FakeCard(name="Baz"))
+        self.cp.rotate()
+        self.assertEqual(self.cp.top_card(), "Bar")
+
+    def test_rotate_empty(self):
+        """Test rotating an empty card pile"""
+        while True:
+            card = self.cp.remove()
+            if card is None:
+                break
+        self.cp.rotate()
+        self.assertIsNone(self.cp.top_card())
 
 
 ###############################################################################
