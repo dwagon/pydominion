@@ -61,6 +61,18 @@ class Game:  # pylint: disable=too-many-public-methods
         self._heirlooms = []
         self._allow_shelters = True
         self.current_player = None
+        self.paths = {
+            "cards": "dominion/cards",
+            "allies": "dominion/allies",
+            "hexes": "dominion/hexes",
+            "boons": "dominion/boons",
+            "states": "dominion/states",
+            "artifacts": "dominion/artifacts",
+            "projects": "dominion/projects",
+            "landmarks": "dominion/landmarks",
+            "events": "dominion/events",
+            "ways": "dominion/ways",
+        }
         # The _base_cards are in every game
         self._base_cards = ["Copper", "Silver", "Gold", "Estate", "Duchy", "Province"]
         self.parse_args(**kwargs)
@@ -77,33 +89,34 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def parse_args(self, **args):
         """Parse the arguments passed to the class"""
-        self.allypath = args.get("allypath", "dominion/allies")
-        self.hexpath = "dominion/hexes"
+        self.paths["cards"] = args.get("cardpath", self.paths["cards"])
+        self.paths["allies"] = args.get("allypath", self.paths["allies"])
+        self.paths["hexes"] = args.get("hexpath", self.paths["hexes"])
+        self.paths["boons"] = args.get("boonpath", self.paths["boons"])
+        self.paths["states"] = args.get("statepath", self.paths["states"])
+        self.paths["artifacts"] = args.get("artifactpath", self.paths["artifacts"])
+        self.paths["projects"] = args.get("projectpath", self.paths["projects"])
+        self.paths["landmarks"] = args.get("landmarkpath", self.paths["landmarks"])
+        self.paths["events"] = args.get("eventpath", self.paths["events"])
+        self.paths["ways"] = args.get("waypath", self.paths["ways"])
+
         self.numstacks = args.get("numstacks", 10)
-        self.boonpath = args.get("boonpath", "dominion/boons")
-        self.statepath = args.get("statepath", "dominion/states")
-        self.artifactpath = args.get("artifactpath", "dominion/artifacts")
         self.prosperity = args.get("prosperity", False)
         self.oldcards = args.get("oldcards", False)
         self.quiet = args["quiet"] if "quiet" in args else False
         self.numplayers = args["numplayers"] if "numplayers" in args else 2
         self._initcards = args.get("initcards", [])
         self.badcards = args.get("badcards", [])
-        self.cardpath = args["cardpath"] if "cardpath" in args else "dominion/cards"
         self.cardbase = args["cardbase"] if "cardbase" in args else []
         self.bot = args["bot"] if "bot" in args else False
         self.randobot = args.get("randobot", 0)
         self.eventcards = args["eventcards"] if "eventcards" in args else []
         self.waycards = args["waycards"] if "waycards" in args else []
-        self.eventpath = "dominion/events"
         self.numevents = args["numevents"] if "numevents" in args else 0
-        self.waypath = "dominion/ways"
         self.numways = args.get("numways", 0)
         self.landmarkcards = args.get("landmarkcards", [])
-        self.landmarkpath = args.get("landmarkpath", "dominion/landmarks")
         self.numlandmarks = args["numlandmarks"] if "numlandmarks" in args else 0
         self.numprojects = args["numprojects"] if "numprojects" in args else 0
-        self.projectpath = args.get("projectpath", "dominion/projects")
         self.initprojects = args["initprojects"] if "initprojects" in args else []
         self.init_ally = args.get("init_ally", args.get("ally", []))
         self._allow_shelters = args.get("shelters", True)
@@ -571,19 +584,19 @@ class Game:  # pylint: disable=too-many-public-methods
             "Heirloom",
             "Shelter",
         ):
-            mapping[prefix] = self.get_card_classes(prefix, self.cardpath, "Card_")
+            mapping[prefix] = self.get_card_classes(prefix, self.paths["cards"], "Card_")
             if self.oldcards:
-                oldpath = os.path.join(self.cardpath, "old")
+                oldpath = os.path.join(self.paths["cards"], "old")
                 mapping[prefix].update(self.get_card_classes(prefix, oldpath, "Card_"))
-        mapping["Event"] = self.get_card_classes("Event", self.eventpath, "Event_")
-        mapping["Way"] = self.get_card_classes("Way", self.waypath, "Way_")
-        mapping["Landmark"] = self.get_card_classes("Landmark", self.landmarkpath, "Landmark_")
-        mapping["Boon"] = self.get_card_classes("Boon", self.boonpath, "Boon_")
-        mapping["Hex"] = self.get_card_classes("Hex", self.hexpath, "Hex_")
-        mapping["State"] = self.get_card_classes("State", self.statepath, "State_")
-        mapping["Artifact"] = self.get_card_classes("Artifact", self.artifactpath, "Artifact_")
-        mapping["Project"] = self.get_card_classes("Project", self.projectpath, "Project_")
-        mapping["Ally"] = self.get_card_classes("Ally", self.allypath, "Ally_")
+        mapping["Event"] = self.get_card_classes("Event", self.paths["events"], "Event_")
+        mapping["Way"] = self.get_card_classes("Way", self.paths["ways"], "Way_")
+        mapping["Landmark"] = self.get_card_classes("Landmark", self.paths["landmarks"], "Landmark_")
+        mapping["Boon"] = self.get_card_classes("Boon", self.paths["boons"], "Boon_")
+        mapping["Hex"] = self.get_card_classes("Hex", self.paths["hexes"], "Hex_")
+        mapping["State"] = self.get_card_classes("State", self.paths["states"], "State_")
+        mapping["Artifact"] = self.get_card_classes("Artifact", self.paths["artifacts"], "Artifact_")
+        mapping["Project"] = self.get_card_classes("Project", self.paths["projects"], "Project_")
+        mapping["Ally"] = self.get_card_classes("Ally", self.paths["allies"], "Ally_")
         return mapping
 
     ###########################################################################
