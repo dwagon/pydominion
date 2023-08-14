@@ -49,7 +49,6 @@ class BotPlayer(Player):
                     opts["quit"] = opt
                 if opt["action"] == "spendall":
                     opts["spendall"] = opt
-            print(f"{opts=}")
             return opts
         except KeyError as exc:  # pragma: no cover
             print(f"Options={options}")
@@ -98,7 +97,6 @@ class BotPlayer(Player):
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "cards", kwargs=kwargs)
         assert False, f"BigMoneyBot can't select cards from {mod.__name__}"
-        return None
 
     ###########################################################################
     def plr_choose_options(self, prompt, *choices):
@@ -106,7 +104,6 @@ class BotPlayer(Player):
         if hasattr(mod, "botresponse"):
             return mod.botresponse(self, "choices", args=choices)
         assert False, f"BigMoneyBot can't choose options from {mod.__name__}"
-        return None
 
     ###########################################################################
     def pick_to_discard(self, numtodiscard, keepvic=False):
