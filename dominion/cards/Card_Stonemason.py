@@ -5,7 +5,7 @@ from dominion import Card, Game, Player
 
 
 ###############################################################################
-class Card_Stonemason(Card.Card):
+class Card_StoneMason(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -51,7 +51,7 @@ class Card_Stonemason(Card.Card):
 
 
 ###############################################################################
-class Test_Stonemason(unittest.TestCase):
+class TestStoneMason(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
