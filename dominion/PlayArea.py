@@ -33,7 +33,7 @@ class PlayArea:
     ###########################################################################
     def __getitem__(self, name_or_idx):
         """Return a card with the name {name_or_idx} or None from playarea
-        If the {name_or_idx} is a integer - return that card from that index
+        If the {name_or_idx} is an integer - return that card from that index
         """
         if isinstance(name_or_idx, int):
             return self._cards[name_or_idx]
@@ -53,7 +53,7 @@ class PlayArea:
 
     ###########################################################################
     def add(self, card):
-        """Add a carx to the area"""
+        """Add a card to the area"""
         self._cards.insert(0, card)
 
     ###########################################################################
@@ -147,7 +147,7 @@ class PlayArea:
 
     ###########################################################################
     def dump(self, name=None):
-        """Print out all of the playarea - for debugging purposes only"""
+        """Print out all the playarea - for debugging purposes only"""
         if name is None:
             name = self.name
         print(f"-vvvvvvvv- {name}")
