@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -19,7 +17,7 @@ class Way_Camel(Way.Way):
 
 
 ###############################################################################
-class Test_Camel(unittest.TestCase):
+class TestCamel(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -34,9 +32,9 @@ class Test_Camel(unittest.TestCase):
 
     def test_play(self):
         """Perform a Camel"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
-        self.assertIn("Gold", self.plr.exilepile)
+        self.assertIn("Gold", self.plr.piles[Piles.EXILE])
 
 
 ###############################################################################
