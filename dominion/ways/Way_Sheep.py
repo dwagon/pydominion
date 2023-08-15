@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -19,7 +17,7 @@ class Way_Sheep(Way.Way):
 
 
 ###############################################################################
-class Test_Sheep(unittest.TestCase):
+class TestSheep(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -34,7 +32,7 @@ class Test_Sheep(unittest.TestCase):
 
     def test_play(self):
         """Perform a Sheep"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 

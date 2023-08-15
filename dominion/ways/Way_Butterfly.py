@@ -37,7 +37,7 @@ class TestButterfly(unittest.TestCase):
 
     def test_play(self):
         """Perform a Butterfly"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Witch"])
