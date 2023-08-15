@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,13 +20,13 @@ class Card_Cutpurse(Card.Card):
         """Each other player discard a Copper card (or reveals a
         hand with no copper)."""
         for victim in player.attack_victims():
-            c = victim.hand["Copper"]
+            c = victim.piles[Piles.HAND]["Copper"]
             if c:
                 player.output("%s discarded a copper" % victim.name)
                 victim.output("Discarded a copper due to %s's Cutpurse" % player.name)
                 victim.discard_card(c)
             else:
-                for card in victim.hand:
+                for card in victim.piles[Piles.HAND]:
                     victim.reveal_card(card)
                 player.output("%s had no coppers" % victim.name)
 
@@ -38,19 +38,19 @@ class Test_Cutpurse(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Cutpurse"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_coppers(self):
-        self.victim.hand.set("Copper", "Copper", "Estate")
+        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.victim.discardpile[-1].name, "Copper")
-        self.assertEqual(self.victim.hand.size(), 2)
+        self.assertEqual(self.victim.piles[Piles.DISCARD][-1].name, "Copper")
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 2)
 
     def test_play_none(self):
-        self.victim.hand.set("Duchy", "Estate", "Estate")
+        self.victim.piles[Piles.HAND].set("Duchy", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertTrue(self.victim.discardpile.is_empty())
-        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

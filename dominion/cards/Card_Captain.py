@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -41,20 +41,20 @@ class Test_Captain(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Captain"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_bureaucrat(self):
         """Make the Captain be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
     def test_play_market(self):
         """Make the Captain be a Workshop"""
         self.plr.test_input = ["Select Workshop", "Get Bureaucrat"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Workshop", self.plr.discardpile)
-        self.assertIn("Bureaucrat", self.plr.discardpile)
+        self.assertNotIn("Workshop", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Bureaucrat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

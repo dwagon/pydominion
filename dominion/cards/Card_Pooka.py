@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Pooka(Card.Card):
         self.heirloom = "Cursed Gold"
 
     def special(self, game, player):
-        treasures = [_ for _ in player.hand if _.isTreasure() and _.name != "Cursed Gold"]
+        treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure() and _.name != "Cursed Gold"]
         tr = player.plr_trash_card(prompt="Trash a treasure from your hand for +4 Cards", cardsrc=treasures)
         if tr:
             player.pickup_cards(4)
@@ -33,11 +33,11 @@ class Test_Pooka(unittest.TestCase):
 
     def test_play(self):
         """Play a Pooka"""
-        self.plr.hand.set("Copper", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertIn("Copper", self.g.trashpile)
         self.assertNotIn("Gold", self.g.trashpile)
 

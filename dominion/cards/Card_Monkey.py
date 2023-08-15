@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Monkey """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -37,16 +37,16 @@ class Test_Monkey(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Monkey"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play Monkey"""
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.oth.gain_card("Moat")
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 1 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 + 1)
 
 
 ###############################################################################

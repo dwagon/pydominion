@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Clashes """
 
 import unittest
-from dominion import Card, Game, CardPile
+from dominion import Card, Game, Piles, CardPile
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -41,7 +41,7 @@ class Test_Garrison(unittest.TestCase):
             self.card = self.g["Forts"].remove()
             if self.card.name == "Garrison":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a garrison"""
@@ -53,7 +53,7 @@ class Test_Garrison(unittest.TestCase):
         self.plr.gain_card("Copper")
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

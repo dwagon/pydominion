@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -31,20 +31,20 @@ class Test_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.wcard = self.g["Workshop"].remove()
-        self.plr.add_card(self.wcard, "hand")
+        self.plr.add_card(self.wcard, Piles.HAND)
 
     def test_gainzero(self):
         self.plr.test_input = ["Finish"]
         self.plr.play_card(self.wcard)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
     def test_gainone(self):
         self.plr.test_input = ["Get Gardens"]
         self.plr.play_card(self.wcard)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].cost, 4)
 
 
 ###############################################################################

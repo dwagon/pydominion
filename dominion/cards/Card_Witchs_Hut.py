@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Witch%27s_Hut"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -42,21 +42,21 @@ class Test_Witchs_Hut(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Witch's Hut"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_curse(self):
         """Play the Witchs Hut and hand out a curse"""
-        self.plr.deck.set("Copper", "Silver", "Gold", "Moat", "Chapel")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Moat", "Chapel")
         self.plr.test_input = ["Discard Moat", "Discard Chapel", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Curse", self.oth.discardpile)
+        self.assertIn("Curse", self.oth.piles[Piles.DISCARD])
 
     def test_play_nocurse(self):
         """Play the Witchs Hut and dont curse"""
-        self.plr.deck.set("Copper", "Silver", "Gold", "Moat", "Chapel")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Moat", "Chapel")
         self.plr.test_input = ["Discard Copper", "Discard Chapel", "Finish"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Curse", self.oth.discardpile)
+        self.assertNotIn("Curse", self.oth.piles[Piles.DISCARD])
 
 
 ###############################################################################

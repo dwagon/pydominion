@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Band_of_Nomads"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -55,10 +55,10 @@ class Test_Band_Nomads(unittest.TestCase):
     def test_play_card(self):
         """Play and gain a card"""
         self.plr.favors.set(1)
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = ["+1 Card"]
         self.plr.gain_card("Silver")
-        self.assertEqual(self.plr.hand.size(), hndsz + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 1)
 
     def test_play_actions(self):
         """Play and gain an action"""

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Scrap """
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -68,17 +68,17 @@ class Test_Scrap(unittest.TestCase):
 
     def test_playcard_cost0(self):
         """Play a scrap and trash something worth 0"""
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
 
     def test_playcard_cost3(self):
         """Play a scrap and trash something worth 3"""
-        self.plr.hand.set("Silver")
-        self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Province")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Province")
         self.plr.test_input = [
             "trash silver",
             "card",
@@ -89,16 +89,16 @@ class Test_Scrap(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Silver", self.g.trashpile)
 
     def test_playcard_cost6(self):
         """Play a scrap and trash something worth more than 4"""
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Copper")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Copper")
         self.plr.test_input = [
             "trash province",
             "card",
@@ -117,11 +117,11 @@ class Test_Scrap(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIn("Copper", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Horse", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

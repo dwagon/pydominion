@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,7 +25,7 @@ class Card_Experiment(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.played.remove(self)
+        player.piles[Piles.PLAYED].remove(self)
         game[self.name].add(self)
         player.output("Returned experiment to stack")
 
@@ -39,15 +39,15 @@ class Test_Experiment(unittest.TestCase):
 
     def test_play_card(self):
         self.card = self.g["Experiment"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0 + 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_gain_card(self):
         self.plr.gain_card("Experiment")
         count = 0
-        for card in self.plr.discardpile:
+        for card in self.plr.piles[Piles.DISCARD]:
             if card.name == "Experiment":
                 count += 1
         self.assertEqual(count, 2)

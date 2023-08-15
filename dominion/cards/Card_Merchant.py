@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Merchant(Card.Card):
     def hook_spend_value(self, game, player, card):
         if card.name != "Silver":
             return 0
-        ag_count = player.played.count("Silver")
+        ag_count = player.piles[Piles.PLAYED].count("Silver")
         if ag_count == 1:
             return 1
         return 0
@@ -37,14 +37,14 @@ class Test_Merchant(unittest.TestCase):
         self.s2 = self.g["Silver"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.plr.add_card(self.s1, "hand")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.plr.add_card(self.s1, Piles.HAND)
         self.plr.play_card(self.s1)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.plr.add_card(self.s2, "hand")
+        self.plr.add_card(self.s2, Piles.HAND)
         self.plr.play_card(self.s2)
         self.assertEqual(self.plr.coins.get(), 5)
 

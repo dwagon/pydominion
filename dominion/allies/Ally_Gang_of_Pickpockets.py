@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Gang_of_Pickpockets"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -40,16 +40,16 @@ class Test_Gang_Pickpockets(unittest.TestCase):
         self.plr.favors.set(1)
         self.plr.test_input = ["Spend"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.favors.get(), 0)
 
     def test_discard(self):
         """Discard"""
-        self.plr.hand.set("Estate", "Duchy", "Silver", "Gold", "Copper")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Silver", "Gold", "Copper")
         self.plr.favors.set(1)
         self.plr.test_input = ["Discard", "Discard Duchy"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         self.assertEqual(self.plr.favors.get(), 1)
 
 

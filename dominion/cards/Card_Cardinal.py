@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Cardinal """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -34,7 +34,7 @@ class Card_Cardinal(Card.Card):
 
 
 ###############################################################################
-class Test_Cardinal(unittest.TestCase):
+class TestCardinal(unittest.TestCase):
     """Test Cardinal"""
 
     def setUp(self):
@@ -42,14 +42,14 @@ class Test_Cardinal(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Cardinal"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Test play"""
-        self.oth.deck.set("Silver", "Village")
+        self.oth.piles[Piles.DECK].set("Silver", "Village")
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.oth.discardpile)
-        self.assertIn("Village", self.oth.exilepile)
+        self.assertIn("Silver", self.oth.piles[Piles.DISCARD])
+        self.assertIn("Village", self.oth.piles[Piles.EXILE])
 
 
 ###############################################################################

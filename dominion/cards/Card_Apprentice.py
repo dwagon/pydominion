@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
+###############################################################################
 class Card_Apprentice(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -38,25 +38,25 @@ class Test_Apprentice(unittest.TestCase):
 
     def test_trashNone(self):
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.apprentice, "hand")
+        self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.apprentice)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_trash_card(self):
-        self.plr.hand.set("Silver")
-        self.plr.add_card(self.apprentice, "hand")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.apprentice)
-        self.assertEqual(self.plr.hand.size(), self.g.trashpile[-1].cost)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trashpile[-1].cost)
 
     def test_trashPotion(self):
-        self.plr.hand.set("Familiar")
-        self.plr.add_card(self.apprentice, "hand")
+        self.plr.piles[Piles.HAND].set("Familiar")
+        self.plr.add_card(self.apprentice, Piles.HAND)
         self.plr.test_input = ["Familiar"]
         self.plr.play_card(self.apprentice)
-        self.assertEqual(self.plr.hand.size(), self.g.trashpile[-1].cost + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), self.g.trashpile[-1].cost + 2)
 
 
 ###############################################################################

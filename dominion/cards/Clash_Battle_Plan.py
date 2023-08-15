@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Battle_Plan """
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ class Card_Battle_Plan(Card.Card):
     def special(self, game, player):
         """You may reveal an Attack card from your hand for +1 Card.
         You may rotate any Supply pile."""
-        attacks = [_ for _ in player.hand if _.isAttack()]
+        attacks = [_ for _ in player.piles[Piles.HAND] if _.isAttack()]
         if attacks:
             options = [("Don't reveal", None)]
             options.extend([(f"Reveal {_.name}", _) for _ in attacks])
@@ -60,12 +60,12 @@ class Test_Battle_Plan(unittest.TestCase):
             card = self.g["Clashes"].remove()
             if card.name == "Battle Plan":
                 break
-        self.plr.deck.set("Gold")
-        self.plr.hand.set("Estate", "Militia")
-        self.plr.add_card(card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold")
+        self.plr.piles[Piles.HAND].set("Estate", "Militia")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Reveal Militia", "Rotate Clashes"]
         self.plr.play_card(card)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
         next_card = self.g["Clashes"].remove()
         self.assertEqual(next_card.name, "Archer")
 

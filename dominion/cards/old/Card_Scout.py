@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -25,7 +25,7 @@ class Card_Scout(Card.Card):
             c = player.next_card()
             player.reveal_card(c)
             if c.isVictory():
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
                 player.output(f"Adding {c.name} to hand")
             else:
                 cards.append(c)
@@ -43,24 +43,24 @@ class Test_Scout(unittest.TestCase):
         self.scout = self.g["Scout"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.scout, "hand")
+        self.plr.add_card(self.scout, Piles.HAND)
         self.plr.play_card(self.scout)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_victory(self):
-        self.plr.hand.set()
-        self.plr.add_card(self.scout, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.scout, Piles.HAND)
         self.plr.play_card(self.scout)
-        for c in self.plr.hand:
+        for c in self.plr.piles[Piles.HAND]:
             self.assertTrue(c.isVictory())
 
     def test_deck(self):
-        self.plr.hand.set()
-        self.plr.add_card(self.scout, "hand")
-        self.plr.deck.set("Copper", "Copper", "Copper", "Duchy")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.scout, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Duchy")
         self.plr.play_card(self.scout)
-        self.assertEqual(self.plr.hand[0].name, "Duchy")
-        for c in self.plr.deck:
+        self.assertEqual(self.plr.piles[Piles.HAND][0].name, "Duchy")
+        for c in self.plr.piles[Piles.DECK]:
             self.assertEqual(c.name, "Copper")
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -41,15 +41,15 @@ class Test_Forge(unittest.TestCase):
     def test_play(self):
         """Play the Forge"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Estate", "Estate", "Estate")
-        self.plr.add_card(self.forge, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
+        self.plr.add_card(self.forge, Piles.HAND)
         # Trash two cards, Finish Trashing, Select another
         self.plr.test_input = ["1", "2", "finish", "Bureaucrat"]
         self.plr.play_card(self.forge)
-        self.assertEqual(self.plr.discardpile[0].cost, 4)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].cost, 4)
         self.assertIn("Estate", self.g.trashpile)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
 
 
 ###############################################################################

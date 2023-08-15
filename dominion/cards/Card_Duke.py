@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,9 +33,9 @@ class Test_Duke(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score(self):
-        self.plr.deck.set("Duchy", "Duchy", "Estate")
-        self.plr.hand.set("Silver")
-        self.plr.discardpile.set("Duke")
+        self.plr.piles[Piles.DECK].set("Duchy", "Duchy", "Estate")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.piles[Piles.DISCARD].set("Duke")
         sc = self.plr.get_score()
         self.assertEqual(sc, 9)  # 3 per duchy, 1 per estate, 2 from duke
 

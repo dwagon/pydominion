@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -48,7 +48,7 @@ class Test_Charm(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Charm"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_choose_one(self):
         self.plr.test_input = ["+1 Buy"]
@@ -64,7 +64,7 @@ class Test_Charm(unittest.TestCase):
         self.plr.test_input = ["Get Duchy"]
         self.plr.coins.set(5)
         self.plr.buy_card(self.g["Charm"])
-        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -18,9 +17,9 @@ class Card_Countinghouse(Card.Card):
 
     def special(self, game, player):
         count = 0
-        for card in player.discardpile:
+        for card in player.piles[Piles.DISCARD]:
             if card.name == "Copper":
-                player.move_card(card, "hand")
+                player.move_card(card, Piles.HAND)
                 count += 1
         player.output(f"Picked up {count} coppers")
 
@@ -32,16 +31,16 @@ class Test_Countinghouse(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ch = self.g["Counting House"].remove()
-        self.plr.hand.set()
-        self.plr.add_card(self.ch, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.ch, Piles.HAND)
 
     def test_pullcoppers(self):
-        self.plr.discardpile.set("Copper", "Gold", "Duchy", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper", "Gold", "Duchy", "Copper")
         self.plr.play_card(self.ch)
-        self.assertEqual(self.plr.hand.size(), 2)
-        for c in self.plr.hand:
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        for c in self.plr.piles[Piles.HAND]:
             self.assertEqual(c.name, "Copper")
-        self.assertNotIn("Copper", self.plr.discardpile)
+        self.assertNotIn("Copper", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

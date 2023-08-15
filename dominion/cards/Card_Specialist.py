@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Card_Specialist(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        from_cards = [_ for _ in player.hand if _.isAction() or _.isTreasure()]
+        from_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()]
         cards = player.card_sel(cardsrc=from_cards, prompt="Play which card?")
         chosen = cards[0]
         player.play_card(chosen, discard=False, cost_action=False)
@@ -42,21 +42,21 @@ class Test_Specialist(unittest.TestCase):
 
     def test_play_gain(self):
         """Play the card and gain a copy"""
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Gain a copy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1 + 2)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 2)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
     def test_play_again(self):
         """Play the card and play it again"""
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Play it again"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1 + 2 + 2)
-        self.assertNotIn("Moat", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 2 + 2)
+        self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

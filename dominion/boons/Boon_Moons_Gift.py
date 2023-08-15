@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -17,17 +17,17 @@ class Boon_Moons_Gift(Boon.Boon):
         self.purchasable = False
 
     def special(self, game, player):
-        if not player.discardpile.size():
+        if not player.piles[Piles.DISCARD].size():
             return
         cards = []
         cardnames = set()
-        for c in player.discardpile:
+        for c in player.piles[Piles.DISCARD]:
             if c.name not in cardnames:
                 cards.append(c)
                 cardnames.add(c.name)
         card = player.card_sel(cardsrc=cards, prompt="Pull card from discard and add to top of your deck")
         player.add_card(card[0], "topdeck")
-        player.discardpile.remove(card[0])
+        player.piles[Piles.DISCARD].remove(card[0])
 
 
 ###############################################################################
@@ -44,12 +44,12 @@ class Test_Moons_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_moons_gift(self):
-        self.plr.discardpile.set("Province", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DISCARD].set("Province", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

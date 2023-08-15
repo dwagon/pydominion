@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -16,12 +16,12 @@ class Card_Explorer(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        prov = player.hand["Province"]
+        prov = player.piles[Piles.HAND]["Province"]
         if prov:
             player.reveal_card(prov)
-            player.gain_card("Gold", destination="hand")
+            player.gain_card("Gold", destination=Piles.HAND)
         else:
-            player.gain_card("Silver", destination="hand")
+            player.gain_card("Silver", destination=Piles.HAND)
 
 
 ###############################################################################
@@ -31,19 +31,19 @@ class Test_Explorer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Explorer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_province(self):
-        self.plr.gain_card("Province", "hand")
+        self.plr.gain_card("Province", Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
         # 5 + province + gold
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
     def test_no_province(self):
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

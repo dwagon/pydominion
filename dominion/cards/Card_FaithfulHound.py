@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_FaithfulHound(Card.Card):
 
     def hook_discard_this_card(self, game, player, source):
         if player.phase != Player.Phase.CLEANUP:
-            player.move_card(self, "hand")
+            player.move_card(self, Piles.HAND)
             player.output("Faithful hound returns to your hand")
 
 
@@ -33,9 +33,9 @@ class TestFaithfulHound(unittest.TestCase):
 
     def test_play(self):
         """Play a Faithful Hound"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_discard(self):
         pass  # TODO

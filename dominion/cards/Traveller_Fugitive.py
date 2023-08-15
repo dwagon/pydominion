@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,14 +37,14 @@ class Test_Fugitive(unittest.TestCase):
 
     def test_fugitive(self):
         """Play a fugitive"""
-        self.plr.hand.set("Province")
+        self.plr.piles[Piles.HAND].set("Province")
         self.plr.test_input = ["province"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIn("Province", self.plr.discardpile)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
 
 ###############################################################################

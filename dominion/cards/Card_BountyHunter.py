@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Bounty_Hunter """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -21,13 +20,13 @@ class Card_Bounty_Hunter(Card.Card):
     def special(self, game, player):
         crd = player.card_sel(prompt="Exile a card", verbs=("Exile", "Unexile"))
         if crd:
-            if crd[0] not in player.exilepile:
+            if crd[0] not in player.piles[Piles.EXILE]:
                 player.coins.add(3)
-            player.move_card(crd[0], "exile")
+            player.move_card(crd[0], Piles.EXILE)
 
 
 ###############################################################################
-class Test_Bounty_Hunter(unittest.TestCase):
+class TestBountyHunter(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Bounty Hunter"])
         self.g.start_game()
@@ -35,9 +34,9 @@ class Test_Bounty_Hunter(unittest.TestCase):
         self.card = self.g["Bounty Hunter"].remove()
 
     def test_play(self):
-        self.plr.exilepile.set("Copper")
-        self.plr.hand.set("Silver", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.EXILE].set("Copper")
+        self.plr.piles[Piles.HAND].set("Silver", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Exile Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)

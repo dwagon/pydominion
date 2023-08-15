@@ -3,7 +3,7 @@
 
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -48,15 +48,15 @@ class Test_Sorceress(unittest.TestCase):
             if card.name == "Sorceress":
                 break
         self.card = card
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_good_guess(self):
         """Play a sorceress and guess correctly"""
-        self.plr.deck.set("Gold", "Gold")
+        self.plr.piles[Piles.DECK].set("Gold", "Gold")
         self.plr.test_input = ["Guess Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

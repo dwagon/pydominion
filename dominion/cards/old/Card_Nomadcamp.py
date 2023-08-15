@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -34,14 +33,14 @@ class Test_NomadCamp(unittest.TestCase):
         self.card = self.g["Nomad Camp"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.plr.buys.get(), 2)
 
     def test_gain(self):
         self.plr.gain_card("Nomad Camp")
-        self.assertEqual(self.plr.deck[-1].name, "Nomad Camp")
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Nomad Camp")
 
 
 ###############################################################################

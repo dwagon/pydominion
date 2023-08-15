@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Tactician(Card.Card):
         discard = player.plr_choose_options(
             "Discard hand for good stuff next turn?", ("Keep", False), ("Discard", True)
         )
-        if discard and player.hand.size():
+        if discard and player.piles[Piles.HAND].size():
             self.discarded = True
             player.discard_hand()
 
@@ -40,16 +40,16 @@ class Test_Tactician(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tactician"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_discard(self):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 10)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 10)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.buys.get(), 2)
 
@@ -57,10 +57,10 @@ class Test_Tactician(unittest.TestCase):
         """Play a tactician and discard hand"""
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 1)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -37,23 +37,23 @@ class Test_Dungeon(unittest.TestCase):
 
     def test_playcard(self):
         """Play a dungeon"""
-        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold")
-        self.plr.hand.set("Province", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Estate", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Province", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["province", "duchy", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)  # 2 picked up from dungeon -2 discard
-        self.assertNotIn("duchy", self.plr.hand)
-        self.assertEqual(self.plr.durationpile.size(), 1)
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)  # 2 picked up from dungeon -2 discard
+        self.assertNotIn("duchy", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         self.plr.end_turn()
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertEqual(self.plr.played.size(), 1)
-        self.assertEqual(self.plr.played[-1].name, "Dungeon")
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertEqual(self.plr.hand.size(), 5)  # 5 dealt + 2 from dungeon -2 discard
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.PLAYED][-1].name, "Dungeon")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)  # 5 dealt + 2 from dungeon -2 discard
 
 
 ###############################################################################

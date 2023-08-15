@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Contraband"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -53,7 +53,7 @@ class Test_Contraband(unittest.TestCase):
         self.g.start_game()
         self.plr, self.nbr = self.g.player_list()
         self.card = self.g["Contraband"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Test play"""

@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Sentinel"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -33,16 +33,16 @@ class Test_Sentinel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentinel"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
-        self.plr.deck.set("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Silver", self.plr.deck)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

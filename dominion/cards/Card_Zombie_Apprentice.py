@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -22,7 +22,7 @@ class Card_Zombie_Apprentice(Card.Card):
         game.trashpile.add(self)
 
     def special(self, game, player):
-        actions = [_ for _ in player.hand if _.isAction()]
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No actions to trash")
             return
@@ -50,10 +50,10 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_play_action(self):
-        self.plr.hand.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat")
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card, discard=False, cost_action=False)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertIn("Zombie Apprentice", self.g.trashpile)
         self.assertIn("Moat", self.g.trashpile)

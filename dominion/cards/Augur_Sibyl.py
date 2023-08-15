@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -19,19 +19,20 @@ class Card_Sibyl(Card.Card):
 
     def special(self, game, player):
         tcard = player.card_sel(
-            prompt="Put a card from your hand on top of your deck", cardsrc=player.hand
+            prompt="Put a card from your hand on top of your deck",
+            cardsrc=player.piles[Piles.HAND],
         )
         player.move_card(tcard[0], "topdeck")
 
         bcard = player.card_sel(
             prompt="Put a card from your hand on bottom of your deck",
-            cardsrc=player.hand,
+            cardsrc=player.piles[Piles.HAND],
         )
-        player.move_card(bcard[0], "deck")
+        player.move_card(bcard[0], Piles.DECK)
 
 
 ###############################################################################
-class Test_Sibyl(unittest.TestCase):
+class TestSibyl(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()
@@ -45,12 +46,12 @@ class Test_Sibyl(unittest.TestCase):
 
     def test_play(self):
         """Play a Sibyl"""
-        self.plr.hand.set("Gold", "Silver", "Duchy", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Duchy", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold", "Select Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.deck.top_card().name, "Gold")
-        self.assertIn("Silver", self.plr.deck)
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Gold")
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Camel_Train """
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -36,16 +36,16 @@ class Test_Camel_Train(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Camel Train"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = ["Select Silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.exilepile)
+        self.assertIn("Silver", self.plr.piles[Piles.EXILE])
 
     def test_gain(self):
         self.plr.gain_card("Camel Train")
-        self.assertIn("Gold", self.plr.exilepile)
+        self.assertIn("Gold", self.plr.piles[Piles.EXILE])
 
 
 ###############################################################################

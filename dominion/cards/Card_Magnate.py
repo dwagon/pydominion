@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Magnate"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_Magnate(Card.Card):
 
     def special(self, game, player):
         cards = 0
-        for crd in player.hand:
+        for crd in player.piles[Piles.HAND]:
             player.reveal_card(crd)
             if crd.isTreasure():
                 cards += 1
@@ -40,11 +40,11 @@ class Test_Magnate(unittest.TestCase):
 
     def test_play_card(self):
         """Play Magnate"""
-        self.plr.hand.set("Copper", "Gold", "Estate")
-        self.plr.add_card(self.card, "hand")
-        orig = self.plr.hand.size()
+        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
+        orig = self.plr.piles[Piles.HAND].size()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), orig + 2 - 1)  # 2 for magnate, -1 for played
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), orig + 2 - 1)  # 2 for magnate, -1 for played
 
 
 ###############################################################################

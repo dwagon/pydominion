@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -39,14 +39,14 @@ class Test_Fool(unittest.TestCase):
         """Play a Fool with Lost in the Woods"""
         self.plr.assign_state("Lost in the Woods")
         self.plr._fool_dont_boon = False
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertFalse(self.plr._fool_dont_boon)
 
     def test_play_without(self):
         """Play a Fool without Lost in the Woods"""
         self.plr._fool_dont_boon = False
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertTrue(self.plr._fool_dont_boon)
 

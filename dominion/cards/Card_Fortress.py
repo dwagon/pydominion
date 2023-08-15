@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,14 +19,14 @@ class Card_Fortress(Card.Card):
 
     def hook_trashThisCard(self, game, player):
         player.output("Putting Fortress back in hand")
-        if self in player.played:
-            player.add_card(self, "hand")
-            player.played.remove(self)
-        if self in player.hand:
-            player.add_card(self, "hand")
-            player.hand.remove(self)
+        if self in player.piles[Piles.PLAYED]:
+            player.add_card(self, Piles.HAND)
+            player.piles[Piles.PLAYED].remove(self)
+        if self in player.piles[Piles.HAND]:
+            player.add_card(self, Piles.HAND)
+            player.piles[Piles.HAND].remove(self)
         if self in game.trashpile:
-            player.add_card(self, "hand")
+            player.add_card(self, Piles.HAND)
             game.trashpile.remove(self)
         return {"trash": False}
 
@@ -38,18 +38,18 @@ class Test_Fortress(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Fortress"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_trash(self):
         self.plr.trash_card(self.card)
         self.g.print_state()
-        self.assertIn("Fortress", self.plr.hand)
+        self.assertIn("Fortress", self.plr.piles[Piles.HAND])
         self.assertNotIn("Fortress", self.g.trashpile)
 
 

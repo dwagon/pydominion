@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -46,7 +46,7 @@ class Test_Stronghold(unittest.TestCase):
             if card.name == "Stronghold":
                 break
         self.card = card
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a stronghold"""
@@ -62,7 +62,7 @@ class Test_Stronghold(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
 
 
 ###############################################################################

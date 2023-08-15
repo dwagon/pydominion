@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Band_of_misfits"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -38,19 +38,19 @@ class Test_BandOfMisfits(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Band of Misfits"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_market(self):
         """Make the Band of Misfits be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
     def test_play_feast(self):
         """Make the Band of Misfits be a Village"""
         self.plr.test_input = ["Select Village -"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
 

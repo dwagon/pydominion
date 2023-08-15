@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -31,7 +31,7 @@ class Test_Cemetery(unittest.TestCase):
 
     def test_gain(self):
         """Gain a Cemetery"""
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
         self.plr.gain_card("Cemetery")
         self.assertIn("Copper", self.g.trashpile)

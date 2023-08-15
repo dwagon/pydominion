@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Paddock """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,7 +32,7 @@ class Test_Paddock(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Paddock"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_one_stack(self):
         while True:
@@ -41,7 +41,7 @@ class Test_Paddock(unittest.TestCase):
                 break
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Horse", self.plr.discardpile)
+        self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

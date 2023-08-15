@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,7 +36,7 @@ class Test_Champion(unittest.TestCase):
         self.plr.add_card(self.card, "duration")
         self.assertEqual(self.plr.actions.get(), 1)
         moat = self.g["Moat"].remove()
-        self.plr.add_card(moat, "hand")
+        self.plr.add_card(moat, Piles.HAND)
         self.plr.play_card(moat)
         self.assertEqual(self.plr.actions.get(), 1)
 

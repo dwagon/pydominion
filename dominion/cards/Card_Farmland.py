@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -39,19 +39,19 @@ class Test_Farmland(unittest.TestCase):
         """Gain a farmland"""
         try:
             tsize = self.g.trashpile.size()
-            self.plr.hand.set("Estate", "Duchy")
+            self.plr.piles[Piles.HAND].set("Estate", "Duchy")
             self.plr.test_input = ["Trash Estate", "Get Militia"]
             self.plr.gain_card("Farmland")
             self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertEqual(self.plr.hand.size(), 1)
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
             # 1 for farmland, 1 for gained card
-            self.assertEqual(self.plr.discardpile.size(), 2)
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         except (AssertionError, IOError):  # pragma: no cover
             self.g.print_state()
             raise
 
     def test_score(self):
-        self.plr.deck.set("Farmland")
+        self.plr.piles[Piles.DECK].set("Farmland")
         sd = self.plr.get_score_details()
         self.assertEqual(sd["Farmland"], 2)
 

@@ -23,7 +23,7 @@ class Card_Mandarin(Card.Card):
     def special(self, game, player):
         card = player.card_sel(
             force=True,
-            cardsrc="hand",
+            cardsrc=Piles.HAND,
             prompt="Put a card from your hand on top of your deck",
         )
         player.move_card(card[0], "topdeck")

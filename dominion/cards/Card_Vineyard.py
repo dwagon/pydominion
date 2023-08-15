@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -35,15 +35,15 @@ class Test_Vineyard(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.hand.set("Vineyard")
-        self.plr.deck.set("Copper")
-        self.plr.discardpile.set("Moat", "Moat", "Moat", "Moat")
+        self.plr.piles[Piles.HAND].set("Vineyard")
+        self.plr.piles[Piles.DECK].set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.get_score_details()["Vineyard"], 1)
 
     def test_scoreTwo(self):
-        self.plr.hand.set("Vineyard")
-        self.plr.deck.set("Vineyard")
-        self.plr.discardpile.set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
+        self.plr.piles[Piles.HAND].set("Vineyard")
+        self.plr.piles[Piles.DECK].set("Vineyard")
+        self.plr.piles[Piles.DISCARD].set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")
         self.assertEqual(self.plr.get_score_details()["Vineyard"], 4)
 
 

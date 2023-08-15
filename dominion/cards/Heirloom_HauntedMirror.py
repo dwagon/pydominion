@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Haunted_Mirror(Card.Card):
         self.purchasable = False
 
     def hook_trashThisCard(self, game, player):
-        ac = [_ for _ in player.hand if _.isAction()]
+        ac = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not ac:
             player.output("No action cards in hand, no effect")
             return
@@ -37,20 +37,20 @@ class Test_Haunted_Mirror(unittest.TestCase):
         self.card = self.g["Haunted Mirror"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_trash_nothing(self):
-        self.plr.hand.set("Copper")
+        self.plr.piles[Piles.HAND].set("Copper")
         self.plr.trash_card(self.card)
-        self.assertNotIn("Ghost", self.plr.discardpile)
+        self.assertNotIn("Ghost", self.plr.piles[Piles.DISCARD])
 
     def test_trash(self):
-        self.plr.hand.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat")
         self.plr.test_input = ["Moat"]
         self.plr.trash_card(self.card)
-        self.assertIn("Ghost", self.plr.discardpile)
+        self.assertIn("Ghost", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

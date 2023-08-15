@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Conjurer(Card.Card):
         player.plr_gain_card(4)
 
     def duration(self, game, player):
-        return {"dest": "hand"}
+        return {"dest": Piles.HAND}
 
 
 ###############################################################################
@@ -39,10 +39,10 @@ class Test_Conjurer(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Conjurer":
                 break
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.plr.end_turn()
         self.g.print_state()
         self.plr.start_turn()

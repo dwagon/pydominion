@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Turtle"""
 
 import unittest
-from dominion import Card, Game, Piles, Piles, Way
+from dominion import Card, Game, Piles, Way
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -35,13 +35,13 @@ class Test_Pasture(unittest.TestCase):
         self.card = self.g["Pasture"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_score(self):
-        self.plr.hand.set("Estate", "Pasture")
-        self.plr.deck.set("Estate")
+        self.plr.piles[Piles.HAND].set("Estate", "Pasture")
+        self.plr.piles[Piles.DECK].set("Estate")
         score = self.plr.get_score_details()
         self.assertEqual(score["Pasture"], 2)
 

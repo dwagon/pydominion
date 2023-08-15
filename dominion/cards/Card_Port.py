@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -40,20 +40,20 @@ class Test_Port(unittest.TestCase):
 
     def test_play(self):
         """Play a port"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_buy(self):
         """Buy a port"""
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         self.plr.coins.set(5)
         self.plr.buy_card(self.g["Port"])
-        for c in self.plr.discardpile:
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Port")
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

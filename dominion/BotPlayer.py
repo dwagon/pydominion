@@ -3,6 +3,7 @@ import inspect
 import sys
 import colorama
 from dominion.Player import Player
+from dominion import Piles
 
 if sys.version[0] == "3":  # pragma: no cover
     raw_input = input
@@ -114,7 +115,7 @@ class BotPlayer(Player):
         todiscard = []
 
         # Discard non-treasures first
-        for card in self.hand:
+        for card in self.piles[Piles.HAND]:
             if card.isTreasure():
                 continue
             if keepvic and card.isVictory():
@@ -123,16 +124,20 @@ class BotPlayer(Player):
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
 
-        # Discard cheapest treasures next
+        # Discard the cheapest treasures next
         while len(todiscard) < numtodiscard:
             for treas in ("Copper", "Silver", "Gold"):
-                for card in self.hand:
+                for card in self.piles[Piles.HAND]:
                     if card.name == treas:
                         todiscard.append(card)
         if len(todiscard) >= numtodiscard:
             return todiscard[:numtodiscard]
-        sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.hand])}")
-        sys.stderr.write(f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n")
+        sys.stderr.write(
+            f"Couldn't find cards to discard {numtodiscard} from {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
+        )
+        sys.stderr.write(
+            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
+        )
 
 
 # EOF

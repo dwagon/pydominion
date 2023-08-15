@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_Gladiator(Card.Card):
         self.split = "Fortune"
 
     def special(self, game, player):
-        if not player.hand:
+        if not player.piles[Piles.HAND]:
             return
         mycard = player.card_sel(
             num=1,
@@ -31,7 +31,7 @@ class Card_Gladiator(Card.Card):
         )
         player.reveal_card(mycard[0])
         lefty = game.player_to_left(player)
-        leftycard = lefty.hand[mycard[0].name]
+        leftycard = lefty.piles[Piles.HAND][mycard[0].name]
         if not leftycard:
             player.output(f"{lefty.name} doesn't have a {mycard[0].name}")
             player.coins.add(1)
@@ -44,7 +44,7 @@ class Card_Gladiator(Card.Card):
 
 
 ###############################################################################
-class Test_Gladiator(unittest.TestCase):
+class TestGladiator(unittest.TestCase):
     """Test Gladiator"""
 
     def setUp(self):
@@ -55,8 +55,8 @@ class Test_Gladiator(unittest.TestCase):
 
     def test_play_nothave(self):
         """Play a Gladiator - something the other player doesn't have"""
-        self.plr.hand.set("Moat", "Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertIn("Gladiator", self.g.trashpile)
@@ -64,9 +64,9 @@ class Test_Gladiator(unittest.TestCase):
 
     def test_play_has(self):
         """Play a Gladiator - something the other player has"""
-        self.plr.hand.set("Moat", "Copper", "Estate")
-        self.vic.hand.set("Moat", "Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper", "Estate")
+        self.vic.piles[Piles.HAND].set("Moat", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertNotIn("Gladiator", self.g.trashpile)

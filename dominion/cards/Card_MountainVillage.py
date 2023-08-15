@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,14 +17,14 @@ class Card_MountainVillage(Card.Card):
         self.actions = 2
 
     def special(self, game, player):
-        if player.discardpile.size():
+        if player.piles[Piles.DISCARD].size():
             card = player.card_sel(
                 cardsrc="discard",
                 force=True,
                 prompt="Look through your discard pile and put a card from it into your hand",
             )
-            player.discardpile.remove(card[0])
-            player.add_card(card[0], "hand")
+            player.piles[Piles.DISCARD].remove(card[0])
+            player.add_card(card[0], Piles.HAND)
         else:
             player.output("No cards in discard pile")
             player.pickup_cards(1)
@@ -37,23 +37,23 @@ class Test_MountainVillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mountain Village"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_no_discard(self):
         """Play Mountain Village without a discard card"""
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_play_discard(self):
         """Play Mountain Village with a discard card"""
-        self.plr.discardpile.set("Gold", "Silver")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

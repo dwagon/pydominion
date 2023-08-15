@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,12 +19,12 @@ class Card_Madman(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        handsize = player.hand.size()
+        handsize = player.piles[Piles.HAND].size()
         player.output("Gaining %d cards from madman" % handsize)
         for _ in range(handsize):
             player.pickup_card()
         game["Madman"].add(self)
-        player.played.remove(self)
+        player.piles[Piles.PLAYED].remove(self)
 
 
 ###############################################################################
@@ -37,10 +37,10 @@ class Test_Madman(unittest.TestCase):
 
     def test_play(self):
         """Play a Madman"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 5 * 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 * 2)
 
 
 ###############################################################################

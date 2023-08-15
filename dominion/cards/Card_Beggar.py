@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Beggar(Card.Card):
     def special(self, game, player):
         player.output("Gaining 3 coppers")
         for _ in range(3):
-            player.gain_card("Copper", "hand")
+            player.gain_card("Copper", Piles.HAND)
 
     def hook_underAttack(self, game, player, attacker):
         player.output("Gaining silvers as under attack from %s" % attacker.name)
@@ -38,21 +38,21 @@ class Test_Beggar(unittest.TestCase):
 
     def test_play(self):
         """Play a beggar"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3)
-        self.assertIn("Copper", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
 
     def test_attack(self):
         """React to an attack as a beggar"""
-        self.plr.hand.set("Beggar", "Estate", "Duchy", "Province", "Gold")
+        self.plr.piles[Piles.HAND].set("Beggar", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         militia = self.g["Militia"].remove()
-        self.attacker.add_card(militia, "hand")
+        self.attacker.add_card(militia, Piles.HAND)
         self.attacker.play_card(militia)
-        self.assertEqual(self.plr.deck[-1].name, "Silver")
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

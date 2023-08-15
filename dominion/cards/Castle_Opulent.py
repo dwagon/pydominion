@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -21,7 +21,7 @@ class Card_OpulentCastle(CastleCard):
         self.name = "Opulent Castle"
 
     def special(self, game, player):
-        victcards = [c for c in player.hand if c.isVictory()]
+        victcards = [c for c in player.piles[Piles.HAND] if c.isVictory()]
         cards = player.plr_discard_cards(
             any_number=True,
             cardsrc=victcards,
@@ -43,8 +43,8 @@ class Test_OpulentCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.hand.set("Estate", "Duchy", "Province", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Province", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Opulent Castle"], 3)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,17 +32,17 @@ class Test_Coinoftherealm(unittest.TestCase):
 
     def test_play(self):
         """Play a coin of the realm"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertIn("Coin of the Realm", self.plr.reserve)
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertIn("Coin of the Realm", self.plr.piles[Piles.RESERVE])
 
     def test_call(self):
         """Call from Reserve"""
         self.plr.actions.set(0)
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         c = self.plr.call_reserve("Coin of the Realm")
         self.assertEqual(c.name, "Coin of the Realm")

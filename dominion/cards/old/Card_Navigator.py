@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -42,21 +42,21 @@ class Test_Navigator(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.navigator = self.g["Navigator"].remove()
-        self.plr.add_card(self.navigator, "hand")
+        self.plr.add_card(self.navigator, Piles.HAND)
 
     def test_discard(self):
-        self.plr.deck.set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.navigator)
-        self.assertEqual(self.plr.discardpile.size(), 5)
-        self.assertEqual(self.plr.deck.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 1)
 
     def test_keep(self):
-        self.plr.deck.set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province", "Silver", "Duchy")
         self.plr.test_input = ["return"]
         self.plr.play_card(self.navigator)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.deck.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 6)
 
 
 ###############################################################################

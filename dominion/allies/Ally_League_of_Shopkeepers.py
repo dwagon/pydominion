@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/League_of_Shopkeepers"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Test_League_Shopkeepers(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Underling"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_one(self):
         self.plr.favors.set(1)

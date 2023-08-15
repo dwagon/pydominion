@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Broker """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -58,16 +58,16 @@ class Test_Broker(unittest.TestCase):
 
     def test_play_cards(self):
         """Play the card - gain cards"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "cards"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2)
 
     def test_play_nothing(self):
         """Play but select nothing to trash"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["finish"]
         tsize = self.g.trashpile.size()
         self.plr.play_card(self.card)
@@ -76,16 +76,16 @@ class Test_Broker(unittest.TestCase):
 
     def test_play_action(self):
         """Play the card - gain action"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "actions"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_play_cash(self):
         """Play the card - gain cash"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "coins"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
@@ -93,8 +93,8 @@ class Test_Broker(unittest.TestCase):
     def test_play_favor(self):
         """Play the card - gain favor"""
         self.plr.favors.set(0)
-        self.plr.hand.set("Copper", "Estate", "Duchy", "Copper", "Province", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Copper", "Province", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "favor"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), 2)

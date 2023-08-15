@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Card
 from dominion.cards.Card_Knight import KnightCard
 
@@ -42,9 +42,9 @@ class Test_Dame_Natalie(unittest.TestCase):
     def test_score(self):
         """Play the Dame"""
         self.plr.test_input = ["get silver"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

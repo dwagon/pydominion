@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,7 +30,7 @@ class Card_Graverobber(Card.Card):
             ),
         )
         if trash:
-            actions = [c for c in player.hand if c.isAction()]
+            actions = [c for c in player.piles[Piles.HAND] if c.isAction()]
             if not actions:
                 player.output("No suitable action cards")
                 return
@@ -59,16 +59,16 @@ class Test_Graverobber(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Graverobber"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash(self):
         """Play a grave robber - trash a militia and gain a gold"""
         militia = self.g["Militia"].remove()
-        self.plr.add_card(militia, "hand")
+        self.plr.add_card(militia, Piles.HAND)
         self.plr.test_input = ["1", "militia", "get gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertNotIn("Militia", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Militia", self.plr.piles[Piles.HAND])
 
     def test_trash_empty(self):
         """Play a grave robber - nothing to trash"""
@@ -81,7 +81,7 @@ class Test_Graverobber(unittest.TestCase):
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), 0)
-        self.assertIn("Militia", self.plr.deck)
+        self.assertIn("Militia", self.plr.piles[Piles.DECK])
 
     def test_loot_empty(self):
         """Play a grave robber - looting the trash that doesn't have anything"""

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,11 +17,11 @@ class Card_Conclave(Card.Card):
         self.coin = 2
 
     def special(self, game, player):
-        ac = [_ for _ in player.hand if _.isAction()]
+        ac = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not ac:
             player.output("No actions to play")
             return
-        sac = [_ for _ in ac if _.name not in player.played]
+        sac = [_ for _ in ac if _.name not in player.piles[Piles.PLAYED]]
         if not sac:
             player.output("No suitable actions to play")
             return
@@ -47,15 +47,15 @@ class Test_Conclave(unittest.TestCase):
         self.card = self.g["Conclave"].remove()
 
     def test_played(self):
-        self.plr.hand.set("Moat", "Copper")
-        self.plr.add_card(self.card, "hand")
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_not_played(self):
-        self.plr.hand.set("Moat", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)

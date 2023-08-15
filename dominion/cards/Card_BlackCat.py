@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Black_Cat """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -40,13 +40,13 @@ class Test_Black_Cat(unittest.TestCase):
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
         self.card = self.g["Black Cat"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a card"""
         self.oth.gain_card("Estate")
         self.g.print_state()
-        self.assertIn("Curse", self.oth.discardpile)
+        self.assertIn("Curse", self.oth.piles[Piles.DISCARD])
 
 
 ###############################################################################

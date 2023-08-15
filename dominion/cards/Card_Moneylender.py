@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Moneylender(Card.Card):
 
     def special(self, game, player):
         """Trash a copper card from your hand. If you do +3 coin"""
-        copper = player.hand["Copper"]
+        copper = player.piles[Piles.HAND]["Copper"]
         if not copper:
             player.output("No coppers in hand")
             return
@@ -40,8 +40,8 @@ class Test_Moneylender(unittest.TestCase):
 
     def test_nocopper(self):
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Estate", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
         self.assertEqual(self.plr.coins.get(), 0)
@@ -49,8 +49,8 @@ class Test_Moneylender(unittest.TestCase):
     def test_trash_copper(self):
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["1"]
-        self.plr.hand.set("Copper", "Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
@@ -58,8 +58,8 @@ class Test_Moneylender(unittest.TestCase):
 
     def test_dont_trash_copper(self):
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Copper", "Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)

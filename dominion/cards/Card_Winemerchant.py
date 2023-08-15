@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
-class Card_Winemerchant(Card.Card):
+class Card_WineMerchant(Card.Card):
     """Wine Merchant"""
 
     def __init__(self):
@@ -25,12 +24,12 @@ class Card_Winemerchant(Card.Card):
     def hook_cleanup(self, game, player):
         if player.coins.get() >= 2:
             player.output("Discarding Wine Merchant")
-            player.reserve.remove(self)
+            player.piles[Piles.RESERVE].remove(self)
             player.add_card(self, "discard")
 
 
 ###############################################################################
-class Test_Winemerchant(unittest.TestCase):
+class TestWineMerchant(unittest.TestCase):
     """Test Wine Merchant"""
 
     def setUp(self):
@@ -42,7 +41,7 @@ class Test_Winemerchant(unittest.TestCase):
 
     def test_play(self):
         """Play a Wine Merchant"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 4)
@@ -50,12 +49,12 @@ class Test_Winemerchant(unittest.TestCase):
     def test_recover(self):
         """Recover a wine merchant"""
         self.plr.coins.set(2)
-        self.plr.reserve.set("Wine Merchant")
-        for crd in self.plr.reserve:
+        self.plr.piles[Piles.RESERVE].set("Wine Merchant")
+        for crd in self.plr.piles[Piles.RESERVE]:
             crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
-        self.assertEqual(self.plr.reserve.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 0)
 
 
 ###############################################################################

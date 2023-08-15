@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_SecretPassage(Card.Card):
         self.cards = 2
 
     def special(self, game, player):
-        card = player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc="hand")
+        card = player.card_sel(prompt="Take a card from your hand and put into your deck", cardsrc=Piles.HAND)
         if card:
             dest = player.plr_choose_options(
                 f"Put {card[0].name} into top or bottom of deck",
@@ -26,7 +26,7 @@ class Card_SecretPassage(Card.Card):
                 ("Bottom of deck", "deck"),
             )
             player.add_card(card[0], dest)
-            player.hand.remove(card[0])
+            player.piles[Piles.HAND].remove(card[0])
 
 
 ###############################################################################
@@ -39,14 +39,14 @@ class Test_SecretPassage(unittest.TestCase):
 
     def test_play(self):
         """Play an Secret Passage"""
-        self.plr.hand.set("Gold", "Province", "Duchy", "Copper", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Province", "Duchy", "Copper", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Province", "Bottom"]
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.actions.get(), 1)
-            self.assertEqual(self.plr.hand.size(), 5 + 2 - 1)  # Hand + SP - back on deck
-            self.assertEqual(self.plr.deck[0].name, "Province")
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 - 1)  # Hand + SP - back on deck
+            self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Province")
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

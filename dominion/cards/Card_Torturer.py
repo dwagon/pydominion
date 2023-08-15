@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,7 +25,7 @@ class Card_Torturer(Card.Card):
             self.choiceOfDoom(plr, player)
 
     def choiceOfDoom(self, victim, player):
-        victim.output("Your hand is: %s" % ", ".join([c.name for c in victim.hand]))
+        victim.output("Your hand is: %s" % ", ".join([c.name for c in victim.piles[Piles.HAND]]))
         discard = victim.plr_choose_options(
             "Discard or curse", ("Discard 2 cards", True), ("Gain a curse card", False)
         )
@@ -34,7 +34,7 @@ class Card_Torturer(Card.Card):
             victim.plr_discard_cards(2)
         else:
             player.output("%s opted for a curse" % victim.name)
-            victim.gain_card("Curse", "hand")
+            victim.gain_card("Curse", Piles.HAND)
 
 
 ###############################################################################
@@ -53,30 +53,30 @@ class Test_Torturer(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Torturer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_opt_curse(self):
         """Play the torturer - victim opts for a curse"""
         self.victim.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 8)
-        self.assertIn("Curse", self.victim.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
+        self.assertIn("Curse", self.victim.piles[Piles.HAND])
 
     def test_opt_discard(self):
         """Play the torturer - victim opts for discarding"""
         self.victim.test_input = ["0", "1", "2", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 8)
-        self.assertEqual(self.victim.hand.size(), 3)
-        self.assertNotIn("Curse", self.victim.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
+        self.assertNotIn("Curse", self.victim.piles[Piles.HAND])
 
     def test_defended(self):
         """Defending against a torturer"""
-        self.victim.hand.set("Moat")
+        self.victim.piles[Piles.HAND].set("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 8)
-        self.assertEqual(self.victim.hand.size(), 1)
-        self.assertNotIn("Curse", self.victim.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 1)
+        self.assertNotIn("Curse", self.victim.piles[Piles.HAND])
 
 
 ###############################################################################

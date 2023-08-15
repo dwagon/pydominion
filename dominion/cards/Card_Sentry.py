@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sentry """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -45,21 +45,21 @@ class Test_Sentry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Sentry"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash_discard(self):
-        self.plr.deck.set("Copper", "Province", "Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Province", "Duchy")
         self.plr.test_input = ["Trash Copper", "Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Province", self.plr.discardpile)
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
 
     def test_discard_keep(self):
-        self.plr.deck.set("Gold", "Province", "Duchy")
+        self.plr.piles[Piles.DECK].set("Gold", "Province", "Duchy")
         self.plr.test_input = ["Finish", "Discard Province", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

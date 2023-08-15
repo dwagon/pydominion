@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -22,7 +22,7 @@ class Card_WilloWisp(Card.Card):
         c = player.next_card()
         player.reveal_card(c)
         if c.cost <= 2 and not c.potcost and not c.debtcost:
-            player.add_card(c, "hand")
+            player.add_card(c, Piles.HAND)
             player.output(f"Moving {c.name} from your deck to your hand")
         else:
             player.add_card(c, "topdeck")
@@ -38,25 +38,25 @@ class Test_WilloWisp(unittest.TestCase):
         self.card = self.g["Will-o'-Wisp"].remove()
 
     def test_special_cheap(self):
-        self.plr.hand.set()
-        self.plr.deck.set("Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.piles[Piles.DECK].set("Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Copper", self.plr.hand)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
     def test_special_expensive(self):
-        self.plr.hand.set()
-        self.plr.deck.set("Gold", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.piles[Piles.DECK].set("Gold", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertNotIn("Gold", self.plr.hand)
-        self.assertIn("Gold", self.plr.deck)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

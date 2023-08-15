@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,13 +30,13 @@ class Card_Treasurer(Card.Card):
             ("Take the key", "key"),
         )
         if choice == "trash":
-            treas = [_ for _ in player.hand if _.isTreasure()]
+            treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
             player.plr_trash_card(cardsrc=treas)
         elif choice == "gain":
             card = player.card_sel(cardsrc=gain_treas, prompt="Select Treasure from the Trash")
             if card:
                 game.trashpile.remove(card[0])
-                player.add_card(card[0], "hand")
+                player.add_card(card[0], Piles.HAND)
         elif choice == "key":
             player.assign_artifact("Key")
 
@@ -47,9 +47,9 @@ class Test_Treasurer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Treasurer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.plr.hand.set("Copper", "Silver")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver")
         self.card = self.g["Treasurer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_trash(self):
         self.plr.test_input = ["Trash a treasure", "Silver"]
@@ -63,7 +63,7 @@ class Test_Treasurer(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
         self.assertNotIn("Gold", self.g.trashpile)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_play_key(self):
         self.plr.test_input = ["Take the key"]

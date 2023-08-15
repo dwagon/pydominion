@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sea_Witch"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -45,19 +45,19 @@ class Test_SeaWitch(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Sea Witch"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a sea witch"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
         self.plr.end_turn()
-        self.plr.deck.set("Copper", "Silver", "Gold")
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Discard Estate", "Discard Duchy", "Finish"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 - 2)
 
 
 ###############################################################################

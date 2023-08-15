@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -54,20 +54,20 @@ class Test_Trustysteed(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Trusty Steed"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_a(self):
         self.plr.test_input = ["cards", "coin"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_b(self):
         self.plr.test_input = ["action", "silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.discardpile.size(), 4)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 4)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Silver")
 
 

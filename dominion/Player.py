@@ -384,10 +384,12 @@ class Player:
         if not card:  # pragma: no cover
             return None
         card.player = self
-        # if isinstance(pile, PlayArea):
-        #    card.location = pile
-        #    pile.add(card)
-        #    return card
+
+        # There can be custom PlayAreas (such as part of  card)
+        if isinstance(pile, PlayArea):
+            card.location = pile
+            pile.add(card)
+            return card
 
         if pile in self.piles:
             self.piles[pile].add(card)

@@ -87,7 +87,7 @@ class TestThief(unittest.TestCase):
         self.thief, self.victim = self.g.player_list()
         self.thief.name = "thief"
         self.victim.name = "victim"
-        self.thief.add_card(self.thief_card, "hand")
+        self.thief.add_card(self.thief_card, Piles.HAND)
 
     def test_no_treasure(self):
         self.victim.piles[Piles.DECK].set("Estate", "Estate", "Estate")

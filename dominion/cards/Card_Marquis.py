@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Marquis"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Card_Marquis(Card.Card):
         self.cost = 6
 
     def special(self, game, player):
-        hand_size = player.hand.size()
+        hand_size = player.piles[Piles.HAND].size()
         player.pickup_cards(num=hand_size)
         player.plr_discard_down_to(10)
 
@@ -29,7 +29,7 @@ class Test_Marquis(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Marquis"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""

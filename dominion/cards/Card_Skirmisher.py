@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -28,23 +28,23 @@ class Card_Skirmisher(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Skirmisher(unittest.TestCase):
+class TestSkirmisher(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Skirmisher"])
         self.g.start_game()
-        self.plr, self.vict = self.g.player_list()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g["Skirmisher"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
@@ -52,15 +52,15 @@ class Test_Skirmisher(unittest.TestCase):
         """Gain a non-attack card after this is in play"""
         self.plr.play_card(self.card)
         self.plr.gain_card("Silver")
-        self.assertEqual(self.vict.hand.size(), 5)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 5)
 
     def test_gain_attack(self):
         """Gain an attack card after this is in play"""
-        self.vict.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
-        self.vict.test_input = ["Estate", "Duchy", "finish"]
+        self.victim.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.victim.test_input = ["Estate", "Duchy", "finish"]
         self.plr.play_card(self.card)
         self.plr.gain_card("Skirmisher")
-        self.assertEqual(self.vict.hand.size(), 3)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -25,14 +25,16 @@ class Card_Masquerade(Card.Card):
             newplr = game.player_to_left(plr)
             newcrd = xfer[plr]
             newplr.output(f"You gained a {newcrd.name} from {plr.name}")
-            newplr.add_card(newcrd, "hand")
+            newplr.add_card(newcrd, Piles.HAND)
         player.plr_trash_card()
 
     def pickCardToXfer(self, plr, game):
         leftplr = game.player_to_left(plr).name
-        cards = plr.card_sel(prompt=f"Which card to give to {leftplr}?", num=1, force=True)
+        cards = plr.card_sel(
+            prompt=f"Which card to give to {leftplr}?", num=1, force=True
+        )
         card = cards[0]
-        plr.hand.remove(card)
+        plr.piles[Piles.HAND].remove(card)
         plr.output(f"Gave {card.name} to {leftplr}")
         return card
 
@@ -44,7 +46,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Masquerade(unittest.TestCase):
+class TestMasquerade(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Masquerade"])
         self.g.start_game()
@@ -54,28 +56,28 @@ class Test_Masquerade(unittest.TestCase):
     def test_play(self):
         """Play a masquerade"""
         tsize = self.g.trashpile.size()
-        self.other.hand.set("Copper", "Silver", "Gold")
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.deck.set("Estate", "Duchy", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["select silver", "finish"]
         self.other.test_input = ["select gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Silver", self.other.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.other.piles[Piles.HAND])
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_play_with_trash(self):
         """Play a masquerade and trash after"""
         tsize = self.g.trashpile.size()
-        self.other.hand.set("Copper", "Silver", "Gold")
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["select gold", "trash silver"]
         self.other.test_input = ["select gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 - 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
 

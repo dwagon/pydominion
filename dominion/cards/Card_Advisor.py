@@ -60,7 +60,7 @@ class TestAdvisor(unittest.TestCase):
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
         self.acard = self.g["Advisor"].remove()
-        self.plr.add_card(self.acard, "hand")
+        self.plr.add_card(self.acard, Piles.HAND)
 
     def test_play(self):
         """ " Play an advisor"""

@@ -2,7 +2,7 @@
 
 import unittest
 import dominion.Card as Card
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -36,8 +36,8 @@ class Test_Remake(unittest.TestCase):
 
     def test_playcard(self):
         """Play a remake"""
-        self.plr.hand.set("Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "Trash Estate",
             "Get Silver",
@@ -45,8 +45,8 @@ class Test_Remake(unittest.TestCase):
             "Finish Selecting",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

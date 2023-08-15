@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,10 +32,10 @@ class Card_Jack_of_all_Trades(Card.Card):
         else:
             player.discard_card(card)
 
-        while player.hand.size() < 5:
+        while player.piles[Piles.HAND].size() < 5:
             player.pickup_card()
 
-        cards = [c for c in player.hand if not c.isTreasure()]
+        cards = [c for c in player.piles[Piles.HAND] if not c.isTreasure()]
         if cards:
             player.plr_trash_card(cardsrc=cards, prompt="Trash a non-Treasure")
 
@@ -51,17 +51,17 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
     def test_play(self):
         """Play a Jack of all Trades"""
         tsize = self.g.trashpile.size()
-        self.plr.deck.set("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
-        self.plr.hand.set("Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Gold")
+        self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.test_input = ["keep", "duchy"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
 
-        self.assertIn("Silver", self.plr.discardpile)  # Gain a Silver
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])  # Gain a Silver
 
-        self.assertIn("Gold", self.plr.hand)  # Keep on deck, then picked up
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])  # Keep on deck, then picked up
 
-        self.assertEqual(self.plr.hand.size(), 5 - 1)  # One trashed
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)  # One trashed
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Duchy", self.g.trashpile)
 

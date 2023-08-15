@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Bandit"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -68,28 +68,28 @@ class TestBandit(unittest.TestCase):
         self.thief.name = "MrBandit"
         self.vic.name = "MrVic"
         self.card = self.g["Bandit"].remove()
-        self.thief.add_card(self.card, "hand")
+        self.thief.add_card(self.card, Piles.HAND)
 
     def test_do_nothing(self):
         """Don't trash anything"""
-        self.vic.hand.set("Copper", "Copper")
-        self.vic.deck.set("Copper", "Silver", "Gold")
+        self.vic.piles[Piles.HAND].set("Copper", "Copper")
+        self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
         self.thief.play_card(self.card)
-        self.assertEqual(self.vic.deck.size(), 1)
-        self.assertEqual(self.vic.discardpile.size(), 2)
+        self.assertEqual(self.vic.piles[Piles.DECK].size(), 1)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
 
     def test_trash_treasure(self):
         """Trash the treasure"""
-        self.vic.hand.set("Copper", "Copper")
-        self.vic.deck.set("Copper", "Silver", "Gold")
+        self.vic.piles[Piles.HAND].set("Copper", "Copper")
+        self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
         self.thief.play_card(self.card)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertIn("Gold", self.g.trashpile)
-        for card in self.vic.deck:
+        for card in self.vic.piles[Piles.DECK]:
             self.assertNotEqual(card.name, "Gold")
-        self.assertEqual(self.vic.discardpile[0].name, "Silver")
+        self.assertEqual(self.vic.piles[Piles.DISCARD][0].name, "Silver")
 
 
 ###############################################################################

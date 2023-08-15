@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -36,7 +36,7 @@ class Test_Fields_Gift(unittest.TestCase):
     def test_fields_gift(self):
         self.plr.coin = 0
         self.plr.action = 0
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.coins.get(), 1 + 2)  # Boon + Bard

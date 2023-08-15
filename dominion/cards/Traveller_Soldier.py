@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -27,7 +27,7 @@ class Card_Soldier(Card.Card):
         """+2 Coins; +1 Coin per other Attack you have in play.
         Each other player with 4 or more cards in hand discards a card."""
         count = 0
-        for c in player.played:
+        for c in player.piles[Piles.PLAYED]:
             if c == self:
                 continue
             if c.isAttack():
@@ -35,7 +35,7 @@ class Card_Soldier(Card.Card):
         player.coins.add(count)
         player.output("Gained %d extra coins" % count)
         for plr in player.attack_victims():
-            if plr.hand.size() >= 4:
+            if plr.piles[Piles.HAND].size() >= 4:
                 plr.output("%s's Soldier: Discard a card" % player.name)
                 plr.plr_discard_cards(force=True)
 
@@ -56,17 +56,17 @@ class Test_Soldier(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Soldier"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_soldier(self):
         """Play a soldier with no extra attacks"""
-        self.vic.hand.set("Copper")
+        self.vic.piles[Piles.HAND].set("Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_soldier_more(self):
         """Play a soldier with no extra attacks"""
-        self.vic.hand.set("Copper")
+        self.vic.piles[Piles.HAND].set("Copper")
         mil = self.g["Militia"].remove()
         self.plr.add_card(mil, "played")
         self.plr.play_card(self.card)
@@ -74,12 +74,12 @@ class Test_Soldier(unittest.TestCase):
 
     def test_soldier_attack(self):
         """Play a soldier with more than 4 cards"""
-        self.vic.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vic.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.vic.discardpile)
-        self.assertNotIn("Gold", self.vic.hand)
-        self.assertEqual(self.vic.hand.size(), 4)
+        self.assertIn("Gold", self.vic.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.vic.piles[Piles.HAND])
+        self.assertEqual(self.vic.piles[Piles.HAND].size(), 4)
 
 
 ###############################################################################

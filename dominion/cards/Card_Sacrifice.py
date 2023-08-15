@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -44,26 +44,26 @@ class Test_Sacrifice(unittest.TestCase):
 
     def test_play_action(self):
         """Sacrifice an Action"""
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertIn("Moat", self.g.trashpile)
 
     def test_play_treasure(self):
         """Sacrifice a Treasure"""
-        self.plr.hand.set("Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_victory(self):
         """Sacrifice a Victory"""
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)
         sc = self.plr.get_score_details()

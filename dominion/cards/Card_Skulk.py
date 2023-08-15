@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -42,13 +42,13 @@ class Test_Skulk(unittest.TestCase):
 
     def test_play_card(self):
         """Play Skulk"""
-        self.plr.add_card(self.Skulk, "hand")
+        self.plr.add_card(self.Skulk, Piles.HAND)
         self.plr.play_card(self.Skulk)
         self.assertTrue(self.vic.has_state("Deluded"))
 
     def test_gain(self):
         self.plr.gain_card("Skulk")
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

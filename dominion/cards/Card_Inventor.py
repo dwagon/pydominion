@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Inventor(Card.Card):
         player.plr_gain_card(4)
 
     def hook_card_cost(self, game, player, card):
-        if self in player.played:
+        if self in player.piles[Piles.PLAYED]:
             return -1
         return 0
 
@@ -36,7 +36,7 @@ class Test_Inventor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.inventor = self.g["Inventor"].remove()
-        self.plr.add_card(self.inventor, "hand")
+        self.plr.add_card(self.inventor, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = ["Get Gardens"]

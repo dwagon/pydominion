@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -100,26 +100,26 @@ class Test_Doctor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Doctor"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play the Doctor"""
-        self.plr.deck.set("Silver", "Province", "Duchy")
+        self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
-        self.assertIn("Silver", self.plr.deck)
-        self.assertIn("Duchy", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
+        self.assertIn("Duchy", self.plr.piles[Piles.DECK])
 
     def test_buy(self):
         """Buy a Doctor"""
         self.plr.coins.set(6)
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
-        self.plr.deck.set("Silver", "Province", "Duchy")
+        self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.buy_card(self.g["Doctor"])
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertIn("Province", self.plr.discardpile)
-        self.assertEqual(self.plr.deck[-1].name, "Silver")
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")
 
 
 ###############################################################################

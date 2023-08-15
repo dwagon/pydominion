@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -35,8 +35,8 @@ class Test_Salvager(unittest.TestCase):
 
     def test_play(self):
         """Play a salvage"""
-        self.plr.hand.set("Duchy", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -16,10 +15,10 @@ class Card_Artisan(Card.Card):
         self.cost = 6
 
     def special(self, game, player):
-        player.plr_gain_card(5, destination="hand")
+        player.plr_gain_card(5, destination=Piles.HAND)
         card = player.card_sel(
             force=True,
-            cardsrc="hand",
+            cardsrc=Piles.HAND,
             prompt="Put a card from your hand on top of your deck",
         )
         player.move_card(card[0], "topdeck")
@@ -34,13 +33,13 @@ class Test_Artisan(unittest.TestCase):
         self.card = self.g["Artisan"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Copper", "Estate", "Silver", "Gold", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Silver", "Gold", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Festival", "Select Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -46,25 +46,25 @@ class Test_Swindler(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Swindler"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the Swindler"""
-        self.victim.hand.set("Moat")
+        self.victim.piles[Piles.HAND].set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_defended(self):
         """Swindle a defended player"""
         tsize = self.g.trashpile.size()
-        self.victim.hand.set("Moat")
+        self.victim.piles[Piles.HAND].set("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_attack(self):
         """Swindle an undefended player"""
         tsize = self.g.trashpile.size()
-        self.victim.deck.set("Gold")
+        self.victim.piles[Piles.DECK].set("Gold")
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.g.trashpile)

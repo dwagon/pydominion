@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,7 +30,7 @@ class Card_BorderGuard(Card.Card):
             prompt="Select a card to put into your hand, other will be discarded",
             cardsrc=cards,
         )
-        player.add_card(ch[0], "hand")
+        player.add_card(ch[0], Piles.HAND)
         cards.remove(ch[0])
         for card in cards:
             player.output(f"Putting {card.name} into the discard pile")
@@ -65,21 +65,21 @@ class Test_BorderGuard(unittest.TestCase):
         self.card = self.g["Border Guard"].remove()
 
     def test_play(self):
-        self.plr.deck.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_play_actions(self):
-        self.plr.deck.set("Moat", "Guide")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Moat", "Guide")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.hand)
-        self.assertIn("Guide", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
         self.assertTrue(self.plr.has_artifact("Horn"))
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, PlayArea
+from dominion import Card, Game, Piles, PlayArea
 
 
 ###############################################################################
@@ -30,11 +30,11 @@ class Card_Research(Card.Card):
             prompt=f"Set aside {cost} cards for next turn",
             verbs=("Set", "Unset"),
             num=cost,
-            cardsrc="hand",
+            cardsrc=Piles.HAND,
         )
         for card in cards:
             self._research.add(card)
-            player.hand.remove(card)
+            player.piles[Piles.HAND].remove(card)
             player.secret_count += 1
 
     ###########################################################################
@@ -44,7 +44,7 @@ class Card_Research(Card.Card):
             cards.append(card)
         for card in cards:
             player.output(f"Bringing {card.name} out from research")
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             self._research.remove(card)
             player.secret_count -= 1
 
@@ -58,10 +58,10 @@ class Test_Research(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Research"].remove()
-        self.plr.hand.set("Gold", "Silver", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.moat = self.g["Moat"].remove()
-        self.plr.add_card(self.moat, "hand")
+        self.plr.add_card(self.moat, Piles.HAND)
 
     def test_play_card(self):
         self.plr.test_input = ["Trash Moat", "Set Gold", "Set Silver", "Finish"]
@@ -70,8 +70,8 @@ class Test_Research(unittest.TestCase):
         self.assertIn("Moat", self.g.trashpile)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIn("Silver", self.plr.hand)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

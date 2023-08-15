@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -40,14 +40,14 @@ class Test_BlessedVillage(unittest.TestCase):
 
     def test_play_card(self):
         """Play Blessed Village"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_gain(self):
         self.plr.gain_card("Blessed Village")
-        self.assertEqual(self.plr.hand.size(), 5 + 1)  # 1 from boon
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)  # 1 from boon
 
 
 ###############################################################################

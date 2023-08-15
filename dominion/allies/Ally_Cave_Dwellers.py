@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Cave_Dwellers """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -42,14 +42,14 @@ class Test_CaveDwellers(unittest.TestCase):
 
     def test_play(self):
         """Play card"""
-        self.plr.deck.set("Copper", "Copper", "Copper", "Copper")
-        self.plr.hand.set("Estate", "Duchy", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Gold")
         self.plr.favors.set(2)
         self.plr.test_input = ["Spend", "Discard Estate", "Spend", "Discard Duchy"]
         self.plr.start_turn()
         self.assertEqual(self.plr.favors.get(), 2 - 2)
-        self.assertNotIn("Estate", self.plr.hand)
-        self.assertIsNotNone(self.plr.discardpile["Duchy"])
+        self.assertNotIn("Estate", self.plr.piles[Piles.HAND])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Duchy"])
 
 
 ###############################################################################

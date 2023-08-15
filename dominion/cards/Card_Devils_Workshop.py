@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -39,13 +39,13 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Devil's Workshop"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_0(self):
         self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         try:
-            self.assertIn("Gold", self.plr.discardpile)
+            self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -56,7 +56,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         try:
-            self.assertLessEqual(self.plr.discardpile[0].name, "Moat")
+            self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].name, "Moat")
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -67,7 +67,7 @@ class Test_Devils_Workshop(unittest.TestCase):
         self.plr.gain_card("Estate")
         self.plr.play_card(self.card)
         try:
-            self.assertIn("Imp", self.plr.discardpile)
+            self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

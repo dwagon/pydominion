@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Leprechaun(Card.Card):
 
     def special(self, game, player):
         player.gain_card("Gold")
-        if player.played.size() + player.durationpile.size() == 7:
+        if player.piles[Piles.PLAYED].size() + player.piles[Piles.DURATION].size() == 7:
             player.gain_card("Wish")
         else:
             player.receive_hex()
@@ -31,7 +31,7 @@ class Test_Leprechaun(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Leprechaun"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)
@@ -40,14 +40,14 @@ class Test_Leprechaun(unittest.TestCase):
     def test_play_with_not_seven(self):
         """Play a Leprechaun with not 7 cards"""
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertTrue(self.plr.has_state("Deluded"))
 
     def test_play_with_seven(self):
         """Play a Leprechaun with 7 cards in play"""
-        self.plr.played.set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
+        self.plr.piles[Piles.PLAYED].set("Moat", "Moat", "Moat", "Moat", "Moat", "Moat")  # + Leprec
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertFalse(self.plr.has_state("Deluded"))
 
 

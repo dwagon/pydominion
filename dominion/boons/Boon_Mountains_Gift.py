@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Mountains_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_mountains_gift(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
 
 
 ###############################################################################

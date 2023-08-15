@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Cobbler"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -37,12 +37,12 @@ class Test_Cobbler(unittest.TestCase):
 
     def test_duration(self):
         """Test Playing Cobbler"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.test_input = ["Get Moat"]
         self.plr.start_turn()
-        self.assertLessEqual(self.plr.discardpile[0].cost, 4)
+        self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].cost, 4)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -48,23 +48,23 @@ class Test_Trader(unittest.TestCase):
     def test_play(self):
         """Play a trader - trashing an estate"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["estate", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for i in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for i in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(i.name, "Silver")
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Estate", self.g.trashpile)
 
     def test_gain(self):
         self.plr.test_input = ["Instead"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.coins.set(6)
         self.plr.buy_card(self.g["Gold"])
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

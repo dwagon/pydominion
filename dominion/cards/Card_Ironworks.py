@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -47,34 +47,34 @@ class Test_Ironworks(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Iron Works"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_great_hall(self):
         """Use Ironworks to gain a Great Hall"""
         self.plr.test_input = ["Mill"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Mill")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Mill")
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_play_silver(self):
         """Use Ironworks to gain a Silver"""
         self.plr.test_input = ["Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Silver")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Silver")
         self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
     def test_play_ironworks(self):
         """Use Ironworks to gain an Ironworks"""
         self.plr.test_input = ["iron"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Iron Works")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Iron Works")
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
 
 ###############################################################################

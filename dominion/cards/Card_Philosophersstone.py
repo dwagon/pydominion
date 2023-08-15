@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Philosophersstone(Card.Card):
     def hook_coinvalue(self, game, player):
         """When you play this, count your deck and discard pile.
         Worth 1 per 5 cards total between them (rounded down)"""
-        numcards = player.deck.size() + player.discardpile.size()
+        numcards = player.piles[Piles.DECK].size() + player.piles[Piles.DISCARD].size()
         extracoin = numcards / 5
         player.output("Gained %d coins from Philosopher's Stone" % extracoin)
         return int(extracoin)
@@ -33,19 +33,19 @@ class Test_Philosophersstone(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Philosopher's Stone"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a philosophers stone with not much on"""
-        self.plr.deck.set("Estate")
-        self.plr.discardpile.set("Estate")
+        self.plr.piles[Piles.DECK].set("Estate")
+        self.plr.piles[Piles.DISCARD].set("Estate")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_play_value(self):
         """Play a philosophers stone with the full Nicholas Flamel"""
-        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Silver")
-        self.plr.discardpile.set("Estate", "Estate", "Estate", "Estate", "Silver")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Silver")
+        self.plr.piles[Piles.DISCARD].set("Estate", "Estate", "Estate", "Estate", "Silver")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 

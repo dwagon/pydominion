@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,9 +19,9 @@ class Card_Villain(Card.Card):
     def special(self, game, player):
         player.coffers.add(2)
         for vic in player.attack_victims():
-            if vic.hand.size() >= 5:
+            if vic.piles[Piles.HAND].size() >= 5:
                 from_cards = []
-                for card in vic.hand:
+                for card in vic.piles[Piles.HAND]:
                     if card.cost >= 2:
                         from_cards.append(card)
                 if from_cards:
@@ -33,7 +33,7 @@ class Card_Villain(Card.Card):
                     player.output(f"{vic.name} discarded {disc[0].name}")
                 else:
                     player.output(f"{vic.name} had no appropriate cards")
-                    for card in vic.hand:
+                    for card in vic.piles[Piles.HAND]:
                         vic.reveal_card(card)
             else:
                 player.output(f"{vic.name}'s hand size is too small")
@@ -55,15 +55,15 @@ class Test_Villain(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Villain"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         sc = self.plr.coffers.get()
-        self.vic.hand.set("Gold", "Province", "Copper", "Copper", "Copper")
+        self.vic.piles[Piles.HAND].set("Gold", "Province", "Copper", "Copper", "Copper")
         self.vic.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), sc + 2)
-        self.assertIn("Province", self.vic.discardpile)
+        self.assertIn("Province", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

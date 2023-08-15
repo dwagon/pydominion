@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -32,25 +32,25 @@ class Test_Hideout(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
-        self.plr.deck.set("Silver")
-        self.plr.hand.set("Copper", "Estate")
+        self.plr.piles[Piles.DECK].set("Silver")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Copper"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
     def test_trashVictory(self):
-        self.plr.deck.set("Silver")
-        self.plr.hand.set("Copper", "Estate")
+        self.plr.piles[Piles.DECK].set("Silver")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
         self.card = self.g["Hideout"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 2)
-        self.assertIn("Curse", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertIn("Curse", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

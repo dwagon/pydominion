@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
-class Card_Swamphag(Card.Card):
+class Card_SwampHag(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -34,22 +33,22 @@ class Card_Swamphag(Card.Card):
 
 
 ###############################################################################
-class Test_Swamphag(unittest.TestCase):
+class TestSwampHag(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Swamp Hag"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Swamp Hag"].remove()
-        self.attacker.add_card(self.seahag, "hand")
+        self.attacker.add_card(self.seahag, Piles.HAND)
 
     def test_play(self):
         self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
         self.victim.buy_card(self.g["Copper"])
-        self.assertEqual(self.attacker.durationpile[0].name, "Swamp Hag")
-        self.assertIn("Curse", self.victim.discardpile)
+        self.assertEqual(self.attacker.piles[Piles.DURATION][0].name, "Swamp Hag")
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         self.attacker.start_turn()
-        self.assertIn("Swamp Hag", self.attacker.played)
+        self.assertIn("Swamp Hag", self.attacker.piles[Piles.PLAYED])
         self.assertEqual(self.attacker.coins.get(), 3)
 
 

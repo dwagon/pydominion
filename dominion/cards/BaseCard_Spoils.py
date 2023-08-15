@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -35,10 +34,10 @@ class Test_Spoils(unittest.TestCase):
     def test_play(self):
         numspoils = self.g["Spoils"].numcards
         spoils = self.g["Spoils"].remove()
-        self.plr.add_card(spoils, "hand")
+        self.plr.add_card(spoils, Piles.HAND)
         self.plr.play_card(spoils)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertTrue(self.plr.played.is_empty())
+        self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
         self.assertEqual(self.g["Spoils"].numcards, numspoils)
 
 

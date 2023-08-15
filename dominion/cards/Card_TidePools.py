@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Tide_Pools"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -33,19 +33,19 @@ class Test_Tide_Pools(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Tide Pools"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a tide pools"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertEqual(self.plr.durationpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Discard Copper", "Discard Silver", "Finish"]
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertEqual(self.plr.played[-1].name, "Tide Pools")
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED][-1].name, "Tide Pools")
 
 
 ###############################################################################

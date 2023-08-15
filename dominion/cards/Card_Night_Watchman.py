@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -34,7 +34,7 @@ class Card_NightWatchman(Card.Card):
                 player.add_card(c, "topdeck")
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": "hand"}
+        return {"destination": Piles.HAND}
 
 
 ###############################################################################
@@ -47,8 +47,8 @@ class Test_NightWatchman(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT
-        self.plr.deck.set("Gold", "Province", "Gold", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Province", "Gold", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "Return Silver",
             "Discard Duchy",
@@ -58,15 +58,15 @@ class Test_NightWatchman(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         try:
-            self.assertIn("Duchy", self.plr.discardpile)
-            self.assertIn("Province", self.plr.discardpile)
-            self.assertNotIn("Gold", self.plr.discardpile)
-            self.assertNotIn("Silver", self.plr.discardpile)
+            self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+            self.assertIn("Province", self.plr.piles[Piles.DISCARD])
+            self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+            self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
 
-            self.assertNotIn("Duchy", self.plr.deck)
-            self.assertNotIn("Province", self.plr.deck)
-            self.assertIn("Gold", self.plr.deck)
-            self.assertIn("Silver", self.plr.deck)
+            self.assertNotIn("Duchy", self.plr.piles[Piles.DECK])
+            self.assertNotIn("Province", self.plr.piles[Piles.DECK])
+            self.assertIn("Gold", self.plr.piles[Piles.DECK])
+            self.assertIn("Silver", self.plr.piles[Piles.DECK])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

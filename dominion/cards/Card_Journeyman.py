@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,7 +38,7 @@ class Card_Journeyman(Card.Card):
             else:
                 cards.append(card)
         for card in cards:
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player.output("Pulling %s into hand" % card.name)
 
 
@@ -49,17 +49,17 @@ class Test_Journeyman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Journeyman"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
-        self.plr.deck.set("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

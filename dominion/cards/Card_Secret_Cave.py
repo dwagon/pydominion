@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -42,19 +42,19 @@ class Test_SecretCave(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Secret Cave"""
-        self.plr.hand.set("Silver", "Estate", "Duchy", "Province", "Copper")
+        self.plr.piles[Piles.HAND].set("Silver", "Estate", "Duchy", "Province", "Copper")
         self.plr.test_input = [
             "Discard Silver",
             "Discard Duchy",
             "Discard Province",
             "Finish",
         ]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.actions.get(), 1)
-            self.assertEqual(self.plr.discardpile.size(), 3)
-            self.assertEqual(self.plr.hand.size(), 5 + 1 - 3)
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 - 3)
             self.plr.end_turn()
             self.plr.start_turn()
             self.assertEqual(self.plr.coins.get(), 3)

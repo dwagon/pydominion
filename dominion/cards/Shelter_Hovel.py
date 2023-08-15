@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Hovel """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -45,7 +45,7 @@ class Test_Hovel(unittest.TestCase):
 
     def test_trash(self):
         """Test Trashing"""
-        self.plr.hand.set("Hovel")
+        self.plr.piles[Piles.HAND].set("Hovel")
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")
         self.assertIn("Hovel", self.g.trashpile)

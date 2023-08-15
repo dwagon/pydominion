@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Poacher """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -38,16 +38,16 @@ class Test_Poacher(unittest.TestCase):
 
     def test_play(self):
         """Play card"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_empty(self):
         """Play card with an empty pile"""
-        self.plr.hand.set("Gold", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         while True:
             c = self.g["Moat"].remove()
             if not c:

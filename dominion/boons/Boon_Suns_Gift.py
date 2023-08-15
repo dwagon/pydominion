@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -46,17 +46,17 @@ class Test_Suns_Gift(unittest.TestCase):
                 break
         self.g.boons = [myboon]
         self.card = self.g["Bard"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_suns_gift(self):
-        self.plr.deck.set("Silver", "Gold", "Province", "Duchy", "Copper")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold", "Province", "Duchy", "Copper")
         self.plr.test_input = ["Province", "Duchy", "finish"]
         self.plr.play_card(self.card)
         try:
-            self.assertIn("Silver", self.plr.deck)
-            self.assertIn("Gold", self.plr.deck)
-            self.assertIsNotNone(self.plr.discardpile["Province"])
-            self.assertIsNotNone(self.plr.discardpile["Duchy"])
+            self.assertIn("Silver", self.plr.piles[Piles.DECK])
+            self.assertIn("Gold", self.plr.piles[Piles.DECK])
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Duchy"])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

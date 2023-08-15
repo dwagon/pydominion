@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -34,12 +34,12 @@ class Test_Bat(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT
-        self.plr.hand.set("Duchy", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Trash Gold", "Finish"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Bat", self.plr.discardpile)
-        self.assertIn("Vampire", self.plr.discardpile)
+        self.assertNotIn("Bat", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Vampire", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

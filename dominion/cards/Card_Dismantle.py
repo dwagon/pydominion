@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,24 +37,24 @@ class Test_Dismantle(unittest.TestCase):
         self.rcard = self.g["Dismantle"].remove()
 
     def test_free(self):
-        self.plr.hand.set("Copper", "Estate", "Silver", "Province")
-        self.plr.add_card(self.rcard, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Silver", "Province")
+        self.plr.add_card(self.rcard, Piles.HAND)
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rcard)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
     def test_non_free(self):
-        self.plr.hand.set("Estate", "Silver", "Province")
-        self.plr.add_card(self.rcard, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Silver", "Province")
+        self.plr.add_card(self.rcard, Piles.HAND)
         self.plr.test_input = ["trash estate", "get copper"]
         self.plr.play_card(self.rcard)
         self.assertIn("Estate", self.g.trashpile)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -69,23 +69,23 @@ class Test_Lookout(unittest.TestCase):
         self.lookout = self.g["Lookout"].remove()
 
     def test_actions(self):
-        self.plr.deck.set("Copper", "Estate", "Gold", "Province")
-        self.plr.add_card(self.lookout, "hand")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Gold", "Province")
+        self.plr.add_card(self.lookout, Piles.HAND)
         self.plr.test_input = ["Province", "Gold"]
         self.plr.play_card(self.lookout)
         self.assertIn("Province", self.g.trashpile)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertEqual(self.plr.deck[0].name, "Copper")
-        self.assertEqual(self.plr.deck[1].name, "Estate")
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
+        self.assertEqual(self.plr.piles[Piles.DECK][1].name, "Estate")
 
     def test_nocards(self):
         """Play a lookout when there are no cards available"""
         tsize = self.g.trashpile.size()
-        self.plr.deck.set()
-        self.plr.add_card(self.lookout, "hand")
+        self.plr.piles[Piles.DECK].set()
+        self.plr.add_card(self.lookout, Piles.HAND)
         self.plr.play_card(self.lookout)
         self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
 
 ###############################################################################

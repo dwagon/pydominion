@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,9 +32,9 @@ class Test_Warehouse(unittest.TestCase):
 
     def test_playcard(self):
         """Play a warehouse"""
-        self.plr.hand.set("Estate", "Copper", "Silver", "Gold")
-        self.plr.deck.set("Province", "Province", "Province", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Province", "Province", "Province", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "discard estate",
             "discard copper",
@@ -43,9 +43,9 @@ class Test_Warehouse(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         # Initial hand size - 3 discards + 3 pickups - 1 played
-        self.assertEqual(self.plr.hand.size(), 5 - 3 + 3 - 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 3 + 3 - 1)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Survivors """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -44,27 +44,27 @@ class Test_Survivors(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Survivors":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_discard(self):
         """Play a survivor and discard cards"""
-        self.plr.deck.set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Discard"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertNotIn("Gold", self.plr.hand)
-        self.assertNotIn("Silver", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
     def test_play_keep(self):
         """Play a survivor and keep cards"""
-        self.plr.deck.set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Return"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertNotIn("Silver", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Silver", self.plr.hand)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

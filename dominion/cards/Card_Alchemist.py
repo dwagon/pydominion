@@ -46,7 +46,7 @@ class Test_Alchemist(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.alchemist = self.g["Alchemist"].remove()
-        self.plr.add_card(self.alchemist, "hand")
+        self.plr.add_card(self.alchemist, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.alchemist)

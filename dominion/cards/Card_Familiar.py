@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,21 +34,21 @@ class Test_Familiar(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Familiar"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a familiar"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.victim.discardpile[0].name, "Curse")
+        self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Curse")
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
     def test_defended(self):
-        self.victim.hand.set("Gold", "Moat")
+        self.victim.piles[Piles.HAND].set("Gold", "Moat")
         self.plr.play_card(self.card)
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
 
 ###############################################################################

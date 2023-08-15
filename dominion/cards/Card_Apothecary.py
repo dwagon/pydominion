@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class Card_Apothecary(Card.Card):
             player.reveal_card(c)
             if c.name in ("Copper", "Potion"):
                 player.output(f"Putting {c.name} in hand")
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
             else:
                 unput.append(c)
         for c in unput:
@@ -44,20 +44,20 @@ class Test_Apothecary(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_none(self):
-        self.plr.hand.set("Apothecary")
-        apoth = self.plr.hand[0]
-        self.plr.deck.set("Duchy", "Estate", "Estate", "Estate", "Province")
+        self.plr.piles[Piles.HAND].set("Apothecary")
+        apoth = self.plr.piles[Piles.HAND][0]
+        self.plr.piles[Piles.DECK].set("Duchy", "Estate", "Estate", "Estate", "Province")
         self.plr.play_card(apoth)
-        self.assertEqual(self.plr.hand.size(), 1)  # P
-        self.assertEqual(self.plr.deck.size(), 4)  # D + E + E + E
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)  # P
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)  # D + E + E + E
 
     def test_some(self):
-        self.plr.hand.set("Apothecary")
-        apoth = self.plr.hand[0]
-        self.plr.deck.set("Duchy", "Potion", "Copper", "Estate", "Province")
+        self.plr.piles[Piles.HAND].set("Apothecary")
+        apoth = self.plr.piles[Piles.HAND][0]
+        self.plr.piles[Piles.DECK].set("Duchy", "Potion", "Copper", "Estate", "Province")
         self.plr.play_card(apoth)
-        self.assertEqual(self.plr.hand.size(), 3)  # P + C + Pot
-        self.assertEqual(self.plr.deck.size(), 2)  # E + D
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)  # P + C + Pot
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 2)  # E + D
 
 
 ###############################################################################

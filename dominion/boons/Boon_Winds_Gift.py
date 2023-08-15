@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -35,13 +35,13 @@ class Test_Winds_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.hand.set("Duchy", "Gold", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Duchy", "Discard Gold", "Finish Selecting"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.hand.size(), 3)
-            self.assertIsNotNone(self.plr.discardpile["Duchy"])
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Duchy"])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

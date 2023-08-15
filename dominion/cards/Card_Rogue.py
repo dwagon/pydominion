@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -98,7 +98,7 @@ class TestRogue(unittest.TestCase):
     def test_play(self):
         """Nothing should happen"""
         try:
-            self.plr.add_card(self.card, "hand")
+            self.plr.add_card(self.card, Piles.HAND)
             self.plr.play_card(self.card)
             self.assertEqual(self.plr.coins.get(), 2)
         except AssertionError:  # pragma: no cover
@@ -107,10 +107,10 @@ class TestRogue(unittest.TestCase):
 
     def test_defended(self):
         """Victim has a defense"""
-        self.plr.hand.empty()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].empty()
+        self.plr.add_card(self.card, Piles.HAND)
         moat = self.g["Moat"].remove()
-        self.victim.add_card(moat, "hand")
+        self.victim.add_card(moat, Piles.HAND)
         self.plr.play_card(self.card)
 
     def test_good_trash(self):
@@ -120,12 +120,12 @@ class TestRogue(unittest.TestCase):
             gold = self.g["Gold"].remove()
             self.plr.trash_card(gold)
         self.plr.test_input = ["1"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertEqual(self.plr.discardpile.size(), 1)
-            self.assertEqual(self.plr.discardpile[-1].name, "Gold")
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+            self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Gold")
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -133,23 +133,23 @@ class TestRogue(unittest.TestCase):
     def test_good_player(self):
         """Rogue to trash something from another player"""
         tsize = self.g.trashpile.size()
-        self.victim.deck.set("Gold", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.victim.piles[Piles.DECK].set("Gold", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertEqual(self.victim.discardpile.size(), 1)
-        self.assertEqual(self.victim.discardpile[-1].name, "Gold")
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.victim.piles[Piles.DISCARD][-1].name, "Gold")
 
     def test_bad_player(self):
         """Rogue to trash nothing from another player"""
         tsize = self.g.trashpile.size()
-        self.victim.deck.set("Gold", "Province", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.victim.piles[Piles.DECK].set("Gold", "Province", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertEqual(self.victim.discardpile.size(), 2)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

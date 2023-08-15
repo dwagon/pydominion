@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -50,7 +49,7 @@ class Test_Traderoute(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.traderoute = self.g["Trade Route"].remove()
-        self.plr.add_card(self.traderoute, "hand")
+        self.plr.add_card(self.traderoute, Piles.HAND)
 
     def test_playZero(self):
         self.plr.test_input = ["finish selecting"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -28,7 +28,7 @@ class Test_AbandonedMine(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Abandoned Mine":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play an abandoned mine"""

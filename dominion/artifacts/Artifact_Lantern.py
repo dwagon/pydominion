@@ -2,7 +2,7 @@
 
 import unittest
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Artifact
 
 
@@ -30,22 +30,22 @@ class Test_Lantern(unittest.TestCase):
         self.plr.assign_artifact("Lantern")
 
     def test_play(self):
-        self.plr.deck.set("Province", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Province", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
-        self.assertIsNotNone(self.plr.discardpile["Province"])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])
 
     def test_play_actions(self):
-        self.plr.deck.set("Guide", "Moat", "Guide")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Guide", "Moat", "Guide")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Take Horn"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.hand)
-        self.assertIsNotNone(self.plr.discardpile["Guide"])
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Guide"])
         self.assertTrue(self.plr.has_artifact("Horn"))
 
 

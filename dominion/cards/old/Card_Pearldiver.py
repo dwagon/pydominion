@@ -39,7 +39,7 @@ class Test_Pearldiver(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.pearldiver = self.g["Pearl Diver"].remove()
-        self.plr.add_card(self.pearldiver, "hand")
+        self.plr.add_card(self.pearldiver, Piles.HAND)
 
     def test_play(self):
         self.plr.piles[Piles.DECK].set("Copper", "Gold", "Province", "Silver", "Duchy")

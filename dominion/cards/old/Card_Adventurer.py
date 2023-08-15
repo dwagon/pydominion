@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -37,12 +37,12 @@ class Test_Adventurer(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_treasures(self):
-        self.plr.deck.set("Copper", "Silver", "Gold", "Estate")
-        self.plr.hand.set("Adventurer")
-        self.plr.play_card(self.plr.hand[0])
-        self.assertEqual(sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.hand]))
-        self.assertIsNotNone(self.plr.discardpile["Estate"])
-        self.assertEqual(self.plr.deck[0].name, "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Estate")
+        self.plr.piles[Piles.HAND].set("Adventurer")
+        self.plr.play_card(self.plr.piles[Piles.HAND][0])
+        self.assertEqual(sorted(["Silver", "Gold"]), sorted([c.name for c in self.plr.piles[Piles.HAND]]))
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
+        self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
 
 
 ###############################################################################

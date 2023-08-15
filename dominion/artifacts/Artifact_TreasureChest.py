@@ -2,7 +2,7 @@
 
 import unittest
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Artifact
 
 
@@ -30,7 +30,7 @@ class Test_TreasureChest(unittest.TestCase):
         self.plr.assign_artifact("Treasure Chest")
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
 
 
 ###############################################################################

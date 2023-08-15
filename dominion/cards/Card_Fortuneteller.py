@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -39,16 +39,16 @@ class Test_Fortuneteller(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Fortune Teller"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Fortune Teller"""
-        self.vic.deck.set("Duchy", "Silver", "Copper")
+        self.vic.piles[Piles.DECK].set("Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Silver", self.vic.discardpile)
-        self.assertIn("Copper", self.vic.discardpile)
-        self.assertEqual(self.vic.deck[-1].name, "Duchy")
+        self.assertIn("Silver", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Copper", self.vic.piles[Piles.DISCARD])
+        self.assertEqual(self.vic.piles[Piles.DECK][-1].name, "Duchy")
 
 
 ###############################################################################

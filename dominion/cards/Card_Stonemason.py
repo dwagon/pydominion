@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -64,20 +64,20 @@ class TestStoneMason(unittest.TestCase):
 
     def test_play(self):
         """Play a stonemason"""
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_buy(self):
         self.plr.coins.set(5)
         self.plr.test_input = ["3", "Moat", "Stonemason"]
         self.plr.buy_card(self.g["Stonemason"])
-        self.assertIn("Moat", self.plr.discardpile)
-        self.assertIn("Stonemason", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Stonemason", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

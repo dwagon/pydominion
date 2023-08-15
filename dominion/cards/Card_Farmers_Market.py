@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -47,12 +47,12 @@ class Test_FarmersMarket(unittest.TestCase):
     def test_play(self):
         """Play a Farmers Market"""
         self.plr.add_actions(2)
-        self.plr.add_card(self.c1, "hand")
+        self.plr.add_card(self.c1, Piles.HAND)
         self.g["Farmers' Market"].addVP(3)
         self.plr.play_card(self.c1)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
         self.assertEqual(self.plr.coins.get(), 4)
-        self.plr.add_card(self.c2, "hand")
+        self.plr.add_card(self.c2, Piles.HAND)
         self.plr.play_card(self.c2)
         self.assertEqual(self.plr.get_score_details()["Farmers' Market"], 4)
         self.assertIn("Farmers' Market", self.g.trashpile)

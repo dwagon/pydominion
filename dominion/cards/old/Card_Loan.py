@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Loan """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -48,24 +48,24 @@ class Test_Loan(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Loan"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.loan = self.plr.gain_card("Loan", "hand")
+        self.loan = self.plr.gain_card("Loan", Piles.HAND)
 
     def test_discard(self):
         tsize = self.g.trashpile.size()
-        self.plr.deck.set("Estate", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Discard Gold"]
         self.plr.play_card(self.loan)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_trash(self):
         tsize = self.g.trashpile.size()
-        self.plr.deck.set("Estate", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Estate", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Trash Gold"]
         self.plr.play_card(self.loan)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.g.trashpile)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -43,13 +43,13 @@ class Test_WildHunt(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wild Hunt"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_give(self):
         """Play a Wild Hunt and take the cards"""
         self.plr.test_input = ["Cards"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
         self.assertEqual(self.g["Wild Hunt"].getVP(), 1)
 
     def test_play_take(self):
@@ -57,8 +57,8 @@ class Test_WildHunt(unittest.TestCase):
         self.plr.test_input = ["Gain"]
         self.g["Wild Hunt"].addVP(3)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.get_score_details()["Wild Hunt"], 3)
 
 

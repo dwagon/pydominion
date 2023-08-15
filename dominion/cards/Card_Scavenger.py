@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,13 +25,13 @@ class Card_Scavenger(Card.Card):
             ("Put deck into discard?", True),
         )
         if dumpdeck:
-            for card in player.deck:
+            for card in player.piles[Piles.DECK]:
                 player.add_card(card, "discard")
-                player.deck.remove(card)
-        if player.discardpile.size():
+                player.piles[Piles.DECK].remove(card)
+        if player.piles[Piles.DISCARD].size():
             cards = []
             cardnames = set()
-            for c in player.discardpile:
+            for c in player.piles[Piles.DISCARD]:
                 if c.name not in cardnames:
                     cards.append(c)
                     cardnames.add(c.name)
@@ -41,7 +41,7 @@ class Card_Scavenger(Card.Card):
                 prompt="Pull card from discard and add to top of your deck",
             )
             player.add_card(card[0], "topdeck")
-            player.discardpile.remove(card[0])
+            player.piles[Piles.DISCARD].remove(card[0])
 
 
 ###############################################################################
@@ -54,13 +54,13 @@ class Test_Scavenger(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.deck.set("Province", "Moat", "Witch", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Province", "Moat", "Witch", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Put", "Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.plr.deck[-1].name, "Moat")
-        self.assertIn("Witch", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Moat")
+        self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

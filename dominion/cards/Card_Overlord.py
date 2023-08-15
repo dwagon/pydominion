@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Overlord """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -36,12 +36,12 @@ class Test_Overlord(unittest.TestCase):
 
     def test_play(self):
         """Play a Overlord"""
-        hand = self.plr.hand.size()
-        self.plr.add_card(self.card, "hand")
+        hand = self.plr.piles[Piles.HAND].size()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Play Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hand + 2)
-        self.assertNotIn("Moat", self.plr.played)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand + 2)
+        self.assertNotIn("Moat", self.plr.piles[Piles.PLAYED])
         self.assertEqual(len(self.g["Moat"]), 10)
 
 

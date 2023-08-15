@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -32,18 +32,18 @@ class Test_Coppersmith(unittest.TestCase):
 
     def test_copper(self):
         """Copper should be worth two"""
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.plr.play_card(self.plr.hand[0])
+        self.plr.play_card(self.plr.piles[Piles.HAND][0])
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_silver(self):
         """Silver should be unchanged and worth two"""
-        self.plr.hand.set("Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.plr.play_card(self.plr.hand[0])
+        self.plr.play_card(self.plr.piles[Piles.HAND][0])
         self.assertEqual(self.plr.coins.get(), 2)
 
 

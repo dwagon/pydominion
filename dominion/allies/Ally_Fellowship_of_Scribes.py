@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Fellowship_of_Scribes """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Ally_Fellowship_of_Scribes(Ally.Ally):
     def hook_post_action(self, game, player, card):
         if not player.favors.get():
             return
-        if player.hand.size() > 4:
+        if player.piles[Piles.HAND].size() > 4:
             return
         choice = player.plr_choose_options(
             "Use Fellowship of Scribes to spend a favor to pickup a card?",
@@ -49,25 +49,25 @@ class Test_Fellowship_of_Scribes(unittest.TestCase):
     def test_play(self):
         """Play and gain a card"""
         self.card = self.g["Festival"].remove()
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.favors.set(2)
         self.plr.test_input = ["Gain"]
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.favors.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 1 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 1)
 
     def test_play_no_gain(self):
         """Play and don't gain a card"""
         self.card = self.g["Festival"].remove()
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.favors.set(2)
         self.plr.test_input = ["No"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
 
 
 ###############################################################################

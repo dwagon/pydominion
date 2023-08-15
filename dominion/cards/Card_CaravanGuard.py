@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Caravan_Guard"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Card_CaravanGuard(Card.Card):
     def hook_underAttack(self, game, player, attacker):
         player.output(f"Under attack from {attacker.name}")
         player.pickup_cards(1)
-        player.move_card(player.hand["Caravan Guard"], "played")
+        player.move_card(player.piles[Piles.HAND]["Caravan Guard"], "played")
 
 
 ###############################################################################
@@ -46,12 +46,12 @@ class Test_CaravanGuard(unittest.TestCase):
         self.plr, self.attacker = self.g.player_list()
         self.card = self.g["Caravan Guard"].remove()
         self.militia = self.g["Militia"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Test playing the caravan guard"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
@@ -60,11 +60,11 @@ class Test_CaravanGuard(unittest.TestCase):
 
     def test_attack(self):
         """Test being attacked"""
-        self.plr.hand.set("Caravan Guard", "Moat")
-        self.attacker.add_card(self.militia, "hand")
+        self.plr.piles[Piles.HAND].set("Caravan Guard", "Moat")
+        self.attacker.add_card(self.militia, Piles.HAND)
         self.attacker.play_card(self.militia)
-        self.assertEqual(self.plr.hand.size(), 2)
-        self.assertIn("Caravan Guard", self.plr.played)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertIn("Caravan Guard", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################
