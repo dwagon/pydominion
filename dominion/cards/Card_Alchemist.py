@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
+###############################################################################
 class Card_Alchemist(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALCHEMY
-        self.desc = (
-            "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
-        )
+        self.desc = "+2 cards, +1 action; When you discard this you may put on top of your deck if you have a Potion in play"
         self.name = "Alchemist"
         self.cards = 2
         self.actions = 1
@@ -24,10 +22,13 @@ class Card_Alchemist(Card.Card):
         """When you discard this from play, you may put this on
         top of your deck if you have a Potion in play"""
         # As we can't guarantee where we are in the discard cycle
-        # We have to check the discardpile as well
+        # We have to check the discard pile as well
         if source != "played":
             return
-        if "Potion" not in player.played and "Potion" not in player.discardpile:
+        if (
+            "Potion" not in player.piles[Piles.PLAYED]
+            and "Potion" not in player.piles[Piles.DISCARD]
+        ):
             return
         ans = player.plr_choose_options(
             "What to do with the alchemist?",
@@ -50,31 +51,35 @@ class Test_Alchemist(unittest.TestCase):
     def test_play(self):
         self.plr.play_card(self.alchemist)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
     def test_nopotion(self):
         """Discard Alchemist with no potion in play"""
         self.plr.play_card(self.alchemist)
         self.plr.discard_hand()
-        self.assertEqual(self.plr.discardpile.size(), 8)  # 5 for hand, +2 cards, alch
+        self.assertEqual(
+            self.plr.piles[Piles.DISCARD].size(), 8
+        )  # 5 for hand, +2 cards, alch
 
     def test_discard(self):
         """Discard an Alchemist even if we have a potion in play"""
-        self.plr.played.set("Potion")
+        self.plr.piles[Piles.PLAYED].set("Potion")
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.alchemist)
         self.plr.discard_hand()
-        self.assertEqual(self.plr.discardpile.size(), 9)  # 5 for hand, +2 cards, alch, pot
-        self.assertIn("Alchemist", self.plr.discardpile)
+        self.assertEqual(
+            self.plr.piles[Piles.DISCARD].size(), 9
+        )  # 5 for hand, +2 cards, alch, pot
+        self.assertIn("Alchemist", self.plr.piles[Piles.DISCARD])
 
     def test_keep(self):
         """Keep an Alchemist for next turn"""
-        self.plr.played.set("Potion")
+        self.plr.piles[Piles.PLAYED].set("Potion")
         self.plr.test_input = ["top of deck"]
         self.plr.play_card(self.alchemist)
         self.plr.discard_hand()
-        self.assertNotIn("Alchemist", self.plr.discardpile)
-        self.assertEqual(self.plr.deck[-1].name, "Alchemist")
+        self.assertNotIn("Alchemist", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Alchemist")
 
 
 ###############################################################################
