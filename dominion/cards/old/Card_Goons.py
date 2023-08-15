@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -31,33 +30,33 @@ class Card_Goons(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Goons(unittest.TestCase):
+class TestGoons(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Goons", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Goons"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.victim.test_input = ["1", "2", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
     def test_defended(self):
-        self.victim.hand.set("Moat", "Estate", "Gold", "Copper")
+        self.victim.piles[Piles.HAND].set("Moat", "Estate", "Gold", "Copper")
         self.plr.play_card(self.card)
-        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
 
     def test_buy(self):
-        self.victim.hand.set("Moat", "Estate", "Gold", "Copper")
+        self.victim.piles[Piles.HAND].set("Moat", "Estate", "Gold", "Copper")
         self.plr.play_card(self.card)
         self.plr.buy_card(self.g["Copper"])
         sc = self.plr.get_score_details()
