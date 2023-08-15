@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -33,10 +31,10 @@ class Test_Pig(unittest.TestCase):
 
     def test_play(self):
         """Perform a Pig"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
 
 ###############################################################################
