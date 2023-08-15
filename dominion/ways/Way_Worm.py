@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -34,9 +32,9 @@ class Test_Worm(unittest.TestCase):
 
     def test_play(self):
         """Perform a Worm"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
-        self.assertIn("Estate", self.plr.exilepile)
+        self.assertIn("Estate", self.plr.piles[Piles.EXILE])
 
 
 ###############################################################################
