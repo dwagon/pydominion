@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -29,7 +29,8 @@ class Card_PirateShip(Card.Card):
                 "attack",
             ),
             (
-                "+%d = +1 per treasure you've taken with Pirate Ships this game." % player._pirate_ship,
+                "+%d = +1 per treasure you've taken with Pirate Ships this game."
+                % player._pirate_ship,
                 "spend",
             ),
         )
@@ -52,10 +53,12 @@ class Card_PirateShip(Card.Card):
             if card.isTreasure():
                 cards.append(card)
             else:
-                victim.output("%s's Pirate Ship discarded your %s" % (player.name, card.name))
-                victim.add_card(card, "discard")
+                victim.output(f"{player.name}'s Pirate Ship discarded your {card.name}")
+                victim.add_card(card, Piles.DISCARD)
         if cards:
-            to_trash = player.plr_trash_card(prompt=f"Trash a card from {victim.name}", cardsrc=cards)
+            to_trash = player.plr_trash_card(
+                prompt=f"Trash a card from {victim.name}", cardsrc=cards
+            )
             trashed = True
             for card in cards:
                 if card not in to_trash:
@@ -74,7 +77,7 @@ class Card_PirateShip(Card.Card):
 
 
 ###############################################################################
-class Test_PirateShip(unittest.TestCase):
+class TestPirateShip(unittest.TestCase):
     """Test Pirate Ship"""
 
     def setUp(self):
@@ -86,7 +89,7 @@ class Test_PirateShip(unittest.TestCase):
 
     def test_play_attack(self):
         tsize = self.g.trashpile.size()
-        self.vic.deck.set("Copper", "Estate")
+        self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "copper"]
         self.plr.play_card(self.card)
         try:
@@ -99,10 +102,10 @@ class Test_PirateShip(unittest.TestCase):
 
     def test_trash_nothing(self):
         """Play the card but chose to not trash anything"""
-        self.vic.deck.set("Copper", "Estate")
+        self.vic.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.test_input = ["Each other", "Finish selecting"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.vic.discardpile)
+        self.assertIn("Copper", self.vic.piles[Piles.DISCARD])
 
     def test_spend(self):
         self.plr._pirate_ship = 2
