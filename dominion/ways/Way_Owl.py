@@ -2,9 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Owl"""
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -18,7 +16,7 @@ class Way_Owl(Way.Way):
         self.name = "Way of the Owl"
 
     def special_way(self, game, player, card):
-        num = 6 - player.hand.size() + 1  # for the card that is used
+        num = 6 - player.piles[Piles.HAND].size() + 1  # for the card that is used
         player.output(f"Picking up {num} cards from Way of the Owl")
         player.pickup_cards(num=num)
 
@@ -41,11 +39,11 @@ class Test_Owl(unittest.TestCase):
 
     def test_play(self):
         """Perform a Owl"""
-        self.plr.hand.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.g.print_state()
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################
