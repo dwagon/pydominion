@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -41,29 +40,31 @@ class Card_Oracle(Card.Card):
         else:
             for card in cards:
                 victim.add_card(card, "topdeck")
-            victim.output("%s's Oracle put %s on top of your deck" % (player.name, cardnames))
+            victim.output(
+                "%s's Oracle put %s on top of your deck" % (player.name, cardnames)
+            )
 
 
 ###############################################################################
-class Test_Oracle(unittest.TestCase):
+class TestOracle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Oracle"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Oracle"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play Oracle"""
-        self.vic.deck.set("Estate", "Duchy", "Province")
-        self.plr.deck.set("Copper", "Silver", "Gold")
+        self.vic.piles[Piles.DECK].set("Estate", "Duchy", "Province")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["discard", "top"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.vic.discardpile)
-        self.assertIn("Province", self.vic.discardpile)
-        self.assertIn("Silver", self.plr.hand)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Province", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
 
 ###############################################################################
