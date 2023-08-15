@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Event_Enhance(Event.Event):
         self.cost = 3
 
     def special(self, game, player):
-        crds = [_ for _ in player.hand if not _.isVictory()]
+        crds = [_ for _ in player.piles[Piles.HAND] if not _.isVictory()]
         if not crds:
             player.output("No non-Victory cards available")
             return
@@ -31,7 +31,7 @@ class Event_Enhance(Event.Event):
 
 
 ###############################################################################
-class Test_Enhance(unittest.TestCase):
+class TestEnhance(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -44,13 +44,13 @@ class Test_Enhance(unittest.TestCase):
         self.card = self.g.events["Enhance"]
 
     def test_play(self):
-        """Perform a Enhance"""
+        """Perform an Enhance"""
         self.plr.coins.add(3)
-        self.plr.hand.set("Copper", "Silver", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
         self.plr.test_input = ["Trash Silver", "Get Festival"]
         self.plr.perform_event(self.card)
         self.assertIn("Silver", self.g.trashpile)
-        self.assertIsNotNone(self.plr.discardpile["Festival"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Festival"])
 
 
 ###############################################################################

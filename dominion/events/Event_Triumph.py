@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Test_Triumph(unittest.TestCase):
         """Use Triumph"""
         self.plr.gain_card("Copper")
         self.plr.perform_event(self.event)
-        self.assertIsNotNone(self.plr.discardpile["Estate"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
         scores = self.plr.get_score_details()
         self.assertEqual(scores["Triumph"], 2)
         self.assertEqual(self.plr.debt.get(), 5)

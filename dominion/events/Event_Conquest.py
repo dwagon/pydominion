@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -36,8 +36,8 @@ class Test_Conquest(unittest.TestCase):
         """Use Conquest"""
         self.plr.coins.add(6)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         self.assertEqual(self.plr.get_score_details()["Conquest"], 2)
 
 

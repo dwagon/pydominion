@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Event_Raid(Event.Event):
             victim.card_token = True
             victim.output("-1 Card token active due to Raid event by %s" % player.name)
         count = 0
-        for c in player.hand + player.played:
+        for c in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
             if c.name == "Silver":
                 player.gain_card("Silver")
                 count += 1
@@ -38,12 +38,12 @@ class Test_Raid(unittest.TestCase):
     def test_play(self):
         """Perform a Raid"""
         self.plr.coins.add(5)
-        self.plr.hand.set("Silver", "Silver")
+        self.plr.piles[Piles.HAND].set("Silver", "Silver")
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.buys.get(), 0)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Silver")
         self.assertTrue(self.victim.card_token)
 

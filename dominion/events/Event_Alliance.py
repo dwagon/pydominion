@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Alliance(unittest.TestCase):
         """Perform a Alliance"""
         self.plr.coins.add(10)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Province"])
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
 
 
 ###############################################################################

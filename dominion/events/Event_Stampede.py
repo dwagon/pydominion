@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Event_Stampede(Event.Event):
         self.required_cards = [("Card", "Horse")]
 
     def special(self, game, player):
-        if player.played.size() <= 5:
+        if player.piles[Piles.PLAYED].size() <= 5:
             for _ in range(5):
                 player.gain_card("Horse")
         else:
@@ -23,7 +23,7 @@ class Event_Stampede(Event.Event):
 
 
 ###############################################################################
-class Test_Stampede(unittest.TestCase):
+class TestStampede(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -39,16 +39,16 @@ class Test_Stampede(unittest.TestCase):
         """Use Stampede"""
         self.plr.coins.add(5)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Horse"])
-        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Horse"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
 
     def test_no_Stampede(self):
         """Use Stampede with played lots"""
-        self.plr.played.set("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
+        self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Gold", "Copper", "Silver", "Gold")
         self.plr.coins.add(5)
         self.plr.perform_event(self.card)
-        self.assertNotIn("Horse", self.plr.discardpile)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertNotIn("Horse", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
 
 ###############################################################################

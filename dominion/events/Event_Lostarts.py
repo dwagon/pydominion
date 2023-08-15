@@ -5,7 +5,7 @@ from dominion import Card, Game, Event
 
 
 ###############################################################################
-class Event_Lostarts(Event.Event):
+class Event_LostArts(Event.Event):
     def __init__(self):
         Event.Event.__init__(self)
         self.base = Card.CardExpansion.ADVENTURE
@@ -26,9 +26,11 @@ class Event_Lostarts(Event.Event):
 
 
 ###############################################################################
-class Test_Lostarts(unittest.TestCase):
+class TestLostArts(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Lost Arts"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, eventcards=["Lost Arts"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Lost Arts"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -50,7 +50,7 @@ class Test_Desperation(unittest.TestCase):
         self.plr.coins.add(0)
         self.plr.test_input = ["Gain a curse"]
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Curse"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
         self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 2)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class Test_Populate(unittest.TestCase):
         """Use Populate"""
         self.plr.coins.add(10)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
 
 
 ###############################################################################

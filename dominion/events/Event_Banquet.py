@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -39,9 +39,9 @@ class Test_Banquet(unittest.TestCase):
         self.plr.test_input = ["Get Silver"]
         self.plr.coins.add(3)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
-        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
 
 
 ###############################################################################

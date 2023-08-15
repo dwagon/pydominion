@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Bargain"""
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -48,8 +48,8 @@ class Test_Bargain(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.perform_event(self.card)
         self.g.print_state()
-        self.assertIn("Horse", self.oth.discardpile)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Horse", self.oth.piles[Piles.DISCARD])
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

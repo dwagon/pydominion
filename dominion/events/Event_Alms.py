@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -19,8 +19,8 @@ class Event_Alms(Event.Event):
 
     def treasures(self, player):
         t = 0
-        t += sum([1 for c in player.played if c.isTreasure()])
-        t += sum([1 for c in player.hand if c.isTreasure()])
+        t += sum([1 for c in player.piles[Piles.PLAYED] if c.isTreasure()])
+        t += sum([1 for c in player.piles[Piles.HAND] if c.isTreasure()])
         return t
 
     def special(self, game, player):
@@ -44,26 +44,26 @@ class Test_Alms(unittest.TestCase):
 
     def test_with_treasure(self):
         """Use Alms with treasures"""
-        self.plr.hand.set("Copper")
+        self.plr.piles[Piles.HAND].set("Copper")
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
     def test_without_treasure(self):
         """Use Alms with no treasures"""
-        self.plr.hand.set("Estate")
+        self.plr.piles[Piles.HAND].set("Estate")
         self.plr.test_input = ["Lurker"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, "Lurker")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Lurker")
 
     def test_twice(self):
         """Use Alms twice"""
-        self.plr.hand.set("Estate")
+        self.plr.piles[Piles.HAND].set("Estate")
         self.plr.test_input = ["Lurker"]
         self.plr.perform_event(self.card)
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, "Lurker")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Lurker")
 
 
 ###############################################################################
