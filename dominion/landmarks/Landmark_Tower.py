@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -30,12 +30,12 @@ class Test_Tower(unittest.TestCase):
 
     def test_none(self):
         """Use Tower"""
-        self.plr.hand.set("Moat", "Moat")
+        self.plr.piles[Piles.HAND].set("Moat", "Moat")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Tower"], 0)
 
     def test_one(self):
-        self.plr.hand.set("Moat", "Moat")
+        self.plr.piles[Piles.HAND].set("Moat", "Moat")
         while True:
             c = self.g["Moat"].remove()
             if not c:

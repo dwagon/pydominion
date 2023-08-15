@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Landmark_Arena(Landmark.Landmark):
         if self._vp <= 0:
             return
         actions = []
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             if card.isAction():
                 actions.append(card)
         if not actions:
@@ -45,7 +45,7 @@ class Test_Arena(unittest.TestCase):
 
     def test_gain(self):
         """Use Arena"""
-        self.plr.hand.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat")
         self.plr.test_input = ["Discard Moat", "End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.get_score_details()["Arena"], 2)
