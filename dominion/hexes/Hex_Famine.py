@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -16,18 +16,18 @@ class Hex_Famine(Hex.Hex):
 
     def special(self, game, player):
         for _ in range(3):
-            c = player.next_card()
-            if c.isAction():
-                player.output("Discarding {}".format(c))
-                player.discard_card(c)
+            card = player.next_card()
+            if card.isAction():
+                player.output(f"Discarding {card}")
+                player.discard_card(card)
             else:
-                player.output("Putting {} back in deck".format(c))
-                player.add_card(c, "topdeck")
-        player.deck.shuffle()
+                player.output(f"Putting {card} back in deck")
+                player.add_card(card, "topdeck")
+        player.piles[Piles.DECK].shuffle()
 
 
 ###############################################################################
-class Test_Famine(unittest.TestCase):
+class TestFamine(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -38,11 +38,11 @@ class Test_Famine(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.deck.set("Duchy", "Cursed Village", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertIsNotNone(self.plr.discardpile["Cursed Village"])
-        self.assertIn("Gold", self.plr.deck)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Cursed Village"])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

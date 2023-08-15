@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -10,15 +10,17 @@ class Hex_Haunting(Hex.Hex):
         Hex.Hex.__init__(self)
         self.cardtype = Card.CardType.HEX
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "If you have at least 4 cards in hand, put one of them onto your deck."
+        self.desc = (
+            "If you have at least 4 cards in hand, put one of them onto your deck."
+        )
         self.name = "Haunting"
         self.purchasable = False
 
     def special(self, game, player):
-        if player.hand.size() >= 4:
+        if player.piles[Piles.HAND].size() >= 4:
             card = player.card_sel(force=True)
             player.add_card(card[0], "topdeck")
-            player.hand.remove(card[0])
+            player.piles[Piles.HAND].remove(card[0])
 
 
 ###############################################################################
@@ -38,14 +40,14 @@ class Test_Haunting(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_none(self):
-        self.plr.hand.set("Duchy", "Gold", "Silver")
+        self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver")
         self.plr.gain_card("Cursed Village")
 
     def test_activate(self):
-        self.plr.hand.set("Duchy", "Gold", "Silver", "Province")
+        self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver", "Province")
         self.plr.test_input = ["Gold"]
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
 
 
 ###############################################################################

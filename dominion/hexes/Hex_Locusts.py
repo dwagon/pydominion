@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -19,10 +19,12 @@ class Hex_Locusts(Hex.Hex):
     def special(self, game, player):
         nxt = player.top_card()
         if nxt.name in ("Copper", "Estate"):
-            player.output("Gaining a curse because your next card is {}".format(nxt.name))
+            player.output(f"Gaining a curse because your next card is {nxt.name}")
             player.gain_card("Curse")
         else:
-            player.output("Gain a card costing {} because your next card is {}".format(nxt.cost - 1, nxt.name))
+            player.output(
+                f"Gain a card costing {nxt.cost - 1} because your next card is {nxt.name}"
+            )
             types = {
                 Card.CardType.VICTORY: nxt.isVictory(),
                 Card.CardType.TREASURE: nxt.isTreasure(),
@@ -58,18 +60,18 @@ class Test_Locusts(unittest.TestCase):
 
     def test_curse(self):
         """Locusts to gain a Curse"""
-        self.plr.deck.set("Estate")
+        self.plr.piles[Piles.DECK].set("Estate")
         self.plr.gain_card("Cursed Village")
-        self.assertIsNotNone(self.plr.discardpile["Curse"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
         self.assertIn("Estate", self.g.trashpile)
 
     def test_gain(self):
         """Locusts to gain a cheaper card"""
-        self.plr.deck.set("Duchy")
+        self.plr.piles[Piles.DECK].set("Duchy")
         self.plr.test_input = ["Get Estate"]
         self.plr.gain_card("Cursed Village")
-        self.assertNotIn("Curse", self.plr.discardpile)
-        self.assertIsNotNone(self.plr.discardpile["Estate"])
+        self.assertNotIn("Curse", self.plr.piles[Piles.DISCARD])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
         self.assertIn("Duchy", self.g.trashpile)
 
 
