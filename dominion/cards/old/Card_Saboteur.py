@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Saboteur"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -52,12 +52,12 @@ def botresponse(
     player, kind, args=None, kwargs=None
 ):  # pragma: no coverage, pylint: disable=unused-argument
     """Bot response"""
-    toget = []
+    to_get = []
     for card in kwargs["cardsrc"]:
         if card.name in ("Copper", "Silver", "Gold"):
-            toget.append((card.cost, card))
-    if toget:
-        return [sorted(toget)[-1][1]]
+            to_get.append((card.cost, card))
+    if to_get:
+        return [sorted(to_get)[-1][1]]
     return []
 
 
@@ -79,29 +79,31 @@ class Test_Saboteur(unittest.TestCase):
 
     def test_play(self):
         """Play a saboteur"""
-        tsize = self.g.trashpile.size()
+        trash_size = self.g.trashpile.size()
         try:
             self.victim.test_input = ["Get Estate"]
-            self.victim.deck.set("Gold", "Copper", "Estate")
+            self.victim.piles[Piles.DECK].set("Gold", "Copper", "Estate")
             self.plr.play_card(self.card)
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
+            self.assertEqual(self.g.trashpile.size(), trash_size + 1)
             trashed = self.g.trashpile[0]
             self.assertTrue(trashed.cost >= 3)
-            for crd in self.victim.discardpile:
+            for crd in self.victim.piles[Piles.DISCARD]:
                 self.assertTrue(crd.cost < 3)
-            self.assertTrue(self.victim.discardpile[-1].cost <= trashed.cost - 2)
+            self.assertTrue(
+                self.victim.piles[Piles.DISCARD][-1].cost <= trashed.cost - 2
+            )
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
 
-    def test_nomatching(self):
+    def test_no_matching(self):
         """Play a saboteur where the victim doesn't have a suitable card"""
-        tsize = self.g.trashpile.size()
-        self.victim.deck.set("Copper", "Copper", "Estate")
+        trash_size = self.g.trashpile.size()
+        self.victim.piles[Piles.DECK].set("Copper", "Copper", "Estate")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize)
-        for crd in self.victim.discardpile:
-            self.assertTrue(crd.cost < 3)
+        self.assertEqual(self.g.trashpile.size(), trash_size)
+        for card in self.victim.piles[Piles.DISCARD]:
+            self.assertTrue(card.cost < 3)
 
 
 ###############################################################################
