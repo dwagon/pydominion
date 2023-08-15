@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -14,17 +14,19 @@ class Project_StarChart(Project.Project):
         self.cost = 3
 
     def hook_pre_shuffle(self, game, player):
-        names = {_.name for _ in player.discardpile}
+        names = {_.name for _ in player.piles[Piles.DISCARD]}
         choices = []
         for name in names:
             choices.append(("Put {} on top".format(name), name))
-        opt = player.plr_choose_options("Pick a card to put on top of your deck", *choices)
-        card = player.discardpile[opt]
+        opt = player.plr_choose_options(
+            "Pick a card to put on top of your deck", *choices
+        )
+        card = player.piles[Piles.DISCARD][opt]
         player.move_card(card, "topdeck")
 
 
 ###############################################################################
-class Test_StarChart(unittest.TestCase):
+class TestStarChart(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["Star Chart"])
         self.g.start_game()
@@ -32,8 +34,10 @@ class Test_StarChart(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Star Chart")
-        self.plr.discardpile.set("Copper", "Copper", "Silver", "Gold", "Estate", "Gold")
-        self.plr.deck.set()
+        self.plr.piles[Piles.DISCARD].set(
+            "Copper", "Copper", "Silver", "Gold", "Estate", "Gold"
+        )
+        self.plr.piles[Piles.DECK].set()
         self.plr.test_input = ["Put Gold"]
         c = self.plr.next_card()
         self.g.print_state()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -14,20 +14,20 @@ class Project_Silos(Project.Project):
         self.cost = 4
 
     def hook_start_turn(self, game, player):
-        cus = [_ for _ in player.hand if _.name == "Copper"]
+        cus = [_ for _ in player.piles[Piles.HAND] if _.name == "Copper"]
         if cus:
             choices = []
             for num in range(len(cus) + 1):
-                choices.append(("Silo: Discard {} Coppers".format(num), num))
+                choices.append((f"Silo: Discard {num} Coppers", num))
             ans = player.plr_choose_options("Discard how many coppers? ", *choices)
             for _ in range(ans):
-                cu = player.hand["Copper"]
+                cu = player.piles[Piles.HAND]["Copper"]
                 player.discard_card(cu)
                 player.pickup_cards(1)
 
 
 ###############################################################################
-class Test_Silos(unittest.TestCase):
+class TestSilos(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["Silos"])
         self.g.start_game()
@@ -35,13 +35,13 @@ class Test_Silos(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("Silos")
-        self.plr.deck.set("Estate", "Estate", "Estate")
-        self.plr.hand.set("Copper", "Estate", "Copper", "Province")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Copper", "Province")
         self.plr.test_input = ["2"]
         self.plr.start_turn()
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
-        self.assertNotIn("Copper", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
 
 
 ###############################################################################

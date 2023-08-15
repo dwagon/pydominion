@@ -22,18 +22,18 @@ class Project_Exploration(Project.Project):
 
 
 ###############################################################################
-class Test_Exploration(unittest.TestCase):
+class TestExploration(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["Exploration"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.coffers.get()
+        num_coffers = self.plr.coffers.get()
         self.plr.assign_project("Exploration")
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.coffers.get(), numc + 1)
+        self.assertEqual(self.plr.coffers.get(), num_coffers + 1)
         self.assertEqual(self.plr.villagers.get(), 1)
 
 

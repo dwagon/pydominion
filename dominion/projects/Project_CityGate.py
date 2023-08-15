@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -17,15 +17,15 @@ class Project_CityGate(Project.Project):
         player.pickup_card()
         card = player.card_sel(
             force=True,
-            cardsrc="hand",
+            cardsrc=Piles.HAND,
             prompt="Put a card from your hand onto your deck",
         )
         player.add_card(card[0], "topdeck")
-        player.hand.remove(card[0])
+        player.piles[Piles.HAND].remove(card[0])
 
 
 ###############################################################################
-class Test_CityGate(unittest.TestCase):
+class TestCityGate(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["City Gate"])
         self.g.start_game()
@@ -33,12 +33,14 @@ class Test_CityGate(unittest.TestCase):
 
     def test_play(self):
         self.plr.assign_project("City Gate")
-        self.plr.deck.set("Gold")
-        self.plr.hand.set("Copper", "Estate", "Province", "Silver", "Duchy")
+        self.plr.piles[Piles.DECK].set("Gold")
+        self.plr.piles[Piles.HAND].set(
+            "Copper", "Estate", "Province", "Silver", "Duchy"
+        )
         self.plr.test_input = ["Select Province"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.deck[-1].name, "Province")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Province")
 
 
 ###############################################################################
