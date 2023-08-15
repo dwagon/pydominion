@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -42,26 +41,30 @@ class Card_Noble_Brigand(Card.Card):
             for card in cards:
                 if card == ans:
                     victim.trash_card(card)
-                    victim.output(f"{player.name}'s Noble Brigand trashed your {card.name}")
+                    victim.output(
+                        f"{player.name}'s Noble Brigand trashed your {card.name}"
+                    )
                     player.output(f"Stole {card.name} from {victim.name}")
                     game.trashpile.remove(ans)
                     card.player = player
                     player.add_card(ans)
                 else:
-                    victim.output(f"{player.name}'s Noble Brigand discarded your {card.name}")
+                    victim.output(
+                        f"{player.name}'s Noble Brigand discarded your {card.name}"
+                    )
                     victim.discard_card(card)
 
     @classmethod
     def getTreasureCards(cls, plr, player):
         cards = []
         for _ in range(2):
-            c = plr.next_card()
-            plr.reveal_card(c)
-            if c.isTreasure():
-                cards.append(c)
+            card = plr.next_card()
+            plr.reveal_card(card)
+            if card.isTreasure():
+                cards.append(card)
             else:
-                plr.output(f"{player.name}'s Noble Brigand discarded your {c.name}")
-                plr.add_card(c, "discard")
+                plr.output(f"{player.name}'s Noble Brigand discarded your {card.name}")
+                plr.add_card(card, Piles.DISCARD)
         return cards
 
 
@@ -74,30 +77,30 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.card = self.g["Noble Brigand"].remove()
 
     def test_play(self):
-        """Play an Noble Brigand but without anything to steal"""
-        self.plr.add_card(self.card, "hand")
+        """Play a Noble Brigand but without anything to steal"""
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_no_treasure(self):
-        """Play an Noble Brigand but with no treasure"""
-        self.vic.deck.set("Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        """Play a Noble Brigand but with no treasure"""
+        self.vic.piles[Piles.DECK].set("Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertEqual(self.vic.discardpile.size(), 3)
-        self.assertIn("Copper", self.vic.discardpile)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 3)
+        self.assertIn("Copper", self.vic.piles[Piles.DISCARD])
 
     def test_gold(self):
-        """Play an Noble Brigand with a gold"""
-        self.vic.deck.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        """Play a Noble Brigand with a gold"""
+        self.vic.piles[Piles.DECK].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.vic.discardpile.size(), 1)
-        self.assertIn("Silver", self.vic.discardpile)
-        self.assertNotIn("Gold", self.vic.discardpile)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 1)
+        self.assertIn("Silver", self.vic.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Gold", self.g.trashpile)
 
 
