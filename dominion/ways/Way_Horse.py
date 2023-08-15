@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -20,12 +18,12 @@ class Way_Horse(Way.Way):
 
     def special_way(self, game, player, card):
         game[card.name].add(card)
-        player.hand.remove(card)
+        player.piles[Piles.HAND].remove(card)
         return {"discard": False}
 
 
 ###############################################################################
-class Test_Horse(unittest.TestCase):
+class TestHorse(unittest.TestCase):
     """Test Way of the Horse"""
 
     def setUp(self):
@@ -42,13 +40,13 @@ class Test_Horse(unittest.TestCase):
 
     def test_play(self):
         """Perform a Horse"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
         self.assertEqual(len(self.g["Moat"]), 10)
-        self.assertNotIn("Moat", self.plr.hand)
-        self.assertNotIn("Moat", self.plr.discardpile)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################
