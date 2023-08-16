@@ -8,3 +8,4 @@ pytest-xdist
 python-coveralls
 flake8
 black
+pre_commit
