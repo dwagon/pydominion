@@ -4,7 +4,8 @@ setuptools~=68.0.0
 pylint
 pytest>=4.4.0
 pytest-cov
+pytest-xdist
 python-coveralls
-py-cpuinfo
 flake8
 black
+pre_commit
