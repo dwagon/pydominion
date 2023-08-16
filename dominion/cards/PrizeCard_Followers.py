@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -31,22 +30,22 @@ class Card_Followers(Card.Card):
 
 
 ###############################################################################
-class Test_Followers(unittest.TestCase):
+class TestFollowers(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Followers"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
-        self.victim.hand.set("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Copper", "Silver", "Gold")
         self.victim.test_input = ["silver", "gold", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertEqual(self.victim.hand.size(), 3)
-        self.assertIn("Estate", self.plr.discardpile)
-        self.assertIn("Curse", self.victim.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
 
 ###############################################################################

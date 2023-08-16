@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -44,11 +44,11 @@ class Test_Pixie(unittest.TestCase):
 
     def test_play_keep(self):
         """Play a Pixie"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard The"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
     def test_trash(self):
         """Play a Pixie and trash it"""
@@ -56,12 +56,12 @@ class Test_Pixie(unittest.TestCase):
             if b.name == "The Mountain's Gift":
                 self.g.boons = [b]
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash"]
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.plr.discardpile.size(), 2)
-            for c in self.plr.discardpile:
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+            for c in self.plr.piles[Piles.DISCARD]:
                 self.assertEqual(c.name, "Silver")
         except AssertionError:  # pragma: no cover
             self.g.print_state()

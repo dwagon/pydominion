@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Hornofplenty(Card.Card):
 
     def special(self, game, player):
         cards = set()
-        for c in player.played:
+        for c in player.piles[Piles.PLAYED]:
             cards.add(c.name)
 
         card = player.plr_gain_card(
@@ -41,32 +41,32 @@ class Test_Hornofplenty(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Horn of Plenty"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Horn of Plenty"""
-        self.plr.played.set("Copper", "Silver", "Silver")
+        self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Silver")
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Horn of Plenty", self.plr.played)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Horn of Plenty", self.plr.piles[Piles.PLAYED])
 
     def test_play_victory(self):
         """Horn of Plenty - gaining a victory card"""
-        self.plr.played.set("Copper", "Silver", "Gold", "Moat")
+        self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Gold", "Moat")
         self.plr.test_input = ["Get Duchy"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertNotIn("Horn of Plenty", self.plr.played)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Horn of Plenty", self.plr.piles[Piles.PLAYED])
         self.assertIn("Horn of Plenty", self.g.trashpile)
 
     def test_play_nothing(self):
         """Horn of Plenty - gaining nothing"""
-        self.plr.played.set("Copper", "Silver", "Gold", "Moat")
+        self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Gold", "Moat")
         self.plr.test_input = ["finish selecting"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Duchy", self.plr.discardpile)
-        self.assertIn("Horn of Plenty", self.plr.played)
+        self.assertNotIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Horn of Plenty", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Horn of Plenty", self.g.trashpile)
 
 

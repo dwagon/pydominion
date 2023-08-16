@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -44,7 +44,7 @@ class Test_SprawlingCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["Sprawling Castle"], 4)
 
     def test_gain_duchy(self):
@@ -55,9 +55,9 @@ class Test_SprawlingCastle(unittest.TestCase):
                 break
         self.plr.test_input = ["duchy"]
         self.plr.gain_card("Castles")
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertNotIn("Estate", self.plr.discardpile)
-        self.assertEqual(self.plr.discardpile.size(), 1 + 1)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Estate", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1 + 1)
 
     def test_gain_estate(self):
         """Gain estates through Sprawling Castle"""
@@ -67,10 +67,10 @@ class Test_SprawlingCastle(unittest.TestCase):
                 break
         self.plr.test_input = ["estates"]
         self.plr.gain_card("Castles")
-        self.assertNotIn("Duchy", self.plr.discardpile)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertNotIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.g.print_state()
-        self.assertEqual(self.plr.discardpile.size(), 3 + 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3 + 1)
 
 
 ###############################################################################

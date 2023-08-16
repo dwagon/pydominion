@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -23,7 +23,7 @@ class Card_Conspirator(Card.Card):
             player.add_actions(1)
 
     def numActionsPlayed(self, player):
-        return sum([1 for _ in player.played if _.isAction()])
+        return sum([1 for _ in player.piles[Piles.PLAYED] if _.isAction()])
 
 
 ###############################################################################
@@ -33,22 +33,22 @@ class Test_Conspirator(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Conspirator"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the conspirator with not enough actions"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
     def test_actions(self):
         """Play the conspirator with enough actions"""
-        self.plr.played.set("Witch", "Witch", "Witch")
+        self.plr.piles[Piles.PLAYED].set("Witch", "Witch", "Witch")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 class Card_Talisman(Card.Card):
@@ -33,7 +32,7 @@ class Test_Talisman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Talisman"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.card)
@@ -42,24 +41,24 @@ class Test_Talisman(unittest.TestCase):
     def test_buy(self):
         self.plr.play_card(self.card)
         self.plr.buy_card(self.g["Copper"])
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Copper")
 
     def test_tooexpensive(self):
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
         self.plr.buy_card(self.g["Gold"])
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Gold")
 
     def test_victory(self):
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
         self.plr.buy_card(self.g["Duchy"])
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Duchy")
 
 

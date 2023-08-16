@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -42,30 +42,30 @@ class Test_Storeroom(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Store Room"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a store room"""
         self.plr.test_input = ["0", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
     def test_discardonce(self):
         """Storeroom: Only discard during the first discard phase"""
         self.plr.test_input = ["1", "0", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 - 1 + 1)
-        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1 + 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
 
     def test_discardtwice(self):
         """Storeroom: Discard during the both discard phases"""
         self.plr.test_input = ["1", "0", "1", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 - 1)
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 - 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
 

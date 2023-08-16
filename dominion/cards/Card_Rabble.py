@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -51,21 +51,21 @@ class Test_Rabble(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.rabble = self.g["Rabble"].remove()
         self.moat = self.g["Moat"].remove()
-        self.attacker.add_card(self.rabble, "hand")
+        self.attacker.add_card(self.rabble, Piles.HAND)
 
     def test_defended(self):
-        self.victim.add_card(self.moat, "hand")
+        self.victim.add_card(self.moat, Piles.HAND)
         self.attacker.play_card(self.rabble)
-        self.assertEqual(self.victim.hand.size(), 6)  # 5 + moat
-        self.assertEqual(self.attacker.hand.size(), 5 + 3)
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)  # 5 + moat
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 3)
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
     def test_nodefense(self):
-        self.victim.deck.set("Copper", "Estate", "Rabble")
+        self.victim.piles[Piles.DECK].set("Copper", "Estate", "Rabble")
         self.attacker.play_card(self.rabble)
-        self.assertEqual(self.victim.deck[-1].name, "Estate")
-        self.assertEqual(self.victim.discardpile.size(), 2)
-        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertEqual(self.victim.piles[Piles.DECK][-1].name, "Estate")
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 3)
 
 
 ###############################################################################

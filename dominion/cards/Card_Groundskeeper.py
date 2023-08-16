@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,10 +34,10 @@ class Test_Groundskeeper(unittest.TestCase):
 
     def test_play(self):
         """Play a Groundskeeper"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.plr.coins.set(5)
         self.plr.buy_card(self.g["Duchy"])
         self.assertEqual(self.plr.score["Groundskeeper"], 1)

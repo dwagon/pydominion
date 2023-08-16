@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -16,7 +16,7 @@ class Card_Stables(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        treasures = [c for c in player.hand if c.isTreasure()]
+        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
         tr = player.plr_discard_cards(
             cardsrc=treasures, prompt="Discard a card and get +3 Cards +1 Action"
         )
@@ -35,13 +35,13 @@ class Test_Stables(unittest.TestCase):
 
     def test_play(self):
         """Play duchess - keep on deck"""
-        self.plr.hand.set("Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

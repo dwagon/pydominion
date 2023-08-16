@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Card
 from dominion.cards.Card_Knight import KnightCard
 
@@ -43,7 +43,7 @@ class Test_Sir_Vander(unittest.TestCase):
 
     def test_score(self):
         """Play the Sir"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
 
 

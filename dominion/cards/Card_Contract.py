@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Contract """
 
 import unittest
-from dominion import Card, Game, PlayArea
+from dominion import Card, Game, Piles, PlayArea
 
 
 ###############################################################################
@@ -28,19 +28,19 @@ class Card_Contract(Card.Card):
         player.favors.add(1)
 
     def hook_pre_buy(self, game, player):
-        acts = [_ for _ in player.hand if _.isAction()]
+        acts = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not acts:
             return
         card = player.card_sel(cardsrc=acts, prompt="Contract: Set aside an action to play next turn")
         self._contract_reserve.add(card[0])
-        player.hand.remove(card[0])
+        player.piles[Piles.HAND].remove(card[0])
         player.secret_count += 1
 
     def duration(self, game, player):
         for card in self._contract_reserve:
             player.output(f"Removing {card.name} from Contract")
             self._contract_reserve.remove(card)
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player.secret_count -= 1
             player.play_card(card)
 
@@ -61,8 +61,8 @@ class Test_Contract(unittest.TestCase):
     def test_play_card(self):
         """Play the card"""
         moat = self.g["Moat"].remove()
-        self.plr.add_card(moat, "hand")
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(moat, Piles.HAND)
+        self.plr.add_card(self.card, Piles.HAND)
         favs = self.plr.favors.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), favs + 1)
@@ -71,8 +71,8 @@ class Test_Contract(unittest.TestCase):
         self.plr.buy_phase()
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIn("Moat", self.plr.played)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)  # Hand + Moat
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)  # Hand + Moat
 
 
 ###############################################################################

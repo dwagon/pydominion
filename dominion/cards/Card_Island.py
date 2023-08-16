@@ -3,7 +3,7 @@
 import unittest
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -27,9 +27,9 @@ class Card_Island(Card.Card):
             card = c[0]
             player.island_reserve.add(card)
             player.end_of_game_cards.append(card)
-            player.hand.remove(card)
+            player.piles[Piles.HAND].remove(card)
             player.secret_count += 1
-        player.played.remove(self)
+        player.piles[Piles.PLAYED].remove(self)
         player.end_of_game_cards.append(self)
         player.island_reserve.add(self)
         player.secret_count += 1
@@ -51,34 +51,34 @@ class Test_Island(unittest.TestCase):
 
     def test_play_province(self):
         """Play an island on a province"""
-        self.plr.hand.set("Silver", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["province"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Island", self.plr.played)
-        self.assertNotIn("Island", self.plr.hand)
-        self.assertNotIn("Island", self.plr.discardpile)
-        self.assertNotIn("Province", self.plr.hand)
-        self.assertNotIn("Province", self.plr.discardpile)
+        self.assertNotIn("Island", self.plr.piles[Piles.PLAYED])
+        self.assertNotIn("Island", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Island", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Province", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.secret_count, 2)
         self.plr.game_over()
-        self.assertIn("Island", self.plr.discardpile)
-        self.assertIn("Province", self.plr.discardpile)
+        self.assertIn("Island", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
         self.assertEqual(score["Province"], 6)
 
     def test_play_alone(self):
         """Play a island but don't pick another card"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Island", self.plr.played)
-        self.assertNotIn("Island", self.plr.hand)
-        self.assertNotIn("Island", self.plr.discardpile)
+        self.assertNotIn("Island", self.plr.piles[Piles.PLAYED])
+        self.assertNotIn("Island", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Island", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.secret_count, 1)
         self.plr.game_over()
-        self.assertIn("Island", self.plr.discardpile)
+        self.assertIn("Island", self.plr.piles[Piles.DISCARD])
         score = self.plr.get_score_details()
         self.assertEqual(score["Island"], 2)
 

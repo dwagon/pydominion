@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -22,7 +22,7 @@ class Card_SmallCastle(CastleCard):
         self.victory = 2
 
     def special(self, game, player):
-        cards = [c for c in player.hand if c.isCastle()] + [self]
+        cards = [c for c in player.piles[Piles.HAND] if c.isCastle()] + [self]
         tr = player.plr_trash_card(prompt="Trash a Castle to gain another Castle", cardsrc=cards)
         if tr:
             newcast = player.gain_card("Castles")
@@ -43,14 +43,14 @@ class Test_SmallCastle(unittest.TestCase):
     def test_play(self):
         """Play a castle - trash nothing"""
         self.plr.test_input = ["Finish"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Small Castle"], 2)
 
     def test_trash(self):
         """Play a castle - trash self"""
         self.plr.test_input = ["small"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Ambassador(Card.Card):
         while True:
             choice = player.card_sel(
                 num=2,
-                cardsrc="hand",
+                cardsrc=Piles.HAND,
                 prompt="Return up to 2 copies of this card to the Supply - Other players gain a copy of it",
             )
             if len(choice) == 2:
@@ -58,21 +58,21 @@ class Test_Ambassador(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.hand.set("Gold", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Duchy", "finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.vic.discardpile)
-        self.assertNotIn("Duchy", self.plr.hand)
+        self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
+        self.assertNotIn("Duchy", self.plr.piles[Piles.HAND])
 
     def test_discard_two(self):
         """Play the card  and discard two"""
-        self.plr.hand.set("Duchy", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.vic.discardpile)
-        self.assertNotIn("Duchy", self.plr.hand)
+        self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
+        self.assertNotIn("Duchy", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

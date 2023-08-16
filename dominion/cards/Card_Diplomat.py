@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Diplomat"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -22,12 +22,12 @@ class Card_Diplomat(Card.Card):
 
     def special(self, game, player):
         """If you have 5 or fewer cards in hand (after drawing), +2 Actions."""
-        if player.hand.size() <= 5:
+        if player.piles[Piles.HAND].size() <= 5:
             player.add_actions(2)
 
     def hook_underAttack(self, game, player, attacker):
         """Reaction"""
-        if player.hand.size() < 5:
+        if player.piles[Piles.HAND].size() < 5:
             return
         react = player.plr_choose_options(
             "Reveal Diplomat to draw 2 cards then discard 3",
@@ -35,7 +35,7 @@ class Card_Diplomat(Card.Card):
             ("Don't do anything", False),
         )
         if react:
-            diplo = player.hand["Diplomat"]
+            diplo = player.piles[Piles.HAND]["Diplomat"]
             player.reveal_card(diplo)
             player.pickup_cards(2)
             player.plr_discard_cards(num=3)
@@ -53,26 +53,26 @@ class Test_Diplomat(unittest.TestCase):
 
     def test_play_small(self):
         """Play the Diplomat with a small hand"""
-        self.plr.hand.set("Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_play_big(self):
         """Play the Diplomat with a big hand"""
-        self.plr.hand.set("Estate", "Copper", "Duchy", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper", "Duchy", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 4 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4 + 2)
         self.assertEqual(self.plr.actions.get(), 0)
 
     def test_react(self):
         """React to an attack"""
-        self.plr.hand.set("Gold", "Silver", "Province", "Duchy", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Province", "Duchy", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         militia = self.g["Militia"].remove()
-        self.att.add_card(militia, "hand")
+        self.att.add_card(militia, Piles.HAND)
         self.plr.test_input = [
             "Reveal",
             "Discard Gold",  # Diplomat actions
@@ -84,8 +84,8 @@ class Test_Diplomat(unittest.TestCase):
             "Finish",
         ]
         self.att.play_card(militia)
-        self.assertEqual(self.plr.hand.size(), 3)
-        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
 
 
 ###############################################################################

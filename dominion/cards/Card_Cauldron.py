@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Cauldron"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -50,7 +50,7 @@ class Test_Cauldron(unittest.TestCase):
         """Play the Cauldron"""
         for _ in range(3):
             self.plr.gain_card("Moat")
-        self.assertIn("Curse", self.oth.discardpile)
+        self.assertIn("Curse", self.oth.piles[Piles.DISCARD])
 
 
 ###############################################################################

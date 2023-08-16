@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,10 +36,10 @@ class Test_Marauder(unittest.TestCase):
 
     def test_play(self):
         """Play a marauder"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Spoils", self.plr.discardpile)
-        self.assertTrue(self.victim.discardpile[0].isRuin())
+        self.assertIn("Spoils", self.plr.piles[Piles.DISCARD])
+        self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
 
 ###############################################################################

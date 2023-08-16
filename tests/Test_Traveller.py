@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -19,22 +19,22 @@ class Test_replace_traveller(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Page"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_replace(self):
         """Replace a traveller"""
         self.plr.test_input = ["replace"]
         self.plr.play_card(self.card)
         self.plr.replace_traveller(self.card, "Treasure Hunter")
-        self.assertNotIn("Page", self.plr.hand)
-        self.assertIn("Treasure Hunter", self.plr.hand)
+        self.assertNotIn("Page", self.plr.piles[Piles.HAND])
+        self.assertIn("Treasure Hunter", self.plr.piles[Piles.HAND])
 
     def test_dont_replace(self):
         """Choose not to replace a traveller"""
         self.plr.test_input = ["keep"]
         self.plr.replace_traveller(self.card, "Treasure Hunter")
-        self.assertIn("Page", self.plr.hand)
-        self.assertNotIn("Treasure Hunter", self.plr.hand)
+        self.assertIn("Page", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Treasure Hunter", self.plr.piles[Piles.HAND])
 
     def test_replacement_not_available(self):
         """Try and replace a traveller when the replacement isn't available"""
@@ -45,8 +45,8 @@ class Test_replace_traveller(unittest.TestCase):
         """Try and replace a traveller when it hasn't been played"""
         self.plr.test_input = ["replace"]
         self.plr.replace_traveller(self.card, "Treasure Hunter")
-        self.assertIn("Page", self.plr.hand)
-        self.assertNotIn("Treasure Hunter", self.plr.hand)
+        self.assertIn("Page", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Treasure Hunter", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

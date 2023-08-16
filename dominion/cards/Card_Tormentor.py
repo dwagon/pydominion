@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Tormentor(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        if player.played.size() == 1:  # Include this card
+        if player.piles[Piles.PLAYED].size() == 1:  # Include this card
             player.gain_card("Imp")
             player.output("Gained an Imp")
         else:
@@ -43,17 +43,17 @@ class Test_Tormentor(unittest.TestCase):
 
     def test_play_imp(self):
         """Play tormentor with no other cards being played"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Imp", self.plr.discardpile)
+        self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
 
     def test_play_hex(self):
         """Play tormentor with other cards already being played"""
-        self.plr.played.set("Tormentor")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.PLAYED].set("Tormentor")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertNotIn("Imp", self.plr.discardpile)
+        self.assertNotIn("Imp", self.plr.piles[Piles.DISCARD])
         self.assertTrue(self.vic.has_state("Deluded"))
 
 

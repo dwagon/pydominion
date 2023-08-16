@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -41,17 +41,17 @@ class Test_Wanderingminstrel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wandering Minstrel"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Wandering Minstrel"""
-        self.plr.deck.set("Duchy", "Moat", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Moat", "Silver", "Gold")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.assertIn("Moat", self.plr.deck)
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.assertIn("Moat", self.plr.piles[Piles.DECK])
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

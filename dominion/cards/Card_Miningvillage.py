@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,24 +37,24 @@ class Test_Miningvillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mining Village"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Mining Village"""
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertNotIn("Mining Village", self.g.trashpile)
-        self.assertEqual(self.plr.played[-1].name, "Mining Village")
+        self.assertEqual(self.plr.piles[Piles.PLAYED][-1].name, "Mining Village")
 
     def test_trash(self):
         """Trash the mining village"""
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.assertTrue(self.plr.played.is_empty())
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertIn("Mining Village", self.g.trashpile)

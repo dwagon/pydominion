@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Test_Ride(unittest.TestCase):
         """Use Ride"""
         self.plr.coins.add(2)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Horse"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Horse"])
 
 
 ###############################################################################

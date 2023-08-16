@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -35,13 +35,13 @@ class Test_Town(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Town"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card_actions(self):
         """Play the card and card + actions"""
         self.plr.test_input = ["card"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 1 + 1)
 
     def test_play_buy_cash(self):

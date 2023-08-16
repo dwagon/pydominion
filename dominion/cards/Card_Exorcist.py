@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -22,7 +22,7 @@ class Card_Exorcist(Card.Card):
         ]
 
     def night(self, game, player):
-        if player.hand.is_empty():
+        if player.piles[Piles.HAND].is_empty():
             player.output("No cards to trash")
             return
         trashed = player.plr_trash_card(prompt="Trash a card and gain a cheaper spirit")
@@ -54,11 +54,11 @@ class Test_Exorcist(unittest.TestCase):
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT
-        self.plr.hand.set("Silver", "Gold", "Province")
+        self.plr.piles[Piles.HAND].set("Silver", "Gold", "Province")
         self.plr.test_input = ["Silver", "Imp"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Imp", self.plr.discardpile)
+        self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.g.trashpile)
         self.g.print_state()
 

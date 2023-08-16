@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,13 +32,13 @@ class Test_Soothsayer(unittest.TestCase):
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Soothsayer"].remove()
-        self.attacker.add_card(self.wcard, "hand")
+        self.attacker.add_card(self.wcard, Piles.HAND)
 
     def test_play(self):
         self.attacker.play_card(self.wcard)
-        self.assertEqual(self.victim.hand.size(), 6)
-        self.assertIn("Curse", self.victim.discardpile)
-        self.assertIn("Gold", self.attacker.discardpile)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.attacker.piles[Piles.DISCARD])
 
 
 ###############################################################################

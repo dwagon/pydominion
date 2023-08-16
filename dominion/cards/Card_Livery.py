@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Livery """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Test_Livery(unittest.TestCase):
         self.plr = self.g.player_list(0)
         self.card = self.g["Livery"].remove()
         self.card.player = self.plr
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_cost0(self):
         """Play a livery and gain something worth 0"""
@@ -40,7 +40,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gain_card("Copper")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
-        self.assertNotIn("Horse", self.plr.discardpile)
+        self.assertNotIn("Horse", self.plr.piles[Piles.DISCARD])
 
     def test_playcard_cost6(self):
         """Play a livery and gain something worth 6"""
@@ -48,7 +48,7 @@ class Test_Livery(unittest.TestCase):
         self.plr.gain_card("Province")
         self.plr.test_input = ["end phase", "end phase"]
         self.plr.turn()
-        self.assertIn("Horse", self.plr.discardpile)
+        self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

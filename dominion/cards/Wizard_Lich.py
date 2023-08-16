@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ class Card_Lich(Card.Card):
     def hook_trashThisCard(self, game, player):
         """Discard rather than trash"""
         player.add_card(self, "discard")
-        player.hand.remove(self)
+        player.piles[Piles.HAND].remove(self)
         intrash = [_ for _ in game.trashpile if _.cost < self.cost]
         if intrash:
             crd = player.plr_pick_card(cardsrc=intrash, force=True, num=1)
@@ -50,25 +50,25 @@ class Test_Lich(unittest.TestCase):
 
     def test_play(self):
         """Play a lich"""
-        hndsz = self.plr.hand.size()
-        self.plr.add_card(self.card, "hand")
-        self.plr.discardpile.set("Estate", "Duchy", "Province", "Silver", "Gold")
+        hndsz = self.plr.piles[Piles.HAND].size()
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DISCARD].set("Estate", "Duchy", "Province", "Silver", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertEqual(self.plr.hand.size(), hndsz + 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_trash(self):
         """Trash the lich"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Silver"]
         self.g.trashpile.set("Silver")
         self.plr.trash_card(self.card)
         self.g.print_state()
         self.assertNotIn("Lich", self.g.trashpile)
         self.assertNotIn("Silver", self.g.trashpile)
-        self.assertIn("Lich", self.plr.discardpile)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Lich", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

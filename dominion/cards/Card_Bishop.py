@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -53,17 +53,17 @@ class Card_Bishop(Card.Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Trash an estate, then a copper else nothing
-    es = player.hand["estate"]
+    es = player.piles[Piles.HAND]["estate"]
     if es:
         return [es]
-    cu = player.hand["copper"]
+    cu = player.piles[Piles.HAND]["copper"]
     if cu:
         return [cu]
     return []
 
 
 ###############################################################################
-class Test_Bishop(unittest.TestCase):
+class TestBishop(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Bishop"])
         self.g.start_game()
@@ -71,33 +71,33 @@ class Test_Bishop(unittest.TestCase):
         self.bishop = self.g["Bishop"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.bishop, "hand")
+        self.plr.add_card(self.bishop, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.other.test_input = ["finish"]
         self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_trash(self):
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.bishop, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.bishop, Piles.HAND)
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["finish"]
         self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.score["bishop"], 3)
-        self.assertTrue(self.plr.hand.is_empty())
+        self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
         self.assertIn("Gold", self.g.trashpile)
 
     def test_bothtrash(self):
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Gold")
-        self.other.hand.set("Province")
-        self.plr.add_card(self.bishop, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.other.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.bishop, Piles.HAND)
         self.plr.test_input = ["trash gold"]
         self.other.test_input = ["trash province"]
         self.plr.play_card(self.bishop)
         self.assertEqual(self.plr.score["bishop"], 3)
-        self.assertTrue(self.plr.hand.is_empty())
-        self.assertTrue(self.other.hand.is_empty())
+        self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
+        self.assertTrue(self.other.piles[Piles.HAND].is_empty())
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
 
 

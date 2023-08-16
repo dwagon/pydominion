@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Architects%27_Guild"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -42,7 +42,7 @@ class Test_Architects_Guild(unittest.TestCase):
         self.plr.favors.set(2)
         self.plr.test_input = ["Get Silver"]
         self.plr.gain_card("Gold")
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 0)
 
 

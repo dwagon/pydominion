@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -28,7 +28,7 @@ class Test_RuinedMarket(unittest.TestCase):
             self.card = self.g["Ruins"].remove()
             if self.card.name == "Ruined Market":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a ruined market"""

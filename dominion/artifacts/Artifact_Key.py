@@ -2,7 +2,7 @@
 
 import unittest
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Artifact
 
 

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Displace """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -40,12 +40,12 @@ class Test_Displace(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.hand.set("Copper", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Exile Copper", "Get Estate"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.exilepile)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertIn("Copper", self.plr.piles[Piles.EXILE])
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

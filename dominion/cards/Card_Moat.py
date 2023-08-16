@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -24,12 +24,12 @@ class Test_Moat(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Moat"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a moat"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
 
 ###############################################################################

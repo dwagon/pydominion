@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,7 +33,7 @@ class Card_ScryingPool(Card.Card):
             if not top_card.isAction():
                 break
         for card in revealed:
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
 
 
 ###############################################################################
@@ -66,21 +66,21 @@ class TestScryingPool(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Scrying Pool"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play a scrying pool"""
-        self.plr.deck.set("Silver", "Province", "Moat", "Gold")
-        self.vic.deck.set("Duchy")
+        self.plr.piles[Piles.DECK].set("Silver", "Province", "Moat", "Gold")
+        self.vic.piles[Piles.DECK].set("Duchy")
         self.plr.test_input = ["discard", "discard", "putback"]
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Duchy", self.vic.discardpile)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Moat", self.plr.hand)
-        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

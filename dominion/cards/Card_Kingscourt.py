@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Kingscourt(Card.Card):
 
     def special(self, game, player):
         """You may chose an Action card in your hand. Play it three times"""
-        actions = [_ for _ in player.hand if _.isAction()]
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No action cards to repeat")
             return
@@ -31,7 +31,7 @@ class Card_Kingscourt(Card.Card):
         o = player.user_input(options, "Play which action card three times?")
         if not o["card"]:
             return
-        player.hand.remove(o["card"])
+        player.piles[Piles.HAND].remove(o["card"])
         for i in range(1, 4):
             player.output("Number %d play of %s" % (i, o["card"].name))
             player.card_benefits(o["card"])
@@ -47,40 +47,40 @@ class Test_Kingscourt(unittest.TestCase):
         self.card = self.g["King's Court"].remove()
 
     def test_play(self):
-        self.plr.deck.set("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
-        self.plr.hand.set("Moat", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Gold", "Gold", "Duchy", "Duchy")
+        self.plr.piles[Piles.HAND].set("Moat", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["play moat"]
         self.plr.play_card(self.card)
         # (moat + 2) * 3 + estate
-        self.assertEqual(self.plr.hand.size(), 2 * 3 + 1)
-        self.assertEqual(self.plr.played.size(), 2)
-        for c in self.plr.played:
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 * 3 + 1)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 2)
+        for c in self.plr.piles[Piles.PLAYED]:
             if c.name == "Moat":
                 break
         else:  # pragma: no cover
             self.fail("Didn't put moat in played")
-        for c in self.plr.played:
+        for c in self.plr.piles[Piles.PLAYED]:
             if c.name == "King's Court":
                 break
         else:  # pragma: no cover
             self.fail("Didn't put moat in played")
 
     def test_noactions(self):
-        self.plr.hand.set("Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.played.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
     def test_picked_nothing(self):
         """Selected no actions with Kings court"""
-        self.plr.hand.set("Estate", "Estate", "Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["don't play"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.played.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
 
 ###############################################################################

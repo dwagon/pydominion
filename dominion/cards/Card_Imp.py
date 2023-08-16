@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -21,12 +21,12 @@ class Card_Imp(Card.Card):
 
     def special(self, game, player):
         # Get action cards in hand
-        ac = [_ for _ in player.hand if _.isAction()]
+        ac = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not ac:
             player.output("No action cards")
             return
         # Select ones that haven't been played
-        sac = [_ for _ in ac if _.name not in player.played]
+        sac = [_ for _ in ac if _.name not in player.piles[Piles.PLAYED]]
         if not sac:
             player.output("No unplayed action cards")
             return
@@ -51,18 +51,18 @@ class Test_Imp(unittest.TestCase):
         self.card = self.g["Imp"].remove()
 
     def test_played(self):
-        self.plr.hand.set("Moat", "Copper")
-        self.plr.add_card(self.card, "hand")
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2)
 
     def test_not_played(self):
-        self.plr.hand.set("Moat", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 2 + 1)  # 2 for moat, 2 for imp, 1 for hand
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 2 + 1)  # 2 for moat, 2 for imp, 1 for hand
 
 
 ###############################################################################

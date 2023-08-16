@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -36,30 +36,30 @@ class Test_Remodel(unittest.TestCase):
 
     def test_nothing(self):
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.rcard, "hand")
+        self.plr.add_card(self.rcard, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
     def test_trash_gainnothing(self):
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.rcard, "hand")
+        self.plr.add_card(self.rcard, Piles.HAND)
         self.plr.test_input = ["1", "0"]
         self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
 
     def test_trash_gainsomething(self):
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.rcard, "hand")
+        self.plr.add_card(self.rcard, Piles.HAND)
         self.plr.test_input = ["1", "1"]
         self.plr.play_card(self.rcard)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
 
 
 ###############################################################################

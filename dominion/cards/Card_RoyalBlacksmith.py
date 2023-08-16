@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_RoyalBlacksmith(Card.Card):
 
     def special(self, game, player):
         count = 0
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
             if card.name == "Copper":
                 player.discard_card(card)
@@ -36,13 +36,13 @@ class Test_RoyalBlacksmith(unittest.TestCase):
 
     def test_play(self):
         """Play an Royal Blacksmith"""
-        self.plr.deck.set("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
-        self.plr.hand.set("Copper", "Silver", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Silver", "Province", "Estate", "Copper", "Gold", "Silver")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3 - 2 + 5)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertNotIn("Copper", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3 - 2 + 5)
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

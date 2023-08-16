@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -33,16 +32,16 @@ class Test_Silkroad(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.hand.set("Silk Road")
-        self.plr.deck.set("Copper")
-        self.plr.discardpile.set("Estate", "Estate", "Estate", "Estate")
+        self.plr.piles[Piles.HAND].set("Silk Road")
+        self.plr.piles[Piles.DECK].set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Estate", "Estate", "Estate", "Estate")
         self.assertEqual(self.plr.get_score_details()["Silk Road"], 1)
 
     def test_scoreTwo(self):
         """Score for having two silk roads worth two each"""
-        self.plr.hand.set("Silk Road", "Estate")
-        self.plr.deck.set("Estate", "Estate", "Silk Road")
-        self.plr.discardpile.set("Estate", "Estate", "Estate", "Estate", "Estate")
+        self.plr.piles[Piles.HAND].set("Silk Road", "Estate")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Silk Road")
+        self.plr.piles[Piles.DISCARD].set("Estate", "Estate", "Estate", "Estate", "Estate")
         self.assertEqual(self.plr.get_score_details()["Silk Road"], 2 + 2)
 
 

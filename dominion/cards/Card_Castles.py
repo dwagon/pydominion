@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 import dominion.CardPile as CardPile
 
@@ -39,8 +39,8 @@ class Test_Castle(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Castles"].remove()
-        self.plr.hand.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_castles(self):
         pass

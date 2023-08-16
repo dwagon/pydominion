@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Procession(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        action_cards = [_ for _ in player.hand if _.isAction() and not _.isDuration()]
+        action_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()]
         if not action_cards:
             player.output("No suitable action cards")
             return
@@ -46,13 +46,13 @@ class TestProcession(unittest.TestCase):
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.g.trashpile)
-        self.assertEqual(self.plr.hand.size(), 4)
-        self.assertIn("Witch", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
+        self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

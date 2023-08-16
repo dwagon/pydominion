@@ -2,7 +2,7 @@
 
 import unittest
 from enum import auto
-from dominion import Card, Game, CardPile
+from dominion import Card, Game, Piles, CardPile
 
 
 ###############################################################################

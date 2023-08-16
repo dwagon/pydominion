@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,7 +33,7 @@ class Card_Wishingwell(Card.Card):
         player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")
-            player.add_card(c, "hand")
+            player.add_card(c, Piles.HAND)
         else:
             player.output("You chose poorly - it was a %s" % c.name)
             player.add_card(c, "topdeck")
@@ -50,29 +50,29 @@ class Test_Wishingwell(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wishing Well"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """No guess still gets a card and action"""
         self.plr.test_input = ["no guess"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_good(self):
         """A good guess means the card ends up in the hand"""
-        self.plr.deck.set("Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Silver", "Copper")
         self.plr.test_input = ["Silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
 
     def test_bad(self):
         """Guessing badly should result in the card staying on the deck"""
-        self.plr.deck.set("Province", "Copper")
+        self.plr.piles[Piles.DECK].set("Province", "Copper")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Gold", self.plr.hand)
-        self.assertNotIn("Province", self.plr.hand)
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Province", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

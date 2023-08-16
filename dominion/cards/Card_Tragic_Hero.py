@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Tragic_Hero(Card.Card):
         self.buys = 1
 
     def special(self, game, player):
-        if player.hand.size() >= 8:
+        if player.piles[Piles.HAND].size() >= 8:
             player.trash_card(self)
             player.plr_gain_card(cost=None, types={Card.CardType.TREASURE: True})
 
@@ -35,18 +35,18 @@ class Test_Tragic_Hero(unittest.TestCase):
 
     def test_play(self):
         """Play a Tragic Hero with less than 8 cards"""
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
-        self.assertEqual(self.plr.hand.size(), 1 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 3)
 
     def test_gainsomething(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

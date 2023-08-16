@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -26,7 +26,7 @@ class Card_Seer(Card.Card):
             player.reveal_card(c)
             if c.cost in (2, 3, 4) and not c.potcost and not c.debtcost:
                 player.output(f"Putting {c} into your hand")
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
             else:
                 drawn.append(c)
         for card in drawn:
@@ -43,16 +43,16 @@ class Test_Seer(unittest.TestCase):
         self.card = self.g["Seer"].remove()
 
     def test_play(self):
-        self.plr.deck.set("Copper", "Silver", "Estate", "Province")
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Estate", "Province")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Copper", self.plr.deck)
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Silver", self.plr.hand)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.DECK])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Hex_War(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        count = player.discardpile.size() + player.deck.size()
+        count = player.piles[Piles.DISCARD].size() + player.piles[Piles.DECK].size()
         while count:
             card = player.next_card()
             if not card:
@@ -48,10 +48,10 @@ class Test_War(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_war(self):
-        tsize = self.g.trashpile.size()
-        self.plr.deck.set("Duchy", "Cursed Village", "Silver")
+        trash_size = self.g.trashpile.size()
+        self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Silver")
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), trash_size + 1)
         self.assertIn("Silver", self.g.trashpile)
 
 

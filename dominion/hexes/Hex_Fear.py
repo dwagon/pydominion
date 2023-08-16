@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -15,9 +15,9 @@ class Hex_Fear(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.hand.size() < 5:
+        if player.piles[Piles.HAND].size() < 5:
             return
-        tanda = [_ for _ in player.hand if _.isAction() or _.isTreasure()]
+        tanda = [_ for _ in player.piles[Piles.HAND] if _.isAction() or _.isTreasure()]
         player.plr_discard_cards(num=1, cardsrc=tanda, prompt="Discard an Action or a Treasure")
 
 
@@ -38,16 +38,16 @@ class Test_Fear(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_empty_war(self):
-        self.plr.hand.set("Estate", "Duchy", "Province", "Gold")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Province", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.plr.discardpile.size(), 1)  # The Cursed Village
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)  # The Cursed Village
 
     def test_war(self):
-        self.plr.hand.set("Estate", "Duchy", "Estate", "Duchy", "Copper")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Estate", "Duchy", "Copper")
         self.plr.test_input = ["Copper"]
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
 
 
 ###############################################################################

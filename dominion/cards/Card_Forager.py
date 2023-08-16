@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -40,8 +40,8 @@ class Test_Forager(unittest.TestCase):
         """Play a forager"""
         self.plr.trash_card(self.g["Copper"].remove())
         self.plr.trash_card(self.g["Silver"].remove())
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)

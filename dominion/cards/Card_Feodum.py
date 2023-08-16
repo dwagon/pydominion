@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,24 +38,24 @@ class Test_Feodum(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_scoreOne(self):
-        self.plr.hand.set("Feodum")
-        self.plr.deck.set("Copper")
-        self.plr.discardpile.set("Silver", "Silver", "Silver", "Silver")
+        self.plr.piles[Piles.HAND].set("Feodum")
+        self.plr.piles[Piles.DECK].set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Silver", "Silver", "Silver", "Silver")
         self.assertEqual(self.plr.get_score_details()["Feodum"], 1)
 
     def test_scoreTwo(self):
-        self.plr.hand.set("Feodum")
-        self.plr.deck.set("Feodum")
-        self.plr.discardpile.set("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
+        self.plr.piles[Piles.HAND].set("Feodum")
+        self.plr.piles[Piles.DECK].set("Feodum")
+        self.plr.piles[Piles.DISCARD].set("Silver", "Silver", "Silver", "Silver", "Silver", "Silver")
         self.assertEqual(self.plr.get_score_details()["Feodum"], 4)
 
     def test_trash(self):
         """Trash a Feodum card"""
         card = self.g["Feodum"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.trash_card(card)
-        self.assertEqual(self.plr.discardpile.size(), 3)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Silver")
 
 

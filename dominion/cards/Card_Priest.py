@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,11 +37,11 @@ class Test_Priest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Priest"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.moat = self.g["Moat"].remove()
-        self.plr.add_card(self.moat, "hand")
+        self.plr.add_card(self.moat, Piles.HAND)
         self.gold = self.g["Gold"].remove()
-        self.plr.add_card(self.gold, "hand")
+        self.plr.add_card(self.gold, Piles.HAND)
 
     def test_play_card(self):
         self.plr.test_input = ["Trash Moat"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ class Test_Tomb(unittest.TestCase):
 
     def test_trash(self):
         """Test Tomb"""
-        cu = self.plr.hand["Copper"]
+        cu = self.plr.piles[Piles.HAND]["Copper"]
         self.plr.trash_card(cu)
         self.assertEqual(self.plr.get_score_details()["Tomb"], 1)
 

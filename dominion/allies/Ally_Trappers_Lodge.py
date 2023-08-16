@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Trappers%27_Lodge"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -41,21 +41,21 @@ class Test_Trappers_Lodge(unittest.TestCase):
 
     def test_gain_card(self):
         """Add to top deck"""
-        self.plr.deck.set("Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper")
         self.plr.favors.set(2)
         self.plr.test_input = ["Put on to deck"]
         self.plr.gain_card("Estate")
-        self.assertEqual(self.plr.deck.top_card().name, "Estate")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Estate")
         self.assertEqual(self.plr.favors.get(), 1)
 
     def test_keep(self):
         """Do nothing"""
-        self.plr.deck.set("Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper")
         self.plr.favors.set(2)
         self.plr.test_input = ["Do nothing"]
         self.plr.gain_card("Estate")
-        self.assertNotEqual(self.plr.deck.top_card().name, "Estate")
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertNotEqual(self.plr.piles[Piles.DECK].top_card().name, "Estate")
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 2)
 
 

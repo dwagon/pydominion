@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Den_of_Sin(Card.Card):
             player.pickup_card()
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": "hand"}
+        return {"destination": Piles.HAND}
 
 
 ###############################################################################
@@ -36,14 +36,14 @@ class Test_Den_of_Sin(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gain_card("Den of Sin")
-        self.assertIn("Den of Sin", self.plr.hand)
+        self.assertIn("Den of Sin", self.plr.piles[Piles.HAND])
 
     def test_duration(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

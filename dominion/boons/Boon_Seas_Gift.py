@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -32,10 +32,10 @@ class Test_Seas_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_seas_gift(self):
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
 
 
 ###############################################################################

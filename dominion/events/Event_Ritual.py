@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -33,12 +33,12 @@ class Test_Ritual(unittest.TestCase):
     def test_ritual(self):
         """Use Ritual"""
         self.plr.coins.add(4)
-        self.plr.hand.set("Gold")
+        self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["Gold"]
         self.plr.perform_event(self.event)
         self.assertEqual(self.plr.get_score_details()["Ritual"], 6)
         self.assertIn("Gold", self.g.trashpile)
-        self.assertIsNotNone(self.plr.discardpile["Curse"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
 
 
 ###############################################################################

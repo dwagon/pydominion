@@ -3,7 +3,7 @@
 
 import unittest
 from collections import Counter
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Card_Warlord(Card.Card):
         if not card.isAction():
             return {}
         cntr = Counter()
-        for crd in player.played:
+        for crd in player.piles[Piles.PLAYED]:
             cntr.update({crd.name: 1})
         print(f"DBG {cntr=}")
         if cntr[card.name] >= 2:
@@ -47,7 +47,7 @@ class Card_Warlord(Card.Card):
 
 
 ###############################################################################
-class Test_Warlord(unittest.TestCase):
+class TestWarlord(unittest.TestCase):
     """Test Warlord"""
 
     def setUp(self):
@@ -61,11 +61,11 @@ class Test_Warlord(unittest.TestCase):
             card = self.g["Clashes"].remove()
             if card.name == "Warlord":
                 break
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_others_playing(self):
         """Other players playing actions"""
@@ -73,11 +73,11 @@ class Test_Warlord(unittest.TestCase):
             card = self.g["Clashes"].remove()
             if card.name == "Warlord":
                 break
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         mil = self.g["Militia"].remove()
-        self.oth.add_card(mil, "hand")
-        self.oth.played.set("Militia", "Militia", "Copper")
+        self.oth.add_card(mil, Piles.HAND)
+        self.oth.piles[Piles.PLAYED].set("Militia", "Militia", "Copper")
         self.oth.play_card(mil)
         self.g.print_state()
 

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sailor"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -30,7 +30,7 @@ class Card_Sailor(Card.Card):
                 ("Play now", True),
             )
             if to_play:
-                player.move_card(card, "hand")
+                player.move_card(card, Piles.HAND)
                 player.output(f"Playing {card.name} from Sailor effect")
                 player.play_card(card, cost_action=False)
                 return {"dontadd": True}
@@ -51,33 +51,33 @@ class Test_Sailor(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sailor"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a sailor"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
         self.plr.gain_card("Guardian")
-        self.assertIn("Guardian", self.plr.durationpile)
-        self.assertIn("Sailor", self.plr.durationpile)
+        self.assertIn("Guardian", self.plr.piles[Piles.DURATION])
+        self.assertIn("Sailor", self.plr.piles[Piles.DURATION])
         self.plr.end_turn()
-        self.plr.hand.set("Gold", "Silver", "Copper")
-        self.plr.deck.set("Province")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Province")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
         self.g.print_state()
         self.assertEqual(self.plr.coins.get(), 3)  # 2 for sailor, 1 for guardian
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Guardian", self.plr.played)
-        self.assertIn("Sailor", self.plr.played)
+        self.assertIn("Guardian", self.plr.piles[Piles.PLAYED])
+        self.assertIn("Sailor", self.plr.piles[Piles.PLAYED])
 
     def test_play_no_duration(self):
         """Play a sailor but don't gain a duration card"""
         self.plr.play_card(self.card)
         self.plr.test_input = ["Play now"]
         self.plr.gain_card("Province")
-        self.assertIn("Province", self.plr.discardpile)
-        self.plr.hand.set("Gold", "Silver", "Copper")
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
+        self.plr.piles[Piles.HAND].set("Gold", "Silver", "Copper")
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 2)

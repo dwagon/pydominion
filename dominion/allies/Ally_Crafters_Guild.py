@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Crafters%27_Guild"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -36,7 +36,7 @@ class Test_Crafters_Guild(unittest.TestCase):
         self.plr.test_input = ["Get Silver"]
         self.plr.start_turn()
         self.assertEqual(self.plr.favors.get(), 3)
-        self.assertIn("Silver", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

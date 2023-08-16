@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -26,7 +26,7 @@ class Card_Transmogrify(Card.Card):
         )
         if tc:
             cost = player.card_cost(tc[0])
-            player.plr_gain_card(cost + 1, modifier="less", destination="hand")
+            player.plr_gain_card(cost + 1, modifier="less", destination=Piles.HAND)
 
 
 ###############################################################################
@@ -40,20 +40,20 @@ class Test_Transmogrify(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.trans = self.g["Transmogrify"].remove()
-        self.plr.add_card(self.trans, "hand")
+        self.plr.add_card(self.trans, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.trans)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIsNotNone(self.plr.reserve["Transmogrify"])
+        self.assertIsNotNone(self.plr.piles[Piles.RESERVE]["Transmogrify"])
 
     def test_call(self):
-        self.plr.hand.set("Duchy", "Estate")
-        self.plr.reserve.set("Transmogrify")
+        self.plr.piles[Piles.HAND].set("Duchy", "Estate")
+        self.plr.piles[Piles.RESERVE].set("Transmogrify")
         self.plr.test_input = ["trash duchy", "get gold"]
         self.plr.call_reserve("Transmogrify")
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

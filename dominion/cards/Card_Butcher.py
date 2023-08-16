@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -43,7 +43,7 @@ class Test_Butcher(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Butcher"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a butcher"""
@@ -54,8 +54,8 @@ class Test_Butcher(unittest.TestCase):
 
     def test_trash_gold(self):
         """Trash a gold"""
-        self.plr.hand.set("Copper", "Gold", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.coffers.set(0)
         # Trash a card
         # Trash card 3
@@ -64,8 +64,8 @@ class Test_Butcher(unittest.TestCase):
         self.plr.test_input = ["trash a card", "trash gold", "add 2", "get silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 2)
-        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertIn("Gold", self.g.trashpile)
         for m in self.plr.messages:
             if "Province" in m:

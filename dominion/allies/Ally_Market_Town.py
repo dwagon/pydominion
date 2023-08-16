@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Market_Towns """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -17,7 +17,7 @@ class Ally_Market_Towns(Ally.Ally):
         self.name = "Market Towns"
 
     def hook_pre_buy(self, game, player):
-        acts = [_ for _ in player.hand if _.playable and _.isAction()]
+        acts = [_ for _ in player.piles[Piles.HAND] if _.playable and _.isAction()]
         while player.favors.get() and acts:
             opts = [("Do Nothing", None)]
             for act in acts:
@@ -42,15 +42,15 @@ class Test_Market_Towns(unittest.TestCase):
 
     def test_play(self):
         """Play a Market Town"""
-        self.plr.hand.set("Moat", "Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper", "Silver", "Gold")
         self.plr.favors.set(3)
         self.plr.test_input = ["Play Moat", "End Phase"]
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         self.plr.buy_phase()
-        self.assertIn("Moat", self.plr.played)
-        self.assertNotIn("Moat", self.plr.hand)
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.favors.get(), 2)
-        self.assertEqual(self.plr.hand.size(), hndsz + 2 - 1)  # Moat - played
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2 - 1)  # Moat - played
 
 
 ###############################################################################

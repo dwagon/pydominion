@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,9 +30,9 @@ class Card_HauntedWoods(Card.Card):
         if player.has_defense(owner):
             return
         player.output("%s's Haunted Woods puts your hand onto your deck" % owner.name)
-        for crd in player.hand:
+        for crd in player.piles[Piles.HAND]:
             player.add_card(crd, "topdeck")
-            player.hand.remove(crd)
+            player.piles[Piles.HAND].remove(crd)
             player.output("Moving %s to deck" % crd.name)
 
 
@@ -43,21 +43,21 @@ class Test_HauntedWoods(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Haunted Woods"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_buy(self):
         """Play a Haunted Woods"""
-        self.vic.hand.set("Silver", "Duchy", "Province")
+        self.vic.piles[Piles.HAND].set("Silver", "Duchy", "Province")
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.vic.coins.set(6)
         self.vic.buy_card(self.g["Gold"])
-        self.assertIn("Silver", self.vic.deck)
-        self.assertIn("Duchy", self.vic.deck)
-        self.assertIn("Province", self.vic.deck)
+        self.assertIn("Silver", self.vic.piles[Piles.DECK])
+        self.assertIn("Duchy", self.vic.piles[Piles.DECK])
+        self.assertIn("Province", self.vic.piles[Piles.DECK])
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 8)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
 
 
 ###############################################################################

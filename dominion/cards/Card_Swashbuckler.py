@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -21,7 +21,7 @@ class Card_Swashbuckler(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        if player.discardpile.size() >= 1:
+        if player.piles[Piles.DISCARD].size() >= 1:
             player.output("Gained a coffer")
             player.coffers.add(1)
             if player.coffers.get() >= 4:
@@ -40,35 +40,35 @@ class Test_Swashbuckler(unittest.TestCase):
 
     def test_play_no_discard(self):
         self.plr.coffers.set(0)
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         card = self.g["Swashbuckler"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.assertEqual(self.plr.coffers.get(), 0)
 
     def test_play_no_discard_coffers(self):
         """Player shouldn't get the Treasure Chest if they have no discards"""
         self.plr.coffers.set(4)
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         card = self.g["Swashbuckler"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.assertEqual(self.plr.coffers.get(), 4)
         self.assertFalse(self.plr.has_artifact("Treasure Chest"))
 
     def test_play_discard(self):
         self.plr.coffers.set(0)
-        self.plr.discardpile.set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper")
         card = self.g["Swashbuckler"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_play_coffers(self):
         self.plr.coffers.set(3)
-        self.plr.discardpile.set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper")
         card = self.g["Swashbuckler"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.assertIsNotNone(self.plr.has_artifact("Treasure Chest"))
 

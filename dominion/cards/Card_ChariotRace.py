@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -43,25 +43,25 @@ class Test_ChariotRace(unittest.TestCase):
 
     def test_play_win(self):
         """Play a Chariot Race and win"""
-        self.plr.deck.set("Gold")
-        self.vic.deck.set("Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold")
+        self.vic.piles[Piles.DECK].set("Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.score["Chariot Race"], 1)
 
     def test_play_lose(self):
         """Play a Chariot Race and lose"""
         self.plr.score["Chariot Race"] = 0
-        self.plr.deck.set("Silver")
-        self.vic.deck.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Silver")
+        self.vic.piles[Piles.DECK].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.score["Chariot Race"], 0)
 
 

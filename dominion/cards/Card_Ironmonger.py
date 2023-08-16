@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -52,46 +52,46 @@ class Test_Ironmonger(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.im = self.g["Iron Monger"].remove()
-        self.plr.add_card(self.im, "hand")
+        self.plr.add_card(self.im, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = ["put back"]
         self.plr.play_card(self.im)
         self.assertEqual(self.plr.actions.get(), 1)
         # 5 for hand, +1 for ironmonger and another potential +1 for action
-        self.assertIn(self.plr.hand.size(), [6, 7])
+        self.assertIn(self.plr.piles[Piles.HAND].size(), [6, 7])
 
     def test_victory(self):
         self.plr.test_input = ["put back"]
-        self.plr.deck.set("Duchy", "Estate")
+        self.plr.piles[Piles.DECK].set("Duchy", "Estate")
         self.plr.play_card(self.im)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
     def test_treasure(self):
         self.plr.test_input = ["put back"]
-        self.plr.deck.set("Copper", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Gold")
         self.plr.play_card(self.im)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_action(self):
         self.plr.test_input = ["put back"]
-        self.plr.deck.set("Iron Monger", "Iron Monger")
+        self.plr.piles[Piles.DECK].set("Iron Monger", "Iron Monger")
         self.plr.play_card(self.im)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_discard(self):
         self.plr.test_input = ["discard"]
-        self.plr.deck.set("Iron Monger", "Gold")
+        self.plr.piles[Piles.DECK].set("Iron Monger", "Gold")
         self.plr.play_card(self.im)
-        self.assertEqual(self.plr.discardpile[0].name, "Iron Monger")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Iron Monger")
 
     def test_putback(self):
         self.plr.test_input = ["put back"]
-        self.plr.deck.set("Copper", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Gold")
         self.plr.play_card(self.im)
-        self.assertEqual(self.plr.deck[0].name, "Copper")
+        self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
 
 
 ###############################################################################

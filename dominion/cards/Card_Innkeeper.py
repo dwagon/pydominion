@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Innkeeper """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -41,21 +41,21 @@ class Test_Innkeeper(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Innkeeper"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_one(self):
         """Play the card to gain one card"""
-        hndsize = self.plr.hand.size()
+        hndsize = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = ["+1 Card"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsize + 1 - 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsize + 1 - 1)
 
     def test_play_three(self):
         """Play the card to gain three cards"""
-        self.plr.deck.set("Copper", "Silver", "Gold")
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
-        self.plr.add_card(self.card, "hand")
-        hndsize = self.plr.hand.size()
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
+        hndsize = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = [
             "+3 Cards",
             "Discard Estate",
@@ -64,7 +64,7 @@ class Test_Innkeeper(unittest.TestCase):
             "Finish",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsize + 3 - 1 - 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsize + 3 - 1 - 3)
 
 
 ###############################################################################

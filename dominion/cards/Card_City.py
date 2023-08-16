@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -35,13 +35,13 @@ class Test_City(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.city = self.g["City"].remove()
-        self.plr.add_card(self.city, "hand")
+        self.plr.add_card(self.city, Piles.HAND)
 
     def test_nostacks(self):
         """Play a city with no stacks empty"""
         self.plr.play_card(self.city)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_onestack(self):
         """Play a city with one stacks empty"""
@@ -51,7 +51,7 @@ class Test_City(unittest.TestCase):
                 break
         self.plr.play_card(self.city)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
     def test_twostack(self):
         """Play a city with two stacks empty"""
@@ -69,7 +69,7 @@ class Test_City(unittest.TestCase):
         # 1 default + 1 for city
         self.assertEqual(self.plr.buys.get(), 2)
         # 5 for hand, 1 for city, 1 for one stack
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
 
 ###############################################################################

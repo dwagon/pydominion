@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Secret_Chamber """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -43,7 +43,7 @@ class Card_Secretchamber(Card.Card):
         )
         for card in cards:
             player.add_card(card, "topdeck")
-            player.hand.remove(card)
+            player.piles[Piles.HAND].remove(card)
 
     def doRevealCard(self, player):
         """TODO"""
@@ -71,16 +71,16 @@ class Test_Secretchamber(unittest.TestCase):
 
     def test_play_none(self):
         """Play the Secret Chamber - discard none"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_play_three(self):
         """Play the Secret Chamber - discard three"""
-        self.plr.hand.set("Copper", "Silver", "Gold", "Province", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Province", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "discard copper",
             "discard silver",
@@ -88,36 +88,36 @@ class Test_Secretchamber(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.coins.get(), 3)
 
     def test_underattack(self):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
-        self.plr.deck.set("Duchy", "Province")
-        self.att.add_card(mil, "hand")
-        self.plr.hand.set("Secret Chamber", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Province")
+        self.att.add_card(mil, Piles.HAND)
+        self.plr.piles[Piles.HAND].set("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["Reveal", "Put Silver", "Put Gold", "Finish"]
         self.att.play_card(mil)
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Duchy", self.plr.hand)
-        self.assertNotIn("Province", self.plr.deck)
-        self.assertIn("Gold", self.plr.deck)
-        self.assertIn("Silver", self.plr.deck)
-        self.assertNotIn("Silver", self.plr.hand)
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Duchy", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Province", self.plr.piles[Piles.DECK])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
     def test_underattack_pass(self):
         """Secret chamber is under attack - use it"""
         mil = self.g["Militia"].remove()
-        self.plr.deck.set("Duchy", "Province")
-        self.att.add_card(mil, "hand")
-        self.plr.hand.set("Secret Chamber", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Province")
+        self.att.add_card(mil, Piles.HAND)
+        self.plr.piles[Piles.HAND].set("Secret Chamber", "Silver", "Gold")
         self.plr.test_input = ["nothing"]
         self.att.play_card(mil)
-        self.assertIn("Province", self.plr.deck)
-        self.assertIn("Duchy", self.plr.deck)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Province", self.plr.piles[Piles.DECK])
+        self.assertIn("Duchy", self.plr.piles[Piles.DECK])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

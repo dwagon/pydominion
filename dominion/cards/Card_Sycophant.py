@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class Test_Sycophant(unittest.TestCase):
 
     def test_trash(self):
         """Test trashing the card"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         favs = self.plr.favors.get()
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.favors.get(), favs + 2)
@@ -57,8 +57,8 @@ class Test_Sycophant(unittest.TestCase):
         """Play the card"""
         favs = self.plr.favors.get()
         coin = self.plr.coins.get()
-        self.plr.hand.set("Estate", "Duchy", "Province", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Province", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "Discard Estate",
             "Discard Duchy",
@@ -68,7 +68,7 @@ class Test_Sycophant(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), favs)
         self.assertEqual(self.plr.coins.get(), coin + 3)
-        self.assertNotIn("Province", self.plr.hand)
+        self.assertNotIn("Province", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -38,32 +37,32 @@ class Test_Venture(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Venture"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Venture"""
-        self.plr.deck.set("Gold")
+        self.plr.piles[Piles.DECK].set("Gold")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)  # Gold
-        for c in self.plr.played:
+        for c in self.plr.piles[Piles.PLAYED]:
             if c.name == "Gold":
                 break
         else:  # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertTrue(self.plr.deck.is_empty())
+        self.assertTrue(self.plr.piles[Piles.DECK].is_empty())
 
     def test_discard(self):
         """Make sure we discard non-treasures"""
-        self.plr.deck.set("Gold", "Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Gold", "Estate", "Estate")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)  # Gold
-        for c in self.plr.played:
+        for c in self.plr.piles[Piles.PLAYED]:
             if c.name == "Gold":
                 break
         else:  # pragma: no cover
             self.fail("Didn't play the gold")
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             if c.name != "Estate":  # pragma: no cover
                 self.fail("Didn't discard the non-treasure")
 

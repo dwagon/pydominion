@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Overgrown_Estate """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -34,11 +34,11 @@ class Test_Overgrown_Estate(unittest.TestCase):
 
     def test_play(self):
         """Test Play"""
-        self.plr.deck.set("Province")
-        self.plr.hand.set("Overgrown Estate")
-        card = self.plr.hand["Overgrown Estate"]
+        self.plr.piles[Piles.DECK].set("Province")
+        self.plr.piles[Piles.HAND].set("Overgrown Estate")
+        card = self.plr.piles[Piles.HAND]["Overgrown Estate"]
         self.plr.trash_card(card)
-        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
         self.assertIn("Overgrown Estate", self.g.trashpile)
 
 

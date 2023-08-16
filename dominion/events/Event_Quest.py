@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -20,6 +20,8 @@ class Event_Quest(Event.Event):
         discards = player.plr_discard_cards(any_number=True)
         attack_flag = False
         curses = 0
+        if not discards:
+            return
         for c in discards:
             if c.isAttack():
                 attack_flag = True
@@ -39,38 +41,38 @@ class Test_Quest(unittest.TestCase):
 
     def test_with_attack(self):
         """Use Quest with an attack card"""
-        self.plr.hand.set("Witch")
+        self.plr.piles[Piles.HAND].set("Witch")
         self.plr.test_input = ["witch", "finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIsNotNone(self.plr.discardpile["Witch"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Witch"])
 
     def test_with_curses(self):
         """Use Quest with two curse cards"""
-        self.plr.hand.set("Curse", "Curse")
+        self.plr.piles[Piles.HAND].set("Curse", "Curse")
         self.plr.test_input = ["1", "2", "finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 3)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIsNotNone(self.plr.discardpile["Curse"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
 
     def test_with_six_cards(self):
         """Use Quest with six cards"""
-        self.plr.hand.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.test_input = ["1", "2", "3", "4", "5", "6", "finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 7)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 7)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
 
     def test_with_five_cards(self):
         """Use Quest with five cards"""
-        self.plr.hand.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
         self.plr.test_input = ["1", "2", "3", "4", "5", "finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 5)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Desert_Guides """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -47,8 +47,8 @@ class Test_Desert_Guides(unittest.TestCase):
         self.plr.test_input = ["Do nothing"]
         self.plr.start_turn()
         self.assertEqual(self.plr.favors.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
     def test_play_discard(self):
         """Play and discard hand"""
@@ -56,8 +56,8 @@ class Test_Desert_Guides(unittest.TestCase):
         self.plr.test_input = ["Spend favor"]
         self.plr.start_turn()
         self.assertEqual(self.plr.favors.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5)
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 
 import unittest
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -21,8 +21,8 @@ class Card_Encampment(Card.Card):
         self._discard = False
 
     def special(self, game, player):
-        gld = player.hand["Gold"]
-        pln = player.hand["Plunder"]
+        gld = player.piles[Piles.HAND]["Gold"]
+        pln = player.piles[Piles.HAND]["Plunder"]
         if gld or pln:
             self._discard = False
             chc = player.plr_choose_options(
@@ -42,11 +42,11 @@ class Card_Encampment(Card.Card):
 
     def hook_cleanup(self, game, player):
         if self._discard:
-            for card in player.played:
+            for card in player.piles[Piles.PLAYED]:
                 if card.name == "Encampment":
                     player.output("Returning Encampment to Supply")
                     game["Encampment"].add(self)
-                    player.played.remove(self)
+                    player.piles[Piles.PLAYED].remove(self)
                     self._discard = False
                     return
 
@@ -61,13 +61,13 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_reveal(self):
         """Play a Encampment and reveal a Gold"""
-        self.plr.hand.set("Gold")
-        hndsz = self.plr.hand.size()
+        self.plr.piles[Piles.HAND].set("Gold")
+        hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.test_input = ["Reveal card"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
         self.assertEqual(self.card._discard, False)
         self.plr.cleanup_phase()
@@ -75,13 +75,13 @@ class Test_Encampment(unittest.TestCase):
 
     def test_play_return(self):
         """Play a Encampment and don't have anything to return"""
-        self.plr.discardpile.set("Copper", "Copper", "Copper", "Estate", "Estate")
-        self.plr.hand.set("Silver")
-        hndsz = self.plr.hand.size()
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper", "Estate", "Estate")
+        self.plr.piles[Piles.HAND].set("Silver")
+        hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
         self.assertEqual(self.card._discard, True)
         self.plr.cleanup_phase()

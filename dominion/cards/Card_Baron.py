@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_Baron(Card.Card):
     def special(self, game, player):
         """You may discard an Estate card. If you do +4 Coin. Otherwise,
         gain an estate card"""
-        hasEstate = player.hand["Estate"]
+        hasEstate = player.piles[Piles.HAND]["Estate"]
         if hasEstate:
             ans = player.plr_choose_options(
                 "Discard Estate?",
@@ -41,38 +41,38 @@ class Test_Baron(unittest.TestCase):
         self.baron = self.g["Baron"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.baron, "hand")
+        self.plr.add_card(self.baron, Piles.HAND)
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.buys.get(), 2)
 
     def test_noestate(self):
-        self.plr.hand.set("Copper", "Copper", "Copper")
-        self.plr.add_card(self.baron, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper")
+        self.plr.add_card(self.baron, Piles.HAND)
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.discardpile[0].name, "Estate")
-        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Estate")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
 
     def test_discardestate(self):
-        self.plr.hand.set("Gold", "Estate", "Copper")
-        self.plr.add_card(self.baron, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Estate", "Copper")
+        self.plr.add_card(self.baron, Piles.HAND)
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.coins.get(), 4)
-        self.assertEqual(self.plr.discardpile[0].name, "Estate")
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertNotIn("Estate", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Estate")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertNotIn("Estate", self.plr.piles[Piles.HAND])
 
     def test_keepestate(self):
-        self.plr.hand.set("Estate", "Gold", "Copper")
-        self.plr.add_card(self.baron, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Gold", "Copper")
+        self.plr.add_card(self.baron, Piles.HAND)
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.baron)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.discardpile[0].name, "Estate")
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Estate")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 from dominion.Player import Phase
 
 
@@ -33,7 +33,7 @@ In games using this, when you gain a card costing 3 or more, you may exchange it
     def night(self, game, player):
         options = [{"selector": "0", "print": "Keep Changeling", "card": None}]
         index = 1
-        for card in player.played + player.hand:
+        for card in player.piles[Piles.PLAYED] + player.piles[Piles.HAND]:
             sel = f"{index}"
             pr = f"Exchange for {card.name}"
             options.append({"selector": sel, "print": pr, "card": card})
@@ -51,32 +51,32 @@ class Test_Changeling(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Changeling"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_keep(self):
         self.plr.phase = Phase.NIGHT
         self.plr.test_input = ["Keep Changeling"]
         self.plr.play_card(self.card)
-        self.assertIn("Changeling", self.plr.played)
+        self.assertIn("Changeling", self.plr.piles[Piles.PLAYED])
 
     def test_play_swap(self):
         self.plr.phase = Phase.NIGHT
-        self.plr.played.set("Gold")
+        self.plr.piles[Piles.PLAYED].set("Gold")
         self.plr.test_input = ["Exchange for Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Changeling", self.g.trashpile)
 
     def test_gain_keep(self):
         self.plr.test_input = ["Keep Silver"]
         self.plr.gain_card("Silver")
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_gain_swap(self):
         self.plr.test_input = ["Swap Silver"]
         self.plr.gain_card("Silver")
-        self.assertNotIn("Silver", self.plr.discardpile)
-        self.assertIn("Changeling", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Changeling", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

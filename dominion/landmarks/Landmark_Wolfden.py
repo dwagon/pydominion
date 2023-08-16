@@ -2,7 +2,7 @@
 
 import unittest
 from collections import defaultdict
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -46,7 +46,7 @@ class Test_WolfDen(unittest.TestCase):
 
     def test_gain(self):
         """Use Wolf Den"""
-        self.plr.discardpile.set("Gold", "Silver")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver")
         self.plr.game_over()
         try:
             self.assertEqual(self.plr.get_score_details()["Wolf Den"], -6)

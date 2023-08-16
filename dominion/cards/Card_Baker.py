@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -34,7 +33,7 @@ class Test_Baker(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Baker"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_setup(self):
         """Test each player having a coin"""
@@ -46,7 +45,7 @@ class Test_Baker(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coffers.get(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

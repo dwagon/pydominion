@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Test_Commerce(unittest.TestCase):
         self.plr.gain_card("Moat")
         self.plr.perform_event(self.card)
         self.g.print_state()
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
 
 
 ###############################################################################

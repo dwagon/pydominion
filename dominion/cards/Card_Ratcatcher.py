@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -33,19 +33,19 @@ class Test_Ratcatcher(unittest.TestCase):
 
     def test_play(self):
         """Play a ratcatcher"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 1)
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertIn("Ratcatcher", self.plr.reserve)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertIn("Ratcatcher", self.plr.piles[Piles.RESERVE])
 
     def test_call(self):
         """Call from Reserve"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Gold"]
         self.plr.play_card(self.card)
         c = self.plr.call_reserve("Ratcatcher")

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -23,13 +22,13 @@ class Card_Tournament(Card.Card):
         found = False
         for plr in game.player_list():
             if plr != player:
-                prov = plr.hand["Province"]
+                prov = plr.piles[Piles.HAND]["Province"]
                 if prov:
                     plr.reveal_card(prov)
                     found = True
-        if "Province" in player.hand:
+        if "Province" in player.piles[Piles.HAND]:
             player.output("Province revealed so gain a prize")
-            player.discard_card(player.hand["Province"])
+            player.discard_card(player.piles[Piles.HAND]["Province"])
             player.gain_prize()
         if not found:
             player.output("No Province revealed")
@@ -38,7 +37,7 @@ class Card_Tournament(Card.Card):
 
 
 ###############################################################################
-class Test_Tournament(unittest.TestCase):
+class TestTournament(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Tournament"])
         self.g.start_game()
@@ -47,32 +46,32 @@ class Test_Tournament(unittest.TestCase):
 
     def test_play(self):
         """Play a tournament - no provinces"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_play_have_province(self):
         """Play a tournament - self provinces"""
         self.plr.test_input = ["Bag"]
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIn("Bag of Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
+        self.assertIn("Bag of Gold", self.plr.piles[Piles.DISCARD])
 
     def test_play_all_province(self):
         """Play a tournament - others have provinces"""
-        self.other.hand.set("Province")
+        self.other.piles[Piles.HAND].set("Province")
         self.plr.test_input = ["Bag"]
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 0)
-        self.assertIn("Bag of Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
+        self.assertIn("Bag of Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

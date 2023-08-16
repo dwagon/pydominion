@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -29,7 +29,7 @@ class Test_BanditFort(unittest.TestCase):
 
     def test_gain(self):
         """Use Bandit Fort"""
-        self.plr.hand.set("Gold", "Silver")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Bandit Fort"], -4)
 

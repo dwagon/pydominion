@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -29,15 +29,15 @@ class Test_Junkdealer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.jd = self.g["Junk Dealer"].remove()
-        self.plr.hand.set("Copper", "Silver", "Silver", "Gold")
-        self.plr.deck.set("Estate", "Province", "Duchy")
-        self.plr.add_card(self.jd, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Estate", "Province", "Duchy")
+        self.plr.add_card(self.jd, Piles.HAND)
 
     def test_trash(self):
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash copper", "finish"]
         self.plr.play_card(self.jd)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
 

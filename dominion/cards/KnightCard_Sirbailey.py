@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Card
 from dominion.cards.Card_Knight import KnightCard
 
@@ -42,10 +42,10 @@ class Test_Sir_Bailey(unittest.TestCase):
 
     def test_score(self):
         """Play the Sir"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

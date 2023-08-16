@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Treasuremap(Card.Card):
 
     def special(self, game, player):
         player.trash_card(self)
-        tmaps = [c for c in player.hand if c.name == "Treasure Map"][:1]
+        tmaps = [c for c in player.piles[Piles.HAND] if c.name == "Treasure Map"][:1]
         if not tmaps:
             return
         t = player.plr_trash_card(
@@ -45,26 +45,26 @@ class Test_Treasuremap(unittest.TestCase):
     def test_trash(self):
         """Trash a TM"""
         tsize = self.g.trashpile.size()
-        self.plr.deck.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0", "1", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Treasure Map", self.g.trashpile)
-        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 0)
 
     def test_trash_two(self):
         """Trash 2 TM"""
         tsize = self.g.trashpile.size()
-        self.plr.deck.set()
-        self.plr.hand.set("Treasure Map")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set()
+        self.plr.piles[Piles.HAND].set("Treasure Map")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertIn("Treasure Map", self.g.trashpile)
-        self.assertEqual(self.plr.deck.size(), 4)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

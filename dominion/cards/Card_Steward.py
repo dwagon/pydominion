@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -31,7 +31,7 @@ class Card_Steward(Card.Card):
             return
         if choice == "trash":
             player.output("Trash two cards")
-            num = min(2, player.hand.size())
+            num = min(2, player.piles[Piles.HAND].size())
             player.plr_trash_card(num=num, force=True)
             return
 
@@ -43,18 +43,18 @@ class Test_Steward(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Steward"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_cards(self):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_gold(self):
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_trash(self):
@@ -63,18 +63,18 @@ class Test_Steward(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
     def test_trash_smallhand(self):
         """Trash two when there are less than two to trash"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["2", "1", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
 
 
 ###############################################################################

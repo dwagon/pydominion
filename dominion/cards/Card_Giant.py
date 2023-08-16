@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Giant"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -25,22 +25,24 @@ class Card_Giant(Card.Card):
         if player.flip_journey_token():
             player.coins.add(5)
             for victim in player.attack_victims():
-                c = victim.top_card()
-                victim.reveal_card(c)
-                if c.cost >= 3 and c.cost <= 6:
-                    victim.trash_card(c)
-                    victim.output(f"{player.name}'s Giant trashed your {c.name}")
-                    player.output(f"Trashed {victim.name}'s {c.name}")
+                card = victim.top_card()
+                victim.reveal_card(card)
+                if 3 <= card.cost <= 6:
+                    victim.trash_card(card)
+                    victim.output(f"{player.name}'s Giant trashed your {card.name}")
+                    player.output(f"Trashed {victim.name}'s {card.name}")
                 else:
-                    victim.output(f"{player.name}'s Giant discarded your {c.name} and cursed you")
-                    victim.add_card(c, "discard")
+                    victim.output(
+                        f"{player.name}'s Giant discarded your {card.name} and cursed you"
+                    )
+                    victim.add_card(card, "discard")
                     victim.gain_card("Curse")
         else:
             player.coins.add(1)
 
 
 ###############################################################################
-class Test_Giant(unittest.TestCase):
+class TestGiant(unittest.TestCase):
     """Test Giant"""
 
     def setUp(self):
@@ -51,9 +53,9 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_journey_trashed(self):
         """Play a giant - good journey - trashable victim"""
-        self.plr.hand.set()
-        self.victim.deck.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.victim.piles[Piles.DECK].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.journey_token = False
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 5)
@@ -61,19 +63,19 @@ class Test_Giant(unittest.TestCase):
 
     def test_play_journey_untrashed(self):
         """Play a giant - good journey - untrashable victim"""
-        self.plr.hand.set()
-        self.victim.deck.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.victim.piles[Piles.DECK].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.journey_token = False
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 5)
         self.assertNotIn("Copper", self.g.trashpile)
-        self.assertIn("Curse", self.victim.discardpile)
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_play_no_journey(self):
         """Play a giant - bad journey"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.journey_token = True
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)

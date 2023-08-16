@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -16,7 +16,7 @@ class Card_Scepter(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        acts = [_ for _ in player.played if _.isAction()]
+        acts = [_ for _ in player.piles[Piles.PLAYED] if _.isAction()]
         if acts:
             get_coin = player.plr_choose_options("Pick one? ", ("2 Coin", True), ("Replay an action card", False))
         else:
@@ -26,8 +26,8 @@ class Card_Scepter(Card.Card):
             player.coins.add(2)
         else:
             card = player.card_sel(cardsrc=acts)
-            player.add_card(card[0], "hand")
-            player.played.remove(card[0])
+            player.add_card(card[0], Piles.HAND)
+            player.piles[Piles.PLAYED].remove(card[0])
             player.play_card(card[0], cost_action=False)
 
 
@@ -38,7 +38,7 @@ class Test_Scepter(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Scepter"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_coin(self):
         self.plr.test_input = ["2 Coin"]
@@ -46,11 +46,11 @@ class Test_Scepter(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_play_replay(self):
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.test_input = ["Replay", "Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

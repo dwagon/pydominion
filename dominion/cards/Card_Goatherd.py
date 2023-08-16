@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Goatherd """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,15 +36,15 @@ class Test_Goatherd(unittest.TestCase):
         self.card = self.g["Goatherd"].remove()
 
     def test_play_this_turn(self):
-        self.plr.hand.set("Copper", "Silver", "Gold", "Province", "Estate")
-        self.plr.deck.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Province", "Estate")
+        self.plr.piles[Piles.DECK].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.other.stats["trashed"] = ["Silver"]
         self.plr.test_input = ["Trash Province"]
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertNotIn("Province", self.plr.hand)
-        self.assertIn("Duchy", self.plr.hand)
+        self.assertNotIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Duchy", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

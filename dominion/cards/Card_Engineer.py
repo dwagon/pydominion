@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -39,20 +39,20 @@ class Test_Engineer(unittest.TestCase):
 
     def test_play_trash(self):
         """Play an Engineer and trash it"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Silver", "Trash", "Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
         self.assertIn("Engineer", self.g.trashpile)
 
     def test_play_keep(self):
         """Play an Engineer and keep it"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Silver", "Keep"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Engineer", self.plr.played)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Engineer", self.plr.piles[Piles.PLAYED])
         self.assertNotIn("Engineer", self.g.trashpile)
 
 

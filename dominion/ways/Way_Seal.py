@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -11,7 +9,9 @@ class Way_Seal(Way.Way):
     def __init__(self):
         Way.Way.__init__(self)
         self.base = Card.CardExpansion.MENAGERIE
-        self.desc = "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
+        self.desc = (
+            "+1 Coin; This turn, when you gain a card, you may put it onto your deck."
+        )
         self.name = "Way of the Seal"
 
     def special(self, game, player):
@@ -21,9 +21,9 @@ class Way_Seal(Way.Way):
     def gain_card(self, game, player, card):
         mod = {}
         deck = player.plr_choose_options(
-            "Seal: Where to put %s?" % card.name,
-            ("Put %s on discard" % card.name, False),
-            ("Put %s on top of deck" % card.name, True),
+            f"Seal: Where to put {card.name}?",
+            (f"Put {card.name} on discard", False),
+            (f"Put {card.name} on top of deck", True),
         )
         if deck:
             player.output("Putting %s on deck due to Way of the Seal" % card.name)
@@ -32,7 +32,7 @@ class Way_Seal(Way.Way):
 
 
 ###############################################################################
-class Test_Seal(unittest.TestCase):
+class TestSeal(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -47,11 +47,11 @@ class Test_Seal(unittest.TestCase):
 
     def test_play(self):
         """Perform a Seal"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["top of deck"]
         self.plr.perform_way(self.way, self.card)
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.deck.top_card().name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card().name, "Gold")
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -27,7 +27,7 @@ class Card_Farmingvillage(Card.Card):
             player.reveal_card(c)
             if c.isTreasure() or c.isAction():
                 player.output("Added %s to hand" % c.name)
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
                 break
             player.output("Picked up and discarded %s" % c.name)
             player.discard_card(c)
@@ -40,24 +40,24 @@ class Test_Farmingvillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Farming Village"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_treasure(self):
         """Play farming village with a treasure in deck"""
-        self.plr.deck.set("Estate", "Estate", "Silver", "Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Silver", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.hand)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Estate")
 
     def test_play_action(self):
         """Play farming village with an action in deck"""
-        self.plr.deck.set("Estate", "Estate", "Farming Village", "Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Farming Village", "Estate", "Estate")
         self.plr.play_card(self.card)
-        self.assertIn("Farming Village", self.plr.hand)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertIn("Farming Village", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Estate")
 
 

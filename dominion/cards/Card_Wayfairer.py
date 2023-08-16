@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Wayfarer """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,13 +36,13 @@ class Test_Wayfarer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wayfarer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a wayfairer"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_buy(self):
         """Buy a wayfairer"""

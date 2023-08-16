@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,7 +25,7 @@ class Card_Enchantress(Card.Card):
         player.pickup_cards(2)
 
     def hook_all_players_pre_action(self, game, player, owner, card):
-        if len(player.played) == 0:
+        if len(player.piles[Piles.PLAYED]) == 0:
             player.output(f"{owner.name}'s Enchantress gazump'd your {card.name}")
             player.add_actions(1)
             player.pickup_card()
@@ -34,7 +34,7 @@ class Card_Enchantress(Card.Card):
 
 
 ###############################################################################
-class Test_Enchantress(unittest.TestCase):
+class TestEnchantress(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
@@ -45,18 +45,18 @@ class Test_Enchantress(unittest.TestCase):
 
     def test_play(self):
         """Play an Enchantress"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.vic.add_card(self.r1, "hand")
+        self.vic.add_card(self.r1, Piles.HAND)
         self.vic.play_card(self.r1)
-        self.assertEqual(self.vic.hand.size(), 5 + 1)  # Hand + Ench
+        self.assertEqual(self.vic.piles[Piles.HAND].size(), 5 + 1)  # Hand + Enchantress
         self.assertEqual(self.vic.actions.get(), 1)
-        self.vic.add_card(self.m1, "hand")
+        self.vic.add_card(self.m1, Piles.HAND)
         self.vic.play_card(self.m1)
-        self.assertEqual(self.vic.hand.size(), 5 + 1 + 2)  # Hand + Ench + Moat
+        self.assertEqual(self.vic.piles[Piles.HAND].size(), 5 + 1 + 2)  # Hand + Enchantress + Moat
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

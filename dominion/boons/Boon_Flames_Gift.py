@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -34,8 +34,8 @@ class Test_Flames_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_flames_gift(self):
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertIn("Duchy", self.g.trashpile)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,20 +33,20 @@ class Test_Witch(unittest.TestCase):
         self.attacker, self.victim = self.g.player_list()
         self.wcard = self.g["Witch"].remove()
         self.mcard = self.g["Moat"].remove()
-        self.attacker.add_card(self.wcard, "hand")
+        self.attacker.add_card(self.wcard, Piles.HAND)
 
     def test_defended(self):
-        self.victim.add_card(self.mcard, "hand")
+        self.victim.add_card(self.mcard, Piles.HAND)
         self.attacker.play_card(self.wcard)
-        self.assertEqual(self.victim.hand.size(), 6)
-        self.assertEqual(self.attacker.hand.size(), 7)
-        self.assertEqual(self.victim.discardpile.size(), 0)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 0)
 
     def test_nodefense(self):
         self.attacker.play_card(self.wcard)
-        self.assertEqual(self.victim.hand.size(), 5)
-        self.assertEqual(self.attacker.hand.size(), 7)
-        self.assertEqual(self.victim.discardpile[0].name, "Curse")
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Curse")
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Kiln """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -39,8 +39,8 @@ class Test_Kiln(unittest.TestCase):
         self.plr = self.g.player_list()[0]
         self.card = self.g["Kiln"].remove()
         self.village = self.g["Village"].remove()
-        self.plr.add_card(self.card, "hand")
-        self.plr.add_card(self.village, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.add_card(self.village, Piles.HAND)
 
     def test_play(self):
         """Test play and gain card"""
@@ -49,8 +49,8 @@ class Test_Kiln(unittest.TestCase):
         self.plr.actions.set(1)
         self.plr.test_input = ["Gain"]
         self.plr.play_card(self.village)
-        self.assertIn("Village", self.plr.discardpile)
-        self.assertIn("Village", self.plr.played)
+        self.assertIn("Village", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Village", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

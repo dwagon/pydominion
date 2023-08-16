@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Test_Dominate(unittest.TestCase):
         """Perform a Dominate"""
         self.plr.coins.add(14)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Province"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Province"])
         self.assertEqual(self.plr.get_score_details()["Dominate"], 9)
 
 

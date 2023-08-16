@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,11 +37,11 @@ class Test_Zombie_Mason(unittest.TestCase):
         self.card = self.g["Zombie Mason"].remove()
 
     def test_play(self):
-        self.plr.deck.set("Estate")
+        self.plr.piles[Piles.DECK].set("Estate")
         self.plr.test_input = ["Guide"]
         self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertIn("Estate", self.g.trashpile)
-        self.assertIn("Guide", self.plr.discardpile)
+        self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

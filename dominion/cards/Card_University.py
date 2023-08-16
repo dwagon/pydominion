@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -42,15 +42,15 @@ class Test_University(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.university = self.g["University"].remove()
-        self.plr.add_card(self.university, "hand")
+        self.plr.add_card(self.university, Piles.HAND)
 
     def test_gain(self):
         self.plr.test_input = ["1"]
         self.plr.play_card(self.university)
         try:
-            self.assertEqual(self.plr.discardpile.size(), 1)
-            self.assertTrue(self.plr.discardpile[0].isAction())
-            self.assertLessEqual(self.plr.discardpile[0].cost, 5)
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+            self.assertTrue(self.plr.piles[Piles.DISCARD][0].isAction())
+            self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].cost, 5)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -58,7 +58,7 @@ class Test_University(unittest.TestCase):
     def test_none(self):
         self.plr.test_input = ["0"]
         self.plr.play_card(self.university)
-        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
 
 ###############################################################################

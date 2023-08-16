@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -35,9 +34,9 @@ class Test_Embassy(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Embassy"].remove()
-        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Estate")
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = [
@@ -47,11 +46,11 @@ class Test_Embassy(unittest.TestCase):
             "finish",
         ]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 5 - 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 5 - 3)
 
     def test_gain(self):
         self.plr.gain_card("Embassy")
-        self.assertEqual(self.other.discardpile[-1].name, "Silver")
+        self.assertEqual(self.other.piles[Piles.DISCARD][-1].name, "Silver")
 
 
 ###############################################################################

@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
+###############################################################################
 class Card_Seahag(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -30,26 +31,28 @@ class Card_Seahag(Card.Card):
 ###############################################################################
 class Test_Seahag(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Sea Hag", "Moat"])
+        self.g = Game.TestGame(
+            numplayers=2, oldcards=True, initcards=["Sea Hag", "Moat"]
+        )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.seahag = self.g["Sea Hag"].remove()
         self.mcard = self.g["Moat"].remove()
-        self.attacker.add_card(self.seahag, "hand")
+        self.attacker.add_card(self.seahag, Piles.HAND)
 
     def test_defended(self):
-        self.victim.add_card(self.mcard, "hand")
+        self.victim.add_card(self.mcard, Piles.HAND)
         self.attacker.play_card(self.seahag)
-        self.assertEqual(self.victim.hand.size(), 6)
-        self.assertNotEqual(self.victim.deck[0].name, "Curse")
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
+        self.assertNotEqual(self.victim.piles[Piles.DECK][0].name, "Curse")
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
     def test_nodefense(self):
-        self.victim.deck.set("Gold")
+        self.victim.piles[Piles.DECK].set("Gold")
         self.attacker.play_card(self.seahag)
-        self.assertEqual(self.victim.hand.size(), 5)
-        self.assertEqual(self.victim.discardpile[0].name, "Gold")
-        self.assertEqual(self.victim.deck[0].name, "Curse")
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Gold")
+        self.assertEqual(self.victim.piles[Piles.DECK][0].name, "Curse")
 
 
 ###############################################################################

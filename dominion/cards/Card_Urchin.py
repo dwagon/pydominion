@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -27,7 +27,7 @@ class Card_Urchin(Card.Card):
 
     def hook_cleanup(self, game, player):
         attacks = 0
-        for card in player.played:
+        for card in player.piles[Piles.PLAYED]:
             if card.isAttack():
                 attacks += 1
         # Urchin and one more
@@ -44,12 +44,12 @@ class Card_Urchin(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 4
-    return player.pick_to_discard(numtodiscard)
+    num_to_discard = len(player.piles[Piles.HAND]) - 4
+    return player.pick_to_discard(num_to_discard)
 
 
 ###############################################################################
-class Test_Urchin(unittest.TestCase):
+class TestUrchin(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Militia"])
         self.g.start_game()
@@ -58,22 +58,22 @@ class Test_Urchin(unittest.TestCase):
 
     def test_play(self):
         """Play an Urchin"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.victim.test_input = ["1", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.victim.hand.size(), 4)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
 
-    def test_merc(self):
+    def test_mercenary(self):
         """Play an Urchin and get a mercenary"""
-        self.plr.played.set("Urchin", "Militia")
-        for crd in self.plr.played:
+        self.plr.piles[Piles.PLAYED].set("Urchin", "Militia")
+        for crd in self.plr.piles[Piles.PLAYED]:
             crd.player = self.plr
         self.plr.test_input = ["end phase", "end phase", "mercenary"]
         self.plr.turn()
-        self.assertIn("Mercenary", self.plr.discardpile)
-        self.assertNotIn("Urchin", self.plr.hand)
+        self.assertIn("Mercenary", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Urchin", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

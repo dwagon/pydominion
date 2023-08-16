@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -35,10 +35,10 @@ class Test_Swamps_Gift(unittest.TestCase):
         self.card = self.g["Bard"].remove()
 
     def test_winds_gift(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.g.print_state()
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Will-o'-Wisp"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Will-o'-Wisp"])
 
 
 ###############################################################################

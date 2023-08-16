@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,21 +34,21 @@ class Test_Cellar(unittest.TestCase):
         self.ccard = self.g["Cellar"].remove()
 
     def test_none(self):
-        self.plr.hand.set("Estate", "Copper", "Silver")
-        self.plr.add_card(self.ccard, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper", "Silver")
+        self.plr.add_card(self.ccard, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.ccard)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
     def test_one(self):
-        self.plr.hand.set("Estate", "Copper", "Silver")
-        self.plr.deck.set("Province", "Gold")
-        self.plr.add_card(self.ccard, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper", "Silver")
+        self.plr.piles[Piles.DECK].set("Province", "Gold")
+        self.plr.add_card(self.ccard, Piles.HAND)
         self.plr.test_input = ["discard estate", "finish"]
         self.plr.play_card(self.ccard)
-        self.assertEqual(self.plr.deck[-1].name, "Province")
-        self.assertIn("Gold", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Province")
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

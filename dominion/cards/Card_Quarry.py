@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Quarry(Card.Card):
         self.cost = 4
 
     def hook_card_cost(self, game, player, card):
-        if self in player.played and card.isAction():
+        if self in player.piles[Piles.PLAYED] and card.isAction():
             return -2
         return 0
 
@@ -29,7 +29,7 @@ class Test_Quarry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Quarry"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a quarry"""

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################

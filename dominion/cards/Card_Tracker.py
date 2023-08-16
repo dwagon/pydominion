@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -48,7 +48,7 @@ class Test_Tracker(unittest.TestCase):
 
     def test_play(self):
         """Play a Tracker"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.coins.get(), 1)
@@ -58,20 +58,20 @@ class Test_Tracker(unittest.TestCase):
 
     def test_discard(self):
         """Have a Tracker  - discard the gained card"""
-        self.plr.played.set("Tracker")
+        self.plr.piles[Piles.PLAYED].set("Tracker")
         self.plr.test_input = ["discard"]
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, "Gold")
-        self.assertNotIn("Gold", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Gold")
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_deck(self):
         """Have a Tracker  - the gained card on the deck"""
-        self.plr.played.set("Tracker")
+        self.plr.piles[Piles.PLAYED].set("Tracker")
         self.plr.test_input = ["deck"]
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertNotIn("Gold", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

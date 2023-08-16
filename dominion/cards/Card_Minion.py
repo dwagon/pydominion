@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class Card_Minion(Card.Card):
     def attack(self, game, player):
         self.dropAndDraw(player)
         for victim in player.attack_victims():
-            if victim.hand.size() >= 5:
+            if victim.piles[Piles.HAND].size() >= 5:
                 self.dropAndDraw(victim)
 
     def dropAndDraw(self, plr):
@@ -54,7 +54,7 @@ class Test_Minion(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Minion"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_gold(self):
         """Play a minion and gain two gold"""
@@ -62,7 +62,7 @@ class Test_Minion(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
     def test_play_discard(self):
         """Play a minion and discard hand"""
@@ -70,37 +70,37 @@ class Test_Minion(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
-        self.assertEqual(self.victim.hand.size(), 4)
-        self.assertEqual(self.victim.discardpile.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5 + 1)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 5)
 
     def test_play_victim_smallhand(self):
         """Play a minion and discard hand - the other player has a small hand"""
-        self.victim.hand.set("Estate", "Estate", "Estate", "Estate")
+        self.victim.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Estate")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
-        self.assertEqual(self.victim.hand.size(), 4)
-        self.assertEqual(self.victim.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5 + 1)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 4)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 0)
 
     def test_play_defended(self):
         """Play a minion and discard hand - the other player is defended"""
-        self.victim.hand.set("Estate", "Estate", "Estate", "Estate", "Moat")
+        self.victim.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Estate", "Moat")
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         # Discard the 5 cards + the minion we added
-        self.assertEqual(self.plr.discardpile.size(), 5 + 1)
-        self.assertEqual(self.victim.hand.size(), 5)
-        self.assertEqual(self.victim.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 5 + 1)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 0)
 
 
 ###############################################################################

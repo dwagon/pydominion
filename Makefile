@@ -10,6 +10,7 @@ pex:
 
 venv:
 	python3 -m venv ${VENV_HOME}
+	${VENV_HOME}/bin/pip install -U pip
 	${VENV_HOME}/bin/pip install -r requirements-dev.txt
 
 clean:

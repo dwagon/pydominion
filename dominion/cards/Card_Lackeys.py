@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Lackeys(unittest.TestCase):
 
     def test_play_card(self):
         self.card = self.g["Lackeys"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertLessEqual(self.plr.villagers.get(), 0)
 
     def test_gain_card(self):

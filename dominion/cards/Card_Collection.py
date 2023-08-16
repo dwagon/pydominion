@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Collection"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -33,7 +33,7 @@ class Test_Collection(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Collection"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play Collection"""

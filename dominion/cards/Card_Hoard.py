@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -31,18 +31,18 @@ class Test_Hoard(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hoard"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
     def test_buy_victory(self):
         self.plr.play_card(self.card)
         self.plr.buy_card(self.g["Estate"])
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for c in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for c in self.plr.piles[Piles.DISCARD]:
             if c.name == "Gold":
                 break
         else:  # pragma: no cover
@@ -51,8 +51,8 @@ class Test_Hoard(unittest.TestCase):
     def test_buy_nonvictory(self):
         self.plr.play_card(self.card)
         self.plr.buy_card(self.g["Copper"])
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile[-1].name, "Copper")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Copper")
 
 
 ###############################################################################

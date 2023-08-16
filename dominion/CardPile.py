@@ -73,7 +73,9 @@ class CardPile:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
             raise
         except IndexError:
-            print(f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}")
+            print(
+                f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}"
+            )
             raise
 
     ###########################################################################
@@ -96,7 +98,7 @@ class CardPile:
 
     ###########################################################################
     def top_card(self) -> Optional[str]:
-        """What is the top card of the cardpile"""
+        """What is the top card of the card pile"""
         if self.is_empty():
             return None
         return self._cards[-1].name

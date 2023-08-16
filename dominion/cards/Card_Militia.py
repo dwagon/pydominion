@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -25,12 +25,12 @@ class Card_Militia(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Militia(unittest.TestCase):
+class TestMilitia(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Militia", "Moat"])
         self.g.start_game()
@@ -38,18 +38,18 @@ class Test_Militia(unittest.TestCase):
         self.mcard = self.g["Militia"].remove()
 
     def test_defense(self):
-        self.attacker.add_card(self.mcard, "hand")
-        self.defender.add_card(self.g["Moat"].remove(), "hand")
+        self.attacker.add_card(self.mcard, Piles.HAND)
+        self.defender.add_card(self.g["Moat"].remove(), Piles.HAND)
         self.attacker.play_card(self.mcard)
-        self.assertEqual(self.defender.hand.size(), 6)  # Normal + moat
+        self.assertEqual(self.defender.piles[Piles.HAND].size(), 6)  # Normal + moat
         self.assertEqual(self.attacker.coins.get(), 2)
 
     def test_attack(self):
-        self.attacker.add_card(self.mcard, "hand")
+        self.attacker.add_card(self.mcard, Piles.HAND)
         self.defender.test_input = ["1", "2", "0"]
         self.attacker.play_card(self.mcard)
-        self.assertEqual(self.defender.hand.size(), 3)  # Normal  - 2
-        self.assertEqual(self.defender.discardpile.size(), 2)
+        self.assertEqual(self.defender.piles[Piles.HAND].size(), 3)  # Normal  - 2
+        self.assertEqual(self.defender.piles[Piles.DISCARD].size(), 2)
         self.assertEqual(self.attacker.coins.get(), 2)
 
 

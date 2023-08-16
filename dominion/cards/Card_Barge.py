@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Barge """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -44,22 +44,22 @@ class Test_Barge(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Barge"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_this_turn(self):
         self.plr.test_input = ["now"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
 
     def test_play_next_turn(self):
         self.plr.test_input = ["next"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
 
 

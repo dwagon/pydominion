@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -21,7 +21,7 @@ class Card_Harbinger(Card.Card):
         index = 1
         options = [{"selector": "0", "print": "Don't look through discard pile", "card": None}]
         already = []
-        for c in player.discardpile:
+        for c in player.piles[Piles.DISCARD]:
             sel = f"{index}"
             pr = f"Put {c.name} back in your deck"
             if c.name in already:
@@ -37,7 +37,7 @@ class Card_Harbinger(Card.Card):
         if not o["card"]:
             return
         player.add_card(o["card"], "topdeck")
-        player.discardpile.remove(o["card"])
+        player.piles[Piles.DISCARD].remove(o["card"])
 
 
 ###############################################################################
@@ -50,14 +50,14 @@ class Test_Harbinger(unittest.TestCase):
 
     def test_play(self):
         """Play a harbinger"""
-        self.plr.discardpile.set("Gold", "Silver", "Province")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver", "Province")
         self.plr.test_input = ["Put Gold"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

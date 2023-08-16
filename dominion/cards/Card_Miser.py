@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -17,8 +17,8 @@ class Card_Miser(Card.Card):
     def special(self, game, player):
         """Choose one: Put a Copper from your hand onto your Tavern mat;
         or +1 Coin per Copper on your Tavern mat."""
-        inhand = sum([1 for _ in player.hand if _.name == "Copper"])
-        coins = sum([1 for _ in player.reserve if _.name == "Copper"])
+        inhand = sum([1 for _ in player.piles[Piles.HAND] if _.name == "Copper"])
+        coins = sum([1 for _ in player.piles[Piles.RESERVE] if _.name == "Copper"])
         deposit = False
         if inhand:
             deposit = player.plr_choose_options(
@@ -27,9 +27,9 @@ class Card_Miser(Card.Card):
                 ("%d coins from mat" % coins, False),
             )
             if deposit:
-                cu = player.hand["Copper"]
+                cu = player.piles[Piles.HAND]["Copper"]
                 player.add_card(cu, "reserve")
-                player.hand.remove(cu)
+                player.piles[Piles.HAND].remove(cu)
         if not deposit:
             player.output("Adding %d coins from tavern" % coins)
             player.coins.add(coins)
@@ -45,30 +45,30 @@ class Test_Miser(unittest.TestCase):
 
     def test_put(self):
         """Play a miser with coppers in hand"""
-        self.plr.hand.set("Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["put"]
         self.plr.play_card(self.card)
-        self.assertIsNotNone(self.plr.reserve["Copper"])
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertNotIn("Copper", self.plr.hand)
+        self.assertIsNotNone(self.plr.piles[Piles.RESERVE]["Copper"])
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
     def test_put_none(self):
         """Play a miser with no coppers in hand"""
-        self.plr.hand.set("Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIsNone(self.plr.reserve["Copper"])
-        self.assertEqual(self.plr.reserve.size(), 0)
+        self.assertIsNone(self.plr.piles[Piles.RESERVE]["Copper"])
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 0)
 
     def test_add(self):
         """Play a miser with coppers in reserve"""
-        self.plr.hand.set("Copper", "Estate")
-        self.plr.reserve.set("Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.piles[Piles.RESERVE].set("Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["coins from mat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.reserve.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
 
 

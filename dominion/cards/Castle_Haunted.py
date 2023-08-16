@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Haunted_Castle """
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -26,7 +26,7 @@ class Card_HauntedCastle(CastleCard):
         for plr in list(game.players.values()):
             if plr == player:
                 continue
-            if plr.hand.size() >= 5:
+            if plr.piles[Piles.HAND].size() >= 5:
                 cards = plr.card_sel(
                     num=2,
                     force=True,
@@ -59,18 +59,18 @@ class Test_HauntedCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Haunted Castle"], 2)
 
     def test_gain(self):
         """Test gaining this card"""
-        self.vic.hand.set("Copper", "Silver", "Gold", "Estate", "Province")
+        self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]
         self.plr.gain_card(newcard=self.card)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Silver", self.vic.deck)
-        self.assertNotIn("Silver", self.vic.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.vic.piles[Piles.DECK])
+        self.assertNotIn("Silver", self.vic.piles[Piles.HAND])
 
 
 ###############################################################################

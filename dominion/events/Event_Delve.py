@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Delve """
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -36,7 +36,7 @@ class Test_Delve(unittest.TestCase):
         self.plr.coins.add(2)
         bys = self.plr.buys.get()
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
         self.assertEqual(self.plr.buys.get(), bys + 1 - 1)
 
 

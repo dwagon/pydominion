@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -34,9 +34,9 @@ class Test_Palace(unittest.TestCase):
 
     def test_gain(self):
         """Use Palace"""
-        self.plr.discardpile.set("Gold", "Silver", "Silver", "Copper", "Duchy")
-        self.plr.deck.set("Gold", "Silver", "Copper", "Copper", "Duchy")
-        self.plr.hand.set("Silver", "Copper", "Copper", "Copper", "Duchy")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver", "Silver", "Copper", "Duchy")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver", "Copper", "Copper", "Duchy")
+        self.plr.piles[Piles.HAND].set("Silver", "Copper", "Copper", "Copper", "Duchy")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Palace"], 2 * 3)
 

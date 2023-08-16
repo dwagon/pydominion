@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -38,14 +38,14 @@ class Test_CrumblingCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Crumbling Castle"], 1)
 
     def test_trash(self):
         self.plr.trash_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Crumbling Castle"], 1)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

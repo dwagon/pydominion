@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -32,9 +32,9 @@ class Card_Messenger(Card.Card):
             ("Yes - dump it", True),
         )
         if opt:
-            for crd in player.deck:
+            for crd in player.piles[Piles.DECK]:
                 player.add_card(crd, "discard")
-                player.deck.remove(crd)
+                player.piles[Piles.DECK].remove(crd)
 
     def hook_buy_this_card(self, game, player):
         if len(player.stats["bought"]) == 1:
@@ -57,7 +57,7 @@ class Test_Messenger(unittest.TestCase):
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
         self.card = self.g["Messenger"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Messenger - do nothing"""
@@ -68,13 +68,13 @@ class Test_Messenger(unittest.TestCase):
 
     def test_discard(self):
         """Play a messenger and discard the deck"""
-        decksize = self.plr.deck.size()
+        decksize = self.plr.piles[Piles.DECK].size()
         self.plr.test_input = ["Yes"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.plr.deck.size(), 0)
-        self.assertEqual(self.plr.discardpile.size(), decksize)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), decksize)
 
     def test_buy(self):
         """Buy a messenger"""
@@ -82,8 +82,8 @@ class Test_Messenger(unittest.TestCase):
         self.plr.coins.set(4)
         self.plr.buy_card(self.g["Messenger"])
         for plr in self.g.player_list():
-            self.assertIn("Silver", plr.discardpile)
-            ag = plr.discardpile["Silver"]
+            self.assertIn("Silver", plr.piles[Piles.DISCARD])
+            ag = plr.piles[Piles.DISCARD]["Silver"]
             self.assertEqual(ag.player.name, plr.name)
 
 

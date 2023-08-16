@@ -3,7 +3,7 @@
 import unittest
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game
+from dominion import Game, Piles
 from dominion.Player import Phase
 
 
@@ -57,7 +57,7 @@ class Test_Ghost(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Ghost"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_with_no_actions(self):
         """Play a Ghost with no actions"""
@@ -67,13 +67,13 @@ class Test_Ghost(unittest.TestCase):
 
     def test_duration(self):
         try:
-            self.plr.deck.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
-            self.plr.discardpile.set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.piles[Piles.DECK].set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
+            self.plr.piles[Piles.DISCARD].set("Silver", "Gold", "Estate", "Silver", "Moat", "Copper")
             self.plr.phase = Phase.NIGHT
             self.plr.play_card(self.card)
             self.plr.end_turn()
             self.plr.start_turn()
-            self.assertEqual(self.plr.hand.size(), 5 + 2 * 2)  # Hand + Moat *2
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 * 2)  # Hand + Moat *2
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

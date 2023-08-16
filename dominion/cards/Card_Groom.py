@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Groom """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,21 +38,21 @@ class Test_Groom(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Groom"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_action(self):
         """Play Card"""
         self.plr.test_input = ["Get Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Horse", self.plr.discardpile)
+        self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
 
     def test_playcard_victory(self):
         """Play Card"""
         self.plr.test_input = ["Get Estate"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Horse", self.plr.discardpile)
+        self.assertNotIn("Horse", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

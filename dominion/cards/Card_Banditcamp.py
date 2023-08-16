@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,11 +33,11 @@ class Test_Banditcamp(unittest.TestCase):
 
     def test_play(self):
         bc = self.g["Bandit Camp"].remove()
-        self.plr.add_card(bc, "hand")
+        self.plr.add_card(bc, Piles.HAND)
         self.plr.play_card(bc)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.assertEqual(self.plr.discardpile[0].name, "Spoils")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Spoils")
 
 
 ###############################################################################

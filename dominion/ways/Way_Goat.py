@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -21,7 +19,9 @@ class Way_Goat(Way.Way):
 ###############################################################################
 class Test_Goat(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, waycards=["Way of the Goat"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, waycards=["Way of the Goat"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Moat"].remove()
@@ -29,8 +29,8 @@ class Test_Goat(unittest.TestCase):
 
     def test_play(self):
         """Perform a Goat"""
-        self.plr.hand.set("Copper", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Copper"]
         self.plr.perform_way(self.way, self.card)
         self.assertIn("Copper", self.g.trashpile)

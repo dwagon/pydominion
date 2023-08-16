@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -21,19 +21,21 @@ class Card_GrandCastle(CastleCard):
         return "5VP"
 
     def hook_gain_this_card(self, game, player):
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
-        vics = sum([1 for _ in player.hand if _.isVictory()])
-        player.output("Gaining %d VPs from your Victory Cards" % vics)
-        player.add_score("Grand Castle", vics)
+        victory_points = sum([1 for _ in player.piles[Piles.HAND] if _.isVictory()])
+        player.output(f"Gaining {victory_points} VPs from your Victory Cards")
+        player.add_score("Grand Castle", victory_points)
         for plr in list(game.players.values()):
-            vics = sum([1 for card in plr.durationpile if card.isVictory()])
-            player.output("Gaining %d VPs from %s's Victory Cards" % (vics, plr.name))
-            player.add_score("Grand Castle", vics)
+            victory_points = sum([1 for card in plr.piles[Piles.DURATION] if card.isVictory()])
+            player.output(
+                f"Gaining {victory_points} VPs from {plr.name}'s Victory Cards"
+            )
+            player.add_score("Grand Castle", victory_points)
 
 
 ###############################################################################
-class Test_GrandCastle(unittest.TestCase):
+class TestGrandCastle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
@@ -45,12 +47,12 @@ class Test_GrandCastle(unittest.TestCase):
             self.card = self.g["Castles"].remove()
             if self.card.name == "Grand Castle":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
 
     def test_gain(self):
         """Gain Grand Castle"""
-        self.plr.hand.set("Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Duchy", "Province")
         while True:
             self.card = self.g["Castles"].remove()
             if self.card.name == "Sprawling Castle":  # One before Grand

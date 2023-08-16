@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -14,13 +14,13 @@ class Event_Windfall(Event.Event):
         self.cost = 5
 
     def special(self, game, player):
-        if player.deck.is_empty() and player.discardpile.is_empty():
+        if player.piles[Piles.DECK].is_empty() and player.piles[Piles.DISCARD].is_empty():
             for _ in range(3):
                 player.gain_card("Gold")
 
 
 ###############################################################################
-class Test_Windfall(unittest.TestCase):
+class TestWindfall(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Windfall"])
         self.g.start_game()
@@ -30,12 +30,12 @@ class Test_Windfall(unittest.TestCase):
     def test_play(self):
         """Perform a Windfall"""
         self.plr.coins.add(5)
-        self.plr.discardpile.set()
-        self.plr.deck.set()
+        self.plr.piles[Piles.DISCARD].set()
+        self.plr.piles[Piles.DECK].set()
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 3)
-        for c in self.plr.discardpile:
-            self.assertEqual(c.name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
+        for card in self.plr.piles[Piles.DISCARD]:
+            self.assertEqual(card.name, "Gold")
 
 
 ###############################################################################

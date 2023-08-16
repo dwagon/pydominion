@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -40,7 +40,7 @@ class Test_FlagBearer(unittest.TestCase):
 
     def test_trash(self):
         card = self.g["Flag Bearer"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.trash_card(card)
         self.assertIsNotNone(self.plr.has_artifact("Flag"))
 

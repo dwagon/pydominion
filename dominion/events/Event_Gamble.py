@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Gamble """
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -39,21 +39,21 @@ class Test_Gamble(unittest.TestCase):
     def test_play_treasure(self):
         """Perform a Gamble with a treasure"""
         self.plr.coins.add(2)
-        self.plr.deck.set("Gold")
+        self.plr.piles[Piles.DECK].set("Gold")
         self.assertEqual(self.plr.buys.get(), 1)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
         self.assertEqual(self.plr.coins.get(), 3)
         self.assertEqual(self.plr.buys.get(), 1)
 
     def test_play_action(self):
         """Perform a Gamble with an action"""
         self.plr.coins.add(2)
-        self.plr.deck.set("Estate", "Estate", "Copper", "Moat")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Copper", "Moat")
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
         self.assertEqual(self.plr.buys.get(), 1)
 
 

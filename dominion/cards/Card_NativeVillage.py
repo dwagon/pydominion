@@ -4,7 +4,7 @@
 import unittest
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -46,7 +46,7 @@ class Card_NativeVillage(Card.Card):
     def pull_back(self, player):
         for card in player._native_map:
             player.output("Returning %s from Native Map" % card.name)
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player._native_map.remove(card)
             player.secret_count -= 1
 
@@ -60,17 +60,17 @@ class Test_NativeVillage(unittest.TestCase):
         self.card = self.g["Native Village"].remove()
 
     def test_play(self):
-        self.plr.deck.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Set aside"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr._native_map[0].name, "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Put all"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.secret_count, 0)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

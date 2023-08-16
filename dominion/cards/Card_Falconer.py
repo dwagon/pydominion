@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Falconer """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,20 +34,20 @@ class Test_Falconer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Falconer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a card"""
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_gaincard(self):
         """Gain a card"""
         self.plr.test_input = ["Get Silver"]
         self.plr.gain_card("Moat")
         self.g.print_state()
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

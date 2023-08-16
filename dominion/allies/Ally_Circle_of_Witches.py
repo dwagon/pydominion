@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Circle_of_Witcches"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -43,10 +43,10 @@ class Test_Circle_of_Witches(unittest.TestCase):
         """Play a liaison and curse"""
         self.plr.favors.set(4)
         card = self.g["Underling"].remove()
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Curse"]
         self.plr.play_card(card)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 1 + 1)  # +1 for playing underling
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -16,11 +16,13 @@ class Project_RoadNetwork(Project.Project):
     def hook_allplayers_gain_card(self, game, player, owner, card):
         if card.isVictory() and owner != player:
             owner.pickup_cards(1)
-            owner.output("Road Network gives card due to {} picking up {}".format(player.name, card.name))
+            owner.output(
+                f"Road Network gives card due to {player.name} picking up {card.name}"
+            )
 
 
 ###############################################################################
-class Test_RoadNetwork(unittest.TestCase):
+class TestRoadNetwork(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
@@ -32,17 +34,17 @@ class Test_RoadNetwork(unittest.TestCase):
 
     def test_victory(self):
         self.plr.assign_project("Road Network")
-        self.plr.deck.set("Gold")
+        self.plr.piles[Piles.DECK].set("Gold")
         self.other.gain_card("Duchy")
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_not_victory(self):
         self.plr.assign_project("Road Network")
-        self.plr.deck.set("Gold")
+        self.plr.piles[Piles.DECK].set("Gold")
         self.other.gain_card("Copper")
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertNotIn("Gold", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

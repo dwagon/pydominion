@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,11 +20,11 @@ class Card_Scheme(Card.Card):
         self.cost = 3
 
     def hook_cleanup(self, game, player):
-        actions = [c for c in player.played if c.isAction()]
+        actions = [c for c in player.piles[Piles.PLAYED] if c.isAction()]
         card = player.card_sel(cardsrc=actions, prompt="Select an action to put back on your deck")
         if card:
             player.add_card(card[0], "topdeck")
-            player.played.remove(card[0])
+            player.piles[Piles.PLAYED].remove(card[0])
 
 
 ###############################################################################
@@ -37,15 +37,15 @@ class Test_Scheme(unittest.TestCase):
 
     def test_play(self):
         """Play a scheme"""
-        self.plr.add_card(self.card, "hand")
-        self.plr.played.set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
         self.plr.test_input = ["moat"]
         self.plr.cleanup_phase()
-        self.assertIn("Moat", self.plr.hand)
-        self.assertIn("Scheme", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIn("Scheme", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

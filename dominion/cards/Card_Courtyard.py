@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,22 +38,22 @@ class Test_Courtyard(unittest.TestCase):
 
     def test_play(self):
         """Play courtyard"""
-        self.plr.add_card(self.cy, "hand")
+        self.plr.add_card(self.cy, Piles.HAND)
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.cy)
-        self.assertEqual(self.plr.hand.size(), 8)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
 
     def test_putcard(self):
         """Use courtyard to put a card to the top of the deck"""
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.cy, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.cy, Piles.HAND)
         self.plr.test_input = ["put gold"]
         self.plr.play_card(self.cy)
         card = self.plr.next_card()
         self.assertEqual(card.name, "Gold")
-        for c in self.plr.hand:
+        for c in self.plr.piles[Piles.HAND]:
             self.assertNotEqual(c.name, "Gold")
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

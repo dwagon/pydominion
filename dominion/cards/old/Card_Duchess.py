@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -53,35 +52,35 @@ class Test_Duchess(unittest.TestCase):
 
     def test_play(self):
         """Play duchess - keep on deck"""
-        self.plr.deck.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["keep"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Province", self.plr.deck)
-        self.assertNotIn("Province", self.plr.discardpile)
+        self.assertIn("Province", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Province", self.plr.piles[Piles.DISCARD])
 
     def test_disacrd(self):
         """Play duchess - discard"""
-        self.plr.deck.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["discard"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertNotIn("Province", self.plr.deck)
-        self.assertIn("Province", self.plr.discardpile)
+        self.assertNotIn("Province", self.plr.piles[Piles.DECK])
+        self.assertIn("Province", self.plr.piles[Piles.DISCARD])
 
     def test_buy_duchess(self):
         self.plr.test_input = ["Duchess"]
         self.plr.gain_card("Duchy")
-        self.assertIn("Duchess", self.plr.discardpile)
-        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertIn("Duchess", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
     def test_buy_duchy(self):
         self.plr.test_input = ["No"]
         self.plr.gain_card("Duchy")
-        self.assertNotIn("Duchess", self.plr.discardpile)
-        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertNotIn("Duchess", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

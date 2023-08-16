@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Herb_Gatherer"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -19,11 +19,11 @@ class Card_Herb_Gatherer(Card.Card):
             You may rotate the Augurs."""
 
     def special(self, game, player):
-        for crd in player.deck:
+        for crd in player.piles[Piles.DECK]:
             player.move_card(crd, "discard")
             player.output(f"Discarding {crd.name} from deck")
         treasures = []
-        for crd in player.discardpile:
+        for crd in player.piles[Piles.DISCARD]:
             if crd.isTreasure():
                 treasures.append(crd)
         if treasures:
@@ -34,7 +34,7 @@ class Card_Herb_Gatherer(Card.Card):
                     already.add(treas.name)
                     options.append((f"Play {treas.name}?", treas))
             choice = player.plr_choose_options("Play a treasure?", *options)
-            player.move_card(choice, "hand")
+            player.move_card(choice, Piles.HAND)
             player.play_card(choice, cost_action=False)
 
         opt = player.plr_choose_options(
@@ -61,8 +61,8 @@ class Test_Herb_Gatherer(unittest.TestCase):
 
     def test_play(self):
         """Play a card"""
-        self.plr.deck.set("Copper", "Silver", "Gold", "Duchy", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold", "Duchy", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Play Gold", "Don't change"]
         self.plr.play_card(self.card)
 

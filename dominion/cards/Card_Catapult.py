@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -35,7 +35,7 @@ class Card_Catapult(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
@@ -49,23 +49,23 @@ class Test_Catapult(unittest.TestCase):
 
     def test_play(self):
         """Play a Catapult with a non-treasure"""
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertIn("Curse", self.victim.discardpile)
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_play_treasure(self):
         """Play a Catapult with a treasure"""
-        self.plr.hand.set("Copper")
+        self.plr.piles[Piles.HAND].set("Copper")
         self.victim.test_input = ["1", "2", "0"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

@@ -3,7 +3,7 @@
 import unittest
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -42,14 +42,14 @@ class Test_Necromancer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Necromancer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Necromancer"""
-        self.plr.deck.set("Gold", "Silver")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver")
         self.plr.test_input = ["Zombie Spy", "Keep"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.hand)  # From Zombie Spy
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])  # From Zombie Spy
 
 
 ###############################################################################

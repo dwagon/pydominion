@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Villa"""
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Card_Villa(Card.Card):
         if player.phase == Player.Phase.BUY:
             player.phase = Player.Phase.ACTION
         player.add_actions(1)
-        return {"destination": "hand"}
+        return {"destination": Piles.HAND}
 
 
 ###############################################################################
@@ -46,7 +46,7 @@ class Test_Villa(unittest.TestCase):
 
     def test_play(self):
         """Test playing a villa"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
@@ -58,7 +58,7 @@ class Test_Villa(unittest.TestCase):
         self.plr.gain_card("Villa")
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.phase, Player.Phase.ACTION)
-        self.assertIn("Villa", self.plr.hand)
+        self.assertIn("Villa", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

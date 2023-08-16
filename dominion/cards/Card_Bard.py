@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,11 +34,11 @@ class Test_Bard(unittest.TestCase):
 
     def test_play_card(self):
         """Play Bard"""
-        self.plr.add_card(self.bard, "hand")
+        self.plr.add_card(self.bard, Piles.HAND)
         self.plr.play_card(self.bard)
         self.assertGreaterEqual(self.plr.coins.get(), 2)
         # Check boon happened
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

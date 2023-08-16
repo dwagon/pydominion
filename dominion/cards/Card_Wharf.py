@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,21 +30,21 @@ class Test_Wharf(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Wharf"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a wharf"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 7)
-        self.assertEqual(self.plr.durationpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 1)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertEqual(self.plr.played.size(), 1)
-        self.assertEqual(self.plr.played[-1].name, "Wharf")
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.PLAYED][-1].name, "Wharf")
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
 
 ###############################################################################

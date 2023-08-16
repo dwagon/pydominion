@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Peaceful_Cult """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_Peaceful_Cult(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_flag(self):
-        self.plr.hand.set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.favors.set(2)
         self.plr.test_input = ["Trash Copper", "Finish", "End Phase"]
         self.plr.buy_phase()

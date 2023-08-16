@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Bridge(Card.Card):
     def hook_card_cost(self, game, player, card):
         """All cards (including cards in players' hands) cost 1
         less this turn, but not less than 0"""
-        if self in player.played:
+        if self in player.piles[Piles.PLAYED]:
             return -1
         return 0
 
@@ -32,7 +32,7 @@ class Test_Bridge(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Bridge"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.card)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -27,7 +27,7 @@ class Card_Replace(Card.Card):
             return
         if gain.isAction() or gain.isTreasure():
             player.add_card(gain, "topdeck")
-            player.discardpile.remove(gain)
+            player.piles[Piles.DISCARD].remove(gain)
         if gain.isVictory():
             for victim in player.attack_victims():
                 victim.output(f"Gained a Curse due to {player.name}'s Replace")
@@ -43,22 +43,22 @@ class Test_Replace(unittest.TestCase):
         self.card = self.g["Replace"].remove()
 
     def test_gain_action(self):
-        self.plr.hand.set("Estate", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "Get Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.deck)
-        self.assertNotIn("Moat", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 
     def test_gain_victory(self):
-        self.plr.hand.set(
+        self.plr.piles[Piles.HAND].set(
             "Estate",
             "Silver",
         )
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate", "Get Estate"]
         self.plr.play_card(self.card)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Turtle"""
 
 import unittest
-from dominion import Card, Game, Way
+from dominion import Card, Game, Piles, Way
 
 
 ###############################################################################
@@ -38,11 +38,11 @@ class Test_Turtle(unittest.TestCase):
 
     def test_play(self):
         """Perform a Turtle"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(len(self.plr.hand), 5 + 2)
+        self.assertEqual(len(self.plr.piles[Piles.HAND]), 5 + 2)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -22,7 +22,7 @@ class Card_Guardian(Card.Card):
         player.coins.add(1)
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": "hand"}
+        return {"destination": Piles.HAND}
 
 
 ###############################################################################
@@ -35,10 +35,10 @@ class Test_Guardian(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gain_card("Guardian")
-        self.assertIn("Guardian", self.plr.hand)
+        self.assertIn("Guardian", self.plr.piles[Piles.HAND])
 
     def test_duration(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()

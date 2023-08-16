@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Test_Masterpiece(unittest.TestCase):
 
     def test_play(self):
         """Play a Masterpiece"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 
@@ -46,7 +46,7 @@ class Test_Masterpiece(unittest.TestCase):
         self.plr.coins.set(5)
         self.plr.test_input = ["1"]
         self.plr.buy_card(self.g["Masterpiece"])
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

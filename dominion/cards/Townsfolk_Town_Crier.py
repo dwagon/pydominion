@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -49,7 +49,7 @@ class Test_Town_Crier(unittest.TestCase):
             self.card = self.g["Townsfolk"].remove()
             if self.card.name == "Town Crier":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_rotate_cash(self):
         """Play a town crier - rotate, but get cash"""
@@ -64,17 +64,17 @@ class Test_Town_Crier(unittest.TestCase):
         """Play a town crier - don't rotate, but get silver"""
         self.plr.test_input = ["Silver", "Don't"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         card = self.g["Townsfolk"].remove()
         self.assertEqual(card.name, "Town Crier")
 
     def test_play_retain_card(self):
         """Play a town crier - don't rotate, but get card and action"""
         self.plr.test_input = ["card", "Don't"]
-        hndsze = self.plr.hand.size()
+        hndsze = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsze + 1 - 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsze + 1 - 1)
         self.assertEqual(self.plr.actions.get(), acts + 1 - 1)
 
 

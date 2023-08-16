@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -38,21 +38,21 @@ class Test_Skys_Gift(unittest.TestCase):
 
     def test_skys_gift(self):
         """Discard 3 cards to gain a gold"""
-        self.plr.hand.set("Copper", "Estate", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper", "Estate", "Duchy", "Finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
 
     def test_skys_no_gift(self):
         """Discard less than three cards to gain nothing"""
-        self.plr.hand.set("Copper", "Estate", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper", "Estate", "Finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

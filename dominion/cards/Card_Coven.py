@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Coven """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,13 +37,13 @@ class Test_Coven(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Coven"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Curse", self.vic.exilepile)
+        self.assertIn("Curse", self.vic.piles[Piles.EXILE])
 
 
 ###############################################################################

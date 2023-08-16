@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Necropolis """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -32,8 +32,8 @@ class Test_Necropolis(unittest.TestCase):
 
     def test_play(self):
         """Test Play"""
-        self.plr.hand.set("Necropolis", "Estate")
-        card = self.plr.hand["Necropolis"]
+        self.plr.piles[Piles.HAND].set("Necropolis", "Estate")
+        card = self.plr.piles[Piles.HAND]["Necropolis"]
         self.assertEqual(self.plr.actions.get(), 1)
         self.plr.play_card(card)
         self.assertEqual(self.plr.actions.get(), 2)

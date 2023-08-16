@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -37,9 +37,9 @@ class Test_Rats(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.rats = self.g["Rats"].remove()
-        self.plr.deck.set("Estate", "Province", "Duchy")
-        self.plr.hand.set("Copper", "Gold", "Silver", "Rats")
-        self.plr.add_card(self.rats, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Province", "Duchy")
+        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Silver", "Rats")
+        self.plr.add_card(self.rats, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = ["trash copper"]
@@ -56,14 +56,14 @@ class Test_Rats(unittest.TestCase):
     def test_gainrats(self):
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.assertEqual(self.plr.discardpile[0].name, "Rats")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Rats")
 
     def test_trashrats(self):
         """Trashing Rats - gain another card"""
-        handsize = self.plr.hand.size()
+        handsize = self.plr.piles[Piles.HAND].size()
         self.plr.trash_card(self.rats)
         # Lose rats, gain another card
-        self.assertEqual(self.plr.hand.size(), handsize)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), handsize)
 
 
 ###############################################################################

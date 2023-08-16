@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
+from dominion.Player import Piles
 
 
 ###############################################################################
@@ -21,7 +22,7 @@ class Card_Peddler(Card.Card):
 
     def hook_this_card_cost(self, game, player):
         cost = 0
-        for card in player.played:
+        for card in player.piles[Piles.PLAYED]:
             if card.isAction():
                 cost -= 2
         return max(cost, -8)
@@ -36,14 +37,14 @@ class Test_Peddler(unittest.TestCase):
         self.card = self.g["Peddler"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_buy(self):
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.PLAYED].set("Moat")
         cost = self.plr.card_cost(self.card)
         self.assertEqual(cost, 6)
 

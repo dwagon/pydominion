@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Anvil"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_Anvil(Card.Card):
         self.cost = 3
 
     def special(self, game, player):
-        treasures = [_ for _ in player.hand if _.isTreasure()]
+        treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treasures:
             return
         options = [("Do Nothing", None)]
@@ -45,13 +45,13 @@ class Test_Anvil(unittest.TestCase):
 
     def test_gaincard(self):
         """Gain a card"""
-        self.plr.hand.set("Copper", "Gold", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Copper", "Get Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertIn("Moat", self.plr.discardpile)
-        self.assertNotIn("Copper", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

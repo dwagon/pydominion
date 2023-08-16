@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -40,23 +40,23 @@ class Test_Modify(unittest.TestCase):
 
     def test_play_action(self):
         """Play the card gaining action"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash estate", "action"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 2 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
         self.assertIn("Estate", self.g.trashpile)
 
     def test_play_gain(self):
         """Play the card gaining a card"""
-        self.plr.hand.set("Copper", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash estate", "gain", "get silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 2)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

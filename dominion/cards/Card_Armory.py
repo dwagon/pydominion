@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -27,21 +26,21 @@ class Test_Armory(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.armory = self.g["Armory"].remove()
-        self.plr.add_card(self.armory, "hand")
+        self.plr.add_card(self.armory, Piles.HAND)
 
     def test_gainzero(self):
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.armory)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
     def test_gainone(self):
         self.plr.test_input = ["Moat"]
-        self.plr.deck.empty()
+        self.plr.piles[Piles.DECK].empty()
         self.plr.play_card(self.armory)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertTrue(self.plr.discardpile.is_empty())
-        self.assertLessEqual(self.plr.deck[-1].cost, 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
+        self.assertLessEqual(self.plr.piles[Piles.DECK][-1].cost, 4)
 
 
 ###############################################################################

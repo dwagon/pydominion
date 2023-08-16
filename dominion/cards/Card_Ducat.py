@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ class Card_Ducat(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        cu = player.hand["Copper"]
+        cu = player.piles[Piles.HAND]["Copper"]
         if cu:
             player.plr_trash_card(cardsrc=[cu], num=1)
         else:
@@ -43,18 +43,18 @@ class Test_Ducat(unittest.TestCase):
     def test_play(self):
         card = self.g["Ducat"].remove()
         self.plr.coffers.set(0)
-        self.plr.add_card(card, "hand")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.play_card(card)
         self.assertEqual(self.plr.coffers.get(), 1)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
 
     def test_gain_trash(self):
         self.plr.test_input = ["Copper"]
-        self.plr.hand.set("Copper")
+        self.plr.piles[Piles.HAND].set("Copper")
         self.plr.gain_card("Ducat")
 
     def test_gain_nothing(self):
-        self.plr.hand.set("Silver")
+        self.plr.piles[Piles.HAND].set("Silver")
         self.plr.gain_card("Ducat")
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_CursedVillage(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        while player.hand.size() < 6:
+        while player.piles[Piles.HAND].size() < 6:
             c = player.next_card()
             player.add_card(c, "discard")
             player.pickup_card(c)
@@ -40,10 +40,10 @@ class Test_CursedVillage(unittest.TestCase):
 
     def test_play_card(self):
         """Play Cursed Village"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertGreaterEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_gain(self):
         self.plr.gain_card("Cursed Village")

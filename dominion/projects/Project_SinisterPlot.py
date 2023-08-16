@@ -2,7 +2,7 @@
 
 import unittest
 from collections import defaultdict
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -20,7 +20,9 @@ class Project_SinisterPlot(Project.Project):
             "Sinister Plot Action? ",
             ("Add a token here?", True),
             (
-                "Remove {} tokens for {} cards?".format(self._token[player.name], self._token[player.name]),
+                "Remove {} tokens for {} cards?".format(
+                    self._token[player.name], self._token[player.name]
+                ),
                 False,
             ),
         )
@@ -34,7 +36,9 @@ class Project_SinisterPlot(Project.Project):
 ###############################################################################
 class Test_SinisterPlot(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Sinister Plot"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Sinister Plot"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -50,7 +54,7 @@ class Test_SinisterPlot(unittest.TestCase):
         self.plr.test_input = ["Remove"]
         self.plr.start_turn()
         self.assertEqual(self.plr.projects[0]._token[self.plr.name], 0)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

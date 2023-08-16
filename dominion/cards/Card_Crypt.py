@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Card
 from dominion import PlayArea
 from dominion.Player import Phase
@@ -31,7 +31,7 @@ class Card_Crypt(Card.Card):
         if cards:
             for card in cards:
                 self._crypt_reserve.add(card)
-                player.played.remove(card)
+                player.piles[Piles.PLAYED].remove(card)
                 player.secret_count += 1
             self.permanent = True
 
@@ -44,7 +44,7 @@ class Card_Crypt(Card.Card):
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.user_input(options, "What card to bring back from the crypt?")
-        player.add_card(o["card"], "hand")
+        player.add_card(o["card"], Piles.HAND)
         self._crypt_reserve.remove(o["card"])
         player.secret_count -= 1
         if self._crypt_reserve.is_empty():
@@ -58,22 +58,22 @@ class Test_Crypt(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Crypt"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT
-        self.plr.played.set("Silver", "Gold", "Estate")
+        self.plr.piles[Piles.PLAYED].set("Silver", "Gold", "Estate")
         self.plr.test_input = ["Set Gold", "Set Silver", "Finish"]
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertEqual(len(self.card._crypt_reserve), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()
-        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
         self.assertFalse(self.card.permanent)
 
 

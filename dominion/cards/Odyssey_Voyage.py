@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Voyage"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -52,8 +52,8 @@ class Test_Voyage(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.hand.set("Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         # TODO - testing
 
