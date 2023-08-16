@@ -5,6 +5,5 @@ pylint
 pytest>=4.4.0
 pytest-cov
 python-coveralls
-py-cpuinfo
 flake8
 black
