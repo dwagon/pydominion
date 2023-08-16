@@ -5,9 +5,7 @@ import os
 import sys
 import cpuinfo
 
-# DEBUG
-print(cpuinfo.get_cpu_info())
-# DEBUF
+os.system("pytest --version")
 
 numcpu = cpuinfo.get_cpu_info()["count"] + 1
 
