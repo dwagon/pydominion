@@ -85,7 +85,7 @@ class CardPile:
 
     ###########################################################################
     def remove(self):
-        """Remove a card from the cardpile"""
+        """Remove a card from the card pile"""
         try:
             return self._cards.pop()
         except IndexError:

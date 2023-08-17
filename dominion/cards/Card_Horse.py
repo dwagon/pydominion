@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -27,12 +26,13 @@ class Card_Horse(Card.Card):
             player.piles[Piles.PLAYED].remove(self)
             card = player.piles[Piles.DISCARD].remove(self)
             game["Horse"].add(card)
-        except ValueError:
+        except ValueError as exc:
+            print(f"Awooga {exc}")
             pass
 
 
 ###############################################################################
-class Test_Horse(unittest.TestCase):
+class TestHorse(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Horse"])
         self.g.start_game()

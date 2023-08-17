@@ -35,7 +35,7 @@ class Card_Giant(Card.Card):
                     victim.output(
                         f"{player.name}'s Giant discarded your {card.name} and cursed you"
                     )
-                    victim.add_card(card, "discard")
+                    victim.discard_card(card)
                     victim.gain_card("Curse")
         else:
             player.coins.add(1)

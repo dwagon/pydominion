@@ -14,13 +14,16 @@ for cardset in cardsets:
     cs_str = f"cardset/{cardset}"
     if not os.path.isfile(cs_str):
         continue
+    cardset_args = f"--cardset {cs_str}"
     players = "--randobot 4 --numplayers 4"
-    redirect = f"> /tmp/randobot_{cardset}.{os.getpid()} 2>&1"
+    output_file = f"/tmp/randobot_{cardset}.{os.getpid()}"
+    redirect_args = f"> {output_file} 2>&1"
     print(f"Playing with {cs_str}")
-    grc = os.system(f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} --cardset {cs_str} {redirect}")
+    grc = os.system(f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} {cardset_args} {redirect_args}")
     if grc:
         print(f"Broke playing with {cs_str}")
-        break
+    else:
+        os.unlink(output_file)
 
 sys.exit(grc >> 8)
 

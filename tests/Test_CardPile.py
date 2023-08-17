@@ -19,13 +19,25 @@ class TestCardPile(unittest.TestCase):
     def setUp(self):
         mock_card = FakeCard
         g = Game.Game()
-        self.cp = CardPile.CardPile(cardname="test_card", klass=mock_card, game=g, pile_size=5)
+        self.cp = CardPile.CardPile(
+            cardname="test_card", klass=mock_card, game=g, pile_size=5
+        )
 
     def test_remove(self):
+        """Test the remove() function"""
         self.assertEqual(len(self.cp), 5)
         card = self.cp.remove()
         self.assertEqual(len(self.cp), 4)
         self.assertTrue(isinstance(card, FakeCard))
+
+    def test_remove_empty(self):
+        """Test removing from an empty pile"""
+        while True:
+            card = self.cp.remove()
+            if card is None:
+                break
+        card = self.cp.remove()
+        self.assertIsNone(card)
 
     def test_add(self):
         self.assertEqual(len(self.cp), 5)

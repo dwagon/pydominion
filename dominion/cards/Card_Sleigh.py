@@ -41,7 +41,7 @@ class Card_Sleigh(Card.Card):
 
 
 ###############################################################################
-class Test_Sleigh(unittest.TestCase):
+class TestSleigh(unittest.TestCase):
     """Test Sleigh"""
 
     def setUp(self):

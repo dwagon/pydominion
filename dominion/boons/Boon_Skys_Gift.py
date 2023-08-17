@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Boon
-from dominion import Card
-from dominion import Game, Piles
+from dominion import Boon, Card, Game, Piles
 
 
 ###############################################################################
@@ -24,7 +22,7 @@ class Boon_Skys_Gift(Boon.Boon):
 
 
 ###############################################################################
-class Test_Skys_Gift(unittest.TestCase):
+class TestSkysGift(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"], badcards=["Druid"])
         self.g.start_game()
