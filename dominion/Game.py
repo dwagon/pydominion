@@ -428,6 +428,8 @@ class Game:  # pylint: disable=too-many-public-methods
             self.initprojects.append(project_name)
         elif ally_name := self.guess_cardname(card, "Ally"):
             self.init_ally.append(ally_name)
+        elif self.guess_cardname(card, "Boon"):
+            self._load_boons()
         elif self.guess_cardname(card, "Artifact"):
             # Artifacts should be loaded by the requiring card but can still be specified
             # in a cardset
