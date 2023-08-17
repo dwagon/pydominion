@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,15 +30,15 @@ class Test_Hireling(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hireling"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_hireling(self):
         """Play a hireling"""
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.assertNotIn("Hireling", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.assertNotIn("Hireling", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

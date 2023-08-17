@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -22,7 +22,7 @@ class Card_Grandmarket(Card.Card):
 
     def hook_allowed_to_buy(self, game, player):
         """You can't buy this if you have any copper in play"""
-        for c in player.hand + player.played:
+        for c in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
             if c.name == "Copper":
                 return False
         return True
@@ -37,15 +37,15 @@ class Test_Grandmarket(unittest.TestCase):
         self.gm = self.g["Grand Market"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.gm, "hand")
+        self.plr.add_card(self.gm, Piles.HAND)
         self.plr.play_card(self.gm)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_nobuy(self):
-        self.plr.hand.set("Copper", "Gold", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Gold", "Gold")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY
@@ -55,8 +55,8 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_nobuy_played(self):
-        self.plr.hand.set("Gold", "Gold", "Gold")
-        self.plr.played.set("Copper")
+        self.plr.piles[Piles.HAND].set("Gold", "Gold", "Gold")
+        self.plr.piles[Piles.PLAYED].set("Copper")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY
@@ -66,7 +66,7 @@ class Test_Grandmarket(unittest.TestCase):
                 self.fail("Allowed to buy with copper")
 
     def test_buy(self):
-        self.plr.hand.set("Gold", "Gold", "Gold")
+        self.plr.piles[Piles.HAND].set("Gold", "Gold", "Gold")
         self.plr.coins.add(6)
         self.plr.test_input = ["0"]
         self.plr.phase = Phase.BUY

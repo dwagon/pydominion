@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 from dominion.cards.Card_Castles import CastleCard
 
 
@@ -41,7 +41,7 @@ class Test_HumbleCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a castle"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
 

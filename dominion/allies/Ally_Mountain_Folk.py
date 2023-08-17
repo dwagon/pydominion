@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Mountain_Folk """
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -36,11 +36,11 @@ class Test_Mountain_Folk(unittest.TestCase):
     def test_play(self):
         """Play and gain a card"""
         self.plr.favors.set(6)
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         self.plr.test_input = ["Spend favors"]
         self.plr.start_turn()
         self.assertEqual(self.plr.favors.get(), 1)
-        self.assertEqual(self.plr.hand.size(), hndsz + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 3)
 
 
 ###############################################################################

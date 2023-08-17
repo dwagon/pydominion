@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -50,7 +50,7 @@ class Test_Lurker(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Lurker"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash(self):
         self.plr.test_input = ["Trash an Action", "Moat"]
@@ -63,7 +63,7 @@ class Test_Lurker(unittest.TestCase):
         self.g.trashpile.set("Moat")
         self.plr.play_card(self.card)
         self.assertNotIn("Moat", self.g.trashpile)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

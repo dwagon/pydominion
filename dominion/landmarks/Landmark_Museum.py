@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Landmark
+from dominion import Card, Game, Piles, Landmark
 
 
 ###############################################################################
@@ -28,9 +28,9 @@ class Test_Museum(unittest.TestCase):
 
     def test_gain(self):
         """Use Museum"""
-        self.plr.hand.set("Copper", "Estate")
-        self.plr.discardpile.set("Gold", "Silver", "Copper")
-        self.plr.deck.set("Gold", "Moat", "Moat")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Gold", "Moat", "Moat")
         self.plr.game_over()
         self.assertEqual(self.plr.get_score_details()["Museum"], 10)
 

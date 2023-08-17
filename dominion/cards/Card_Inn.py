@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class Card_Inn(Card.Card):
 
     def hook_gain_this_card(self, game, player):
         cards = []
-        for card in player.discardpile:
+        for card in player.piles[Piles.DISCARD]:
             if card.isAction():
                 player.reveal_card(card)
                 cards.append(card)
@@ -41,9 +41,9 @@ class Card_Inn(Card.Card):
         for card in back:
             if card.name == "Inn":
                 return {"destination": "deck", "shuffle": True}
-            player.discardpile.remove(card)
+            player.piles[Piles.DISCARD].remove(card)
             player.add_card(card, "deck")
-            player.deck.shuffle()
+            player.piles[Piles.DECK].shuffle()
         return {}
 
 
@@ -57,24 +57,24 @@ class Test_Inn(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.hand.set("Duchy", "Province", "Gold", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Province", "Gold", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Duchy", "Province", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 4 + 2 - 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4 + 2 - 2)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_gain(self):
-        self.plr.discardpile.set("Moat", "Gold")
+        self.plr.piles[Piles.DISCARD].set("Moat", "Gold")
         self.plr.test_input = ["Moat", "finish"]
         self.plr.gain_card("Inn")
-        self.assertIn("Moat", self.plr.deck)
+        self.assertIn("Moat", self.plr.piles[Piles.DECK])
 
     def test_gain_self(self):
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         self.plr.test_input = ["Inn", "finish"]
         self.plr.gain_card("Inn")
-        self.assertIn("Inn", self.plr.deck)
+        self.assertIn("Inn", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

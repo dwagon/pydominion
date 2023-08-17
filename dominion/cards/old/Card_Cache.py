@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
+from dominion import Piles
 import dominion.Game as Game
 import dominion.Card as Card
 
@@ -38,11 +39,11 @@ class Test_Cache(unittest.TestCase):
 
     def test_gain(self):
         self.plr.gain_card("Cache")
-        sdp = sorted([c.name for c in self.plr.discardpile])
+        sdp = sorted([c.name for c in self.plr.piles[Piles.DISCARD]])
         self.assertEqual(sorted(["Copper", "Copper", "Cache"]), sdp)
 
     def test_play(self):
-        self.plr.add_card(self.cache, "hand")
+        self.plr.add_card(self.cache, Piles.HAND)
         self.plr.play_card(self.cache)
         self.assertEqual(self.plr.coins.get(), 3)
 

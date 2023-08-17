@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -54,41 +54,41 @@ class Test_Jester(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Jester"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_victory(self):
         """Play a jester with the victim having a Victory on top of deck"""
-        self.victim.deck.set("Duchy")
+        self.victim.piles[Piles.DECK].set("Duchy")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Curse", self.victim.discardpile)
-        self.assertIn("Duchy", self.victim.discardpile)
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.victim.piles[Piles.DISCARD])
 
     def test_give_card(self):
         """Play a jester and give the duplicate to the victim"""
-        self.victim.deck.set("Gold")
+        self.victim.piles[Piles.DECK].set("Gold")
         self.plr.test_input = ["gets"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.victim.discardpile.size(), 2)
-        self.assertEqual(self.plr.discardpile.size(), 0)
-        for c in self.victim.discardpile:
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
+        for c in self.victim.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Gold")
-        self.assertNotIn("Curse", self.victim.discardpile)
-        self.assertIn("Gold", self.victim.discardpile)
-        self.assertNotIn("Gold", self.plr.discardpile)
+        self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.victim.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
     def test_take_card(self):
         """Play a jester and take the duplicate from the victim"""
-        self.victim.deck.set("Gold")
+        self.victim.piles[Piles.DECK].set("Gold")
         self.plr.test_input = ["you"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.victim.discardpile.size(), 1)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertNotIn("Curse", self.victim.discardpile)
-        self.assertIn("Gold", self.victim.discardpile)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

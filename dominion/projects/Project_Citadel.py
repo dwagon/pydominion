@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -14,24 +14,28 @@ class Project_Citadel(Project.Project):
         self.cost = 8
 
     def hook_post_action(self, game, player, card):
-        if player.played.size() == 1:
+        if player.piles[Piles.PLAYED].size() == 1:
             player.output("Citadel plays {} again".format(card.name))
-            player.play_card(card, discard=False, cost_action=False, post_action_hook=False)
+            player.play_card(
+                card, discard=False, cost_action=False, post_action_hook=False
+            )
 
 
 ###############################################################################
-class Test_Citadel(unittest.TestCase):
+class TestCitadel(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Citadel"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Citadel"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Moat"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.assign_project("Citadel")
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 + 2)
 
 
 ###############################################################################

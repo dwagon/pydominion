@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -31,11 +31,11 @@ class Test_Recruiter(unittest.TestCase):
         self.card = self.g["Recruiter"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Copper", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
         self.assertEqual(self.plr.villagers.get(), 3)
         self.assertIn("Silver", self.g.trashpile)
 

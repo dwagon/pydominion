@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Territory """
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -48,7 +48,7 @@ class Test_Territory(unittest.TestCase):
             card = self.g["Clashes"].remove()
             if card.name == "Territory":
                 break
-        self.plr.hand.set("Copper", "Silver", "Estate", "Duchy")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate", "Duchy")
         # Empty Duchy Pile
         c = self.g["Duchy"].remove()
         while c:
@@ -56,7 +56,7 @@ class Test_Territory(unittest.TestCase):
         self.plr.gain_card("Clashes")
         score = self.plr.get_score_details()
         self.assertEqual(score["Territory"], 3)  # Estate, Duchy, Territory
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

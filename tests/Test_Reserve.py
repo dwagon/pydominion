@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
-class Test__get_whens(unittest.TestCase):
+class TestGetWhens(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"], badcards=["Pixie"])
         self.g.start_game()
@@ -27,10 +27,10 @@ class Test__get_whens(unittest.TestCase):
         self.assertIn("any", whens)
 
     def test_postaction(self):
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.PLAYED].set("Moat")
         whens = self.plr._get_whens()
         self.assertIn("postaction", whens)
-        self.plr.played.set("Copper")
+        self.plr.piles[Piles.PLAYED].set("Copper")
         whens = self.plr._get_whens()
         self.assertNotIn("postaction", whens)
 
@@ -43,7 +43,7 @@ class Test__get_whens(unittest.TestCase):
 
 
 ###############################################################################
-class Test_Reserve(unittest.TestCase):
+class TestReserve(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Coin of the Realm"])
         self.g.start_game()
@@ -51,39 +51,39 @@ class Test_Reserve(unittest.TestCase):
 
     def test_reserve(self):
         """Test reserve[]"""
-        self.plr.reserve.set("Copper")
-        self.assertTrue(self.plr.reserve["Copper"])
-        self.assertEqual(self.plr.reserve["Copper"].name, "Copper")
+        self.plr.piles[Piles.RESERVE].set("Copper")
+        self.assertTrue(self.plr.piles[Piles.RESERVE]["Copper"])
+        self.assertEqual(self.plr.piles[Piles.RESERVE]["Copper"].name, "Copper")
 
     def test_not_reserve(self):
         """Test reserve[]"""
-        self.plr.reserve.set("Copper")
-        self.assertFalse(self.plr.reserve["Estate"])
+        self.plr.piles[Piles.RESERVE].set("Copper")
+        self.assertFalse(self.plr.piles[Piles.RESERVE]["Estate"])
 
     def test_reserve_set(self):
         """set reserved"""
-        self.plr.reserve.set("Silver")
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertEqual(self.plr.reserve[0].name, "Silver")
+        self.plr.piles[Piles.RESERVE].set("Silver")
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.RESERVE][0].name, "Silver")
 
     def test_call_reserve(self):
-        self.plr.reserve.set("Silver")
-        self.assertEqual(self.plr.reserve.size(), 1)
+        self.plr.piles[Piles.RESERVE].set("Silver")
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
         c = self.plr.call_reserve("Silver")
-        self.assertEqual(self.plr.reserve.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 0)
         self.assertEqual(c.name, "Silver")
 
     def test_bad_call_reserve(self):
         """Call a reserve that isn't there!"""
-        self.plr.reserve.set("Copper")
+        self.plr.piles[Piles.RESERVE].set("Copper")
         c = self.plr.call_reserve("Silver")
         self.assertIsNone(c)
 
     def test_addcard_reserve(self):
         gold = self.g["Gold"].remove()
         self.plr.add_card(gold, "reserve")
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertEqual(self.plr.reserve[0].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.RESERVE][0].name, "Gold")
 
     def test_isreserve(self):
         gold = self.g["Gold"].remove()

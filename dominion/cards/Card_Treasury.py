@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -45,12 +45,12 @@ class Test_Treasury(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Treasury"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a trader - trashing an estate"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
@@ -59,7 +59,7 @@ class Test_Treasury(unittest.TestCase):
         self.plr.coins.set(5)
         self.plr.buy_card(self.g["Duchy"])
         self.plr.discard_card(self.card)
-        self.assertEqual(self.plr.deck[-1].name, "Treasury")
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Treasury")
 
 
 ###############################################################################

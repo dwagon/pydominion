@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sanctuary """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -38,15 +38,15 @@ class Test_Sanctuary(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.deck.set("Estate", "Duchy", "Province")
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Exile Copper"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIn("Copper", self.plr.exilepile)
+        self.assertIn("Copper", self.plr.piles[Piles.EXILE])
 
 
 ###############################################################################

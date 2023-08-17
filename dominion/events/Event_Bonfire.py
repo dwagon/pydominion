@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -33,10 +33,10 @@ class Test_Bonfire(unittest.TestCase):
         """Use Bonfire"""
         tsize = self.g.trashpile.size()
         self.plr.coins.add(3)
-        self.plr.hand.set("Estate")
-        self.plr.add_card(self.copper, "hand")
+        self.plr.piles[Piles.HAND].set("Estate")
+        self.plr.add_card(self.copper, Piles.HAND)
         self.plr.play_card(self.copper)
-        self.plr.add_card(self.gold, "hand")
+        self.plr.add_card(self.gold, Piles.HAND)
         self.plr.play_card(self.gold)
         self.plr.test_input = ["Copper", "Gold", "Finish"]
         self.plr.perform_event(self.card)

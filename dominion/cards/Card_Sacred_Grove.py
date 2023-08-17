@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -50,7 +50,7 @@ class Test_SacredGrove(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Sacred Grove"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_no_share(self):
         """Play a Sacred Grove with a gift that shouldn't share"""
@@ -78,7 +78,7 @@ class Test_SacredGrove(unittest.TestCase):
         try:
             self.assertEqual(self.plr.coins.get(), 3)
             self.assertEqual(self.plr.buys.get(), 1 + 1)
-            self.assertEqual(self.vic.hand.size(), 5 + 1)
+            self.assertEqual(self.vic.piles[Piles.HAND].size(), 5 + 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

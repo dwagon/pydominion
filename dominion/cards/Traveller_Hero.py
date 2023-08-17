@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,7 +36,7 @@ class Test_Hero(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hero"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_hero(self):
         """Play a hero"""
@@ -44,7 +44,7 @@ class Test_Hero(unittest.TestCase):
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.coins.get(), 2)
-            self.assertIn("Gold", self.plr.discardpile)
+            self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -35,7 +35,7 @@ class Test_Spices(unittest.TestCase):
 
     def test_play_card(self):
         self.card = self.g["Spices"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.coffers.set(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 1 + 1)

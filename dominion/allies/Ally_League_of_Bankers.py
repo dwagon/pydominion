@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/League_of_Bankers"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################

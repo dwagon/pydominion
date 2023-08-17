@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 from dominion.Player import Phase
 
@@ -32,7 +32,7 @@ class Test_Vampire(unittest.TestCase):
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Vampire"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)
@@ -43,9 +43,9 @@ class Test_Vampire(unittest.TestCase):
         self.plr.phase = Phase.NIGHT
         self.plr.play_card(self.card)
         self.assertTrue(self.vic.has_state("Deluded"))
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertNotIn("Vampire", self.plr.discardpile)
-        self.assertIn("Bat", self.plr.discardpile)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Vampire", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Bat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

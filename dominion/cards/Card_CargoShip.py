@@ -3,7 +3,7 @@
 import unittest
 from dominion import Card
 from dominion import PlayArea
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Card_CargoShip(Card.Card):
 
     ###########################################################################
     def hook_gain_card(self, game, player, card):
-        if self not in player.durationpile:
+        if self not in player.piles[Piles.DURATION]:
             return None
         if not self._cargo_ship:
             choice = player.plr_choose_options(
@@ -41,7 +41,7 @@ class Card_CargoShip(Card.Card):
     ###########################################################################
     def duration(self, game, player):
         for card in self._cargo_ship:
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             self._cargo_ship.remove(card)
             player.secret_count -= 1
 
@@ -58,7 +58,7 @@ class Test_CargoShip(unittest.TestCase):
     def test_play_card_yes(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["Yes"]
@@ -66,12 +66,12 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(self.card._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertIn("Moat", self.plr.hand)
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
     def test_play_card_no(self):
         self.card = self.g["Cargo Ship"].remove()
         self.card.hook_gain_this_card(self.g, self.plr)
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["No"]
@@ -79,7 +79,7 @@ class Test_CargoShip(unittest.TestCase):
         self.assertEqual(len(self.card._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertNotIn("Moat", self.plr.hand)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

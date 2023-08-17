@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -23,10 +22,10 @@ class Card_OldWitch(Card.Card):
             player.output(f"{pl.name} got cursed")
             pl.output(f"{player.name}'s Old Witch cursed you")
             pl.gain_card("Curse")
-            tr = pl.hand["Curse"]
+            tr = pl.piles[Piles.HAND]["Curse"]
             if tr:
-                c = pl.plr_trash_card(cardsrc=[tr], prompt="You may trash a Curse")
-                if c:
+                curse = pl.plr_trash_card(cardsrc=[tr], prompt="You may trash a Curse")
+                if curse:
                     player.output(f"{pl.name} trashed a Curse")
 
 
@@ -36,7 +35,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_OldWitch(unittest.TestCase):
+class TestOldWitch(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Old Witch"])
         self.g.start_game()
@@ -44,18 +43,18 @@ class Test_OldWitch(unittest.TestCase):
         self.card = self.g["Old Witch"].remove()
 
     def test_play(self):
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
 
     def test_has_curse(self):
-        self.vic.hand.set("Curse")
-        self.plr.add_card(self.card, "hand")
+        self.vic.piles[Piles.HAND].set("Curse")
+        self.plr.add_card(self.card, Piles.HAND)
         self.vic.test_input = ["Trash Curse"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Curse", self.vic.hand)
+        self.assertNotIn("Curse", self.vic.piles[Piles.HAND])
         self.assertIn("Curse", self.g.trashpile)
 
 

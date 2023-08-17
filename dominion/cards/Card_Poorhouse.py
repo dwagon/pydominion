@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Poorhouse(Card.Card):
 
     def special(self, game, player):
         coins = 4
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
             if card.isTreasure():
                 coins -= 1
@@ -35,8 +35,8 @@ class Test_Poorhouse(unittest.TestCase):
 
     def test_play(self):
         """Play an Poor House"""
-        self.plr.hand.set("Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 4 - 1)
 

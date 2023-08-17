@@ -2,7 +2,7 @@
 
 import unittest
 import dominion.Card as Card
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -25,7 +25,7 @@ class Card_Fortune(Card.Card):
             player.coins.set(player.coins.get() * 2)
 
     def hook_gain_this_card(self, game, player):
-        num_gladiators = sum([1 for c in player.played if c.name == "Gladiator"])
+        num_gladiators = sum([1 for c in player.piles[Piles.PLAYED] if c.name == "Gladiator"])
         if num_gladiators:
             player.output("Gaining %d Gold" % num_gladiators)
             for _ in range(num_gladiators):
@@ -42,7 +42,7 @@ class Test_Fortune(unittest.TestCase):
 
     def test_play(self):
         """Play a Fortune"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
 
 

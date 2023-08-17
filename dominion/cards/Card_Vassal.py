@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Vassal(Card.Card):
         card = player.next_card()
         player.reveal_card(card)
         if card.isAction():
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
         else:
             player.add_card(card, "discard")
@@ -36,21 +36,21 @@ class Test_Vassal(unittest.TestCase):
 
     def test_play_action(self):
         """Play a Vassal with action next"""
-        self.plr.deck.set("Silver", "Gold", "Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold", "Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Moat", self.plr.played)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_play_non_action(self):
         """Play a Vassal with non-action next"""
-        self.plr.deck.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
 
 ###############################################################################

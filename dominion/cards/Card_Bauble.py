@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -71,7 +71,7 @@ class Test_Bauble(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Bauble"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_buy_cash(self):
         """Play the card and gain a buy and cash"""
@@ -94,16 +94,16 @@ class Test_Bauble(unittest.TestCase):
         self.plr.test_input = ["favor", "deck", "deck"]
         self.plr.play_card(self.card)
         self.plr.gain_card("Gold")
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertFalse(self.plr.discardpile["Gold"])
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertFalse(self.plr.piles[Piles.DISCARD]["Gold"])
 
     def test_play_deck_discard(self):
         """Play the card and put next card on to deck"""
         self.plr.test_input = ["favor", "deck", "discard"]
         self.plr.play_card(self.card)
         self.plr.gain_card("Gold")
-        self.assertNotEqual(self.plr.deck[-1].name, "Gold")
-        self.assertTrue(self.plr.discardpile["Gold"])
+        self.assertNotEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertTrue(self.plr.piles[Piles.DISCARD]["Gold"])
 
 
 ###############################################################################

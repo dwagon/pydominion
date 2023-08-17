@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -22,7 +22,7 @@ class Card_Crossroads(Card.Card):
         If this is the first time you played a Crossroads this turn,
         +3 Actions"""
         vict = 0
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             player.reveal_card(card)
             if card.isVictory():
                 vict += 1
@@ -31,7 +31,7 @@ class Card_Crossroads(Card.Card):
             player.pickup_cards(vict)
         else:
             player.output("No victory cards")
-        numcross = sum([1 for c in player.played if c.name == "Crossroads"])
+        numcross = sum([1 for c in player.piles[Piles.PLAYED] if c.name == "Crossroads"])
         if numcross == 1:
             player.add_actions(3)
 
@@ -46,19 +46,19 @@ class Test_Crossroads(unittest.TestCase):
 
     def test_play(self):
         """Play crossroads once"""
-        self.plr.hand.set("Silver", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.actions.get(), 3)
 
     def test_play_twice(self):
         """Play crossroads again"""
-        self.plr.hand.set("Silver", "Copper", "Crossroads")
-        self.plr.played.set("Crossroads")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Copper", "Crossroads")
+        self.plr.piles[Piles.PLAYED].set("Crossroads")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.plr.actions.get(), 0)
 
 

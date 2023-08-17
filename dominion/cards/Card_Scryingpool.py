@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Scryingpool(Card.Card):
+class Card_ScryingPool(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.ATTACK]
@@ -23,59 +23,64 @@ class Card_Scryingpool(Card.Card):
 
     def special(self, game, player):
         for plr in player.attack_victims():
-            self.discardOrPutBack(plr, player)
-        self.discardOrPutBack(player, player)
+            discard_or_put_back(plr, player)
+        discard_or_put_back(player, player)
         revealed = []
         while True:
-            topcard = player.pickup_card()
-            player.reveal_card(topcard)
-            if not topcard.isAction():
+            top_card = player.pickup_card()
+            player.reveal_card(top_card)
+            revealed.append(top_card)
+            if not top_card.isAction():
                 break
-            revealed.append(topcard)
         for card in revealed:
-            player.add_card(card, "hand")
-
-    def discardOrPutBack(self, victim, player):
-        if player == victim:
-            name = ("you", "your")
-        else:
-            name = (victim.name, "%s's" % victim.name)
-        topcard = victim.next_card()
-        if topcard is None:
-            return
-        victim.reveal_card(topcard)
-        putback = player.plr_choose_options(
-            "For %s which one?" % name[0],
-            ("Discard %s" % topcard.name, False),
-            ("Putback %s" % topcard.name, True),
-        )
-        if putback:
-            victim.output("Put %s back on %s deck" % (topcard.name, name[1]))
-            victim.add_card(topcard, "deck")
-        else:
-            victim.output("Discarded %s" % topcard.name)
-            victim.add_card(topcard, "discard")
+            player.add_card(card, Piles.HAND)
 
 
 ###############################################################################
-class Test_ScryingPool(unittest.TestCase):
+def discard_or_put_back(victim, player):
+    if player == victim:
+        name = ("you", "your")
+    else:
+        name = (victim.name, f"{victim.name}'s")
+    top_card = victim.next_card()
+    if top_card is None:
+        return
+    victim.reveal_card(top_card)
+    putback = player.plr_choose_options(
+        f"For {name[0]} which one?",
+        (f"Discard {top_card.name}", False),
+        (f"Putback {top_card.name}", True),
+    )
+    if putback:
+        victim.output(f"Put {top_card.name} back on {name[1]} deck")
+        victim.add_card(top_card, "topdeck")
+    else:
+        victim.output(f"Discarded {top_card.name}")
+        victim.add_card(top_card, "discard")
+
+
+###############################################################################
+class TestScryingPool(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Scrying Pool", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
         self.card = self.g["Scrying Pool"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a scrying pool"""
-        self.plr.deck.set("Moat", "Gold")
-        self.vic.deck.set("Duchy")
-        self.plr.test_input = ["discard", "putback"]
+        self.plr.piles[Piles.DECK].set("Silver", "Province", "Moat", "Gold")
+        self.vic.piles[Piles.DECK].set("Duchy")
+        self.plr.test_input = ["discard", "discard", "putback"]
         self.plr.play_card(self.card)
+        self.g.print_state()
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Duchy", self.vic.discardpile)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Moat", self.plr.hand)
+        self.assertIn("Duchy", self.vic.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

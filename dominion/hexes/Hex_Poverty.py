@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Hex_Poverty(Hex.Hex):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
@@ -38,7 +38,7 @@ class Test_Poverty(unittest.TestCase):
     def test_normal(self):
         self.plr.test_input = ["1", "2", "0"]
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Distant_Shore"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -41,13 +41,13 @@ class Test_Distant_Shore(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         actions = self.plr.actions.get()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
         self.assertEqual(self.plr.actions.get(), actions)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.get_score_details()["Distant Shore"], 2)
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -27,7 +27,7 @@ class Card_Cultist(Card.Card):
         for plr in player.attack_victims():
             plr.output("Gained a ruin from %s's Cultist" % player.name)
             plr.gain_card("Ruins")
-        cultist = player.hand["Cultist"]
+        cultist = player.piles[Piles.HAND]["Cultist"]
         if cultist:
             ans = player.plr_choose_options(
                 "Play another cultist?",
@@ -52,57 +52,57 @@ class Test_Cultist(unittest.TestCase):
 
     def test_play(self):
         """Play a cultists - should give 2 cards"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
-        self.assertEqual(self.victim.discardpile.size(), 1)
-        self.assertTrue(self.victim.discardpile[0].isRuin())
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
+        self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
     def test_defense(self):
         """Make sure moats work against cultists"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         moat = self.g["Moat"].remove()
-        self.victim.add_card(moat, "hand")
+        self.victim.add_card(moat, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
     def test_noother(self):
         """Don't ask to play another cultist if it doesn't exist"""
-        self.plr.hand.set("Estate", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
     def test_anothercultist_no(self):
         """Don't play the other cultist"""
-        self.plr.hand.set("Cultist", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.played.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
     def test_anothercultist_yes(self):
         """Another cultist can be played for free"""
-        self.plr.hand.set("Cultist", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.played.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 2)
         self.assertEqual(self.plr.actions.get(), 0)
-        for c in self.plr.played:
+        for c in self.plr.piles[Piles.PLAYED]:
             self.assertEqual(c.name, "Cultist")
-        self.assertEqual(self.victim.discardpile.size(), 2)
-        for c in self.victim.discardpile:
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
+        for c in self.victim.piles[Piles.DISCARD]:
             self.assertTrue(c.isRuin())
 
     def test_trash(self):
         """Trashing a cultist should give 3 more cards"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.trash_card(self.card)
         self.assertIn("Cultist", self.g.trashpile)
-        self.assertEqual(self.plr.hand.size(), 8)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
 
 
 ###############################################################################

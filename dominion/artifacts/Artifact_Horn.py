@@ -2,7 +2,7 @@
 
 import unittest
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Artifact
 
 
@@ -28,8 +28,8 @@ class Test_Horn(unittest.TestCase):
         self.plr.assign_artifact("Horn")
         self.plr.test_input = ["Put onto deck"]
         self.plr.discard_card(self.card)
-        self.assertIn("Border Guard", self.plr.deck)
-        self.assertNotIn("Border Guard", self.plr.discardpile)
+        self.assertIn("Border Guard", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Border Guard", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

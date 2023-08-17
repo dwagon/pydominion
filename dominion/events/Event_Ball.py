@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -33,8 +33,8 @@ class Test_Ball(unittest.TestCase):
         self.plr.test_input = ["militia", "moat"]
         self.plr.perform_event(self.card)
         self.assertTrue(self.plr.coin_token)
-        self.assertIsNotNone(self.plr.discardpile["Militia"])
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Militia"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
 
 
 ###############################################################################

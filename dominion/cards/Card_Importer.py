@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -34,7 +34,7 @@ class Test_Importer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Importer"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
@@ -42,7 +42,7 @@ class Test_Importer(unittest.TestCase):
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.plr.start_turn()
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Travelling_Fair """
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -39,8 +39,8 @@ class Test_TravellingFair(unittest.TestCase):
         self.plr.test_input = ["Discard"]
         self.plr.gain_card("Gold")
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertNotIn("Gold", self.plr.deck)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
 
     def test_play_deck(self):
         """Perform a Travelling Fair and deck the card"""
@@ -50,8 +50,8 @@ class Test_TravellingFair(unittest.TestCase):
         self.plr.gain_card("Gold")
         self.g.print_state()
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -40,12 +40,12 @@ class Test_ScoutingParty(unittest.TestCase):
     def test_play(self):
         """Perform a Scouting Party"""
         self.plr.coins.add(2)
-        self.plr.deck.set("Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["estate", "duchy", "province", "finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.plr.deck[0].name, "Gold")
-        self.assertEqual(self.plr.deck[1].name, "Silver")
-        self.assertEqual(self.plr.discardpile.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DECK][1].name, "Silver")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
 
 
 ###############################################################################

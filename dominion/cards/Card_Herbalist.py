@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Herbalist(Card.Card):
             options = [{"selector": "0", "print": "Do nothing", "card": None}]
             index = 1
             player.output("Herbalist lets you put treasures on top of deck")
-            for c in player.played:
+            for c in player.piles[Piles.PLAYED]:
                 if c.isTreasure():
                     sel = "%d" % index
                     options.append({"selector": sel, "print": "Put %s" % c.name, "card": c})
@@ -32,10 +32,10 @@ class Card_Herbalist(Card.Card):
             if index != 1:
                 o = player.user_input(options, "Put a card on the top of your deck?")
                 if o["card"]:
-                    player.played.remove(o["card"])
+                    player.piles[Piles.PLAYED].remove(o["card"])
                     player.add_card(o["card"], "topdeck")
             else:
-                player.output("No suitable treasures = %s" % ",".join([c.name for c in player.played]))
+                player.output("No suitable treasures = %s" % ",".join([c.name for c in player.piles[Piles.PLAYED]]))
 
 
 ###############################################################################
@@ -47,24 +47,24 @@ class Test_Herbalist(unittest.TestCase):
         self.hcard = self.g["Herbalist"].remove()
 
     def test_putnothing(self):
-        self.plr.played.set("Gold", "Estate")
-        self.plr.add_card(self.hcard, "hand")
+        self.plr.piles[Piles.PLAYED].set("Gold", "Estate")
+        self.plr.add_card(self.hcard, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.hcard)
         self.plr.discard_hand()
-        self.assertEqual(self.plr.deck.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 5)
 
     def test_putgold(self):
-        self.plr.played.set("Gold", "Estate")
-        self.plr.hand.empty()
-        self.plr.add_card(self.hcard, "hand")
+        self.plr.piles[Piles.PLAYED].set("Gold", "Estate")
+        self.plr.piles[Piles.HAND].empty()
+        self.plr.add_card(self.hcard, Piles.HAND)
         self.plr.test_input = ["1"]
         self.plr.play_card(self.hcard)
         self.plr.discard_hand()
-        self.assertEqual(self.plr.deck[-1].name, "Gold")
-        self.assertEqual(self.plr.discardpile[-1].name, "Estate")
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertEqual(self.plr.deck.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Estate")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 6)
 
 
 ###############################################################################

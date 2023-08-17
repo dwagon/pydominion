@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -27,7 +26,9 @@ class Card_Vault(Card.Card):
         player.output(f"Gaining {len(discards)} coins")
         for plr in game.player_list():
             if plr != player:
-                plr.output(f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one")
+                plr.output(
+                    f"Due to {player.name}'s Vault you may discard two cards. If you do, draw one"
+                )
                 plrdiscards = plr.plr_discard_cards(num=2)
                 if len(plrdiscards) == 2:
                     plr.pickup_card()
@@ -39,7 +40,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Vault(unittest.TestCase):
+class TestVault(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Vault"])
         self.g.start_game()
@@ -47,15 +48,15 @@ class Test_Vault(unittest.TestCase):
         self.card = self.g["Vault"].remove()
 
     def test_play(self):
-        self.other.hand.set("Copper", "Silver", "Gold")
-        self.plr.hand.set("Duchy", "Province", "Gold", "Silver", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.other.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Duchy", "Province", "Gold", "Silver", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.other.test_input = ["Copper", "Silver", "Finish"]
         self.plr.test_input = ["Duchy", "Province", "Finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2 - 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 - 2)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.other.hand.size(), 3 - 2 + 1)
+        self.assertEqual(self.other.piles[Piles.HAND].size(), 3 - 2 + 1)
 
 
 ###############################################################################

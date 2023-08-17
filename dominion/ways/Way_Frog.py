@@ -2,9 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Frog """
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -18,7 +16,7 @@ class Way_Frog(Way.Way):
 
     def hook_way_discard_this_card(self, game, player, card):
         player.add_card(card, "topdeck")
-        player.played.remove(card)
+        player.piles[Piles.PLAYED].remove(card)
 
 
 ###############################################################################
@@ -37,12 +35,12 @@ class Test_Frog(unittest.TestCase):
 
     def test_play(self):
         """Perform a Frog"""
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.plr.discard_hand()
-        self.assertIn("Moat", self.plr.deck)
+        self.assertIn("Moat", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

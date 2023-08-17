@@ -1,4 +1,7 @@
 ###############################################################################
+from typing import Optional
+
+
 class CardPile:
     def __init__(self, cardname, klass, game, pile_size=10):
         self.cardname = cardname
@@ -82,7 +85,7 @@ class CardPile:
 
     ###########################################################################
     def remove(self):
-        """Remove a card from the cardpile"""
+        """Remove a card from the card pile"""
         try:
             return self._cards.pop()
         except IndexError:
@@ -94,8 +97,10 @@ class CardPile:
         self._cards.insert(0, card)
 
     ###########################################################################
-    def top_card(self):
-        """What is the top card of the cardpile"""
+    def top_card(self) -> Optional[str]:
+        """What is the top card of the card pile"""
+        if self.is_empty():
+            return None
         return self._cards[-1].name
 
     ###########################################################################
@@ -103,6 +108,8 @@ class CardPile:
         """Rotate a pile of cards - only works with split decks
         http://wiki.dominionstrategy.com/index.php/Rotate
         """
+        if self.is_empty():
+            return
         top_card_name = self.top_card()
         count = 0
         while True:
@@ -116,7 +123,7 @@ class CardPile:
 
     ###########################################################################
     def dump(self):
-        """Print out all of the pile - for debugging purposes only"""
+        """Print out all the pile - for debugging purposes only"""
         print("----------")
         for crd in self._cards:
             print(f"Card={crd}")
@@ -128,13 +135,13 @@ class CardPile:
 
 ###############################################################################
 class CardPileIterator:
-    def __init__(self, cpile):
-        self.cpile = cpile
+    def __init__(self, card_pile):
+        self.card_pile = card_pile
         self.index = 0
 
     def __next__(self):
         try:
-            result = self.cpile._cards[self.index]
+            result = self.card_pile._cards[self.index]
         except IndexError:
             raise StopIteration  # pylint: disable=raise-missing-from
         self.index += 1

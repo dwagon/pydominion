@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -22,7 +22,7 @@ class Card_Patrician(Card.Card):
         topcard = player.next_card()
         player.reveal_card(topcard)
         if topcard.cost >= 5:
-            player.add_card(topcard, "hand")
+            player.add_card(topcard, Piles.HAND)
             player.output("Adding %s to hand" % topcard.name)
         else:
             player.add_card(topcard, "topdeck")
@@ -39,20 +39,20 @@ class Test_Patrician(unittest.TestCase):
 
     def test_play_cheap(self):
         """Play the Patrician"""
-        self.plr.deck.set("Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_play_good(self):
         """Play the Patrician"""
-        self.plr.deck.set("Gold", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

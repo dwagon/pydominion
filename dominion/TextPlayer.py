@@ -1,5 +1,6 @@
 import sys
 import colorama
+from dominion import Piles
 from dominion.Player import Player
 from dominion.Option import Option
 
@@ -30,9 +31,11 @@ class TextPlayer(Player):
     ###########################################################################
     def output(self, msg, end="\n"):
         if not self.quiet:
-            sys.stdout.write("%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL))
+            sys.stdout.write(
+                "%s%s%s: " % (self.colour, self.name, colorama.Style.RESET_ALL)
+            )
             try:
-                sys.stdout.write("%s: " % (self.currcards[0].name))
+                sys.stdout.write("%s: " % self.currcards[0].name)
             except IndexError:
                 pass
             sys.stdout.write("%s%s" % (msg, end))
@@ -60,7 +63,7 @@ class TextPlayer(Player):
         return "\n".join(outstr)
 
     ###########################################################################
-    def selectorLine(self, o):
+    def selector_line(self, o):
         output = []
         if isinstance(o, dict):
             verb = o["print"]
@@ -97,7 +100,7 @@ class TextPlayer(Player):
     def user_input(self, options, prompt):
         """Get input from the user"""
         for o in options:
-            line = self.selectorLine(o)
+            line = self.selector_line(o)
             o["line"] = line
             self.output(line)
         self.output(prompt, end=" ")
@@ -129,19 +132,21 @@ class TextPlayer(Player):
         the players hand"""
         if "cardsrc" in kwargs:
             if kwargs["cardsrc"] == "hand":
-                selectfrom = self.hand
+                selectfrom = self.piles[Piles.HAND]
             elif kwargs["cardsrc"] == "played":
-                selectfrom = self.played
+                selectfrom = self.piles[Piles.PLAYED]
             elif kwargs["cardsrc"] == "discard":
-                selectfrom = self.discardpile
+                selectfrom = self.piles[Piles.DISCARD]
             else:
                 selectfrom = kwargs["cardsrc"]
         else:
-            selectfrom = self.hand
+            selectfrom = self.piles[Piles.HAND]
         return selectfrom
 
     ###########################################################################
-    def card_sel(self, num=1, **kwargs):  # pylint: disable=too-many-locals, too-many-branches
+    def card_sel(
+        self, num=1, **kwargs
+    ):  # pylint: disable=too-many-locals, too-many-branches
         """Most interactions with players are the selection of cards
         either from the hand, the drawpiles, or a subset
         * force
@@ -184,7 +189,11 @@ class TextPlayer(Player):
         types = self._type_selector(types)
         while True:
             options = []
-            if anynum or (force and num == len(selected)) or (not force and num >= len(selected)):
+            if (
+                anynum
+                or (force and num == len(selected))
+                or (not force and num >= len(selected))
+            ):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1

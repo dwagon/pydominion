@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,21 +33,21 @@ class Test_Mill(unittest.TestCase):
         self.card = self.g["Mill"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Gold", "Silver")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Finish"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 1 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 1)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.get_score_details()["Mill"], 1)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
     def test_discard(self):
-        self.plr.hand.set("Gold", "Silver")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver")
         self.plr.test_input = ["Discard Gold", "Discard Silver", "Finish"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.coins.get(), 2)
 
 

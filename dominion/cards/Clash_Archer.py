@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Archer """
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -27,7 +27,7 @@ class Card_Archer(Card.Card):
         """Each other player with 5 or more cards in hand reveals all but one,
         and discards one of those you choose."""
         for plr in player.attack_victims():
-            if plr.hand.size() >= 5:
+            if plr.piles[Piles.HAND].size() >= 5:
                 self.attack(plr, player)
 
     def attack(self, victim, player):
@@ -38,18 +38,20 @@ class Card_Archer(Card.Card):
         )
         hide = victim.card_sel(num=1, prompt="Select card to not reveal")
         cards = []
-        for crd in victim.hand:
+        for crd in victim.piles[Piles.HAND]:
             if crd == hide[0]:
                 continue
             cards.append(crd)
             victim.reveal_card(crd)
-        disc = player.card_sel(prompt=f"Discard a card from {victim.name}s hand", cardsrc=cards)
+        disc = player.card_sel(
+            prompt=f"Discard a card from {victim.name}s hand", cardsrc=cards
+        )
         victim.discard_card(disc[0])
         victim.output(f"Discarded {disc[0].name}")
 
 
 ###############################################################################
-class Test_Archer(unittest.TestCase):
+class TestArcher(unittest.TestCase):
     """Test Archer"""
 
     def setUp(self):
@@ -63,12 +65,12 @@ class Test_Archer(unittest.TestCase):
             card = self.g["Clashes"].remove()
             if card.name == "Archer":
                 break
-        self.plr.add_card(card, "hand")
-        self.vic.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.add_card(card, Piles.HAND)
+        self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
         self.vic.test_input = ["Select Gold"]
         self.plr.test_input = ["Select Silver"]
         self.plr.play_card(card)
-        self.assertIn("Silver", self.vic.discardpile)
+        self.assertIn("Silver", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

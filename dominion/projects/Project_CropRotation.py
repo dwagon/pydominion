@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -9,15 +9,19 @@ class Project_CropRotation(Project.Project):
     def __init__(self):
         Project.Project.__init__(self)
         self.base = Card.CardExpansion.RENAISSANCE
-        self.desc = "At the start of your turn, you may discard a Victory card for +2 Cards."
+        self.desc = (
+            "At the start of your turn, you may discard a Victory card for +2 Cards."
+        )
         self.name = "Crop Rotation"
         self.cost = 6
 
     def hook_start_turn(self, game, player):
-        vics = [_ for _ in player.hand if _.isVictory()]
+        vics = [_ for _ in player.piles[Piles.HAND] if _.isVictory()]
         if not vics:
             return
-        card = player.plr_discard_cards(prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics)
+        card = player.plr_discard_cards(
+            prompt="Crop Rotation: Discard a victory for +2 Cards", cardsrc=vics
+        )
         if card:
             player.pickup_cards(2)
 
@@ -31,11 +35,11 @@ class Test_CropRotation(unittest.TestCase):
 
     def test_cost(self):
         self.plr.assign_project("Crop Rotation")
-        self.plr.hand.set("Copper", "Silver", "Estate")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
         self.plr.test_input = ["Discard Estate"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 3 + 2 - 1)
-        self.assertIsNotNone(self.plr.discardpile["Estate"])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3 + 2 - 1)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Estate"])
 
 
 ###############################################################################

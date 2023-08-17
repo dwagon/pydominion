@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Storyteller """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -21,7 +21,7 @@ class Card_Storyteller(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        treasures = [_ for _ in player.hand if _.isTreasure()]
+        treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treasures:
             return
         toplay = player.card_sel(
@@ -49,13 +49,13 @@ class Test_Storyteller(unittest.TestCase):
 
     def test_play(self):
         """Play a Storyteller"""
-        self.plr.hand.set("Copper", "Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Silver", "Gold")
         self.plr.test_input = ["1", "2", "silver", "finish"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         # 1 from existing, 1 + story, 2 for two coppers and 2 for a silver
-        self.assertEqual(self.plr.hand.size(), 1 + 1 + 2 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1 + 1 + 2 + 2)
 
 
 ###############################################################################

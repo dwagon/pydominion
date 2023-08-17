@@ -2,9 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Rat """
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -16,7 +14,7 @@ class Way_Rat(Way.Way):
         self.name = "Way of the Rat"
 
     def special_way(self, game, player, card):
-        treas = [_ for _ in player.hand if _.isTreasure()]
+        treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treas:
             player.output("No treasures to discard")
             return
@@ -28,7 +26,7 @@ class Way_Rat(Way.Way):
 
 
 ###############################################################################
-class Test_Rat(unittest.TestCase):
+class TestRat(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -43,14 +41,14 @@ class Test_Rat(unittest.TestCase):
 
     def test_play(self):
         """Perform a Rat"""
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
-        self.assertIsNotNone(self.plr.discardpile["Copper"])
-        self.assertIn("Moat", self.plr.played)
-        self.assertNotIn("Copper", self.plr.hand)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

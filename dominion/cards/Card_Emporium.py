@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ class Card_Emporium(Card.Card):
 
     ###########################################################################
     def hook_gain_this_card(self, game, player):
-        count = sum([1 for c in player.played if c.isAction()])
+        count = sum([1 for c in player.piles[Piles.PLAYED] if c.isAction()])
         if count >= 5:
             player.add_score("Emporium", 2)
             player.output("Gained 2VP from Emporium")
@@ -42,15 +42,15 @@ class Test_Emporium(unittest.TestCase):
 
     def test_play(self):
         """Play the Emporium"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_gain_with_actions(self):
         """Play the Emporium having played lots of actions"""
-        self.plr.played.set("Moat", "Moat", "Moat", "Moat", "Moat")
+        self.plr.piles[Piles.PLAYED].set("Moat", "Moat", "Moat", "Moat", "Moat")
         self.plr.gain_card("Emporium")
         self.assertEqual(self.plr.get_score_details()["Emporium"], 2)
 

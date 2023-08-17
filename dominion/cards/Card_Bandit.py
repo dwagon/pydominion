@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Bandit"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -22,10 +22,9 @@ class Card_Bandit(Card.Card):
     def special(self, game, player):
         player.gain_card("Gold")
         for plr in player.attack_victims():
-            self._thieve_on(victim=plr, bandit=player)
+            self.thieve_on(victim=plr, bandit=player)
 
-    @classmethod
-    def _thieve_on(cls, victim, bandit):
+    def thieve_on(self, victim, bandit):
         """Thieve on the victim"""
         # Each other player reveals the top 2 cards of their deck
         treasures = []
@@ -35,17 +34,16 @@ class Card_Bandit(Card.Card):
             if card.isTreasure() and card.name != "Copper":
                 treasures.append(card)
             else:
-                victim.move_card(card, "discard")
+                card.location = "cardpile"
+                victim.add_card(card, "discard")
         if not treasures:
             bandit.output(f"Player {victim.name} has no suitable treasures")
             return
         index = 1
         options = [{"selector": "0", "print": "Don't trash any card", "card": None}]
         for card in treasures:
-            sel = f"{index}"
-            pr = f"Trash {card.name} from {victim.name}"
-            options.append({"selector": sel, "print": pr, "card": card})
-            sel = f"{index}"
+            to_print = f"Trash {card.name} from {victim.name}"
+            options.append({"selector": f"{index}", "print": to_print, "card": card})
             index += 1
         o = bandit.user_input(options, f"What to do to {victim.name}'s cards?")
         # Discard the ones we don't care about
@@ -60,7 +58,7 @@ class Card_Bandit(Card.Card):
 
 
 ###############################################################################
-class Test_Bandit(unittest.TestCase):
+class TestBandit(unittest.TestCase):
     """Test Bandit"""
 
     def setUp(self):
@@ -70,28 +68,28 @@ class Test_Bandit(unittest.TestCase):
         self.thief.name = "MrBandit"
         self.vic.name = "MrVic"
         self.card = self.g["Bandit"].remove()
-        self.thief.add_card(self.card, "hand")
+        self.thief.add_card(self.card, Piles.HAND)
 
     def test_do_nothing(self):
         """Don't trash anything"""
-        self.vic.hand.set("Copper", "Copper")
-        self.vic.deck.set("Copper", "Silver", "Gold")
+        self.vic.piles[Piles.HAND].set("Copper", "Copper")
+        self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["Don't trash"]
         self.thief.play_card(self.card)
-        self.assertEqual(self.vic.deck.size(), 1)
-        self.assertEqual(self.vic.discardpile.size(), 2)
+        self.assertEqual(self.vic.piles[Piles.DECK].size(), 1)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
 
     def test_trash_treasure(self):
         """Trash the treasure"""
-        self.vic.hand.set("Copper", "Copper")
-        self.vic.deck.set("Copper", "Silver", "Gold")
+        self.vic.piles[Piles.HAND].set("Copper", "Copper")
+        self.vic.piles[Piles.DECK].set("Copper", "Silver", "Gold")
         self.thief.test_input = ["trash gold"]
         self.thief.play_card(self.card)
         # Make sure the gold ends up in the trashpile and not in the victims deck
         self.assertIn("Gold", self.g.trashpile)
-        for card in self.vic.deck:
+        for card in self.vic.piles[Piles.DECK]:
             self.assertNotEqual(card.name, "Gold")
-        self.assertEqual(self.vic.discardpile[0].name, "Silver")
+        self.assertEqual(self.vic.piles[Piles.DISCARD][0].name, "Silver")
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,6 +20,9 @@ class Card_MarketSquare(Card.Card):
         self.cost = 3
 
     def hook_trash_card(self, game, player, card):
+        """This should only activate if Market Square is in the hand"""
+        if self.location != Piles.HAND:
+            return
         gold = player.plr_choose_options(
             "Discard Market Square to gain a Gold?",
             ("Keep Market Square in hand", False),
@@ -31,7 +34,7 @@ class Card_MarketSquare(Card.Card):
 
 
 ###############################################################################
-class Test_MarketSquare(unittest.TestCase):
+class TestMarketSquare(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Market Square"])
         self.g.start_game()
@@ -40,26 +43,34 @@ class Test_MarketSquare(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_trash_and_keep(self):
         """Choose to keep MS after a trash"""
-        self.plr.hand.set("Copper", "Market Square")
+        self.plr.piles[Piles.HAND].set("Copper", "Market Square")
         self.plr.test_input = ["keep"]
-        self.plr.trash_card(self.plr.hand["Copper"])
-        self.assertIn("Market Square", self.plr.hand)
+        self.plr.trash_card(self.plr.piles[Piles.HAND]["Copper"])
+        self.assertIn("Market Square", self.plr.piles[Piles.HAND])
 
     def test_trash_and_discard(self):
         """Choose to keep MS after a trash"""
-        self.plr.hand.set("Copper", "Market Square")
+        self.plr.piles[Piles.HAND].set("Copper", "Market Square")
         self.plr.test_input = ["discard"]
-        self.plr.trash_card(self.plr.hand["Copper"])
-        self.assertNotIn("Market Square", self.plr.hand)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.plr.trash_card(self.plr.piles[Piles.HAND]["Copper"])
+        self.assertNotIn("Market Square", self.plr.piles[Piles.HAND])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+
+    def test_trash_in_played(self):
+        """Test trashing a card with MS not in hand"""
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.piles[Piles.PLAYED].set("Market Square")
+        self.plr.trash_card(self.plr.piles[Piles.HAND]["Copper"])
+        self.g.print_state()
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

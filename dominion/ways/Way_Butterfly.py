@@ -2,9 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Way_of_the_Butterfly """
 
 import unittest
-from dominion import Card
-from dominion import Game
-from dominion import Way
+from dominion import Card, Game, Way, Piles
 
 
 ###############################################################################
@@ -17,13 +15,14 @@ class Way_Butterfly(Way.Way):
 
     def special_way(self, game, player, card):
         game[card.name].add(card)
+        player.remove_card(card)
         cst = player.card_cost(card)
         player.plr_gain_card(cst + 1, "equal")
         return {"discard": False}
 
 
 ###############################################################################
-class Test_Butterfly(unittest.TestCase):
+class TestButterfly(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -38,11 +37,13 @@ class Test_Butterfly(unittest.TestCase):
 
     def test_play(self):
         """Perform a Butterfly"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
-        self.assertIsNotNone(self.plr.discardpile["Witch"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Witch"])
         self.assertEqual(len(self.g["Moat"]), 10)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.g.print_state()
 
 
 ###############################################################################

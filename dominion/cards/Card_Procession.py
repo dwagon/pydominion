@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,17 +18,18 @@ class Card_Procession(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        actcards = [c for c in player.hand if c.isAction() and not c.isDuration()]
-        if not actcards:
+        action_cards = [_ for _ in player.piles[Piles.HAND] if _.isAction() and not _.isDuration()]
+        if not action_cards:
             player.output("No suitable action cards")
             return
-        cards = player.card_sel(prompt="Select a card to play twice, then trash", cardsrc=actcards)
+        cards = player.card_sel(prompt="Select a card to play twice, then trash", cardsrc=action_cards)
         if not cards:
             return
         card = cards[0]
+        player.move_card(card, "played")
 
         for i in range(1, 3):
-            player.output("Play %d of %s" % (i, card.name))
+            player.output(f"Play {i} of {card.name}")
             player.play_card(card, discard=False, cost_action=False)
         player.trash_card(card)
         cost = player.card_cost(card) + 1
@@ -36,7 +37,7 @@ class Card_Procession(Card.Card):
 
 
 ###############################################################################
-class Test_Procession(unittest.TestCase):
+class TestProcession(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Procession", "Moat", "Witch"])
         self.g.start_game()
@@ -45,13 +46,13 @@ class Test_Procession(unittest.TestCase):
 
     def test_play(self):
         """Play procession to trash moat and buy a witch"""
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.play_card(self.card)
         self.assertIn("Moat", self.g.trashpile)
-        self.assertEqual(self.plr.hand.size(), 4)
-        self.assertIn("Witch", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
+        self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

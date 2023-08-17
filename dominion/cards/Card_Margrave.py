@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Margrave """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -24,18 +24,18 @@ class Card_Margrave(Card.Card):
         """Each other player draws a card, then discards down to 3 cards in hand"""
         for plr in player.attack_victims():
             plr.pickup_card()
-            plr.output("%s's Margrave: Discard down to 3 cards" % player.name)
+            plr.output(f"{player.name}'s Margrave: Discard down to 3 cards")
             plr.plr_discard_down_to(3)
 
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
 ###############################################################################
-class Test_Margrave(unittest.TestCase):
+class TestMargrave(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Margrave", "Moat"])
         self.g.start_game()
@@ -43,20 +43,20 @@ class Test_Margrave(unittest.TestCase):
         self.card = self.g["Margrave"].remove()
 
     def test_defense(self):
-        self.attacker.add_card(self.card, "hand")
-        self.defender.add_card(self.g["Moat"].remove(), "hand")
+        self.attacker.add_card(self.card, Piles.HAND)
+        self.defender.add_card(self.g["Moat"].remove(), Piles.HAND)
         self.attacker.play_card(self.card)
-        self.assertEqual(self.defender.hand.size(), 5 + 1)  # Moat
-        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertEqual(self.defender.piles[Piles.HAND].size(), 5 + 1)  # Moat
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 3)
         self.assertEqual(self.attacker.buys.get(), 1 + 1)
 
     def test_attack(self):
-        self.attacker.add_card(self.card, "hand")
+        self.attacker.add_card(self.card, Piles.HAND)
         self.defender.test_input = ["1", "2", "3", "0"]
         self.attacker.play_card(self.card)
-        self.assertEqual(self.defender.hand.size(), 3)
-        self.assertEqual(self.defender.discardpile.size(), 3)
-        self.assertEqual(self.attacker.hand.size(), 5 + 3)
+        self.assertEqual(self.defender.piles[Piles.HAND].size(), 3)
+        self.assertEqual(self.defender.piles[Piles.DISCARD].size(), 3)
+        self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 3)
         self.assertEqual(self.attacker.buys.get(), 1 + 1)
 
 

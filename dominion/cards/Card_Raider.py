@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
-from dominion.Player import Phase
+from dominion import Game, Card, Piles, Phase
 
 
 ###############################################################################
@@ -26,43 +24,45 @@ class Card_Raider(Card.Card):
         player.coins.add(3)
 
     def night(self, game, player):
-        inplay = {_.name for _ in player.played}
+        inplay = {_.name for _ in player.piles[Piles.PLAYED]}
         for pl in player.attack_victims():
-            if pl.hand.size() >= 5:
+            if pl.piles[Piles.HAND].size() >= 5:
                 player.output(f"Raiding {pl.name}")
                 todiscard = []
-                for c in pl.hand:
+                for c in pl.piles[Piles.HAND]:
                     if c.name in inplay:
                         pl.output(f"{player.name}'s Raider discarded your {c.name}")
                         player.output(f"Raider discarded {pl.name}'s {c.name}")
                         todiscard.append(c)
                 if not todiscard:
-                    for card in pl.hand:
+                    for card in pl.piles[Piles.HAND]:
                         pl.reveal_card(card)
                 for c in todiscard[:]:
                     pl.discard_card(c)
 
 
 ###############################################################################
-class Test_Raider(unittest.TestCase):
+class TestRaider(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Raider"])
         self.g.start_game()
-        self.plr, self.vic = self.g.player_list()
+        self.plr, self.victim = self.g.player_list()
         self.card = self.g["Raider"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Raider"""
         self.plr.phase = Phase.NIGHT
-        self.plr.played.set("Gold", "Silver")
-        self.vic.hand.set("Silver", "Gold", "Estate", "Copper", "Copper")
+        self.plr.piles[Piles.PLAYED].set("Gold", "Silver")
+        self.victim.piles[Piles.HAND].set(
+            "Silver", "Gold", "Estate", "Copper", "Copper"
+        )
         self.plr.play_card(self.card)
         try:
-            self.assertIn("Gold", self.vic.discardpile)
-            self.assertIn("Silver", self.vic.discardpile)
-            self.assertNotIn("Gold", self.vic.hand)
-            self.assertNotIn("Silver", self.vic.hand)
+            self.assertIn("Gold", self.victim.piles[Piles.DISCARD])
+            self.assertIn("Silver", self.victim.piles[Piles.DISCARD])
+            self.assertNotIn("Gold", self.victim.piles[Piles.HAND])
+            self.assertNotIn("Silver", self.victim.piles[Piles.HAND])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

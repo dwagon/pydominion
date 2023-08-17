@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -14,7 +14,9 @@ class Project_Cathedral(Project.Project):
         self.cost = 3
 
     def hook_start_turn(self, game, player):
-        player.plr_trash_card(num=1, force=True, prompt="Cathedral forces you to trash a card")
+        player.plr_trash_card(
+            num=1, force=True, prompt="Cathedral forces you to trash a card"
+        )
 
 
 ###############################################################################
@@ -26,11 +28,11 @@ class Test_Cathedral(unittest.TestCase):
 
     def test_flag(self):
         self.plr.assign_project("Cathedral")
-        self.plr.hand.set("Copper", "Estate", "Province")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Province")
         self.plr.test_input = ["Copper"]
         self.plr.start_turn()
         self.assertIn("Copper", self.g.trashpile)
-        self.assertNotIn("Copper", self.plr.hand)
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

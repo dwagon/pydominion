@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -28,7 +28,7 @@ class Card_Catacombs(Card.Card):
         )
         if ans:
             for c in cards:
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
         else:
             for c in cards:
                 player.add_card(c, "discard")
@@ -46,35 +46,35 @@ class Test_Catacombs(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.cat = self.g["Catacombs"].remove()
-        self.plr.add_card(self.cat, "hand")
+        self.plr.add_card(self.cat, Piles.HAND)
 
     def test_keep(self):
-        self.plr.deck.set("Province", "Gold", "Gold", "Gold")
+        self.plr.piles[Piles.DECK].set("Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["keep the three"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(self.plr.hand.size(), 8)
-        numgold = sum(1 for c in self.plr.hand if c.name == "Gold")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
+        numgold = sum(1 for c in self.plr.piles[Piles.HAND] if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
     def test_discard(self):
-        self.plr.deck.set("Province", "Province", "Province", "Gold", "Gold", "Gold")
+        self.plr.piles[Piles.DECK].set("Province", "Province", "Province", "Gold", "Gold", "Gold")
         self.plr.test_input = ["discard and draw"]
         self.plr.play_card(self.cat)
         # Normal 5, +3 new ones
-        self.assertEqual(self.plr.hand.size(), 8)
-        numgold = sum(1 for c in self.plr.hand if c.name == "Gold")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 8)
+        numgold = sum(1 for c in self.plr.piles[Piles.HAND] if c.name == "Gold")
         self.assertEqual(numgold, 0)
-        numprov = sum(1 for c in self.plr.hand if c.name == "Province")
+        numprov = sum(1 for c in self.plr.piles[Piles.HAND] if c.name == "Province")
         self.assertEqual(numprov, 3)
-        numgold = sum(1 for c in self.plr.discardpile if c.name == "Gold")
+        numgold = sum(1 for c in self.plr.piles[Piles.DISCARD] if c.name == "Gold")
         self.assertEqual(numgold, 3)
 
     def test_trash(self):
         self.plr.test_input = ["get estate"]
         self.plr.trash_card(self.cat)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertTrue(self.plr.discardpile[0].cost < self.cat.cost)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertTrue(self.plr.piles[Piles.DISCARD][0].cost < self.cat.cost)
         self.assertIn("Catacombs", self.g.trashpile)
 
 

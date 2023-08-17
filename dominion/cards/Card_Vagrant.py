@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -24,7 +24,7 @@ class Card_Vagrant(Card.Card):
         c = player.next_card()
         player.reveal_card(c)
         if c.isVictory() or c.isRuin() or c.isShelter() or c.name == "Ruins":
-            player.add_card(c, "hand")
+            player.add_card(c, Piles.HAND)
             player.output("Adding %s to hand" % c.name)
         else:
             player.add_card(c, "topdeck")
@@ -38,23 +38,23 @@ class Test_Vagrant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Vagrant"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the vagrant with unexciting next card"""
-        self.plr.deck.set("Gold", "Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver", "Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.next_card().name, "Silver")
 
     def test_play_exciting(self):
         """Play the vagrant with an exciting next card"""
-        self.plr.deck.set("Estate", "Province", "Duchy")
+        self.plr.piles[Piles.DECK].set("Estate", "Province", "Duchy")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 7)
-        self.assertIn("Province", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

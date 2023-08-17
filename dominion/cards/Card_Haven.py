@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -16,51 +16,52 @@ class Card_Haven(Card.Card):
         self.cards = 1
         self.actions = 1
         self.cost = 4
+        self.savedHavenCard = None
 
     def special(self, game, player):
         """Set aside a card from your hand face down. At the start of
         your next turn, put it into your hand."""
         c = player.plr_pick_card(force=True, prompt="Pick card to put into hand next turn")
         player.add_card(c, "duration")
-        player.hand.remove(c)
+        player.piles[Piles.HAND].remove(c)
         self.savedHavenCard = c
 
     def duration(self, game, player):
         c = self.savedHavenCard
-        player.add_card(c, "hand")
-        # Can't guarantee the order so it may be in played
-        # or still in durationpile
-        if c in player.played:
-            player.played.remove(c)
-        elif c in player.durationpile:
-            player.durationpile.remove(c)
+        player.add_card(c, Piles.HAND)
+        # Can't guarantee the order, so it may be in played
+        # or still in duration pile
+        if c in player.piles[Piles.PLAYED]:
+            player.piles[Piles.PLAYED].remove(c)
+        elif c in player.piles[Piles.DURATION]:
+            player.piles[Piles.DURATION].remove(c)
         player.output(f"Pulling {c.name} out of from haven")
-        del self.savedHavenCard
+        self.savedHavenCard = None
 
 
 ###############################################################################
-class Test_Haven(unittest.TestCase):
+class TestHaven(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Haven"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Haven"].remove()
-        self.plr.discardpile.set("Copper", "Copper", "Copper", "Copper", "Copper")
-        self.plr.deck.set("Estate", "Estate", "Estate", "Estate", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Estate", "Estate", "Estate", "Estate", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a haven"""
         self.plr.test_input = ["select gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.durationpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 2)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.played.size(), 1)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
 
 

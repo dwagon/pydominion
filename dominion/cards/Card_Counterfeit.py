@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -22,7 +22,7 @@ class Card_Counterfeit(Card.Card):
         hand twice. If you do, trash that Treasure"""
         options = [{"selector": "0", "print": "Do nothing", "card": None}]
         index = 1
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             if c.isTreasure():
                 sel = "%d" % index
                 index += 1
@@ -44,7 +44,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Counterfeit"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         self.plr.test_input = ["0"]
@@ -53,18 +53,18 @@ class Test_Counterfiet(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 2)
 
     def test_notreasures(self):
-        self.plr.hand.set("Estate", "Estate", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
     def test_twice(self):
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.hand.is_empty())
+        self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
         self.assertIn("Gold", self.g.trashpile)
         # CF + 2 * Gold
         self.assertEqual(self.plr.coins.get(), 7)

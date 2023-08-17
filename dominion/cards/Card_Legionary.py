@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Legionary(Card.Card):
         self.coin = 3
 
     def special(self, game, player):
-        au = player.hand["Gold"]
+        au = player.piles[Piles.HAND]["Gold"]
         if au:
             player.reveal_card(au)
             for plr in player.attack_victims():
@@ -29,7 +29,7 @@ class Card_Legionary(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 2
+    numtodiscard = len(player.piles[Piles.HAND]) - 2
     return player.pick_to_discard(numtodiscard)
 
 
@@ -43,13 +43,13 @@ class Test_Legionary(unittest.TestCase):
 
     def test_play(self):
         """Play a Legionary"""
-        self.plr.hand.set("Gold")
+        self.plr.piles[Piles.HAND].set("Gold")
         self.victim.test_input = ["1", "2", "3", "0"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertEqual(self.victim.hand.size(), 3)
-        self.assertEqual(self.victim.discardpile.size(), 3)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 3)
 
 
 ###############################################################################

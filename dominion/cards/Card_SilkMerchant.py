@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,27 +34,27 @@ class Test_SilkMerchant(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Silk Merchant"].remove()
-        self.plr.hand.set()
+        self.plr.piles[Piles.HAND].set()
 
     def test_gain_card(self):
         self.plr.coffers.set(0)
         self.plr.gain_card("Silk Merchant")
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.villagers.get(), 1)
         self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_trash_card(self):
         self.plr.coffers.set(0)
         self.plr.trash_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.villagers.get(), 1)
         self.assertEqual(self.plr.coffers.get(), 1)
 
     def test_play_card(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.coffers.set(0)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.villagers.get(), 0)
         self.assertEqual(self.plr.coffers.get(), 0)
 

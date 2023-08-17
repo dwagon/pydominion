@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,10 +18,10 @@ class Card_Settlers(Card.Card):
         self.desc = """+1 Card +1 Action. Look through your discard pile. You may reveal a Copper from it and put it into your hand."""
 
     def special(self, game, player):
-        cu = player.discardpile["Copper"]
+        cu = player.piles[Piles.DISCARD]["Copper"]
         if cu:
-            player.add_card(cu, "hand")
-            player.discardpile.remove(cu)
+            player.add_card(cu, Piles.HAND)
+            player.piles[Piles.DISCARD].remove(cu)
             player.reveal_card(cu)
             player.output("Pulled Copper from discard into hand")
         else:
@@ -38,24 +38,24 @@ class Test_Settlers(unittest.TestCase):
 
     def test_play(self):
         """Play a Settlers and pull a copper"""
-        self.plr.discardpile.set("Gold", "Silver", "Copper")
-        self.plr.hand.set("Gold", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver", "Copper")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.hand)
-        self.assertNotIn("Copper", self.plr.discardpile)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Copper", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 2 + 1 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1 + 1)
 
     def test_play_nocopper(self):
         """Play a Settlers and pull a copper"""
-        self.plr.deck.set("Gold", "Silver")
-        self.plr.discardpile.set("Gold", "Silver", "Duchy")
-        self.plr.hand.set("Gold", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver")
+        self.plr.piles[Piles.DISCARD].set("Gold", "Silver", "Duchy")
+        self.plr.piles[Piles.HAND].set("Gold", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertNotIn("Copper", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), 2 + 1)
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
 
 
 ###############################################################################

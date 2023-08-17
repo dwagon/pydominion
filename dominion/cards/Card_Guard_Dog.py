@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Guard_Dog """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Guard_Dog(Card.Card):
 
     def special(self, game, player):
         player.pickup_cards(2)
-        if player.hand.size() <= 5:
+        if player.piles[Piles.HAND].size() <= 5:
             player.pickup_cards(2)
 
     def hook_underAttack(self, game, player, attacker):
@@ -40,26 +40,26 @@ class Test_Guard_Dog(unittest.TestCase):
 
     def test_play_small_hand(self):
         """Play a card - gain twice"""
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
     def test_play_big_hand(self):
         """Play a card - gain once"""
-        self.plr.hand.set("Copper", "Silver", "Gold", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_attack(self):
         """Test under attack"""
-        self.plr.hand.set("Copper", "Guard Dog")
+        self.plr.piles[Piles.HAND].set("Copper", "Guard Dog")
         witch = self.g["Witch"]
-        self.att.add_card(witch, "hand")
+        self.att.add_card(witch, Piles.HAND)
         self.att.play_card(witch)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertIn("Guard Dog", self.plr.played)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertIn("Guard Dog", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -52,13 +52,13 @@ class Test_Tent(unittest.TestCase):
             self.card = self.g["Forts"].remove()
             if self.card.name == "Tent":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a tent - don't rotate"""
         self.plr.test_input = ["Discard as normal"]
         self.plr.discard_card(self.card)
-        self.assertIn("Tent", self.plr.discardpile)
+        self.assertIn("Tent", self.plr.piles[Piles.DISCARD])
 
     def test_play_rotate(self):
         """Play a tent - rotate"""

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -57,7 +57,7 @@ class Test_Feast(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Feast"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_dontTrash(self):
         tsize = self.g.trashpile.size()
@@ -65,7 +65,7 @@ class Test_Feast(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize)
         try:
-            self.assertEqual(self.plr.played[0].name, "Feast")
+            self.assertEqual(self.plr.piles[Piles.PLAYED][0].name, "Feast")
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -77,7 +77,7 @@ class Test_Feast(unittest.TestCase):
             self.plr.play_card(self.card)
             self.assertEqual(self.g.trashpile.size(), tsize + 1)
             self.assertIn("Feast", self.g.trashpile)
-            self.assertTrue(self.plr.played.is_empty())
+            self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -89,9 +89,9 @@ class Test_Feast(unittest.TestCase):
         try:
             self.assertEqual(self.g.trashpile.size(), tsize + 1)
             self.assertIn("Feast", self.g.trashpile)
-            self.assertTrue(self.plr.played.is_empty())
-            self.assertEqual(self.plr.discardpile.size(), 1)
-            self.assertIsNotNone(self.plr.discardpile["Duchy"])
+            self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Duchy"])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

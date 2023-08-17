@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Barbarian """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -82,23 +82,23 @@ class Test_Barbarian(unittest.TestCase):
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
         self.card = self.g["Barbarian"].remove()
-        self.attacker.add_card(self.card, "hand")
+        self.attacker.add_card(self.card, Piles.HAND)
 
     def Xtest_play(self):
         """Test against a low cost victim card"""
-        self.victim.deck.set("Estate", "Copper")
+        self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Curse", self.victim.discardpile)
+        self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_expense(self):
         """Test trashing an expensive card"""
-        self.victim.deck.set("Estate", "Province")
+        self.victim.piles[Piles.DECK].set("Estate", "Province")
         self.victim.test_input = ["Select Duchy"]
         self.attacker.play_card(self.card)
         self.assertIn("Province", self.g.trashpile)
-        self.assertNotIn("Curse", self.victim.discardpile)
-        self.assertIn("Duchy", self.victim.discardpile)
+        self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
+        self.assertIn("Duchy", self.victim.piles[Piles.DISCARD])
 
 
 ###############################################################################

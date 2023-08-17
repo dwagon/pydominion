@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Horse """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -24,15 +23,16 @@ class Card_Horse(Card.Card):
     def special(self, game, player):
         player.discard_card(self)
         try:  # If Horse is played multiple times e.g. Kings Court
-            card = player.played.remove(self)
-            card = player.discardpile.remove(self)
+            player.piles[Piles.PLAYED].remove(self)
+            card = player.piles[Piles.DISCARD].remove(self)
             game["Horse"].add(card)
-        except ValueError:
+        except ValueError as exc:
+            print(f"Awooga {exc}")
             pass
 
 
 ###############################################################################
-class Test_Horse(unittest.TestCase):
+class TestHorse(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Horse"])
         self.g.start_game()
@@ -40,10 +40,10 @@ class Test_Horse(unittest.TestCase):
         self.card = self.g["Horse"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertNotIn("Horse", self.plr.played)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertNotIn("Horse", self.plr.piles[Piles.PLAYED])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
         self.assertEqual(self.plr.actions.get(), 1)
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Taxman(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        treas = [c for c in player.hand if c.isTreasure()]
+        treas = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
         cards = player.plr_trash_card(
             cardsrc=treas,
             prompt="Pick card to trash. Others discard that. You gain a treasure costing 3 more",
@@ -27,15 +27,15 @@ class Card_Taxman(Card.Card):
             return
         card = cards[0]
         for vic in player.attack_victims():
-            if vic.hand.size() >= 5:
-                viccard = vic.hand[card.name]
+            if vic.piles[Piles.HAND].size() >= 5:
+                viccard = vic.piles[Piles.HAND][card.name]
                 if viccard:
                     vic.output("Discarding %s due to %s's Taxman" % (viccard.name, player.name))
                     player.output("%s discarded a %s" % (vic.name, viccard.name))
                     vic.discard_card(viccard)
                 else:
                     player.output("%s doesn't have a %s" % (vic.name, card.name))
-                    for c in vic.hand:
+                    for c in vic.piles[Piles.HAND]:
                         vic.reveal_card(c)
         cardcost = player.card_cost(card) + 3
         player.plr_gain_card(cost=cardcost, types={Card.CardType.TREASURE: True})
@@ -51,14 +51,14 @@ class Test_Taxman(unittest.TestCase):
 
     def test_play(self):
         """Play a Taxman"""
-        self.plr.hand.set("Silver")
-        self.victim.hand.set("Copper", "Copper", "Estate", "Duchy", "Silver")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver")
+        self.victim.piles[Piles.HAND].set("Copper", "Copper", "Estate", "Duchy", "Silver")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Silver", "Get Gold"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.g.trashpile)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertIn("Silver", self.victim.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.victim.piles[Piles.DISCARD])
 
 
 ###############################################################################

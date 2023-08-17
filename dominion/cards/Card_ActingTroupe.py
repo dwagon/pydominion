@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -22,7 +21,7 @@ class Card_ActingTroupe(Card.Card):
 
 
 ###############################################################################
-class Test_ActingTroupe(unittest.TestCase):
+class TestActingTroupe(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Acting Troupe"])
         self.g.start_game()
@@ -30,7 +29,7 @@ class Test_ActingTroupe(unittest.TestCase):
 
     def test_play_card(self):
         self.card = self.g["Acting Troupe"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertLessEqual(self.plr.villagers.get(), 4)
         self.assertIn("Acting Troupe", self.g.trashpile)

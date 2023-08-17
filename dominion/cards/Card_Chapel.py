@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -26,21 +26,21 @@ class Test_Chapel(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.ccard = self.g["Chapel"].remove()
-        self.plr.hand.set("Copper", "Silver", "Estate")
-        self.plr.add_card(self.ccard, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Estate")
+        self.plr.add_card(self.ccard, Piles.HAND)
 
     def test_trashnone(self):
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["finish"]
         self.plr.play_card(self.ccard)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.g.trashpile.size(), tsize)
 
     def test_trashtwo(self):
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash copper", "trash silver", "finish"]
         self.plr.play_card(self.ccard)
-        self.assertEqual(self.plr.hand.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
 
 

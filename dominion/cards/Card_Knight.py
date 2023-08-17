@@ -2,7 +2,7 @@
 
 import random
 import unittest
-from dominion import Card, CardPile, Game
+from dominion import Card, CardPile, Game, Piles
 
 
 ###############################################################################
@@ -24,7 +24,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 ###############################################################################
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
-        self.mapping = game.get_card_classes("KnightCard", game.cardpath, "Card_")
+        self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
         super().__init__(
             cardname="Knight",
             klass=None,
@@ -60,7 +60,9 @@ class KnightCard(Card.Card):
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)
             else:
-                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
+                victim.output(
+                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
+                )
                 victim.discard_card(crd)
         if not cards:
             return
@@ -75,12 +77,17 @@ class KnightCard(Card.Card):
         player.output("%s trashed a %s" % (victim.name, to_trash.name))
 
         if to_trash.isKnight():
-            player.output("%s trashed a knight: %s - trashing your %s" % (victim.name, to_trash.name, self.name))
+            player.output(
+                "%s trashed a knight: %s - trashing your %s"
+                % (victim.name, to_trash.name, self.name)
+            )
             player.trash_card(self)
 
         for crd in cards:
             if crd != to_trash:
-                victim.output("%s's %s discarded your %s" % (player.name, self.name, crd.name))
+                victim.output(
+                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
+                )
                 victim.discard_card(crd)
 
 
@@ -97,21 +104,21 @@ class Test_Knight(unittest.TestCase):
         while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
             self.card = self.g["Knights"].remove()
 
-        self.plr.hand.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_nosuitable(self):
         """Play a knight woth no suitable cards"""
-        self.vic.deck.set("Copper", "Copper")
+        self.vic.piles[Piles.DECK].set("Copper", "Copper")
         self.plr.play_card(self.card)
-        self.assertEqual(self.vic.discardpile.size(), 2)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
 
     def test_playcard_one_suitable(self):
         """Play a knight with one suitable card"""
-        self.vic.deck.set("Copper", "Duchy")
+        self.vic.piles[Piles.DECK].set("Copper", "Duchy")
         self.vic.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.vic.discardpile.size(), 1)
+        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 1)
 
 
 ###############################################################################

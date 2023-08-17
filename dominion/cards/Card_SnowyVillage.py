@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Snowy_Village """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,19 +30,19 @@ class Test_SnowyVillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Snowy Village"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 4)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.plr.add_card(self.card, "hand")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 4 - 1)  # -1 for playing card
         self.assertEqual(self.plr.buys.get(), 1 + 1 + 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

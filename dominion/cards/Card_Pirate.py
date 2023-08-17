@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Pirate """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -27,13 +27,13 @@ class Card_Pirate(Card.Card):
         """gain a Treasure costing up to $6 to your hand"""
         # Discard first to avoid the gained card triggering the pirate again
         player.move_card(self, "played")
-        player.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
+        player.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND)
 
     def hook_allplayers_gain_card(self, game, player, owner, card):
         """When any player gains a Treasure, you may play this from your hand"""
         if not card.isTreasure():
             return
-        if self.location != "hand":
+        if self.location != Piles.HAND:
             return
         owner.output(f"Player {player.name} gained a treasure ({card.name})")
         gain = owner.plr_choose_options(
@@ -44,7 +44,7 @@ class Card_Pirate(Card.Card):
         if not gain:
             return
         owner.move_card(self, "played")
-        owner.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination="hand")
+        owner.plr_gain_card(cost=6, types={Card.CardType.TREASURE: True}, destination=Piles.HAND)
 
 
 ###############################################################################
@@ -59,30 +59,30 @@ class Test_Pirate(unittest.TestCase):
 
     def test_playcard(self):
         """Play a pirate"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.test_input = ["Get Gold"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.durationpile.size(), 0)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Pirate", self.plr.played)
+        self.assertEqual(self.plr.piles[Piles.DURATION].size(), 0)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Pirate", self.plr.piles[Piles.PLAYED])
 
     def test_react_treasure(self):
         """Play a pirate through a reaction"""
-        self.plr.hand.set("Pirate")
+        self.plr.piles[Piles.HAND].set("Pirate")
         self.plr.test_input = ["Gain a treasure", "Get Gold"]
         self.oth.gain_card("Silver")
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Pirate", self.plr.played)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Pirate", self.plr.piles[Piles.PLAYED])
 
     def test_react_not_treasure(self):
         """Play a pirate through a reaction, but not a treasure"""
-        self.plr.hand.set("Pirate")
+        self.plr.piles[Piles.HAND].set("Pirate")
         self.plr.test_input = ["Gain a treasure", "Get Gold"]
         self.oth.gain_card("Estate")
-        self.assertNotIn("Gold", self.plr.hand)
-        self.assertNotIn("Pirate", self.plr.played)
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Pirate", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

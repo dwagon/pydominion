@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -19,20 +19,19 @@ class Card_Wish(Card.Card):
         self.numcards = 12
 
     def special(self, game, player):
-        dc = player.plr_choose_options(
-            "Return this to gain a card to you hand costing up to 6",
+        return_card = player.plr_choose_options(
+            "Return this to gain a card to your hand costing up to 6",
             ("Return", True),
             ("Keep", False),
         )
-        if dc:
-            player.discard_card(self)
+        if return_card:
             game["Wish"].add(self)
-            player.played.remove(self)
+            player.piles[Piles.PLAYED].remove(self)
             player.plr_gain_card(cost=6)
 
 
 ###############################################################################
-class Test_Wish(unittest.TestCase):
+class TestWish(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wish"])
         self.g.start_game()
@@ -40,18 +39,21 @@ class Test_Wish(unittest.TestCase):
         self.card = self.g["Wish"].remove()
 
     def test_return(self):
-        self.plr.add_card(self.card, "hand")
+        num_wishes = len(self.g["Wish"])
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Return", "Get Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertNotIn("Wish", self.plr.played)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Wish", self.plr.piles[Piles.PLAYED])
+        self.assertNotIn("Wish", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(len(self.g["Wish"]), num_wishes + 1)
 
     def test_keep(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Keep"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Gold", self.plr.discardpile)
-        self.assertIn("Wish", self.plr.played)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Wish", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

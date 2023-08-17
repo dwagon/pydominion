@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -26,7 +25,7 @@ class Card_IGG(Card.Card):
     def special(self, game, player):
         ans = player.plr_choose_options("Gain a Copper into your hand?", ("No thanks", False), ("Gain Copper", True))
         if ans:
-            player.gain_card("Copper", destination="hand")
+            player.gain_card("Copper", destination=Piles.HAND)
 
     def hook_gain_this_card(self, game, player):
         for plr in player.attack_victims():
@@ -45,18 +44,18 @@ class Test_IGG(unittest.TestCase):
 
     def test_play(self):
         """Play an Ill-Gotten Gains"""
-        self.plr.hand.set("Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["copper"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.HAND])
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_gain(self):
         """Gain an Ill-Gotten Gains"""
-        self.plr.hand.set("Estate")
+        self.plr.piles[Piles.HAND].set("Estate")
         self.plr.gain_card("Ill-Gotten Gains")
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

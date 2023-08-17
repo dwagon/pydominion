@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -36,14 +36,14 @@ class Test_Expand(unittest.TestCase):
         self.expand = self.g["Expand"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.expand, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.expand, Piles.HAND)
         self.plr.test_input = ["Trash Copper", "Get Estate"]
         self.plr.play_card(self.expand)
         self.g.print_state()
-        self.assertTrue(self.plr.hand.is_empty())
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertLessEqual(self.plr.discardpile[0].cost, 3)
+        self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].cost, 3)
 
 
 ###############################################################################

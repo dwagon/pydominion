@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Carpenter """
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -46,24 +46,24 @@ class Test_Carpenter(unittest.TestCase):
 
     def test_play_full(self):
         """Play the card with no empties"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         acts = self.plr.actions.get()
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), acts)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_play_empty(self):
         """Play the card with an empty"""
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         while True:
             c = self.g["Moat"].remove()
             if not c:
                 break
         self.plr.test_input = ["Trash Copper", "Get Estate"]
         self.plr.play_card(self.card)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertIn("Copper", self.g.trashpile)
 
 

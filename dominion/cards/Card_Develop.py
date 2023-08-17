@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -39,13 +39,13 @@ class Test_Develop(unittest.TestCase):
         self.card = self.g["Develop"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
         self.assertIn("Duchy", self.g.trashpile)
-        self.assertIn("Gold", self.plr.deck)
-        self.assertIn("Smithy", self.plr.deck)
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertIn("Smithy", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

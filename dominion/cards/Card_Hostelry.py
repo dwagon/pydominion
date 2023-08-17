@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Hostelry """
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -23,7 +23,7 @@ class Card_Hostelry(Card.Card):
         return "+1 Card; +2 Actions"
 
     def hook_gain_this_card(self, game, player):
-        treas = [_ for _ in player.hand if _.isTreasure()]
+        treas = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treas:
             player.output("No suitable cards for Hostelry")
             return
@@ -46,21 +46,21 @@ class Test_Hostelry(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hostelry"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_gain(self):
         """Gain the card"""
-        self.plr.hand.set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
         self.plr.test_input = ["Copper", "Silver", "Finish"]
         self.plr.gain_card("Hostelry")
-        self.assertIn("Horse", self.plr.discardpile)
-        self.assertNotIn("Silver", self.plr.hand)
+        self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

@@ -1,5 +1,4 @@
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 class Card_Gold(Card.Card):

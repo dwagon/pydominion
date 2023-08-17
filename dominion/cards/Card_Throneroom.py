@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Throneroom(Card.Card):
         """You may chose an Action card in your hand. Play it twice"""
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             if not c.isAction():
                 continue
             sel = "%d" % index
@@ -46,25 +46,25 @@ class Test_Throneroom(unittest.TestCase):
 
     def test_action(self):
         # Test by playing mine twice on a copper. Cu -> Ag -> Au
-        self.plr.hand.set("Copper", "Mine")
-        card = self.plr.gain_card("Throne Room", "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Mine")
+        card = self.plr.gain_card("Throne Room", Piles.HAND)
         self.plr.test_input = ["1", "1", "1"]
         self.plr.play_card(card)
-        self.assertEqual(self.plr.hand[0].name, "Gold")
-        self.assertEqual(self.plr.hand.size(), 1)
-        self.assertEqual(self.plr.discardpile[0].name, "Mine")
-        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.HAND][0].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Mine")
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.actions.get(), 0)
 
     def test_donothing(self):
-        self.plr.hand.set("Copper", "Mine")
-        card = self.plr.gain_card("Throne Room", "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Mine")
+        card = self.plr.gain_card("Throne Room", Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(card)
 
     def test_noaction(self):
-        self.plr.hand.set("Copper", "Copper")
-        card = self.plr.gain_card("Throne Room", "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper")
+        card = self.plr.gain_card("Throne Room", Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(card)
         self.assertEqual(self.plr.test_input, ["0"])

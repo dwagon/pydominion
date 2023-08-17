@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sunken_Treasure"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Sunken_Treasure(Card.Card):
         self.desc = """Gain an Action card you don't have a copy of in play."""
 
     def special(self, game, player):
-        acts = [_ for _ in game.cardTypes() if _.isAction() and _.name not in player.played]
+        acts = [_ for _ in game.cardTypes() if _.isAction() and _.name not in player.piles[Piles.PLAYED]]
         card = player.card_sel(cardsrc=acts, prompt="Gain a card")
         player.gain_card(card[0])
 
@@ -36,11 +36,11 @@ class Test_Sunken_Treasure(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.played.set("Moat", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.PLAYED].set("Moat", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Militia"]
         self.plr.play_card(self.card)
-        self.assertIn("Militia", self.plr.discardpile)
+        self.assertIn("Militia", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,13 +37,13 @@ class Test_Horsetraders(unittest.TestCase):
         self.card = self.g["Horse Traders"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Estate", "Duchy", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Estate", "Duchy", "Finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Fisherman """
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -20,7 +20,7 @@ class Card_Fisherman(Card.Card):
         self.cost = 5
 
     def hook_this_card_cost(self, game, player):
-        if player.discardpile.is_empty():
+        if player.piles[Piles.DISCARD].is_empty():
             return -3
         return 0
 
@@ -32,20 +32,20 @@ class Test_Fisherman(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Fisherman"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play the card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
     def test_buycard(self):
         """Buy the card"""
-        self.plr.discardpile.set("Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper")
         self.assertEqual(self.plr.card_cost(self.card), 5)
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.DISCARD].set()
         self.assertEqual(self.plr.card_cost(self.card), 2)
 
 

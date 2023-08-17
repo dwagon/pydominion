@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_Swap(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        acts = [_ for _ in player.hand if _.isAction()]
+        acts = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not acts:
             return
         choice = player.card_sel(
@@ -27,7 +27,7 @@ class Card_Swap(Card.Card):
             cardsrc=acts,
         )
         if choice:
-            player.hand.remove(choice[0])
+            player.piles[Piles.HAND].remove(choice[0])
             game[choice[0].name].add(choice[0])
             player.plr_gain_card(5, "less")
 
@@ -42,13 +42,13 @@ class Test_Swap(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.hand.set("Moat", "Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Select Moat", "Get Swap"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 2 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Swap", self.plr.discardpile)
+        self.assertIn("Swap", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

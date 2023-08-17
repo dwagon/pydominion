@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -29,7 +29,7 @@ class Card_Sage(Card.Card):
             player.reveal_card(card)
             if card.cost >= 3:
                 player.output("Adding %s to hand" % card.name)
-                player.add_card(card, "hand")
+                player.add_card(card, Piles.HAND)
                 break
             player.output("Discarding %s" % card.name)
             todiscard.append(card)
@@ -47,19 +47,19 @@ class Test_Sage(unittest.TestCase):
 
     def test_play(self):
         """Pick a card out of the pile"""
-        self.plr.deck.set("Gold", "Copper", "Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_exhaust_deck(self):
         """No good card to pick out of the pile"""
-        self.plr.deck.set("Copper", "Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.deck.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 0)
 
 
 ###############################################################################

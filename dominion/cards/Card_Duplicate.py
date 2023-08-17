@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -17,7 +17,7 @@ class Card_Duplicate(Card.Card):
         self.when = ["special"]
 
     def hook_gain_card(self, game, player, card):
-        if not player.reserve["Duplicate"]:
+        if not player.piles[Piles.RESERVE]["Duplicate"]:
             return {}
         if card.cost > 6:
             return {}
@@ -52,21 +52,21 @@ class Test_Duplicate(unittest.TestCase):
     def test_buy(self):
         """Call Duplicate from reserve"""
         self.plr.coins.set(6)
-        self.plr.reserve.set("Duplicate")
+        self.plr.piles[Piles.RESERVE].set("Duplicate")
         self.plr.test_input = ["Gold"]
         self.plr.buy_card(self.g["Gold"])
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        for i in self.plr.discardpile:
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        for i in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(i.name, "Gold")
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_buy_non_reserve(self):
         """Buy a card when duplicate just in hand"""
         self.plr.coins.set(6)
-        self.plr.reserve.set()
-        self.plr.hand.set("Duplicate")
+        self.plr.piles[Piles.RESERVE].set()
+        self.plr.piles[Piles.HAND].set("Duplicate")
         self.plr.buy_card(self.g["Gold"])
-        self.assertEqual(self.plr.discardpile.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
 
 

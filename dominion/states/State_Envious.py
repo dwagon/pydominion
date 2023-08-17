@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, State
+from dominion import Card, Game, Piles, State
 
 
 ###############################################################################
@@ -40,10 +40,10 @@ class Test_Envious(unittest.TestCase):
 
     def test_envious(self):
         self.plr.assign_state("Envious")
-        self.plr.hand.set("Silver", "Gold")
-        self.plr.play_card(self.plr.hand[0])
+        self.plr.piles[Piles.HAND].set("Silver", "Gold")
+        self.plr.play_card(self.plr.piles[Piles.HAND][0])
         self.assertEqual(self.plr.coins.get(), 1)
-        self.plr.play_card(self.plr.hand[0])
+        self.plr.play_card(self.plr.piles[Piles.HAND][0])
         self.assertEqual(self.plr.coins.get(), 2)
 
 

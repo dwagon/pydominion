@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Old_Map"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -44,14 +44,14 @@ class Test_Old_Map(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.deck.set("Estate", "Duchy", "Province")
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Copper", "Rotate"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertNotIn("Copper", self.plr.hand)
-        self.assertIn("Province", self.plr.hand)
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
         self.assertEqual(self.g["Odysseys"].top_card(), "Voyage")
 
 

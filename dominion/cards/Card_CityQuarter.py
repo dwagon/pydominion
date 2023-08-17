@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_CityQuarter(Card.Card):
 
     def special(self, game, player):
         actions = 0
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             player.reveal_card(c)
             if c.isAction():
                 actions += 1
@@ -37,11 +37,11 @@ class Test_CityQuarter(unittest.TestCase):
 
     def test_play(self):
         """Play a City Quarter"""
-        self.plr.hand.set("Moat", "Moat", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Moat", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 3 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3 + 2)
 
 
 ###############################################################################

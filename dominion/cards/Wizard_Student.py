@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Card_Student(Card.Card):
         trshd = player.plr_trash_card(prompt="Pick a card to trash", num=1, force=True)
         if trshd[0].isTreasure():
             player.favors.add(1)
-            player.played.remove(self)
+            player.piles[Piles.PLAYED].remove(self)
             player.add_card(self, "deck")
 
 
@@ -49,13 +49,13 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
-        self.plr.add_card(card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Don't change", "Trash Copper"]
         favs = self.plr.favors.get()
         self.plr.play_card(card)
         self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Student", self.plr.deck)
+        self.assertIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favs + 1)
 
     def test_play_trash_non_treas(self):
@@ -64,13 +64,13 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
-        self.plr.add_card(card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Don't change", "Trash Estate"]
         favs = self.plr.favors.get()
         self.plr.play_card(card)
         self.assertIn("Estate", self.g.trashpile)
-        self.assertNotIn("Student", self.plr.deck)
+        self.assertNotIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favs)
 
     def test_play_trash_rotate(self):
@@ -79,8 +79,8 @@ class Test_Student(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Student":
                 break
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate")
-        self.plr.add_card(card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
+        self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Rotate", "Trash Estate"]
         self.plr.play_card(card)
         card = self.g["Wizards"].remove()

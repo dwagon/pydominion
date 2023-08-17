@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Card, Game, Piles, Player, Piles
 
 
 ###############################################################################
@@ -19,7 +18,7 @@ class Card_Mountebank(Card.Card):
 
     def special(self, game, player):
         for plr in player.attack_victims():
-            for c in plr.hand:
+            for c in plr.piles[Piles.HAND]:
                 if c.name == "Curse":
                     player.output("Player %s discarded a curse" % plr.name)
                     plr.output("Discarded a Curse due to %s's Mountebank" % player.name)
@@ -42,15 +41,15 @@ class Test_Mountebank(unittest.TestCase):
         self.curse = self.g["Curse"].remove()
 
     def test_hascurse(self):
-        self.attacker.add_card(self.mountebank, "hand")
-        self.victim.add_card(self.curse, "hand")
+        self.attacker.add_card(self.mountebank, Piles.HAND)
+        self.victim.add_card(self.curse, Piles.HAND)
         self.attacker.play_card(self.mountebank)
-        self.assertEqual(self.victim.discardpile[0].name, "Curse")
+        self.assertEqual(self.victim.piles[Piles.DISCARD][0].name, "Curse")
 
     def test_nocurse(self):
-        self.attacker.add_card(self.mountebank, "hand")
+        self.attacker.add_card(self.mountebank, Piles.HAND)
         self.attacker.play_card(self.mountebank)
-        discards = [c.name for c in self.victim.discardpile]
+        discards = [c.name for c in self.victim.piles[Piles.DISCARD]]
         self.assertEqual(sorted(discards), sorted(["Curse", "Copper"]))
 
 

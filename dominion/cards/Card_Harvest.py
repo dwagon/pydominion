@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,16 +34,16 @@ class Test_Harvest(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Harvest"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Harvest"""
-        self.plr.deck.set("Duchy", "Duchy", "Silver", "Copper")
+        self.plr.piles[Piles.DECK].set("Duchy", "Duchy", "Silver", "Copper")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertNotIn("Duchy", self.plr.deck)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Duchy", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

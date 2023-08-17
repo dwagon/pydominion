@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -33,15 +33,15 @@ class Test_Merchant_Camp(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Merchant Camp"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card and discard to deck"""
         self.plr.test_input = ["Onto deck"]
         self.plr.play_card(self.card)
         self.plr.discard_card(self.card)
-        self.assertNotIn("Merchant Card", self.plr.discardpile)
-        self.assertEqual(self.plr.deck.top_card(), self.card)
+        self.assertNotIn("Merchant Card", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DECK].top_card(), self.card)
 
 
 ###############################################################################

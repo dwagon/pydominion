@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Card_Sorcerer(Card.Card):
             pick = plr.plr_choose_options(
                 "Sorcerer: Guess the top card correctly or get a curse", *options
             )
-            tpcrd = plr.deck.top_card()
+            tpcrd = plr.piles[Piles.DECK].top_card()
             player.reveal_card(tpcrd)
             if tpcrd.name != pick:
                 player.output(f"Top card is {tpcrd.name} not {pick}")
@@ -47,7 +47,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Sorcerer(unittest.TestCase):
+class TestSorcerer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Wizards"])
         self.g.start_game()
@@ -58,28 +58,28 @@ class Test_Sorcerer(unittest.TestCase):
             card = self.g["Wizards"].remove()
             if card.name == "Sorcerer":
                 break
-        self.plr.add_card(card, "hand")
-        hndsz = self.plr.hand.size()
-        self.vic.deck.set("Duchy")
+        self.plr.add_card(card, Piles.HAND)
+        hndsz = self.plr.piles[Piles.HAND].size()
+        self.vic.piles[Piles.DECK].set("Duchy")
         self.vic.test_input = ["Duchy"]
         self.plr.play_card(card)
-        self.assertEqual(self.plr.hand.size(), hndsz)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertNotIn("Curse", self.vic.discardpile)
+        self.assertNotIn("Curse", self.vic.piles[Piles.DISCARD])
 
     def test_play_miss(self):
         while True:
             card = self.g["Wizards"].remove()
             if card.name == "Sorcerer":
                 break
-        self.plr.add_card(card, "hand")
-        hndsz = self.plr.hand.size()
-        self.vic.deck.set("Duchy")
+        self.plr.add_card(card, Piles.HAND)
+        hndsz = self.plr.piles[Piles.HAND].size()
+        self.vic.piles[Piles.DECK].set("Duchy")
         self.vic.test_input = ["Estate"]
         self.plr.play_card(card)
-        self.assertEqual(self.plr.hand.size(), hndsz)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Curse", self.vic.discardpile)
+        self.assertIn("Curse", self.vic.piles[Piles.DISCARD])
 
 
 ###############################################################################

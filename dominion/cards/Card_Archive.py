@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, PlayArea
+from dominion import Card, Game, Piles, PlayArea, Piles
 
 
 ###############################################################################
@@ -37,7 +37,7 @@ class Card_Archive(Card.Card):
             options.append({"selector": sel, "print": toprint, "card": card})
             index += 1
         o = player.user_input(options, "What card to bring back from the Archive?")
-        player.add_card(o["card"], "hand")
+        player.add_card(o["card"], Piles.HAND)
         self._archive_reserve.remove(o["card"])
         player.secret_count -= 1
         if self._archive_reserve.is_empty():
@@ -56,19 +56,19 @@ class Test_Archive(unittest.TestCase):
 
     def test_play(self):
         """Play a Archive"""
-        self.plr.deck.set("Gold", "Silver", "Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver", "Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Gold"]
         self.plr.start_turn()
-        self.assertIn("Gold", self.plr.hand)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertEqual(len(self.card._archive_reserve), 2)
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Silver"]
         self.plr.start_turn()
-        self.assertIn("Silver", self.plr.hand)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
         self.plr.end_turn()
         self.plr.test_input = ["Bring back Province"]
         self.plr.start_turn()

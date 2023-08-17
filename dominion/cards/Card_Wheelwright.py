@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Wheelwright """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -39,13 +39,13 @@ class Test_Wheelwright(unittest.TestCase):
 
     def test_play(self):
         """Play the Wheelwright"""
-        self.plr.deck.set("Estate", "Duchy")
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Estate", "Duchy")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Silver", "Get Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.discardpile)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.actions.get(), 1)
 
 

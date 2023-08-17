@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,7 +34,7 @@ class Card_Mystic(Card.Card):
         player.reveal_card(c)
         if o["card"].name == c.name:
             player.output("You guessed correctly")
-            player.add_card(c, "hand")
+            player.add_card(c, Piles.HAND)
         else:
             player.output("You chose poorly - it was a %s" % c.name)
             player.add_card(c, "topdeck")
@@ -54,7 +54,7 @@ class Test_Mystic(unittest.TestCase):
 
     def test_play(self):
         """No guess should still get results"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
@@ -62,26 +62,26 @@ class Test_Mystic(unittest.TestCase):
 
     def test_good(self):
         """When the guess is good the card should move to the hand"""
-        self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Province")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Province", self.plr.hand)
-        self.assertTrue(self.plr.deck.is_empty())
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertTrue(self.plr.piles[Piles.DECK].is_empty())
 
     def test_bad(self):
         """When the guess is bad the card should stay on the deck"""
-        self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Province")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertNotIn("Gold", self.plr.hand)
-        self.assertNotIn("Province", self.plr.hand)
-        self.assertEqual(self.plr.deck[-1].name, "Province")
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Province", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Province")
 
 
 ###############################################################################

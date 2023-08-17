@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -21,7 +21,7 @@ class Card_Miller(Card.Card):
             card = player.next_card()
             cards.append(card)
         ch = player.card_sel(prompt="Pick a card to put into your hand", cardsrc=cards)
-        player.add_card(ch[0], "hand")
+        player.add_card(ch[0], Piles.HAND)
         cards.remove(ch[0])
         for card in cards:
             player.add_card(card, "discard")
@@ -37,16 +37,16 @@ class Test_Miller(unittest.TestCase):
             self.card = self.g["Townsfolk"].remove()
             if self.card.name == "Miller":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a miller"""
-        self.plr.deck.set("Silver", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Silver", "Gold", "Estate", "Duchy")
         self.plr.test_input = ["Gold"]
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertNotIn("Silver", self.plr.deck)
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

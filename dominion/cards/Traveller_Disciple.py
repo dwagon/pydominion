@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Disciple(Card.Card):
 
     def special(self, game, player):
         """You may play an Action card from your hand twice. Gain a copy of it"""
-        actions = [c for c in player.hand if c.isAction()]
+        actions = [c for c in player.piles[Piles.HAND] if c.isAction()]
         if not actions:
             player.output("No suitable actions to perform")
             return
@@ -31,7 +31,7 @@ class Card_Disciple(Card.Card):
             player.output("Number %d play of %s" % (i, card.name))
             player.play_card(card, discard=False, cost_action=False)
         player.add_card(card, "played")
-        player.hand.remove(card)
+        player.piles[Piles.HAND].remove(card)
         if card.purchasable:
             c = player.gain_card(card.name)
             if c:
@@ -52,20 +52,20 @@ class Test_Disciple(unittest.TestCase):
 
     def test_play_no_actions(self):
         """Play a disciple with no actions available"""
-        self.plr.hand.set("Copper", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.played.size(), 1)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
     def test_play_actions(self):
         """Play a disciple with an action available"""
-        self.plr.hand.set("Copper", "Estate", "Moat")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Moat")
         self.plr.test_input = ["moat"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.played.size(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -26,8 +26,8 @@ class Card_Temple(Card.Card):
 
     def special(self, game, player):
         player.add_score("Temple", 1)
-        cardnames = {_.name for _ in player.hand}
-        cards = [player.hand[_] for _ in cardnames]
+        cardnames = {_.name for _ in player.piles[Piles.HAND]}
+        cards = [player.piles[Piles.HAND][_] for _ in cardnames]
         trash = player.plr_trash_card(cardsrc=cards, prompt="Trash up to 3 different cards", num=3)
         if not trash:
             return
@@ -51,8 +51,8 @@ class Test_Temple(unittest.TestCase):
 
     def test_play(self):
         """Play a Temple"""
-        self.plr.hand.set("Copper", "Silver", "Silver", "Gold", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Silver", "Gold", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Copper", "Silver", "finish"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.get_score_details()["Temple"], 1)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,21 +34,21 @@ class Test_Ranger(unittest.TestCase):
     def test_play_first(self):
         """Play a ranger"""
         self.plr.journey_token = True
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertFalse(self.plr.journey_token)
 
     def test_play_second(self):
         """Play a ranger the second time"""
         self.plr.journey_token = False
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertTrue(self.plr.journey_token)
 
 

@@ -2,7 +2,7 @@
 """  http://wiki.dominionstrategy.com/index.php/Plateau_Shepherds"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -29,18 +29,18 @@ class Test_Plateau_Shepherds(unittest.TestCase):
 
     def test_score_less(self):
         """When we have less cards than favors"""
-        self.plr.hand.set("Estate", "Estate")
-        self.plr.deck.set("Silver", "Silver")
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.HAND].set("Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Silver", "Silver")
+        self.plr.piles[Piles.DISCARD].set()
         self.plr.favors.set(4)
         score = self.plr.get_score_details()
         self.assertEqual(score["Plateau Shepherds"], 4)
 
     def test_score_more(self):
         """When we have more cards than favors"""
-        self.plr.hand.set("Estate", "Estate", "Estate", "Estate")
-        self.plr.deck.set("Silver", "Silver")
-        self.plr.discardpile.set()
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Silver", "Silver")
+        self.plr.piles[Piles.DISCARD].set()
         self.plr.favors.set(3)
         score = self.plr.get_score_details()
         self.assertEqual(score["Plateau Shepherds"], 6)

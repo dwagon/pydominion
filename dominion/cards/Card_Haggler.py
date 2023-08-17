@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -34,18 +34,18 @@ class Test_Haggler(unittest.TestCase):
         self.card = self.g["Haggler"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
 
     def test_buy(self):
         """Buy a Gold and haggle a silver"""
-        self.plr.played.set("Haggler")
+        self.plr.piles[Piles.PLAYED].set("Haggler")
         self.plr.test_input = ["Get Silver"]
         self.plr.coins.set(6)
         self.plr.buy_card(self.g["Gold"])
-        self.assertIn("Silver", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

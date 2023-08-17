@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sea_Chart"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -22,14 +22,14 @@ class Card_Sea_Chart(Card.Card):
 
     def special(self, game, player):
         """Sea Chart Special"""
-        nextcard = player.deck.top_card()
+        nextcard = player.piles[Piles.DECK].top_card()
         if not nextcard:
             player.output("No cards on deck")
             return
         player.reveal_card(nextcard)
-        if nextcard.name in player.played:
+        if nextcard.name in player.piles[Piles.PLAYED]:
             player.output(f"Next card is {nextcard.name}, same as played so moving to hand")
-            player.move_card(nextcard, "hand")
+            player.move_card(nextcard, Piles.HAND)
         else:
             player.output(f"Next card is {nextcard.name} which hasn't been played")
 
@@ -43,21 +43,21 @@ class Test_Sea_Chart(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sea Chart"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_match(self):
         """Play a Sea Chart where we have played the same"""
-        self.plr.deck.set("Moat", "Copper")
-        self.plr.played.set("Moat")
+        self.plr.piles[Piles.DECK].set("Moat", "Copper")
+        self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.hand)
+        self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
     def test_playcard_nomatch(self):
         """Play a Sea Chart where we haven't played the same"""
-        self.plr.deck.set("Moat", "Copper")
-        self.plr.played.set("Copper")
+        self.plr.piles[Piles.DECK].set("Moat", "Copper")
+        self.plr.piles[Piles.PLAYED].set("Copper")
         self.plr.play_card(self.card)
-        self.assertNotIn("Moat", self.plr.hand)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

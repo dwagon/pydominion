@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Delay"""
 
 import unittest
-from dominion import Game, Event
+from dominion import Game, Event, Piles
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Event_Delay(Event.Event):
 
     def special(self, game, player):
         actions = []
-        for card in player.hand:
+        for card in player.piles[Piles.HAND]:
             if card.isAction():
                 actions.append(card)
         if not actions:
@@ -32,7 +32,7 @@ class Event_Delay(Event.Event):
 
 
 ###############################################################################
-class Test_Delay(unittest.TestCase):
+class TestDelay(unittest.TestCase):
     """Test Delay"""
 
     def setUp(self):
@@ -49,9 +49,9 @@ class Test_Delay(unittest.TestCase):
     def test_play(self):
         """Perform a Delay"""
         self.plr.test_input = ["Select Moat"]
-        self.plr.hand.set("Moat", "Copper", "Estate")
+        self.plr.piles[Piles.HAND].set("Moat", "Copper", "Estate")
         self.plr.perform_event(self.card)
-        self.assertIn("Moat", self.plr.deferpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DEFER])
 
 
 ###############################################################################

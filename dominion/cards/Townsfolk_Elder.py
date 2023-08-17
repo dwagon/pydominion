@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Elder"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -38,7 +38,7 @@ class Test_Elder(unittest.TestCase):
             if card.name == "Elder":
                 break
         self.card = card
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play an elder"""

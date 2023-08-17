@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -32,14 +32,14 @@ class Test_Fairgrounds(unittest.TestCase):
 
     def test_zero(self):
         """Fairground for 4 types"""
-        self.plr.hand.set("Copper", "Estate", "Silver", "Fairgrounds")
-        self.plr.deck.set("Copper", "Estate", "Silver", "Fairgrounds")
+        self.plr.piles[Piles.HAND].set("Copper", "Estate", "Silver", "Fairgrounds")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Silver", "Fairgrounds")
         sc = self.plr.get_score_details()
         self.assertEqual(sc["Fairgrounds"], 0)
 
     def test_one(self):
         """Fairground for 4 types"""
-        self.plr.deck.set("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Silver", "Fairgrounds", "Gold")
         sc = self.plr.get_score_details()
         self.assertEqual(sc["Fairgrounds"], 2)
 

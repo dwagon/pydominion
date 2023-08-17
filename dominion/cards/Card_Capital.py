@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,7 +33,7 @@ class Test_Capital(unittest.TestCase):
 
     def test_play(self):
         """Play a Capital"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 6)
@@ -44,7 +44,7 @@ class Test_Capital(unittest.TestCase):
 
     def test_dontplay(self):
         """Dont play a Capital"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.discard_card(self.card)

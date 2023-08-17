@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,26 +38,26 @@ class Test_Huntinggrounds(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Hunting Grounds"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a Hunting Ground"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 4)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 4)
 
     def test_trash_estate(self):
         """Trash a hunting ground and gain estates"""
         self.plr.test_input = ["Estates"]
         self.plr.trash_card(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 3)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
 
     def test_trash_duchy(self):
         """Trash a hunting ground and gain duchy"""
         self.plr.test_input = ["Duchy"]
         self.plr.trash_card(self.card)
-        self.assertEqual(self.plr.discardpile.size(), 1)
-        self.assertIn("Duchy", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

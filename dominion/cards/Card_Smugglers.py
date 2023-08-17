@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -38,9 +38,9 @@ class Test_Smugglers(unittest.TestCase):
         """Play a smugglers"""
         self.other.stats["bought"] = [self.g["Gold"].remove()]
         self.plr.test_input = ["gold"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Gold", self.plr.discardpile)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Woodworkers_Guild"""
 
 import unittest
-from dominion import Card, Game, Ally
+from dominion import Card, Game, Piles, Ally
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Ally_Woodworkers_Guild(Ally.Ally):
     def hook_pre_buy(self, game, player):
         if player.favors.get() == 0:
             return
-        actions = [_ for _ in player.hand if _.isAction()]
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             return
         spend = player.plr_choose_options(
@@ -58,7 +58,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
 
     def test_play_card(self):
         """Play and gain a card"""
-        self.plr.hand.set("Underling")
+        self.plr.piles[Piles.HAND].set("Underling")
         self.plr.favors.set(2)
         self.plr.test_input = [
             "Spend favor",
@@ -68,7 +68,7 @@ class Test_Woodworkers_Guild(unittest.TestCase):
         ]
         self.plr.buy_phase()
         self.assertIn("Underling", self.g.trashpile)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.favors.get(), 1)
 
 

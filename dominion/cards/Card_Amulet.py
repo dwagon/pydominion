@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -45,43 +44,43 @@ class Test_Amulet(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Amulet"].remove()
-        self.plr.hand.set("Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_coin(self):
         """Play an amulet with coin"""
         self.plr.test_input = ["coin", "coin"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertNotIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertNotIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_play_silver(self):
         """Play an amulet with coin"""
         self.plr.test_input = ["silver", "silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertIn("Silver", self.plr.discardpile)
+        self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
     def test_play_trash(self):
         """Play an amulet with trash"""
         tsize = self.g.trashpile.size()
         self.plr.test_input = ["trash", "duchy", "finish", "trash", "1", "finish"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.g.trashpile)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertNotIn("Silver", self.plr.discardpile)
+        self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
 
 

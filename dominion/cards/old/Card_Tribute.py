@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Tribute """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -28,28 +28,28 @@ class Card_Tribute(Card.Card):
             card = victim.next_card()
             victim.reveal_card(card)
             cards.append(card)
-        cardname = None
-        for c in cards:
-            player.output(f"Looking at {c.name} from {victim.name}")
-            victim.output(f"{player.name}'s Tribute discarded {c.name}")
-            victim.add_card(c, "discard")
-            if c.name == cardname:
+        card_name = None
+        for card in cards:
+            player.output(f"Looking at {card.name} from {victim.name}")
+            victim.output(f"{player.name}'s Tribute discarded {card.name}")
+            victim.add_card(card, "discard")
+            if card.name == card_name:
                 player.output("Duplicate - no extra")
                 continue
-            cardname = c.name
-            if c.isAction():
+            card_name = card.name
+            if card.isAction():
                 player.output("Gained two actions")
                 player.add_actions(2)
-            elif c.isTreasure():
+            elif card.isTreasure():
                 player.output("Gained two coin")
                 player.coins.add(2)
-            elif c.isVictory():
+            elif card.isVictory():
                 player.output("Gained two cards")
                 player.pickup_cards(2)
 
 
 ###############################################################################
-class Test_Tribute(unittest.TestCase):
+class TestTribute(unittest.TestCase):
     """Test Tribute"""
 
     def setUp(self):
@@ -57,23 +57,23 @@ class Test_Tribute(unittest.TestCase):
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Tribute"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play a tribute"""
-        self.victim.deck.set("Copper", "Estate")
+        self.victim.piles[Piles.DECK].set("Copper", "Estate")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 7)
-        self.assertEqual(self.victim.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
 
     def test_same(self):
         """Victim has the same cards for Tribute"""
-        self.victim.deck.set("Tribute", "Tribute")
+        self.victim.piles[Piles.DECK].set("Tribute", "Tribute")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
 
 
 ###############################################################################

@@ -3,7 +3,7 @@
 import unittest
 from dominion import Boon
 from dominion import Card
-from dominion import Game
+from dominion import Game, Piles
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Boon_Earths_Gift(Boon.Boon):
         self.coin = 2
 
     def special(self, game, player):
-        treasures = [c for c in player.hand if c.isTreasure()]
+        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
         if not treasures:
             return
         tr = player.plr_discard_cards(
@@ -44,14 +44,14 @@ class Test_Earths_Gift(unittest.TestCase):
 
     def test_earths_gift(self):
         self.coins = 0
-        self.plr.hand.set("Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Discard Copper", "Get Silver"]
         self.plr.play_card(self.card)
         try:
             self.assertEqual(self.plr.coins.get(), 2 + 2)  # Boon + Bard
-            self.assertIsNotNone(self.plr.discardpile["Silver"])
-            self.assertIsNotNone(self.plr.discardpile["Copper"])
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
+            self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Copper"])
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class Project_Innovation(Project.Project):
             ("Don't play", False),
         )
         if ch:
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
         return {}
 
@@ -38,7 +38,9 @@ class Test_Innovation(unittest.TestCase):
     """Test Innovation"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Innovation"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Innovation"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
@@ -48,8 +50,8 @@ class Test_Innovation(unittest.TestCase):
         self.plr.test_input = ["Play card"]
         self.plr.start_turn()
         self.plr.gain_card("Moat")
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
     def test_dontplay(self):
         """Don't play a card through innovation"""
@@ -57,9 +59,9 @@ class Test_Innovation(unittest.TestCase):
         self.plr.test_input = ["Don't play"]
         self.plr.start_turn()
         self.plr.gain_card("Moat")
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertNotIn("Moat", self.plr.hand)
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
 
 
 ###############################################################################

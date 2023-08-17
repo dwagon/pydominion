@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Hill_Fort"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -22,11 +22,11 @@ class Card_Hill_Fort(Card.Card):
     def special(self, game, player):
         chc = player.plr_choose_options(
             "Choose One - gain a card costing up to $4 and ...",
-            ("put it into your hand", "hand"),
+            ("put it into your hand", Piles.HAND),
             ("+1 Card and +1 Action", "disc"),
         )
-        if chc == "hand":
-            player.plr_gain_card(cost=4, destination="hand")
+        if chc == Piles.HAND:
+            player.plr_gain_card(cost=4, destination=Piles.HAND)
         elif chc == "disc":
             player.plr_gain_card(cost=4)
             player.pickup_card()
@@ -43,24 +43,24 @@ class Test_Hill_Fort(unittest.TestCase):
             self.card = self.g["Forts"].remove()
             if self.card.name == "Hill Fort":
                 break
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_hand(self):
         self.plr.test_input = ["put it", "Get Silver"]
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.play_card(self.card)
-        self.assertIn("Silver", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), hndsz)
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz)
         self.assertEqual(self.plr.actions.get(), acts - 1)
 
     def test_play_disc(self):
         self.plr.test_input = ["card", "Get Silver"]
-        hndsz = self.plr.hand.size()
+        hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
         self.plr.play_card(self.card)
-        self.assertNotIn("Silver", self.plr.hand)
-        self.assertEqual(self.plr.hand.size(), hndsz + 1 - 1)
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 1 - 1)
         self.assertEqual(self.plr.actions.get(), acts - 1 + 1)
 
 

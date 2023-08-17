@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -30,16 +30,16 @@ class Test_Gardens(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_score_0(self):
-        self.plr.hand.set("Gardens", "Copper", "Copper")
-        self.plr.deck.set("Copper", "Copper", "Copper")
-        self.plr.discardpile.set("Copper", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Gardens", "Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper")
         score = self.plr.get_score_details()
         self.assertEqual(score["Gardens"], 0)
 
     def test_score_1(self):
-        self.plr.hand.set("Gardens", "Copper", "Copper")
-        self.plr.deck.set("Copper", "Copper", "Copper", "Copper")
-        self.plr.discardpile.set("Copper", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Gardens", "Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper")
         score = self.plr.get_score_details()
         self.assertEqual(score["Gardens"], 1)
 

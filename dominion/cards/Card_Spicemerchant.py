@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -15,7 +15,7 @@ class Card_SpiceMerchant(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        treasures = [c for c in player.hand if c.isTreasure()]
+        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
         tr = player.plr_trash_card(
             prompt="Trash a treasure from your hand for +2 Cards, +1 Action / +2 Coins, +1 Buy",
             cardsrc=treasures,
@@ -45,13 +45,13 @@ class Test_SpiceMerchant(unittest.TestCase):
     def test_play_card(self):
         """Play an Spice Merchant and select cards"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold", "cards"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.g.trashpile)
-        self.assertEqual(self.plr.hand.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 1)
         self.assertEqual(self.plr.coins.get(), 0)
@@ -59,13 +59,13 @@ class Test_SpiceMerchant(unittest.TestCase):
     def test_play_coins(self):
         """Play an Spice Merchant and select coins"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Gold", "coins"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
         self.assertIn("Gold", self.g.trashpile)
-        self.assertEqual(self.plr.hand.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 0)
         self.assertEqual(self.plr.actions.get(), 0)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 2)

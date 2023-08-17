@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,7 +25,7 @@ class Card_Distantlands(Card.Card):
         """Worth 4 VP if on your tavern mat; else 0"""
         score = 0
         if game.gameover:
-            for c in player.reserve:
+            for c in player.piles[Piles.RESERVE]:
                 if c.name == "Distant Lands" and not c.counted:
                     c.counted = True
                     score += 4
@@ -42,26 +42,26 @@ class Test_Distantlands(unittest.TestCase):
 
     def test_play(self):
         """Play a distant lands"""
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.reserve.size(), 1)
-        self.assertIsNotNone(self.plr.reserve["Distant Lands"])
+        self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
+        self.assertIsNotNone(self.plr.piles[Piles.RESERVE]["Distant Lands"])
 
     def test_notonmat(self):
-        self.plr.hand.set("Distant Lands")
+        self.plr.piles[Piles.HAND].set("Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 0)
 
     def test_onmat(self):
         """Distant lands on mat"""
-        self.plr.reserve.set("Distant Lands")
+        self.plr.piles[Piles.RESERVE].set("Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 4)
 
     def test_onmat_twice(self):
         """Two Distant lands on mat"""
-        self.plr.reserve.set("Distant Lands", "Distant Lands")
+        self.plr.piles[Piles.RESERVE].set("Distant Lands", "Distant Lands")
         self.g.gameover = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 8)
 

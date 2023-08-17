@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -33,11 +32,11 @@ class Test_Altar(unittest.TestCase):
 
     def test_play(self):
         """Play an Altar"""
-        self.plr.hand.set("Province")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Province", "Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.plr.discardpile)
+        self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
         self.assertIn("Province", self.g.trashpile)
 
 

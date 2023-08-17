@@ -2,7 +2,7 @@
 """http://wiki.dominionstrategy.com/index.php/Investment"""
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Investment(Card.Card):
 
     def special(self, game, player):
         player.plr_trash_card(force=True)
-        num_treas = len({_.name for _ in player.hand if _.isTreasure()})
+        num_treas = len({_.name for _ in player.piles[Piles.HAND] if _.isTreasure()})
         cash_opt = player.plr_choose_options(
             "Choose One? ",
             ("+1 Coin", True),
@@ -46,8 +46,8 @@ class Test_Investment(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Investment"].remove()
-        self.plr.hand.set("Copper", "Silver", "Gold", "Estate", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_donttrash(self):
         """Play but don't trash"""

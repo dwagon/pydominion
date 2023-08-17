@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -52,35 +52,35 @@ class Test_Golem(unittest.TestCase):
 
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""
-        self.plr.hand.set()
-        self.plr.deck.set("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Moat", "Estate", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
             sorted(["Golem", "Moat", "Village"]),
-            sorted([c.name for c in self.plr.played]),
+            sorted([c.name for c in self.plr.piles[Piles.PLAYED]]),
         )
-        self.assertEqual(sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.discardpile]))
+        self.assertEqual(sorted(["Copper", "Estate"]), sorted([c.name for c in self.plr.piles[Piles.DISCARD]]))
 
     def test_golem(self):
         """Ensure golem isn't picked up"""
-        self.plr.hand.set()
-        self.plr.deck.set("Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.piles[Piles.DECK].set("Gold", "Gold", "Gold", "Village", "Golem", "Moat", "Estate", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(
             sorted(["Golem", "Moat", "Village"]),
-            sorted([c.name for c in self.plr.played]),
+            sorted([c.name for c in self.plr.piles[Piles.PLAYED]]),
         )
         self.assertEqual(
             sorted(["Copper", "Estate", "Golem"]),
-            sorted([c.name for c in self.plr.discardpile]),
+            sorted([c.name for c in self.plr.piles[Piles.DISCARD]]),
         )
 
     def test_nocards(self):
-        self.plr.hand.set("Copper", "Copper", "Copper")
-        self.plr.deck.set("Copper", "Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
 
 

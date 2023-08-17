@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Goat(Card.Card):
         self.purchasable = False
 
     def special(self, game, player):
-        if player.hand.size():
+        if player.piles[Piles.HAND].size():
             player.plr_trash_card()
 
 
@@ -36,8 +36,8 @@ class Test_Goat(unittest.TestCase):
         self.card = self.g["Goat"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Province", "Estate")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Province", "Estate")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)

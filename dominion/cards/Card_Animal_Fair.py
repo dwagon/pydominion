@@ -2,8 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Animal_Fair """
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -25,7 +24,7 @@ class Card_Animal_Fair(Card.Card):
         player.buys.add(empties)
 
     def todo_hook_buy_this_card(self, game, player):
-        actions = [_ for _ in player.hand if _.isAction()]
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             return 0
         tc = player.plr_trash_card(prompt="Trash card to get Animal Fair for free", cardsrc=actions)
@@ -41,7 +40,7 @@ class Test_Animal_Fair(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Animal Fair"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a supplies"""

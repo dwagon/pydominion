@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Warrior """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -32,7 +32,7 @@ class Card_Warrior(Card.Card):
         player discards the top card of his deck and trashes it if it
         costs 3 or 4"""
         count = 0
-        for c in player.hand + player.played:
+        for c in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
             if c.isTraveller():
                 count += 1
         for victim in player.attack_victims():
@@ -52,21 +52,23 @@ class Card_Warrior(Card.Card):
 
 
 ###############################################################################
-class Test_Warrior(unittest.TestCase):
+class TestWarrior(unittest.TestCase):
     """Test Warrior"""
 
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"])
+        self.g = Game.TestGame(
+            quiet=True, numplayers=2, initcards=["Page"], badcards=["Pooka", "Fool"]
+        )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
         self.card = self.g["Warrior"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_warrior(self):
         """Play a warrior nothing to trash"""
         self.plr.play_card(self.card)
         try:
-            self.assertEqual(self.victim.discardpile.size(), 1)
+            self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise
@@ -74,8 +76,8 @@ class Test_Warrior(unittest.TestCase):
     def test_with_trash(self):
         """Play a warrior with something to trash"""
         tsize = self.g.trashpile.size()
-        self.victim.deck.set("Silver", "Silver")
-        self.plr.played.set("Page")
+        self.victim.piles[Piles.DECK].set("Silver", "Silver")
+        self.plr.piles[Piles.PLAYED].set("Page")
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
 

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Embargo"""
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -49,7 +49,7 @@ class Test_Embargo(unittest.TestCase):
 
     def test_play(self):
         """Test playing Embargo"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash", "Select Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)

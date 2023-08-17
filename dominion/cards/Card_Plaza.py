@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Plaza(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        treasures = [c for c in player.hand if c.isTreasure()]
+        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
         if treasures:
             disc = player.plr_discard_cards(num=1, cardsrc=treasures, prompt="Discard a treasure to gain a Coffer")
             if disc:
@@ -37,13 +37,13 @@ class Test_Plaza(unittest.TestCase):
         """Play a plaza"""
         try:
             self.plr.coffers.set(0)
-            self.plr.hand.set("Gold")
+            self.plr.piles[Piles.HAND].set("Gold")
             self.plr.test_input = ["discard gold"]
-            self.plr.add_card(self.card, "hand")
+            self.plr.add_card(self.card, Piles.HAND)
             self.plr.play_card(self.card)
             self.assertEqual(self.plr.coffers.get(), 1)
             self.assertEqual(self.plr.actions.get(), 2)
-            self.assertEqual(self.plr.hand.size(), 1)
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
         except AssertionError:  # pragma: no cover
             self.g.print_state()
             raise

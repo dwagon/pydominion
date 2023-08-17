@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -28,7 +28,7 @@ class Test_Pouch(unittest.TestCase):
         self.card = self.g["Pouch"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.buys.set(0)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)

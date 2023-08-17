@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,7 +19,7 @@ class Card_Improve(Card.Card):
         self.coin = 2
 
     def hook_cleanup(self, game, player):
-        acts = [_ for _ in player.hand + player.discardpile if _.isAction()]
+        acts = [_ for _ in player.piles[Piles.HAND] + player.piles[Piles.DISCARD] if _.isAction()]
         if not acts:
             return
         tt = player.plr_trash_card(cardsrc=acts, prompt="Trash a card through Improve")
@@ -39,13 +39,13 @@ class Test_Improve(unittest.TestCase):
         self.card.player = self.plr
 
     def test_play(self):
-        self.plr.hand.set("Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
         self.assertIn("Moat", self.g.trashpile)
-        self.assertIn("Guide", self.plr.discardpile)
+        self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -48,9 +48,9 @@ class Test_Capital_City(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
-        self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver", "Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "Discard",
             "Discard Estate",
@@ -60,15 +60,15 @@ class Test_Capital_City(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 4 + 1 - 2 + 2)
-        self.assertNotIn("Duchy", self.plr.hand)
-        self.assertIn("Silver", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4 + 1 - 2 + 2)
+        self.assertNotIn("Duchy", self.plr.piles[Piles.HAND])
+        self.assertIn("Silver", self.plr.piles[Piles.HAND])
 
     def test_play_no_pickup(self):
         """Play the card but don't pickup new cards"""
-        self.plr.hand.set("Copper", "Copper", "Estate", "Duchy")
-        self.plr.deck.set("Gold", "Silver", "Copper", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Copper", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Gold", "Silver", "Copper", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = [
             "Discard",
             "Discard Estate",
@@ -78,9 +78,9 @@ class Test_Capital_City(unittest.TestCase):
         ]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 4 + 1 - 2)
-        self.assertNotIn("Duchy", self.plr.hand)
-        self.assertNotIn("Silver", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 4 + 1 - 2)
+        self.assertNotIn("Duchy", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

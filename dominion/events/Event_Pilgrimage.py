@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -21,7 +21,7 @@ class Event_Pilgrimage(Event.Event):
         if not player.flip_journey_token():
             player.output("Flipped Journey token to face down")
             return
-        cardnames = {c.name for c in player.played if c.purchasable}
+        cardnames = {c.name for c in player.piles[Piles.PLAYED] if c.purchasable}
         selected = []
         while True:
             options = [{"selector": "0", "print": "Finish", "opt": None}]
@@ -52,13 +52,13 @@ class Test_Pilgrimage(unittest.TestCase):
 
     def test_play(self):
         """Perform a Pilgrimage"""
-        self.plr.played.set("Moat", "Silver", "Gold", "Copper", "Duchy")
+        self.plr.piles[Piles.PLAYED].set("Moat", "Silver", "Gold", "Copper", "Duchy")
         self.plr.test_input = ["moat", "silver", "finish"]
         self.plr.journey_token = False
         self.plr.coins.add(4)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Moat"])
-        self.assertIsNotNone(self.plr.discardpile["Silver"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Moat"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Silver"])
         self.assertTrue(self.plr.journey_token)
 
 

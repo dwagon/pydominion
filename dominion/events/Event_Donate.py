@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -17,9 +17,9 @@ class Event_Donate(Event.Event):
         self.debtcost = 8
 
     def hook_end_turn(self, game, player):
-        for area in (player.hand, player.deck, player.played, player.discardpile):
+        for area in (player.piles[Piles.HAND], player.piles[Piles.DECK], player.piles[Piles.PLAYED], player.piles[Piles.DISCARD]):
             for card in area:
-                player.add_card(card, "hand")
+                player.add_card(card, Piles.HAND)
                 area.remove(card)
         player.plr_trash_card(anynum=True, prompt="Donate allows you to trash any cards")
         player.discard_hand()
@@ -37,9 +37,9 @@ class Test_Donate(unittest.TestCase):
     def test_with_treasure(self):
         """Use Donate"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Gold", "Estate", "Copper", "Copper")
-        self.plr.discardpile.set("Province", "Estate", "Copper", "Copper")
-        self.plr.deck.set("Silver", "Estate", "Copper", "Copper")
+        self.plr.piles[Piles.HAND].set("Gold", "Estate", "Copper", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Province", "Estate", "Copper", "Copper")
+        self.plr.piles[Piles.DECK].set("Silver", "Estate", "Copper", "Copper")
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.debt.get(), 8)
         self.plr.test_input = ["Gold", "Province", "Silver", "finish"]
@@ -48,10 +48,10 @@ class Test_Donate(unittest.TestCase):
         self.assertIn("Gold", self.g.trashpile)
         self.assertIn("Province", self.g.trashpile)
         self.assertIn("Silver", self.g.trashpile)
-        self.assertNotIn("Gold", self.plr.deck)
+        self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
         self.assertEqual(self.g.trashpile.size(), tsize + 3)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 0)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -25,7 +25,7 @@ class Card_Transmute(Card.Card):
         options = []
         options.append({"selector": "0", "print": "Trash Nothing", "card": None, "gain": None})
         index = 1
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             sel = "%d" % index
             if c.isAction():
                 trashtag = "Duchy"
@@ -54,34 +54,34 @@ class Test_Transmute(unittest.TestCase):
 
     def test_play(self):
         """Play a transmute - trash nothing"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash nothing"]
         self.plr.play_card(self.card)
-        self.assertTrue(self.plr.discardpile.is_empty())
+        self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
 
     def test_trash_treasure(self):
         """Transmute a treasure card to gain a Transmute"""
-        self.plr.hand.set("Gold", "Estate", "Transmute")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash gold"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Transmute")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Transmute")
 
     def test_trash_action(self):
         """Transmute a action card to gain a Duchy"""
-        self.plr.hand.set("Gold", "Estate", "Transmute")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash transmute"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Duchy")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Duchy")
 
     def test_trash_victory(self):
         """Transmute a victory card to gain a Gold"""
-        self.plr.hand.set("Gold", "Estate", "Transmute")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Gold", "Estate", "Transmute")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash estate"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.discardpile[-1].name, "Gold")
+        self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Gold")
 
 
 ###############################################################################

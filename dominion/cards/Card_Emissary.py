@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -27,18 +27,18 @@ class Test_Emissary(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Emissary"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
-        self.plr.deck.set("Copper", "Copper")
-        self.plr.discardpile.set("Estate", "Estate", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Estate", "Estate", "Estate", "Duchy")
         favs = self.plr.favors.get()
         acts = self.plr.actions.get()
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.favors.get(), favs + 2)
         self.assertEqual(self.plr.actions.get(), acts - 1 + 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3)
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -15,15 +15,15 @@ class Hex_BadOmens(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        for c in player.deck:
-            player.add_card(c, "discard")
-            player.deck.remove(c)
+        for card in player.piles[Piles.DECK]:
+            player.add_card(card, Piles.DISCARD)
+            player.piles[Piles.DECK].remove(card)
         numcu = 0
-        for c in player.discardpile:
-            if c.name == "Copper":
+        for card in player.piles[Piles.DISCARD]:
+            if card.name == "Copper":
                 numcu += 1
-                player.add_card(c, "deck")
-                player.discardpile.remove(c)
+                player.add_card(card, Piles.DECK)
+                player.piles[Piles.DISCARD].remove(card)
                 if numcu == 2:
                     break
 
@@ -40,10 +40,10 @@ class Test_BadOmens(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_play(self):
-        self.plr.deck.set("Copper", "Copper", "Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Silver", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertEqual(self.plr.deck.size(), 2)
-        self.assertEqual(self.plr.deck.count("Copper"), 2)
+        self.assertEqual(self.plr.piles[Piles.DECK].size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DECK].count("Copper"), 2)
 
 
 ###############################################################################

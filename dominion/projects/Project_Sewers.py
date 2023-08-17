@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Project
+from dominion import Card, Game, Piles, Project
 
 
 ###############################################################################
@@ -18,16 +18,18 @@ class Project_Sewers(Project.Project):
 
 
 ###############################################################################
-class Test_Sewers(unittest.TestCase):
+class TestSewers(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initprojects=["Sewers"], initcards=["Chapel"])
+        self.g = Game.TestGame(
+            numplayers=1, initprojects=["Sewers"], initcards=["Chapel"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Chapel"].remove()
 
     def test_play(self):
-        self.plr.hand.set("Copper", "Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]
         self.plr.play_card(self.card)

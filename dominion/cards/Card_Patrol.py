@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -26,7 +26,7 @@ class Card_Patrol(Card.Card):
             if c is None:
                 break
             if c.isVictory() or c.name == "Curse":
-                player.add_card(c, "hand")
+                player.add_card(c, Piles.HAND)
                 player.output(f"Patrol adding {c.name}")
             else:
                 cards.add(c)
@@ -44,14 +44,14 @@ class Test_Patrol(unittest.TestCase):
         self.card = self.g["Patrol"].remove()
 
     def test_play(self):
-        self.plr.hand.set()
-        self.plr.add_card(self.card, "hand")
-        self.plr.deck.set("Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold")
+        self.plr.piles[Piles.HAND].set()
+        self.plr.add_card(self.card, Piles.HAND)
+        self.plr.piles[Piles.DECK].set("Duchy", "Province", "Silver", "Gold", "Copper", "Copper", "Gold")
         self.plr.play_card(self.card)
         self.g.print_state()
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Duchy", self.plr.hand)
-        self.assertNotIn("Silver", self.plr.hand)
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Duchy", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

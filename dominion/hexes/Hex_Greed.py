@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -15,11 +15,11 @@ class Hex_Greed(Hex.Hex):
         self.purchasable = False
 
     def special(self, game, player):
-        player.gain_card("Copper", "deck")
+        player.gain_card("Copper", Piles.DECK)
 
 
 ###############################################################################
-class Test_Greed(unittest.TestCase):
+class TestGreed(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()
@@ -30,10 +30,10 @@ class Test_Greed(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_famine(self):
-        self.plr.deck.set("Duchy", "Cursed Village", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertIsNotNone(self.plr.discardpile["Cursed Village"])
-        self.assertIn("Copper", self.plr.deck)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Cursed Village"])
+        self.assertIn("Copper", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

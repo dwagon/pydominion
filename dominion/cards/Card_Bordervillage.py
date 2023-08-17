@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -37,17 +37,17 @@ class Test_Bordervillage(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.bv = self.g["Border Village"].remove()
-        self.plr.add_card(self.bv, "hand")
+        self.plr.add_card(self.bv, Piles.HAND)
 
     def test_play(self):
         self.plr.play_card(self.bv)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
     def test_gain(self):
         self.plr.test_input = ["get estate"]
         self.plr.gain_card("Border Village")
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

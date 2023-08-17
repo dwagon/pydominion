@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -14,7 +14,7 @@ class Event_Advance(Event.Event):
         self.cost = 0
 
     def special(self, game, player):
-        actions = [c for c in player.hand if c.isAction()]
+        actions = [c for c in player.piles[Piles.HAND] if c.isAction()]
         trash = player.plr_trash_card(
             prompt="Trash a card to gain an action costing up to 6", cardsrc=actions
         )
@@ -36,11 +36,11 @@ class Test_Advance(unittest.TestCase):
 
     def test_advance(self):
         """Use Advance twice"""
-        self.plr.hand.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat")
         self.plr.test_input = ["Trash moat", "Get Lurker"]
         self.plr.perform_event(self.card)
-        self.assertNotIn("Moat", self.plr.hand)
-        self.assertIsNotNone(self.plr.discardpile["Lurker"])
+        self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Lurker"])
 
 
 ###############################################################################

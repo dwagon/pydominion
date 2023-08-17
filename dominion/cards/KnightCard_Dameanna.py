@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game
+from dominion import Game, Piles
 from dominion import Card
 from dominion.cards.Card_Knight import KnightCard
 
@@ -30,7 +30,7 @@ class Card_Dame_Anna(KnightCard):
 
 
 ###############################################################################
-class Test_Dame_Anna(unittest.TestCase):
+class TestDameAnna(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
@@ -43,9 +43,9 @@ class Test_Dame_Anna(unittest.TestCase):
     def test_score(self):
         """Play the Dame"""
         tsize = self.g.trashpile.size()
-        self.plr.hand.set("Duchy", "Province")
+        self.plr.piles[Piles.HAND].set("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertIn("Province", self.g.trashpile)

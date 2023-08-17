@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Mastermind """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -18,7 +18,7 @@ class Card_Mastermind(Card.Card):
     def duration(self, game, player):
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             if not c.isAction():
                 continue
             sel = "%d" % index
@@ -35,7 +35,7 @@ class Card_Mastermind(Card.Card):
             player.output(f"Number {i} play of {o['card'].name}")
             player.play_card(o["card"], discard=False, cost_action=False)
         player.add_card(o["card"], "played")
-        player.hand.remove(o["card"])
+        player.piles[Piles.HAND].remove(o["card"])
 
 
 ###############################################################################
@@ -45,17 +45,17 @@ class Test_Mastermind(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Mastermind"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.discardpile.set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.DISCARD].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.play_card(self.card)
         self.plr.end_turn()
-        self.plr.hand.set("Moat")
+        self.plr.piles[Piles.HAND].set("Moat")
         self.plr.test_input = ["Play Moat"]
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
 
 ###############################################################################

@@ -4,7 +4,7 @@
 
 import unittest
 import random
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -43,7 +43,7 @@ class Card_YoungWitch(Card.Card):
     def special(self, game, player):
         player.plr_discard_cards(num=2, force=True)
         for pl in player.attack_victims():
-            if pl.hand[game._bane]:
+            if pl.piles[Piles.HAND][game._bane]:
                 player.output(f"{pl.name} has the bane: {game._bane}")
                 continue
             player.output(f"{pl.name} got cursed")
@@ -52,7 +52,7 @@ class Card_YoungWitch(Card.Card):
 
 
 ###############################################################################
-class Test_YoungWitch(unittest.TestCase):
+class TestYoungWitch(unittest.TestCase):
     """Test Young Witch"""
 
     def setUp(self):
@@ -67,15 +67,17 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_nobane(self):
         """Play the young witch without a bane"""
-        self.victim.hand.set("Copper", "Silver")
-        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
-        self.attacker.add_card(self.card, "hand")
+        self.victim.piles[Piles.HAND].set("Copper", "Silver")
+        self.attacker.piles[Piles.HAND].set(
+            "Copper", "Silver", "Gold", "Duchy", "Province"
+        )
+        self.attacker.add_card(self.card, Piles.HAND)
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
             self.assertIn(self.g[self.g._bane].cost, (2, 3))
-            self.assertEqual(self.attacker.hand.size(), 5 + 2 - 2)
-            self.assertIn("Curse", self.victim.discardpile)
+            self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 2 - 2)
+            self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()
@@ -83,13 +85,15 @@ class Test_YoungWitch(unittest.TestCase):
 
     def test_play_bane(self):
         """Play the young witch with a bane"""
-        self.victim.hand.set("Copper", "Silver", self.g._bane)
-        self.attacker.hand.set("Copper", "Silver", "Gold", "Duchy", "Province")
-        self.attacker.add_card(self.card, "hand")
+        self.victim.piles[Piles.HAND].set("Copper", "Silver", self.g._bane)
+        self.attacker.piles[Piles.HAND].set(
+            "Copper", "Silver", "Gold", "Duchy", "Province"
+        )
+        self.attacker.add_card(self.card, Piles.HAND)
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            self.assertNotIn("Curse", self.victim.discardpile)
+            self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover
             print(f"Bane={self.g._bane}")
             self.g.print_state()

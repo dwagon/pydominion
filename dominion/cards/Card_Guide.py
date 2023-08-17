@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -19,8 +19,8 @@ class Card_Guide(Card.Card):
 
     def hook_call_reserve(self, game, player):
         player.output("Discarding current hand and picking up 5 new cards")
-        while player.hand:
-            player.discard_card(player.hand.next_card())
+        while player.piles[Piles.HAND]:
+            player.discard_card(player.piles[Piles.HAND].next_card())
         player.discard_hand()
         player.pickup_cards(5)
 
@@ -34,21 +34,21 @@ class Test_Guide(unittest.TestCase):
         self.card = self.g["Guide"].remove()
 
     def test_play(self):
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 6)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
 
     def test_call(self):
         """Call Guide from reserve"""
-        self.plr.hand.set("Estate", "Estate")
-        self.plr.deck.set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
-        self.plr.reserve.set("Guide")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate")
+        self.plr.piles[Piles.DECK].set("Copper", "Copper", "Copper", "Copper", "Copper", "Copper")
+        self.plr.piles[Piles.RESERVE].set("Guide")
         self.plr.call_reserve("Guide")
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertEqual(self.plr.discardpile.size(), 2)
-        self.assertNotIn("Estate", self.plr.hand)
-        self.assertIn("Estate", self.plr.discardpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
+        self.assertNotIn("Estate", self.plr.piles[Piles.HAND])
+        self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
 
 
 ###############################################################################

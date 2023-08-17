@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Sheepdog """
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_Sheepdog(Card.Card):
         self.cost = 3
 
     def hook_gain_card(self, game, player, card):
-        if self in player.hand:
+        if self in player.piles[Piles.HAND]:
             player.play_card(self, cost_action=False)
 
 
@@ -32,24 +32,24 @@ class Test_Sheepdog(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Sheepdog"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play card"""
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_gain(self):
         """Gain a card"""
         self.plr.gain_card("Estate")
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
     def test_gain_twice(self):
         """Gain a card twice"""
         self.plr.gain_card("Estate")
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
         self.plr.gain_card("Estate")
-        self.assertEqual(self.plr.hand.size(), 5 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
 
 
 ###############################################################################

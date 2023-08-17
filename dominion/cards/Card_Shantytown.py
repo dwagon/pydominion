@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -18,7 +18,7 @@ class Card_Shantytown(Card.Card):
 
     def special(self, game, player):
         """Reveal your hand. If you have no Action cards in hand, +2 cards"""
-        for c in player.hand:
+        for c in player.piles[Piles.HAND]:
             player.reveal_card(c)
             if c.isAction():
                 break
@@ -37,19 +37,19 @@ class Test_Shantytown(unittest.TestCase):
 
     def test_no_actions(self):
         """Test Shany Town with no actions"""
-        self.plr.hand.set("Estate", "Estate", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Estate", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 3 + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3 + 2)
 
     def test_actions(self):
         """Test Shany Town with actions"""
-        self.plr.hand.set("Moat", "Estate", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Moat", "Estate", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 3)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

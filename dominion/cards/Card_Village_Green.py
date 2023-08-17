@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Village_Green """
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -54,7 +54,7 @@ class Card_Village_Green(Card.Card):
             ("Keep concealed", False),
         )
         if play:
-            player.move_card(self, "hand")
+            player.move_card(self, Piles.HAND)
             player.play_card(self)
 
 
@@ -67,35 +67,35 @@ class Test_Village_Green(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Village Green"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_this_turn(self):
         """Play Card with effect this turn"""
         self.plr.test_input = ["Now"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
     def test_play_next_turn(self):
         """Play Card with effect next turn"""
         self.plr.test_input = ["Next"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.plr.end_turn()
         self.plr.start_turn()
         self.assertEqual(self.plr.actions.get(), 2 + 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
 
     def test_discard(self):
         """Discard when not cleanup"""
-        self.plr.deck.set("Duchy")
+        self.plr.piles[Piles.DECK].set("Duchy")
         self.plr.phase = Player.Phase.BUY
         self.plr.test_input = ["Reveal", "Now"]
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
-        self.assertIn("Village Green", self.plr.durationpile)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
+        self.assertIn("Village Green", self.plr.piles[Piles.DURATION])
 
 
 ###############################################################################

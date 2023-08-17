@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Test_Wedding(unittest.TestCase):
         """Perform a Wedding"""
         self.plr.coins.add(4)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
         self.assertEqual(self.plr.debt.get(), 3)
         self.assertEqual(self.plr.get_score_details()["Wedding"], 1)
 

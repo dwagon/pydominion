@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 import dominion.CardPile as CardPile
 
@@ -20,7 +20,7 @@ class Card_Castles(Card.Card):
 ###############################################################################
 class CastleCardPile(CardPile.CardPile):
     def __init__(self, game, pile_size=10):
-        self.mapping = game.get_card_classes("Castle", game.cardpath, "Card_")
+        self.mapping = game.get_card_classes("Castle", game.paths["cards"], "Card_")
         super().__init__(cardname="Castles", klass=None, game=game, pile_size=pile_size)
 
     def init_cards(self):
@@ -39,8 +39,8 @@ class Test_Castle(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Castles"].remove()
-        self.plr.hand.set("Silver", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Silver", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_castles(self):
         pass

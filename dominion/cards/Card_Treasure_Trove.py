@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -33,11 +33,11 @@ class Test_Treasure_Trove(unittest.TestCase):
 
     def test_play(self):
         """Play a treasure trove"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertEqual(self.plr.discardpile.size(), 2)
+        self.assertIn("Copper", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
 
 
 ###############################################################################

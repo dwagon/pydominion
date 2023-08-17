@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Enclave """
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -34,8 +34,8 @@ class Test_Enclave(unittest.TestCase):
         """Use Enclave"""
         self.plr.coins.add(8)
         self.plr.perform_event(self.card)
-        self.assertIsNotNone(self.plr.discardpile["Gold"])
-        self.assertIn("Duchy", self.plr.exilepile)
+        self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Gold"])
+        self.assertIn("Duchy", self.plr.piles[Piles.EXILE])
 
 
 ###############################################################################

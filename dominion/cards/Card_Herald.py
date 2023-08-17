@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Herald"""
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Herald(Card.Card):
         self.cost = 4
 
     def desc(self, player):
-        """Variable descrition"""
+        """Variable description"""
         if player.phase == Player.Phase.BUY:
             return """+1 Card +1 Action. Reveal the top card of your deck.
                 If it is an Action, play it.  When you buy this, you may overpay
@@ -32,7 +32,7 @@ class Card_Herald(Card.Card):
         card = player.top_card()
         player.reveal_card(card)
         if card.isAction():
-            player.add_card(card, "hand")
+            player.add_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
 
     def hook_overpay(self, game, player, amount):  # pylint: disable=unused-argument
@@ -44,12 +44,13 @@ class Card_Herald(Card.Card):
                 cardsrc="discard",
                 prompt="Look through your discard pile and put a card from it on top of your deck",
             )
-            player.add_card(card[0], "topdeck")
-            player.discardpile.remove(card[0])
+            if card:
+                player.add_card(card[0], "topdeck")
+                player.piles[Piles.DISCARD].remove(card[0])
 
 
 ###############################################################################
-class Test_Herald(unittest.TestCase):
+class TestHerald(unittest.TestCase):
     """Test Herald"""
 
     def setUp(self):
@@ -60,30 +61,30 @@ class Test_Herald(unittest.TestCase):
 
     def test_play_action(self):
         """Play a Herald  - action top card"""
-        self.plr.deck.set("Province", "Estate", "Copper", "Moat", "Duchy")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Province", "Estate", "Copper", "Moat", "Duchy")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
         self.assertEqual(self.plr.actions.get(), 1 + 1)
-        self.assertIn("Duchy", self.plr.hand)
-        self.assertIn("Moat", self.plr.played)
+        self.assertIn("Duchy", self.plr.piles[Piles.HAND])
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 
-    def test_play_nonaction(self):
+    def test_play_non_action(self):
         """Play a Herald - non-action top card"""
-        self.plr.deck.set("Gold", "Copper")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.DECK].set("Gold", "Copper")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 1 + 1)
-        self.assertIn("Gold", self.plr.deck)
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
 
     def test_buy(self):
         """Buy a Herald"""
         self.plr.coins.set(5)
         self.plr.test_input = ["1", "moat"]
-        self.plr.discardpile.set("Estate", "Moat", "Copper")
+        self.plr.piles[Piles.DISCARD].set("Estate", "Moat", "Copper")
         self.plr.buy_card(self.g["Herald"])
-        self.assertEqual(self.plr.deck[-1].name, "Moat")
+        self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Moat")
 
 
 ###############################################################################

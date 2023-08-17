@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Crown """
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -20,10 +20,10 @@ class Card_Crown(Card.Card):
 
     def special(self, game, player):
         if player.phase == Player.Phase.ACTION:
-            cards = [_ for _ in player.hand if _.isAction()]
+            cards = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
             self._do_twice(player, cards)
         if player.phase == Player.Phase.BUY:
-            cards = [_ for _ in player.hand if _.isTreasure()]
+            cards = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
             self._do_twice(player, cards)
 
     def _do_twice(self, player, cards):
@@ -59,24 +59,24 @@ class Test_Crown(unittest.TestCase):
 
     def test_play(self):
         """Play a crown with no suitable actions"""
-        self.plr.hand.set("Duchy", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Duchy", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.phase = Player.Phase.ACTION
         self.plr.play_card(self.card)
 
     def test_action(self):
         """Play a crown with a suitable action"""
-        self.plr.hand.set("Estate", "Duchy", "Copper", "Gold", "Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Copper", "Gold", "Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.phase = Player.Phase.ACTION
         self.plr.test_input = ["moat"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5 + 2 * 2 - 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2 * 2 - 1)
 
     def test_buy(self):
         """Play a crown in a buy phase"""
-        self.plr.hand.set("Estate", "Duchy", "Copper", "Gold")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Estate", "Duchy", "Copper", "Gold")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.phase = Player.Phase.BUY
         self.plr.test_input = ["gold"]
         self.plr.play_card(self.card)

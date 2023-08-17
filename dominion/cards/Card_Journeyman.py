@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -20,46 +19,59 @@ class Card_Journeyman(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for c in sorted(game.cardTypes()):
-            sel = "%s" % index
-            options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
+        for card in sorted(game.cardTypes()):
+            options.append(
+                {"selector": f"{index}", "print": f"Guess {card.name}", "card": card}
+            )
             index += 1
         o = player.user_input(
             options,
             "Name a card. Reveal cards from your deck until you have 3 that aren't the named card",
         )
+        if o["card"] is None:
+            return
         cards = []
         while len(cards) < 3:
             card = player.next_card()
             player.reveal_card(card)
             if card.name == o["card"].name:
-                player.output("Discarding %s" % card.name)
+                player.output(f"Discarding {card.name}")
                 player.discard_card(card)
             else:
                 cards.append(card)
         for card in cards:
-            player.add_card(card, "hand")
-            player.output("Pulling %s into hand" % card.name)
+            player.add_card(card, Piles.HAND)
+            player.output(f"Pulling {card.name} into hand")
 
 
 ###############################################################################
-class Test_Journeyman(unittest.TestCase):
+class TestJourneyman(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Journeyman"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Journeyman"].remove()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):
         """Play the pawn - select card and action"""
-        self.plr.deck.set("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Duchy", "Province", "Gold")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.plr.discardpile)
-        self.assertIn("Gold", self.plr.hand)
-        self.assertIn("Province", self.plr.hand)
-        self.assertIn("Estate", self.plr.hand)
+        self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Gold", self.plr.piles[Piles.HAND])
+        self.assertIn("Province", self.plr.piles[Piles.HAND])
+        self.assertIn("Estate", self.plr.piles[Piles.HAND])
+
+    def test_play_guess_none(self):
+        """Chose not to guess"""
+        self.plr.piles[Piles.DECK].set("Copper", "Estate", "Duchy", "Province", "Gold")
+        self.plr.test_input = ["No guess"]
+        self.plr.play_card(self.card)
+        self.assertIn("Duchy", self.plr.piles[Piles.DECK])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertIn("Province", self.plr.piles[Piles.DECK])
+        self.assertIn("Estate", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################

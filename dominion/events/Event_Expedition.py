@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ class Test_Expedition(unittest.TestCase):
         self.plr.perform_event(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.end_turn()
-        self.assertEqual(self.plr.hand.size(), 7)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
     def test_playtwice(self):
         """Use Expedition twice"""
@@ -43,7 +43,7 @@ class Test_Expedition(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 1)
         self.assertEqual(self.plr.buys.get(), 0)
         self.plr.end_turn()
-        self.assertEqual(self.plr.hand.size(), 9)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 9)
 
 
 ###############################################################################

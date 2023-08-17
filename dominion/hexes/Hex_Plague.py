@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Hex
+from dominion import Card, Game, Piles, Hex
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Hex_Plague(Hex.Hex):
         self.required_cards = ["Curse"]
 
     def special(self, game, player):
-        player.gain_card("Curse", destination="hand")
+        player.gain_card("Curse", destination=Piles.HAND)
 
 
 ###############################################################################
@@ -31,9 +31,9 @@ class Test_Plague(unittest.TestCase):
                 self.g.hexes.remove(h)
 
     def test_plague(self):
-        self.plr.deck.set("Duchy", "Cursed Village", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Cursed Village", "Gold")
         self.plr.gain_card("Cursed Village")
-        self.assertIn("Curse", self.plr.hand)
+        self.assertIn("Curse", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

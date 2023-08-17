@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Toil """
 
 import unittest
-from dominion import Card, Game, Event
+from dominion import Card, Game, Piles, Event
 
 
 ###############################################################################
@@ -42,12 +42,12 @@ class Test_Toil(unittest.TestCase):
     def test_play(self):
         """Perform a Toil"""
         self.plr.coins.add(2)
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.perform_event(self.event)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.buys.get(), 1)
-        self.assertIn("Moat", self.plr.played)
+        self.assertIn("Moat", self.plr.piles[Piles.PLAYED])
 
 
 ###############################################################################

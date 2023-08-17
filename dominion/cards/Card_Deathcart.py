@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Deathcart(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        action_cards = [c for c in player.hand if c.isAction()]
+        action_cards = [c for c in player.piles[Piles.HAND] if c.isAction()]
         choices = [
             ("Trash this Death Cart for 5 Gold", "trash_dc"),
         ]
@@ -58,7 +58,7 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play(self):
         """Play a death cart - no actions"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Do nothing"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 0)
@@ -66,8 +66,8 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play_trash_action(self):
         """Play a death cart - no actions"""
-        self.plr.hand.set("Copper", "Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash an Action", "Trash Moat"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 5)
@@ -76,8 +76,8 @@ class Test_Deathcart(unittest.TestCase):
 
     def test_play_trash_self(self):
         """Play a death cart - no actions"""
-        self.plr.hand.set("Copper", "Moat")
-        self.plr.add_card(self.card, "hand")
+        self.plr.piles[Piles.HAND].set("Copper", "Moat")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash this Death"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 5)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
-import dominion.Card as Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -18,13 +17,14 @@ class Card_Farmland(Card.Card):
         self.victory = 2
 
     def hook_gain_this_card(self, game, player):
-        c = player.plr_trash_card(force=True)
-        player.plr_gain_card(cost=c[0].cost + 2, modifier="equal")
+        card = player.plr_trash_card(force=True)
+        if card:
+            player.plr_gain_card(cost=card[0].cost + 2, modifier="equal")
         return {}
 
 
 ###############################################################################
-class Test_Farmland(unittest.TestCase):
+class TestFarmland(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -38,20 +38,20 @@ class Test_Farmland(unittest.TestCase):
     def test_gain(self):
         """Gain a farmland"""
         try:
-            tsize = self.g.trashpile.size()
-            self.plr.hand.set("Estate", "Duchy")
+            trash_size = self.g.trashpile.size()
+            self.plr.piles[Piles.HAND].set("Estate", "Duchy")
             self.plr.test_input = ["Trash Estate", "Get Militia"]
             self.plr.gain_card("Farmland")
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertEqual(self.plr.hand.size(), 1)
+            self.assertEqual(self.g.trashpile.size(), trash_size + 1)
+            self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
             # 1 for farmland, 1 for gained card
-            self.assertEqual(self.plr.discardpile.size(), 2)
+            self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         except (AssertionError, IOError):  # pragma: no cover
             self.g.print_state()
             raise
 
     def test_score(self):
-        self.plr.deck.set("Farmland")
+        self.plr.piles[Piles.DECK].set("Farmland")
         sd = self.plr.get_score_details()
         self.assertEqual(sd["Farmland"], 2)
 

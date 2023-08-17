@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Card
+from dominion import Game, Card, Piles
 
 
 ###############################################################################
@@ -38,39 +38,39 @@ class Card_Advisor(Card.Card):
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
     # Discard the card that costs the most
-    cardlist = [(c.cost, c) for c in kwargs["cardsrc"] if c.isTreasure()]
-    if cardlist:
-        most = sorted(cardlist)[-1]
+    card_list = [(c.cost, c) for c in kwargs["cardsrc"] if c.isTreasure()]
+    if card_list:
+        most = sorted(card_list)[-1]
         if most:
             return [most[1]]
-    cardlist = [(c.cost, c) for c in kwargs["cardsrc"] if c.isAction()]
-    if cardlist:
-        most = sorted(cardlist)[-1]
+    card_list = [(c.cost, c) for c in kwargs["cardsrc"] if c.isAction()]
+    if card_list:
+        most = sorted(card_list)[-1]
         if most:
             return [most[1]]
-    cardlist = [(c.cost, c) for c in kwargs["cardsrc"]]
-    most = sorted(cardlist)[-1]
+    card_list = [(c.cost, c) for c in kwargs["cardsrc"]]
+    most = sorted(card_list)[-1]
     return [most[1]]
 
 
 ###############################################################################
-class Test_Advisor(unittest.TestCase):
+class TestAdvisor(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Advisor"])
         self.g.start_game()
         self.plr, self.plr2 = self.g.player_list()
         self.acard = self.g["Advisor"].remove()
-        self.plr.add_card(self.acard, "hand")
+        self.plr.add_card(self.acard, Piles.HAND)
 
     def test_play(self):
         """ " Play an advisor"""
-        self.plr.deck.set("Duchy", "Silver", "Gold")
+        self.plr.piles[Piles.DECK].set("Duchy", "Silver", "Gold")
         self.plr2.test_input = ["discard gold"]
         self.plr.play_card(self.acard)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertEqual(self.plr.hand.size(), 5 + 3 - 1)
-        self.assertIn("Gold", self.plr.discardpile)
-        self.assertNotIn("Gold", self.plr.hand)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 3 - 1)
+        self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
+        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

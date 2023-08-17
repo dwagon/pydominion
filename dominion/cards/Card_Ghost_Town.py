@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Player
+from dominion import Card, Game, Piles, Player
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Ghost_Town(Card.Card):
         return "At the start of your next turn, +1 Card and +1 Action."
 
     def hook_gain_this_card(self, game, player):
-        return {"destination": "hand"}
+        return {"destination": Piles.HAND}
 
     def duration(self, game, player):
         player.pickup_card()
@@ -37,17 +37,17 @@ class Test_Ghost_Town(unittest.TestCase):
 
     def test_play_card(self):
         """Play Ghost Town"""
-        self.plr.add_card(self.gtown, "hand")
+        self.plr.add_card(self.gtown, Piles.HAND)
         self.plr.play_card(self.gtown)
         self.plr.end_turn()
         self.plr.start_turn()
-        self.assertEqual(self.plr.hand.size(), 5 + 1)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)
 
     def test_gain(self):
         self.plr.gain_card("Ghost Town")
-        self.assertNotIn("Ghost Town", self.plr.discardpile)
-        self.assertIn("Ghost Town", self.plr.hand)
+        self.assertNotIn("Ghost Town", self.plr.piles[Piles.DISCARD])
+        self.assertIn("Ghost Town", self.plr.piles[Piles.HAND])
 
 
 ###############################################################################

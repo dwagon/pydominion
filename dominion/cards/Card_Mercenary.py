@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-import dominion.Game as Game
+from dominion import Game, Card, Piles
 import dominion.Card as Card
 
 
@@ -37,7 +37,7 @@ class Card_Mercenary(Card.Card):
 
 ###############################################################################
 def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
-    numtodiscard = len(player.hand) - 3
+    numtodiscard = len(player.piles[Piles.HAND]) - 3
     return player.pick_to_discard(numtodiscard)
 
 
@@ -51,37 +51,37 @@ class Test_Mercenary(unittest.TestCase):
 
     def test_play(self):
         """Trash nothing with mercenary - should do nothing"""
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.hand.size(), 5)
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
     def test_defense(self):
         """Make sure moats work against mercenaries"""
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         moat = self.g["Moat"].remove()
-        self.victim.add_card(moat, "hand")
+        self.victim.add_card(moat, Piles.HAND)
         self.plr.test_input = ["1", "1", "2", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         # 5 for hand + moat
-        self.assertEqual(self.victim.hand.size(), 6)
-        self.assertTrue(self.victim.discardpile.is_empty())
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
+        self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
     def test_attack(self):
         """Attack with a mercenary"""
         tsize = self.g.trashpile.size()
-        self.plr.add_card(self.card, "hand")
+        self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "1", "2", "0"]
         self.victim.test_input = ["1", "2", "0"]
         self.plr.play_card(self.card)
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertEqual(self.plr.hand.size(), 5)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertEqual(self.victim.hand.size(), 3)
+        self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################
