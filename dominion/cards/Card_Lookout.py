@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 class Card_Lookout(Card.Card):
@@ -24,26 +23,28 @@ class Card_Lookout(Card.Card):
         cards = []
         for _ in range(3):
             cards.append(player.next_card())
-        cards = [c for c in cards if c]
+        cards = [_ for _ in cards if _]
         if not cards:
             player.output("No cards available")
             return
-        player.output("Pulled %s from deck" % ", ".join([c.name for c in cards]))
-        player.output("Trash a card, Discard a card, put a card on your deck")
+        player.output("Pulled %s from deck" % ", ".join([_.name for _ in cards]))
+        player.output("Trash a card, discard a card, put a card on your deck")
         tc = self._trash(player, cards)
         cards.remove(tc)
         cd = self._discard(player, cards)
         cards.remove(cd)
-        player.output("Putting %s on top of deck" % cards[0].name)
-        player.add_card(cards[0], "topdeck")
+        if cards:
+            player.output(f"Putting {cards[0].name} on top of deck")
+            player.add_card(cards[0], "topdeck")
 
     def _trash(self, player, cards):
         index = 1
         options = []
-        for c in cards:
-            sel = str(index)
+        for card in cards:
             index += 1
-            options.append({"selector": sel, "print": "Trash %s" % c.name, "card": c})
+            options.append(
+                {"selector": f"{index}", "print": f"Trash {card.name}", "card": card}
+            )
         o = player.user_input(options, "Select a card to trash")
         player.trash_card(o["card"])
         return o["card"]
@@ -51,17 +52,18 @@ class Card_Lookout(Card.Card):
     def _discard(self, player, cards):
         index = 1
         options = []
-        for c in cards:
-            sel = "%d" % index
+        for card in cards:
             index += 1
-            options.append({"selector": sel, "print": "Discard %s" % c.name, "card": c})
+            options.append(
+                {"selector": f"{index}", "print": f"Discard {card.name}", "card": card}
+            )
         o = player.user_input(options, "Select a card to discard")
         player.discard_card(o["card"])
         return o["card"]
 
 
 ###############################################################################
-class Test_Lookout(unittest.TestCase):
+class TestLookout(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Lookout"])
         self.g.start_game()
@@ -78,13 +80,13 @@ class Test_Lookout(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DECK][0].name, "Copper")
         self.assertEqual(self.plr.piles[Piles.DECK][1].name, "Estate")
 
-    def test_nocards(self):
+    def test_no_cards(self):
         """Play a lookout when there are no cards available"""
-        tsize = self.g.trashpile.size()
+        trash_size = self.g.trashpile.size()
         self.plr.piles[Piles.DECK].set()
         self.plr.add_card(self.lookout, Piles.HAND)
         self.plr.play_card(self.lookout)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertEqual(self.g.trashpile.size(), trash_size)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
 
