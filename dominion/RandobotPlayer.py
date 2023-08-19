@@ -46,24 +46,24 @@ class RandobotPlayer(Player):
     ###########################################################################
     def card_selSource(self, **kwargs):
         """Understand the various places to select cards from - either a
-        text desctiption of the source, a list of cards, or by default
+        text description of the source, a list of cards, or by default
         the players hand"""
         if "cardsrc" in kwargs:
             if kwargs["cardsrc"] == "hand":
-                selectfrom = self.piles[Piles.HAND]
+                select_from = self.piles[Piles.HAND]
             elif kwargs["cardsrc"] == "played":
-                selectfrom = self.piles[Piles.PLAYED]
+                select_from = self.piles[Piles.PLAYED]
             elif kwargs["cardsrc"] == "discard":
-                selectfrom = self.piles[Piles.DISCARD]
+                select_from = self.piles[Piles.DISCARD]
             else:
-                selectfrom = kwargs["cardsrc"]
+                select_from = kwargs["cardsrc"]
         else:
-            selectfrom = self.piles[Piles.HAND]
-        return selectfrom
+            select_from = self.piles[Piles.HAND]
+        return select_from
 
     ###########################################################################
     def selectorLine(self, o):
-        """User friendly representation of option"""
+        """User-friendly representation of option"""
         output = []
         if isinstance(o, dict):
             verb = o["print"]
@@ -150,7 +150,7 @@ class RandobotPlayer(Player):
         Return num cards to discard"""
         if numtodiscard <= 0:
             return []
-        todiscard = []
+        to_discard = []
 
         # Discard non-treasures first
         for card in self.piles[Piles.HAND]:
@@ -158,22 +158,22 @@ class RandobotPlayer(Player):
                 continue
             if keepvic and card.isVictory():
                 continue
-            todiscard.append(card)
-        if len(todiscard) >= numtodiscard:
-            return todiscard[:numtodiscard]
+            to_discard.append(card)
+        if len(to_discard) >= numtodiscard:
+            return to_discard[:numtodiscard]
 
-        # Discard cheapest treasures next
-        while len(todiscard) < numtodiscard:
+        # Discard the cheapest treasures next
+        while len(to_discard) < numtodiscard:
             for treas in ("Copper", "Silver", "Gold"):
                 for card in self.piles[Piles.HAND]:
                     if card.name == treas:
-                        todiscard.append(card)
-        if len(todiscard) >= numtodiscard:
-            return todiscard[:numtodiscard]
+                        to_discard.append(card)
+        if len(to_discard) >= numtodiscard:
+            return to_discard[:numtodiscard]
         hand = ", ".join([_.name for _ in self.piles[Piles.HAND]])
         sys.stderr.write(f"Couldn't find cards to discard {numtodiscard} from {hand}")
         sys.stderr.write(
-            f"Managed to get {(', '.join([_.name for _ in todiscard]))} so far\n"
+            f"Managed to get {(', '.join([_.name for _ in to_discard]))} so far\n"
         )
 
 

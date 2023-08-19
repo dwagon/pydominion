@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 coverage = "--no-cov-on-fail --cov-report term-missing --cov ."
 targets = "tests/*.py dominion/*.py dominion/*/*.py dominion/*/*/*.py"
-cmd = f"pytest -n auto {coverage} {targets}"
+cmd = f"PYDOMINION_DEBUG='' pytest -n auto {coverage} {targets}"
 print(f"{cmd=}")
 rc = os.system(cmd)
 os.system("coverage html")
