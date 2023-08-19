@@ -1,6 +1,7 @@
 """ The master class for all cards """
 # pylint: disable=no-member
 
+import os
 import uuid
 from enum import Enum, auto
 
@@ -123,9 +124,13 @@ class Card:
         if hasattr(self, "coins"):
             raise NotImplementedError(f"{self.__class__.__name__} has coins not coin")
         if hasattr(self, "action"):
-            raise NotImplementedError(f"{self.__class__.__name__} has action not actions")
+            raise NotImplementedError(
+                f"{self.__class__.__name__} has action not actions"
+            )
         if hasattr(self, "potions"):
-            raise NotImplementedError(f"{self.__class__.__name__} has potions not potion")
+            raise NotImplementedError(
+                f"{self.__class__.__name__} has potions not potion"
+            )
         if hasattr(self, "card"):
             raise NotImplementedError(f"{self.__class__.__name__} has card not cards")
         if hasattr(self, "buy"):
@@ -164,7 +169,9 @@ class Card:
 
     ##########################################################################
     def __repr__(self):
-        return f"{self.name} {self.uuid} {self._player}@{self._location}"
+        if os.getenv("PYDOMINION_DEBUG"):
+            return f"{self.name} ({self.uuid} {self._player}@{self._location})"
+        return f"{self.name}"
 
     ##########################################################################
     def __lt__(self, card):

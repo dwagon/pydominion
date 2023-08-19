@@ -245,7 +245,7 @@ class Player:
             if not card:
                 return None
         assert isinstance(card, Card)
-        self.output(f"Calling {card.name} from Reserve")
+        self.output(f"Calling {card} from Reserve")
         self.currcards.append(card)
         card.hook_call_reserve(game=self.game, player=self)
         self.currcards.pop()
@@ -258,7 +258,7 @@ class Player:
         """Reveal a card to everyone"""
         if not card:
             return
-        self.game.output(f"{self.name} reveals {card.name}")
+        self.game.output(f"{self.name} reveals {card}")
         card.hook_revealThisCard(game=self.game, player=self)
 
     ###########################################################################
@@ -334,7 +334,7 @@ class Player:
         assert isinstance(card, Card)
         self.add_card(card, Piles.HAND)
         if verbose:
-            self.output(f"{verb} {card.name}")
+            self.output(f"{verb} {card}")
         return card
 
     ###########################################################################
@@ -778,7 +778,7 @@ class Player:
         for stack_name, stack in self.piles.items():
             for card in stack:
                 assert (
-                    card.location == stack_name.lower()
+                    card.location == stack_name
                 ), f"{card} {card.location=} != {stack_name=}"
                 assert card.player == self, f"{card} player not {self}"
 
@@ -917,21 +917,21 @@ class Player:
             self.output(f"| States: {', '.join([_.name for _ in self.states])}")
         if self.piles[Piles.DEFER]:
             self.output(
-                f"| Defer: {', '.join([_.name for _ in self.piles[Piles.DEFER]])}"
+                f"| Defer: {', '.join([str(_) for _ in self.piles[Piles.DEFER]])}"
             )
         if self.piles[Piles.DURATION]:
             self.output(
-                f"| Duration: {', '.join([_.name for _ in self.piles[Piles.DURATION]])}"
+                f"| Duration: {', '.join([str(_) for _ in self.piles[Piles.DURATION]])}"
             )
         if self.projects:
             self.output(f"| Project: {', '.join([p.name for p in self.projects])}")
         if self.piles[Piles.RESERVE]:
             self.output(
-                f"| Reserve: {', '.join([_.name for _ in self.piles[Piles.RESERVE]])}"
+                f"| Reserve: {', '.join([str(_) for _ in self.piles[Piles.RESERVE]])}"
             )
         if self.piles[Piles.HAND]:
             self.output(
-                f"| Hand ({len(self.piles[Piles.HAND])}): {', '.join([_.name for _ in self.piles[Piles.HAND]])}"
+                f"| Hand ({len(self.piles[Piles.HAND])}): {', '.join([str(_) for _ in self.piles[Piles.HAND]])}"
             )
         else:
             self.output("| Hand: <EMPTY>")
@@ -939,11 +939,11 @@ class Player:
             self.output(f"| Artifacts: {', '.join([_.name for _ in self.artifacts])}")
         if self.piles[Piles.EXILE]:
             self.output(
-                f"| Exile: {', '.join([_.name for _ in self.piles[Piles.EXILE]])}"
+                f"| Exile: {', '.join([str(_) for _ in self.piles[Piles.EXILE]])}"
             )
         if self.piles[Piles.PLAYED]:
             self.output(
-                f"| Played ({len(self.piles[Piles.PLAYED])}): {', '.join([_.name for _ in self.piles[Piles.PLAYED]])}"
+                f"| Played ({len(self.piles[Piles.PLAYED])}): {', '.join([str(_) for _ in self.piles[Piles.PLAYED]])}"
             )
         else:
             self.output("| Played: <NONE>")
@@ -953,10 +953,10 @@ class Player:
                 f"| Ally: {self.game.ally.name}: {self.game.ally.description(self)}"
             )
         self.output(
-            f"| Discard ({len(self.piles[Piles.DISCARD])}): {', '.join([_.name for _ in self.piles[Piles.DISCARD]])}"
+            f"| Discard ({len(self.piles[Piles.DISCARD])}): {', '.join([str(_) for _ in self.piles[Piles.DISCARD]])}"
         )  # Debug
         self.output(
-            f"| Trash ({len(self.game.trashpile)}): {', '.join([_.name for _ in self.game.trashpile])}"
+            f"| Trash ({len(self.game.trashpile)}): {', '.join([str(_) for _ in self.game.trashpile])}"
         )  # Debug
         self.output(f"| {self.piles[Piles.DISCARD].size()} cards in discard pile")
         self.output("-" * 50)
@@ -1044,7 +1044,7 @@ class Player:
     def _defer_start_turn(self):
         """Perform the defer-pile cards at the start of the turn"""
         for card in self.piles[Piles.DEFER]:
-            self.output(f"Playing deferred {card.name}")
+            self.output(f"Playing deferred {card}")
             self.currcards.append(card)
             self.move_card(card, Piles.HAND)
             self.play_card(card, cost_action=False)
@@ -1055,7 +1055,7 @@ class Player:
         """Perform the duration pile at the start of the turn"""
         for card in self.piles[Piles.DURATION]:
             options = {"dest": Piles.PLAYED}
-            self.output(f"Playing {card.name} from duration pile")
+            self.output(f"Playing {card} from duration pile")
             self.currcards.append(card)
             upd_opts = card.duration(game=self.game, player=self)
             if isinstance(upd_opts, dict):
@@ -1219,13 +1219,13 @@ class Player:
         """Play the card {card}"""
         options = {"skip_card": False, "discard": discard}
         if card not in self.piles[Piles.HAND] and options["discard"]:
-            raise AssertionError(f"Playing {card.name} which is not in hand")
+            raise AssertionError(f"Playing {card} which is not in hand")
         if self.playlimit is not None:
             if self.playlimit <= 0:
-                self.output(f"Can't play {card.name} due to limits in number of plays")
+                self.output(f"Can't play {card} due to limits in number of plays")
                 return
             self.playlimit -= 1
-        self.output(f"Playing {card.name}")
+        self.output(f"Playing {card}")
         self.currcards.append(card)
         if card.isAction():
             options.update(self._hook_pre_action(card))
@@ -1265,7 +1265,7 @@ class Player:
             self.currcards.pop()
             self.output("Not enough actions")
             return
-        self.output(f"Playing {way.name} instead of {card.name}")
+        self.output(f"Playing {way.name} instead of {card}")
         self.card_benefits(way)
         newopts = way.special_way(game=self.game, player=self, card=card)
         if isinstance(newopts, dict):
@@ -1330,7 +1330,7 @@ class Player:
         if not newcard:
             self.output(f"No more {cardpile}")
             return None
-        self.output(f"Gained a {newcard.name}")
+        self.output(f"Gained a {newcard}")
         if callhook:
             if rc := self._hook_gain_card(newcard):
                 options.update(rc)
@@ -1428,7 +1428,7 @@ class Player:
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(newcard)
-        self.output(f"Bought {newcard.name} for {cost} coin")
+        self.output(f"Bought {newcard} for {cost} coin")
         if "Trashing" in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plr_trash_card()
@@ -1791,7 +1791,7 @@ class Player:
         if cards:
             card_pile = cards[0]
             new_card = recipient.gain_card(card_pile, destination)
-            recipient.output(f"Got a {new_card.name}")
+            recipient.output(f"Got a {new_card}")
             return new_card
         return None
 

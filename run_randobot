@@ -8,7 +8,10 @@ import random
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 # Now try running example games
-cardsets = os.listdir("cardset")
+if len(sys.argv) > 1:
+    cardsets = sys.argv[1:]
+else:
+    cardsets = os.listdir("cardset")
 random.shuffle(cardsets)
 for cardset in cardsets:
     cs_str = f"cardset/{cardset}"
@@ -18,8 +21,11 @@ for cardset in cardsets:
     players = "--randobot 4 --numplayers 4"
     output_file = f"/tmp/randobot_{cardset}.{os.getpid()}"
     redirect_args = f"> {output_file} 2>&1"
+    env_args = "PYDOMINION_DEBUG=1 PYTHONPATH=."
     print(f"Playing with {cs_str}")
-    grc = os.system(f"PYTHONPATH=. ./dominion/rungame.py --oldcards {players} {cardset_args} {redirect_args}")
+    grc = os.system(
+        f"{env_args} ./dominion/rungame.py --oldcards {players} {cardset_args} {redirect_args}"
+    )
     if grc:
         print(f"Broke playing with {cs_str}")
     else:
