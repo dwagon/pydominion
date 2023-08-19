@@ -36,7 +36,7 @@ class Card_Jester(Card.Card):
             getcard = player.plr_choose_options(
                 f"Who should get a copy of {plr.name}'s {card.name}",
                 (f"You get a {card.name}", True),
-                ("{plr.name} gets a {card.name}", False),
+                (f"{plr.name} gets a {card.name}", False),
             )
             if getcard:
                 player.gain_card(card.name)
