@@ -1082,6 +1082,13 @@ class TestAddCard(unittest.TestCase):
         self.plr.add_card(card, "played")
         self.assertIn("Copper", self.plr.piles[Piles.PLAYED])
 
+    def test_return_to_pile(self):
+        """Test specifying a pile"""
+        card = self.game["Gold"].remove()
+        gold_size = len(self.game["Gold"])
+        self.plr.add_card(card, self.game["Gold"])
+        self.assertEqual(len(self.game["Gold"]), gold_size + 1)
+
 
 ###############################################################################
 class TestRemoveCard(unittest.TestCase):

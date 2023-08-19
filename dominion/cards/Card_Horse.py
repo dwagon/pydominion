@@ -21,14 +21,7 @@ class Card_Horse(Card.Card):
         self.numcards = 30
 
     def special(self, game, player):
-        player.discard_card(self)
-        try:  # If Horse is played multiple times e.g. Kings Court
-            player.piles[Piles.PLAYED].remove(self)
-            card = player.piles[Piles.DISCARD].remove(self)
-            game["Horse"].add(card)
-        except ValueError as exc:
-            print(f"Awooga {exc}")
-            pass
+        player.move_card(self, game["Horse"])
 
 
 ###############################################################################

@@ -391,6 +391,11 @@ class Player:
             pile.add(card)
             return card
 
+        # Return card to a card pile
+        if isinstance(pile, CardPile):
+            self.game[pile.cardname].add(card)
+            return card
+
         if pile in self.piles:
             self.piles[pile].add(card)
             card.location = pile
