@@ -27,14 +27,14 @@ class Card_Sleigh(Card.Card):
         # Discard self if choice == hand or deck
         choice = player.plr_choose_options(
             f"What to do with {card.name}?",
-            ("Discard by default", "discard"),
+            ("Discard by default", Piles.DISCARD),
             (f"Put {card.name} into hand and discard Sleigh", Piles.HAND),
             (f"Put {card.name} onto your deck and discard Sleigh", "topdeck"),
         )
-        if choice != "discard":
+        if choice != Piles.DISCARD:
             if self in player.piles[Piles.PLAYED]:
                 player.piles[Piles.PLAYED].remove(self)
-            if self in player.piles[Piles.HAND]:
+            elif self in player.piles[Piles.HAND]:
                 player.piles[Piles.HAND].remove(self)
             player.discard_card(self)
         return {"destination": choice}
@@ -51,14 +51,14 @@ class TestSleigh(unittest.TestCase):
         self.card = self.g["Sleigh"].remove()
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_sleigh(self):
         """Play a sleigh"""
         self.plr.test_input = ["Discard by default", "Put Horse into hand"]
         self.plr.play_card(self.card)
         self.assertIn("Horse", self.plr.piles[Piles.DISCARD])
         self.assertIn("Horse", self.plr.piles[Piles.HAND])
 
-    def test_gaincard(self):
+    def test_gain_card(self):
         """Gain a card while Sleigh in hand"""
         self.plr.test_input = ["Put Estate onto your deck"]
         self.plr.gain_card("Estate")
