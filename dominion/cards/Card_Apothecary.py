@@ -24,20 +24,22 @@ class Card_Apothecary(Card.Card):
         back on top of your deck in any order"""
         unput = []
         for _ in range(4):
-            c = player.next_card()
-            player.reveal_card(c)
-            if c.name in ("Copper", "Potion"):
-                player.output(f"Putting {c.name} in hand")
-                player.add_card(c, Piles.HAND)
+            card = player.next_card()
+            if not card:
+                continue
+            player.reveal_card(card)
+            if card.name in ("Copper", "Potion"):
+                player.output(f"Putting {card} in hand")
+                player.add_card(card, Piles.HAND)
             else:
-                unput.append(c)
-        for c in unput:
-            player.output(f"Putting {c.name} back in deck")
-            player.add_card(c, "deck")
+                unput.append(card)
+        for card in unput:
+            player.output(f"Putting {card} back in deck")
+            player.add_card(card, "deck")
 
 
 ###############################################################################
-class Test_Apothecary(unittest.TestCase):
+class TestApothecary(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Apothecary"])
         self.g.start_game()
@@ -46,7 +48,9 @@ class Test_Apothecary(unittest.TestCase):
     def test_none(self):
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
-        self.plr.piles[Piles.DECK].set("Duchy", "Estate", "Estate", "Estate", "Province")
+        self.plr.piles[Piles.DECK].set(
+            "Duchy", "Estate", "Estate", "Estate", "Province"
+        )
         self.plr.play_card(apoth)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)  # P
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)  # D + E + E + E
@@ -54,7 +58,9 @@ class Test_Apothecary(unittest.TestCase):
     def test_some(self):
         self.plr.piles[Piles.HAND].set("Apothecary")
         apoth = self.plr.piles[Piles.HAND][0]
-        self.plr.piles[Piles.DECK].set("Duchy", "Potion", "Copper", "Estate", "Province")
+        self.plr.piles[Piles.DECK].set(
+            "Duchy", "Potion", "Copper", "Estate", "Province"
+        )
         self.plr.play_card(apoth)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)  # P + C + Pot
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 2)  # E + D

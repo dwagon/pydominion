@@ -61,6 +61,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.gameover = False
         self._heirlooms = []
         self._allow_shelters = True
+        self._loaded_prizes = False
         self.current_player = None
         self.paths = {
             "cards": "dominion/cards",
@@ -481,6 +482,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
             self._use_cardpile(None, prize, False, "PrizeCard")
+        self._loaded_prizes = True
 
     ###########################################################################
     def getPrizes(self):
@@ -553,7 +555,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self.output(f"Using Allies as required by {card.name}")
             if card.traveller and not self.loaded_travellers:
                 self._load_travellers()
-            if card.needsprize:
+            if card.needsprize and not self._loaded_prizes:
                 self._add_prizes()
                 self.output(f"Playing with Prizes as required by {card.name}")
             if card.needsartifacts and not self.artifacts:
@@ -782,7 +784,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
         """This is used for debugging"""
-        print("#" * 80)
+        print("\n" + "#" * 80)
         print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
         print(f"Boons: {', '.join([_.name for _ in self.boons])}")
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
