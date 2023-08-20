@@ -34,7 +34,7 @@ class Card_Lookout(Card.Card):
         cd = self._discard(player, cards)
         cards.remove(cd)
         if cards:
-            player.output(f"Putting {cards[0].name} on top of deck")
+            player.output(f"Putting {cards[0]} on top of deck")
             player.add_card(cards[0], "topdeck")
 
     def _trash(self, player, cards):
@@ -43,7 +43,7 @@ class Card_Lookout(Card.Card):
         for card in cards:
             index += 1
             options.append(
-                {"selector": f"{index}", "print": f"Trash {card.name}", "card": card}
+                {"selector": f"{index}", "print": f"Trash {card}", "card": card}
             )
         o = player.user_input(options, "Select a card to trash")
         player.trash_card(o["card"])
@@ -55,7 +55,7 @@ class Card_Lookout(Card.Card):
         for card in cards:
             index += 1
             options.append(
-                {"selector": f"{index}", "print": f"Discard {card.name}", "card": card}
+                {"selector": f"{index}", "print": f"Discard {card}", "card": card}
             )
         o = player.user_input(options, "Select a card to discard")
         player.discard_card(o["card"])
