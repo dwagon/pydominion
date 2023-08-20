@@ -24,19 +24,21 @@ class Card_Spy(Card.Card):
             self.spy_on(player, pl)
 
     def spy_on(self, attacker, victim):
-        c = victim.next_card()
-        victim.reveal_card(c)
-        vicname = "your" if attacker == victim else f"{victim.name}'s"
+        card = victim.next_card()
+        if not card:
+            return
+        victim.reveal_card(card)
+        victim_name = "your" if attacker == victim else f"{victim.name}'s"
         discard = attacker.plr_choose_options(
-            f"Discard {vicname} card?",
-            (f"Keep {c.name} on {vicname} deck", False),
-            (f"Discard {vicname} {c.name}", True),
+            f"Discard {victim_name} card?",
+            (f"Keep {card} on {victim_name} deck", False),
+            (f"Discard {victim_name} {card}", True),
         )
         if discard:
-            victim.add_card(c, "discard")
-            victim.output("f{attacker.name}'s Spy discarded your {c.name}")
+            victim.add_card(card, "discard")
+            victim.output("f{attacker.name}'s Spy discarded your {card}")
         else:
-            victim.add_card(c, "topdeck")
+            victim.add_card(card, "topdeck")
 
 
 ###############################################################################
