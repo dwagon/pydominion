@@ -29,10 +29,12 @@ class Card_Lookout(Card.Card):
             return
         player.output("Pulled %s from deck" % ", ".join([_.name for _ in cards]))
         player.output("Trash a card, discard a card, put a card on your deck")
-        tc = self._trash(player, cards)
-        cards.remove(tc)
-        cd = self._discard(player, cards)
-        cards.remove(cd)
+        trash_card = self._trash(player, cards)
+        if trash_card:
+            cards.remove(trash_card)
+        discard_card = self._discard(player, cards)
+        if discard_card:
+            cards.remove(discard_card)
         if cards:
             player.output(f"Putting {cards[0]} on top of deck")
             player.add_card(cards[0], "topdeck")
@@ -46,6 +48,8 @@ class Card_Lookout(Card.Card):
                 {"selector": f"{index}", "print": f"Trash {card}", "card": card}
             )
         o = player.user_input(options, "Select a card to trash")
+        if not o:
+            return
         player.trash_card(o["card"])
         return o["card"]
 
@@ -58,6 +62,8 @@ class Card_Lookout(Card.Card):
                 {"selector": f"{index}", "print": f"Discard {card}", "card": card}
             )
         o = player.user_input(options, "Select a card to discard")
+        if not o:
+            return
         player.discard_card(o["card"])
         return o["card"]
 

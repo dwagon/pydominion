@@ -142,7 +142,7 @@ def runGame(args):  # pragma: no cover
             except Exception:
                 g.print_state(card_dump=True)
                 raise
-            assert turn < 200
+            assert turn < 400
     except KeyboardInterrupt:
         g.gameover = True
     g.whoWon()
