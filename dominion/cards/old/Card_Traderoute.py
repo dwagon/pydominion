@@ -5,7 +5,7 @@ from dominion import Card, Game, Piles
 
 
 ###############################################################################
-class Card_Traderoute(Card.Card):
+class Card_TradeRoute(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -25,9 +25,9 @@ class Card_Traderoute(Card.Card):
             if cp.isVictory():
                 cls.tokens[cp.name] = len(cp)
 
-    def isWorth(self):
+    def is_worth(self, game):
         worth = 0
-        for cp in list(self.game.cardpiles.values()):
+        for cp in list(game.cardpiles.values()):
             if cp.name in self.tokens:
                 if self.tokens[cp.name] != len(cp):
                     worth += 1
@@ -39,35 +39,35 @@ class Card_Traderoute(Card.Card):
         supply pile. When a card is gained from that pile move the
         token to the trade route map"""
         player.plr_trash_card()
-        player.coins.add(self.isWorth())
+        player.coins.add(self.is_worth(game))
 
 
 ###############################################################################
-class Test_Traderoute(unittest.TestCase):
+class TestTradeRoute(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Trade Route"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.traderoute = self.g["Trade Route"].remove()
-        self.plr.add_card(self.traderoute, Piles.HAND)
+        self.trade_route = self.g["Trade Route"].remove()
+        self.plr.add_card(self.trade_route, Piles.HAND)
 
     def test_playZero(self):
         self.plr.test_input = ["finish selecting"]
-        self.plr.play_card(self.traderoute)
+        self.plr.play_card(self.trade_route)
         self.assertEqual(self.plr.coins.get(), 0)
         self.assertEqual(self.plr.buys.get(), 2)
 
     def test_playOne(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
-        self.plr.play_card(self.traderoute)
+        self.plr.play_card(self.trade_route)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ["finish selecting"]
         self.g["Estate"].remove()
         self.g["Province"].remove()
-        self.plr.play_card(self.traderoute)
+        self.plr.play_card(self.trade_route)
         self.assertEqual(self.plr.coins.get(), 2)
 
 

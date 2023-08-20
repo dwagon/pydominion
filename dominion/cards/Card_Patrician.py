@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,8 @@ class Card_Patrician(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = "+1 Card, +1 Action. Reveal the top card of your deck. If it costs 5 or more, put it into your hand."
+        self.desc = """+1 Card, +1 Action. Reveal the top card of your deck.
+        If it costs 5 or more, put it into your hand."""
         self.name = "Patrician"
         self.cards = 1
         self.actions = 1
@@ -19,18 +19,20 @@ class Card_Patrician(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        topcard = player.next_card()
-        player.reveal_card(topcard)
-        if topcard.cost >= 5:
-            player.add_card(topcard, Piles.HAND)
-            player.output("Adding %s to hand" % topcard.name)
+        top_card = player.next_card()
+        if not top_card:
+            return
+        player.reveal_card(top_card)
+        if top_card.cost >= 5:
+            player.add_card(top_card, Piles.HAND)
+            player.output(f"Adding {top_card} to hand")
         else:
-            player.add_card(topcard, "topdeck")
-            player.output("%s too cheap to bother with" % topcard.name)
+            player.add_card(top_card, "topdeck")
+            player.output(f"{top_card} too cheap to bother with")
 
 
 ###############################################################################
-class Test_Patrician(unittest.TestCase):
+class TestPatrician(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Patrician"])
         self.g.start_game()
