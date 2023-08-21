@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Piles
-from dominion import Card
-from dominion import PlayArea
+from dominion import Game, Piles, Card, PlayArea
 from dominion.Player import Phase
 
 
@@ -36,13 +34,15 @@ class Card_Crypt(Card.Card):
             self.permanent = True
 
     def duration(self, game, player):
+        if self._crypt_reserve.is_empty():
+            return
         options = []
         index = 0
         for card in self._crypt_reserve:
-            sel = f"{index}"
-            toprint = f"Bring back {card.name}"
-            options.append({"selector": sel, "print": toprint, "card": card})
+            to_print = f"Bring back {card.name}"
+            options.append({"selector": f"{index}", "print": to_print, "card": card})
             index += 1
+
         o = player.user_input(options, "What card to bring back from the crypt?")
         player.add_card(o["card"], Piles.HAND)
         self._crypt_reserve.remove(o["card"])
@@ -52,7 +52,7 @@ class Card_Crypt(Card.Card):
 
 
 ###############################################################################
-class Test_Crypt(unittest.TestCase):
+class TestCrypt(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Crypt"], badcards=["Duchess"])
         self.g.start_game()
