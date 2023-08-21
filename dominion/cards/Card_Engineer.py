@@ -23,7 +23,7 @@ class Card_Engineer(Card.Card):
             ("Keep the engineer", False),
             ("Trash to gain a card costing up to 4", True),
         )
-        if trash and self.location != "trash":
+        if trash and self.location != Piles.TRASH:
             player.trash_card(self)
             player.plr_gain_card(4)
 
