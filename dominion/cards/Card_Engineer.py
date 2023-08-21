@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -21,16 +20,16 @@ class Card_Engineer(Card.Card):
         player.plr_gain_card(4)
         trash = player.plr_choose_options(
             "Trash the Engineer?",
-            ("Keep the enginner", False),
+            ("Keep the engineer", False),
             ("Trash to gain a card costing up to 4", True),
         )
-        if trash:
+        if trash and self.location != "trash":
             player.trash_card(self)
             player.plr_gain_card(4)
 
 
 ###############################################################################
-class Test_Engineer(unittest.TestCase):
+class TestEngineer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Engineer", "Moat"])
         self.g.start_game()
