@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-""" Run randobot tests """
+""" Run randobot tests - play a game very randomly to see what errors pop up"""
 
 import os
 import sys
-import random
 
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
@@ -12,7 +11,7 @@ if len(sys.argv) > 1:
     cardsets = sys.argv[1:]
 else:
     cardsets = os.listdir("cardset")
-random.shuffle(cardsets)
+grc = 0
 for cardset in cardsets:
     cs_str = f"cardset/{cardset}"
     if not os.path.isfile(cs_str):
