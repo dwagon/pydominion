@@ -23,21 +23,24 @@ class Card_Sorceress(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for c in sorted(game.cardTypes()):
+        for card in sorted(game.cardTypes()):
             sel = f"{index}"
-            options.append({"selector": sel, "print": f"Guess {c.name}", "card": c})
+            options.append({"selector": sel, "print": f"Guess {card}", "card": card})
             index += 1
         o = player.user_input(options, "Guess the top card")
-        c = player.pickup_card()
-        player.output(f"Next card = {c.name}, Guess = {o['card'].name}")
-        if c.name == o["card"].name:
-            game.output(f"Guessed {c.name} correctly")
+        if not o["card"]:
+            player.output("No suitable cards")
+            return
+        card = player.pickup_card()
+        player.output(f"Next card = {card}, Guess = {o['card']}")
+        if card.name == o["card"].name:
+            game.output(f"Guessed {card} correctly")
             for plr in player.attack_victims():
                 plr.gain_card("Curse")
 
 
 ###############################################################################
-class Test_Sorceress(unittest.TestCase):
+class TestSorceress(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Augurs"])
         self.g.start_game()
