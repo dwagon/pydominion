@@ -5,7 +5,7 @@ from dominion import Card, Game, Piles
 
 
 ###############################################################################
-class Card_Tradingpost(Card.Card):
+class Card_TradingPost(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -17,8 +17,10 @@ class Card_Tradingpost(Card.Card):
     def special(self, game, player):
         """Trash 2 card from your hand. If you do, gain a Silver card; put it into your hand"""
         num = min(2, player.piles[Piles.HAND].size())
-        trash = player.plr_trash_card(num=num, prompt="Trash two cards to gain a silver")
-        if len(trash) == 2:
+        trash = player.plr_trash_card(
+            num=num, prompt="Trash two cards to gain a silver"
+        )
+        if trash and len(trash) == 2:
             player.gain_card("Silver", Piles.HAND)
             player.coins.add(2)
         else:
@@ -26,7 +28,7 @@ class Card_Tradingpost(Card.Card):
 
 
 ###############################################################################
-class Test_Tradingpost(unittest.TestCase):
+class TestTradingPost(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Trading Post"])
         self.g.start_game()

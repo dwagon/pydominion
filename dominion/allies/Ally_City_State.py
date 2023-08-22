@@ -19,7 +19,7 @@ class Ally_CityState(Ally.Ally):
         if player.favors.get() < 2:
             return
         ch = player.plr_choose_options(
-            f"Play {card.name} from City State?",
+            f"Play {card} from City State?",
             ("Do nothing", False),
             ("Play Card", True),
         )
@@ -34,7 +34,7 @@ def botresponse(player, kind, args=None, kwargs=None):
 
 
 ###############################################################################
-class Test_CityState(unittest.TestCase):
+class TestCityState(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, ally="City State", initcards=["Underling"])
         self.g.start_game()
