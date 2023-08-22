@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,9 @@ class Card_Disciple(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.TRAVELLER]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = """You may play an Action card from your hand twice. Gain a copy of it"""
+        self.desc = (
+            """You may play an Action card from your hand twice. Gain a copy of it"""
+        )
         self.name = "Disciple"
         self.purchasable = False
         self.numcards = 5
@@ -19,7 +20,7 @@ class Card_Disciple(Card.Card):
 
     def special(self, game, player):
         """You may play an Action card from your hand twice. Gain a copy of it"""
-        actions = [c for c in player.piles[Piles.HAND] if c.isAction()]
+        actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
         if not actions:
             player.output("No suitable actions to perform")
             return
@@ -28,14 +29,13 @@ class Card_Disciple(Card.Card):
             return
         card = cards[0]
         for i in range(1, 3):
-            player.output("Number %d play of %s" % (i, card.name))
+            player.output(f"Number {i} play of {card}")
             player.play_card(card, discard=False, cost_action=False)
-        player.add_card(card, "played")
-        player.piles[Piles.HAND].remove(card)
+        player.move_card(card, Piles.PLAYED)
         if card.purchasable:
             c = player.gain_card(card.name)
             if c:
-                player.output("Gained a %s from Disciple" % c.name)
+                player.output(f"Gained a {c} from Disciple")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Teacher"""
@@ -43,7 +43,7 @@ class Card_Disciple(Card.Card):
 
 
 ###############################################################################
-class Test_Disciple(unittest.TestCase):
+class TestDisciple(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Peasant", "Moat"])
         self.g.start_game()
