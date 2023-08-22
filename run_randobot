@@ -4,32 +4,53 @@
 import os
 import sys
 
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-# Now try running example games
-if len(sys.argv) > 1:
-    cardsets = sys.argv[1:]
-else:
-    cardsets = os.listdir("cardset")
-grc = 0
-for cardset in cardsets:
-    cs_str = f"cardset/{cardset}"
-    if not os.path.isfile(cs_str):
-        continue
-    cardset_args = f"--cardset {cs_str}"
+def make_run(cardset=None, run=None):
+    """ Run the game """
+    if cardset:
+        cardsetname = cardset.replace("cardset/", "")
+        cardset_args = f"--cardset {cardset}"
+    else:
+        cardsetname = f"{run}"
+        cardset_args = ""
     players = "--randobot 4 --numplayers 4"
-    output_file = f"/tmp/randobot_{cardset}.{os.getpid()}"
+    output_file = f"/tmp/randobot_{cardsetname}.{os.getpid()}"
     redirect_args = f"> {output_file} 2>&1"
     env_args = "PYDOMINION_DEBUG=1 PYTHONPATH=."
-    print(f"Playing with {cs_str}")
+    args = f"--oldcards {players} {cardset_args} {redirect_args}"
+    print(f"Playing with {cardsetname}")
     grc = os.system(
-        f"{env_args} ./dominion/rungame.py --oldcards {players} {cardset_args} {redirect_args}"
+        f"{env_args} ./dominion/rungame.py {args}"
     )
     if grc:
-        print(f"Broke playing with {cs_str}")
+        print(f"Broke playing with {cardsetname}")
     else:
         os.unlink(output_file)
 
-sys.exit(grc >> 8)
+
+def main():
+    """ Do stuff """
+    os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+    num_runs = 0
+    if len(sys.argv) > 1:
+        try:
+            num_runs = int(sys.argv[1])
+        except ValueError:
+            cardsets = sys.argv[1:]
+    else:
+        cardsets = [os.path.join("cardset", _) for _ in os.listdir("cardset")]
+
+    if num_runs:
+        for run in range(num_runs):
+            make_run(run=run)
+    else:
+        for cardsetfile in cardsets:
+            if not os.path.isfile(cardsetfile):
+                continue
+            make_run(cardset=cardsetfile)
+
+
+if __name__ == "__main__":
+    main()
 
 # EOF
