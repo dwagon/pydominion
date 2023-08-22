@@ -20,17 +20,21 @@ class Card_Camel_Train(Card.Card):
         return "Exile a non-Victory card from the Supply."
 
     def special(self, game, player):
-        cards = [_ for _ in game.cardpiles.values() if not _.isVictory() and not _.is_empty()]
-        toex = player.card_sel(prompt="Pick a card to Exile", cardsrc=cards)
-        if toex:
-            player.exile_card(toex[0].name)
+        cards = [
+            _
+            for _ in game.cardpiles.values()
+            if not _.is_empty() and not _.isVictory() and _.purchasable
+        ]
+        to_exile = player.card_sel(prompt="Pick a card to Exile", cardsrc=cards)
+        if to_exile:
+            player.exile_card(to_exile[0].name)
 
     def hook_gain_this_card(self, game, player):
         player.exile_card("Gold")
 
 
 ###############################################################################
-class Test_Camel_Train(unittest.TestCase):
+class TestCamelTrain(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Camel Train"])
         self.g.start_game()
