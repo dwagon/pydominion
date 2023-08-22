@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -25,13 +24,12 @@ class Card_Experiment(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.piles[Piles.PLAYED].remove(self)
-        game[self.name].add(self)
+        player.move_card(self, game["Experiment"])
         player.output("Returned experiment to stack")
 
 
 ###############################################################################
-class Test_Experiment(unittest.TestCase):
+class TestExperiment(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Experiment"])
         self.g.start_game()
