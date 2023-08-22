@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -20,22 +19,22 @@ class Card_Survivors(Card.Card):
     def special(self, game, player):
         """Look at the top 2 cards of your deck. Discard them or
         put them back in any order"""
-        crds = player.pickup_cards(2)
+        cards = player.pickup_cards(2)
         ans = player.plr_choose_options(
             "What to do with survivors?",
-            (f"Discard {crds[0].name} and {crds[1].name}", "discard"),
-            (f"Return {crds[0].name} and {crds[1].name} to deck", "return"),
+            (f"Discard {cards[0]} and {cards[1]}", "discard"),
+            (f"Return {cards[0]} and {cards[1]} to deck", "return"),
         )
         if ans == "discard":
-            player.discard_card(crds[0])
-            player.discard_card(crds[1])
+            player.discard_card(cards[0])
+            player.discard_card(cards[1])
         else:
-            player.add_card(crds[0], "deck")
-            player.add_card(crds[1], "deck")
+            player.move_card(cards[0], Piles.DECK)
+            player.move_card(cards[1], Piles.DECK)
 
 
 ###############################################################################
-class Test_Survivors(unittest.TestCase):
+class TestSurvivors(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
@@ -53,18 +52,19 @@ class Test_Survivors(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
-        self.assertNotIn("Gold", self.plr.piles[Piles.HAND])
-        self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertNotIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertNotIn("Silver", self.plr.piles[Piles.DECK])
 
-    def test_play_keep(self):
-        """Play a survivor and keep cards"""
+    def test_play_return(self):
+        """Play a survivor and return to deck"""
         self.plr.piles[Piles.DECK].set("Copper", "Silver", "Gold")
+        self.plr.piles[Piles.DISCARD].empty()
         self.plr.test_input = ["Return"]
         self.plr.play_card(self.card)
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Silver", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Gold", self.plr.piles[Piles.HAND])
-        self.assertIn("Silver", self.plr.piles[Piles.HAND])
+        self.assertIn("Gold", self.plr.piles[Piles.DECK])
+        self.assertIn("Silver", self.plr.piles[Piles.DECK])
 
 
 ###############################################################################
