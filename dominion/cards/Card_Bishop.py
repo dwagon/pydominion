@@ -24,12 +24,12 @@ class Card_Bishop(Card.Card):
         from his hand"""
         for plr in game.player_list():
             if plr == player:
-                self.trashOwnCard(game, player)
+                self.trashOwnCard(player)
             else:
-                self.trashOtherCard(game, player, plr)
+                self.trashOtherCard(player, plr)
 
     @classmethod
-    def trashOwnCard(cls, game, player):
+    def trashOwnCard(cls, player):
         tc = player.plr_trash_card(
             printcost=True, prompt="Gain VP worth half the cost of the card you trash"
         )
@@ -38,14 +38,14 @@ class Card_Bishop(Card.Card):
         card = tc[0]
         points = int(card.cost / 2)
         player.add_score("bishop", points)
-        player.output(f"Trashing {card.name} for {points} points")
+        player.output(f"Trashing {card} for {points} points")
 
     @classmethod
-    def trashOtherCard(cls, game, player, victim):
+    def trashOtherCard(cls, player, victim):
         victim.output(f"{player.name}'s bishop lets you trash a card")
         tc = victim.plr_trash_card()
         if tc:
-            victim.output(f"Trashing {tc[0].name}")
+            victim.output(f"Trashing {tc[0]}")
         else:
             victim.output("All mine I tell you, all mine")
 
@@ -87,8 +87,8 @@ class TestBishop(unittest.TestCase):
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
         self.assertIn("Gold", self.g.trashpile)
 
-    def test_bothtrash(self):
-        tsize = self.g.trashpile.size()
+    def test_both_trash(self):
+        trash_size = self.g.trashpile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.other.piles[Piles.HAND].set("Province")
         self.plr.add_card(self.bishop, Piles.HAND)
@@ -98,7 +98,7 @@ class TestBishop(unittest.TestCase):
         self.assertEqual(self.plr.score["bishop"], 3)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
         self.assertTrue(self.other.piles[Piles.HAND].is_empty())
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trashpile.size(), trash_size + 2)
 
 
 ###############################################################################

@@ -24,7 +24,7 @@ class Card_Sheepdog(Card.Card):
 
 
 ###############################################################################
-class Test_Sheepdog(unittest.TestCase):
+class TestSheepdog(unittest.TestCase):
     """Test Sheepdog"""
 
     def setUp(self):
@@ -34,7 +34,7 @@ class Test_Sheepdog(unittest.TestCase):
         self.card = self.g["Sheepdog"].remove()
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play card"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
@@ -43,6 +43,7 @@ class Test_Sheepdog(unittest.TestCase):
         """Gain a card"""
         self.plr.gain_card("Estate")
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
+        self.assertIn("Sheepdog", self.plr.piles[Piles.PLAYED])
 
     def test_gain_twice(self):
         """Gain a card twice"""

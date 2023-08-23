@@ -46,29 +46,30 @@ class CardPile:
         self.embargo_level += 1
 
     ###########################################################################
-    def __lt__(self, a):
+    def __lt__(self, other_card):
         if self._card:
-            selfname = self._card.name
+            self_name = self._card.name
         else:
             try:
-                selfname = self._cards[-1].name
+                self_name = self._cards[-1].name
             except IndexError:
-                selfname = "ZZZZ"
-        if a._card:
-            aname = a._card.name
+                self_name = "ZZZZ"
+        if other_card._card:
+            other_name = other_card._card.name
         else:
             try:
-                aname = a._cards[-1].name
+                other_name = other_card._cards[-1].name
             except IndexError:
-                aname = "ZZZZ"
-        return selfname < aname
+                other_name = "ZZZZ"
+        return self_name < other_name
 
     ###########################################################################
     def __getattr__(self, name):
         try:
             if self._card:
                 return getattr(self._card, name)
-            return getattr(self._cards[-1], name)
+            if self._cards:
+                return getattr(self._cards[-1], name)
         except RecursionError:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
             raise
@@ -125,8 +126,8 @@ class CardPile:
     def dump(self):
         """Print out all the pile - for debugging purposes only"""
         print("----------")
-        for crd in self._cards:
-            print(f"Card={crd}")
+        for card in self._cards:
+            print(f"Card={card}")
 
     ###########################################################################
     def __repr__(self):

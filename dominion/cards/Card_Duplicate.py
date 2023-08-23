@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -15,6 +14,7 @@ class Card_Duplicate(Card.Card):
         self.name = "Duplicate"
         self.cost = 4
         self.when = ["special"]
+        self._duplicate = None
 
     def hook_gain_card(self, game, player, card):
         if not player.piles[Piles.RESERVE]["Duplicate"]:
@@ -26,23 +26,25 @@ class Card_Duplicate(Card.Card):
         if card.potcost:
             return {}
         o = player.plr_choose_options(
-            "Call Duplicate on %s" % card.name,
+            f"Call Duplicate on {card}?",
             ("Save for later", False),
-            ("Duplicate %s" % card.name, True),
+            (f"Duplicate {card}", True),
         )
         if o:
             self._duplicate = card
             player.call_reserve(self)
+        else:
+            self._duplicate = None
         return {}
 
     def hook_call_reserve(self, game, player):
         card = self._duplicate
-        player.output("Gaining a %s from Duplicate" % card.name)
+        player.output(f"Gaining a {card} from Duplicate")
         player.gain_card(card.name, callhook=False)
 
 
 ###############################################################################
-class Test_Duplicate(unittest.TestCase):
+class TestDuplicate(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Duplicate"])
         self.g.start_game()

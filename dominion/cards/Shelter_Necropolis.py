@@ -22,7 +22,7 @@ class Card_Necropolis(Card.Card):
 
 
 ###############################################################################
-class Test_Necropolis(unittest.TestCase):
+class TestNecropolis(unittest.TestCase):
     """Test Necropolis"""
 
     def setUp(self):
