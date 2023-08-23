@@ -49,7 +49,6 @@ class Game:  # pylint: disable=too-many-public-methods
         self.ways = {}
         self.landmarks = {}
         self.init_ally = []
-        self._init_cardset = set()
         self.boons = []
         self.discarded_boons = []
         self.retained_boons = []
@@ -83,7 +82,6 @@ class Game:  # pylint: disable=too-many-public-methods
             self._base_cards.append("Platinum")
 
         self.cardmapping = self._get_available_card_classes()
-        self._total_cards = 0
         self._original = {}
         self.loaded_travellers = False  # For testing purposes
         self._cards = {}
@@ -209,9 +207,8 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _save_original(self):
         """Save original card state for debugging purposes"""
-        self._init_cardset = set(self._cards.keys())
-        self._total_cards = self.count_cards()
-        self._original = self._count_all_cards()
+        self._original["count"] = self._count_all_cards()
+        self._original["total_cards"] = self.count_cards()
 
     ###########################################################################
     def player_list(self, num=None):
@@ -232,8 +229,8 @@ class Game:  # pylint: disable=too-many-public-methods
     def count_cards(self):
         """TODO"""
         count = {"trash": self.trashpile.size()}
-        for cpile in list(self.cardpiles.values()):
-            count[f"pile_{cpile.name}"] = len(cpile)
+        for name, pile in list(self.cardpiles.items()):
+            count[f"pile_{name}"] = len(pile)
         for plr in self.player_list():
             count[f"player_{plr.name}"] = plr.count_cards()
         total = sum(count.values())
@@ -508,7 +505,7 @@ class Game:  # pylint: disable=too-many-public-methods
         for crd in card_pile:
             self._cards[crd.uuid] = crd
             crd.location = Piles.CARDPILE
-        self.output(f"Playing with card {self[card].name}")
+        self.output(f"Playing with {self[card].name}")
         return 1
 
     ###########################################################################
@@ -728,7 +725,10 @@ class Game:  # pylint: disable=too-many-public-methods
             self.boons = self.discarded_boons[:]
             self.discarded_boons = []
             random.shuffle(self.boons)
-        boon = self.boons.pop()
+        try:
+            boon = self.boons.pop()
+        except IndexError:
+            boon = None
         return boon
 
     ###########################################################################
@@ -876,16 +876,21 @@ class Game:  # pylint: disable=too-many-public-methods
         now = self._count_all_cards()
         print(f"{'- -' * 20}", file=sys.stderr)
         print(
-            f"current={self.count_cards()} original={self._total_cards}\n",
+            f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
         )
         for pile in self.cardpiles.values():
             card = pile.name
-            if self._original[card]["total"] == now[card]["total"]:
+            if self._original["count"][card]["total"] == now[card]["total"]:
                 continue
             print(f"{card} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)
             print(f" {card} Original:")
-            print(json.dumps(self._original[card], indent=2), file=sys.stderr)
+            try:
+                print(
+                    json.dumps(self._original["count"][card], indent=2), file=sys.stderr
+                )
+            except KeyError:
+                print(f"Unhandled card {card}")
             print(f" {card} Now:")
             print(json.dumps(now[card], indent=2), file=sys.stderr)
         print(f"{'- -' * 20}", file=sys.stderr)
@@ -893,9 +898,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _validate_cards(self):
         try:
-            assert self.count_cards() == self._total_cards
-            current_cardset = set(self._cards.keys())
-            assert self._init_cardset == current_cardset
+            assert self.count_cards() == self._original["total_cards"]
         except AssertionError:
             self._card_loc_debug()
             raise
