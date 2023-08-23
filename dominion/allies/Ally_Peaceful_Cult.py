@@ -18,8 +18,9 @@ class Ally_Peaceful_Cult(Ally.Ally):
         if not player.favors.get():
             return
         player.output("Use Peaceful Cult to trash a card per favor")
-        trshed = player.plr_trash_card(num=player.favors.get())
-        player.favors.add(-1 * len(trshed))
+        trashed = player.plr_trash_card(num=player.favors.get())
+        if trashed:
+            player.favors.add(-1 * len(trashed))
 
 
 ###############################################################################
@@ -28,9 +29,11 @@ def botresponse(player, kind, args=None, kwargs=None):
 
 
 ###############################################################################
-class Test_Peaceful_Cult(unittest.TestCase):
+class TestPeacefulCult(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, ally="Peaceful Cult", initcards=["Underling"])
+        self.g = Game.TestGame(
+            numplayers=1, ally="Peaceful Cult", initcards=["Underling"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
 

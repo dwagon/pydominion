@@ -645,13 +645,21 @@ class Player:
         return options, index
 
     ###########################################################################
+    def _card_check(self):
+        for pile in self.piles:
+            for card in self.piles[pile]:
+                assert card.location == pile, f"{self.name=} {pile=} {card.location=}"
+
+    ###########################################################################
     def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
         all_cards = PlayArea("all_purchasable")
-        for c in self.game.cardTypes():
-            if not c.purchasable:
+        for card_pile in self.game.cardTypes():
+            if card_pile.is_empty():
                 continue
-            all_cards.add(c)
+            if not card_pile.purchasable:
+                continue
+            all_cards.add(card_pile)
         all_cards.sort(key=self.card_cost)
         all_cards.sort(key=lambda x: x.basecard)
         return all_cards
@@ -760,27 +768,22 @@ class Player:
     def turn(self):
         """Have a turn as the player"""
         self.turn_number += 1
+        self.output("\n")
         self.output(f"{'#' * 20} Turn {self.turn_number} {'#' * 20}")
         stats = f"({self.get_score()} points, {self.count_cards()} cards)"
         if self.skip_turn:
             self.skip_turn = False
             return
         self.output(f"{self.name}'s Turn {stats}")
+        self._card_check()  # DEBUG
         self.action_phase()
+        self._card_check()  # DEBUG
         self.buy_phase()
+        self._card_check()  # DEBUG
         self.night_phase()
+        self._card_check()  # DEBUG
         self.cleanup_phase()
-        self._check()
-
-    ###########################################################################
-    def _check(self):
-        """For bug detection: Is everything where it should be?"""
-        for stack_name, stack in self.piles.items():
-            for card in stack:
-                assert (
-                    card.location == stack_name
-                ), f"{card} {card.location=} != {stack_name=}"
-                assert card.player == self, f"{card} player not {self}"
+        self._card_check()  # DEBUG
 
     ###########################################################################
     def night_phase(self):
@@ -908,6 +911,7 @@ class Player:
     ###########################################################################
     def _display_overview(self) -> None:
         """Display turn summary overview to player"""
+        self.output("")
         self.output("-" * 50)
         self.output(f"| Phase: {self.phase.name.title()}")
         for lndmark in self.game.landmarks.values():
@@ -1363,16 +1367,16 @@ class Player:
         return newcard
 
     ###########################################################################
-    def check_unexile(self, cardname):
+    def check_unexile(self, card_name: str):
         """Give players option to un-exile card"""
-        num = sum(1 for _ in self.piles[Piles.EXILE] if _.name == cardname)
+        num = sum(1 for _ in self.piles[Piles.EXILE] if _.name == card_name)
         choices = [
-            (f"Unexile {num} x {cardname}", True),
+            (f"Unexile {num} x {card_name}", True),
             ("Do nothing", False),
         ]
-        unex = self.plr_choose_options(f"Un-exile {cardname}", *choices)
+        unex = self.plr_choose_options(f"Un-exile {card_name}", *choices)
         if unex:
-            self.unexile(cardname)
+            self.unexile(card_name)
 
     ###########################################################################
     def unexile(self, cardname: str) -> int:

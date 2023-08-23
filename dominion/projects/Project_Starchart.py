@@ -18,6 +18,9 @@ class Project_StarChart(Project.Project):
         choices = []
         for name in names:
             choices.append(("Put {} on top".format(name), name))
+        if not choices:
+            player.output("No suitable cards")
+            return
         opt = player.plr_choose_options(
             "Pick a card to put on top of your deck", *choices
         )

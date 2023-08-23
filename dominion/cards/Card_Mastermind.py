@@ -18,12 +18,11 @@ class Card_Mastermind(Card.Card):
     def duration(self, game, player):
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for c in player.piles[Piles.HAND]:
-            if not c.isAction():
+        for card in player.piles[Piles.HAND]:
+            if not card.isAction():
                 continue
-            sel = "%d" % index
-            pr = "Play %s thrice" % c.name
-            options.append({"selector": sel, "print": pr, "card": c})
+            pr = f"Play {card} thrice"
+            options.append({"selector": f"{index}", "print": pr, "card": card})
             index += 1
         if index == 1:
             player.output("No action cards to repeat")
@@ -32,14 +31,13 @@ class Card_Mastermind(Card.Card):
         if not o["card"]:
             return
         for i in range(1, 4):
-            player.output(f"Number {i} play of {o['card'].name}")
+            player.output(f"Number {i} play of {o['card']}")
             player.play_card(o["card"], discard=False, cost_action=False)
-        player.add_card(o["card"], "played")
-        player.piles[Piles.HAND].remove(o["card"])
+        player.move_card(o["card"], Piles.PLAYED)
 
 
 ###############################################################################
-class Test_Mastermind(unittest.TestCase):
+class TestMastermind(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Mastermind", "Moat"])
         self.g.start_game()
@@ -49,7 +47,9 @@ class Test_Mastermind(unittest.TestCase):
 
     def test_playcard(self):
         """Play a card"""
-        self.plr.piles[Piles.DISCARD].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
+        self.plr.piles[Piles.DISCARD].set(
+            "Copper", "Silver", "Gold", "Estate", "Duchy", "Province"
+        )
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.plr.piles[Piles.HAND].set("Moat")

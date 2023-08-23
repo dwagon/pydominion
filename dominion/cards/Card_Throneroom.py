@@ -2,11 +2,10 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Throneroom(Card.Card):
+class Card_ThroneRoom(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
@@ -16,15 +15,15 @@ class Card_Throneroom(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        """You may chose an Action card in your hand. Play it twice"""
+        """You may choose an Action card in your hand. Play it twice"""
         options = [{"selector": "0", "print": "Don't play a card", "card": None}]
         index = 1
-        for c in player.piles[Piles.HAND]:
-            if not c.isAction():
+        for card in player.piles[Piles.HAND]:
+            if not card.isAction():
                 continue
-            sel = "%d" % index
-            pr = "Play %s twice" % c.name
-            options.append({"selector": sel, "print": pr, "card": c})
+            options.append(
+                {"selector": f"{index}", "print": f"Play {card} twice", "card": card}
+            )
             index += 1
         if index == 1:
             return
@@ -32,13 +31,13 @@ class Card_Throneroom(Card.Card):
         if not o["card"]:
             return
         for i in range(1, 3):
-            player.output("Number %d play of %s" % (i, o["card"].name))
+            player.output(f"Number {i} play of {o['card']}'")
             player.play_card(o["card"], discard=False, cost_action=False)
         player.discard_card(o["card"])
 
 
 ###############################################################################
-class Test_Throneroom(unittest.TestCase):
+class TestThroneRoom(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Throne Room", "Mine"])
         self.g.start_game()
@@ -56,13 +55,13 @@ class Test_Throneroom(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.actions.get(), 0)
 
-    def test_donothing(self):
+    def test_do_nothing(self):
         self.plr.piles[Piles.HAND].set("Copper", "Mine")
         card = self.plr.gain_card("Throne Room", Piles.HAND)
         self.plr.test_input = ["0"]
         self.plr.play_card(card)
 
-    def test_noaction(self):
+    def test_no_action(self):
         self.plr.piles[Piles.HAND].set("Copper", "Copper")
         card = self.plr.gain_card("Throne Room", Piles.HAND)
         self.plr.test_input = ["0"]

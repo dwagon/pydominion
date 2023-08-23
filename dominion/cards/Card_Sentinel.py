@@ -12,13 +12,17 @@ class Card_Sentinel(Card.Card):
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.ALLIES
         self.name = "Sentinel"
-        self.desc = "Look at the top 5 cards of your deck. You may trash up to 2 of them. Put the rest back in any order."
+        self.desc = """Look at the top 5 cards of your deck. You may trash up to 2 of them.
+        Put the rest back in any order."""
         self.cost = 3
 
     def special(self, game, player):
         cards = []
         for _ in range(5):
             cards.append(player.next_card())
+        if not cards:
+            player.output("No suitable cards")
+            return
         player.output("Trash up to 2 of these")
         trashed = player.plr_trash_card(num=2, cardsrc=cards)
         for card in cards:
@@ -27,7 +31,7 @@ class Card_Sentinel(Card.Card):
 
 
 ###############################################################################
-class Test_Sentinel(unittest.TestCase):
+class TestSentinel(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Sentinel"])
         self.g.start_game()
@@ -37,7 +41,9 @@ class Test_Sentinel(unittest.TestCase):
 
     def test_play(self):
         """Play the card"""
-        self.plr.piles[Piles.DECK].set("Province", "Copper", "Silver", "Gold", "Estate", "Duchy")
+        self.plr.piles[Piles.DECK].set(
+            "Province", "Copper", "Silver", "Gold", "Estate", "Duchy"
+        )
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)

@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -37,11 +36,14 @@ class Card_Squire(Card.Card):
             if cp.isAttack() and cp.purchasable:
                 attacks.append(cp)
         cards = player.card_sel(prompt="Gain an attack card", cardsrc=attacks)
+        if not cards:
+            player.output("No suitable cards")
+            return
         player.gain_card(cards[0])
 
 
 ###############################################################################
-class Test_Squire(unittest.TestCase):
+class TestSquire(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Squire", "Militia"])
         self.g.start_game()

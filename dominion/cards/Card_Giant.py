@@ -26,6 +26,8 @@ class Card_Giant(Card.Card):
             player.coins.add(5)
             for victim in player.attack_victims():
                 card = victim.top_card()
+                if not card:
+                    continue
                 victim.reveal_card(card)
                 if 3 <= card.cost <= 6:
                     victim.trash_card(card)

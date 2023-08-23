@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,19 +10,25 @@ class Card_Shepherd(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+1 action; Discard any number of victory cards +2 cards per card discarded"
+        self.desc = (
+            "+1 action; Discard any number of victory cards +2 cards per card discarded"
+        )
         self.name = "Shepherd"
         self.cost = 2
         self.actions = 1
         self.heirloom = "Pasture"
 
     def special(self, game, player):
-        todiscard = player.plr_discard_cards(num=0, any_number=True, types={Card.CardType.VICTORY: True})
-        player.pickup_cards(2 * len(todiscard))
+        to_discard = player.plr_discard_cards(
+            num=0, any_number=True, types={Card.CardType.VICTORY: True}
+        )
+        if not to_discard:
+            return
+        player.pickup_cards(2 * len(to_discard))
 
 
 ###############################################################################
-class Test_Shepherd(unittest.TestCase):
+class TestShepherd(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Shepherd"])
         self.g.start_game()

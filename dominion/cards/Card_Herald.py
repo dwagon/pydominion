@@ -32,7 +32,7 @@ class Card_Herald(Card.Card):
         card = player.top_card()
         player.reveal_card(card)
         if card.isAction():
-            player.add_card(card, Piles.HAND)
+            player.move_card(card, Piles.HAND)
             player.play_card(card, cost_action=False)
 
     def hook_overpay(self, game, player, amount):  # pylint: disable=unused-argument
@@ -64,7 +64,9 @@ class TestHerald(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Province", "Estate", "Copper", "Moat", "Duchy")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1 + 2)  # 5 for hand, 1 for herald, 2 for moat
+        self.assertEqual(
+            self.plr.piles[Piles.HAND].size(), 5 + 1 + 2
+        )  # 5 for hand, 1 for herald, 2 for moat
         self.assertEqual(self.plr.actions.get(), 1 + 1)
         self.assertIn("Duchy", self.plr.piles[Piles.HAND])
         self.assertIn("Moat", self.plr.piles[Piles.PLAYED])

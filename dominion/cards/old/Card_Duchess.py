@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Player
+from dominion import Card, Game, Piles
 
 
 ###############################################################################
@@ -19,19 +19,21 @@ class Card_Duchess(Card.Card):
     def special(self, game, player):
         for plr in game.player_list():
             card = plr.next_card()
+            if not card:
+                continue
             if plr == player:
                 name = "your"
             else:
                 name = f"{player.name}'s"
             keep = plr.plr_choose_options(
                 f"Due to {name} Duchess you can keep or discard the top card",
-                (f"Keep {card.name} on top of deck", True),
-                (f"Discard {card.name}", False),
+                (f"Keep {card} on top of deck", True),
+                (f"Discard {card}", False),
             )
             if keep:
                 plr.add_card(card, "topdeck")
             else:
-                plr.output(f"Discarding {card.name}")
+                plr.output(f"Discarding {card}")
                 plr.discard_card(card)
 
 
@@ -43,7 +45,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Duchess(unittest.TestCase):
+class TestDuchess(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Duchess"])
         self.g.start_game()

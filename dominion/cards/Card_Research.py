@@ -32,6 +32,8 @@ class Card_Research(Card.Card):
             num=cost,
             cardsrc=Piles.HAND,
         )
+        if not cards:
+            return
         for card in cards:
             self._research.add(card)
             player.piles[Piles.HAND].remove(card)
@@ -50,7 +52,7 @@ class Card_Research(Card.Card):
 
 
 ###############################################################################
-class Test_Research(unittest.TestCase):
+class TestResearch(unittest.TestCase):
     """Test Research"""
 
     def setUp(self):

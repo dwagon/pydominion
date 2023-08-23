@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -18,16 +17,14 @@ class Card_CursedVillage(Card.Card):
 
     def special(self, game, player):
         while player.piles[Piles.HAND].size() < 6:
-            c = player.next_card()
-            player.add_card(c, "discard")
-            player.pickup_card(c)
+            player.pickup_card()
 
     def hook_gain_this_card(self, game, player):
         player.receive_hex()
 
 
 ###############################################################################
-class Test_CursedVillage(unittest.TestCase):
+class TestCursedVillage(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Cursed Village"])
         self.g.start_game()

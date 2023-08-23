@@ -10,7 +10,8 @@ class Card_WilloWisp(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.SPIRIT]
         self.base = Card.CardExpansion.NOCTURNE
-        self.desc = "+1 Card; +1 Action; Reveal the top card of your deck. If it costs 2 or less, put it into your hand."
+        self.desc = """+1 Card; +1 Action; Reveal the top card of your deck.
+        If it costs 2 or less, put it into your hand."""
         self.name = "Will-o'-Wisp"
         self.purchasable = False
         self.cards = 1
@@ -19,18 +20,21 @@ class Card_WilloWisp(Card.Card):
         self.cost = 0
 
     def special(self, game, player):
-        c = player.next_card()
-        player.reveal_card(c)
-        if c.cost <= 2 and not c.potcost and not c.debtcost:
-            player.add_card(c, Piles.HAND)
-            player.output(f"Moving {c.name} from your deck to your hand")
+        card = player.next_card()
+        if not card:
+            player.output("No suitable card")
+            return
+        player.reveal_card(card)
+        if card.cost <= 2 and not card.potcost and not card.debtcost:
+            player.add_card(card, Piles.HAND)
+            player.output(f"Moving {card} from your deck to your hand")
         else:
-            player.add_card(c, "topdeck")
-            player.output(f"Keep {c.name} on top of your deck")
+            player.add_card(card, "topdeck")
+            player.output(f"Keep {card} on top of your deck")
 
 
 ###############################################################################
-class Test_WilloWisp(unittest.TestCase):
+class TestWilloWisp(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Will-o'-Wisp"])
         self.g.start_game()

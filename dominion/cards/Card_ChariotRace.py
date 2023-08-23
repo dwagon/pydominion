@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -21,20 +20,30 @@ class Card_ChariotRace(Card.Card):
 
     def special(self, game, player):
         card = player.pickup_card()
+        if not card:
+            player.output("No card")
+            return
         player.reveal_card(card)
         other = game.player_to_left(player)
-        othercard = other.next_card()
-        if card.cost > othercard.cost:
-            player.output(f"Your {card.name} costs more than {other.name}'s {othercard.name}")
+        other_card = other.next_card()
+        if not other_card:
+            player.output(f"{other.name} doesn't have a suitable card")
+            player.coins.add(1)
+            player.add_score("Chariot Race")
+            return
+        if card.cost > other_card.cost:
+            player.output(f"Your {card} costs more than {other.name}'s {other_card}")
             player.coins.add(1)
             player.add_score("Chariot Race")
         else:
-            player.output(f"Your {card.name} costs less than {other.name}'s {othercard.name} - Getting nothing")
-        other.add_card(othercard, "topdeck")
+            player.output(
+                f"Your {card} costs less than {other.name}'s {other_card} - Getting nothing"
+            )
+        other.add_card(other_card, "topdeck")
 
 
 ###############################################################################
-class Test_ChariotRace(unittest.TestCase):
+class TestChariotRace(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Chariot Race"])
         self.g.start_game()
