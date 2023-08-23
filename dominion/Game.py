@@ -140,8 +140,8 @@ class Game:  # pylint: disable=too-many-public-methods
         if use_shelters:
             shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
             for crd in shelters:
-                cpile = CardPile(crd, self.cardmapping["Shelter"][crd], self)
-                self.cardpiles[cpile.name] = cpile
+                cpile = CardPile(self.cardmapping["Shelter"][crd], self)
+                self.cardpiles["Shelters"] = cpile
         return use_shelters
 
     ###########################################################################
@@ -411,8 +411,8 @@ class Game:  # pylint: disable=too-many-public-methods
         """
         # If basecards are specified by initcards
         if card_name := self.guess_cardname(card, prefix="BaseCard"):
-            cpile = CardPile(card_name, self.cardmapping["BaseCard"][card_name], self)
-            self.cardpiles[cpile.name] = cpile
+            cpile = CardPile(self.cardmapping["BaseCard"][card_name], self)
+            self.cardpiles[card_name] = cpile
         elif card_name := self.guess_cardname(card):
             self._use_cardpile(available, card_name, force=True)
             return 1
@@ -487,25 +487,27 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
-    def _use_cardpile(self, available, card: str, force=False, cardtype="Card") -> int:
+    def _use_cardpile(
+        self, available, card_name: str, force=False, cardtype="Card"
+    ) -> int:
         """TODO"""
         try:
             if available is not None:
-                available.remove(card)
+                available.remove(card_name)
         except ValueError:  # pragma: no cover
-            print(f"Unknown card '{card}'\n", file=sys.stderr)
+            print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
-        card_pile = CardPile(card, self.cardmapping[cardtype][card], self)
+        card_pile = CardPile(self.cardmapping[cardtype][card_name], self)
         if not force and not card_pile.insupply:
             return 0
-        cpilename = card_pile.name
         if hasattr(card_pile, "cardpile_setup"):
             card_pile = card_pile.cardpile_setup(self)
-        self.cardpiles[cpilename] = card_pile
+        self.cardpiles[card_name] = card_pile
         for crd in card_pile:
             self._cards[crd.uuid] = crd
+            crd.pile = card_name
             crd.location = Piles.CARDPILE
-        self.output(f"Playing with {self[card].name}")
+        self.output(f"Playing with {card_name}")
         return 1
 
     ###########################################################################

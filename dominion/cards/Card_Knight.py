@@ -26,7 +26,6 @@ class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
         super().__init__(
-            cardname="Knight",
             klass=None,
             game=game,
         )

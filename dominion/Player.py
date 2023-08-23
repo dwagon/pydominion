@@ -393,7 +393,7 @@ class Player:
 
         # Return card to a card pile
         if isinstance(pile, CardPile):
-            self.game[pile.cardname].add(card)
+            self.game[card.name].add(card)
             return card
 
         if pile in self.piles:

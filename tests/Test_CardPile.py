@@ -19,9 +19,7 @@ class TestCardPile(unittest.TestCase):
     def setUp(self):
         mock_card = FakeCard
         g = Game.Game()
-        self.cp = CardPile.CardPile(
-            cardname="test_card", klass=mock_card, game=g, pile_size=5
-        )
+        self.cp = CardPile.CardPile(klass=mock_card, game=g, pile_size=5)
 
     def test_remove(self):
         """Test the remove() function"""

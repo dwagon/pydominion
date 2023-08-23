@@ -3,9 +3,8 @@ from typing import Optional
 
 
 class CardPile:
-    def __init__(self, cardname, klass, game, pile_size=10):
-        self.cardname = cardname
-        self.cardclass = klass
+    def __init__(self, klass, game, pile_size=10):
+        self.card_class = klass
         self.pile_size = pile_size
         self.game = game
         self._cards = []
@@ -21,7 +20,7 @@ class CardPile:
         if hasattr(self, "calc_numcards"):
             self.pile_size = self.calc_numcards(self.game)
         for _ in range(self.pile_size):
-            self._cards.append(self.cardclass())
+            self._cards.append(self.card_class())
 
     ###########################################################################
     def __iter__(self):
@@ -31,7 +30,7 @@ class CardPile:
     def add_to_pile(self, num):
         # Extend the pile
         for _ in range(num):
-            self._cards.append(self.cardclass())
+            self._cards.append(self.card_class())
 
     ###########################################################################
     def __len__(self):
@@ -131,7 +130,7 @@ class CardPile:
 
     ###########################################################################
     def __repr__(self):
-        return f"<CardPile {self.name}: {len(self._cards)}>"
+        return f"<CardPile {len(self._cards)}>"
 
 
 ###############################################################################
