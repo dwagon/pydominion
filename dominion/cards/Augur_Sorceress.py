@@ -23,10 +23,10 @@ class Card_Sorceress(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for card_pile in sorted(game.cardTypes()):
+        for name, card_pile in sorted(game.card_piles()):
             sel = f"{index}"
             options.append(
-                {"selector": sel, "print": f"Guess {card_pile.name}", "card": card_pile}
+                {"selector": sel, "print": f"Guess {name}", "card": card_pile}
             )
             index += 1
         o = player.user_input(options, "Guess the top card")

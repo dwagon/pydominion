@@ -16,7 +16,11 @@ class Card_Sunken_Treasure(Card.Card):
         self.desc = """Gain an Action card you don't have a copy of in play."""
 
     def special(self, game, player):
-        acts = [_ for _ in game.cardTypes() if _.isAction() and _.name not in player.piles[Piles.PLAYED]]
+        acts = [
+            card_pile
+            for name, card_pile in game.card_piles()
+            if card_pile.isAction() and name not in player.piles[Piles.PLAYED]
+        ]
         card = player.card_sel(cardsrc=acts, prompt="Gain a card")
         player.gain_card(card[0])
 

@@ -24,7 +24,7 @@ class Card_Overgrown_Estate(Card.Card):
 
 
 ###############################################################################
-class Test_Overgrown_Estate(unittest.TestCase):
+class TestOvergrownEstate(unittest.TestCase):
     """Test Overgrown Estate"""
 
     def setUp(self):

@@ -654,12 +654,12 @@ class Player:
     def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
         all_cards = PlayArea("all_purchasable")
-        for card_pile in self.game.cardTypes():
-            if card_pile.is_empty():
+        for name, pile in self.game.card_piles():
+            if pile.is_empty():
                 continue
-            if not card_pile.purchasable:
+            if not pile.purchasable:
                 continue
-            all_cards.add(card_pile)
+            all_cards.add(pile)
         all_cards.sort(key=self.card_cost)
         all_cards.sort(key=lambda x: x.basecard)
         return all_cards
@@ -1597,28 +1597,28 @@ class Player:
         {coin} {num_potions} are the resources contraints we have
         """
         affordable = PlayArea("affordable")
-        for c in self.game.cardTypes():
-            if not c:
+        for name, pile in self.game.card_piles():
+            if not pile:
                 continue
-            cost = self.card_cost(c)
-            if not self.select_by_type(c, types):
+            cost = self.card_cost(pile)
+            if not self.select_by_type(pile, types):
                 continue
-            if not c.purchasable:
+            if not pile.purchasable:
                 continue
-            if c.always_buyable:
-                affordable.add(c)
+            if pile.always_buyable:
+                affordable.add(pile)
                 continue
-            if c.always_buyable:
-                affordable.add(c)
+            if pile.always_buyable:
+                affordable.add(pile)
                 continue
             if coin is None:
-                affordable.add(c)
+                affordable.add(pile)
                 continue
-            if c.debtcost and not c.cost:
-                affordable.add(c)
+            if pile.debtcost and not pile.cost:
+                affordable.add(pile)
                 continue
-            if oper(cost, coin) and oper(c.potcost, num_potions):
-                affordable.add(c)
+            if oper(cost, coin) and oper(pile.potcost, num_potions):
+                affordable.add(pile)
                 continue
         affordable.sort(key=self.card_cost)
         affordable.sort(key=lambda x: x.basecard)

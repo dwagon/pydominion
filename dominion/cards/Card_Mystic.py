@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,8 @@ class Card_Mystic(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = "+2 coin, +1 action; Name a card. Reveal the top card of your deck. If it's the named card, put it into your hand."
+        self.desc = """+2 coin, +1 action; Name a card. Reveal the top card of your deck. 
+        If it's the named card, put it into your hand."""
         self.name = "Mystic"
         self.actions = 1
         self.coin = 2
@@ -19,29 +19,30 @@ class Card_Mystic(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        """ " Name a card. Reveal the top card of your deck. If it's
+        """Name a card. Reveal the top card of your deck. If it's
         the named card, put it into your hand"""
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for c in sorted(game.cardTypes()):
-            sel = "%s" % index
-            options.append({"selector": sel, "print": "Guess %s" % c.name, "card": c})
+        for name, card_pile in sorted(game.card_piles()):
+            options.append(
+                {"selector": f"{index}", "print": f"Guess {name}", "card": card_pile}
+            )
             index += 1
         o = player.user_input(options, "Guess the top card")
         if not o["card"]:
             return
-        c = player.next_card()
-        player.reveal_card(c)
-        if o["card"].name == c.name:
+        card = player.next_card()
+        player.reveal_card(card)
+        if o["card"].name == card.name:
             player.output("You guessed correctly")
-            player.add_card(c, Piles.HAND)
+            player.add_card(card, Piles.HAND)
         else:
-            player.output("You chose poorly - it was a %s" % c.name)
-            player.add_card(c, "topdeck")
+            player.output(f"You chose poorly - it was a {card}")
+            player.add_card(card, "topdeck")
 
 
 ###############################################################################
-class Test_Mystic(unittest.TestCase):
+class TestMystic(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

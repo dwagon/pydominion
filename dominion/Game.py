@@ -568,13 +568,13 @@ class Game:  # pylint: disable=too-many-public-methods
             sys.exit(1)
 
     ###########################################################################
-    def cardTypes(self):
+    def card_piles(self):
         """TODO"""
-        return list(self.cardpiles.values())
+        return self.cardpiles.items()
 
     ###########################################################################
     def __getitem__(self, key):
-        """Return the card using `game[cardname]`"""
+        """Return the card using `game[card_name]`"""
         return self.cardpiles[key]
 
     ###########################################################################

@@ -28,16 +28,16 @@ class Card_Barbarian(Card.Card):
 
     def _barbarian_attack(self, game, attacker, victim):
         """Do the barbarian attack"""
-        crd = victim.top_card()
-        victim.output(f"{attacker.name}'s Barbarian: Trashes your {crd.name}")
-        victim.trash_card(crd)
-        if crd.cost < 3:
+        card = victim.top_card()
+        victim.output(f"{attacker.name}'s Barbarian: Trashes your {card}")
+        victim.trash_card(card)
+        if card.cost < 3:
             victim.gain_card("Curse")
             return
         cards = []
-        for cp in game.cardTypes():
-            if self._cardtypes(cp).intersection(self._cardtypes(crd)):
-                if cp.cost < crd.cost:
+        for name, cp in game.card_piles():
+            if self._cardtypes(cp).intersection(self._cardtypes(card)):
+                if cp.cost < card.cost:
                     cards.append(cp)
         if cards:
             gained = victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards)
@@ -74,7 +74,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Barbarian(unittest.TestCase):
+class TestBarbarian(unittest.TestCase):
     """Test Barbarian"""
 
     def setUp(self):
