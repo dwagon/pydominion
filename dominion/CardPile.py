@@ -19,8 +19,7 @@ class CardPile:
         """Create the cards in the pile - overwrite for funky piles"""
         if hasattr(self, "calc_numcards"):
             self.pile_size = self.calc_numcards(self.game)
-        for _ in range(self.pile_size):
-            self._cards.append(self.card_class())
+        self.add_to_pile(self.pile_size)
 
     ###########################################################################
     def __iter__(self):
@@ -65,7 +64,7 @@ class CardPile:
     ###########################################################################
     def __getattr__(self, name):
         try:
-            if self._card:
+            if self._card is not None:
                 return getattr(self._card, name)
             if self._cards:
                 return getattr(self._cards[-1], name)
@@ -84,12 +83,18 @@ class CardPile:
         return not self._cards
 
     ###########################################################################
-    def remove(self):
+    def remove(self, name=""):
         """Remove a card from the card pile"""
-        try:
-            return self._cards.pop()
-        except IndexError:
-            return None
+        if not name:
+            try:
+                return self._cards.pop()
+            except IndexError:
+                return None
+        for card in self._cards:
+            if card.name == name:
+                self._cards.remove(card)
+                return card
+        return None
 
     ###########################################################################
     def add(self, card):

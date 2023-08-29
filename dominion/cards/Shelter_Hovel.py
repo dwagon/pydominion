@@ -18,6 +18,7 @@ class Card_Hovel(Card.Card):
         self.cost = 1
         self.purchasable = False
         self.victory = 0
+        self.pile = "Shelters"
 
     def hook_gain_card(self, game, player, card):
         if not card.isVictory():
@@ -33,7 +34,7 @@ class Card_Hovel(Card.Card):
 def botresponse(
     player, kind, args=None, kwargs=None
 ):  # pragma: no cover, pylint: disable=unused-argument
-    """botresponse"""
+    """bot response"""
     return True
 
 
@@ -45,7 +46,6 @@ class TestHovel(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shelters"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Hovel"].remove()
 
     def test_trash(self):
         """Test Trashing"""

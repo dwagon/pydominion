@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Dame_Sylvia """
 
 import unittest
-from dominion import Game, Piles
-from dominion import Card
+from dominion import Game, Piles, Card
 from dominion.cards.Card_Knight import KnightCard
 
 
@@ -29,18 +29,17 @@ class Card_Dame_Sylvia(KnightCard):
 
 
 ###############################################################################
-class Test_Dame_Sylvia(unittest.TestCase):
+class TestDameSylvia(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        while True:
-            self.card = self.g["Knights"].remove()
-            if self.card.name == "Dame Sylvia":
-                break
+        self.g.print_state()
+        self.card = self.g.get_card_from_pile("Knights", "Dame Sylvia")
 
     def test_score(self):
         """Play the Dame"""
+        self.assertIsNotNone(self.card)
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)

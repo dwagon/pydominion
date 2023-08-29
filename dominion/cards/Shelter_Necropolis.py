@@ -19,6 +19,7 @@ class Card_Necropolis(Card.Card):
         self.actions = 2
         self.victory = 0
         self.purchasable = False
+        self.pile = "Shelters"
 
 
 ###############################################################################

@@ -18,6 +18,7 @@ class Card_Overgrown_Estate(Card.Card):
         self.cost = 1
         self.victory = 0
         self.purchasable = False
+        self.pile = "Shelters"
 
     def hook_trashThisCard(self, game, player):
         player.pickup_card()
