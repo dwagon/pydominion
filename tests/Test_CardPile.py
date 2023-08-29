@@ -28,6 +28,17 @@ class TestCardPile(unittest.TestCase):
         self.assertEqual(len(self.cp), 4)
         self.assertTrue(isinstance(card, FakeCard))
 
+    def test_remove_named(self):
+        """Test the remove() function naming a specific card"""
+        index = 0
+        for card in self.cp:
+            card.name = f"Fake_{index}"
+            index += 1
+        card = self.cp.remove("Fake_2")
+        self.assertEqual(card.name, "Fake_2")
+        for card in self.cp:
+            self.assertNotEqual(card.name, "Fake_2")
+
     def test_remove_empty(self):
         """Test removing from an empty pile"""
         while True:

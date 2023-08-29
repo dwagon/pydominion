@@ -43,6 +43,9 @@ class Player:
             Piles.DISCARD: PlayArea(Piles.DISCARD, game=self.game),
             Piles.RESERVE: PlayArea(Piles.RESERVE, game=self.game),
         }
+        self.projects = []
+        self.states = []
+        self.artifacts = []
 
         self.buys = Counter("Buys", 1)
         self.actions = Counter("Actions", 1)
@@ -71,9 +74,6 @@ class Player:
         self.end_of_game_cards = []
         self.phase = Phase.NONE
         self.misc = {"is_start": False, "cleaned": False}
-        self.states = []
-        self.artifacts = []
-        self.projects = []
         self.skip_turn = False
         game.output(f"Player {name} is at the table")
 
@@ -86,25 +86,32 @@ class Player:
             heirlooms = []
 
         for _ in range(7 - len(heirlooms)):
-            card = self.game["Copper"].remove()
-            card.player = self
+            card = self.game.get_card_from_pile("Copper")
             self.add_card(card, Piles.DECK)
 
-        for hl in heirlooms:
-            card = self.game[hl].remove()
-            card.player = self
+        for heirloom in heirlooms:
+            card = self.game.get_card_from_pile(heirloom)
             self.add_card(card, Piles.DECK)
 
         if use_shelters:
-            estates = ("Overgrown Estate", "Hovel", "Necropolis")
+            self._use_shelters()
         else:
-            estates = ("Estate", "Estate", "Estate")
-        for card_name in estates:
-            card = self.game[card_name].remove()
+            for _ in range(3):
+                card = self.game.get_card_from_pile("Estate")
+                self.add_card(card, Piles.DECK)
+
+        for card in self.piles[Piles.DECK]:
             card.player = self
-            self.add_card(card, Piles.DECK)
 
         self.piles[Piles.DECK].shuffle()
+
+    ###########################################################################
+    def _use_shelters(self):
+        """Pick shelters out of the pile until we have one of each type"""
+        shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
+        for shelter in shelters:
+            card = self.game.get_card_from_pile("Shelters", shelter)
+            self.add_card(card, Piles.DECK)
 
     ###########################################################################
     def _initial_tokens(self):
@@ -393,7 +400,7 @@ class Player:
 
         # Return card to a card pile
         if isinstance(pile, CardPile):
-            self.game[card.name].add(card)
+            self.game[card.pile].add(card)
             return card
 
         if pile in self.piles:
@@ -1103,7 +1110,7 @@ class Player:
         """Send a card to the exile pile; if the card is a name then take it
         from supply"""
         if isinstance(card, str):
-            card = self.game[card].remove()
+            card = self.game.get_card_from_pile(card)
             if card is None:
                 self.output(f"No more {card} in supply")
                 return
@@ -1327,7 +1334,7 @@ class Player:
         options = {}
         if not newcard:
             if isinstance(cardpile, str):
-                newcard = self.game[cardpile].remove()
+                newcard = self.game.get_card_from_pile(cardpile)
             else:
                 newcard = cardpile.remove()
 
@@ -1348,7 +1355,7 @@ class Player:
         # Replace is to gain a different card
         if options.get("replace"):
             self.game[newcard.name].add(newcard)
-            newcard = self.game[options["replace"]].remove()
+            newcard = self.game.get_card_from_pile(options["replace"])
             if not newcard:
                 self.output(f"No more {options['replace']}")
             else:

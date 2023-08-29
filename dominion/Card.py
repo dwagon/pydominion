@@ -111,6 +111,7 @@ class Card:
         self.uuid = uuid.uuid4().hex
         self._location = None
         self._player = None
+        self.pile = ""
 
     ##########################################################################
     def check(self):

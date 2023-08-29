@@ -25,7 +25,6 @@ from dominion.Names import playerNames
 from dominion.PlayArea import PlayArea
 from dominion.Player import Player
 from dominion.ProjectPile import ProjectPile
-from dominion.RuinCardPile import RuinCardPile
 from dominion.StatePile import StatePile
 from dominion.TextPlayer import TextPlayer
 from dominion.WayPile import WayPile
@@ -131,25 +130,25 @@ class Game:  # pylint: disable=too-many-public-methods
         elif not self._allow_shelters:
             return False
 
-        # Pick a card to see if it is a darkages
+        # Pick a card to see if it is a dark ages
         halfway = int(len(self.cardpiles) / 2)
         card = list(self.cardpiles.values())[halfway]
         if card.base == CardExpansion.DARKAGES:
             use_shelters = True
 
         if use_shelters:
-            shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
-            for crd in shelters:
-                cpile = CardPile(self.cardmapping["Shelter"][crd], self)
-                self.cardpiles["Shelters"] = cpile
+            self.cardpiles["Shelters"] = CardPile(None, self)
+            for _ in range(self.numplayers):
+                shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
+                for shelter in shelters:
+                    shelter_card = self.cardmapping["Shelter"][shelter]()
+                    self.cardpiles["Shelters"].add(shelter_card)
         return use_shelters
 
     ###########################################################################
-    def start_game(self, playernames=None, plrKlass=TextPlayer):
+    def start_game(self, playernames=None, plr_class=TextPlayer):
         """Initialise game bits"""
-        if playernames is None:
-            playernames = []
-        names = playerNames[:]
+
         self._load_decks(self._initcards, self.numstacks)
         self._load_events()
         self._load_ways()
@@ -160,9 +159,22 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.hexes or self.boons:
             self._load_states()
         self._check_card_requirements()
-        use_shelters = self._use_shelters()
+        self._setup_players(playernames, plr_class)
+        self.card_setup()  # Has to be after players have been created
+        self.current_player = self.player_list(0)
+        if self.ally:
+            for plr in self.player_list():
+                plr.favors.add(1)
+        self._save_original()
 
-        for plrnum in range(self.numplayers):
+    ###########################################################################
+    def _setup_players(self, playernames=None, plr_class=TextPlayer):
+        use_shelters = self._use_shelters()
+        names = playerNames[:]
+        if playernames is None:
+            playernames = []
+
+        for player_num in range(self.numplayers):
             try:
                 name = playernames.pop()
             except IndexError:
@@ -188,21 +200,15 @@ class Game:  # pylint: disable=too-many-public-methods
                 )
                 self.randobot -= 1
             else:
-                self.players[the_uuid] = plrKlass(
+                self.players[the_uuid] = plr_class(
                     game=self,
                     quiet=self.quiet,
                     name=name,
-                    number=plrnum,
+                    number=player_num,
                     heirlooms=self._heirlooms,
                     use_shelters=use_shelters,
                 )
             self.players[the_uuid].uuid = the_uuid
-        self.card_setup()
-        self.current_player = self.player_list(0)
-        if self.ally:
-            for plr in self.player_list():
-                plr.favors.add(1)
-        self._save_original()
 
     ###########################################################################
     def _save_original(self):
@@ -220,10 +226,13 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def card_setup(self):
         """Run the setup() method for all cards"""
-        for cpile in list(self.cardpiles.values()):
-            cpile.setup(game=self)
-        for lmk in list(self.landmarks.values()):
-            lmk.setup(game=self)
+        for name, card_pile in list(self.cardpiles.items()):
+            try:  # Handle empty card piles
+                card_pile.setup(game=self)
+            except TypeError:
+                pass
+        for landmark in list(self.landmarks.values()):
+            landmark.setup(game=self)
 
     ###########################################################################
     def count_cards(self):
@@ -247,8 +256,8 @@ class Game:  # pylint: disable=too-many-public-methods
         """TODO"""
         travellers = self.getAvailableCards("Traveller")
         for trav in travellers:
-            cpile = CardPile(trav, self.cardmapping["Traveller"][trav], self)
-            self.cardpiles[cpile.name] = cpile
+            cpile = CardPile(klass=self.cardmapping["Traveller"][trav], game=self)
+            self.cardpiles[trav] = cpile
         self.loaded_travellers = True
 
     ###########################################################################
@@ -407,9 +416,9 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _place_init_card(self, card: str, available: list) -> Optional[int]:
         """For the specified card, load it into the correct deck
-        Return the number of kingdom cardpiles used or None for not found
+        Return the number of kingdom card piles used or None for not found
         """
-        # If basecards are specified by initcards
+        # If base cards are specified by initcards
         if card_name := self.guess_cardname(card, prefix="BaseCard"):
             cpile = CardPile(self.cardmapping["BaseCard"][card_name], self)
             self.cardpiles[card_name] = cpile
@@ -503,12 +512,24 @@ class Game:  # pylint: disable=too-many-public-methods
         if hasattr(card_pile, "cardpile_setup"):
             card_pile = card_pile.cardpile_setup(self)
         self.cardpiles[card_name] = card_pile
-        for crd in card_pile:
-            self._cards[crd.uuid] = crd
-            crd.pile = card_name
-            crd.location = Piles.CARDPILE
+        for card in card_pile:
+            self._cards[card.uuid] = card
+            if not card.pile:
+                card.pile = card_name
+            card.location = Piles.CARDPILE
         self.output(f"Playing with {card_name}")
         return 1
+
+    ###########################################################################
+    def get_card_from_pile(self, pile: str, name: Optional[str] = None):
+        """Get and return a card from pile (with name if specified)"""
+        return self[pile].remove(name)
+
+    ###########################################################################
+    def _use_ruins(self, card) -> None:
+        """Use Ruins"""
+        self.output(f"Playing with Ruins as required by {card.name}")
+        self._use_cardpile(None, "Ruins", True)
 
     ###########################################################################
     def _check_card_requirements(self):
@@ -541,9 +562,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self.output(f"Playing with {card.heirloom} as required by {card.name}")
 
             if card.isLooter() and "Ruins" not in self.cardpiles:
-                nc = self.numplayers * 10
-                self.cardpiles["Ruins"] = RuinCardPile(game=self, pile_size=nc)
-                self.output(f"Playing with Ruins as required by {card.name}")
+                self._use_ruins(card)
             if card.isFate() and not self.boons:
                 self._load_boons()
             if card.isDoom() and not self.hexes:
@@ -793,14 +812,14 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.ally:
             print(f"Ally: {self.ally.name}")
         print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
-        for cname, cpile in self.cardpiles.items():
+        for name, cpile in self.cardpiles.items():
             tokens = ""
             for plr in self.player_list():
-                tkns = plr.which_token(cname)
+                tkns = plr.which_token(name)
                 if tkns:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
-            print(f"CardPile {cname}: {len(cpile)} cards {tokens}")
+            print(f"CardPile {name}: {len(cpile)} cards {tokens}")
         for plr in self.player_list():
             self.print_player_state(plr)
         if card_dump:
@@ -849,27 +868,27 @@ class Game:  # pylint: disable=too-many-public-methods
     def _count_all_cards(self) -> dict:  # pragma: no cover
         """Return where all the cards are"""
         tmp = {}
-        for pile in self.cardpiles.values():
-            tmp[pile.name] = {}
+        for pile_name, pile in self.cardpiles.items():
+            tmp[pile_name] = {}
             total = len(pile)
-            tmp[pile.name]["pile"] = total
+            tmp[pile_name]["pile"] = total
             for plr in self.player_list():
                 for stack_name, stack in plr.piles.items():
                     count = 0
                     for card in stack:
-                        if card.name == pile.name:
+                        if card.name == pile_name:
                             count += 1
                     if count:
-                        tmp[pile.name][f"{plr.name}:{stack_name}"] = count
+                        tmp[pile_name][f"{plr.name}:{stack_name}"] = count
                         total += count
             count = 0
             for card in self.trashpile:
-                if card.name == pile.name:
+                if card.name == pile_name:
                     count += 1
             if count:
-                tmp[pile.name]["trash"] = count
+                tmp[pile_name]["trash"] = count
                 total += count
-            tmp[pile.name]["total"] = total
+            tmp[pile_name]["total"] = total
         return tmp
 
     ###########################################################################
