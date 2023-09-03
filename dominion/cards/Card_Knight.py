@@ -25,17 +25,13 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
-        super().__init__(
-            klass=None,
-            game=game,
-        )
+        super().__init__()
 
     #    def __getattr__(self, name):
     #        return getattr(self._cards[0], name)
 
     def init_cards(self):
         self._cards = [_() for _ in self.mapping.values()]
-        print(f"DBG {self._cards=}")
         random.shuffle(self._cards)
 
     def isVictory(self):

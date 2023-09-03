@@ -67,7 +67,7 @@ class Test_HauntedCastle(unittest.TestCase):
         """Test gaining this card"""
         self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]
-        self.plr.gain_card(newcard=self.card)
+        self.plr.gain_card(new_card=self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.vic.piles[Piles.DECK])
         self.assertNotIn("Silver", self.vic.piles[Piles.HAND])

@@ -1,39 +1,31 @@
 ###############################################################################
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from dominion import Card
 
 
 class CardPile:
-    def __init__(self, klass, game, pile_size=10):
-        self.card_class = klass
-        self.pile_size = pile_size
-        self.game = game
-        self._cards = []
+    def __init__(self, game=None):
+        # game is required by some subclasses
+        self.cards = []
         self.embargo_level = 0
-        self._card = None
-        if klass:
-            self._card = klass()  # Non-playable instance to access card attributes
-        self.init_cards()
 
     ###########################################################################
-    def init_cards(self):
-        """Create the cards in the pile - overwrite for funky piles"""
-        if hasattr(self, "calc_numcards"):
-            self.pile_size = self.calc_numcards(self.game)
-        self.add_to_pile(self.pile_size)
+    def init_cards(self, num_cards=0, card_class=None):
+        """Can be overwritten for the more unusual piles"""
+        if num_cards == 0 or not card_class:
+            return
+        for _ in range(num_cards):
+            self.cards.append(card_class())
 
     ###########################################################################
     def __iter__(self):
         return CardPileIterator(self)
 
     ###########################################################################
-    def add_to_pile(self, num):
-        # Extend the pile
-        for _ in range(num):
-            self._cards.append(self.card_class())
-
-    ###########################################################################
     def __len__(self):
-        return len(self._cards)
+        return len(self.cards)
 
     ###########################################################################
     def __bool__(self):
@@ -45,68 +37,77 @@ class CardPile:
 
     ###########################################################################
     def __lt__(self, other_card):
-        if self._card:
-            self_name = self._card.name
+        self_name = self.cards[-1].name
+        if other_card.cards:
+            other_name = other_card.cards[-1].name
         else:
             try:
-                self_name = self._cards[-1].name
-            except IndexError:
-                self_name = "ZZZZ"
-        if other_card._card:
-            other_name = other_card._card.name
-        else:
-            try:
-                other_name = other_card._cards[-1].name
+                other_name = other_card.cards[-1].name
             except IndexError:
                 other_name = "ZZZZ"
         return self_name < other_name
 
     ###########################################################################
-    def __getattr__(self, name):
+    def setup(self, game):
+        """Setup card pile"""
+        if self.cards:
+            self.cards[-1].setup(game)
+
+    ###########################################################################
+    def x__getattr__(self, name):
         try:
-            if self._card is not None:
-                return getattr(self._card, name)
-            if self._cards:
-                return getattr(self._cards[-1], name)
+            if self.cards:
+                return getattr(self.cards[-1], name)
+            if self.cards:
+                return getattr(self.cards[-1], name)
         except RecursionError:
             print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
             raise
         except IndexError:
             print(
-                f"DBG {self.__class__.__name__}.__getattr__({name=}) {self._card=} {self._cards=}"
+                f"DBG {self.__class__.__name__}.__getattr__({name=}) {self.cards=} {self.cards=}"
             )
             raise
+        print(f"DBG CardPile __getattr__ failure looking up '{name}'")
 
     ###########################################################################
     def is_empty(self):
         """Is the card pile empty"""
-        return not self._cards
+        return not self.cards
 
     ###########################################################################
     def remove(self, name=""):
         """Remove a card from the card pile"""
         if not name:
             try:
-                return self._cards.pop()
+                return self.cards.pop()
             except IndexError:
                 return None
-        for card in self._cards:
+        for card in self.cards:
             if card.name == name:
-                self._cards.remove(card)
+                self.cards.remove(card)
                 return card
         return None
 
     ###########################################################################
     def add(self, card):
         """Add a card to the bottom of the deck"""
-        self._cards.insert(0, card)
+        self.cards.insert(0, card)
 
     ###########################################################################
     def top_card(self) -> Optional[str]:
+        """What is the name of the top card of the card pile"""
+        # TODO: Make this return the card, not just the name
+        if self.is_empty():
+            return None
+        return self.cards[-1].name
+
+    ###########################################################################
+    def get_top_card(self):
         """What is the top card of the card pile"""
         if self.is_empty():
             return None
-        return self._cards[-1].name
+        return self.cards[-1]
 
     ###########################################################################
     def rotate(self):
@@ -130,12 +131,12 @@ class CardPile:
     def dump(self):
         """Print out all the pile - for debugging purposes only"""
         print("----------")
-        for card in self._cards:
+        for card in self.cards:
             print(f"Card={card}")
 
     ###########################################################################
     def __repr__(self):
-        return f"<CardPile {len(self._cards)}>"
+        return f"<CardPile {len(self.cards)}>"
 
 
 ###############################################################################
@@ -146,7 +147,7 @@ class CardPileIterator:
 
     def __next__(self):
         try:
-            result = self.card_pile._cards[self.index]
+            result = self.card_pile.cards[self.index]
         except IndexError:
             raise StopIteration  # pylint: disable=raise-missing-from
         self.index += 1

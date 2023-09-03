@@ -137,7 +137,7 @@ class Game:  # pylint: disable=too-many-public-methods
             use_shelters = True
 
         if use_shelters:
-            self.cardpiles["Shelters"] = CardPile(None, self)
+            self.cardpiles["Shelters"] = CardPile(self)
             for _ in range(self.numplayers):
                 shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
                 for shelter in shelters:
@@ -254,10 +254,12 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_travellers(self):
         """TODO"""
+        return
         travellers = self.getAvailableCards("Traveller")
         for trav in travellers:
-            cpile = CardPile(klass=self.cardmapping["Traveller"][trav], game=self)
-            self.cardpiles[trav] = cpile
+            card_pile = CardPile(self)
+            card_pile.init_cards(self.cardmapping["Traveller"][trav])
+            self.cardpiles[trav] = card_pile
         self.loaded_travellers = True
 
     ###########################################################################
@@ -420,8 +422,9 @@ class Game:  # pylint: disable=too-many-public-methods
         """
         # If base cards are specified by initcards
         if card_name := self.guess_cardname(card, prefix="BaseCard"):
-            cpile = CardPile(self.cardmapping["BaseCard"][card_name], self)
-            self.cardpiles[card_name] = cpile
+            card_pile = CardPile(self)
+            card_pile.init_cards(10, self.cardmapping["BaseCard"][card_name])
+            self.cardpiles[card_name] = card_pile
         elif card_name := self.guess_cardname(card):
             self._use_cardpile(available, card_name, force=True)
             return 1
@@ -506,11 +509,19 @@ class Game:  # pylint: disable=too-many-public-methods
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
-        card_pile = CardPile(self.cardmapping[cardtype][card_name], self)
-        if not force and not card_pile.insupply:
+        card = self.cardmapping[cardtype][card_name]()
+        if hasattr(card, "calc_numcards"):
+            num_cards = card.calc_numcards(self)
+        else:
+            num_cards = 10
+        if hasattr(card, "cardpile_setup"):
+            card_pile = card.cardpile_setup(self)
+        else:
+            card_pile = CardPile(self)
+            card_pile.init_cards(num_cards, self.cardmapping[cardtype][card_name])
+        if not force and not card.insupply:
             return 0
-        if hasattr(card_pile, "cardpile_setup"):
-            card_pile = card_pile.cardpile_setup(self)
+
         self.cardpiles[card_name] = card_pile
         for card in card_pile:
             self._cards[card.uuid] = card
@@ -523,6 +534,8 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def get_card_from_pile(self, pile: str, name: Optional[str] = None):
         """Get and return a card from pile (with name if specified)"""
+        assert isinstance(pile, str), f"{pile=} {type(pile)=}"
+        assert pile in self.cardpiles, f"{pile=} not in {self.cardpiles=}"
         return self[pile].remove(name)
 
     ###########################################################################
@@ -674,15 +687,18 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def getActionPiles(self, cost=999):
         """Return all cardstacks that are action cards that cost less than cost"""
-        actionpiles = []
-        for cpile in self.cardpiles.values():
-            if not cpile.purchasable:
+        action_piles = []
+        for pile in self.cardpiles.values():
+            card = pile.get_top_card()
+            if not card:
                 continue
-            if cpile.cost > cost:
+            if not card.purchasable:
                 continue
-            if cpile.isAction():
-                actionpiles.append(cpile)
-        return actionpiles
+            if card.cost > cost:
+                continue
+            if card.isAction():
+                action_piles.append(pile)
+        return action_piles
 
     ###########################################################################
     def getTreasurePiles(self):
@@ -812,14 +828,14 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.ally:
             print(f"Ally: {self.ally.name}")
         print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
-        for name, cpile in self.cardpiles.items():
+        for name, card_pile in self.cardpiles.items():
             tokens = ""
             for plr in self.player_list():
                 tkns = plr.which_token(name)
                 if tkns:
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
-            print(f"CardPile {name}: {len(cpile)} cards {tokens}")
+            print(f"CardPile {name}: {len(card_pile)} cards {tokens}")
         for plr in self.player_list():
             self.print_player_state(plr)
         if card_dump:

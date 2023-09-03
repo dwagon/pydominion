@@ -13,15 +13,17 @@ class Card_Forts(Card.Card):
         self.base = Card.CardExpansion.ALLIES
         self.cardtype = Card.CardType.ACTION
 
-    def setup(self, game):
-        game.cardpiles["Forts"] = FortCardPile(game)
+    def cardpile_setup(self, game):
+        card_pile = FortCardPile(game)
+        card_pile.init_cards()
+        return card_pile
 
 
 ###############################################################################
 class FortCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=10):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Fort", game.paths["cards"], "Card_")
-        super().__init__(klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel
@@ -30,10 +32,9 @@ class FortCardPile(CardPile.CardPile):
         from dominion.cards.Fort_Hill_Fort import Card_Hill_Fort
         from dominion.cards.Fort_Stronghold import Card_Stronghold
 
-        self._cards = []
         for crd in (Card_Tent, Card_Garrison, Card_Hill_Fort, Card_Stronghold):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, crd())
 
 
 ###############################################################################

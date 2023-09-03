@@ -170,7 +170,7 @@ class TextPlayer(Player):
         * anynum
             True - Any number of cards can be selected
         """
-        selectfrom = self.card_selSource(**kwargs)
+        select_from = self.card_selSource(**kwargs)
         force = kwargs["force"] if "force" in kwargs else False
         showdesc = kwargs["showdesc"] if "showdesc" in kwargs else True
         verbs = kwargs.get("verbs", ("Select", "Unselect"))
@@ -197,24 +197,24 @@ class TextPlayer(Player):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            for c in sorted(selectfrom):
-                if "exclude" in kwargs and c.name in kwargs["exclude"]:
+            for card in sorted(select_from):
+                if "exclude" in kwargs and card.name in kwargs["exclude"]:
                     continue
-                if not self.select_by_type(c, types):
+                if not self.select_by_type(card, types):
                     continue
-                sel = "%d" % index
+                sel = f"{index}"
                 index += 1
-                if c not in selected:
+                if card not in selected:
                     verb = verbs[0]
                 else:
                     verb = verbs[1]
-                o = Option(selector=sel, verb=verb, card=c, name=c.name)
+                o = Option(selector=sel, verb=verb, card=card, name=card.name)
                 if showdesc:
-                    o["desc"] = c.description(self)
+                    o["desc"] = card.description(self)
                 if kwargs.get("printcost"):
-                    o["details"] = str(self.card_cost(c))
+                    o["details"] = str(self.card_cost(card))
                 if kwargs.get("printtypes"):
-                    o["details"] = c.get_cardtype_repr()
+                    o["details"] = card.get_cardtype_repr()
                 options.append(o)
             ui = self.user_input(options, "Select which card?")
             if not ui["card"]:

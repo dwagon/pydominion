@@ -2,7 +2,7 @@
 
 import unittest
 from enum import auto
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -16,30 +16,31 @@ class Card_Wizards(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
-        return WizardCardPile(game)
+        card_pile = WizardCardPile(game)
+        card_pile.init_cards()
+        return card_pile
 
 
 ###############################################################################
 class WizardCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=10):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Wizard", game.paths["cards"], "Card_")
-        super().__init__(klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Wizard_Student import Card_Student
         from dominion.cards.Wizard_Conjurer import Card_Conjurer
         from dominion.cards.Wizard_Sorcerer import Card_Sorcerer
         from dominion.cards.Wizard_Lich import Card_Lich
 
-        self._cards = []
-        for crd in (Card_Student, Card_Conjurer, Card_Sorcerer, Card_Lich):
+        for card_class in (Card_Student, Card_Conjurer, Card_Sorcerer, Card_Lich):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, card_class())
 
 
 ###############################################################################
-class Test_Wizard(unittest.TestCase):
+class TestWizard(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()

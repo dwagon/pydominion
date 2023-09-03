@@ -79,11 +79,11 @@ class Player:
 
     ###########################################################################
     def _initial_deck(self, heirlooms=None, use_shelters=False):
-        """Provide the initial deck - cards don't come from the piles
-        hence add them back
-        """
+        """Provide the initial deck"""
         if heirlooms is None:
             heirlooms = []
+
+        self.piles[Piles.DECK].empty()
 
         for _ in range(7 - len(heirlooms)):
             card = self.game.get_card_from_pile("Copper")
@@ -664,9 +664,10 @@ class Player:
         for name, pile in self.game.card_piles():
             if pile.is_empty():
                 continue
-            if not pile.purchasable:
+            card = pile.get_top_card()
+            if not card.purchasable:
                 continue
-            all_cards.add(pile)
+            all_cards.add(card)
         all_cards.sort(key=self.card_cost)
         all_cards.sort(key=lambda x: x.basecard)
         return all_cards
@@ -696,12 +697,12 @@ class Player:
                 verb = ""
                 action = None
             details = [self.coststr(card)]
-            if card.embargo_level:
+            if self.game[card.name].embargo_level:
                 details.append(f"Embargo {card.embargo_level}")
             if card.getVP():
                 details.append(f"Gathered {card.getVP()} VP")
             details.append(card.get_cardtype_repr())
-            details.append(f"{len(card)} left")
+            details.append(f"{len(self.game[card.name])} left")
             for tkn in self.which_token(card.name):
                 details.append(f"[Tkn: {tkn}]")
             o = Option(
@@ -1310,8 +1311,8 @@ class Player:
             card.special(game=self.game, player=self)
 
     ###########################################################################
-    def card_cost(self, card):
-        assert isinstance(card, (Card, CardPile, EventPile, ProjectPile))
+    def card_cost(self, card: Card) -> int:
+        assert isinstance(card, Card), f"Card{card=} {type(card)=}"
         cost = card.cost
         if "-Cost" in self.which_token(card.name):
             cost -= 2
@@ -1322,56 +1323,53 @@ class Player:
 
     ###########################################################################
     def gain_card(
-        self, cardpile=None, destination=Piles.DISCARD, newcard=None, callhook=True
+        self, card_name=None, destination=Piles.DISCARD, new_card=None, callhook=True
     ):
-        """Add a new card to the players set of cards from a cardpile"""
+        """Add a new card to the players set of cards from a card pile, return the card gained"""
         # Options:
         #   dontadd: True - adding card handled elsewhere
-        #   replace: <newcard> - Replace the gained card with <newcard>
+        #   replace: <new_card> - Replace the gained card with <new_card>
         #   destination: <dest> - Move the new card to <dest> rather than discard pile
         #   trash: True - trash the new card
         #   shuffle: True - shuffle the deck after gaining new card
         options = {}
-        if not newcard:
-            if isinstance(cardpile, str):
-                newcard = self.game.get_card_from_pile(cardpile)
-            else:
-                newcard = cardpile.remove()
+        if not new_card:
+            new_card = self.game.get_card_from_pile(card_name)
 
-        if not newcard:
-            self.output(f"No more {cardpile}")
+        if not new_card:
+            self.output(f"No more {card_name}")
             return None
-        self.output(f"Gained a {newcard}")
+        self.output(f"Gained a {new_card}")
         if callhook:
-            if rc := self._hook_gain_card(newcard):
+            if rc := self._hook_gain_card(new_card):
                 options.update(rc)
-            if rc := newcard.hook_gain_this_card(game=self.game, player=self):
+            if rc := new_card.hook_gain_this_card(game=self.game, player=self):
                 options.update(rc)
 
         # check for un-exiling
-        if self.piles[Piles.EXILE][newcard.name]:
-            self.check_unexile(newcard.name)
+        if self.piles[Piles.EXILE][new_card.name]:
+            self.check_unexile(new_card.name)
 
         # Replace is to gain a different card
         if options.get("replace"):
-            self.game[newcard.name].add(newcard)
-            newcard = self.game.get_card_from_pile(options["replace"])
-            if not newcard:
+            self.game[new_card.name].add(new_card)
+            new_card = self.game.get_card_from_pile(options["replace"])
+            if not new_card:
                 self.output(f"No more {options['replace']}")
             else:
-                newcard.player = self
-        self.stats["gained"].append(newcard)
+                new_card.player = self
+        self.stats["gained"].append(new_card)
         destination = options.get("destination", destination)
         if callhook:
-            self.hook_allplayers_gain_card(newcard)
+            self.hook_allplayers_gain_card(new_card)
         if options.get("trash", False):
-            self.trash_card(newcard)
-            return newcard
+            self.trash_card(new_card)
+            return new_card
         if not options.get("dontadd", False):
-            self.add_card(newcard, destination)
+            self.add_card(new_card, destination)
         if options.get("shuffle", False):
             self.piles[Piles.DECK].shuffle()
-        return newcard
+        return new_card
 
     ###########################################################################
     def check_unexile(self, card_name: str):
@@ -1412,15 +1410,15 @@ class Player:
             self.coins -= ans
 
     ###########################################################################
-    def buy_card(self, card):
+    def buy_card(self, card_name: str) -> None:
         """Buy a card"""
-        assert isinstance(card, CardPile)
         if not self.buys:  # pragma: no cover
             return
         if self.debt:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
+        card = self.game[card_name].get_top_card()
         cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
@@ -1430,22 +1428,22 @@ class Player:
         self.coins -= cost
         if card.overpay and self.coins.get():
             self.overpay(card)
-        newcard = self.gain_card(card)
-        if not newcard:
+        new_card = self.gain_card(card.name)
+        if not new_card:
             self.output("Couldn't buy card")
             return
-        if card.embargo_level:
-            for _ in range(card.embargo_level):
+        if self.game[card.name].embargo_level:
+            for _ in range(self.game[card.name].embargo_level):
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
-        self.stats["bought"].append(newcard)
-        self.output(f"Bought {newcard} for {cost} coin")
+        self.stats["bought"].append(new_card)
+        self.output(f"Bought {new_card} for {cost} coin")
         if "Trashing" in self.which_token(card.name):
             self.output("Trashing token allows you to trash a card")
             self.plr_trash_card()
-        self.hook_buy_card(newcard)
-        newcard.hook_buy_this_card(game=self.game, player=self)
-        self.hook_all_players_buy_card(newcard)
+        self.hook_buy_card(new_card)
+        new_card.hook_buy_this_card(game=self.game, player=self)
+        self.hook_all_players_buy_card(new_card)
 
     ###########################################################################
     def hook_all_players_buy_card(self, card):
@@ -1599,40 +1597,41 @@ class Player:
         return True
 
     ###########################################################################
-    def cards_affordable(self, oper, coin, num_potions, types):
+    def cards_affordable(self, oper, coin: int, num_potions: int, types):
         """Return the list of cards for under cost
-        {coin} {num_potions} are the resources contraints we have
+        {coin} {num_potions} are the resources constraints we have
         """
         affordable = PlayArea("affordable")
         for name, pile in self.game.card_piles():
             if not pile:
                 continue
-            cost = self.card_cost(pile)
-            if not self.select_by_type(pile, types):
+            card = pile.get_top_card()
+            cost = self.card_cost(card)
+            if not self.select_by_type(card, types):
                 continue
-            if not pile.purchasable:
+            if not card.purchasable:
                 continue
-            if pile.always_buyable:
-                affordable.add(pile)
+            if card.always_buyable:
+                affordable.add(card)
                 continue
-            if pile.always_buyable:
-                affordable.add(pile)
+            if card.always_buyable:
+                affordable.add(card)
                 continue
             if coin is None:
-                affordable.add(pile)
+                affordable.add(card)
                 continue
-            if pile.debtcost and not pile.cost:
-                affordable.add(pile)
+            if card.debtcost and not card.cost:
+                affordable.add(card)
                 continue
-            if oper(cost, coin) and oper(pile.potcost, num_potions):
-                affordable.add(pile)
+            if oper(cost, coin) and oper(card.potcost, num_potions):
+                affordable.add(card)
                 continue
         affordable.sort(key=self.card_cost)
         affordable.sort(key=lambda x: x.basecard)
-        return affordable
+        return [_ for _ in affordable]
 
     ###########################################################################
-    def cards_under(self, coin, num_potions=0, types=None):
+    def cards_under(self, coin, num_potions=0, types=None) -> list[str]:
         """Return the list of cards for under cost"""
         if types is None:
             types = {}
@@ -1640,7 +1639,7 @@ class Player:
         return self.cards_affordable(operator.le, coin, num_potions, types)
 
     ###########################################################################
-    def cards_worth(self, coin, num_potions=0, types=None):
+    def cards_worth(self, coin, num_potions=0, types=None) -> list[str]:
         """Return the list of cards that are exactly cost"""
         if types is None:
             types = {}
@@ -1755,12 +1754,12 @@ class Player:
     ###########################################################################
     def plr_gain_card(
         self,
-        cost,
+        cost: int,
         modifier="less",
         recipient=None,
         destination=Piles.DISCARD,
         **kwargs,
-    ):
+    ) -> Optional[Card]:
         """Gain a card up to cost coin
         if recipient defined then that player gets the card
         kwargs:
@@ -1768,31 +1767,17 @@ class Player:
             ignore_debt - normally you can't gain a card with a debt cost
             ignore_potcost - normally you can't gain a card with a potion cost
         """
-        types = kwargs.get("types", {})
-        assert modifier in ("less", "equal")
         if recipient is None:
             recipient = self
-        buyable = []
-        prompt = "Gain a card "
-        types = self._type_selector(types)
-        if modifier == "less":
-            if cost:
-                prompt += f"costing up to {cost}"
-            buyable = self.cards_under(cost, types=types)
-        elif modifier == "equal":
-            if cost:
-                prompt += f"costing exactly {cost}"
-            buyable = self.cards_worth(cost, types=types)
-        buyable = [_ for _ in buyable if _.purchasable]
-        if not kwargs.get("ignore_debt", False):
-            buyable = [_ for _ in buyable if not _.debtcost]
-        if not kwargs.get("ignore_potcost", False):
-            buyable = [_ for _ in buyable if not _.potcost]
-        buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
+
+        kwargs["prompt"] = kwargs.get(
+            "prompt", self._get_buyable_prompt(cost, modifier)
+        )
+
+        buyable = self._get_buyable(cost, modifier, **kwargs)
         if not buyable:
             self.output("Nothing suitable to gain")
             return
-        kwargs["prompt"] = kwargs.get("prompt", prompt)
         cards = self.card_sel(
             cardsrc=buyable,
             recipient=recipient,
@@ -1800,11 +1785,41 @@ class Player:
             **kwargs,
         )
         if cards:
-            card_pile = cards[0]
-            new_card = recipient.gain_card(card_pile, destination)
+            card_name = cards[0].name
+            new_card = recipient.gain_card(card_name, destination)
             recipient.output(f"Got a {new_card}")
             return new_card
         return None
+
+    ###########################################################################
+    def _get_buyable_prompt(self, cost: int, modifier: str) -> str:
+        """Return the prompt for buying cards"""
+        prompt = "Gain a card "
+        assert modifier in ("less", "equal")
+        if cost:
+            if modifier == "less":
+                prompt += f"costing up to {cost}"
+            elif modifier == "equal":
+                prompt += f"costing exactly {cost}"
+        return prompt
+
+    ###########################################################################
+    def _get_buyable(self, cost: int, modifier: str, **kwargs):
+        """Return the list of cards that are buyable for cost"""
+        types = kwargs.get("types", {})
+        buyable = []
+        types = self._type_selector(types)
+        if modifier == "less":
+            buyable = self.cards_under(cost, types=types)
+        elif modifier == "equal":
+            buyable = self.cards_worth(cost, types=types)
+        buyable = [_ for _ in buyable if _.purchasable]
+        if not kwargs.get("ignore_debt", False):
+            buyable = [_ for _ in buyable if not _.debtcost]
+        if not kwargs.get("ignore_potcost", False):
+            buyable = [_ for _ in buyable if not _.potcost]
+        buyable = [_ for _ in buyable if _.name not in kwargs.get("exclude", [])]
+        return buyable
 
     ###########################################################################
     def plr_pick_card(self, force=False, **kwargs):

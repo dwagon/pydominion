@@ -23,13 +23,13 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 0)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
-    def test_initialDeck(self):
+    def test_initial_deck(self):
         """Ensure initial player decks are correct"""
         self.plr.piles[Piles.DECK].empty()
-        self.plr._initial_deck(heirlooms=[])
+        self.plr._initial_deck()
         self.assertEqual(len(self.plr.piles[Piles.DECK]), 10)
 
-    def test_deckorder(self):
+    def test_deck_order(self):
         """Ensure adding cards to decks in the correct order"""
         self.plr.piles[Piles.DECK].empty()
         estate = self.game["Estate"].remove()
@@ -399,15 +399,14 @@ class Test_gain_card(unittest.TestCase):
 
     def test_gainByCardpile(self):
         """Gain card by pile"""
-        cp = self.game["Copper"]
-        self.plr.gain_card(cp)
+        self.plr.gain_card("Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].player.name, self.plr.name)
 
     def test_gainSpecific(self):
         """Gain card by specific card"""
         cu = self.game["Copper"].remove()
-        self.plr.gain_card(newcard=cu)
+        self.plr.gain_card(new_card=cu)
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].name, "Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD][0].player.name, self.plr.name)
 
@@ -420,7 +419,9 @@ class Test_gain_card(unittest.TestCase):
 
 
 ###############################################################################
-class Test__spend_all_cards(unittest.TestCase):
+class TestSpendAllCards(unittest.TestCase):
+    """Test _spend_all_cards()"""
+
     def setUp(self):
         self.game = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.game.start_game()
@@ -697,7 +698,11 @@ class TestBuyableSelection(unittest.TestCase):
             if i["name"] == "Moat":
                 self.assertEqual(i["verb"], "Buy")
                 self.assertEqual(i["action"], "buy")
-                self.assertEqual(i["card"], self.game["Moat"])
+                self.assertTrue(
+                    isinstance(
+                        i["card"], self.game.get_card_from_pile("Moat").__class__
+                    )
+                )
                 break
         else:  # pragma: no coverage
             self.fail("Moat not buyable")
@@ -710,7 +715,11 @@ class TestBuyableSelection(unittest.TestCase):
             if i["name"].startswith("Copper"):
                 try:
                     self.assertEqual(i["action"], "buy")
-                    self.assertEqual(i["card"], self.game["Copper"])
+                    self.assertTrue(
+                        isinstance(
+                            i["card"], self.game.get_card_from_pile("Copper").__class__
+                        )
+                    )
                 except AssertionError:  # pragma: no cover
                     print(f"Buy Copper {i}")
                     self.game.print_state()
@@ -931,13 +940,13 @@ class TestBuyCard(unittest.TestCase):
     def test_debt(self):
         """Test buying a card when the player has a debt"""
         self.plr.debt = Counter("Debt", 1)
-        self.plr.buy_card(self.game["Copper"])
+        self.plr.buy_card("Copper")
         self.assertIn("Must pay off debt first", self.plr.messages)
 
     def test_embargo(self):
         """Test buying an embargoed card"""
         self.game["Copper"].embargo()
-        self.plr.buy_card(self.game["Copper"])
+        self.plr.buy_card("Copper")
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Curse"])
         self.assertIn("Gained a Curse from embargo", self.plr.messages)
 
@@ -1127,7 +1136,7 @@ class TestWay(unittest.TestCase):
         self.game.start_game()
         self.plr = self.game.player_list(0)
         self.way = self.game.ways["Way of the Otter"]
-        self.card = self.game["Cellar"]
+        self.card = self.game.get_card_from_pile("Cellar")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_perform_way(self):

@@ -16,14 +16,16 @@ class Card_Augurs(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
-        return AugurCardPile(game)
+        card_pile = AugurCardPile(game)
+        card_pile.init_cards()
+        return card_pile
 
 
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=12):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Augurs", game.paths["cards"], "Card_")
-        super().__init__(klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
     def init_cards(self):
         # pylint: disable=import-outside-toplevel
@@ -32,10 +34,9 @@ class AugurCardPile(CardPile.CardPile):
         from dominion.cards.Augur_Sorceress import Card_Sorceress
         from dominion.cards.Augur_Sibyl import Card_Sibyl
 
-        self._cards = []
         for crd in (Card_Herb_Gatherer, Card_Acolyte, Card_Sorceress, Card_Sibyl):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, crd())
 
 
 ###############################################################################

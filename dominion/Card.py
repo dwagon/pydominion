@@ -32,6 +32,7 @@ class CardExpansion(Enum):
 class CardType(Enum):
     """Type of card"""
 
+    UNDEFINED = auto()
     ACTION = auto()
     ALLY = auto()
     ARTIFACT = auto()
@@ -82,7 +83,7 @@ class Card:
         self.debtcost = 0
         self.always_buyable = False
         self.potcost = False
-        self.cardtype = "unknown"
+        self.cardtype = CardType.UNDEFINED
         self.purchasable = True
         self.permanent = False
         self.playable = True
@@ -161,12 +162,8 @@ class Card:
             ct = self.cardtype[:]
         else:
             ct = [self.cardtype]
-        try:
-            return ", ".join([_.name.title() for _ in ct])
-        except AttributeError:
-            print(f"DBG {self}")
-            print(f"DBG {ct}")
-            raise
+
+        return ", ".join([_.name.title() for _ in ct])
 
     ##########################################################################
     def __repr__(self):

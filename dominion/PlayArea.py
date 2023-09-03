@@ -21,7 +21,7 @@ class PlayArea:
 
     ###########################################################################
     def __contains__(self, obj) -> bool:
-        """Return True if a card {obj} or a card with name {obj} is in playarea"""
+        """Return True if a card {obj} or a card with name {obj} is in play area"""
         for card in self._cards:
             if isinstance(obj, str):
                 if card.name == obj:
@@ -43,11 +43,14 @@ class PlayArea:
         return None
 
     ###########################################################################
-    def set(self, *cards):
+    def set(self, *cards: list[str]) -> None:
         """Used for testing to set contents"""
         self.empty()
-        for cardname in cards:
-            card = self.game[cardname].remove()
+        for card_name in cards:
+            card = self.game.get_card_from_pile(card_name)
+            if card is None:
+                print(f"Card Pile {card_name} is empty")
+                return
             card.location = self.name
             self.addToTop(card)
 
