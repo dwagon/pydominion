@@ -32,7 +32,7 @@ class Landmark_Basilica(Landmark.Landmark):
 
 
 ###############################################################################
-class Test_Basilica(unittest.TestCase):
+class TestBasilica(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, landmarkcards=["Basilica"])
         self.g.start_game()
@@ -41,7 +41,7 @@ class Test_Basilica(unittest.TestCase):
     def test_gain(self):
         """Use Basilica"""
         self.plr.coin = 4
-        self.plr.buy_card(self.g["Copper"])
+        self.plr.buy_card("Copper")
         self.assertEqual(self.plr.get_score_details()["Basilica"], 2)
 
 

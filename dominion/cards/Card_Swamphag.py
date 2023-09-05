@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Swamp_Hag"""
 
 import unittest
 from dominion import Game, Card, Piles
 
 
+###############################################################################
 class Card_SwampHag(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -13,7 +15,8 @@ class Card_SwampHag(Card.Card):
             Card.CardType.DURATION,
         ]
         self.base = Card.CardExpansion.ADVENTURE
-        self.desc = "Until your next turn, when any other player buys a card, he gains a Curse. At the start of your next turn: +3 Coin"
+        self.desc = """Until your next turn, when any other player buys a card, he gains a Curse. 
+        At the start of your next turn: +3 Coin"""
         self.required_cards = ["Curse"]
         self.name = "Swamp Hag"
         self.cost = 5
@@ -28,8 +31,8 @@ class Card_SwampHag(Card.Card):
         if player == owner:
             return
         player.gain_card("Curse")
-        player.output("Gained a curse from %s's Swamp Hag" % owner.name)
-        owner.output("Cursed %s when they bought a %s" % (player.name, card.name))
+        player.output(f"Gained a curse from {owner.name}'s Swamp Hag")
+        owner.output(f"Cursed {player.name} when they bought a {card}")
 
 
 ###############################################################################
@@ -44,7 +47,7 @@ class TestSwampHag(unittest.TestCase):
     def test_play(self):
         self.attacker.play_card(self.seahag)
         self.attacker.end_turn()
-        self.victim.buy_card(self.g["Copper"])
+        self.victim.buy_card("Copper")
         self.assertEqual(self.attacker.piles[Piles.DURATION][0].name, "Swamp Hag")
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         self.attacker.start_turn()

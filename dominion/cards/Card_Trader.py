@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Trader"""
 import unittest
 from dominion import Card, Game, Piles
 
@@ -38,7 +38,7 @@ class Card_Trader(Card.Card):
 
 
 ###############################################################################
-class Test_Trader(unittest.TestCase):
+class TestTrader(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Trader"])
         self.g.start_game()
@@ -62,7 +62,7 @@ class Test_Trader(unittest.TestCase):
         self.plr.test_input = ["Instead"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.coins.set(6)
-        self.plr.buy_card(self.g["Gold"])
+        self.plr.buy_card("Gold")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertNotIn("Gold", self.plr.piles[Piles.DISCARD])
 

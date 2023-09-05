@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Mint"""
 import unittest
 from dominion import Card, Game, Piles, Player
 
@@ -20,28 +20,28 @@ class Card_Mint(Card.Card):
         return "You may reveal a Treasure card from your hand. Gain a copy of it."
 
     def special(self, game, player):
-        treasures = [c for c in player.piles[Piles.HAND] if c.isTreasure()]
+        treasures = [_ for _ in player.piles[Piles.HAND] if _.isTreasure()]
         if not treasures:
             player.output("No treasures to reveal")
             return
-        toget = player.card_sel(
+        to_get = player.card_sel(
             num=1, cardsrc=treasures, prompt="Reveal a treasure to gain a copy of"
         )
-        player.reveal_card(toget[0])
-        if toget:
-            player.output("Gained a %s from the Mint" % toget[0].name)
-            player.gain_card(toget[0].name)
+        player.reveal_card(to_get[0])
+        if to_get:
+            player.output(f"Gained a {to_get[0]} from the Mint")
+            player.gain_card(to_get[0].name)
 
     def hook_buy_this_card(self, game, player):
         """Trash all Treasures you have in play"""
-        totrash = [c for c in player.piles[Piles.PLAYED] if c.isTreasure()]
-        for c in totrash:
+        to_trash = [c for c in player.piles[Piles.PLAYED] if c.isTreasure()]
+        for c in to_trash:
             player.output(f"Mint trashing {c.name}")
             player.trash_card(c)
 
 
 ###############################################################################
-class Test_Mint(unittest.TestCase):
+class TestMint(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Mint", "Moat"])
         self.g.start_game()
@@ -62,7 +62,7 @@ class Test_Mint(unittest.TestCase):
         self.plr.coins.set(5)
         self.plr.piles[Piles.HAND].set("Gold", "Estate")
         self.plr.piles[Piles.PLAYED].set("Copper", "Silver", "Estate", "Moat")
-        self.plr.buy_card(self.g["Mint"])
+        self.plr.buy_card("Mint")
         self.assertEqual(self.g.trashpile.size(), tsize + 2)
         self.assertIn("Copper", self.g.trashpile)
         self.assertIn("Silver", self.g.trashpile)

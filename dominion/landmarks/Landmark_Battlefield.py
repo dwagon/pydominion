@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, Landmark
+from dominion import Card, Game, Landmark
 
 
 ###############################################################################
@@ -26,7 +26,7 @@ class Landmark_Battlefield(Landmark.Landmark):
 
 
 ###############################################################################
-class Test_Battlefield(unittest.TestCase):
+class TestBattlefield(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -39,7 +39,7 @@ class Test_Battlefield(unittest.TestCase):
     def test_gain(self):
         """Use Battlefield"""
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Duchy"])
+        self.plr.buy_card("Duchy")
         self.assertEqual(self.plr.get_score_details()["Battlefield"], 2)
 
 

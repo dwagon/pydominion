@@ -1412,6 +1412,7 @@ class Player:
     ###########################################################################
     def buy_card(self, card_name: str) -> None:
         """Buy a card"""
+        assert isinstance(card_name, str), f"buy_card({card_name=}) {type(card_name)=}"
         if not self.buys:  # pragma: no cover
             return
         if self.debt:

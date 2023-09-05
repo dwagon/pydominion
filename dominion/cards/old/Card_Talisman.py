@@ -4,6 +4,7 @@ import unittest
 from dominion import Card, Game, Piles
 
 
+###############################################################################
 class Card_Talisman(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -19,12 +20,12 @@ class Card_Talisman(Card.Card):
         """While this is in play, when you buy a card costing 4
         or less that is not a victory card, gain a copy of it."""
         if card.cost <= 4 and not card.isVictory():
-            player.output("Gained another %s from Talisman" % card.name)
-            player.add_card(game[card.name].remove())
+            player.output(f"Gained another {card} from Talisman")
+            player.add_card(game.get_card_from_pile(card.name))
 
 
 ###############################################################################
-class Test_Talisman(unittest.TestCase):
+class TestTalisman(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1, initcards=["Talisman"], oldcards=True, badcards=["Duchess"]
@@ -40,15 +41,15 @@ class Test_Talisman(unittest.TestCase):
 
     def test_buy(self):
         self.plr.play_card(self.card)
-        self.plr.buy_card(self.g["Copper"])
+        self.plr.buy_card("Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Copper")
 
-    def test_tooexpensive(self):
+    def test_too_expensive(self):
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
-        self.plr.buy_card(self.g["Gold"])
+        self.plr.buy_card("Gold")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Gold")
@@ -56,7 +57,7 @@ class Test_Talisman(unittest.TestCase):
     def test_victory(self):
         self.plr.play_card(self.card)
         self.plr.coins.set(6)
-        self.plr.buy_card(self.g["Duchy"])
+        self.plr.buy_card("Duchy")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Duchy")

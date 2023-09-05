@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -25,9 +24,11 @@ class Card_Groundskeeper(Card.Card):
 
 
 ###############################################################################
-class Test_Groundskeeper(unittest.TestCase):
+class TestGroundskeeper(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Groundskeeper"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Groundskeeper"].remove()
@@ -39,7 +40,7 @@ class Test_Groundskeeper(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Duchy"])
+        self.plr.buy_card("Duchy")
         self.assertEqual(self.plr.score["Groundskeeper"], 1)
 
 

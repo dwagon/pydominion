@@ -64,7 +64,7 @@ class TestTemple(unittest.TestCase):
         """Gain a Temple"""
         self.g["Temple"].addVP(5)
         self.plr.coins.set(4)
-        self.plr.buy_card(self.g["Temple"])
+        self.plr.buy_card("Temple")
         self.assertEqual(self.plr.get_score_details()["Temple"], 5)
 
 

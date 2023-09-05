@@ -116,7 +116,7 @@ class TestDoctor(unittest.TestCase):
         self.plr.coins.set(6)
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
-        self.plr.buy_card(self.g["Doctor"])
+        self.plr.buy_card("Doctor")
         self.assertIn("Duchy", self.g.trashpile)
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")

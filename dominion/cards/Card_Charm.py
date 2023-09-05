@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Charm"""
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -16,7 +16,7 @@ class Card_Charm(Card.Card):
             named card with the same cost."""
         self.name = "Charm"
         self.cost = 5
-        self.buytrigger = False
+        self.buy_trigger = False
 
     def special(self, game, player):
         ans = player.plr_choose_options(
@@ -31,23 +31,23 @@ class Card_Charm(Card.Card):
             player.buys.add(1)
             player.coins.add(2)
         else:
-            self.buytrigger = True
+            self.buy_trigger = True
 
     def hook_buy_card(self, game, player, card):
-        if not self.buytrigger:
+        if not self.buy_trigger:
             return
-        self.buytrigger = False
+        self.buy_trigger = False
         cost = card.cost
         player.plr_gain_card(cost=cost, modifier="equal", exclude=[card.name])
 
 
 ###############################################################################
-class Test_Charm(unittest.TestCase):
+class TestCharm(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Charm"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Charm"].remove()
+        self.card = self.g.get_card_from_pile("Charm")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_choose_one(self):
@@ -63,7 +63,7 @@ class Test_Charm(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.test_input = ["Get Duchy"]
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Charm"])
+        self.plr.buy_card("Charm")
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
 
 

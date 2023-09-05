@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -37,7 +36,7 @@ class Card_HauntedWoods(Card.Card):
 
 
 ###############################################################################
-class Test_HauntedWoods(unittest.TestCase):
+class TestHauntedWoods(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Haunted Woods"])
         self.g.start_game()
@@ -51,7 +50,7 @@ class Test_HauntedWoods(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.end_turn()
         self.vic.coins.set(6)
-        self.vic.buy_card(self.g["Gold"])
+        self.vic.buy_card("Gold")
         self.assertIn("Silver", self.vic.piles[Piles.DECK])
         self.assertIn("Duchy", self.vic.piles[Piles.DECK])
         self.assertIn("Province", self.vic.piles[Piles.DECK])

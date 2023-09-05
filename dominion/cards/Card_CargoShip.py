@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card
-from dominion import PlayArea
-from dominion import Game, Piles
+from dominion import Card, PlayArea, Game, Piles
 
 
 ###############################################################################
@@ -47,7 +45,7 @@ class Card_CargoShip(Card.Card):
 
 
 ###############################################################################
-class Test_CargoShip(unittest.TestCase):
+class TestCargoShip(unittest.TestCase):
     """Test Cargo Ship"""
 
     def setUp(self):
@@ -62,7 +60,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["Yes"]
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(self.card._cargo_ship[0].name, "Moat")
         self.plr.end_turn()
         self.plr.start_turn()
@@ -75,7 +73,7 @@ class Test_CargoShip(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 2)
         self.plr.test_input = ["No"]
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(len(self.card._cargo_ship), 0)
         self.plr.end_turn()
         self.plr.start_turn()

@@ -85,7 +85,7 @@ class TestHerald(unittest.TestCase):
         self.plr.coins.set(5)
         self.plr.test_input = ["1", "moat"]
         self.plr.piles[Piles.DISCARD].set("Estate", "Moat", "Copper")
-        self.plr.buy_card(self.g["Herald"])
+        self.plr.buy_card("Herald")
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Moat")
 
 
