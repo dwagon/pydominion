@@ -24,7 +24,7 @@ class Card_WishingWell(Card.Card):
         index = 1
         for name, card_pile in sorted(game.card_piles()):
             options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": card_pile}
+                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
             index += 1
         o = player.user_input(options, "Guess the top card")
@@ -34,7 +34,7 @@ class Card_WishingWell(Card.Card):
         if not card:
             return
         player.reveal_card(card)
-        if o["card"].name == card.name:
+        if o["card"] == card.name:
             player.output("You guessed correctly")
             player.add_card(card, Piles.HAND)
         else:

@@ -21,7 +21,7 @@ class Event_Populate(Event.Event):
 
 
 ###############################################################################
-class Test_Populate(unittest.TestCase):
+class TestPopulate(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

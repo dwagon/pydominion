@@ -25,15 +25,14 @@ class Card_Feast(Card.Card):
         buyable = player.cards_under(5)
         index = 1
         for p in buyable:
-            selector = "%d" % index
-            toprint = "Get %s (%d coin)" % (p.name, p.cost)
-            options.append({"selector": selector, "print": toprint, "card": p})
+            to_print = "Get %s (%d coin)" % (p.name, p.cost)
+            options.append({"selector": f"{index}", "print": to_print, "card": p})
             index += 1
 
         o = player.user_input(options, "What card do you wish?")
         if o["card"]:
-            player.gain_card(o["card"])
-            player.output("Took %s" % o["card"].name)
+            player.gain_card(o["card"].name)
+            player.output(f"Took {o['card']}")
 
     def trash_card(self, player):
         ans = player.plr_choose_options(
@@ -46,7 +45,7 @@ class Card_Feast(Card.Card):
 
 
 ###############################################################################
-class Test_Feast(unittest.TestCase):
+class TestFeast(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

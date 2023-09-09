@@ -26,7 +26,7 @@ class Event_Plan(Event.Event):
 
 
 ###############################################################################
-class Test_Plan(unittest.TestCase):
+class TestPlan(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Plan"], initcards=["Moat"])
         self.g.start_game()

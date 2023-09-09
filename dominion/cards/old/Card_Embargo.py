@@ -38,7 +38,7 @@ class Card_Embargo(Card.Card):
 
 
 ###############################################################################
-class Test_Embargo(unittest.TestCase):
+class TestEmbargo(unittest.TestCase):
     """Test Embargo"""
 
     def setUp(self):

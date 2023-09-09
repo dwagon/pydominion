@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Ferry"""
 import unittest
 from dominion import Card, Game, Event
 
@@ -23,7 +23,7 @@ class Event_Ferry(Event.Event):
 
 
 ###############################################################################
-class Test_Ferry(unittest.TestCase):
+class TestFerry(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Ferry"], initcards=["Moat"])
         self.g.start_game()

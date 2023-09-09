@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Training"""
 
 import unittest
 from dominion import Card, Game, Event
@@ -15,16 +16,22 @@ class Event_Training(Event.Event):
 
     def special(self, game, player):
         """Move your +1 Coin token to an Action Supply Pile"""
-        actionpiles = game.getActionPiles()
-        stacks = player.card_sel(num=1, prompt="What stack to add the +1 Coin Token to?", cardsrc=actionpiles)
+        action_piles = game.getActionPiles()
+        stacks = player.card_pile_sel(
+            num=1,
+            prompt="What stack to add the +1 Coin Token to?",
+            cardsrc=action_piles,
+        )
         if stacks:
-            player.place_token("+1 Coin", stacks[0].name)
+            player.place_token("+1 Coin", stacks[0])
 
 
 ###############################################################################
-class Test_Training(unittest.TestCase):
+class TestTraining(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, eventcards=["Training"], initcards=["Moat"])
+        self.g = Game.TestGame(
+            numplayers=1, eventcards=["Training"], initcards=["Moat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Training"]

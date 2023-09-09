@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Deluded """
 
 import unittest
 from dominion import Card, Game, Piles, State
@@ -24,7 +25,7 @@ class State_Deluded(State.State):
 
 
 ###############################################################################
-class Test_Deluded(unittest.TestCase):
+class TestDeluded(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bard"])
         self.g.start_game()
@@ -34,7 +35,8 @@ class Test_Deluded(unittest.TestCase):
     def test_deluded(self):
         self.plr.assign_state("Deluded")
         self.plr.test_input = ["Estate"]
-        self.assertGreater(self.plr.card_cost(self.g["Bard"]), 99)
+        bard = self.g.get_card_from_pile("Bard")
+        self.assertGreater(self.plr.card_cost(bard), 99)
         self.plr.test_input = ["End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.states, [])

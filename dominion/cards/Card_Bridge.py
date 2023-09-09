@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -26,7 +25,7 @@ class Card_Bridge(Card.Card):
 
 
 ###############################################################################
-class Test_Bridge(unittest.TestCase):
+class TestBridge(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Bridge"])
         self.g.start_game()
@@ -39,11 +38,11 @@ class Test_Bridge(unittest.TestCase):
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_costreduction(self):
+    def test_cost_reduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 6)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 5)
 
 
 ###############################################################################

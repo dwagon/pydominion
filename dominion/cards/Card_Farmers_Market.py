@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Farmers_Market"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -16,6 +15,8 @@ class Card_FarmersMarket(Card.Card):
         self.cost = 3
 
     def desc(self, player):
+        """If there are 4VP or more on the Farmers' Market pile, take them and trash this.
+        Otherwise, add 1VP to the pile and then +$1 per 1VP on the pile."""
         vps = player.game["Farmers' Market"].getVP()
         if vps >= 4:
             return f"+1 Buy; Take {vps} VPs and trash this."
@@ -36,7 +37,7 @@ class Card_FarmersMarket(Card.Card):
 
 
 ###############################################################################
-class Test_FarmersMarket(unittest.TestCase):
+class TestFarmersMarket(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Farmers' Market"])
         self.g.start_game()

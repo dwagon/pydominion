@@ -27,9 +27,9 @@ class Test_Canal(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_cost(self):
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 6)
         self.plr.assign_project("Canal")
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(self.g.get_card_from_pile("Gold")), 5)
 
 
 ###############################################################################

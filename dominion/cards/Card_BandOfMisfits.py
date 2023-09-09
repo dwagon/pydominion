@@ -27,7 +27,7 @@ class Card_BandOfMisfits(Card.Card):
 
 
 ###############################################################################
-class Test_BandOfMisfits(unittest.TestCase):
+class TestBandOfMisfits(unittest.TestCase):
     """Test Band of Misfits"""
 
     def setUp(self):

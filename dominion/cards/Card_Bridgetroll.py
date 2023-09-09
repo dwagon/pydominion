@@ -2,11 +2,10 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Bridgetroll(Card.Card):
+class Card_BridgeTroll(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -40,15 +39,15 @@ class Card_Bridgetroll(Card.Card):
 
 
 ###############################################################################
-class Test_Bridgetroll(unittest.TestCase):
+class TestBridgeTroll(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Bridge Troll"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Bridge Troll"].remove()
+        self.card = self.g.get_card_from_pile("Bridge Troll")
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a bridge troll"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
@@ -57,11 +56,12 @@ class Test_Bridgetroll(unittest.TestCase):
         self.plr.start_turn()
         self.assertEqual(self.plr.buys.get(), 2)
 
-    def test_costreduction(self):
+    def test_cost_reduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        gold = self.g.get_card_from_pile("Gold")
+        self.assertEqual(self.plr.card_cost(gold), 6)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(gold), 5)
 
 
 ###############################################################################
