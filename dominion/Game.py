@@ -711,12 +711,13 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def getVictoryPiles(self):
-        """Return all cardstacks that are victory cards"""
-        victorypiles = []
-        for cpile in self.cardpiles.values():
-            if cpile.isVictory():
-                victorypiles.append(cpile)
-        return victorypiles
+        """Return all card stack names that are victory cards"""
+        victory_piles = []
+        for name, _ in self.cardpiles.items():
+            card = self.get_card_from_pile(name)
+            if card.isVictory():
+                victory_piles.append(name)
+        return victory_piles
 
     ###########################################################################
     def isGameOver(self) -> bool:

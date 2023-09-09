@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -24,14 +23,8 @@ class Card_Rebuild(Card.Card):
         until you reveal a Victory card that is not the named card.
         Discard the other cards. Trash the Victory card and gain a
         Victory card cost up to 3 more than it"""
-        stacks = game.getVictoryPiles()
-        cards = player.card_sel(
-            prompt="Guess a victory card - the next victory card that is not that will be upgraded",
-            cardsrc=stacks,
-        )
-        if cards:
-            guess = cards[0]
-        else:
+        guess = self._pick_victory_card(game, player)
+        if not guess:
             return
         discards = []
         while True:
@@ -39,21 +32,37 @@ class Card_Rebuild(Card.Card):
             player.reveal_card(card)
             if not card:
                 break
-            if card.isVictory() and guess.name != card.name:
-                player.output("Found and trashing a %s" % card.name)
+            if card.isVictory() and guess != card.name:
+                player.output(f"Found and trashing {card}")
                 player.trash_card(card)
-                player.plr_gain_card(card.cost + 3, modifier="less", types={Card.CardType.VICTORY: True})
+                player.plr_gain_card(
+                    card.cost + 3, modifier="less", types={Card.CardType.VICTORY: True}
+                )
                 break
-            player.output("Drew and discarded %s" % card.name)
+            player.output(f"Drew and discarded {card}")
             discards.append(card)
         for c in discards:
             player.discard_card(c)
 
+    def _pick_victory_card(self, game, player):
+        """Get the player to guess the victory card"""
+        stacks = game.getVictoryPiles()
+        options = []
+        for card in stacks:
+            options.append((f"{card}", card))
+        guess = player.plr_choose_options(
+            "Guess a victory card - the next victory card that is not that will be upgraded",
+            *options,
+        )
+        return guess
+
 
 ###############################################################################
-class Test_Rebuild(unittest.TestCase):
+class TestRebuild(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Rebuild"], badcards=["Duchess"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Rebuild"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Rebuild"].remove()
@@ -61,16 +70,16 @@ class Test_Rebuild(unittest.TestCase):
 
     def test_play(self):
         """Play a rebuild"""
-        tsize = self.g.trashpile.size()
+        trash_size = self.g.trashpile.size()
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Estate", "Province", "Gold")
-        self.plr.test_input = ["Select Province", "Get Duchy"]
+        self.plr.test_input = ["Province", "Get Duchy"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 3)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trashpile.size(), trash_size + 1)
         self.assertIn("Estate", self.g.trashpile)
 
 
