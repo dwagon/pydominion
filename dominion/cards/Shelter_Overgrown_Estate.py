@@ -36,7 +36,12 @@ class TestOvergrownEstate(unittest.TestCase):
     def test_play(self):
         """Test Play"""
         self.plr.piles[Piles.DECK].set("Province")
-        self.plr.piles[Piles.HAND].set("Overgrown Estate")
+        while True:
+            if "Overgrown Estate" in self.plr.piles[Piles.HAND]:
+                break
+            self.plr.discard_hand()
+            self.plr.pick_up_hand()
+            self.g.print_state()
         card = self.plr.piles[Piles.HAND]["Overgrown Estate"]
         self.plr.trash_card(card)
         self.assertIn("Province", self.plr.piles[Piles.HAND])
