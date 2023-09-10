@@ -32,7 +32,7 @@ class Card_Doctor(Card.Card):
         index = 1
         for name, pile in sorted(game.card_piles()):
             sel = f"{index}"
-            options.append({"selector": sel, "print": f"Guess {name}", "card": pile})
+            options.append({"selector": sel, "print": f"Guess {name}", "card": name})
             index += 1
         o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
@@ -42,7 +42,7 @@ class Card_Doctor(Card.Card):
             cards.append(player.next_card())
         for card in cards:
             player.reveal_card(card)
-            if card.name == o["card"].name:
+            if card.name == o["card"]:
                 player.output(f"Trashing {card}")
                 card.location = None
                 player.trash_card(card)

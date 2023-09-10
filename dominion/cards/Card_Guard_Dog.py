@@ -29,7 +29,7 @@ class Card_Guard_Dog(Card.Card):
 
 
 ###############################################################################
-class Test_Guard_Dog(unittest.TestCase):
+class TestGuardDog(unittest.TestCase):
     """Test Guard Dog"""
 
     def setUp(self):
@@ -55,7 +55,7 @@ class Test_Guard_Dog(unittest.TestCase):
     def test_attack(self):
         """Test under attack"""
         self.plr.piles[Piles.HAND].set("Copper", "Guard Dog")
-        witch = self.g["Witch"]
+        witch = self.g.get_card_from_pile("Witch")
         self.att.add_card(witch, Piles.HAND)
         self.att.play_card(witch)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
