@@ -52,10 +52,7 @@ class Test_HauntedCastle(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Haunted Castle":
-                break
+        self.card = self.g.get_card_from_pile("Castles", "Haunted Castle")
 
     def test_play(self):
         """Play a castle"""

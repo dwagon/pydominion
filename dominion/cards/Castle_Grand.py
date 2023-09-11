@@ -27,7 +27,9 @@ class Card_GrandCastle(CastleCard):
         player.output(f"Gaining {victory_points} VPs from your Victory Cards")
         player.add_score("Grand Castle", victory_points)
         for plr in list(game.players.values()):
-            victory_points = sum([1 for card in plr.piles[Piles.DURATION] if card.isVictory()])
+            victory_points = sum(
+                [1 for card in plr.piles[Piles.DURATION] if card.isVictory()]
+            )
             player.output(
                 f"Gaining {victory_points} VPs from {plr.name}'s Victory Cards"
             )
@@ -43,10 +45,7 @@ class TestGrandCastle(unittest.TestCase):
 
     def test_play(self):
         """Play a sprawling castle"""
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Grand Castle":
-                break
+        self.card = self.g.get_card_from_pile("Castles", "Grand Castle")
         self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["Grand Castle"], 5)
 

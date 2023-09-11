@@ -28,10 +28,8 @@ class Test_KingsCastle(unittest.TestCase):
 
     def test_have(self):
         """Have a kings castle"""
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "King's Castle":  # One before Kings
-                break
+        self.card = self.g.get_card_from_pile("Castles", "King's Castle")
+
         self.plr.add_card(self.card, Piles.HAND)
         self.assertEqual(self.plr.get_score_details()["King's Castle"], 2)
 
