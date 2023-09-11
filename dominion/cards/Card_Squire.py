@@ -32,14 +32,15 @@ class Card_Squire(Card.Card):
 
     def hook_trashThisCard(self, game, player):
         attacks = []
-        for cp in game.cardpiles.values():
-            if cp.isAttack() and cp.purchasable:
-                attacks.append(cp)
+        for name, _ in game.card_piles():
+            card = game.get_card_from_pile(name)
+            if card.isAttack() and card.purchasable:
+                attacks.append(card)
         cards = player.card_sel(prompt="Gain an attack card", cardsrc=attacks)
         if not cards:
             player.output("No suitable cards")
             return
-        player.gain_card(cards[0])
+        player.gain_card(cards[0].name)
 
 
 ###############################################################################
