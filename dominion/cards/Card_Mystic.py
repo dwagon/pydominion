@@ -25,7 +25,7 @@ class Card_Mystic(Card.Card):
         index = 1
         for name, card_pile in sorted(game.card_piles()):
             options.append(
-                {"selector": f"{index}", "print": f"Guess {name}", "card": card_pile}
+                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
             index += 1
         o = player.user_input(options, "Guess the top card")
@@ -33,7 +33,7 @@ class Card_Mystic(Card.Card):
             return
         card = player.next_card()
         player.reveal_card(card)
-        if o["card"].name == card.name:
+        if o["card"] == card.name:
             player.output("You guessed correctly")
             player.add_card(card, Piles.HAND)
         else:
@@ -51,7 +51,7 @@ class TestMystic(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Mystic"].remove()
+        self.card = self.g.get_card_from_pile("Mystic")
 
     def test_play(self):
         """No guess should still get results"""
