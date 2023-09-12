@@ -51,8 +51,11 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(len(self.g["Wizards"]), 15)
         self.assertEqual(card.name, "Student")
         card = self.g["Wizards"].remove()
+        self.assertEqual(card.name, "Student")
         card = self.g["Wizards"].remove()
+        self.assertEqual(card.name, "Student")
         card = self.g["Wizards"].remove()
+        self.assertEqual(card.name, "Student")
         card = self.g["Wizards"].remove()
         self.assertEqual(card.name, "Conjurer")
 

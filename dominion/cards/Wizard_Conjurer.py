@@ -18,6 +18,7 @@ class Card_Conjurer(Card.Card):
         self.name = "Conjurer"
         self.desc = """Gain a card costing up to $4.
             At the start of your next turn, put this into your hand."""
+        self.pile = "Wizards"
 
     def special(self, game, player):
         player.plr_gain_card(4)
@@ -27,7 +28,7 @@ class Card_Conjurer(Card.Card):
 
 
 ###############################################################################
-class Test_Conjurer(unittest.TestCase):
+class TestConjurer(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Wizards"])
         self.g.start_game()
@@ -35,10 +36,7 @@ class Test_Conjurer(unittest.TestCase):
 
     def test_play(self):
         """Play a conjurer"""
-        while True:
-            card = self.g["Wizards"].remove()
-            if card.name == "Conjurer":
-                break
+        card = self.g.get_card_from_pile("Wizards", "Conjurer")
         self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Get Silver"]
         self.plr.play_card(card)

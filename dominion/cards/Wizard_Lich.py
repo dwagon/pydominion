@@ -17,6 +17,7 @@ class Card_Lich(Card.Card):
         self.cards = 6
         self.actions = 2
         self.name = "Lich"
+        self.pile = "Wizards"
         self.desc = """+6 Cards; +2 Actions; Skip a turn;
             When you trash this, discard it and gain a cheaper card from the trash."""
 
