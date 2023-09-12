@@ -89,7 +89,7 @@ class Card:
         self.playable = True
         self.callable = True
         self.defense = False
-        self.needsprize = False
+        self.needs_prizes = False
         self.needsartifacts = False
         self.needsprojects = False
         self.overpay = False

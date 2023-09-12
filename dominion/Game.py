@@ -586,7 +586,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self.output(f"Using Allies as required by {card.name}")
             if card.traveller and not self.loaded_travellers:
                 self._load_travellers()
-            if card.needsprize and not self._loaded_prizes:
+            if card.needs_prizes and not self._loaded_prizes:
                 self._add_prizes()
                 self.output(f"Playing with Prizes as required by {card.name}")
             if card.needsartifacts and not self.artifacts:
