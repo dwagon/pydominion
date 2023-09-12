@@ -426,7 +426,7 @@ class Game:  # pylint: disable=too-many-public-methods
             card_pile.init_cards(10, self.cardmapping["BaseCard"][card_name])
             self.cardpiles[card_name] = card_pile
         elif card_name := self.guess_cardname(card):
-            self._use_cardpile(available, card_name, force=True)
+            self._use_card_pile(available, card_name, force=True)
             return 1
         elif event_name := self.guess_cardname(card, "Event"):
             self.eventcards.append(event_name)
@@ -456,7 +456,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _load_decks(self, initcards, numstacks: int) -> None:
         """Determine what cards we are using this game"""
         for card in self._base_cards:
-            self._use_cardpile(
+            self._use_card_pile(
                 self._base_cards[:], card, force=True, cardtype="BaseCard"
             )
         available = self.getAvailableCards()
@@ -482,7 +482,7 @@ class Game:  # pylint: disable=too-many-public-methods
             crd = random.choice(available)
             if crd in self.badcards:
                 continue
-            unfilled -= self._use_cardpile(available, crd)
+            unfilled -= self._use_card_pile(available, crd)
 
         self._check_card_requirements()
 
@@ -490,7 +490,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _add_prizes(self):
         """TODO"""
         for prize in self.getAvailableCards("PrizeCard"):
-            self._use_cardpile(None, prize, False, "PrizeCard")
+            self._use_card_pile(None, prize, False, "PrizeCard")
         self._loaded_prizes = True
 
     ###########################################################################
@@ -499,7 +499,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
-    def _use_cardpile(
+    def _use_card_pile(
         self, available, card_name: str, force=False, cardtype="Card"
     ) -> int:
         """TODO"""
@@ -542,7 +542,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _use_ruins(self, card) -> None:
         """Use Ruins"""
         self.output(f"Playing with Ruins as required by {card.name}")
-        self._use_cardpile(None, "Ruins", True)
+        self._use_card_pile(None, "Ruins", True)
 
     ###########################################################################
     def _check_card_requirements(self):
@@ -566,11 +566,13 @@ class Game:  # pylint: disable=too-many-public-methods
                 else:
                     krdtype, crd = "BaseCard", x
                 if crd not in self.cardpiles:
-                    self._use_cardpile(None, crd, force=True, cardtype=krdtype)
+                    self._use_card_pile(None, crd, force=True, cardtype=krdtype)
                     self.output(f"Playing with {crd} as required by {card.name}")
 
             if card.heirloom is not None and card.heirloom not in self._heirlooms:
-                self._use_cardpile(None, card.heirloom, force=True, cardtype="Heirloom")
+                self._use_card_pile(
+                    None, card.heirloom, force=True, cardtype="Heirloom"
+                )
                 self._heirlooms.append(card.heirloom)
                 self.output(f"Playing with {card.heirloom} as required by {card.name}")
 
