@@ -21,34 +21,29 @@ class Card_Voyage(Card.Card):
         self.desc = """+1 Action; If the previous turn wasn't yours, take an
             extra turn after this one, during which you can only play 3 cards
             from your hand."""
-        self._taketurn = False
+        self._take_turn = False
 
     def special(self, game, player):
         if game.last_turn(player):
-            self._taketurn = True
+            self._take_turn = True
         else:
             player.output("You had the previous turn")
 
     def hook_end_turn(self, game, player):
-        if self._taketurn:
+        if self._take_turn:
             player.output("Having a second turn due to Voyage")
             player.playlimit = 3
-            self._taketurn = False
+            self._take_turn = False
             game.current_player = game.playerToRight(player)
 
 
 ###############################################################################
-class Test_Voyage(unittest.TestCase):
+class TestVoyage(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-
-        while True:
-            card = self.g["Odysseys"].remove()
-            if card.name == "Voyage":
-                break
-        self.card = card
+        self.card = self.g.get_card_from_pile("Odysseys", "Voyage")
 
     def test_play(self):
         """Play the card"""

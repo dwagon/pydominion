@@ -35,12 +35,7 @@ class Test_Old_Map(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-
-        while True:
-            card = self.g["Odysseys"].remove()
-            if card.name == "Old Map":
-                break
-        self.card = card
+        self.card = self.g.get_card_from_pile("Odysseys", "Old Map")
 
     def test_play(self):
         """Play the card"""

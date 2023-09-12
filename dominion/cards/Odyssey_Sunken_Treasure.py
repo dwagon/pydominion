@@ -16,33 +16,31 @@ class Card_Sunken_Treasure(Card.Card):
         self.desc = """Gain an Action card you don't have a copy of in play."""
 
     def special(self, game, player):
-        acts = [
-            card_pile
-            for name, card_pile in game.card_piles()
-            if card_pile.isAction() and name not in player.piles[Piles.PLAYED]
-        ]
-        card = player.card_sel(cardsrc=acts, prompt="Gain a card")
-        player.gain_card(card[0])
+        options = []
+        for name, pile in game.card_piles():
+            card = game.get_card_from_pile(name)
+            if not card.isAction():
+                continue
+            if name in player.piles[Piles.PLAYED]:
+                continue
+            options.append((f"Gain {name}", name))
+        to_gain = player.plr_choose_options("Gain a card", *options)
+        player.gain_card(to_gain)
 
 
 ###############################################################################
-class Test_Sunken_Treasure(unittest.TestCase):
+class TestSunkenTreasure(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys", "Moat", "Militia"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-
-        while True:
-            card = self.g["Odysseys"].remove()
-            if card.name == "Sunken Treasure":
-                break
-        self.card = card
+        self.card = self.g.get_card_from_pile("Odysseys", "Sunken Treasure")
 
     def test_play(self):
         """Play the card"""
         self.plr.piles[Piles.PLAYED].set("Moat", "Copper")
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["Select Militia"]
+        self.plr.test_input = ["Gain Militia"]
         self.plr.play_card(self.card)
         self.assertIn("Militia", self.plr.piles[Piles.DISCARD])
 

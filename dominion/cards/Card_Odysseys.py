@@ -28,22 +28,21 @@ class OdysseyCardPile(CardPile.CardPile):
         self.mapping = game.get_card_classes("Odysseys", game.paths["cards"], "Card_")
         super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Odyssey_Old_Map import Card_Old_Map
         from dominion.cards.Odyssey_Voyage import Card_Voyage
         from dominion.cards.Odyssey_Sunken_Treasure import Card_Sunken_Treasure
         from dominion.cards.Odyssey_Distant_Shore import Card_Distant_Shore
 
-        self._cards = []
-        for crd in (
+        for card in (
             Card_Old_Map,
             Card_Voyage,
             Card_Sunken_Treasure,
             Card_Distant_Shore,
         ):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, card())
 
 
 ###############################################################################
