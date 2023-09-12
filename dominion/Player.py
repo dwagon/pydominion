@@ -1524,12 +1524,20 @@ class Player:
 
     ###########################################################################
     def gain_prize(self):
-        prizes = [self.game[c] for c in self.game.getPrizes()]
-        available = [cp for cp in prizes if not cp.is_empty()]
-        if available:
+        """Pickup a Prize"""
+        prizes = [self.game[_] for _ in self.game.getPrizes()]
+        options = []
+        for prize_pile in prizes:
+            if prize_pile.is_empty():
+                continue
+            prize = prize_pile.top_card()
+            options.append((f"Gain {prize}", prize))
+        if options:
             self.output("Gain a prize")
-            card = self.card_sel(cardsrc=available)
-            self.add_card(card[0].remove())
+            option = self.plr_choose_options("Gain a Prize", *options)
+            if option:
+                prize = self.game.get_card_from_pile(option)
+                self.add_card(prize)
         else:
             self.output("No prizes available")
 

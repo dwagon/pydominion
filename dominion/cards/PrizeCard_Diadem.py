@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -23,7 +22,7 @@ class Card_Diadem(Card.Card):
 
 
 ###############################################################################
-class Test_Diadem(unittest.TestCase):
+class TestDiadem(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
