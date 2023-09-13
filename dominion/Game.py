@@ -690,7 +690,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def getActionPiles(self, cost=999):
         """Return all cardstacks that are action cards that cost less than cost"""
         action_piles = []
-        for pile in self.cardpiles.values():
+        for name, pile in self.cardpiles.items():
             card = pile.get_top_card()
             if not card:
                 continue
@@ -699,7 +699,7 @@ class Game:  # pylint: disable=too-many-public-methods
             if card.cost > cost:
                 continue
             if card.isAction():
-                action_piles.append(pile)
+                action_piles.append(name)
         return action_piles
 
     ###########################################################################
