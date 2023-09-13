@@ -28,28 +28,30 @@ class Card_Barbarian(Card.Card):
 
     def _barbarian_attack(self, game, attacker, victim):
         """Do the barbarian attack"""
-        card = victim.top_card()
-        victim.output(f"{attacker.name}'s Barbarian: Trashes your {card}")
-        victim.trash_card(card)
-        if card.cost < 3:
+        victim_card = victim.top_card()
+        victim.output(f"{attacker.name}'s Barbarian: Trashes your {victim_card}")
+        victim.trash_card(victim_card)
+        if victim_card.cost < 3:
             victim.gain_card("Curse")
             return
         cards = []
-        for name, cp in game.card_piles():
-            if self._cardtypes(cp).intersection(self._cardtypes(card)):
-                if cp.cost < card.cost:
-                    cards.append(cp)
+        for name, card_pile in game.card_piles():
+            check_card = game.get_card_from_pile(name)
+            if _card_types(check_card).intersection(_card_types(victim_card)):
+                if check_card.cost < victim_card.cost:
+                    cards.append(check_card)
         if cards:
             gained = victim.card_sel(prompt="Gain a cheaper card", cardsrc=cards)
-            victim.gain_card(gained[0], "discard")
+            victim.gain_card(gained[0].name, Piles.DISCARD)
         else:
             victim.output("No suitable cards")
 
-    def _cardtypes(self, crd):
-        """Return a set of the cards cartypes"""
-        if isinstance(crd.cardtype, list):
-            return set(crd.cardtype)
-        return set([crd.cardtype])
+
+def _card_types(card):
+    """Return a set of the cards card types"""
+    if isinstance(card.cardtype, list):
+        return set(card.cardtype)
+    return set([card.cardtype])
 
 
 ###############################################################################
@@ -85,7 +87,7 @@ class TestBarbarian(unittest.TestCase):
         self.attacker.add_card(self.card, Piles.HAND)
 
     def Xtest_play(self):
-        """Test against a low cost victim card"""
+        """Test against a low-cost victim card"""
         self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
         self.assertIn("Copper", self.g.trashpile)
