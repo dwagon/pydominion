@@ -9,7 +9,8 @@ class Landmark_DefiledShrine(Landmark.Landmark):
     def __init__(self):
         Landmark.Landmark.__init__(self)
         self.base = Card.CardExpansion.EMPIRES
-        self.desc = "When you gain an Action, move 1VP from its pile to this. When you buy a Curse, take the VP from this."
+        self.desc = """When you gain an Action, move 1VP from its pile to this.
+        When you buy a Curse, take the VP from this."""
         self.name = "Defiled Shrine"
         self.required_cards = ["Curse"]
         self.stored_vp = 0
@@ -17,9 +18,10 @@ class Landmark_DefiledShrine(Landmark.Landmark):
     @classmethod
     def setup(cls, game):
         cls._vp = {}
-        for cp in list(game.cardpiles.values()):
-            if not cp.isGathering():
-                cls._vp[cp.name] = 2
+        for name, _ in list(game.card_piles()):
+            card = game.get_card_from_pile(name)
+            if not card.isGathering():
+                cls._vp[name] = 2
 
     def hook_all_players_buy_card(self, game, player, owner, card):
         if game.landmarks["Defiled Shrine"]._vp[card.name]:
@@ -33,7 +35,7 @@ class Landmark_DefiledShrine(Landmark.Landmark):
 
 
 ###############################################################################
-class Test_DefiledShrine(unittest.TestCase):
+class TestDefiledShrine(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
@@ -48,9 +50,9 @@ class Test_DefiledShrine(unittest.TestCase):
         self.plr.buys.set(2)
         self.plr.coins.set(5)
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 2)
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(self.g.landmarks["Defiled Shrine"]._vp["Moat"], 1)
-        self.plr.buy_card(self.g["Curse"])
+        self.plr.buy_card("Curse")
         self.assertEqual(self.plr.score["Defiled Shrine"], 1)
 
 
