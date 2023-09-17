@@ -509,6 +509,8 @@ class Game:  # pylint: disable=too-many-public-methods
         card = self.cardmapping[card_type][card_name]()
         if hasattr(card, "calc_numcards"):
             num_cards = card.calc_numcards(self)
+        elif hasattr(card, "numcards"):
+            num_cards = card.numcards
         else:
             num_cards = 10
         if hasattr(card, "cardpile_setup"):
