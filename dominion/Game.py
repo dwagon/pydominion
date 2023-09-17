@@ -454,7 +454,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """Determine what cards we are using this game"""
         for card in self._base_cards:
             self._use_card_pile(
-                self._base_cards[:], card, force=True, cardtype="BaseCard"
+                self._base_cards[:], card, force=True, card_type="BaseCard"
             )
         available = self.getAvailableCards()
         unfilled = numstacks
@@ -497,7 +497,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     def _use_card_pile(
-        self, available, card_name: str, force=False, cardtype="Card"
+        self, available, card_name: str, force=False, card_type="Card"
     ) -> int:
         """TODO"""
         try:
@@ -515,7 +515,7 @@ class Game:  # pylint: disable=too-many-public-methods
             card_pile = card.cardpile_setup(self)
         else:
             card_pile = CardPile(self)
-            card_pile.init_cards(num_cards, self.cardmapping[cardtype][card_name])
+            card_pile.init_cards(num_cards, self.cardmapping[card_type][card_name])
         if not force and not card.insupply:
             return 0
 
@@ -563,12 +563,12 @@ class Game:  # pylint: disable=too-many-public-methods
                 else:
                     krdtype, crd = "BaseCard", x
                 if crd not in self.cardpiles:
-                    self._use_card_pile(None, crd, force=True, cardtype=krdtype)
+                    self._use_card_pile(None, crd, force=True, card_type=krdtype)
                     self.output(f"Playing with {crd} as required by {card.name}")
 
             if card.heirloom is not None and card.heirloom not in self._heirlooms:
                 self._use_card_pile(
-                    None, card.heirloom, force=True, cardtype="Heirloom"
+                    None, card.heirloom, force=True, card_type="Heirloom"
                 )
                 self._heirlooms.append(card.heirloom)
                 self.output(f"Playing with {card.heirloom} as required by {card.name}")
@@ -684,7 +684,7 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping[prefix].keys())
 
     ###########################################################################
-    def getActionPiles(self, cost=999):
+    def get_action_piles(self, cost=999):
         """Return all cardstacks that are action cards that cost less than cost"""
         action_piles = []
         for name, pile in self.cardpiles.items():
