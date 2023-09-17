@@ -12,8 +12,12 @@ class Card_Knight(Card.Card):
         self.name = "Knights"
         self.base = Card.CardExpansion.DARKAGES
 
-    def setup(self, game):
-        game.cardpiles["Knights"] = KnightCardPile(game)
+    @classmethod
+    def cardpile_setup(cls, game):
+        """Setup"""
+        card_pile = KnightCardPile(game)
+        card_pile.init_cards()
+        return card_pile
 
 
 ###############################################################################

@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Fort"""
 
 import unittest
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -25,7 +25,7 @@ class FortCardPile(CardPile.CardPile):
         self.mapping = game.get_card_classes("Fort", game.paths["cards"], "Card_")
         super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Fort_Tent import Card_Tent
         from dominion.cards.Fort_Garrison import Card_Garrison
@@ -38,7 +38,7 @@ class FortCardPile(CardPile.CardPile):
 
 
 ###############################################################################
-class Test_Forts(unittest.TestCase):
+class TestForts(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Forts"])
         self.g.start_game()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, CardPile, Piles
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -27,7 +27,7 @@ class AugurCardPile(CardPile.CardPile):
         self.mapping = game.get_card_classes("Augurs", game.paths["cards"], "Card_")
         super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Augur_Herb_Gatherer import Card_Herb_Gatherer
         from dominion.cards.Augur_Acolyte import Card_Acolyte
@@ -40,7 +40,7 @@ class AugurCardPile(CardPile.CardPile):
 
 
 ###############################################################################
-class Test_Augurs(unittest.TestCase):
+class TestAugurs(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()

@@ -32,7 +32,7 @@ class ClashCardPile(CardPile.CardPile):
         self.mapping = game.get_card_classes("Clashes", game.paths["cards"], "Clash_")
         super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Clash_Battle_Plan import Card_Battle_Plan
         from dominion.cards.Clash_Archer import Card_Archer
@@ -45,8 +45,8 @@ class ClashCardPile(CardPile.CardPile):
 
 
 ###############################################################################
-class Test_Clashes(unittest.TestCase):
-    """Text Clashes"""
+class TestClashes(unittest.TestCase):
+    """Test Clashes"""
 
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Clashes"])
