@@ -496,6 +496,17 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.cardmapping["PrizeCard"].keys())
 
     ###########################################################################
+    def _num_cards_in_pile(self, card) -> int:
+        """Return the number of cards that should be in a card pile"""
+        if hasattr(card, "calc_numcards"):
+            num_cards = card.calc_numcards(self)
+        elif hasattr(card, "numcards"):
+            num_cards = card.numcards
+        else:
+            num_cards = 10
+        return num_cards
+
+    ###########################################################################
     def _use_card_pile(
         self, available, card_name: str, force=False, card_type="Card"
     ) -> int:
@@ -507,17 +518,12 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
         card = self.cardmapping[card_type][card_name]()
-        if hasattr(card, "calc_numcards"):
-            num_cards = card.calc_numcards(self)
-        elif hasattr(card, "numcards"):
-            num_cards = card.numcards
-        else:
-            num_cards = 10
+        num_cards = self._num_cards_in_pile(card)
         if hasattr(card, "cardpile_setup"):
             card_pile = card.cardpile_setup(self)
         else:
             card_pile = CardPile(self)
-            card_pile.init_cards(num_cards, self.cardmapping[card_type][card_name])
+        card_pile.init_cards(num_cards, self.cardmapping[card_type][card_name])
         if not force and not card.insupply:
             return 0
 
