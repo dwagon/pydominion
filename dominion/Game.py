@@ -254,12 +254,9 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_travellers(self):
         """TODO"""
-        return
         travellers = self.getAvailableCards("Traveller")
         for trav in travellers:
-            card_pile = CardPile(self)
-            card_pile.init_cards(self.cardmapping["Traveller"][trav])
-            self.cardpiles[trav] = card_pile
+            self._use_card_pile(None, trav, True, "Traveller")
         self.loaded_travellers = True
 
     ###########################################################################
