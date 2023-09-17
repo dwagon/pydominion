@@ -506,7 +506,7 @@ class Game:  # pylint: disable=too-many-public-methods
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
-        card = self.cardmapping[cardtype][card_name]()
+        card = self.cardmapping[card_type][card_name]()
         if hasattr(card, "calc_numcards"):
             num_cards = card.calc_numcards(self)
         else:
