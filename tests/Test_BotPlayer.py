@@ -18,7 +18,7 @@ class TestGetOptions(unittest.TestCase):
                 "action": "buy",
                 "desc": "+1 coin",
                 "selector": "-",
-                "card": self.g["Copper"],
+                "card": self.g["Copper"].remove(),
                 "name": "Copper",
                 "details": "0 Coins; Treasure; 60 left",
                 "verb": "",
@@ -27,7 +27,7 @@ class TestGetOptions(unittest.TestCase):
                 "action": "buy",
                 "desc": "1 VP",
                 "selector": "-",
-                "card": self.g["Estate"],
+                "card": self.g["Estate"].remove(),
                 "name": "Estate",
                 "details": "2 Coins; Victory; 12 left",
                 "verb": "",
@@ -36,7 +36,7 @@ class TestGetOptions(unittest.TestCase):
                 "action": "buy",
                 "desc": "+2 coin",
                 "selector": "-",
-                "card": self.g["Silver"],
+                "card": self.g["Silver"].remove(),
                 "name": "Silver",
                 "details": "3 Coins; Treasure; 39 left",
                 "verb": "",
@@ -45,7 +45,7 @@ class TestGetOptions(unittest.TestCase):
                 "action": None,
                 "desc": "3 VP",
                 "selector": "-",
-                "card": self.g["Duchy"],
+                "card": self.g["Duchy"].remove(),
                 "name": "Duchy",
                 "details": "5 Coins; Victory; 12 left",
                 "verb": "",
@@ -54,7 +54,7 @@ class TestGetOptions(unittest.TestCase):
                 "action": "buy",
                 "desc": "+3 coin",
                 "selector": "-",
-                "card": self.g["Gold"],
+                "card": self.g["Gold"].remove(),
                 "name": "Gold",
                 "details": "6 Coins; Treasure; 30 left",
                 "verb": "",
@@ -63,14 +63,14 @@ class TestGetOptions(unittest.TestCase):
                 "action": "buy",
                 "desc": "6 VP",
                 "selector": "-",
-                "card": self.g["Province"],
+                "card": self.g["Province"].remove(),
                 "name": "Province",
                 "details": "8 Coins; Victory; 12 left",
                 "verb": "",
             },
             {"action": "quit", "card": None, "verb": "End Phase", "selector": "0"},
         ]
-        ans = self.plr.getOptions(options)
+        ans = self.plr.get_options(options)
         self.assertEqual(ans["silver"]["name"], "Silver")
         self.assertEqual(ans["gold"]["name"], "Gold")
         self.assertEqual(ans["quit"]["verb"], "End Phase")
