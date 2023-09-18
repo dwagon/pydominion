@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Clashes """
 
 import unittest
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -20,7 +20,7 @@ class Card_Clashes(Card.Card):
     def cardpile_setup(cls, game):
         """Setup"""
         card_pile = ClashCardPile(game)
-        card_pile.init_cards()
+        # card_pile.init_cards()
         return card_pile
 
 
@@ -39,9 +39,9 @@ class ClashCardPile(CardPile.CardPile):
         from dominion.cards.Clash_Warlord import Card_Warlord
         from dominion.cards.Clash_Territory import Card_Territory
 
-        for crd in (Card_Battle_Plan, Card_Archer, Card_Warlord, Card_Territory):
+        for card in (Card_Battle_Plan, Card_Archer, Card_Warlord, Card_Territory):
             for _ in range(4):
-                self.cards.insert(0, crd())
+                self.cards.insert(0, card())
 
 
 ###############################################################################

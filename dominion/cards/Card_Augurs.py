@@ -17,7 +17,6 @@ class Card_Augurs(Card.Card):
     @classmethod
     def cardpile_setup(cls, game):
         card_pile = AugurCardPile(game)
-        card_pile.init_cards()
         return card_pile
 
 

@@ -15,14 +15,13 @@ class Event_Plan(Event.Event):
 
     def special(self, game, player):
         """Move your Trashing token to an Action Supply pile"""
-        actionpiles = game.getActionPiles()
-        stacks = player.card_sel(
+        stacks = player.card_pile_sel(
             num=1,
             prompt="What stack to add the Trashing Token to?",
-            cardsrc=actionpiles,
+            cardsrc=game.get_action_piles(),
         )
         if stacks:
-            player.place_token("Trashing", stacks[0].name)
+            player.place_token("Trashing", stacks[0])
 
 
 ###############################################################################

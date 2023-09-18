@@ -31,11 +31,16 @@ class Card_Exorcist(Card.Card):
         cost = trashed[0].cost
         options = []
         idx = 0
-        for card in ("Ghost", "Imp", "Will-o'-Wisp"):
-            if game[card].cost < cost:
-                sel = f"{idx}"
-                toprint = f"Get {card}"
-                options.append({"selector": sel, "print": toprint, "card": card})
+        for card_name in ("Ghost", "Imp", "Will-o'-Wisp"):
+            card = game.get_card_from_pile(card_name)
+            if card.cost < cost:
+                options.append(
+                    {
+                        "selector": f"{idx}",
+                        "print": f"Get {card_name}",
+                        "card": card_name,
+                    }
+                )
                 idx += 1
         if idx:
             o = player.user_input(options, "Gain a spirit")
@@ -45,7 +50,7 @@ class Card_Exorcist(Card.Card):
 
 
 ###############################################################################
-class Test_Exorcist(unittest.TestCase):
+class TestExorcist(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Exorcist"])
         self.g.start_game()

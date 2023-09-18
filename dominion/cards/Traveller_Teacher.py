@@ -25,26 +25,26 @@ class Card_Teacher(Card.Card):
         """At the start of your turn, you may call this, to move your +1 Card,
         +1 Action, +1 Buy or +1 Coin token to an Action Supply pile you have
         no tokens on"""
-        for tkn in ("+1 Card", "+1 Action", "+1 Buy", "+1 Coin"):
-            actionpiles = self.which_stacks(game, player)
-            prompt = f"Which stack do you want to add the {tkn} token to?"
-            if player.tokens[tkn]:
-                prompt += f" Currently on {player.tokens[tkn]}"
-            stacks = player.card_sel(num=1, prompt=prompt, cardsrc=actionpiles)
-            if stacks:
-                player.place_token(tkn, stacks[0].name)
-
-    def which_stacks(self, game, player):
-        """Action piles which don't have the token"""
-        return [ap for ap in game.getActionPiles() if not player.which_token(ap.name)]
+        for token in ("+1 Card", "+1 Action", "+1 Buy", "+1 Coin"):
+            options = []
+            for pile in game.get_action_piles():
+                if player.which_token(pile):
+                    continue
+                options.append((f"Select {pile}", pile))
+            prompt = f"Which stack do you want to add the {token} token to?"
+            if player.tokens[token]:
+                prompt += f" Currently on {player.tokens[token]}"
+            stack = player.plr_choose_options(prompt, *options)
+            if stack:
+                player.place_token(token, stack)
 
 
 ###############################################################################
-class Test_Teacher(unittest.TestCase):
+class TestTeacher(unittest.TestCase):
     """Test Teacher"""
 
     def setUp(self):
-        initcards = [
+        init_cards = [
             "Page",
             "Cellar",
             "Chapel",
@@ -55,7 +55,7 @@ class Test_Teacher(unittest.TestCase):
             "Bureaucrat",
             "Gardens",
         ]
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=initcards)
+        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=init_cards)
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Teacher"].remove()
@@ -74,19 +74,6 @@ class Test_Teacher(unittest.TestCase):
         self.assertEqual(self.plr.tokens["+1 Action"], "Chapel")
         self.assertEqual(self.plr.tokens["+1 Buy"], "Moat")
         self.assertEqual(self.plr.tokens["+1 Coin"], "Village")
-
-    def test_which_stacks(self):
-        """Test which_stacks()"""
-        orig_output = self.card.which_stacks(self.g, self.plr)
-        for c in orig_output:
-            if c.name == "Gardens":
-                self.fail("Non action card in action card list")
-        self.plr.place_token("+1 Card", "Moat")
-        output = self.card.which_stacks(self.g, self.plr)
-        self.assertEqual(len(output), len(orig_output) - 1)
-        for c in output:
-            if c.name == "Moat":
-                self.fail("Card with token in action card list")
 
 
 ###############################################################################

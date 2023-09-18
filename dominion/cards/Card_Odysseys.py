@@ -18,7 +18,6 @@ class Card_Odysseys(Card.Card):
     @classmethod
     def cardpile_setup(cls, game):
         card_pile = OdysseyCardPile(game)
-        card_pile.init_cards()
         return card_pile
 
 

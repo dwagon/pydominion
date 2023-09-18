@@ -16,7 +16,7 @@ class Event_Training(Event.Event):
 
     def special(self, game, player):
         """Move your +1 Coin token to an Action Supply Pile"""
-        action_piles = game.getActionPiles()
+        action_piles = game.get_action_piles()
         stacks = player.card_pile_sel(
             num=1,
             prompt="What stack to add the +1 Coin Token to?",

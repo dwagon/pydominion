@@ -75,7 +75,8 @@ class TestYoungWitch(unittest.TestCase):
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            self.assertIn(self.g[self.g._bane].cost, (2, 3))
+            bane = self.g.get_card_from_pile(self.g._bane)
+            self.assertIn(bane.cost, (2, 3))
             self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 2 - 2)
             self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover

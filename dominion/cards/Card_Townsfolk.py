@@ -16,7 +16,6 @@ class Card_Townsfolk(Card.Card):
     @classmethod
     def cardpile_setup(cls, game):
         card_pile = TownsfolkCardPile(game)
-        card_pile.init_cards()
         return card_pile
 
 

@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -21,7 +20,7 @@ class Card_Workshop(Card.Card):
 
 
 ###############################################################################
-class Test_Workshop(unittest.TestCase):
+class TestWorkshop(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2,
@@ -30,18 +29,18 @@ class Test_Workshop(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.wcard = self.g["Workshop"].remove()
-        self.plr.add_card(self.wcard, Piles.HAND)
+        self.workshop = self.g["Workshop"].remove()
+        self.plr.add_card(self.workshop, Piles.HAND)
 
-    def test_gainzero(self):
+    def test_gain_zero(self):
         self.plr.test_input = ["Finish"]
-        self.plr.play_card(self.wcard)
+        self.plr.play_card(self.workshop)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 0)
 
-    def test_gainone(self):
+    def test_gain_one(self):
         self.plr.test_input = ["Get Gardens"]
-        self.plr.play_card(self.wcard)
+        self.plr.play_card(self.workshop)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertLessEqual(self.plr.piles[Piles.DISCARD][0].cost, 4)

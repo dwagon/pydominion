@@ -31,10 +31,8 @@ class Card_Embargo(Card.Card):
         if not trash:
             return
         player.trash_card(self)
-        piles = list(game.cardpiles.values())
-        piles.sort()
-        card = player.card_sel(cardsrc=piles, prompt="Which stack to embargo")
-        game[card[0].name].embargo()
+        card_pile = player.card_pile_sel(prompt="Which stack to embargo")
+        game[card_pile[0]].embargo()
 
 
 ###############################################################################

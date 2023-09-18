@@ -21,15 +21,16 @@ class Card_TradeRoute(Card.Card):
         to the Trade Route mat when a card is gained from the pile."""
         cls.tokens = {}
         cls.game = game
-        for cp in list(game.cardpiles.values()):
-            if cp.isVictory():
-                cls.tokens[cp.name] = len(cp)
+        for name, card_pile in game.card_piles():
+            card = game.get_card_from_pile(name)
+            if card.isVictory():
+                cls.tokens[name] = len(card_pile)
 
     def is_worth(self, game):
         worth = 0
-        for cp in list(game.cardpiles.values()):
-            if cp.name in self.tokens:
-                if self.tokens[cp.name] != len(cp):
+        for name, card_pile in game.card_piles():
+            if name in self.tokens:
+                if self.tokens[name] != len(card_pile):
                     worth += 1
         return worth
 

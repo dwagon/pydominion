@@ -49,7 +49,9 @@ class TestHovel(unittest.TestCase):
 
     def test_trash(self):
         """Test Trashing"""
-        self.plr.piles[Piles.HAND].set("Hovel")
+        hovel = self.g.get_card_from_pile("Shelters", "Hovel")
+        self.plr.piles[Piles.HAND].empty()
+        self.plr.piles[Piles.HAND].add(hovel)
         self.g.print_state()
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")

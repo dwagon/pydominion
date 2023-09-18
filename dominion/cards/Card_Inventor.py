@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -26,7 +25,7 @@ class Card_Inventor(Card.Card):
 
 
 ###############################################################################
-class Test_Inventor(unittest.TestCase):
+class TestInventor(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,
@@ -39,10 +38,11 @@ class Test_Inventor(unittest.TestCase):
         self.plr.add_card(self.inventor, Piles.HAND)
 
     def test_play(self):
+        gold = self.g.get_card_from_pile("Gold")
         self.plr.test_input = ["Get Gardens"]
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        self.assertEqual(self.plr.card_cost(gold), 6)
         self.plr.play_card(self.inventor)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(gold), 5)
 
 
 ###############################################################################

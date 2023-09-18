@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Piles
-from dominion import Card
+from dominion import Game, Piles, Card
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
-class Card_Dame_Natalie(KnightCard):
+class Card_DameNatalie(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = [
@@ -29,7 +28,7 @@ class Card_Dame_Natalie(KnightCard):
 
 
 ###############################################################################
-class Test_Dame_Natalie(unittest.TestCase):
+class TestDameNatalie(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()

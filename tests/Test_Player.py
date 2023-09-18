@@ -502,9 +502,9 @@ class TestMisc(unittest.TestCase):
         witch = self.game["Witch"].remove()
         golem = self.game["Golem"].remove()
         eng = self.game["Engineer"].remove()
-        self.assertEqual(self.plr.coststr(witch), "3 Coins")
-        self.assertEqual(self.plr.coststr(golem), "4 Coins, Potion")
-        self.assertEqual(self.plr.coststr(eng), "0 Coins, 4 Debt")
+        self.assertEqual(self.plr._cost_string(witch), "3 Coins")
+        self.assertEqual(self.plr._cost_string(golem), "4 Coins, Potion")
+        self.assertEqual(self.plr._cost_string(eng), "0 Coins, 4 Debt")
 
     def test_durationpile_size(self):
         copper = self.game["Copper"].remove()

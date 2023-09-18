@@ -15,7 +15,6 @@ class Card_Forts(Card.Card):
 
     def cardpile_setup(self, game):
         card_pile = FortCardPile(game)
-        card_pile.init_cards()
         return card_pile
 
 

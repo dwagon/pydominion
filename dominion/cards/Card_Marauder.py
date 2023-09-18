@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Marauder"""
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
+###############################################################################
 class Card_Marauder(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
@@ -14,20 +15,22 @@ class Card_Marauder(Card.Card):
             Card.CardType.LOOTER,
         ]
         self.base = Card.CardExpansion.DARKAGES
-        self.desc = "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
+        self.desc = (
+            "Gain a Spoils from the Spoils pile. Each other player gains a Ruins."
+        )
         self.name = "Marauder"
         self.cost = 4
         self.required_cards = ["Spoils"]
 
     def special(self, game, player):
         for plr in player.attack_victims():
-            plr.output("Gained a ruin from %s's Marauder" % player.name)
+            plr.output(f"Gained a ruin from {player.name}'s Marauder")
             plr.gain_card("Ruins")
         player.gain_card("Spoils")
 
 
 ###############################################################################
-class Test_Marauder(unittest.TestCase):
+class TestMarauder(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Marauder"])
         self.g.start_game()
@@ -39,6 +42,7 @@ class Test_Marauder(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertIn("Spoils", self.plr.piles[Piles.DISCARD])
+        self.g.print_state()
         self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
 

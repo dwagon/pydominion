@@ -24,9 +24,8 @@ class Card_Sorceress(Card.Card):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
         for name, card_pile in sorted(game.card_piles()):
-            sel = f"{index}"
             options.append(
-                {"selector": sel, "print": f"Guess {name}", "card": card_pile}
+                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
             index += 1
         o = player.user_input(options, "Guess the top card")
@@ -35,7 +34,7 @@ class Card_Sorceress(Card.Card):
             return
         card_pile = player.pickup_card()
         player.output(f"Next card = {card_pile}, Guess = {o['card']}")
-        if card_pile.name == o["card"].name:
+        if card_pile.name == o["card"]:
             game.output(f"Guessed {card_pile} correctly")
             for plr in player.attack_victims():
                 plr.gain_card("Curse")

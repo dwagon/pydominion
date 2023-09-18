@@ -10,6 +10,7 @@ class CardPile:
         # game is required by some subclasses
         self.cards = []
         self.embargo_level = 0
+        self.gatheredvp = 0
 
     ###########################################################################
     def init_cards(self, num_cards=0, card_class=None):
@@ -18,6 +19,20 @@ class CardPile:
             return
         for _ in range(num_cards):
             self.cards.append(card_class())
+
+    ##########################################################################
+    def addVP(self, num=1):
+        self.gatheredvp += num
+
+    ##########################################################################
+    def getVP(self):
+        return self.gatheredvp
+
+    ##########################################################################
+    def drainVP(self):
+        num = self.gatheredvp
+        self.gatheredvp = 0
+        return num
 
     ###########################################################################
     def __iter__(self):
@@ -52,23 +67,6 @@ class CardPile:
         """Setup card pile"""
         if self.cards:
             self.cards[-1].setup(game)
-
-    ###########################################################################
-    def x__getattr__(self, name):
-        try:
-            if self.cards:
-                return getattr(self.cards[-1], name)
-            if self.cards:
-                return getattr(self.cards[-1], name)
-        except RecursionError:
-            print(f"DBG {self.__class__.__name__}.__getattr__({name=})")
-            raise
-        except IndexError:
-            print(
-                f"DBG {self.__class__.__name__}.__getattr__({name=}) {self.cards=} {self.cards=}"
-            )
-            raise
-        print(f"DBG CardPile __getattr__ failure looking up '{name}'")
 
     ###########################################################################
     def is_empty(self):

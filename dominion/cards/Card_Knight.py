@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Knight"""
 
 import random
 import unittest
@@ -16,7 +17,6 @@ class Card_Knight(Card.Card):
     def cardpile_setup(cls, game):
         """Setup"""
         card_pile = KnightCardPile(game)
-        card_pile.init_cards()
         return card_pile
 
 
@@ -31,12 +31,9 @@ class KnightCardPile(CardPile.CardPile):
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
         super().__init__()
 
-    #    def __getattr__(self, name):
-    #        return getattr(self._cards[0], name)
-
-    def init_cards(self):
-        self._cards = [_() for _ in self.mapping.values()]
-        random.shuffle(self._cards)
+    def init_cards(self, num_cards=0, card_class=None):
+        self.cards = [_() for _ in self.mapping.values()]
+        random.shuffle(self.cards)
 
     def isVictory(self):
         """Knight Pile is not considered a Victory pile"""
@@ -97,7 +94,7 @@ class TestKnight(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Knights"])
         self.g.start_game()
         self.player, self.victim = self.g.player_list()
-        self.card = self.g.get_card_from_pile("Knights")
+        self.card = self.g.get_card_from_pile("Knights", "Dame Josephine")
 
         self.player.piles[Piles.HAND].set("Silver", "Gold")
         self.player.add_card(self.card, Piles.HAND)
@@ -105,16 +102,15 @@ class TestKnight(unittest.TestCase):
     def test_play_card_no_suitable(self):
         """Play a knight with no suitable cards"""
         self.victim.piles[Piles.DECK].set("Copper", "Copper")
-        self.g.print_state()
         self.player.play_card(self.card)
-        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 2)
+        self.assertEqual(len(self.victim.piles[Piles.DISCARD]), 2)
 
     def test_play_card_one_suitable(self):
         """Play a knight with one suitable card"""
         self.victim.piles[Piles.DECK].set("Copper", "Duchy")
         self.victim.test_input = ["Duchy"]
         self.player.play_card(self.card)
-        self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
+        self.assertEqual(len(self.victim.piles[Piles.DISCARD]), 1)
 
 
 ###############################################################################

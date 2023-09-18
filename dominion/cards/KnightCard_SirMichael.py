@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Game, Piles
-from dominion import Card
+from dominion import Game, Piles, Card
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
-class Card_Sir_Destry(KnightCard):
+class Card_SirMichael(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = [
@@ -16,33 +15,37 @@ class Card_Sir_Destry(KnightCard):
             Card.CardType.KNIGHT,
         ]
         self.base = Card.CardExpansion.DARKAGES
-        self.name = "Sir Destry"
-        self.desc = """+2 Cards. Each other player reveals the top 2 cards of his deck,
-        trashes one of them costing from 3 to 6, and discards the rest.
-        If a Knight is trashed by this, trash this card."""
-        self.cards = 2
+        self.name = "Sir Michael"
+        self.desc = """Each other player discards down to 3 cards in hand.
+        Each other player reveals the top 2 cards of his deck, trashes one of them
+        costing from 3 to 6, and discards the rest. If a Knight is trashed by this, trash this card."""
         self.cost = 5
 
     def special(self, game, player):
+        for plr in player.attack_victims():
+            plr.plr_discard_down_to(3)
         self.knight_special(game, player)
 
 
 ###############################################################################
-class Test_Sir_Destry(unittest.TestCase):
+class TestSirMichael(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
+        self.g = Game.TestGame(
+            quiet=True, numplayers=2, initcards=["Knights"], badcards=["Pooka", "Fool"]
+        )
         self.g.start_game()
-        self.plr = self.g.player_list(0)
+        self.plr, self.vic = self.g.player_list()
         while True:
             self.card = self.g["Knights"].remove()
-            if self.card.name == "Sir Destry":
+            if self.card.name == "Sir Michael":
                 break
 
     def test_score(self):
         """Play the Sir"""
+        self.vic.test_input = ["1", "2", "0"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.vic.piles[Piles.HAND].size(), 3)
 
 
 ###############################################################################

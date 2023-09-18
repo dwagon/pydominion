@@ -7,7 +7,7 @@ from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
-class Card_Dame_Sylvia(KnightCard):
+class Card_DameSylvia(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = [

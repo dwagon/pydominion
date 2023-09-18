@@ -106,7 +106,6 @@ class Card:
         self.required_cards = []
         self.image = None
         self.numcards = 10
-        self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
         self.uuid = uuid.uuid4().hex
@@ -173,6 +172,7 @@ class Card:
 
     ##########################################################################
     def __lt__(self, card):
+        assert isinstance(card, Card), f"__lt__({card=}) {type(card)=}"
         return self.name < card.name
 
     ##########################################################################
@@ -180,20 +180,6 @@ class Card:
         if callable(self.desc):
             return self.desc(player)
         return self.desc
-
-    ##########################################################################
-    def addVP(self, num=1):
-        self.gatheredvp += num
-
-    ##########################################################################
-    def getVP(self):
-        return self.gatheredvp
-
-    ##########################################################################
-    def drainVP(self):
-        num = self.gatheredvp
-        self.gatheredvp = 0
-        return num
 
     ##########################################################################
     def special(self, game, player):

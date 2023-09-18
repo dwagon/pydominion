@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Highway"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -24,7 +23,7 @@ class Card_Highway(Card.Card):
 
 
 ###############################################################################
-class Test_Highway(unittest.TestCase):
+class TestHighway(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Highway"])
         self.g.start_game()
@@ -37,11 +36,12 @@ class Test_Highway(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
         self.assertEqual(self.plr.actions.get(), 1)
 
-    def test_costreduction(self):
+    def test_cost_reduction(self):
         self.coin = 1
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
+        gold = self.g.get_card_from_pile("Gold")
+        self.assertEqual(self.plr.card_cost(gold), 6)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 5)
+        self.assertEqual(self.plr.card_cost(gold), 5)
 
 
 ###############################################################################

@@ -25,20 +25,20 @@ class Card_Spoils(Card.Card):
 
 
 ###############################################################################
-class Test_Spoils(unittest.TestCase):
+class TestSpoils(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Bandit Camp"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numspoils = self.g["Spoils"].numcards
+        num_spoils = len(self.g["Spoils"])
         spoils = self.g["Spoils"].remove()
         self.plr.add_card(spoils, Piles.HAND)
         self.plr.play_card(spoils)
         self.assertEqual(self.plr.coins.get(), 3)
         self.assertTrue(self.plr.piles[Piles.PLAYED].is_empty())
-        self.assertEqual(self.g["Spoils"].numcards, numspoils)
+        self.assertEqual(len(self.g["Spoils"]), num_spoils)
 
 
 ###############################################################################

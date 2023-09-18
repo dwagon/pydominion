@@ -58,14 +58,14 @@ class TestToken(unittest.TestCase):
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(self.g.trashpile.size(), tsize + 1)
 
     def test_cost_token(self):
         """Does the -Cost token work"""
         self.assertEqual(self.plr.coins.get(), 0)
         self.plr.place_token("-Cost", "Moat")
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(self.plr.coins.get(), 0)
 
     def test_card_token(self):

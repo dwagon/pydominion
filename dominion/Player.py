@@ -129,24 +129,11 @@ class Player:
         }
 
     ###########################################################################
-    def _find_cardpile(self, cname):
-        """Return the card pile that has cards called {cname}"""
-        dstcp = None
-        for cp in self.game.cardpiles.values():
-            if cp.name == cname:
-                dstcp = cp
-                break
-        else:  # pragma: no cover
-            assert dstcp is not None, f"Couldn't find card pile {cname}"
-        return dstcp
-
-    ###########################################################################
     def replace_traveller(self, src, dst):
         """For traveller cards replace the src card with a copy of the
         dst card"""
         assert isinstance(src, Card)
         assert isinstance(dst, str)
-        dstcp = self._find_cardpile(dst)
 
         if src not in self.piles[Piles.PLAYED]:
             self.output(f"Not activating {src.name} traveller as not played")
@@ -155,7 +142,7 @@ class Player:
         choice = self.plr_choose_options(
             "Replace Traveller",
             (f"Keep {src.name}", "keep"),
-            (f"Replace with a {dstcp.name}?", "replace"),
+            (f"Replace with a {dst}?", "replace"),
         )
         if choice == "keep":
             return
@@ -163,20 +150,17 @@ class Player:
             self.replace_card(src, dst, destination=Piles.HAND)
 
     ###########################################################################
-    def replace_card(self, src, dst, **kwargs):
+    def replace_card(self, src: Card, dst: str, **kwargs) -> None:
         """Replace the {src} card with the {dst} card"""
         # New card goes into hand as it is about to be discarded
-        destination = (
-            kwargs["destination"] if "destination" in kwargs else Piles.DISCARD
-        )
+        destination = kwargs.get("destination", Piles.DISCARD)
+        assert isinstance(src, Card), f"replace_card {src=} {type(src)=}"
+        assert isinstance(dst, str), f"replace_card {dst=} {type(dst)=}"
 
-        dstcp = self._find_cardpile(dst)
-        newcard = self.gain_card(
-            cardpile=dstcp, destination=destination, callhook=False
-        )
+        newcard = self.gain_card(card_name=dst, destination=destination, callhook=False)
         if newcard:
-            cardpile = self.game.cardpiles[src.name]
-            cardpile.add(src)
+            card_pile = self.game.cardpiles[src.name]
+            card_pile.add(src)
             self.piles[Piles.PLAYED].remove(src)
 
     ###########################################################################
@@ -390,6 +374,7 @@ class Player:
         """Add an existing card to a new location"""
         if not card:  # pragma: no cover
             return None
+        assert isinstance(card, Card), f"{card=} {type(card)=}"
         card.player = self
 
         # There can be custom PlayAreas (such as part of  card)
@@ -612,7 +597,7 @@ class Player:
             else:
                 sel = "-"
                 action = None
-            details = f"Project; {self.coststr(op)}"
+            details = f"Project; {self._cost_string(op)}"
             o = Option(
                 selector=sel,
                 verb="Buy",
@@ -628,6 +613,7 @@ class Player:
 
     ###########################################################################
     def _event_selection(self, index):
+        """Generate player options for selecting events"""
         options = []
         for op in self.game.events.values():
             index += 1
@@ -637,7 +623,7 @@ class Player:
             else:
                 sel = "-"
                 action = None
-            details = f"Event; {self.coststr(op)}"
+            details = f"Event; {self._cost_string(op)}"
             o = Option(
                 selector=sel,
                 verb="Use",
@@ -696,13 +682,13 @@ class Player:
                 sel = "-"
                 verb = ""
                 action = None
-            details = [self.coststr(card)]
-            if self.game[card.name].embargo_level:
+            details = [self._cost_string(card)]
+            if self.game[card.pile].embargo_level:
                 details.append(f"Embargo {card.embargo_level}")
-            if card.getVP():
-                details.append(f"Gathered {card.getVP()} VP")
+            if self.game[card.pile].getVP():
+                details.append(f"Gathered {self.game[card.name].getVP()} VP")
             details.append(card.get_cardtype_repr())
-            details.append(f"{len(self.game[card.name])} left")
+            details.append(f"{len(self.game[card.pile])} left")
             for tkn in self.which_token(card.name):
                 details.append(f"[Tkn: {tkn}]")
             o = Option(
@@ -871,7 +857,7 @@ class Player:
     ###########################################################################
     def _perform_action(self, opt):
         if opt["action"] == "buy":
-            self.buy_card(opt["card"])
+            self.buy_card(opt["name"])
         elif opt["action"] == "event":
             self.perform_event(opt["card"])
         elif opt["action"] == "project":
@@ -1312,7 +1298,9 @@ class Player:
 
     ###########################################################################
     def card_cost(self, card: Card) -> int:
-        assert isinstance(card, Card), f"Card{card=} {type(card)=}"
+        assert isinstance(
+            card, (Card, ProjectPile, EventPile)
+        ), f"Card{card=} {type(card)=}"
         cost = card.cost
         if "-Cost" in self.which_token(card.name):
             cost -= 2
@@ -1565,12 +1553,12 @@ class Player:
         return True
 
     ###########################################################################
-    def perform_event(self, evnt: EventPile) -> bool:
+    def perform_event(self, event: EventPile) -> bool:
         """Perform an event"""
         try:
-            assert isinstance(evnt, EventPile)
+            assert isinstance(event, EventPile)
         except AssertionError:
-            print("Event={evnt} ({type(evnt)})")
+            print(f"Event={event} ({type(event)})")
             raise
 
         if not self.buys:
@@ -1578,23 +1566,24 @@ class Player:
             return False
         if self.debt != 0:
             self.output("Must pay off debt first")
-        if self.coins < evnt.cost:
-            self.output(f"Need {evnt.cost} coins to perform this event")
+        if self.coins < event.cost:
+            self.output(f"Need {event.cost} coins to perform this event")
             return False
         self.buys -= 1
-        self.coins -= evnt.cost
-        self.debt += evnt.debtcost
-        self.buys += evnt.buys
-        self.output(f"Using event {evnt}")
-        self.currcards.append(evnt)
-        evnt.special(game=self.game, player=self)
+        self.coins -= event.cost
+        self.debt += event.debtcost
+        self.buys += event.buys
+        self.output(f"Using event {event}")
+        self.currcards.append(event)
+        event.special(game=self.game, player=self)
         self.currcards.pop()
-        self.played_events.add(evnt)
+        self.played_events.add(event)
         return True
 
     ###########################################################################
     @classmethod
     def select_by_type(cls, card, types):
+        assert isinstance(card, Card), f"select_by_type {card=} {type(card)=}"
         if card.isAction() and not types[CardType.ACTION]:
             return False
         if card.isVictory() and not types[CardType.VICTORY]:
@@ -1716,7 +1705,7 @@ class Player:
         return victims
 
     ###########################################################################
-    def coststr(self, card) -> str:
+    def _cost_string(self, card) -> str:
         """Generate the string showing the cost of the card"""
         cost = [f"{self.card_cost(card)} Coins"]
         if card.debtcost:
@@ -1725,8 +1714,8 @@ class Player:
             cost.append("Potion")
         if card.overpay:
             cost.append("Overpay")
-        cststr = ", ".join(cost)
-        return cststr.strip()
+        cost_str = ", ".join(cost)
+        return cost_str.strip()
 
     ###########################################################################
     def plr_trash_card(

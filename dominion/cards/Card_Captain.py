@@ -28,7 +28,7 @@ class Card_Captain(Card.Card):
 
     def special_sauce(self, game, player):
         options = [("None", None)]
-        for name in game.getActionPiles(4):
+        for name in game.get_action_piles(4):
             card = game.get_card_from_pile(name)
             if card.isDuration():
                 continue

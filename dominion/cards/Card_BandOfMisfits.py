@@ -19,11 +19,14 @@ class Card_BandOfMisfits(Card.Card):
         self.cost = 5
 
     def special(self, game, player):
-        actionpiles = game.getActionPiles(self.cost - 1)
-        actions = player.card_sel(
-            prompt="What action card do you want to play?", cardsrc=actionpiles
+        options = []
+        for action_pile in game.get_action_piles(self.cost - 1):
+            options.append((f"Select {action_pile}", action_pile))
+        choice = player.plr_choose_options(
+            "What action card do you want to play?", *options
         )
-        player.card_benefits(actions[0])
+        action = game.get_card_from_pile(choice)
+        player.card_benefits(action)
 
 
 ###############################################################################
@@ -40,7 +43,7 @@ class TestBandOfMisfits(unittest.TestCase):
         self.card = self.g["Band of Misfits"].remove()
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_play_market(self):
+    def test_play_bureaucrat(self):
         """Make the Band of Misfits be a Bureaucrat"""
         self.plr.test_input = ["Bureaucrat"]
         self.plr.play_card(self.card)
@@ -48,7 +51,7 @@ class TestBandOfMisfits(unittest.TestCase):
 
     def test_play_feast(self):
         """Make the Band of Misfits be a Village"""
-        self.plr.test_input = ["Select Village -"]
+        self.plr.test_input = ["Select Village"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 1)
         self.assertEqual(self.plr.actions.get(), 2)

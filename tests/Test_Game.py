@@ -113,15 +113,15 @@ class TestGameOver(unittest.TestCase):
 
 
 ###############################################################################
-class Test_actionpiles(unittest.TestCase):
+class TestActionPiles(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
 
-    def test_actionpiles(self):
-        piles = self.g.getActionPiles()
-        self.assertIn(self.g.cardpiles["Moat"], piles)
-        self.assertNotIn(self.g.cardpiles["Copper"], piles)
+    def test_action_piles(self):
+        piles = self.g.get_action_piles()
+        self.assertIn("Moat", piles)
+        self.assertNotIn("Copper", piles)
 
 
 ###############################################################################

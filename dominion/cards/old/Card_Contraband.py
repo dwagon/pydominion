@@ -24,11 +24,15 @@ class Card_Contraband(Card.Card):
         """When you play this, the player to your left names a card.
         You can't buy that card this turn."""
         plr = game.player_to_left(player)
-        cps = [_ for _ in game.cardpiles if game.cardpiles[_].purchasable]
         options = []
-        for cp in cps:
-            options.append((cp, cp))
-        forbid = plr.plr_choose_options(f"Contraband: Pick a stack that {player.name} can't buy this turn", *options)
+        for name, pile in game.card_piles():
+            card = game.get_card_from_pile(name)
+            if not card.purchasable:
+                continue
+            options.append((name, name))
+        forbid = plr.plr_choose_options(
+            f"Contraband: Pick a stack that {player.name} can't buy this turn", *options
+        )
         player.output(f"Forbidden to buy {forbid}")
         player.forbidden_to_buy.append(forbid)
 
@@ -40,7 +44,7 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 
 
 ###############################################################################
-class Test_Contraband(unittest.TestCase):
+class TestContraband(unittest.TestCase):
     """Test Contraband"""
 
     def setUp(self):
