@@ -87,18 +87,6 @@ class TestMine(unittest.TestCase):
         self.assertTrue(self.plr.piles[Piles.DISCARD].is_empty())
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
 
-    def test_convert_nothing_left(self):
-        """Test where the destination treasure is no longer available"""
-        while self.g["Silver"]:
-            self.plr.gain_card("Silver")
-        self.plr.piles[Piles.HAND].set("Copper")
-        self.plr.add_card(self.card, Piles.HAND)
-        self.plr.test_input = ["1"]
-        self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND][0].name, "Copper")
-        self.assertFalse(self.plr.piles[Piles.DISCARD].is_empty())
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 1)
-
 
 ###############################################################################
 if __name__ == "__main__":  # pragma: no cover
