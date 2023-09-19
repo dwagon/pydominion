@@ -2,11 +2,10 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Bagofgold(Card.Card):
+class Card_BagOfGold(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [Card.CardType.ACTION, Card.CardType.PRIZE]
@@ -22,7 +21,7 @@ class Card_Bagofgold(Card.Card):
 
 
 ###############################################################################
-class Test_Bagofgold(unittest.TestCase):
+class TestBagOfGold(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()

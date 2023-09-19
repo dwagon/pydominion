@@ -52,10 +52,7 @@ class Test_HauntedCastle(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Haunted Castle":
-                break
+        self.card = self.g.get_card_from_pile("Castles", "Haunted Castle")
 
     def test_play(self):
         """Play a castle"""
@@ -67,7 +64,7 @@ class Test_HauntedCastle(unittest.TestCase):
         """Test gaining this card"""
         self.vic.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Province")
         self.vic.test_input = ["Silver", "Gold", "finish"]
-        self.plr.gain_card(newcard=self.card)
+        self.plr.gain_card(new_card=self.card)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.vic.piles[Piles.DECK])
         self.assertNotIn("Silver", self.vic.piles[Piles.HAND])

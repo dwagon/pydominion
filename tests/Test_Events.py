@@ -6,7 +6,7 @@ from dominion import Game
 
 
 ###############################################################################
-class Test_perform_event(unittest.TestCase):
+class TestPerformEvent(unittest.TestCase):
     """Test performing an event"""
 
     def setUp(self):
@@ -44,7 +44,7 @@ class Test_perform_event(unittest.TestCase):
 
 
 ###############################################################################
-class Test__event_selection(unittest.TestCase):
+class TestEventSelection(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Alms", "Expedition", "Raid"])
         self.g.start_game()
@@ -56,16 +56,16 @@ class Test__event_selection(unittest.TestCase):
         self.assertEqual(index, 6)
         self.assertEqual(len(output), 3)
         num_affordable = 0
-        num_notaff = 0
+        num_not_affordable = 0
         for i in output:
             if i["action"] == "event":
                 num_affordable += 1
             elif i["action"] is None:
-                num_notaff += 1
+                num_not_affordable += 1
             else:  # pragma: no coverage
-                self.fail("Unexpected action %s in %s" % (i["action"], i))
+                self.fail(f"Unexpected action {i['action']} in {i}")
         self.assertEqual(num_affordable, 2)
-        self.assertEqual(num_notaff, 1)
+        self.assertEqual(num_not_affordable, 1)
 
 
 ###############################################################################

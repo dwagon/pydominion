@@ -126,22 +126,80 @@ class TextPlayer(Player):
             self.output(f"Invalid Option ({inp})")
 
     ###########################################################################
-    def card_selSource(self, **kwargs):
+    def select_source(self, **kwargs):
         """Understand the various places to select cards from - either a
-        text desctiption of the source, a list of cards, or by default
+        text description of the source, a list of cards, or by default
         the players hand"""
         if "cardsrc" in kwargs:
             if kwargs["cardsrc"] == "hand":
-                selectfrom = self.piles[Piles.HAND]
+                select_from = self.piles[Piles.HAND]
             elif kwargs["cardsrc"] == "played":
-                selectfrom = self.piles[Piles.PLAYED]
+                select_from = self.piles[Piles.PLAYED]
             elif kwargs["cardsrc"] == "discard":
-                selectfrom = self.piles[Piles.DISCARD]
+                select_from = self.piles[Piles.DISCARD]
             else:
-                selectfrom = kwargs["cardsrc"]
+                select_from = kwargs["cardsrc"]
         else:
-            selectfrom = self.piles[Piles.HAND]
-        return selectfrom
+            select_from = self.piles[Piles.HAND]
+        return select_from
+
+    ###########################################################################
+    def card_pile_sel(self, num=1, **kwargs):
+        """Select some card piles from a selection of card piles and return their names"""
+        force = kwargs.get("force", False)
+        showdesc = kwargs.get("showdesc", True)
+        verbs = kwargs.get("verbs", ("Select", "Unselect"))
+
+        if "prompt" in kwargs:
+            self.output(kwargs["prompt"])
+
+        if "anynum" in kwargs and kwargs["anynum"]:
+            anynum = True
+            num = 0
+        else:
+            anynum = False
+
+        selected = []
+        while True:
+            options = []
+            if (
+                anynum
+                or (force and num == len(selected))
+                or (not force and num >= len(selected))
+            ):
+                o = Option(selector="0", verb="Finish Selecting", card=None)
+                options.append(o)
+            index = 1
+            for name, card_pile in self.game.card_piles():
+                card = self.game.get_card_from_pile(name)
+                if "exclude" in kwargs and card_pile.name in kwargs["exclude"]:
+                    continue
+                if card_pile not in selected:
+                    verb = verbs[0]
+                else:
+                    verb = verbs[1]
+                o = Option(selector=f"{index}", verb=verb, card=name, name=name)
+                index += 1
+                if showdesc:
+                    if card:
+                        o["desc"] = card.description(self)
+                    else:
+                        o["desc"] = "Empty card pile"
+                if kwargs.get("printcost"):
+                    o["details"] = str(self.card_cost(card_pile))
+                if kwargs.get("printtypes"):
+                    o["details"] = card_pile.get_cardtype_repr()
+                options.append(o)
+            ui = self.user_input(options, "Select which card pile?")
+            if not ui["card"]:
+                break
+            if ui["card"] in selected:
+                selected.remove(ui["card"])
+            else:
+                selected.append(ui["card"])
+            if num == 1 and len(selected) == 1:
+                break
+        return selected
 
     ###########################################################################
     def card_sel(
@@ -170,9 +228,9 @@ class TextPlayer(Player):
         * anynum
             True - Any number of cards can be selected
         """
-        selectfrom = self.card_selSource(**kwargs)
-        force = kwargs["force"] if "force" in kwargs else False
-        showdesc = kwargs["showdesc"] if "showdesc" in kwargs else True
+        select_from = self.select_source(**kwargs)
+        force = kwargs.get("force", False)
+        showdesc = kwargs.get("showdesc", True)
         verbs = kwargs.get("verbs", ("Select", "Unselect"))
 
         if "prompt" in kwargs:
@@ -197,24 +255,23 @@ class TextPlayer(Player):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            for c in sorted(selectfrom):
-                if "exclude" in kwargs and c.name in kwargs["exclude"]:
+            for card in sorted(select_from):
+                if "exclude" in kwargs and card.name in kwargs["exclude"]:
                     continue
-                if not self.select_by_type(c, types):
+                if not self.select_by_type(card, types):
                     continue
-                sel = "%d" % index
-                index += 1
-                if c not in selected:
+                if card not in selected:
                     verb = verbs[0]
                 else:
                     verb = verbs[1]
-                o = Option(selector=sel, verb=verb, card=c, name=c.name)
+                o = Option(selector=f"{index}", verb=verb, card=card, name=card.name)
+                index += 1
                 if showdesc:
-                    o["desc"] = c.description(self)
+                    o["desc"] = card.description(self)
                 if kwargs.get("printcost"):
-                    o["details"] = str(self.card_cost(c))
+                    o["details"] = str(self.card_cost(card))
                 if kwargs.get("printtypes"):
-                    o["details"] = c.get_cardtype_repr()
+                    o["details"] = card.get_cardtype_repr()
                 options.append(o)
             ui = self.user_input(options, "Select which card?")
             if not ui["card"]:

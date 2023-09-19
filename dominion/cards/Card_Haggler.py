@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Haggler"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,8 @@ class Card_Haggler(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.HINTERLANDS
-        self.desc = "+2 Coin. While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."
+        self.desc = """+2 Coin. 
+        While this is in play, when you buy a card, gain a card costing less than it that is not a Victory card."""
         self.name = "Haggler"
         self.coin = 2
         self.cost = 5
@@ -21,7 +21,7 @@ class Card_Haggler(Card.Card):
         player.plr_gain_card(
             cost=cost,
             types={Card.CardType.ACTION: True, Card.CardType.TREASURE: True},
-            prompt="Gain a non-Victory card costing under %s" % cost,
+            prompt=f"Gain a non-Victory card costing under {cost}",
         )
 
 
@@ -43,7 +43,7 @@ class Test_Haggler(unittest.TestCase):
         self.plr.piles[Piles.PLAYED].set("Haggler")
         self.plr.test_input = ["Get Silver"]
         self.plr.coins.set(6)
-        self.plr.buy_card(self.g["Gold"])
+        self.plr.buy_card("Gold")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
 

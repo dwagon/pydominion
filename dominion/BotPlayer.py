@@ -30,7 +30,7 @@ class BotPlayer(Player):
 
     ###########################################################################
     @classmethod
-    def getOptions(cls, options):
+    def get_options(cls, options):
         try:
             opts = {}
             for opt in options:
@@ -58,7 +58,7 @@ class BotPlayer(Player):
 
     ###########################################################################
     def user_input(self, options, prompt):  # pylint: disable=too-many-return-statements
-        opts = self.getOptions(options)
+        opts = self.get_options(options)
         if "spendall" in opts:
             return opts["spendall"]
         if self.buys.get() == 0:

@@ -23,7 +23,7 @@ class Card_MerchantGuild(Card.Card):
 
 
 ###############################################################################
-class Test_MerchantGuild(unittest.TestCase):
+class TestMerchantGuild(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Merchant Guild"])
         self.g.start_game()
@@ -42,7 +42,7 @@ class Test_MerchantGuild(unittest.TestCase):
         self.plr.coffers = Counter("C", 0)
         self.plr.play_card(self.card)
         self.plr.coins.set(3)
-        self.plr.buy_card(self.g["Estate"])
+        self.plr.buy_card("Estate")
         self.assertEqual(self.plr.coffers.get(), 1)
 
 

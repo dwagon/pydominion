@@ -1,13 +1,13 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Dame_Sylvia """
 
 import unittest
-from dominion import Game, Piles
-from dominion import Card
+from dominion import Game, Piles, Card
 from dominion.cards.Card_Knight import KnightCard
 
 
 ###############################################################################
-class Card_Sir_Destry(KnightCard):
+class Card_DameSylvia(KnightCard):
     def __init__(self):
         KnightCard.__init__(self)
         self.cardtype = [
@@ -16,11 +16,12 @@ class Card_Sir_Destry(KnightCard):
             Card.CardType.KNIGHT,
         ]
         self.base = Card.CardExpansion.DARKAGES
-        self.name = "Sir Destry"
-        self.desc = """+2 Cards. Each other player reveals the top 2 cards of his deck,
-        trashes one of them costing from 3 to 6, and discards the rest.
-        If a Knight is trashed by this, trash this card."""
-        self.cards = 2
+        self.name = "Dame Sylvia"
+        self.desc = """+2 Coin
+            Each other player reveals the top 2 cards of his deck, trashes one of
+            them costing from 3 to 6, and discards the rest.
+            If a Knight is trashed by this, trash this card."""
+        self.coin = 2
         self.cost = 5
 
     def special(self, game, player):
@@ -28,21 +29,20 @@ class Card_Sir_Destry(KnightCard):
 
 
 ###############################################################################
-class Test_Sir_Destry(unittest.TestCase):
+class TestDameSylvia(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Knights"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        while True:
-            self.card = self.g["Knights"].remove()
-            if self.card.name == "Sir Destry":
-                break
+        self.g.print_state()
+        self.card = self.g.get_card_from_pile("Knights", "Dame Sylvia")
 
     def test_score(self):
-        """Play the Sir"""
+        """Play the Dame"""
+        self.assertIsNotNone(self.card)
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
+        self.assertEqual(self.plr.coins.get(), 2)
 
 
 ###############################################################################

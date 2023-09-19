@@ -28,7 +28,7 @@ class Card_Forum(Card.Card):
 
 
 ###############################################################################
-class Test_Forum(unittest.TestCase):
+class TestForum(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Forum"])
         self.g.start_game()
@@ -46,7 +46,7 @@ class Test_Forum(unittest.TestCase):
 
     def test_buy(self):
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Forum"])
+        self.plr.buy_card("Forum")
         self.assertEqual(self.plr.buys.get(), 1)
 
 

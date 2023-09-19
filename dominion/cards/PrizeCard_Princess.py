@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -14,7 +13,9 @@ class Card_Princess(Card.Card):
         self.name = "Princess"
         self.purchasable = False
         self.cost = 0
-        self.desc = "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
+        self.desc = (
+            "+1 Buy; While this is in play, cards cost 2 less, but not less than 0."
+        )
         self.buys = 1
 
     def hook_card_cost(self, game, player, card):
@@ -22,7 +23,7 @@ class Card_Princess(Card.Card):
 
 
 ###############################################################################
-class Test_Princess(unittest.TestCase):
+class TestPrincess(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Tournament"])
         self.g.start_game()
@@ -33,7 +34,8 @@ class Test_Princess(unittest.TestCase):
     def test_play(self):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 4)
+        gold = self.g.get_card_from_pile("Gold")
+        self.assertEqual(self.plr.card_cost(gold), 4)
 
 
 ###############################################################################

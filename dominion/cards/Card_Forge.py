@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,9 @@ class Card_Forge(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.ACTION
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = "Trash cards from hand and gain one worth the sum of the trashed cards"
+        self.desc = (
+            "Trash cards from hand and gain one worth the sum of the trashed cards"
+        )
         self.name = "Forge"
         self.cost = 7
 
@@ -20,23 +21,21 @@ class Card_Forge(Card.Card):
         """Trash any number of cards from your hand. Gain a card
         with cost exactly equal to the total cost in coins of the
         trashed cards."""
-        availcosts = set()
-        for cp in game.cardTypes():
-            availcosts.add(f"{cp.cost}")
         player.output("Gain a card costing exactly the sum of the trashed cards")
-        player.output("Costs = %s" % ", ".join(sorted(list(availcosts))))
         tc = player.plr_trash_card(anynum=True, num=0, printcost=True)
         cost = sum(_.cost for _ in tc)
-        player.plr_gain_card(cost=cost, modifier="equal", prompt=f"Gain card worth {cost}")
+        player.plr_gain_card(
+            cost=cost, modifier="equal", prompt=f"Gain card worth {cost}"
+        )
 
 
 ###############################################################################
-class Test_Forge(unittest.TestCase):
+class TestForge(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Forge", "Bureaucrat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.forge = self.g["Forge"].remove()
+        self.forge = self.g.get_card_from_pile("Forge")
 
     def test_play(self):
         """Play the Forge"""

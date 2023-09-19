@@ -31,7 +31,7 @@ class Card_Port(Card.Card):
 
 
 ###############################################################################
-class Test_Port(unittest.TestCase):
+class TestPort(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Port"])
         self.g.start_game()
@@ -50,7 +50,7 @@ class Test_Port(unittest.TestCase):
         """Buy a port"""
         self.plr.piles[Piles.DISCARD].set()
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Port"])
+        self.plr.buy_card("Port")
         for c in self.plr.piles[Piles.DISCARD]:
             self.assertEqual(c.name, "Port")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)

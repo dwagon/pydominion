@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+"""https://wiki.dominionstrategy.com/index.php/Colonnade """
 import unittest
 from dominion import Card, Game, Piles, Landmark
 
@@ -46,7 +46,7 @@ class TestColonnade(unittest.TestCase):
         """Test Colonnade"""
         self.plr.piles[Piles.PLAYED].set("Moat")
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Moat"])
+        self.plr.buy_card("Moat")
         self.assertEqual(self.plr.get_score_details()["Colonnade"], 2)
 
 

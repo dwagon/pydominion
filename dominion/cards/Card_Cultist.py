@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -25,7 +24,7 @@ class Card_Cultist(Card.Card):
         """Each other play gains a Ruins. You may play a Cultist
         from your hand."""
         for plr in player.attack_victims():
-            plr.output("Gained a ruin from %s's Cultist" % player.name)
+            plr.output(f"Gained a ruin from {player.name}'s Cultist")
             plr.gain_card("Ruins")
         cultist = player.piles[Piles.HAND]["Cultist"]
         if cultist:
@@ -43,12 +42,12 @@ class Card_Cultist(Card.Card):
 
 
 ###############################################################################
-class Test_Cultist(unittest.TestCase):
+class TestCultist(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Cultist", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Cultist"].remove()
+        self.card = self.g.get_card_from_pile("Cultist")
 
     def test_play(self):
         """Play a cultists - should give 2 cards"""
@@ -56,18 +55,19 @@ class Test_Cultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertEqual(self.victim.piles[Piles.DISCARD].size(), 1)
+        print(f"card = {self.victim.piles[Piles.DISCARD][0]}")
         self.assertTrue(self.victim.piles[Piles.DISCARD][0].isRuin())
 
     def test_defense(self):
         """Make sure moats work against cultists"""
         self.plr.add_card(self.card, Piles.HAND)
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.victim.add_card(moat, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
         self.assertTrue(self.victim.piles[Piles.DISCARD].is_empty())
 
-    def test_noother(self):
+    def test_no_other(self):
         """Don't ask to play another cultist if it doesn't exist"""
         self.plr.piles[Piles.HAND].set("Estate", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -75,7 +75,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.test_input, ["0"])
 
-    def test_anothercultist_no(self):
+    def test_another_cultist_no(self):
         """Don't play the other cultist"""
         self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
@@ -83,7 +83,7 @@ class Test_Cultist(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.PLAYED].size(), 1)
 
-    def test_anothercultist_yes(self):
+    def test_another_cultist_yes(self):
         """Another cultist can be played for free"""
         self.plr.piles[Piles.HAND].set("Cultist", "Estate", "Estate")
         self.plr.add_card(self.card, Piles.HAND)

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""https://wiki.dominionstrategy.com/index.php/Journeyman"""
 
 import unittest
 from dominion import Game, Card, Piles
@@ -19,9 +20,9 @@ class Card_Journeyman(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for card in sorted(game.cardTypes()):
+        for name, card_pile in sorted(game.card_piles()):
             options.append(
-                {"selector": f"{index}", "print": f"Guess {card.name}", "card": card}
+                {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
             index += 1
         o = player.user_input(
@@ -34,14 +35,14 @@ class Card_Journeyman(Card.Card):
         while len(cards) < 3:
             card = player.next_card()
             player.reveal_card(card)
-            if card.name == o["card"].name:
-                player.output(f"Discarding {card.name}")
+            if card.name == o["card"]:
+                player.output(f"Discarding {card}")
                 player.discard_card(card)
             else:
                 cards.append(card)
         for card in cards:
             player.add_card(card, Piles.HAND)
-            player.output(f"Pulling {card.name} into hand")
+            player.output(f"Pulling {card} into hand")
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Card_YoungWitch(Card.Card):
             if card.cost in (2, 3):
                 banes.append(card.name)
         game._bane = random.choice(banes)
-        game._use_cardpile(game.getAvailableCards(), game._bane)
+        game._use_card_pile(game.getAvailableCards(), game._bane)
         game.output(f"Using {game._bane} as the bane for Young Witch")
 
     def special(self, game, player):
@@ -75,7 +75,8 @@ class TestYoungWitch(unittest.TestCase):
         self.attacker.test_input = ["Duchy", "Province", "finish"]
         self.attacker.play_card(self.card)
         try:
-            self.assertIn(self.g[self.g._bane].cost, (2, 3))
+            bane = self.g.get_card_from_pile(self.g._bane)
+            self.assertIn(bane.cost, (2, 3))
             self.assertEqual(self.attacker.piles[Piles.HAND].size(), 5 + 2 - 2)
             self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
         except AssertionError:  # pragma: no cover

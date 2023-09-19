@@ -28,7 +28,7 @@ class Card_Masterpiece(Card.Card):
 
 
 ###############################################################################
-class Test_Masterpiece(unittest.TestCase):
+class TestMasterpiece(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Masterpiece"])
         self.g.start_game()
@@ -45,7 +45,7 @@ class Test_Masterpiece(unittest.TestCase):
         """Buy a Masterpiece"""
         self.plr.coins.set(5)
         self.plr.test_input = ["1"]
-        self.plr.buy_card(self.g["Masterpiece"])
+        self.plr.buy_card("Masterpiece")
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 
 

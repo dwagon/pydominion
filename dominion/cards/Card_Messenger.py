@@ -43,13 +43,13 @@ class Card_Messenger(Card.Card):
                 return
             for plr in game.player_list():
                 if plr != player:
-                    card = plr.gain_card(cardpile=crd.name)
+                    card = plr.gain_card(crd.name)
                     if card:
-                        plr.output(f"Gained a {card.name} from {player.name}'s Messenger")
+                        plr.output(f"Gained a {card} from {player.name}'s Messenger")
 
 
 ###############################################################################
-class Test_Messenger(unittest.TestCase):
+class TestMessenger(unittest.TestCase):
     """Test Messenger"""
 
     def setUp(self):
@@ -68,19 +68,19 @@ class Test_Messenger(unittest.TestCase):
 
     def test_discard(self):
         """Play a messenger and discard the deck"""
-        decksize = self.plr.piles[Piles.DECK].size()
+        deck_size = self.plr.piles[Piles.DECK].size()
         self.plr.test_input = ["Yes"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 2)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 0)
-        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), decksize)
+        self.assertEqual(self.plr.piles[Piles.DISCARD].size(), deck_size)
 
     def test_buy(self):
         """Buy a messenger"""
         self.plr.test_input = ["get silver"]
         self.plr.coins.set(4)
-        self.plr.buy_card(self.g["Messenger"])
+        self.plr.buy_card("Messenger")
         for plr in self.g.player_list():
             self.assertIn("Silver", plr.piles[Piles.DISCARD])
             ag = plr.piles[Piles.DISCARD]["Silver"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, CardPile, Piles
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -16,30 +16,30 @@ class Card_Augurs(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
-        return AugurCardPile(game)
+        card_pile = AugurCardPile(game)
+        return card_pile
 
 
 ###############################################################################
 class AugurCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=12):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Augurs", game.paths["cards"], "Card_")
-        super().__init__(cardname="Augurs", klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Augur_Herb_Gatherer import Card_Herb_Gatherer
         from dominion.cards.Augur_Acolyte import Card_Acolyte
         from dominion.cards.Augur_Sorceress import Card_Sorceress
         from dominion.cards.Augur_Sibyl import Card_Sibyl
 
-        self._cards = []
         for crd in (Card_Herb_Gatherer, Card_Acolyte, Card_Sorceress, Card_Sibyl):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, crd())
 
 
 ###############################################################################
-class Test_Augurs(unittest.TestCase):
+class TestAugurs(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Augurs"])
         self.g.start_game()

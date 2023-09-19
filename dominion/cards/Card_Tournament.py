@@ -14,7 +14,7 @@ class Card_Tournament(Card.Card):
             If you do, discard it and gain a Prize (from the Prize pile) or a Duchy,
             putting it on top of your deck. If no-one else does, +1 Card, +1 Coin."""
         self.name = "Tournament"
-        self.needsprize = True
+        self.needs_prizes = True
         self.actions = 1
         self.cost = 4
 

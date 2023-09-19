@@ -19,22 +19,29 @@ class Card_Sorcerer(Card.Card):
         self.required_cards = ["Curse"]
         self.actions = 1
         self.name = "Sorcerer"
+        self.pile = "Wizards"
         self.desc = """+1 Card; +1 Action; Each other player names a card,
             then reveals the top card of their deck. If wrong, they gain a Curse."""
 
+    def _generate_options(self, game):
+        """Generate the options for user interaction"""
+        options = []
+        for name, card_pile in game.card_piles():
+            card = game.get_card_from_pile(name)
+            if card and card.purchasable:
+                options.append((name, name))
+        return options
+
     def special(self, game, player):
         for plr in player.attack_victims():
-            cps = [_ for _ in game.cardpiles if game.cardpiles[_].purchasable]
-            options = []
-            for cp in cps:
-                options.append((cp, cp))
+            options = self._generate_options(game)
             pick = plr.plr_choose_options(
                 "Sorcerer: Guess the top card correctly or get a curse", *options
             )
-            tpcrd = plr.piles[Piles.DECK].top_card()
-            player.reveal_card(tpcrd)
-            if tpcrd.name != pick:
-                player.output(f"Top card is {tpcrd.name} not {pick}")
+            top_card = plr.piles[Piles.DECK].top_card()
+            player.reveal_card(top_card)
+            if top_card.name != pick:
+                player.output(f"Top card is {top_card.name} not {pick}")
                 plr.gain_card("Curse")
             else:
                 player.output(f"Guessed {pick} correctly")
@@ -54,10 +61,7 @@ class TestSorcerer(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
     def test_play_hit(self):
-        while True:
-            card = self.g["Wizards"].remove()
-            if card.name == "Sorcerer":
-                break
+        card = self.g.get_card_from_pile("Wizards", "Sorcerer")
         self.plr.add_card(card, Piles.HAND)
         hndsz = self.plr.piles[Piles.HAND].size()
         self.vic.piles[Piles.DECK].set("Duchy")

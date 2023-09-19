@@ -15,26 +15,26 @@ class Card_Townsfolk(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
-        return TownsfolkCardPile(game)
+        card_pile = TownsfolkCardPile(game)
+        return card_pile
 
 
 ###############################################################################
 class TownsfolkCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=10):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Townsfolk", game.paths["cards"], "Card_")
-        super().__init__(cardname="Townsfolk", klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Townsfolk_Town_Crier import Card_Town_Crier
         from dominion.cards.Townsfolk_Blacksmith import Card_Blacksmith
         from dominion.cards.Townsfolk_Miller import Card_Miller
         from dominion.cards.Townsfolk_Elder import Card_Elder
 
-        self._cards = []
-        for crd in (Card_Town_Crier, Card_Blacksmith, Card_Miller, Card_Elder):
+        for card_class in (Card_Town_Crier, Card_Blacksmith, Card_Miller, Card_Elder):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, card_class())
 
 
 ###############################################################################

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Knight"""
 
 import random
 import unittest
@@ -12,8 +13,11 @@ class Card_Knight(Card.Card):
         self.name = "Knights"
         self.base = Card.CardExpansion.DARKAGES
 
-    def setup(self, game):
-        game.cardpiles["Knights"] = KnightCardPile(game)
+    @classmethod
+    def cardpile_setup(cls, game):
+        """Setup"""
+        card_pile = KnightCardPile(game)
+        return card_pile
 
 
 ###############################################################################
@@ -25,18 +29,15 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
-        super().__init__(
-            cardname="Knight",
-            klass=None,
-            game=game,
-        )
+        super().__init__()
 
-    def __getattr__(self, name):
-        return getattr(self._cards[0], name)
+    def init_cards(self, num_cards=0, card_class=None):
+        self.cards = [_() for _ in self.mapping.values()]
+        random.shuffle(self.cards)
 
-    def init_cards(self):
-        self._cards = [_() for _ in self.mapping.values()]
-        random.shuffle(self._cards)
+    def isVictory(self):
+        """Knight Pile is not considered a Victory pile"""
+        return False
 
 
 ###############################################################################
@@ -44,6 +45,7 @@ class KnightCard(Card.Card):
     def __init__(self):
         self.name = "Undef Knight"
         super().__init__()
+        self.pile = "Knights"
 
     def knight_special(self, game, player):
         """Each other player reveals the top 2 cards of his deck,
@@ -60,65 +62,55 @@ class KnightCard(Card.Card):
             if crd.cost in (3, 4, 5, 6):
                 cards.append(crd)
             else:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output(f"{player.name}'s {self} discarded your {crd}")
                 victim.discard_card(crd)
         if not cards:
             return
-        player.output("Looking at %s" % ", ".join([x.name for x in cards]))
+        player.output("Looking at %s" % ", ".join([_.name for _ in cards]))
 
         trash = victim.plr_trash_card(
             cardsrc=cards,
             force=True,
-            prompt="%s's %s trashes one of your cards" % (player.name, self.name),
+            prompt=f"{player.name}'s {self} trashes one of your cards",
         )
         to_trash = trash[0]
-        player.output("%s trashed a %s" % (victim.name, to_trash.name))
+        player.output(f"{victim.name} trashed a {to_trash}")
 
         if to_trash.isKnight():
             player.output(
-                "%s trashed a knight: %s - trashing your %s"
-                % (victim.name, to_trash.name, self.name)
+                f"{victim.name} trashed a knight: {to_trash} - trashing your {self}"
             )
             player.trash_card(self)
 
         for crd in cards:
             if crd != to_trash:
-                victim.output(
-                    "%s's %s discarded your %s" % (player.name, self.name, crd.name)
-                )
+                victim.output(f"{player.name}'s {self} discarded your {crd}")
                 victim.discard_card(crd)
 
 
 ###############################################################################
-class Test_Knight(unittest.TestCase):
+class TestKnight(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Knights"])
         self.g.start_game()
-        self.plr, self.vic = self.g.player_list()
-        self.card = None
-        self.card = self.g["Knights"].remove()
+        self.player, self.victim = self.g.player_list()
+        self.card = self.g.get_card_from_pile("Knights", "Dame Josephine")
 
-        # Makes testing harder due to card actions
-        while self.card.name in ("Dame Anna", "Dame Natalie", "Sir Michael"):
-            self.card = self.g["Knights"].remove()
+        self.player.piles[Piles.HAND].set("Silver", "Gold")
+        self.player.add_card(self.card, Piles.HAND)
 
-        self.plr.piles[Piles.HAND].set("Silver", "Gold")
-        self.plr.add_card(self.card, Piles.HAND)
+    def test_play_card_no_suitable(self):
+        """Play a knight with no suitable cards"""
+        self.victim.piles[Piles.DECK].set("Copper", "Copper")
+        self.player.play_card(self.card)
+        self.assertEqual(len(self.victim.piles[Piles.DISCARD]), 2)
 
-    def test_playcard_nosuitable(self):
-        """Play a knight woth no suitable cards"""
-        self.vic.piles[Piles.DECK].set("Copper", "Copper")
-        self.plr.play_card(self.card)
-        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 2)
-
-    def test_playcard_one_suitable(self):
+    def test_play_card_one_suitable(self):
         """Play a knight with one suitable card"""
-        self.vic.piles[Piles.DECK].set("Copper", "Duchy")
-        self.vic.test_input = ["Duchy"]
-        self.plr.play_card(self.card)
-        self.assertEqual(self.vic.piles[Piles.DISCARD].size(), 1)
+        self.victim.piles[Piles.DECK].set("Copper", "Duchy")
+        self.victim.test_input = ["Duchy"]
+        self.player.play_card(self.card)
+        self.assertEqual(len(self.victim.piles[Piles.DISCARD]), 1)
 
 
 ###############################################################################

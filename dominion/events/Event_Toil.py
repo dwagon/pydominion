@@ -22,14 +22,14 @@ class Event_Toil(Event.Event):
         action = player.card_sel(
             num=1,
             types={Card.CardType.ACTION: True},
-            prompt="Plan an action card?",
+            prompt="Play an action card?",
         )
         if action:
             player.play_card(action[0], cost_action=False)
 
 
 ###############################################################################
-class Test_Toil(unittest.TestCase):
+class TestToil(unittest.TestCase):
     """Test Toil"""
 
     def setUp(self):
@@ -37,7 +37,7 @@ class Test_Toil(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.event = self.g.events["Toil"]
-        self.card = self.g["Moat"]
+        self.card = self.g.get_card_from_pile("Moat")
 
     def test_play(self):
         """Perform a Toil"""

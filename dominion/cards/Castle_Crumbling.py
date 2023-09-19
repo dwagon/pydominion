@@ -26,15 +26,12 @@ class Card_CrumblingCastle(CastleCard):
 
 
 ###############################################################################
-class Test_CrumblingCastle(unittest.TestCase):
+class TestCrumblingCastle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Crumbling Castle":
-                break
+        self.card = self.g.get_card_from_pile("Castles", "Crumbling Castle")
 
     def test_play(self):
         """Play a castle"""

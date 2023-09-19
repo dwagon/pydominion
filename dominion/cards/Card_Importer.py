@@ -25,20 +25,25 @@ class Card_Importer(Card.Card):
         """Each player gets 4 favors"""
         for plr in game.player_list():
             plr.favors.add(4)
+            plr.output("Gained four favors from Importer")
 
 
 ###############################################################################
-class Test_Importer(unittest.TestCase):
+class TestImporter(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Importer", "moat"], ally="Plateau Shepherds")
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["importer", "moat"], ally="Plateau Shepherds"
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Importer"].remove()
+        self.card = self.g.get_card_from_pile("Importer")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
         """Play the card"""
-        self.assertEqual(self.plr.favors.get(), 1 + 4)  # One for using liaison, 4 for this card
+        self.assertEqual(
+            self.plr.favors.get(), 1 + 4
+        )  # One for using liaison, 4 for this card
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
         self.plr.start_turn()

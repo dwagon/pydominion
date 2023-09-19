@@ -17,6 +17,7 @@ class Card_Student(Card.Card):
         self.cost = 3
         self.name = "Student"
         self.actions = 1
+        self.pile = "Wizards"
         self.desc = """+1 Action;
             You may rotate the Wizards;
             Trash a card from your hand. If it's a Treasure, +1 Favor and put this onto your deck."""
@@ -47,10 +48,7 @@ class TestStudent(unittest.TestCase):
 
     def test_play_trash_treas(self):
         """Play a student - don't rotate, but trash treasure"""
-        while True:
-            card = self.g["Wizards"].remove()
-            if card.name == "Student":
-                break
+        card = self.g.get_card_from_pile("Wizards", "Student")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate")
         self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Don't change", "Trash Copper"]

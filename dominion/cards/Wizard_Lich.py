@@ -17,6 +17,7 @@ class Card_Lich(Card.Card):
         self.cards = 6
         self.actions = 2
         self.name = "Lich"
+        self.pile = "Wizards"
         self.desc = """+6 Cards; +2 Actions; Skip a turn;
             When you trash this, discard it and gain a cheaper card from the trash."""
 
@@ -30,7 +31,7 @@ class Card_Lich(Card.Card):
         intrash = [_ for _ in game.trashpile if _.cost < self.cost]
         if intrash:
             crd = player.plr_pick_card(cardsrc=intrash, force=True, num=1)
-            player.gain_card(newcard=crd)
+            player.gain_card(new_card=crd)
             game.trashpile.remove(crd)
         return {"trash": False}
 
@@ -52,7 +53,9 @@ class Test_Lich(unittest.TestCase):
         """Play a lich"""
         hndsz = self.plr.piles[Piles.HAND].size()
         self.plr.add_card(self.card, Piles.HAND)
-        self.plr.piles[Piles.DISCARD].set("Estate", "Duchy", "Province", "Silver", "Gold")
+        self.plr.piles[Piles.DISCARD].set(
+            "Estate", "Duchy", "Province", "Silver", "Gold"
+        )
         self.plr.play_card(self.card)
         self.g.print_state()
         self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 6)

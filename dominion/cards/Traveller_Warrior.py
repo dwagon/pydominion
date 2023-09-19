@@ -32,19 +32,19 @@ class Card_Warrior(Card.Card):
         player discards the top card of his deck and trashes it if it
         costs 3 or 4"""
         count = 0
-        for c in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
-            if c.isTraveller():
+        for card in player.piles[Piles.HAND] + player.piles[Piles.PLAYED]:
+            if card.isTraveller():
                 count += 1
         for victim in player.attack_victims():
             for _ in range(count):
-                c = victim.next_card()
-                if c.cost in (3, 4) and not c.potcost:
-                    victim.output(f"Trashing {c.name} due to {player.name}'s Warrior")
-                    player.output(f"Trashing {c.name} from {victim.name}")
-                    victim.trash_card(c)
+                card = victim.next_card()
+                if card.cost in (3, 4) and not card.potcost:
+                    victim.output(f"Trashing {card} due to {player.name}'s Warrior")
+                    player.output(f"Trashing {card} from {victim.name}")
+                    victim.trash_card(card)
                 else:
-                    victim.output(f"Discarding {c.name} due to {player.name}'s Warrior")
-                    victim.add_card(c, "discard")
+                    victim.output(f"Discarding {card} due to {player.name}'s Warrior")
+                    victim.add_card(card, "discard")
 
     def hook_discard_this_card(self, game, player, source):
         """Replace with Hero"""
@@ -61,8 +61,10 @@ class TestWarrior(unittest.TestCase):
         )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Warrior"].remove()
+        self.card = self.g.get_card_from_pile("Warrior")
         self.plr.add_card(self.card, Piles.HAND)
+        print(f"DBG {self.card=}")
+        self.g.print_state()
 
     def test_warrior(self):
         """Play a warrior nothing to trash"""
@@ -75,11 +77,11 @@ class TestWarrior(unittest.TestCase):
 
     def test_with_trash(self):
         """Play a warrior with something to trash"""
-        tsize = self.g.trashpile.size()
+        trash_size = self.g.trashpile.size()
         self.victim.piles[Piles.DECK].set("Silver", "Silver")
         self.plr.piles[Piles.PLAYED].set("Page")
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trashpile.size(), trash_size + 2)
 
     def test_end_turn(self):
         """End the turn with a played warrior"""

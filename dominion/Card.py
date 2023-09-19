@@ -32,6 +32,7 @@ class CardExpansion(Enum):
 class CardType(Enum):
     """Type of card"""
 
+    UNDEFINED = auto()
     ACTION = auto()
     ALLY = auto()
     ARTIFACT = auto()
@@ -82,13 +83,13 @@ class Card:
         self.debtcost = 0
         self.always_buyable = False
         self.potcost = False
-        self.cardtype = "unknown"
+        self.cardtype = CardType.UNDEFINED
         self.purchasable = True
         self.permanent = False
         self.playable = True
         self.callable = True
         self.defense = False
-        self.needsprize = False
+        self.needs_prizes = False
         self.needsartifacts = False
         self.needsprojects = False
         self.overpay = False
@@ -105,12 +106,12 @@ class Card:
         self.required_cards = []
         self.image = None
         self.numcards = 10
-        self.gatheredvp = 0
         self.retain_boon = False
         self.heirloom = None
         self.uuid = uuid.uuid4().hex
         self._location = None
         self._player = None
+        self.pile = ""
 
     ##########################################################################
     def check(self):
@@ -160,12 +161,8 @@ class Card:
             ct = self.cardtype[:]
         else:
             ct = [self.cardtype]
-        try:
-            return ", ".join([_.name.title() for _ in ct])
-        except AttributeError:
-            print(f"DBG {self}")
-            print(f"DBG {ct}")
-            raise
+
+        return ", ".join([_.name.title() for _ in ct])
 
     ##########################################################################
     def __repr__(self):
@@ -175,6 +172,7 @@ class Card:
 
     ##########################################################################
     def __lt__(self, card):
+        assert isinstance(card, Card), f"__lt__({card=}) {type(card)=}"
         return self.name < card.name
 
     ##########################################################################
@@ -182,20 +180,6 @@ class Card:
         if callable(self.desc):
             return self.desc(player)
         return self.desc
-
-    ##########################################################################
-    def addVP(self, num=1):
-        self.gatheredvp += num
-
-    ##########################################################################
-    def getVP(self):
-        return self.gatheredvp
-
-    ##########################################################################
-    def drainVP(self):
-        num = self.gatheredvp
-        self.gatheredvp = 0
-        return num
 
     ##########################################################################
     def special(self, game, player):

@@ -37,11 +37,13 @@ class Card_Treasury(Card.Card):
 
 
 ###############################################################################
-class Test_Treasury(unittest.TestCase):
+class TestTreasury(unittest.TestCase):
     """Test Treasury"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Treasury"], badcards=["Duchess"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Treasury"], badcards=["Duchess"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g["Treasury"].remove()
@@ -54,10 +56,10 @@ class Test_Treasury(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.coins.get(), 1)
 
-    def test_buy_topdeck(self):
+    def test_buy_top_deck(self):
         self.plr.test_input = ["put on top"]
         self.plr.coins.set(5)
-        self.plr.buy_card(self.g["Duchy"])
+        self.plr.buy_card("Duchy")
         self.plr.discard_card(self.card)
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Treasury")
 

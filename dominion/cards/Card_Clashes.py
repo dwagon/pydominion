@@ -2,7 +2,7 @@
 """ http://wiki.dominionstrategy.com/index.php/Clashes """
 
 import unittest
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -19,33 +19,34 @@ class Card_Clashes(Card.Card):
     @classmethod
     def cardpile_setup(cls, game):
         """Setup"""
-        return ClashCardPile(game)
+        card_pile = ClashCardPile(game)
+        # card_pile.init_cards()
+        return card_pile
 
 
 ###############################################################################
 class ClashCardPile(CardPile.CardPile):
     """Pile of Clashes"""
 
-    def __init__(self, game, pile_size=10):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Clashes", game.paths["cards"], "Clash_")
-        super().__init__(cardname="Clashes", klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Clash_Battle_Plan import Card_Battle_Plan
         from dominion.cards.Clash_Archer import Card_Archer
         from dominion.cards.Clash_Warlord import Card_Warlord
         from dominion.cards.Clash_Territory import Card_Territory
 
-        self._cards = []
-        for crd in (Card_Battle_Plan, Card_Archer, Card_Warlord, Card_Territory):
+        for card in (Card_Battle_Plan, Card_Archer, Card_Warlord, Card_Territory):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, card())
 
 
 ###############################################################################
-class Test_Clashes(unittest.TestCase):
-    """Text Clashes"""
+class TestClashes(unittest.TestCase):
+    """Test Clashes"""
 
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Clashes"])

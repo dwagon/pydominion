@@ -7,7 +7,7 @@ from dominion import Game
 
 
 ###############################################################################
-class Test_args(unittest.TestCase):
+class TestArgs(unittest.TestCase):
     """Test argument parsing"""
 
     def setUp(self):
@@ -52,7 +52,7 @@ class Test_args(unittest.TestCase):
 
 
 ###############################################################################
-class Test_guess_cardname(unittest.TestCase):
+class TestGuessCardname(unittest.TestCase):
     """TODO"""
 
     def setUp(self):
@@ -63,13 +63,15 @@ class Test_guess_cardname(unittest.TestCase):
         """TODO"""
         self.assertEqual(self.g.guess_cardname("moat"), "Moat")
         self.assertEqual(self.g.guess_cardname("grandmarket"), "Grand Market")
-        self.assertEqual(self.g.guess_cardname("philosophersstone"), "Philosopher's Stone")
+        self.assertEqual(
+            self.g.guess_cardname("philosophersstone"), "Philosopher's Stone"
+        )
         self.assertEqual(self.g.guess_cardname("colony", prefix="BaseCard"), "Colony")
         self.assertIsNone(self.g.guess_cardname("nosuchcard"))
 
 
 ###############################################################################
-class Test_game_over(unittest.TestCase):
+class TestGameOver(unittest.TestCase):
     """Test detecting when the game is over"""
 
     def setUp(self):
@@ -85,7 +87,7 @@ class Test_game_over(unittest.TestCase):
     def test_provinces(self):
         """Someone took the last province"""
         while self.g["Province"]:
-            self.plr.gain_card("Province")
+            card = self.plr.gain_card("Province")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
@@ -111,15 +113,15 @@ class Test_game_over(unittest.TestCase):
 
 
 ###############################################################################
-class Test_actionpiles(unittest.TestCase):
+class TestActionPiles(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Moat"])
         self.g.start_game()
 
-    def test_actionpiles(self):
-        piles = self.g.getActionPiles()
-        self.assertIn(self.g.cardpiles["Moat"], piles)
-        self.assertNotIn(self.g.cardpiles["Copper"], piles)
+    def test_action_piles(self):
+        piles = self.g.get_action_piles()
+        self.assertIn("Moat", piles)
+        self.assertNotIn("Copper", piles)
 
 
 ###############################################################################
@@ -150,7 +152,7 @@ class Test_boon(unittest.TestCase):
 
 
 ###############################################################################
-class Test_whowon(unittest.TestCase):
+class TestWhoWon(unittest.TestCase):
     def setUp(self):
         self.numplayers = 3
         self.g = Game.TestGame(numplayers=self.numplayers, badcards=["Shepherd"])
@@ -162,6 +164,27 @@ class Test_whowon(unittest.TestCase):
         for score in scores.values():
             self.assertEqual(score, 3)
         self.assertEqual(len(scores), self.numplayers)
+
+
+###############################################################################
+class TestGetCardFromPile(unittest.TestCase):
+    """Test get_card_from_pile()"""
+
+    def setUp(self):
+        self.g = Game.TestGame(numplayers=1)
+        self.g.start_game()
+
+    def test_get_card(self):
+        pile_size = len(self.g["Copper"])
+        card = self.g.get_card_from_pile("Copper")
+        self.assertEqual(card.name, "Copper")
+        self.assertEqual(len(self.g["Copper"]), pile_size - 1)
+
+    def test_get_wrong_card(self):
+        """Test asking for a wrong card"""
+        pile_size = len(self.g["Copper"])
+        self.assertIsNone(self.g.get_card_from_pile("Copper", "Gold"))
+        self.assertEqual(len(self.g["Copper"]), pile_size)
 
 
 ###############################################################################

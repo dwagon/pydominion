@@ -26,9 +26,11 @@ class Card_Temple(Card.Card):
 
     def special(self, game, player):
         player.add_score("Temple", 1)
-        cardnames = {_.name for _ in player.piles[Piles.HAND]}
-        cards = [player.piles[Piles.HAND][_] for _ in cardnames]
-        trash = player.plr_trash_card(cardsrc=cards, prompt="Trash up to 3 different cards", num=3)
+        card_names = {_.name for _ in player.piles[Piles.HAND]}
+        cards = [player.piles[Piles.HAND][_] for _ in card_names]
+        trash = player.plr_trash_card(
+            cardsrc=cards, prompt="Trash up to 3 different cards", num=3
+        )
         if not trash:
             return
         game["Temple"].addVP()
@@ -40,7 +42,7 @@ class Card_Temple(Card.Card):
 
 
 ###############################################################################
-class Test_Temple(unittest.TestCase):
+class TestTemple(unittest.TestCase):
     """Test Temple"""
 
     def setUp(self):
@@ -62,7 +64,7 @@ class Test_Temple(unittest.TestCase):
         """Gain a Temple"""
         self.g["Temple"].addVP(5)
         self.plr.coins.set(4)
-        self.plr.buy_card(self.g["Temple"])
+        self.plr.buy_card("Temple")
         self.assertEqual(self.plr.get_score_details()["Temple"], 5)
 
 

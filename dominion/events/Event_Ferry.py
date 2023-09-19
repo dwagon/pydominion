@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Ferry"""
 import unittest
 from dominion import Card, Game, Event
 
@@ -14,16 +14,18 @@ class Event_Ferry(Event.Event):
         self.cost = 3
 
     def special(self, game, player):
-        actionpiles = game.getActionPiles()
-        stacks = player.card_sel(
-            num=1, prompt="What stack to add the -2 Coin Token to?", cardsrc=actionpiles
+        action_piles = game.get_action_piles()
+        piles = player.card_pile_sel(
+            num=1,
+            prompt="What stack to add the -2 Coin Token to?",
+            cardsrc=action_piles,
         )
-        if stacks:
-            player.place_token("-2 Cost", stacks[0].name)
+        if piles:
+            player.place_token("-2 Cost", piles[0])
 
 
 ###############################################################################
-class Test_Ferry(unittest.TestCase):
+class TestFerry(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, eventcards=["Ferry"], initcards=["Moat"])
         self.g.start_game()

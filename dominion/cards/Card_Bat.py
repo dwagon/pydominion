@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 from dominion.Player import Phase
 
 
@@ -25,12 +24,12 @@ class Card_Bat(Card.Card):
 
 
 ###############################################################################
-class Test_Bat(unittest.TestCase):
+class TestBat(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Vampire"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Bat"].remove()
+        self.card = self.g.get_card_from_pile("Bat")
 
     def test_play(self):
         self.plr.phase = Phase.NIGHT

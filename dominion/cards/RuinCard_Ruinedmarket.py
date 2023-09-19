@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Ruined_Market """
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -19,15 +19,13 @@ class Card_RuinedMarket(Card.Card):
 
 
 ###############################################################################
-class Test_RuinedMarket(unittest.TestCase):
+class TestRuinedMarket(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
+        self.g.print_state()
         self.plr = self.g.player_list(0)
-        while True:
-            self.card = self.g["Ruins"].remove()
-            if self.card.name == "Ruined Market":
-                break
+        self.card = self.g.get_card_from_pile("Ruins", "Ruined Market")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):
@@ -35,5 +33,9 @@ class Test_RuinedMarket(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.buys.get(), 1 + 1)
 
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 # EOF

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Hoard"""
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -11,7 +10,9 @@ class Card_Hoard(Card.Card):
         Card.Card.__init__(self)
         self.cardtype = Card.CardType.TREASURE
         self.base = Card.CardExpansion.PROSPERITY
-        self.desc = "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
+        self.desc = (
+            "+2 coin; While this is in play, when you buy a Victory card, gain a Gold"
+        )
         self.name = "Hoard"
         self.playable = False
         self.coin = 2
@@ -40,7 +41,7 @@ class Test_Hoard(unittest.TestCase):
 
     def test_buy_victory(self):
         self.plr.play_card(self.card)
-        self.plr.buy_card(self.g["Estate"])
+        self.plr.buy_card("Estate")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 2)
         for c in self.plr.piles[Piles.DISCARD]:
             if c.name == "Gold":
@@ -48,9 +49,9 @@ class Test_Hoard(unittest.TestCase):
         else:  # pragma: no cover
             self.fail("Didn't pickup gold")
 
-    def test_buy_nonvictory(self):
+    def test_buy_non_victory(self):
         self.plr.play_card(self.card)
-        self.plr.buy_card(self.g["Copper"])
+        self.plr.buy_card("Copper")
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertEqual(self.plr.piles[Piles.DISCARD][-1].name, "Copper")
 

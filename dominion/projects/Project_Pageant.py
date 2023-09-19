@@ -25,19 +25,19 @@ class Project_Pageant(Project.Project):
 
 
 ###############################################################################
-class Test_Pageant(unittest.TestCase):
+class TestPageant(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initprojects=["Pageant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
 
     def test_play(self):
-        numc = self.plr.coffers.get()
+        num_coffers = self.plr.coffers.get()
         self.plr.assign_project("Pageant")
         self.plr.coins.set(5)
         self.plr.test_input = ["End Phase", "4"]
         self.plr.buy_phase()
-        self.assertEqual(self.plr.coffers.get(), numc + 4)
+        self.assertEqual(self.plr.coffers.get(), num_coffers + 4)
         self.assertEqual(self.plr.coins.get(), 1)
 
 

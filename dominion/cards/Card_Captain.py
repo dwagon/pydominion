@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -28,16 +27,28 @@ class Card_Captain(Card.Card):
         self.special_sauce(game, player)
 
     def special_sauce(self, game, player):
-        actionpiles = [_ for _ in game.getActionPiles(4) if not _.isDuration() and not _.isCommand()]
-        actions = player.card_sel(prompt="What action card do you want to imitate?", cardsrc=actionpiles)
-        if actions:
-            player.card_benefits(actions[0])
+        options = [("None", None)]
+        for name in game.get_action_piles(4):
+            card = game.get_card_from_pile(name)
+            if card.isDuration():
+                continue
+            if card.isCommand():
+                continue
+            options.append((f"Play {name}", card))
+
+        action = player.plr_choose_options(
+            "What action card do you want to imitate?", *options
+        )
+        if action:
+            player.card_benefits(action)
 
 
 ###############################################################################
-class Test_Captain(unittest.TestCase):
+class TestCaptain(unittest.TestCase):
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"])
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Captain", "Workshop", "Bureaucrat"]
+        )
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.card = self.g["Captain"].remove()
@@ -51,7 +62,7 @@ class Test_Captain(unittest.TestCase):
 
     def test_play_market(self):
         """Make the Captain be a Workshop"""
-        self.plr.test_input = ["Select Workshop", "Get Bureaucrat"]
+        self.plr.test_input = ["Play Workshop", "Get Bureaucrat"]
         self.plr.play_card(self.card)
         self.assertNotIn("Workshop", self.plr.piles[Piles.DISCARD])
         self.assertIn("Bureaucrat", self.plr.piles[Piles.DISCARD])

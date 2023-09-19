@@ -1,7 +1,8 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Odyssey"""
 
 import unittest
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -16,35 +17,35 @@ class Card_Odysseys(Card.Card):
 
     @classmethod
     def cardpile_setup(cls, game):
-        return OdysseyCardPile(game)
+        card_pile = OdysseyCardPile(game)
+        return card_pile
 
 
 ###############################################################################
 class OdysseyCardPile(CardPile.CardPile):
-    def __init__(self, game, pile_size=12):
+    def __init__(self, game):
         self.mapping = game.get_card_classes("Odysseys", game.paths["cards"], "Card_")
-        super().__init__(cardname="Odysseys", klass=None, game=game, pile_size=pile_size)
+        super().__init__()
 
-    def init_cards(self):
+    def init_cards(self, num_cards=0, card_class=None):
         # pylint: disable=import-outside-toplevel
         from dominion.cards.Odyssey_Old_Map import Card_Old_Map
         from dominion.cards.Odyssey_Voyage import Card_Voyage
         from dominion.cards.Odyssey_Sunken_Treasure import Card_Sunken_Treasure
         from dominion.cards.Odyssey_Distant_Shore import Card_Distant_Shore
 
-        self._cards = []
-        for crd in (
+        for card in (
             Card_Old_Map,
             Card_Voyage,
             Card_Sunken_Treasure,
             Card_Distant_Shore,
         ):
             for _ in range(4):
-                self._cards.insert(0, crd())
+                self.cards.insert(0, card())
 
 
 ###############################################################################
-class Test_Odysseys(unittest.TestCase):
+class TestOdysseys(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()

@@ -18,34 +18,41 @@ class Card_Hovel(Card.Card):
         self.cost = 1
         self.purchasable = False
         self.victory = 0
+        self.pile = "Shelters"
 
     def hook_gain_card(self, game, player, card):
         if not card.isVictory():
             return
-        to_trash = player.plr_choose_options("Trash Hovel?", ("Trash it", True), ("Keep it", False))
+        to_trash = player.plr_choose_options(
+            "Trash Hovel?", ("Trash it", True), ("Keep it", False)
+        )
         if to_trash:
             player.trash_card(self)
 
 
 ###############################################################################
-def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover, pylint: disable=unused-argument
-    """botresponse"""
+def botresponse(
+    player, kind, args=None, kwargs=None
+):  # pragma: no cover, pylint: disable=unused-argument
+    """bot response"""
     return True
 
 
 ###############################################################################
-class Test_Hovel(unittest.TestCase):
+class TestHovel(unittest.TestCase):
     """Test Hovel"""
 
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shelters"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Hovel"].remove()
 
     def test_trash(self):
         """Test Trashing"""
-        self.plr.piles[Piles.HAND].set("Hovel")
+        hovel = self.g.get_card_from_pile("Shelters", "Hovel")
+        self.plr.piles[Piles.HAND].empty()
+        self.plr.piles[Piles.HAND].add(hovel)
+        self.g.print_state()
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")
         self.assertIn("Hovel", self.g.trashpile)

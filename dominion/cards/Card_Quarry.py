@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -23,7 +22,7 @@ class Card_Quarry(Card.Card):
 
 
 ###############################################################################
-class Test_Quarry(unittest.TestCase):
+class TestQuarry(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Quarry", "Moat"])
         self.g.start_game()
@@ -31,12 +30,14 @@ class Test_Quarry(unittest.TestCase):
         self.card = self.g["Quarry"].remove()
         self.plr.add_card(self.card, Piles.HAND)
 
-    def test_playcard(self):
+    def test_play_card(self):
         """Play a quarry"""
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 1)
-        self.assertEqual(self.plr.card_cost(self.g["Gold"]), 6)
-        self.assertEqual(self.plr.card_cost(self.g["Moat"]), 0)
+        gold = self.g.get_card_from_pile("Gold")
+        moat = self.g.get_card_from_pile("Moat")
+        self.assertEqual(self.plr.card_cost(gold), 6)
+        self.assertEqual(self.plr.card_cost(moat), 0)
 
 
 ###############################################################################

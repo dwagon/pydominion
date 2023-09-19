@@ -30,9 +30,9 @@ class Card_Doctor(Card.Card):
     def special(self, game, player):
         options = []
         index = 1
-        for c in sorted(game.cardTypes()):
+        for name, pile in sorted(game.card_piles()):
             sel = f"{index}"
-            options.append({"selector": sel, "print": f"Guess {c.name}", "card": c})
+            options.append({"selector": sel, "print": f"Guess {name}", "card": name})
             index += 1
         o = player.user_input(
             options, "Pick which card to trash if it is in the top 3 of your deck"
@@ -42,12 +42,12 @@ class Card_Doctor(Card.Card):
             cards.append(player.next_card())
         for card in cards:
             player.reveal_card(card)
-            if card.name == o["card"].name:
-                player.output(f"Trashing {card.name}")
+            if card.name == o["card"]:
+                player.output(f"Trashing {card}")
                 card.location = None
                 player.trash_card(card)
             else:
-                player.output(f"Putting {card.name} back")
+                player.output(f"Putting {card} back")
                 player.add_card(card, "topdeck")
 
     def hook_overpay(self, game, player, amount):
@@ -74,25 +74,25 @@ class Card_Doctor(Card.Card):
             options.append(
                 {
                     "selector": "2",
-                    "print": f"Discard {card.name}",
+                    "print": f"Discard {card}",
                     "action": "discard",
                 }
             )
-            o = player.user_input(options, f"What to do with the top card {card.name}?")
+            o = player.user_input(options, f"What to do with the top card {card}?")
             if o["action"] == "trash":
                 card.location = None
                 player.trash_card(card)
-                player.output(f"Trashing {card.name}")
+                player.output(f"Trashing {card}")
             elif o["action"] == "discard":
-                player.add_card(card, "discard")
-                player.output(f"Discarding {card.name}")
+                player.add_card(card, Piles.DISCARD)
+                player.output(f"Discarding {card}")
             elif o["action"] == "put back":
                 player.add_card(card, "topdeck")
-                player.output(f"Putting {card.name} back")
+                player.output(f"Putting {card} back")
 
 
 ###############################################################################
-class Test_Doctor(unittest.TestCase):
+class TestDoctor(unittest.TestCase):
     """Test Doctor"""
 
     def setUp(self):
@@ -116,7 +116,7 @@ class Test_Doctor(unittest.TestCase):
         self.plr.coins.set(6)
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
-        self.plr.buy_card(self.g["Doctor"])
+        self.plr.buy_card("Doctor")
         self.assertIn("Duchy", self.g.trashpile)
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")

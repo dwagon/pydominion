@@ -14,14 +14,17 @@ class Event_Populate(Event.Event):
         self.cost = 10
 
     def special(self, game, player):
-        for cp in game.cardpiles.values():
-            if cp.isAction() and cp.insupply:
-                player.output("Gained {} from Populate".format(cp.name))
-                player.gain_card(cp)
+        for card_name, card_pile in game.card_piles():
+            card = game.get_card_from_pile(card_name)
+            if not card:
+                continue
+            if card.isAction() and card.insupply:
+                player.output(f"Gained {card_name} from Populate")
+                player.gain_card(card_name)
 
 
 ###############################################################################
-class Test_Populate(unittest.TestCase):
+class TestPopulate(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=1,

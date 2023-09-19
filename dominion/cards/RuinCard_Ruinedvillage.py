@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+""" https://wiki.dominionstrategy.com/index.php/Ruined_Village """
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -19,7 +19,7 @@ class Card_RuinedVillage(Card.Card):
 
 
 ###############################################################################
-class Test_RuinedVillage(unittest.TestCase):
+class TestRuinedVillage(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=4, initcards=["Cultist"])
         self.g.start_game()
@@ -35,5 +35,9 @@ class Test_RuinedVillage(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
 
+
+###############################################################################
+if __name__ == "__main__":  # pragma: no cover
+    unittest.main()
 
 # EOF

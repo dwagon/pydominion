@@ -32,20 +32,15 @@ class Test_Distant_Shore(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Odysseys"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-
-        while True:
-            card = self.g["Odysseys"].remove()
-            if card.name == "Distant Shore":
-                break
-        self.card = card
+        self.card = self.g.get_card_from_pile("Odysseys", "Distant Shore")
 
     def test_play(self):
         """Play the card"""
-        hndsz = self.plr.piles[Piles.HAND].size()
+        hand_size = self.plr.piles[Piles.HAND].size()
         actions = self.plr.actions.get()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.plr.piles[Piles.HAND].size(), hndsz + 2)
+        self.assertEqual(self.plr.piles[Piles.HAND].size(), hand_size + 2)
         self.assertEqual(self.plr.actions.get(), actions)
         self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.get_score_details()["Distant Shore"], 2)
