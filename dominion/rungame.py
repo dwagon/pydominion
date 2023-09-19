@@ -135,17 +135,17 @@ def runGame(args):  # pragma: no cover
     g = Game.Game(**args)
     g.start_game()
     try:
-        while not g.gameover:
+        while not g.game_over:
             try:
                 turn += 1
                 g.turn()
             except Exception:
                 g.print_state(card_dump=True)
                 raise
-            if turn > 400:      # Eternal game
+            if turn > 400:  # Eternal game
                 return
     except KeyboardInterrupt:
-        g.gameover = True
+        g.game_over = True
     g.whoWon()
 
 

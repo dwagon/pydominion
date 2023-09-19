@@ -56,7 +56,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.ally = None
         self.discarded_hexes = []
         self.trashpile = PlayArea("trash", game=self)
-        self.gameover = False
+        self.game_over = False
         self._heirlooms = []
         self._allow_shelters = True
         self._loaded_prizes = False
@@ -960,7 +960,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._validate_cards()
         self._turns.append(self.current_player.uuid)
         if self.isGameOver():
-            self.gameover = True
+            self.game_over = True
             for plr in self.player_list():
                 plr.game_over()
 

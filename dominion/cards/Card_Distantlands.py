@@ -24,7 +24,7 @@ class Card_Distantlands(Card.Card):
     def special_score(self, game, player):
         """Worth 4 VP if on your tavern mat; else 0"""
         score = 0
-        if game.gameover:
+        if game.game_over:
             for c in player.piles[Piles.RESERVE]:
                 if c.name == "Distant Lands" and not c.counted:
                     c.counted = True
@@ -50,19 +50,19 @@ class Test_Distantlands(unittest.TestCase):
 
     def test_notonmat(self):
         self.plr.piles[Piles.HAND].set("Distant Lands")
-        self.g.gameover = True
+        self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 0)
 
     def test_onmat(self):
         """Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands")
-        self.g.gameover = True
+        self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 4)
 
     def test_onmat_twice(self):
         """Two Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands", "Distant Lands")
-        self.g.gameover = True
+        self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 8)
 
 

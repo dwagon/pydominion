@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -29,7 +28,7 @@ class Card_City(Card.Card):
 
 
 ###############################################################################
-class Test_City(unittest.TestCase):
+class TestCity(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["City", "Moat", "Cellar"])
         self.g.start_game()
@@ -37,13 +36,14 @@ class Test_City(unittest.TestCase):
         self.city = self.g["City"].remove()
         self.plr.add_card(self.city, Piles.HAND)
 
-    def test_nostacks(self):
+    def test_no_stacks(self):
         """Play a city with no stacks empty"""
         self.plr.play_card(self.city)
+        self.g.print_state()
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 6)
 
-    def test_onestack(self):
+    def test_one_stack(self):
         """Play a city with one stacks empty"""
         while True:
             c = self.g["Moat"].remove()
@@ -53,7 +53,7 @@ class Test_City(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 7)
 
-    def test_twostack(self):
+    def test_two_stack(self):
         """Play a city with two stacks empty"""
         while True:
             c = self.g["Moat"].remove()
