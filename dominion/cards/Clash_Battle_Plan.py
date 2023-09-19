@@ -30,7 +30,9 @@ class Card_Battle_Plan(Card.Card):
         if attacks:
             options = [("Don't reveal", None)]
             options.extend([(f"Reveal {_.name}", _) for _ in attacks])
-            reveal = player.plr_choose_options("Reveal attack to pickup a card", *options)
+            reveal = player.plr_choose_options(
+                "Reveal attack to pickup a card", *options
+            )
             if reveal:
                 player.reveal_card(reveal)
                 player.pickup_card()
@@ -50,7 +52,9 @@ class Test_Battle_Plan(unittest.TestCase):
     """Test Battle Plan"""
 
     def setUp(self):
-        self.g = Game.TestGame(numplayers=1, initcards=["Clashes", "Militia"], use_liaisons=True)
+        self.g = Game.TestGame(
+            numplayers=1, initcards=["Clashes", "Militia"], use_liaisons=True
+        )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
 

@@ -37,7 +37,7 @@ class Test_Recruiter(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
         self.assertEqual(self.plr.villagers.get(), 3)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
 
 
 ###############################################################################

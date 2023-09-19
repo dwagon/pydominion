@@ -64,7 +64,7 @@ class TestExorcist(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertIn("Imp", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
         self.g.print_state()
 
 

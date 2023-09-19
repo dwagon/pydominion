@@ -22,7 +22,7 @@ class Card_Necromancer(Card.Card):
         ]
 
     def special(self, game, player):
-        act = [_ for _ in game.trashpile if _.isAction() and not _.isDuration() and _ not in game._necromancer]
+        act = [_ for _ in game.trash_pile if _.isAction() and not _.isDuration() and _ not in game._necromancer]
         card = player.card_sel(cardsrc=act, prompt="Select Action card from Trash")
         game._necromancer.add(card[0])
         player.play_card(card[0], discard=False, cost_action=False)

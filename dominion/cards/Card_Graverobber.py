@@ -37,14 +37,14 @@ class Card_Graverobber(Card.Card):
             card = player.plr_trash_card(cardsrc=actions)
             player.plr_gain_card(cost=card[0].cost + 3)
         else:
-            trash_cards = [c for c in game.trashpile if 3 <= c.cost <= 6]
+            trash_cards = [c for c in game.trash_pile if 3 <= c.cost <= 6]
             if not trash_cards:
                 player.output("No suitable cards in trash")
                 return
             cards = player.card_sel(cardsrc=trash_cards)
             if cards:
                 card = cards[0]
-                game.trashpile.remove(card)
+                game.trash_pile.remove(card)
                 player.add_card(card, "topdeck")
 
 
@@ -77,18 +77,18 @@ class Test_Graverobber(unittest.TestCase):
 
     def test_loot(self):
         """Play a grave robber - looting the trash"""
-        self.g.trashpile.set("Militia")
+        self.g.trash_pile.set("Militia")
         self.plr.test_input = ["0", "militia"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), 0)
+        self.assertEqual(self.g.trash_pile.size(), 0)
         self.assertIn("Militia", self.plr.piles[Piles.DECK])
 
     def test_loot_empty(self):
         """Play a grave robber - looting the trash that doesn't have anything"""
-        self.g.trashpile.set("Copper")
+        self.g.trash_pile.set("Copper")
         self.plr.test_input = ["0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), 1)
+        self.assertEqual(self.g.trash_pile.size(), 1)
 
 
 ###############################################################################

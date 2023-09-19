@@ -45,7 +45,7 @@ class TestOvergrownEstate(unittest.TestCase):
         card = self.plr.piles[Piles.HAND]["Overgrown Estate"]
         self.plr.trash_card(card)
         self.assertIn("Province", self.plr.piles[Piles.HAND])
-        self.assertIn("Overgrown Estate", self.g.trashpile)
+        self.assertIn("Overgrown Estate", self.g.trash_pile)
 
 
 ###############################################################################

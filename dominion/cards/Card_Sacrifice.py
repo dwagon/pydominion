@@ -50,7 +50,7 @@ class Test_Sacrifice(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
 
     def test_play_treasure(self):
         """Sacrifice a Treasure"""

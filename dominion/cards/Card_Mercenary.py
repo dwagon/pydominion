@@ -59,13 +59,13 @@ class Test_Mercenary(unittest.TestCase):
 
     def test_defense(self):
         """Make sure moats work against mercenaries"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
         moat = self.g["Moat"].remove()
         self.victim.add_card(moat, Piles.HAND)
         self.plr.test_input = ["1", "1", "2", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         # 5 for hand + moat
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 6)
@@ -73,12 +73,12 @@ class Test_Mercenary(unittest.TestCase):
 
     def test_attack(self):
         """Attack with a mercenary"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "1", "2", "0"]
         self.victim.test_input = ["1", "2", "0"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5)
         self.assertEqual(self.plr.coins.get(), 2)
         self.assertEqual(self.victim.piles[Piles.HAND].size(), 3)

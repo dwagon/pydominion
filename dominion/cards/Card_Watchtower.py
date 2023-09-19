@@ -70,14 +70,14 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_trash(self):
         """React to gaining a card - discard card"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         try:
             self.plr.test_input = ["trash"]
             self.plr.piles[Piles.HAND].set("Gold")
             self.plr.add_card(self.card, Piles.HAND)
             self.plr.gain_card("Copper")
-            self.assertEqual(self.g.trashpile.size(), tsize + 1)
-            self.assertEqual(self.g.trashpile[-1].name, "Copper")
+            self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+            self.assertEqual(self.g.trash_pile[-1].name, "Copper")
             self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
             self.assertNotIn("Copper", self.plr.piles[Piles.HAND])
         except AssertionError:  # pragma: no cover
@@ -86,13 +86,13 @@ class Test_Watchtower(unittest.TestCase):
 
     def test_react_topdeck(self):
         """React to gaining a card - put card on deck"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["top"]
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.gain_card("Silver")
         try:
-            self.assertEqual(self.g.trashpile.size(), tsize)
+            self.assertEqual(self.g.trash_pile.size(), tsize)
             self.assertEqual(self.plr.piles[Piles.HAND].size(), 2)
             self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
             c = self.plr.next_card()

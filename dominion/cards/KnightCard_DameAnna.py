@@ -41,13 +41,13 @@ class TestDameAnna(unittest.TestCase):
 
     def test_score(self):
         """Play the Dame"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Duchy", "Province")
         self.plr.test_input = ["duchy", "province", "finish"]
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
+        self.assertIn("Province", self.g.trash_pile)
 
 
 ###############################################################################

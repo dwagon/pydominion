@@ -55,7 +55,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._turns = []
         self.ally = None
         self.discarded_hexes = []
-        self.trashpile = PlayArea("trash", game=self)
+        self.trash_pile = PlayArea("trash", game=self)
         self.game_over = False
         self._heirlooms = []
         self._allow_shelters = True
@@ -238,7 +238,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def count_cards(self):
         """TODO"""
-        count = {"trash": self.trashpile.size()}
+        count = {"trash": self.trash_pile.size()}
         for name, pile in list(self.card_piles.items()):
             count[f"pile_{name}"] = len(pile)
         for plr in self.player_list():
@@ -831,7 +831,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def print_state(self, card_dump=False) -> None:  # pragma: no cover
         """This is used for debugging"""
         print("\n" + "#" * 80)
-        print(f"Trash: {', '.join([_.name for _ in self.trashpile])}")
+        print(f"Trash: {', '.join([_.name for _ in self.trash_pile])}")
         print(f"Boons: {', '.join([_.name for _ in self.boons])}")
         print(f"Hexes: {', '.join([_.name for _ in self.hexes])}")
         if self.ally:
@@ -907,7 +907,7 @@ class Game:  # pylint: disable=too-many-public-methods
                         tmp[pile_name][f"{plr.name}:{stack_name}"] = count
                         total += count
             count = 0
-            for card in self.trashpile:
+            for card in self.trash_pile:
                 if card.name == pile_name:
                     count += 1
             if count:

@@ -65,7 +65,7 @@ class Test_Counterfiet(unittest.TestCase):
         self.plr.test_input = ["1"]
         self.plr.play_card(self.card)
         self.assertTrue(self.plr.piles[Piles.HAND].is_empty())
-        self.assertIn("Gold", self.g.trashpile)
+        self.assertIn("Gold", self.g.trash_pile)
         # CF + 2 * Gold
         self.assertEqual(self.plr.coins.get(), 7)
 

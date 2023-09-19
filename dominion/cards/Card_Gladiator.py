@@ -59,7 +59,7 @@ class TestGladiator(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Gladiator", self.g.trashpile)
+        self.assertIn("Gladiator", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), 3)
 
     def test_play_has(self):
@@ -69,7 +69,7 @@ class TestGladiator(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat"]
         self.plr.play_card(self.card)
-        self.assertNotIn("Gladiator", self.g.trashpile)
+        self.assertNotIn("Gladiator", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), 2)
 
 

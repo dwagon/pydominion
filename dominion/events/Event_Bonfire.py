@@ -31,7 +31,7 @@ class Test_Bonfire(unittest.TestCase):
 
     def test_bonfire(self):
         """Use Bonfire"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.coins.add(3)
         self.plr.piles[Piles.HAND].set("Estate")
         self.plr.add_card(self.copper, Piles.HAND)
@@ -40,7 +40,7 @@ class Test_Bonfire(unittest.TestCase):
         self.plr.play_card(self.gold)
         self.plr.test_input = ["Copper", "Gold", "Finish"]
         self.plr.perform_event(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
 
 
 ###############################################################################

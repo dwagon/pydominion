@@ -68,7 +68,7 @@ class TestStoneMason(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash province", "get gold", "get silver"]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Silver", self.plr.piles[Piles.DISCARD])
 

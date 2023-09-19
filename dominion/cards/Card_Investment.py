@@ -63,7 +63,7 @@ class Test_Investment(unittest.TestCase):
         self.plr.test_input = ["Trash Copper", "Trash this"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), cash)
-        self.assertIn("Investment", self.g.trashpile)
+        self.assertIn("Investment", self.g.trash_pile)
         self.assertEqual(self.plr.get_score(), score + 2)
 
 

@@ -20,7 +20,9 @@ class Card_Carpenter(Card.Card):
             return """If no Supply piles are empty, +1 Action and gain a card
                 costing up to $4.  Otherwise, trash a card from your hand and
                 gain a card costing up to $2 more than it."""
-        empties = sum([1 for st in player.game.card_piles if player.game[st].is_empty()])
+        empties = sum(
+            [1 for st in player.game.card_piles if player.game[st].is_empty()]
+        )
         if empties:
             return """Trash a card from your hand and gain
                 a card costing up to $2 more than it."""
@@ -64,7 +66,7 @@ class Test_Carpenter(unittest.TestCase):
         self.plr.test_input = ["Trash Copper", "Get Estate"]
         self.plr.play_card(self.card)
         self.assertIn("Estate", self.plr.piles[Piles.DISCARD])
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
 
 
 ###############################################################################

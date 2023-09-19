@@ -40,7 +40,7 @@ class Test_Monastery(unittest.TestCase):
         self.plr.gain_card("Silver")
         self.plr.test_input = ["Duchy"]
         self.plr.play_card(self.monastery)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
 
     def test_play_no_gained(self):
         """Play Monastery when you didn't gain a card"""

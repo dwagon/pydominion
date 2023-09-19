@@ -38,19 +38,19 @@ class TestTradingPost(unittest.TestCase):
 
     def test_play(self):
         """Play Trading Post"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["1", "2", "0"]
         self.plr.play_card(self.card)
         self.assertIn("Silver", self.plr.piles[Piles.HAND])
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
 
     def test_trash_little(self):
         """Play a trading post but don't trash enough"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["1", "0"]
         self.plr.play_card(self.card)
         self.assertNotIn("Silver", self.plr.piles[Piles.HAND])
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
 
 
 ###############################################################################

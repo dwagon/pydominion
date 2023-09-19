@@ -61,19 +61,19 @@ class Test_Fools_Gold(unittest.TestCase):
         self.assertEqual(self.plr.coins.get(), 4)
 
     def test_gain_province(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash"]
         self.other.gain_card("Province")
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertIn("Fool's Gold", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Fool's Gold", self.g.trash_pile)
 
     def test_self_gain_province(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.gain_card("Province")
         self.assertNotEqual(self.plr.piles[Piles.DECK][-1].name, "Gold")
-        self.assertEqual(self.g.trashpile.size(), tsize)
-        self.assertNotIn("Fool's Gold", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
+        self.assertNotIn("Fool's Gold", self.g.trash_pile)
 
 
 ###############################################################################

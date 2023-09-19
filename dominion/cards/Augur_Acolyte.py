@@ -62,7 +62,7 @@ class Test_Acolyte(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash self"]
         self.plr.play_card(self.card)
-        self.assertIn("Acolyte", self.g.trashpile)
+        self.assertIn("Acolyte", self.g.trash_pile)
         self.assertIn("Sorceress", self.plr.piles[Piles.DISCARD])
 
 

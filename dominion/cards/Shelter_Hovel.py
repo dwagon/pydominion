@@ -55,7 +55,7 @@ class TestHovel(unittest.TestCase):
         self.g.print_state()
         self.plr.test_input = ["Trash it"]
         self.plr.gain_card("Province")
-        self.assertIn("Hovel", self.g.trashpile)
+        self.assertIn("Hovel", self.g.trash_pile)
 
 
 ###############################################################################

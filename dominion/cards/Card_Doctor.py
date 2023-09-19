@@ -107,7 +107,7 @@ class TestDoctor(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.test_input = ["Province"]
         self.plr.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertIn("Duchy", self.plr.piles[Piles.DECK])
 
@@ -117,7 +117,7 @@ class TestDoctor(unittest.TestCase):
         self.plr.test_input = ["3", "trash", "discard", "back on top"]
         self.plr.piles[Piles.DECK].set("Silver", "Province", "Duchy")
         self.plr.buy_card("Doctor")
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertEqual(self.plr.piles[Piles.DECK][-1].name, "Silver")
 

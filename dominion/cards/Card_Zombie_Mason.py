@@ -19,7 +19,7 @@ class Card_Zombie_Mason(Card.Card):
         self.numcards = 1
 
     def setup(self, game):
-        game.trashpile.add(self)
+        game.trash_pile.add(self)
 
     def special(self, game, player):
         topdeck = player.top_card()
@@ -40,7 +40,7 @@ class Test_Zombie_Mason(unittest.TestCase):
         self.plr.piles[Piles.DECK].set("Estate")
         self.plr.test_input = ["Guide"]
         self.plr.play_card(self.card, discard=False, cost_action=False)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertIn("Estate", self.g.trash_pile)
         self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
 
 

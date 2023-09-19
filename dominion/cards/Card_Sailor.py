@@ -67,7 +67,7 @@ class Test_Sailor(unittest.TestCase):
         self.plr.start_turn()
         self.g.print_state()
         self.assertEqual(self.plr.coins.get(), 3)  # 2 for sailor, 1 for guardian
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Guardian", self.plr.piles[Piles.PLAYED])
         self.assertIn("Sailor", self.plr.piles[Piles.PLAYED])
 
@@ -81,7 +81,7 @@ class Test_Sailor(unittest.TestCase):
         self.plr.test_input = ["Trash Copper"]
         self.plr.start_turn()
         self.assertEqual(self.plr.coins.get(), 2)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
 
 
 ###############################################################################

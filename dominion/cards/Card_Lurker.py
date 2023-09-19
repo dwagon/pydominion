@@ -49,12 +49,12 @@ class Card_Lurker(Card.Card):
 
     def _from_trash(self, game, player):
         """Gain an action from the trash"""
-        acts = [_ for _ in game.trashpile if _.isAction()]
+        acts = [_ for _ in game.trash_pile if _.isAction()]
         if not acts:
             player.output("No suitable cards found")
             return
         card = player.card_sel(cardsrc=acts, prompt="Select Action from the Trash")
-        game.trashpile.remove(card[0])
+        game.trash_pile.remove(card[0])
         player.add_card(card[0], "discard")
 
 
@@ -70,14 +70,14 @@ class TestLurker(unittest.TestCase):
     def test_trash(self):
         self.plr.test_input = ["Trash an Action", "Moat"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.assertEqual(self.plr.actions.get(), 0 + 1)
 
     def test_recover(self):
         self.plr.test_input = ["Gain an Action", "Moat"]
-        self.g.trashpile.set("Moat")
+        self.g.trash_pile.set("Moat")
         self.plr.play_card(self.card)
-        self.assertNotIn("Moat", self.g.trashpile)
+        self.assertNotIn("Moat", self.g.trash_pile)
         self.assertIn("Moat", self.plr.piles[Piles.DISCARD])
 
 

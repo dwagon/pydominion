@@ -21,7 +21,7 @@ class Card_Zombie_Spy(Card.Card):
         self.actions = 1
 
     def setup(self, game):
-        game.trashpile.add(self)
+        game.trash_pile.add(self)
 
     def special(self, game, player):
         c = player.next_card()

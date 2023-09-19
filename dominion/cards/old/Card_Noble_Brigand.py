@@ -45,7 +45,7 @@ class Card_Noble_Brigand(Card.Card):
                         f"{player.name}'s Noble Brigand trashed your {card.name}"
                     )
                     player.output(f"Stole {card.name} from {victim.name}")
-                    game.trashpile.remove(ans)
+                    game.trash_pile.remove(ans)
                     card.player = player
                     player.add_card(ans)
                 else:
@@ -101,7 +101,7 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.assertIn("Silver", self.vic.piles[Piles.DISCARD])
         self.assertNotIn("Gold", self.vic.piles[Piles.DISCARD])
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
-        self.assertNotIn("Gold", self.g.trashpile)
+        self.assertNotIn("Gold", self.g.trash_pile)
 
 
 ###############################################################################

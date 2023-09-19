@@ -33,8 +33,8 @@ class TestSewers(unittest.TestCase):
         self.plr.assign_project("Sewers")
         self.plr.test_input = ["Trash Copper", "Finish", "Trash Silver", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertIn("Silver", self.g.trash_pile)
 
 
 ###############################################################################

@@ -264,7 +264,7 @@ class Player:
         if trash_opts.get("trash", True):
             if card.location and card.location != Piles.TRASH:
                 self.remove_card(card)
-            self.game.trashpile.add(card)
+            self.game.trash_pile.add(card)
             card.player = None
             card.location = Piles.TRASH
         for crd in self.relevant_cards():
@@ -954,7 +954,7 @@ class Player:
             f"| Discard ({len(self.piles[Piles.DISCARD])}): {', '.join([str(_) for _ in self.piles[Piles.DISCARD]])}"
         )  # Debug
         self.output(
-            f"| Trash ({len(self.game.trashpile)}): {', '.join([str(_) for _ in self.game.trashpile])}"
+            f"| Trash ({len(self.game.trash_pile)}): {', '.join([str(_) for _ in self.game.trash_pile])}"
         )  # Debug
         self.output(f"| {self.piles[Piles.DISCARD].size()} cards in discard pile")
         self.output("-" * 50)

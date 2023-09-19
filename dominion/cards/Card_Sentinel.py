@@ -46,7 +46,7 @@ class TestSentinel(unittest.TestCase):
         )
         self.plr.test_input = ["Trash Copper", "Finish"]
         self.plr.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
 

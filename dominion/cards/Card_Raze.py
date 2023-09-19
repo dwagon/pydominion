@@ -59,7 +59,7 @@ class Test_Raze(unittest.TestCase):
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
         self.assertIn("Silver", self.plr.piles[Piles.DECK])
-        self.assertIn("Raze", self.g.trashpile)
+        self.assertIn("Raze", self.g.trash_pile)
 
     def test_copper(self):
         """Play a raze - trashing copper - a zero value card"""
@@ -69,7 +69,7 @@ class Test_Raze(unittest.TestCase):
         self.plr.test_input = ["Copper", "Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
 
 
 ###############################################################################

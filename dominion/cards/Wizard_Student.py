@@ -54,7 +54,7 @@ class TestStudent(unittest.TestCase):
         self.plr.test_input = ["Don't change", "Trash Copper"]
         favors = self.plr.favors.get()
         self.plr.play_card(card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favors + 1)
 
@@ -69,7 +69,7 @@ class TestStudent(unittest.TestCase):
         self.plr.test_input = ["Don't change", "Trash Estate"]
         favors = self.plr.favors.get()
         self.plr.play_card(card)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertIn("Estate", self.g.trash_pile)
         self.assertNotIn("Student", self.plr.piles[Piles.DECK])
         self.assertEqual(self.plr.favors.get(), favors)
 

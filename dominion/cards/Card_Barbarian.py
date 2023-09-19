@@ -90,7 +90,7 @@ class TestBarbarian(unittest.TestCase):
         """Test against a low-cost victim card"""
         self.victim.piles[Piles.DECK].set("Estate", "Copper")
         self.attacker.play_card(self.card)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
         self.assertIn("Curse", self.victim.piles[Piles.DISCARD])
 
     def test_expense(self):
@@ -98,7 +98,7 @@ class TestBarbarian(unittest.TestCase):
         self.victim.piles[Piles.DECK].set("Estate", "Province")
         self.victim.test_input = ["Select Duchy"]
         self.attacker.play_card(self.card)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertNotIn("Curse", self.victim.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.victim.piles[Piles.DISCARD])
 

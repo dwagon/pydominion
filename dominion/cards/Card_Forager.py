@@ -21,7 +21,7 @@ class Card_Forager(Card.Card):
     def special(self, game, player):
         player.plr_trash_card()
         treas = set()
-        for card in game.trashpile:
+        for card in game.trash_pile:
             if card.isTreasure():
                 treas.add(card.name)
         player.coins.add(len(treas))
@@ -46,7 +46,7 @@ class Test_Forager(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.buys.get(), 2)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
         self.assertEqual(self.plr.coins.get(), 2)
 
 

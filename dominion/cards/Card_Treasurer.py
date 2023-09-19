@@ -19,7 +19,7 @@ class Card_Treasurer(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        gain_treas = [_ for _ in game.trashpile if _.isTreasure()]
+        gain_treas = [_ for _ in game.trash_pile if _.isTreasure()]
         choice = player.plr_choose_options(
             "Choose one?",
             ("Trash a treasure from your hand", "trash"),
@@ -35,7 +35,7 @@ class Card_Treasurer(Card.Card):
         elif choice == "gain":
             card = player.card_sel(cardsrc=gain_treas, prompt="Select Treasure from the Trash")
             if card:
-                game.trashpile.remove(card[0])
+                game.trash_pile.remove(card[0])
                 player.add_card(card[0], Piles.HAND)
         elif choice == "key":
             player.assign_artifact("Key")
@@ -55,14 +55,14 @@ class Test_Treasurer(unittest.TestCase):
         self.plr.test_input = ["Trash a treasure", "Silver"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertIn("Silver", self.g.trashpile)
+        self.assertIn("Silver", self.g.trash_pile)
 
     def test_play_recover(self):
-        self.g.trashpile.set("Gold", "Estate")
+        self.g.trash_pile.set("Gold", "Estate")
         self.plr.test_input = ["Gain a treasure", "Gold"]
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 3)
-        self.assertNotIn("Gold", self.g.trashpile)
+        self.assertNotIn("Gold", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
     def test_play_key(self):

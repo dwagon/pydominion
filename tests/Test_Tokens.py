@@ -53,13 +53,13 @@ class TestToken(unittest.TestCase):
 
     def test_trashing_token(self):
         """Does the Trashing token work"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold", "Province", "Duchy")
         self.plr.place_token("Trashing", "Moat")
         self.plr.test_input = ["trash province"]
         self.plr.coins.set(5)
         self.plr.buy_card("Moat")
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
 
     def test_cost_token(self):
         """Does the -Cost token work"""

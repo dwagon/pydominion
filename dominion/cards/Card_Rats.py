@@ -44,14 +44,14 @@ class Test_Rats(unittest.TestCase):
     def test_play(self):
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
 
     def test_trashcard(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.test_input = ["trash copper"]
         self.plr.play_card(self.rats)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertNotEqual(self.g.trashpile[0].name, "Rats")
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertNotEqual(self.g.trash_pile[0].name, "Rats")
 
     def test_gainrats(self):
         self.plr.test_input = ["trash copper"]

@@ -44,25 +44,25 @@ class Test_Treasuremap(unittest.TestCase):
 
     def test_trash(self):
         """Trash a TM"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set()
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["0", "1", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 1)
-        self.assertIn("Treasure Map", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 1)
+        self.assertIn("Treasure Map", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 0)
 
     def test_trash_two(self):
         """Trash 2 TM"""
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set()
         self.plr.piles[Piles.HAND].set("Treasure Map")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["1", "finish"]
         self.plr.play_card(self.card)
-        self.assertEqual(self.g.trashpile.size(), tsize + 2)
-        self.assertIn("Treasure Map", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), tsize + 2)
+        self.assertIn("Treasure Map", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.DECK].size(), 4)
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
 

@@ -70,7 +70,7 @@ class TestRebuild(unittest.TestCase):
 
     def test_play(self):
         """Play a rebuild"""
-        trash_size = self.g.trashpile.size()
+        trash_size = self.g.trash_pile.size()
         self.plr.piles[Piles.DECK].set("Copper", "Copper", "Estate", "Province", "Gold")
         self.plr.test_input = ["Province", "Get Duchy"]
         self.plr.play_card(self.card)
@@ -79,8 +79,8 @@ class TestRebuild(unittest.TestCase):
         self.assertIn("Gold", self.plr.piles[Piles.DISCARD])
         self.assertIn("Province", self.plr.piles[Piles.DISCARD])
         self.assertIn("Duchy", self.plr.piles[Piles.DISCARD])
-        self.assertEqual(self.g.trashpile.size(), trash_size + 1)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertEqual(self.g.trash_pile.size(), trash_size + 1)
+        self.assertIn("Estate", self.g.trash_pile)
 
 
 ###############################################################################

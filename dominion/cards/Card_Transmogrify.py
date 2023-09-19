@@ -52,7 +52,7 @@ class Test_Transmogrify(unittest.TestCase):
         self.plr.piles[Piles.RESERVE].set("Transmogrify")
         self.plr.test_input = ["trash duchy", "get gold"]
         self.plr.call_reserve("Transmogrify")
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
 
 

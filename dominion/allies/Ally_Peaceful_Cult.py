@@ -43,7 +43,7 @@ class TestPeacefulCult(unittest.TestCase):
         self.plr.test_input = ["Trash Copper", "Finish", "End Phase"]
         self.plr.buy_phase()
         self.assertEqual(self.plr.favors.get(), 1)
-        self.assertIn("Copper", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
 
 
 ###############################################################################

@@ -37,7 +37,7 @@ class Test_SaltEarth(unittest.TestCase):
         self.plr.test_input = ["Province"]
         self.plr.perform_event(self.event)
         self.assertEqual(self.plr.get_score_details()["Salt the Earth"], 1)
-        self.assertIn("Province", self.g.trashpile)
+        self.assertIn("Province", self.g.trash_pile)
 
 
 ###############################################################################

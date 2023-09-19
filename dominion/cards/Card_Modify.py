@@ -46,7 +46,7 @@ class Test_Modify(unittest.TestCase):
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 2 + 1)
-        self.assertIn("Estate", self.g.trashpile)
+        self.assertIn("Estate", self.g.trash_pile)
 
     def test_play_gain(self):
         """Play the card gaining a card"""

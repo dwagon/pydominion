@@ -50,7 +50,7 @@ class TestProcession(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Moat", "Witch"]
         self.plr.play_card(self.card)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 4)
         self.assertIn("Witch", self.plr.piles[Piles.DISCARD])
 

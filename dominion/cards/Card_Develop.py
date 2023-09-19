@@ -43,7 +43,7 @@ class Test_Develop(unittest.TestCase):
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["trash duchy", "get gold", "smithy"]
         self.plr.play_card(self.card)
-        self.assertIn("Duchy", self.g.trashpile)
+        self.assertIn("Duchy", self.g.trash_pile)
         self.assertIn("Gold", self.plr.piles[Piles.DECK])
         self.assertIn("Smithy", self.plr.piles[Piles.DECK])
 

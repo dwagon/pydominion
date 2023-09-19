@@ -34,9 +34,9 @@ class Test_Cemetery(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Estate", "Duchy", "Province")
         self.plr.test_input = ["Copper", "Silver", "Gold", "Estate", "Finish"]
         self.plr.gain_card("Cemetery")
-        self.assertIn("Copper", self.g.trashpile)
-        self.assertIn("Gold", self.g.trashpile)
-        self.assertNotIn("Duchy", self.g.trashpile)
+        self.assertIn("Copper", self.g.trash_pile)
+        self.assertIn("Gold", self.g.trash_pile)
+        self.assertNotIn("Duchy", self.g.trash_pile)
         self.assertEqual(self.plr.get_score_details()["Cemetery"], 2)
 
 

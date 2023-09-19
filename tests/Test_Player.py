@@ -55,7 +55,7 @@ class TestTrashCard(unittest.TestCase):
         card = self.plr.piles[Piles.HAND][0]
         self.plr.trash_card(card)
         self.assertEqual(num_cards, self.game.count_cards())
-        self.assertIn(card, self.game.trashpile)
+        self.assertIn(card, self.game.trash_pile)
         self.assertNotIn(card, self.plr.piles[Piles.HAND])
         self.assertEqual(card.location, "trash")
         self.assertEqual(card.player, None)
@@ -66,7 +66,7 @@ class TestTrashCard(unittest.TestCase):
         num_cards = self.game.count_cards()
         card = self.plr.piles[Piles.PLAYED][0]
         self.plr.trash_card(card)
-        self.assertIn(card, self.game.trashpile)
+        self.assertIn(card, self.game.trash_pile)
         self.assertEqual(num_cards, self.game.count_cards())
         self.assertEqual(len(self.plr.piles[Piles.PLAYED]), 0)
         self.assertIn(card, self.plr.stats["trashed"])
@@ -279,7 +279,7 @@ class TestPlrTrashCard(unittest.TestCase):
         self.plr.test_input = ["0"]
         trashed = self.plr.plr_trash_card()
         self.assertEqual(trashed, [])
-        self.assertNotIn("Gold", self.game.trashpile)
+        self.assertNotIn("Gold", self.game.trash_pile)
 
     def test_Two(self):
         """Trash Two cards"""
@@ -287,28 +287,28 @@ class TestPlrTrashCard(unittest.TestCase):
         self.plr.test_input = ["Gold", "Silver", "0"]
         trashed = self.plr.plr_trash_card(num=2)
         self.assertEqual(len(trashed), 2)
-        self.assertIn("Gold", self.game.trashpile)
-        self.assertIn("Silver", self.game.trashpile)
+        self.assertIn("Gold", self.game.trash_pile)
+        self.assertIn("Silver", self.game.trash_pile)
         self.assertIn("Copper", self.plr.piles[Piles.HAND])
 
     def test_Trash(self):
         """Test trashing"""
-        tsize = self.game.trashpile.size()
+        tsize = self.game.trash_pile.size()
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["1"]
         trashed = self.plr.plr_trash_card()
         self.assertEqual(trashed[0].name, "Gold")
-        self.assertEqual(self.game.trashpile.size(), tsize + 1)
-        self.assertIn("Gold", self.game.trashpile)
+        self.assertEqual(self.game.trash_pile.size(), tsize + 1)
+        self.assertIn("Gold", self.game.trash_pile)
 
     def test_force(self):
         """Test trashing a card with force"""
-        self.game.trashpile.set()
+        self.game.trash_pile.set()
         self.plr.piles[Piles.HAND].set("Gold")
         self.plr.test_input = ["0", "1"]
         trashed = self.plr.plr_trash_card(force=True)
         self.assertEqual(trashed[0].name, "Gold")
-        self.assertEqual(self.game.trashpile[-1].name, "Gold")
+        self.assertEqual(self.game.trash_pile[-1].name, "Gold")
         for m in self.plr.messages:
             if "Invalid Option" in m:
                 break
@@ -324,7 +324,7 @@ class TestPlrTrashCard(unittest.TestCase):
         self.plr.test_input = ["1"]
         trashed = self.plr.plr_trash_card(exclude=["Gold"])
         self.assertEqual(trashed[0].name, "Copper")
-        self.assertIn("Copper", self.game.trashpile)
+        self.assertIn("Copper", self.game.trash_pile)
 
     def test_from_nothing(self):
         """Trash when there are no cards to trash"""

@@ -75,7 +75,7 @@ class Test_Catacombs(unittest.TestCase):
         self.plr.trash_card(self.cat)
         self.assertEqual(self.plr.piles[Piles.DISCARD].size(), 1)
         self.assertTrue(self.plr.piles[Piles.DISCARD][0].cost < self.cat.cost)
-        self.assertIn("Catacombs", self.g.trashpile)
+        self.assertIn("Catacombs", self.g.trash_pile)
 
 
 ###############################################################################

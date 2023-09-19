@@ -19,7 +19,7 @@ class Card_Zombie_Apprentice(Card.Card):
         self.numcards = 1
 
     def setup(self, game):
-        game.trashpile.add(self)
+        game.trash_pile.add(self)
 
     def special(self, game, player):
         actions = [_ for _ in player.piles[Piles.HAND] if _.isAction()]
@@ -44,10 +44,10 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.card = self.g["Zombie Apprentice"].remove()
 
     def test_play_noactions(self):
-        tsize = self.g.trashpile.size()
+        tsize = self.g.trash_pile.size()
         self.plr.play_card(self.card, discard=False, cost_action=False)
-        self.assertIn("Zombie Apprentice", self.g.trashpile)
-        self.assertEqual(self.g.trashpile.size(), tsize)
+        self.assertIn("Zombie Apprentice", self.g.trash_pile)
+        self.assertEqual(self.g.trash_pile.size(), tsize)
 
     def test_play_action(self):
         self.plr.piles[Piles.HAND].set("Moat")
@@ -55,8 +55,8 @@ class Test_Zombie_Apprentice(unittest.TestCase):
         self.plr.play_card(self.card, discard=False, cost_action=False)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 3)
         self.assertEqual(self.plr.actions.get(), 2)
-        self.assertIn("Zombie Apprentice", self.g.trashpile)
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Zombie Apprentice", self.g.trash_pile)
+        self.assertIn("Moat", self.g.trash_pile)
 
 
 ###############################################################################

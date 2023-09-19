@@ -44,7 +44,7 @@ class Test_Improve(unittest.TestCase):
         self.plr.play_card(self.card)
         self.plr.test_input = ["End phase", "End phase", "Trash Moat", "Get Guide"]
         self.plr.turn()
-        self.assertIn("Moat", self.g.trashpile)
+        self.assertIn("Moat", self.g.trash_pile)
         self.assertIn("Guide", self.plr.piles[Piles.DISCARD])
 
 
