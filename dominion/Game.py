@@ -80,7 +80,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self._base_cards.append("Colony")
             self._base_cards.append("Platinum")
 
-        self.cardmapping = self._get_available_card_classes()
+        self.card_mapping = self._get_available_card_classes()
         self._original = {}
         self.loaded_travellers = False  # For testing purposes
         self._cards = {}
@@ -142,7 +142,7 @@ class Game:  # pylint: disable=too-many-public-methods
             for _ in range(self.numplayers):
                 shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
                 for shelter in shelters:
-                    shelter_card = self.cardmapping["Shelter"][shelter]()
+                    shelter_card = self.card_mapping["Shelter"][shelter]()
                     self.cardpiles["Shelters"].add(shelter_card)
         return use_shelters
 
@@ -360,13 +360,13 @@ class Game:  # pylint: disable=too-many-public-methods
         if specified is not None:
             for nkc in specified:
                 try:
-                    if nkc not in self.cardmapping[cardtype]:
+                    if nkc not in self.card_mapping[cardtype]:
                         nkc = self.guess_cardname(nkc, cardtype)
                         if nkc is None:
                             sys.stderr.write(f"Unknown {cardtype} '{nkc}'\n")
                             sys.exit(1)
                         print(f"Guessed {nkc}")
-                    klass = self.cardmapping[cardtype][nkc]
+                    klass = self.card_mapping[cardtype][nkc]
                     dest[nkc] = cardKlass(nkc, klass)
                     available.remove(nkc)
                 except (ValueError, KeyError):
@@ -376,12 +376,12 @@ class Game:  # pylint: disable=too-many-public-methods
             # To make up the numbers
             while len(dest) < num_required:
                 nkc = random.choice(available)
-                klass = self.cardmapping[cardtype][nkc]
+                klass = self.card_mapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
                 available.remove(nkc)
         else:  # Do them all
             for nkc in available:
-                klass = self.cardmapping[cardtype][nkc]
+                klass = self.card_mapping[cardtype][nkc]
                 dest[nkc] = cardKlass(nkc, klass)
 
         for crd in dest:
@@ -421,7 +421,7 @@ class Game:  # pylint: disable=too-many-public-methods
         # If base cards are specified by initcards
         if card_name := self.guess_cardname(card, prefix="BaseCard"):
             card_pile = CardPile(self)
-            card_pile.init_cards(10, self.cardmapping["BaseCard"][card_name])
+            card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
             self.cardpiles[card_name] = card_pile
         elif card_name := self.guess_cardname(card):
             self._use_card_pile(available, card_name, force=True)
@@ -494,7 +494,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def getPrizes(self):
         """TODO"""
-        return list(self.cardmapping["PrizeCard"].keys())
+        return list(self.card_mapping["PrizeCard"].keys())
 
     ###########################################################################
     def _num_cards_in_pile(self, card) -> int:
@@ -518,13 +518,13 @@ class Game:  # pylint: disable=too-many-public-methods
         except ValueError:  # pragma: no cover
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
-        card = self.cardmapping[card_type][card_name]()
+        card = self.card_mapping[card_type][card_name]()
         num_cards = self._num_cards_in_pile(card)
         if hasattr(card, "cardpile_setup"):
             card_pile = card.cardpile_setup(self)
         else:
             card_pile = CardPile(self)
-        card_pile.init_cards(num_cards, self.cardmapping[card_type][card_name])
+        card_pile.init_cards(num_cards, self.card_mapping[card_type][card_name])
         if not force and not card.insupply:
             return 0
 
@@ -690,7 +690,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def getAvailableCards(self, prefix: str = "Card") -> List[str]:
         """TODO"""
-        return list(self.cardmapping[prefix].keys())
+        return list(self.card_mapping[prefix].keys())
 
     ###########################################################################
     def get_action_piles(self, cost=999):

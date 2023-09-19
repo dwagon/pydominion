@@ -26,7 +26,7 @@ class Card_YoungWitch(Card.Card):
         """Setup: Add an extra Kingdom card pile costing 2 or 3 to the Supply.
         Cards from that pile are Bane cards."""
         banes = []
-        for klass in game.cardmapping["Card"].values():
+        for klass in game.card_mapping["Card"].values():
             card = klass()
             if card.name in game:
                 continue
