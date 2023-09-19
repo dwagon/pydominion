@@ -20,14 +20,14 @@ class Card_Carpenter(Card.Card):
             return """If no Supply piles are empty, +1 Action and gain a card
                 costing up to $4.  Otherwise, trash a card from your hand and
                 gain a card costing up to $2 more than it."""
-        empties = sum([1 for st in player.game.cardpiles if player.game[st].is_empty()])
+        empties = sum([1 for st in player.game.card_piles if player.game[st].is_empty()])
         if empties:
             return """Trash a card from your hand and gain
                 a card costing up to $2 more than it."""
         return """+1 Action and gain a card costing up to $4."""
 
     def special(self, game, player):
-        empties = sum([1 for st in game.cardpiles if game[st].is_empty()])
+        empties = sum([1 for st in game.card_piles if game[st].is_empty()])
         if not empties:
             player.add_actions(1)
             player.plr_gain_card(4)

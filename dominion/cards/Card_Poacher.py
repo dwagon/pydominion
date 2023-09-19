@@ -21,7 +21,7 @@ class Card_Poacher(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        empties = sum(1 for st in game.cardpiles if game[st].is_empty())
+        empties = sum(1 for st in game.card_piles if game[st].is_empty())
         if empties:
             player.plr_discard_cards(num=empties, force=True)
 

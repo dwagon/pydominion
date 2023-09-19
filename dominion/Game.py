@@ -40,7 +40,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self.players = {}
         self.bot = False
         self.randobot = False
-        self.cardpiles = {}
+        self.card_piles = {}
         self.states = {}
         self.artifacts = {}
         self.projects = {}
@@ -131,19 +131,19 @@ class Game:  # pylint: disable=too-many-public-methods
             return False
 
         # Pick a card to see if it is a dark ages card
-        halfway = int(len(self.cardpiles) / 2)
-        name, card_pile = list(self.cardpiles.items())[halfway]
+        halfway = int(len(self.card_piles) / 2)
+        name, card_pile = list(self.card_piles.items())[halfway]
         card = self.get_card_from_pile(name)
         if card.base == CardExpansion.DARKAGES:
             use_shelters = True
 
         if use_shelters:
-            self.cardpiles["Shelters"] = CardPile(self)
+            self.card_piles["Shelters"] = CardPile(self)
             for _ in range(self.numplayers):
                 shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
                 for shelter in shelters:
                     shelter_card = self.card_mapping["Shelter"][shelter]()
-                    self.cardpiles["Shelters"].add(shelter_card)
+                    self.card_piles["Shelters"].add(shelter_card)
         return use_shelters
 
     ###########################################################################
@@ -227,7 +227,7 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def card_setup(self):
         """Run the setup() method for all cards"""
-        for name, card_pile in list(self.cardpiles.items()):
+        for name, card_pile in list(self.card_piles.items()):
             try:  # Handle empty card piles
                 card_pile.setup(game=self)
             except TypeError:
@@ -239,7 +239,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def count_cards(self):
         """TODO"""
         count = {"trash": self.trashpile.size()}
-        for name, pile in list(self.cardpiles.items()):
+        for name, pile in list(self.card_piles.items()):
             count[f"pile_{name}"] = len(pile)
         for plr in self.player_list():
             count[f"player_{plr.name}"] = plr.count_cards()
@@ -422,7 +422,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if card_name := self.guess_cardname(card, prefix="BaseCard"):
             card_pile = CardPile(self)
             card_pile.init_cards(10, self.card_mapping["BaseCard"][card_name])
-            self.cardpiles[card_name] = card_pile
+            self.card_piles[card_name] = card_pile
         elif card_name := self.guess_cardname(card):
             self._use_card_pile(available, card_name, force=True)
             return 1
@@ -528,7 +528,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if not force and not card.insupply:
             return 0
 
-        self.cardpiles[card_name] = card_pile
+        self.card_piles[card_name] = card_pile
         for card in card_pile:
             self._cards[card.uuid] = card
             if not card.pile:
@@ -541,7 +541,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def get_card_from_pile(self, pile: str, name: Optional[str] = None):
         """Get and return a card from pile (with name if specified)"""
         assert isinstance(pile, str), f"{pile=} {type(pile)=}"
-        assert pile in self.cardpiles, f"{pile=} not in {self.cardpiles=}"
+        assert pile in self.card_piles, f"{pile=} not in {self.card_piles=}"
         return self[pile].remove(name)
 
     ###########################################################################
@@ -571,7 +571,7 @@ class Game:  # pylint: disable=too-many-public-methods
                     krdtype, crd = x
                 else:
                     krdtype, crd = "BaseCard", x
-                if crd not in self.cardpiles:
+                if crd not in self.card_piles:
                     self._use_card_pile(None, crd, force=True, card_type=krdtype)
                     self.output(f"Playing with {crd} as required by {card.name}")
 
@@ -582,7 +582,7 @@ class Game:  # pylint: disable=too-many-public-methods
                 self._heirlooms.append(card.heirloom)
                 self.output(f"Playing with {card.heirloom} as required by {card.name}")
 
-            if card.isLooter() and "Ruins" not in self.cardpiles:
+            if card.isLooter() and "Ruins" not in self.card_piles:
                 self._use_ruins(card)
             if card.isFate() and not self.boons:
                 self._load_boons()
@@ -610,17 +610,17 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def card_piles(self):
         """TODO"""
-        return self.cardpiles.items()
+        return self.card_piles.items()
 
     ###########################################################################
     def __getitem__(self, key):
         """Return the card using `game[card_name]`"""
-        return self.cardpiles[key]
+        return self.card_piles[key]
 
     ###########################################################################
     def __contains__(self, key):
         """TODO"""
-        return key in self.cardpiles
+        return key in self.card_piles
 
     ###########################################################################
     def _get_available_card_classes(self):
@@ -696,7 +696,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def get_action_piles(self, cost=999):
         """Return all cardstacks that are action cards that cost less than cost"""
         action_piles = []
-        for name, pile in self.cardpiles.items():
+        for name, pile in self.card_piles.items():
             card = pile.get_top_card()
             if not card:
                 continue
@@ -712,7 +712,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def getTreasurePiles(self):
         """Return all cardstacks that are treasure cards"""
         treasurepiles = []
-        for cpile in self.cardpiles.values():
+        for cpile in self.card_piles.values():
             if cpile.isTreasure():
                 treasurepiles.append(cpile)
         return treasurepiles
@@ -721,7 +721,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def getVictoryPiles(self):
         """Return all card stack names that are victory cards"""
         victory_piles = []
-        for name, _ in self.cardpiles.items():
+        for name, _ in self.card_piles.items():
             card = self.get_card_from_pile(name)
             if card.isVictory():
                 victory_piles.append(name)
@@ -731,7 +731,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def isGameOver(self) -> bool:
         """is the game over"""
         empties = []
-        for cpil in self.cardpiles:
+        for cpil in self.card_piles:
             if self[cpil].is_empty():
                 empties.append(cpil)
         if len(empties) >= 3:
@@ -837,7 +837,7 @@ class Game:  # pylint: disable=too-many-public-methods
         if self.ally:
             print(f"Ally: {self.ally.name}")
         print(f"Projects: {', '.join([_.name for _ in self.projects.values()])}")
-        for name, card_pile in self.cardpiles.items():
+        for name, card_pile in self.card_piles.items():
             tokens = ""
             for plr in self.player_list():
                 tkns = plr.which_token(name)
@@ -893,7 +893,7 @@ class Game:  # pylint: disable=too-many-public-methods
     def _count_all_cards(self) -> dict:  # pragma: no cover
         """Return where all the cards are"""
         tmp = {}
-        for pile_name, pile in self.cardpiles.items():
+        for pile_name, pile in self.card_piles.items():
             tmp[pile_name] = {}
             total = len(pile)
             tmp[pile_name]["pile"] = total
@@ -925,7 +925,7 @@ class Game:  # pylint: disable=too-many-public-methods
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
         )
-        for pile in self.cardpiles.values():
+        for pile in self.card_piles.values():
             card = pile.name
             if self._original["count"][card]["total"] == now[card]["total"]:
                 continue

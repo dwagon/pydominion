@@ -23,20 +23,20 @@ class TestArgs(unittest.TestCase):
         """TODO"""
         g = Game.TestGame(initcards=["Moat"])
         g.start_game()
-        self.assertIn("Moat", g.cardpiles)
+        self.assertIn("Moat", g.card_piles)
 
     def test_basecard(self):
         """Make sure that if you specify a basecard in initcards it works"""
         g = Game.TestGame(initcards=["Platinum"])
         g.start_game()
-        self.assertIn("Platinum", g.cardpiles)
+        self.assertIn("Platinum", g.card_piles)
 
     def test_prosperity(self):
         """TODO"""
         g = Game.TestGame(prosperity=True)
         g.start_game()
-        self.assertIn("Colony", g.cardpiles)
-        self.assertIn("Platinum", g.cardpiles)
+        self.assertIn("Colony", g.card_piles)
+        self.assertIn("Platinum", g.card_piles)
 
     def test_event(self):
         """Test that we can specify an event on the command line"""
@@ -48,7 +48,7 @@ class TestArgs(unittest.TestCase):
         """Can we access old cards"""
         g = Game.TestGame(cardpath="tests/cards", oldcards=True)
         g.start_game()
-        self.assertIn("OldCard", g.cardpiles)
+        self.assertIn("OldCard", g.card_piles)
 
 
 ###############################################################################

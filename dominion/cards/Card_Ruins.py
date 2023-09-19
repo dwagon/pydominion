@@ -15,8 +15,8 @@ class Card_Ruins(Card.Card):
         self.base = Card.CardExpansion.DARKAGES
 
     def setup(self, game):
-        game.cardpiles["Ruins"] = RuinCardPile(game)
-        game.cardpiles["Ruins"].init_cards(min(10, game.numplayers * 10 - 10))
+        game.card_piles["Ruins"] = RuinCardPile(game)
+        game.card_piles["Ruins"].init_cards(min(10, game.numplayers * 10 - 10))
 
 
 ###############################################################################

@@ -13,8 +13,8 @@ class Card_Castles(Card.Card):
         self.base = Card.CardExpansion.EMPIRES
 
     def setup(self, game):
-        game.cardpiles["Castles"] = CastleCardPile(game)
-        game.cardpiles["Castles"].init_cards()
+        game.card_piles["Castles"] = CastleCardPile(game)
+        game.card_piles["Castles"].init_cards()
 
 
 ###############################################################################

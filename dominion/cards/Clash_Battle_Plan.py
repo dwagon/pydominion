@@ -35,7 +35,7 @@ class Card_Battle_Plan(Card.Card):
                 player.reveal_card(reveal)
                 player.pickup_card()
         # Rotate pile selection
-        piles = list(game.cardpiles.keys())
+        piles = list(game.card_piles.keys())
         piles.sort()
         options = [("Don't do anything", False)]
         for pile in piles:

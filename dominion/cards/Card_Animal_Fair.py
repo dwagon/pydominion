@@ -20,7 +20,7 @@ class Card_Animal_Fair(Card.Card):
         self.cost = 7
 
     def special(self, game, player):
-        empties = sum(1 for st in game.cardpiles if game[st].is_empty())
+        empties = sum(1 for st in game.card_piles if game[st].is_empty())
         player.buys.add(empties)
 
     def todo_hook_buy_this_card(self, game, player):

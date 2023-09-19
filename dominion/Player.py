@@ -159,7 +159,7 @@ class Player:
 
         newcard = self.gain_card(card_name=dst, destination=destination, callhook=False)
         if newcard:
-            card_pile = self.game.cardpiles[src.name]
+            card_pile = self.game.card_piles[src.name]
             card_pile.add(src)
             self.piles[Piles.PLAYED].remove(src)
 
