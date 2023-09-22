@@ -54,7 +54,7 @@ class Test_Villain(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Villain"], numhexes=0, numboons=0)
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Villain"].remove()
+        self.card = self.g.get_card_from_pile("Villain")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

@@ -39,7 +39,7 @@ class TestMarketSquare(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Market Square"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Market Square"].remove()
+        self.card = self.g.get_card_from_pile("Market Square")
 
     def test_play(self):
         """Play the card"""

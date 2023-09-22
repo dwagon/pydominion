@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Ambassador"""
 import unittest
 from dominion import Card, Game, Piles
 
@@ -35,26 +35,25 @@ class Card_Ambassador(Card.Card):
         choice = self.pick_card(player)
         if not choice:
             return
-        cardname = choice[0].name
+        card_name = choice[0].name
         player.reveal_card(choice[0])
-        player.output(f"Putting {cardname} back")
+        player.output(f"Putting {card_name} back")
         for card in choice:
-            player.remove_card(card)
-            game[cardname].add(card)
+            player.move_card(card, Piles.CARDPILE)
         for plr in player.attack_victims():
-            plr.output(f"Gained a {cardname} from {player.name}'s Ambassador")
-            plr.gain_card(cardname)
+            plr.output(f"Gained a {card_name} from {player.name}'s Ambassador")
+            plr.gain_card(card_name)
 
 
 ###############################################################################
-class Test_Ambassador(unittest.TestCase):
+class TestAmbassador(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(
             numplayers=2, initcards=["Ambassador"], badcards=["Duchess"], oldcards=True
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Ambassador"].remove()
+        self.card = self.g.get_card_from_pile("Ambassador")
 
     def test_play(self):
         """Play the card"""

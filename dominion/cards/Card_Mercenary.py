@@ -47,7 +47,7 @@ class Test_Mercenary(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Urchin", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Mercenary"].remove()
+        self.card = self.g.get_card_from_pile("Mercenary")
 
     def test_play(self):
         """Trash nothing with mercenary - should do nothing"""
@@ -61,7 +61,7 @@ class Test_Mercenary(unittest.TestCase):
         """Make sure moats work against mercenaries"""
         tsize = self.g.trash_pile.size()
         self.plr.add_card(self.card, Piles.HAND)
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.victim.add_card(moat, Piles.HAND)
         self.plr.test_input = ["1", "1", "2", "0"]
         self.plr.play_card(self.card)

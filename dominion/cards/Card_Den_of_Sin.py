@@ -32,7 +32,7 @@ class Test_Den_of_Sin(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Den of Sin"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Den of Sin"].remove()
+        self.card = self.g.get_card_from_pile("Den of Sin")
 
     def test_gain(self):
         self.plr.gain_card("Den of Sin")

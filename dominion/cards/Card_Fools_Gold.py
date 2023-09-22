@@ -46,7 +46,7 @@ class Test_Fools_Gold(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Fool's Gold"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Fool's Gold"].remove()
+        self.card = self.g.get_card_from_pile("Fool's Gold")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_once(self):

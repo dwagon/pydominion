@@ -46,7 +46,7 @@ class TestMint(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Mint", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Mint"].remove()
+        self.card = self.g.get_card_from_pile("Mint")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Duchy", "Gold", "Silver", "Estate")

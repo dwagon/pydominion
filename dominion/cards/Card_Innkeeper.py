@@ -40,7 +40,7 @@ class Test_Innkeeper(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Innkeeper"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Innkeeper"].remove()
+        self.card = self.g.get_card_from_pile("Innkeeper")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_one(self):

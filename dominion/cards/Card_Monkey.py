@@ -36,7 +36,7 @@ class Test_Monkey(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Monkey", "Moat"])
         self.g.start_game()
         self.plr, self.oth = self.g.player_list()
-        self.card = self.g["Monkey"].remove()
+        self.card = self.g.get_card_from_pile("Monkey")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

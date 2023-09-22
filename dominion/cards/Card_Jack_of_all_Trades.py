@@ -46,7 +46,7 @@ class Test_Jack_of_all_Trades(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Jack of all Trades"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Jack of all Trades"].remove()
+        self.card = self.g.get_card_from_pile("Jack of all Trades")
 
     def test_play(self):
         """Play a Jack of all Trades"""

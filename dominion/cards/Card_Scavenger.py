@@ -50,7 +50,7 @@ class Test_Scavenger(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Scavenger", "Moat", "Witch"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Scavenger"].remove()
+        self.card = self.g.get_card_from_pile("Scavenger")
 
     def test_play(self):
         """Play a scheme"""

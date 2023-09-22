@@ -19,7 +19,7 @@ class Card_City(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        empties = sum([1 for st in game.card_piles if game[st].is_empty()])
+        empties = sum([1 for _, st in game.get_card_piles() if st.is_empty()])
         if empties >= 1:
             player.pickup_card()
         if empties >= 2:
@@ -33,7 +33,7 @@ class TestCity(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["City", "Moat", "Cellar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.city = self.g["City"].remove()
+        self.city = self.g.get_card_from_pile("City")
         self.plr.add_card(self.city, Piles.HAND)
 
     def test_no_stacks(self):
@@ -46,7 +46,7 @@ class TestCity(unittest.TestCase):
     def test_one_stack(self):
         """Play a city with one stacks empty"""
         while True:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
             if not c:
                 break
         self.plr.play_card(self.city)
@@ -56,11 +56,11 @@ class TestCity(unittest.TestCase):
     def test_two_stack(self):
         """Play a city with two stacks empty"""
         while True:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
             if not c:
                 break
         while True:
-            c = self.g["Cellar"].remove()
+            c = self.g.get_card_from_pile("Cellar")
             if not c:
                 break
         self.plr.play_card(self.city)

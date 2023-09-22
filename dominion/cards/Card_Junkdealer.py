@@ -28,7 +28,7 @@ class Test_Junkdealer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Junk Dealer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.jd = self.g["Junk Dealer"].remove()
+        self.jd = self.g.get_card_from_pile("Junk Dealer")
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Silver", "Gold")
         self.plr.piles[Piles.DECK].set("Estate", "Province", "Duchy")
         self.plr.add_card(self.jd, Piles.HAND)

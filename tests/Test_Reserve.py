@@ -80,15 +80,15 @@ class TestReserve(unittest.TestCase):
         self.assertIsNone(c)
 
     def test_addcard_reserve(self):
-        gold = self.g["Gold"].remove()
+        gold = self.g.get_card_from_pile("Gold")
         self.plr.add_card(gold, "reserve")
         self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
         self.assertEqual(self.plr.piles[Piles.RESERVE][0].name, "Gold")
 
     def test_isreserve(self):
-        gold = self.g["Gold"].remove()
+        gold = self.g.get_card_from_pile("Gold")
         self.assertFalse(gold.isReserve())
-        cotr = self.g["Coin of the Realm"].remove()
+        cotr = self.g.get_card_from_pile("Coin of the Realm")
         self.assertTrue(cotr.isReserve())
 
 
@@ -100,7 +100,7 @@ class Test_reserveSelection(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_callable(self):
-        gold = self.g["Gold"].remove()
+        gold = self.g.get_card_from_pile("Gold")
         self.plr.add_card(gold, "reserve")
         output, index = self.plr._reserve_selection(1)
         self.assertEqual(len(output), 1)
@@ -111,7 +111,7 @@ class Test_reserveSelection(unittest.TestCase):
 
     def test_not_callable(self):
         """Copper is not callable (Due to miser)"""
-        copper = self.g["Copper"].remove()
+        copper = self.g.get_card_from_pile("Copper")
         self.plr.add_card(copper, "reserve")
         output, index = self.plr._reserve_selection(1)
         self.assertEqual(len(output), 0)

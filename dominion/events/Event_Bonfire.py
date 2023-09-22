@@ -25,9 +25,9 @@ class Test_Bonfire(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         self.card = self.g.events["Bonfire"]
-        self.copper = self.g["Copper"].remove()
-        self.gold = self.g["Gold"].remove()
-        self.estate = self.g["Estate"].remove()
+        self.copper = self.g.get_card_from_pile("Copper")
+        self.gold = self.g.get_card_from_pile("Gold")
+        self.estate = self.g.get_card_from_pile("Estate")
 
     def test_bonfire(self):
         """Use Bonfire"""

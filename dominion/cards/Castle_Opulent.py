@@ -16,7 +16,9 @@ class Card_OpulentCastle(CastleCard):
         ]
         self.base = Card.CardExpansion.EMPIRES
         self.cost = 7
-        self.desc = """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
+        self.desc = (
+            """Discard any number of Victory cards. +2 Coin per card discarded. +3VP"""
+        )
         self.victory = 3
         self.name = "Opulent Castle"
 
@@ -31,15 +33,12 @@ class Card_OpulentCastle(CastleCard):
 
 
 ###############################################################################
-class Test_OpulentCastle(unittest.TestCase):
+class TestOpulentCastle(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Castles"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        while True:
-            self.card = self.g["Castles"].remove()
-            if self.card.name == "Opulent Castle":
-                break
+        self.card = self.g.get_card_from_pile("Castles", "Opulent Castle")
 
     def test_play(self):
         """Play a castle"""

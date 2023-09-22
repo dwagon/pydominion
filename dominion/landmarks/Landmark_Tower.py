@@ -19,7 +19,7 @@ class Landmark_Tower(Landmark.Landmark):
         for card in player.all_cards():
             if card.isVictory():
                 continue
-            if game[card.name].is_empty():
+            if game.card_piles[card.name].is_empty():
                 player.add_score("Tower", 1)
 
 
@@ -41,7 +41,7 @@ class TestTower(unittest.TestCase):
     def test_one(self):
         self.plr.piles[Piles.HAND].set("Moat", "Moat")
         while True:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
             if not c:
                 break
         self.plr.game_over()

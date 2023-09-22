@@ -68,7 +68,7 @@ class TestBishop(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Bishop"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.bishop = self.g["Bishop"].remove()
+        self.bishop = self.g.get_card_from_pile("Bishop")
 
     def test_play(self):
         self.plr.add_card(self.bishop, Piles.HAND)

@@ -21,7 +21,7 @@ class Card_Camel_Train(Card.Card):
 
     def special(self, game, player):
         options = []
-        for name, pile in game.card_piles():
+        for name, pile in game.get_card_piles():
             if pile.is_empty():
                 continue
             card = game.get_card_from_pile(name)
@@ -45,7 +45,7 @@ class TestCamelTrain(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Camel Train"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Camel Train"].remove()
+        self.card = self.g.get_card_from_pile("Camel Train")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

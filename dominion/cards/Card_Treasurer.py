@@ -48,7 +48,7 @@ class Test_Treasurer(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.plr.piles[Piles.HAND].set("Copper", "Silver")
-        self.card = self.g["Treasurer"].remove()
+        self.card = self.g.get_card_from_pile("Treasurer")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_trash(self):

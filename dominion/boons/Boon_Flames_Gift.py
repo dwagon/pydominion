@@ -31,7 +31,7 @@ class Test_Flames_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
 
     def test_flames_gift(self):
         self.plr.piles[Piles.HAND].set("Duchy")

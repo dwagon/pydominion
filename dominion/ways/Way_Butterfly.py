@@ -14,8 +14,7 @@ class Way_Butterfly(Way.Way):
         self.name = "Way of the Butterfly"
 
     def special_way(self, game, player, card):
-        game[card.name].add(card)
-        player.remove_card(card)
+        player.move_card(card, Piles.CARDPILE)
         cst = player.card_cost(card)
         player.plr_gain_card(cst + 1, "equal")
         return {"discard": False}
@@ -32,7 +31,7 @@ class TestButterfly(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Moat"].remove()
+        self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Butterfly"]
 
     def test_play(self):
@@ -41,9 +40,8 @@ class TestButterfly(unittest.TestCase):
         self.plr.test_input = ["Get Witch"]
         self.plr.perform_way(self.way, self.card)
         self.assertIsNotNone(self.plr.piles[Piles.DISCARD]["Witch"])
-        self.assertEqual(len(self.g["Moat"]), 10)
+        self.assertEqual(len(self.g.card_piles["Moat"]), 10)
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
-        self.g.print_state()
 
 
 ###############################################################################

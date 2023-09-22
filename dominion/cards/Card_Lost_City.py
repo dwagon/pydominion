@@ -41,7 +41,7 @@ class TestLostCity(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Lost City"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Lost City"].remove()
+        self.card = self.g.get_card_from_pile("Lost City")
 
     def test_play(self):
         """Play a lost_city"""

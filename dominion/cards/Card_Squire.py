@@ -32,7 +32,7 @@ class Card_Squire(Card.Card):
 
     def hook_trashThisCard(self, game, player):
         attacks = []
-        for name, _ in game.card_piles():
+        for name, _ in game.get_card_piles():
             card = game.get_card_from_pile(name)
             if card.isAttack() and card.purchasable:
                 attacks.append(card)
@@ -49,7 +49,7 @@ class TestSquire(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Squire", "Militia"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Squire"].remove()
+        self.card = self.g.get_card_from_pile("Squire")
 
     def test_play_actions(self):
         """Play a Squire - gain actions"""

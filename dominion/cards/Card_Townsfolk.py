@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from dominion import Card, Game, Piles, CardPile
+from dominion import Card, Game, CardPile
 
 
 ###############################################################################
@@ -45,13 +45,13 @@ class Test_Townsfolk(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_wizards(self):
-        card = self.g["Townsfolk"].remove()
-        self.assertEqual(len(self.g["Townsfolk"]), 15)
+        card = self.g.get_card_from_pile("Townsfolk")
+        self.assertEqual(len(self.g.card_piles["Townsfolk"]), 15)
         self.assertEqual(card.name, "Town Crier")
-        card = self.g["Townsfolk"].remove()
-        card = self.g["Townsfolk"].remove()
-        card = self.g["Townsfolk"].remove()
-        card = self.g["Townsfolk"].remove()
+        card = self.g.get_card_from_pile("Townsfolk")
+        card = self.g.get_card_from_pile("Townsfolk")
+        card = self.g.get_card_from_pile("Townsfolk")
+        card = self.g.get_card_from_pile("Townsfolk")
         self.assertEqual(card.name, "Blacksmith")
 
 

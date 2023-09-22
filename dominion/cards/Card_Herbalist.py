@@ -44,7 +44,7 @@ class Test_Herbalist(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Herbalist"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.hcard = self.g["Herbalist"].remove()
+        self.hcard = self.g.get_card_from_pile("Herbalist")
 
     def test_putnothing(self):
         self.plr.piles[Piles.PLAYED].set("Gold", "Estate")

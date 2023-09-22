@@ -39,7 +39,7 @@ class Test_Transmogrify(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.trans = self.g["Transmogrify"].remove()
+        self.trans = self.g.get_card_from_pile("Transmogrify")
         self.plr.add_card(self.trans, Piles.HAND)
 
     def test_play(self):

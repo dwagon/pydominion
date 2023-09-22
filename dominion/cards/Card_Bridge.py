@@ -30,7 +30,7 @@ class TestBridge(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Bridge"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Bridge"].remove()
+        self.card = self.g.get_card_from_pile("Bridge")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

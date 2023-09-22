@@ -29,6 +29,8 @@ def botresponse(player, kind, args=None, kwargs=None):  # pragma: no cover
 class KnightCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("KnightCard", game.paths["cards"], "Card_")
+        for name, class_ in self.mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):

@@ -34,7 +34,7 @@ class Test_Upgrade(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Upgrade"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Upgrade"].remove()
+        self.card = self.g.get_card_from_pile("Upgrade")
 
     def test_play(self):
         """Play the Upgrade"""

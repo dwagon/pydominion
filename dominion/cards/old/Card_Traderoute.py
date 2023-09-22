@@ -21,14 +21,14 @@ class Card_TradeRoute(Card.Card):
         to the Trade Route mat when a card is gained from the pile."""
         cls.tokens = {}
         cls.game = game
-        for name, card_pile in game.card_piles():
+        for name, card_pile in game.get_card_piles():
             card = game.get_card_from_pile(name)
             if card.isVictory():
                 cls.tokens[name] = len(card_pile)
 
     def is_worth(self, game):
         worth = 0
-        for name, card_pile in game.card_piles():
+        for name, card_pile in game.get_card_piles():
             if name in self.tokens:
                 if self.tokens[name] != len(card_pile):
                     worth += 1
@@ -49,7 +49,7 @@ class TestTradeRoute(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Trade Route"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.trade_route = self.g["Trade Route"].remove()
+        self.trade_route = self.g.get_card_from_pile("Trade Route")
         self.plr.add_card(self.trade_route, Piles.HAND)
 
     def test_playZero(self):
@@ -60,14 +60,14 @@ class TestTradeRoute(unittest.TestCase):
 
     def test_playOne(self):
         self.plr.test_input = ["finish selecting"]
-        self.g["Estate"].remove()
+        self.g.get_card_from_pile("Estate")
         self.plr.play_card(self.trade_route)
         self.assertEqual(self.plr.coins.get(), 1)
 
     def test_playTwo(self):
         self.plr.test_input = ["finish selecting"]
-        self.g["Estate"].remove()
-        self.g["Province"].remove()
+        self.g.get_card_from_pile("Estate")
+        self.g.get_card_from_pile("Province")
         self.plr.play_card(self.trade_route)
         self.assertEqual(self.plr.coins.get(), 2)
 

@@ -29,7 +29,9 @@ class ClashCardPile(CardPile.CardPile):
     """Pile of Clashes"""
 
     def __init__(self, game):
-        self.mapping = game.get_card_classes("Clashes", game.paths["cards"], "Clash_")
+        mapping = game.get_card_classes("Clashes", game.paths["cards"], "Clash_")
+        for name, class_ in mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
@@ -55,13 +57,13 @@ class TestClashes(unittest.TestCase):
 
     def test_clashes(self):
         """Test that we can rotate the pile"""
-        card = self.g["Clashes"].remove()
-        self.assertEqual(len(self.g["Clashes"]), 15)
+        card = self.g.get_card_from_pile("Clashes")
+        self.assertEqual(len(self.g.card_piles["Clashes"]), 15)
         self.assertEqual(card.name, "Battle Plan")
-        card = self.g["Clashes"].remove()
-        card = self.g["Clashes"].remove()
-        card = self.g["Clashes"].remove()
-        card = self.g["Clashes"].remove()
+        card = self.g.get_card_from_pile("Clashes")
+        card = self.g.get_card_from_pile("Clashes")
+        card = self.g.get_card_from_pile("Clashes")
+        card = self.g.get_card_from_pile("Clashes")
         self.assertEqual(card.name, "Archer")
 
 

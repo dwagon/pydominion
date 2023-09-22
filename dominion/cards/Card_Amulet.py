@@ -43,7 +43,7 @@ class Test_Amulet(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Amulet"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Amulet"].remove()
+        self.card = self.g.get_card_from_pile("Amulet")
         self.plr.piles[Piles.HAND].set("Duchy")
         self.plr.add_card(self.card, Piles.HAND)
 

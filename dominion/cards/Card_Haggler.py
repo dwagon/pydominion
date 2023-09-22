@@ -31,7 +31,7 @@ class Test_Haggler(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Haggler"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Haggler"].remove()
+        self.card = self.g.get_card_from_pile("Haggler")
 
     def test_play(self):
         self.plr.add_card(self.card, Piles.HAND)

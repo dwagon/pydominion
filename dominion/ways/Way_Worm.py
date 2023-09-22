@@ -27,7 +27,7 @@ class Test_Worm(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Moat"].remove()
+        self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Worm"]
 
     def test_play(self):

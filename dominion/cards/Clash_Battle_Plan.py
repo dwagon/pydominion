@@ -44,11 +44,11 @@ class Card_Battle_Plan(Card.Card):
             options.append((f"Rotate {pile}", pile))
         opt = player.plr_choose_options("Rotate a pile?", *options)
         if opt:
-            game[opt].rotate()
+            game.card_piles[opt].rotate()
 
 
 ###############################################################################
-class Test_Battle_Plan(unittest.TestCase):
+class TestBattlePlan(unittest.TestCase):
     """Test Battle Plan"""
 
     def setUp(self):
@@ -61,7 +61,7 @@ class Test_Battle_Plan(unittest.TestCase):
     def test_play_card(self):
         """Play a battle plan"""
         while True:
-            card = self.g["Clashes"].remove()
+            card = self.g.get_card_from_pile("Clashes")
             if card.name == "Battle Plan":
                 break
         self.plr.piles[Piles.DECK].set("Gold")
@@ -70,7 +70,7 @@ class Test_Battle_Plan(unittest.TestCase):
         self.plr.test_input = ["Reveal Militia", "Rotate Clashes"]
         self.plr.play_card(card)
         self.assertIn("Gold", self.plr.piles[Piles.HAND])
-        next_card = self.g["Clashes"].remove()
+        next_card = self.g.get_card_from_pile("Clashes")
         self.assertEqual(next_card.name, "Archer")
 
 

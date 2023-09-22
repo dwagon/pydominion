@@ -54,7 +54,7 @@ class TestCargoShip(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card_yes(self):
-        self.card = self.g["Cargo Ship"].remove()
+        self.card = self.g.get_card_from_pile("Cargo Ship")
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
@@ -67,7 +67,7 @@ class TestCargoShip(unittest.TestCase):
         self.assertIn("Moat", self.plr.piles[Piles.HAND])
 
     def test_play_card_no(self):
-        self.card = self.g["Cargo Ship"].remove()
+        self.card = self.g.get_card_from_pile("Cargo Ship")
         self.card.hook_gain_this_card(self.g, self.plr)
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)

@@ -47,15 +47,17 @@ class PlayArea:
         """Used for testing to set contents"""
         self.empty()
         for card_name in cards:
-            card = self.game.get_card_from_pile(card_name)
+            card = self.game.card_instances[card_name]
             if card is None:
                 print(f"Card Pile {card_name} is empty")
                 return
+            if card.pile == "":
+                card.pile = card_name
             card.location = self.name
             self.addToTop(card)
 
     ###########################################################################
-    def add(self, card):
+    def add(self, card) -> None:
         """Add a card to the area"""
         self._cards.insert(0, card)
 

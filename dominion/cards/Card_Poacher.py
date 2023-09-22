@@ -21,20 +21,20 @@ class Card_Poacher(Card.Card):
         self.cost = 4
 
     def special(self, game, player):
-        empties = sum(1 for st in game.card_piles if game[st].is_empty())
+        empties = sum(1 for _, st in game.get_card_piles() if st.is_empty())
         if empties:
             player.plr_discard_cards(num=empties, force=True)
 
 
 ###############################################################################
-class Test_Poacher(unittest.TestCase):
+class TestPoacher(unittest.TestCase):
     """Test Poacher"""
 
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Poacher", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Poacher"].remove()
+        self.card = self.g.get_card_from_pile("Poacher")
 
     def test_play(self):
         """Play card"""
@@ -49,7 +49,7 @@ class Test_Poacher(unittest.TestCase):
         self.plr.piles[Piles.HAND].set("Gold", "Province")
         self.plr.add_card(self.card, Piles.HAND)
         while True:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
             if not c:
                 break
         self.plr.test_input = ["Discard Gold"]

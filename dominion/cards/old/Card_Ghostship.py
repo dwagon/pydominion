@@ -46,7 +46,7 @@ class Test_Ghostship(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Ghost Ship"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Ghost Ship"].remove()
+        self.card = self.g.get_card_from_pile("Ghost Ship")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):

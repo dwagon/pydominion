@@ -93,7 +93,7 @@ class TestRogue(unittest.TestCase):
         )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Rogue"].remove()
+        self.card = self.g.get_card_from_pile("Rogue")
 
     def test_play(self):
         """Nothing should happen"""
@@ -109,7 +109,7 @@ class TestRogue(unittest.TestCase):
         """Victim has a defense"""
         self.plr.piles[Piles.HAND].empty()
         self.plr.add_card(self.card, Piles.HAND)
-        moat = self.g["Moat"].remove()
+        moat = self.g.get_card_from_pile("Moat")
         self.victim.add_card(moat, Piles.HAND)
         self.plr.play_card(self.card)
 
@@ -117,7 +117,7 @@ class TestRogue(unittest.TestCase):
         """Rogue to get something juicy from the trash"""
         tsize = self.g.trash_pile.size()
         for _ in range(2):
-            gold = self.g["Gold"].remove()
+            gold = self.g.get_card_from_pile("Gold")
             self.plr.trash_card(gold)
         self.plr.test_input = ["1"]
         self.plr.add_card(self.card, Piles.HAND)

@@ -25,7 +25,7 @@ class TestSewers(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Chapel"].remove()
+        self.card = self.g.get_card_from_pile("Chapel")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold")

@@ -74,7 +74,7 @@ class Test_Saboteur(unittest.TestCase):
         )
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Saboteur"].remove()
+        self.card = self.g.get_card_from_pile("Saboteur")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

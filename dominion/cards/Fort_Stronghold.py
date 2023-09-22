@@ -42,7 +42,7 @@ class Test_Stronghold(unittest.TestCase):
         self.plr = self.g.player_list()[0]
 
         while True:
-            card = self.g["Forts"].remove()
+            card = self.g.get_card_from_pile("Forts")
             if card.name == "Stronghold":
                 break
         self.card = card

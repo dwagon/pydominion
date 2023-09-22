@@ -42,7 +42,7 @@ class Test_Sea_Chart(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Sea Chart", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Sea Chart"].remove()
+        self.card = self.g.get_card_from_pile("Sea Chart")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_match(self):

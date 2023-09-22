@@ -45,19 +45,19 @@ class Card_Encampment(Card.Card):
             for card in player.piles[Piles.PLAYED]:
                 if card.name == "Encampment":
                     player.output("Returning Encampment to Supply")
-                    game["Encampment"].add(self)
+                    game.card_piles["Encampment"].add(self)
                     player.piles[Piles.PLAYED].remove(self)
                     self._discard = False
                     return
 
 
 ###############################################################################
-class Test_Encampment(unittest.TestCase):
+class TestEncampment(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Encampment", "Plunder"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Encampment"].remove()
+        self.card = self.g.get_card_from_pile("Encampment")
 
     def test_play_reveal(self):
         """Play a Encampment and reveal a Gold"""
@@ -71,11 +71,13 @@ class Test_Encampment(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
         self.assertEqual(self.card._discard, False)
         self.plr.cleanup_phase()
-        self.assertEqual(len(self.g["Encampment"]), 9)
+        self.assertEqual(len(self.g.card_piles["Encampment"]), 9)
 
     def test_play_return(self):
         """Play a Encampment and don't have anything to return"""
-        self.plr.piles[Piles.DISCARD].set("Copper", "Copper", "Copper", "Estate", "Estate")
+        self.plr.piles[Piles.DISCARD].set(
+            "Copper", "Copper", "Copper", "Estate", "Estate"
+        )
         self.plr.piles[Piles.HAND].set("Silver")
         hndsz = self.plr.piles[Piles.HAND].size()
         acts = self.plr.actions.get()
@@ -85,7 +87,7 @@ class Test_Encampment(unittest.TestCase):
         self.assertEqual(self.plr.actions.get(), acts + 2 - 1)
         self.assertEqual(self.card._discard, True)
         self.plr.cleanup_phase()
-        self.assertEqual(len(self.g["Encampment"]), 10)
+        self.assertEqual(len(self.g.card_piles["Encampment"]), 10)
 
 
 ###############################################################################

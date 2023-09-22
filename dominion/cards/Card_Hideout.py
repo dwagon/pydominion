@@ -34,7 +34,7 @@ class Test_Hideout(unittest.TestCase):
     def test_play_card(self):
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
-        self.card = self.g["Hideout"].remove()
+        self.card = self.g.get_card_from_pile("Hideout")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Copper"]
         self.plr.play_card(self.card)
@@ -44,7 +44,7 @@ class Test_Hideout(unittest.TestCase):
     def test_trashVictory(self):
         self.plr.piles[Piles.DECK].set("Silver")
         self.plr.piles[Piles.HAND].set("Copper", "Estate")
-        self.card = self.g["Hideout"].remove()
+        self.card = self.g.get_card_from_pile("Hideout")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["Trash Estate"]
         self.plr.play_card(self.card)

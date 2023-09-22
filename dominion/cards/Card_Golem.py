@@ -48,7 +48,7 @@ class Test_Golem(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Golem", "Village", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Golem"].remove()
+        self.card = self.g.get_card_from_pile("Golem")
 
     def test_actions(self):
         """Ensure two actions are picked up and played, others are discarded"""

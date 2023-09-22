@@ -32,14 +32,14 @@ class Test_FlagBearer(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Flag Bearer"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Flag Bearer"].remove()
+        self.card = self.g.get_card_from_pile("Flag Bearer")
 
     def test_gain(self):
         self.plr.gain_card("Flag Bearer")
         self.assertIsNotNone(self.plr.has_artifact("Flag"))
 
     def test_trash(self):
-        card = self.g["Flag Bearer"].remove()
+        card = self.g.get_card_from_pile("Flag Bearer")
         self.plr.add_card(card, Piles.HAND)
         self.plr.trash_card(card)
         self.assertIsNotNone(self.plr.has_artifact("Flag"))

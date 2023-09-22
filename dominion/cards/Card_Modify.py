@@ -36,7 +36,7 @@ class Test_Modify(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Modify"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Modify"].remove()
+        self.card = self.g.get_card_from_pile("Modify")
 
     def test_play_action(self):
         """Play the card gaining action"""

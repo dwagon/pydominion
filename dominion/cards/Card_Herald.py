@@ -57,7 +57,7 @@ class TestHerald(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Herald", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Herald"].remove()
+        self.card = self.g.get_card_from_pile("Herald")
 
     def test_play_action(self):
         """Play a Herald  - action top card"""

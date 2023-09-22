@@ -36,7 +36,7 @@ class Test_Displace(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Displace"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Displace"].remove()
+        self.card = self.g.get_card_from_pile("Displace")
 
     def test_playcard(self):
         """Play a card"""

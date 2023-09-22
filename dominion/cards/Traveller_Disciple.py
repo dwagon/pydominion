@@ -48,7 +48,7 @@ class TestDisciple(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Peasant", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Disciple"].remove()
+        self.card = self.g.get_card_from_pile("Disciple")
 
     def test_play_no_actions(self):
         """Play a disciple with no actions available"""

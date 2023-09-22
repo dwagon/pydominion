@@ -32,7 +32,7 @@ class Test_Vassal(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Vassal", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Vassal"].remove()
+        self.card = self.g.get_card_from_pile("Vassal")
 
     def test_play_action(self):
         """Play a Vassal with action next"""

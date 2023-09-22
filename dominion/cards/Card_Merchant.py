@@ -32,9 +32,9 @@ class Test_Merchant(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Merchant"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Merchant"].remove()
-        self.s1 = self.g["Silver"].remove()
-        self.s2 = self.g["Silver"].remove()
+        self.card = self.g.get_card_from_pile("Merchant")
+        self.s1 = self.g.get_card_from_pile("Silver")
+        self.s2 = self.g.get_card_from_pile("Silver")
 
     def test_play(self):
         self.plr.add_card(self.card, Piles.HAND)

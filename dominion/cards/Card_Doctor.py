@@ -30,7 +30,7 @@ class Card_Doctor(Card.Card):
     def special(self, game, player):
         options = []
         index = 1
-        for name, pile in sorted(game.card_piles()):
+        for name, pile in sorted(game.get_card_piles()):
             sel = f"{index}"
             options.append({"selector": sel, "print": f"Guess {name}", "card": name})
             index += 1
@@ -99,7 +99,7 @@ class TestDoctor(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Doctor"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Doctor"].remove()
+        self.card = self.g.get_card_from_pile("Doctor")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

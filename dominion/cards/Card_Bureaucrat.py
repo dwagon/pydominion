@@ -39,7 +39,7 @@ class TestBureaucrat(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Bureaucrat", "Moat"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.bcard = self.g["Bureaucrat"].remove()
+        self.bcard = self.g.get_card_from_pile("Bureaucrat")
         self.plr.add_card(self.bcard, Piles.HAND)
 
     def test_hasvictory(self):

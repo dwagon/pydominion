@@ -28,7 +28,7 @@ class TestActingTroupe(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
-        self.card = self.g["Acting Troupe"].remove()
+        self.card = self.g.get_card_from_pile("Acting Troupe")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertLessEqual(self.plr.villagers.get(), 4)

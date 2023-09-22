@@ -45,7 +45,7 @@ class Test_Suns_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_suns_gift(self):

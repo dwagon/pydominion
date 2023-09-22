@@ -42,7 +42,7 @@ class TestTournament(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Tournament"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Tournament"].remove()
+        self.card = self.g.get_card_from_pile("Tournament")
 
     def test_play(self):
         """Play a tournament - no provinces"""

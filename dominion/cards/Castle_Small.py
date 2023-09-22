@@ -36,7 +36,7 @@ class Test_SmallCastle(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         while True:
-            self.card = self.g["Castles"].remove()
+            self.card = self.g.get_card_from_pile("Castles")
             if self.card.name == "Small Castle":
                 break
 

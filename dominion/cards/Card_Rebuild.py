@@ -46,7 +46,7 @@ class Card_Rebuild(Card.Card):
 
     def _pick_victory_card(self, game, player):
         """Get the player to guess the victory card"""
-        stacks = game.getVictoryPiles()
+        stacks = game.get_victory_piles()
         options = []
         for card in stacks:
             options.append((f"{card}", card))
@@ -65,7 +65,7 @@ class TestRebuild(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Rebuild"].remove()
+        self.card = self.g.get_card_from_pile("Rebuild")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

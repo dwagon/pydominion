@@ -24,7 +24,7 @@ class Card_Experiment(Card.Card):
 
     ###########################################################################
     def special(self, game, player):
-        player.move_card(self, game["Experiment"])
+        player.move_card(self, game.card_piles["Experiment"])
         player.output("Returned experiment to stack")
 
 
@@ -36,7 +36,7 @@ class TestExperiment(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
-        self.card = self.g["Experiment"].remove()
+        self.card = self.g.get_card_from_pile("Experiment")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.actions.get(), 0 + 1)

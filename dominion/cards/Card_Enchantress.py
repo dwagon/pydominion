@@ -39,9 +39,9 @@ class TestEnchantress(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Enchantress", "Remodel", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Enchantress"].remove()
-        self.r1 = self.g["Remodel"].remove()
-        self.m1 = self.g["Moat"].remove()
+        self.card = self.g.get_card_from_pile("Enchantress")
+        self.r1 = self.g.get_card_from_pile("Remodel")
+        self.m1 = self.g.get_card_from_pile("Moat")
 
     def test_play(self):
         """Play an Enchantress"""

@@ -39,7 +39,7 @@ class Test_Treasurehunter(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=2, initcards=["Page"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Treasure Hunter"].remove()
+        self.card = self.g.get_card_from_pile("Treasure Hunter")
 
     def test_treasure_hunter(self):
         """Play a treasure_hunter"""

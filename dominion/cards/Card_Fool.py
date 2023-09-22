@@ -33,7 +33,7 @@ class Test_Fool(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Fool"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Fool"].remove()
+        self.card = self.g.get_card_from_pile("Fool")
 
     def test_play_with(self):
         """Play a Fool with Lost in the Woods"""

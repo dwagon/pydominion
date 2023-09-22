@@ -20,7 +20,7 @@ class Card_Animal_Fair(Card.Card):
         self.cost = 7
 
     def special(self, game, player):
-        empties = sum(1 for st in game.card_piles if game[st].is_empty())
+        empties = sum(1 for _, stack in game.get_card_piles() if stack.is_empty())
         player.buys.add(empties)
 
     def todo_hook_buy_this_card(self, game, player):
@@ -36,19 +36,19 @@ class Card_Animal_Fair(Card.Card):
 
 
 ###############################################################################
-class Test_Animal_Fair(unittest.TestCase):
+class TestAnimalFair(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Animal Fair", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Animal Fair"].remove()
+        self.card = self.g.get_card_from_pile("Animal Fair")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard(self):
         """Play a supplies"""
-        c = self.g["Moat"].remove()
+        c = self.g.get_card_from_pile("Moat")
         while c:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
         self.plr.play_card(self.card)
         self.assertEqual(self.plr.coins.get(), 4)
         self.assertEqual(self.plr.buys.get(), 1 + 1)

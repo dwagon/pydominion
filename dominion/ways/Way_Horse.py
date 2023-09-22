@@ -17,8 +17,7 @@ class Way_Horse(Way.Way):
         self.actions = 1
 
     def special_way(self, game, player, card):
-        game[card.name].add(card)
-        player.piles[Piles.HAND].remove(card)
+        player.move_card(card, Piles.CARDPILE)
         return {"discard": False}
 
 
@@ -35,7 +34,7 @@ class TestHorse(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Moat"].remove()
+        self.card = self.g.get_card_from_pile("Moat")
         self.way = self.g.ways["Way of the Horse"]
 
     def test_play(self):
@@ -44,7 +43,7 @@ class TestHorse(unittest.TestCase):
         self.plr.perform_way(self.way, self.card)
         self.assertEqual(self.plr.actions.get(), 1)
         self.assertEqual(self.plr.piles[Piles.HAND].size(), 5 + 2)
-        self.assertEqual(len(self.g["Moat"]), 10)
+        self.assertEqual(len(self.g.card_piles["Moat"]), 10)
         self.assertNotIn("Moat", self.plr.piles[Piles.HAND])
         self.assertNotIn("Moat", self.plr.piles[Piles.DISCARD])
 

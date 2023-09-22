@@ -86,27 +86,27 @@ class TestGameOver(unittest.TestCase):
 
     def test_provinces(self):
         """Someone took the last province"""
-        while self.g["Province"]:
+        while self.g.card_piles["Province"]:
             card = self.plr.gain_card("Province")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_three_stacks(self):
         """Three stacks are empty"""
-        while self.g["Estate"]:
+        while self.g.card_piles["Estate"]:
             self.plr.gain_card("Estate")
-        while self.g["Copper"]:
+        while self.g.card_piles["Copper"]:
             self.plr.gain_card("Copper")
-        while self.g["Silver"]:
+        while self.g.card_piles["Silver"]:
             self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertTrue(over)
 
     def test_two_stacks(self):
         """Two stacks are empty"""
-        while self.g["Estate"]:
+        while self.g.card_piles["Estate"]:
             self.plr.gain_card("Estate")
-        while self.g["Silver"]:
+        while self.g.card_piles["Silver"]:
             self.plr.gain_card("Silver")
         over = self.g.isGameOver()
         self.assertFalse(over)
@@ -175,16 +175,16 @@ class TestGetCardFromPile(unittest.TestCase):
         self.g.start_game()
 
     def test_get_card(self):
-        pile_size = len(self.g["Copper"])
+        pile_size = len(self.g.card_piles["Copper"])
         card = self.g.get_card_from_pile("Copper")
         self.assertEqual(card.name, "Copper")
-        self.assertEqual(len(self.g["Copper"]), pile_size - 1)
+        self.assertEqual(len(self.g.card_piles["Copper"]), pile_size - 1)
 
     def test_get_wrong_card(self):
         """Test asking for a wrong card"""
-        pile_size = len(self.g["Copper"])
+        pile_size = len(self.g.card_piles["Copper"])
         self.assertIsNone(self.g.get_card_from_pile("Copper", "Gold"))
-        self.assertEqual(len(self.g["Copper"]), pile_size)
+        self.assertEqual(len(self.g.card_piles["Copper"]), pile_size)
 
 
 ###############################################################################

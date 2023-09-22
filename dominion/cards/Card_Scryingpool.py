@@ -65,7 +65,7 @@ class TestScryingPool(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Scrying Pool", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Scrying Pool"].remove()
+        self.card = self.g.get_card_from_pile("Scrying Pool")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_card(self):

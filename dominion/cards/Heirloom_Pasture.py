@@ -32,7 +32,7 @@ class Test_Pasture(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Shepherd"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Pasture"].remove()
+        self.card = self.g.get_card_from_pile("Pasture")
 
     def test_play(self):
         self.plr.add_card(self.card, Piles.HAND)

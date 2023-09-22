@@ -83,7 +83,7 @@ class TestThief(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Thief", "Moat"])
         self.g.start_game()
-        self.thief_card = self.g["Thief"].remove()
+        self.thief_card = self.g.get_card_from_pile("Thief")
         self.thief, self.victim = self.g.player_list()
         self.thief.name = "thief"
         self.victim.name = "victim"

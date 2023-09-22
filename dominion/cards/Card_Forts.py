@@ -44,13 +44,13 @@ class TestForts(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_wizards(self):
-        card = self.g["Forts"].remove()
-        self.assertEqual(len(self.g["Forts"]), 15)
+        card = self.g.get_card_from_pile("Forts")
+        self.assertEqual(len(self.g.card_piles["Forts"]), 15)
         self.assertEqual(card.name, "Tent")
-        card = self.g["Forts"].remove()
-        card = self.g["Forts"].remove()
-        card = self.g["Forts"].remove()
-        card = self.g["Forts"].remove()
+        card = self.g.get_card_from_pile("Forts")
+        card = self.g.get_card_from_pile("Forts")
+        card = self.g.get_card_from_pile("Forts")
+        card = self.g.get_card_from_pile("Forts")
         self.assertEqual(card.name, "Garrison")
 
 

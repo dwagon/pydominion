@@ -34,7 +34,7 @@ class Test_Apprentice(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Apprentice", "Familiar"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.apprentice = self.g["Apprentice"].remove()
+        self.apprentice = self.g.get_card_from_pile("Apprentice")
 
     def test_trashNone(self):
         tsize = self.g.trash_pile.size()

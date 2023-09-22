@@ -31,7 +31,7 @@ class Test_Stables(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Stables"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Stables"].remove()
+        self.card = self.g.get_card_from_pile("Stables")
 
     def test_play(self):
         """Play duchess - keep on deck"""

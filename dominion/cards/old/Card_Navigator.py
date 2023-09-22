@@ -41,7 +41,7 @@ class Test_Navigator(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, oldcards=True, initcards=["Navigator"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.navigator = self.g["Navigator"].remove()
+        self.navigator = self.g.get_card_from_pile("Navigator")
         self.plr.add_card(self.navigator, Piles.HAND)
 
     def test_discard(self):

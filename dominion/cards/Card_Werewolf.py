@@ -37,7 +37,7 @@ class Test_Werewolf(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Werewolf"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Werewolf"].remove()
+        self.card = self.g.get_card_from_pile("Werewolf")
         self.plr.add_card(self.card, Piles.HAND)
         for h in self.g.hexes[:]:
             if h.name != "Delusion":

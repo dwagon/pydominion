@@ -45,7 +45,7 @@ class Test_Storyteller(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Storyteller"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Storyteller"].remove()
+        self.card = self.g.get_card_from_pile("Storyteller")
 
     def test_play(self):
         """Play a Storyteller"""

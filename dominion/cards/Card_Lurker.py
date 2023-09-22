@@ -30,7 +30,7 @@ class Card_Lurker(Card.Card):
     def _trash_supply(self, game, player):
         """Trash an action from supply"""
         options = []
-        for name, pile in game.card_piles():
+        for name, pile in game.get_card_piles():
             if pile.is_empty():
                 continue
             card = game.get_card_from_pile(name)
@@ -64,7 +64,7 @@ class TestLurker(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Lurker", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Lurker"].remove()
+        self.card = self.g.get_card_from_pile("Lurker")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash(self):

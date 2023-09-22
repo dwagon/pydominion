@@ -33,7 +33,7 @@ class Test_Scheme(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Scheme", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Scheme"].remove()
+        self.card = self.g.get_card_from_pile("Scheme")
 
     def test_play(self):
         """Play a scheme"""

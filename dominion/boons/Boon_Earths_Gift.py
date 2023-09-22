@@ -40,7 +40,7 @@ class Test_Earths_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
 
     def test_earths_gift(self):
         self.coins = 0

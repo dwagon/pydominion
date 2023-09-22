@@ -44,7 +44,7 @@ class Test_Lich(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g.get_card_from_pile("Wizards")
             if card.name == "Lich":
                 break
         self.card = card

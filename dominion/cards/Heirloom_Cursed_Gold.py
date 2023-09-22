@@ -28,7 +28,7 @@ class Test_CursedGold(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1, initcards=["Pooka"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Cursed Gold"].remove()
+        self.card = self.g.get_card_from_pile("Cursed Gold")
 
     def test_play(self):
         self.plr.add_card(self.card, Piles.HAND)

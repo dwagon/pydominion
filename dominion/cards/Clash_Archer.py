@@ -62,7 +62,7 @@ class TestArcher(unittest.TestCase):
     def test_play_archer(self):
         """Play an Archer"""
         while True:
-            card = self.g["Clashes"].remove()
+            card = self.g.get_card_from_pile("Clashes")
             if card.name == "Archer":
                 break
         self.plr.add_card(card, Piles.HAND)

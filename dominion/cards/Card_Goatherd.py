@@ -33,7 +33,7 @@ class Test_Goatherd(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Goatherd"])
         self.g.start_game()
         self.plr, self.other = self.g.player_list()
-        self.card = self.g["Goatherd"].remove()
+        self.card = self.g.get_card_from_pile("Goatherd")
 
     def test_play_this_turn(self):
         self.plr.piles[Piles.HAND].set("Copper", "Silver", "Gold", "Province", "Estate")

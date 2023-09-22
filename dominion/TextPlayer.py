@@ -170,7 +170,7 @@ class TextPlayer(Player):
                 o = Option(selector="0", verb="Finish Selecting", card=None)
                 options.append(o)
             index = 1
-            for name, card_pile in self.game.card_piles():
+            for name, card_pile in self.game.get_card_piles():
                 card = self.game.get_card_from_pile(name)
                 if "exclude" in kwargs and card_pile.name in kwargs["exclude"]:
                     continue

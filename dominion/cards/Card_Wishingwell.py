@@ -22,7 +22,7 @@ class Card_WishingWell(Card.Card):
         the named card, put it into your hand"""
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for name, card_pile in sorted(game.card_piles()):
+        for name, card_pile in sorted(game.get_card_piles()):
             options.append(
                 {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
@@ -52,7 +52,7 @@ class TestWishingWell(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Wishing Well"].remove()
+        self.card = self.g.get_card_from_pile("Wishing Well")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

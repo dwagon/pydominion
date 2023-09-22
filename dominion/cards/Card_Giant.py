@@ -51,7 +51,7 @@ class TestGiant(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Giant"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Giant"].remove()
+        self.card = self.g.get_card_from_pile("Giant")
 
     def test_play_journey_trashed(self):
         """Play a giant - good journey - trashable victim"""

@@ -58,12 +58,12 @@ class Test_Graverobber(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Graverobber"].remove()
+        self.card = self.g.get_card_from_pile("Graverobber")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_trash(self):
         """Play a grave robber - trash a militia and gain a gold"""
-        militia = self.g["Militia"].remove()
+        militia = self.g.get_card_from_pile("Militia")
         self.plr.add_card(militia, Piles.HAND)
         self.plr.test_input = ["1", "militia", "get gold"]
         self.plr.play_card(self.card)

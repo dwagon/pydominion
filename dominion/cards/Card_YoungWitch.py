@@ -63,7 +63,7 @@ class TestYoungWitch(unittest.TestCase):
         )
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.card = self.g["Young Witch"].remove()
+        self.card = self.g.get_card_from_pile("Young Witch")
 
     def test_play_nobane(self):
         """Play the young witch without a bane"""

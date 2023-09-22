@@ -48,7 +48,7 @@ class TestChariotRace(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Chariot Race"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Chariot Race"].remove()
+        self.card = self.g.get_card_from_pile("Chariot Race")
 
     def test_play_win(self):
         """Play a Chariot Race and win"""

@@ -12,15 +12,18 @@ class Card_Castles(Card.Card):
         self.name = "Castles"
         self.base = Card.CardExpansion.EMPIRES
 
-    def setup(self, game):
-        game.card_piles["Castles"] = CastleCardPile(game)
-        game.card_piles["Castles"].init_cards()
+    @classmethod
+    def cardpile_setup(cls, game):
+        card_pile = CastleCardPile(game)
+        return card_pile
 
 
 ###############################################################################
 class CastleCardPile(CardPile.CardPile):
     def __init__(self, game):
         self.mapping = game.get_card_classes("Castle", game.paths["cards"], "Card_")
+        for name, class_ in self.mapping.items():
+            game.card_instances[name] = class_()
         super().__init__()
 
     def init_cards(self, num_cards=0, card_class=None):
@@ -40,7 +43,7 @@ class TestCastles(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Castles"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Castles"].remove()
+        self.card = self.g.get_card_from_pile("Castles")
         self.plr.piles[Piles.HAND].set("Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
 

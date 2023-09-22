@@ -34,7 +34,7 @@ class Test_Skulk(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Skulk"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.Skulk = self.g["Skulk"].remove()
+        self.Skulk = self.g.get_card_from_pile("Skulk")
         for h in self.g.hexes[:]:
             if h.name != "Delusion":
                 self.g.discarded_hexes.append(h)

@@ -32,7 +32,7 @@ class Test_Hamlet(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Hamlet"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Hamlet"].remove()
+        self.card = self.g.get_card_from_pile("Hamlet")
         self.plr.piles[Piles.HAND].set("Silver", "Gold")
         self.plr.add_card(self.card, Piles.HAND)
 

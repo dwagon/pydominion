@@ -67,7 +67,7 @@ class TestBandit(unittest.TestCase):
         self.thief, self.vic = self.g.player_list()
         self.thief.name = "MrBandit"
         self.vic.name = "MrVic"
-        self.card = self.g["Bandit"].remove()
+        self.card = self.g.get_card_from_pile("Bandit")
         self.thief.add_card(self.card, Piles.HAND)
 
     def test_do_nothing(self):

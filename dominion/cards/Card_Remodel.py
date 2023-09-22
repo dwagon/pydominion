@@ -32,7 +32,7 @@ class Test_Remodel(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Remodel"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.rcard = self.g["Remodel"].remove()
+        self.rcard = self.g.get_card_from_pile("Remodel")
 
     def test_nothing(self):
         tsize = self.g.trash_pile.size()

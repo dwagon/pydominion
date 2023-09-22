@@ -36,7 +36,7 @@ class Test_Moneylender(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Money Lender"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Money Lender"].remove()
+        self.card = self.g.get_card_from_pile("Money Lender")
 
     def test_nocopper(self):
         tsize = self.g.trash_pile.size()

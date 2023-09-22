@@ -54,7 +54,7 @@ class Test_Deathcart(unittest.TestCase):
         )
         self.g.start_game()
         self.plr = self.g.player_list()[0]
-        self.card = self.g["Death Cart"].remove()
+        self.card = self.g.get_card_from_pile("Death Cart")
 
     def test_play(self):
         """Play a death cart - no actions"""

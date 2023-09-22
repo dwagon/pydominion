@@ -53,7 +53,7 @@ class Test_Jester(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Jester"])
         self.g.start_game()
         self.plr, self.victim = self.g.player_list()
-        self.card = self.g["Jester"].remove()
+        self.card = self.g.get_card_from_pile("Jester")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_victory(self):

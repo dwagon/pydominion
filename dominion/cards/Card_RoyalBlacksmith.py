@@ -32,7 +32,7 @@ class Test_RoyalBlacksmith(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Royal Blacksmith"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Royal Blacksmith"].remove()
+        self.card = self.g.get_card_from_pile("Royal Blacksmith")
 
     def test_play(self):
         """Play an Royal Blacksmith"""

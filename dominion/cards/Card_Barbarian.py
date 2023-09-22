@@ -35,7 +35,7 @@ class Card_Barbarian(Card.Card):
             victim.gain_card("Curse")
             return
         cards = []
-        for name, card_pile in game.card_piles():
+        for name, card_pile in game.get_card_piles():
             check_card = game.get_card_from_pile(name)
             if _card_types(check_card).intersection(_card_types(victim_card)):
                 if check_card.cost < victim_card.cost:
@@ -83,7 +83,7 @@ class TestBarbarian(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Barbarian"])
         self.g.start_game()
         self.attacker, self.victim = self.g.player_list()
-        self.card = self.g["Barbarian"].remove()
+        self.card = self.g.get_card_from_pile("Barbarian")
         self.attacker.add_card(self.card, Piles.HAND)
 
     def Xtest_play(self):

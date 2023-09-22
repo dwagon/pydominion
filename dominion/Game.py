@@ -84,6 +84,7 @@ class Game:  # pylint: disable=too-many-public-methods
         self._original = {}
         self.loaded_travellers = False  # For testing purposes
         self._cards = {}
+        self.card_instances = {}
 
     ###########################################################################
     def parse_args(self, **args):
@@ -142,6 +143,9 @@ class Game:  # pylint: disable=too-many-public-methods
             for _ in range(self.numplayers):
                 shelters = ["Overgrown Estate", "Hovel", "Necropolis"]
                 for shelter in shelters:
+                    self.card_instances[shelter] = self.card_mapping["Shelter"][
+                        shelter
+                    ]()
                     shelter_card = self.card_mapping["Shelter"][shelter]()
                     self.card_piles["Shelters"].add(shelter_card)
         return use_shelters
@@ -263,15 +267,15 @@ class Game:  # pylint: disable=too-many-public-methods
     ###########################################################################
     def _load_ways(self):
         """TODO"""
-        waycards = []
+        way_cards = []
         for wname in self.waycards:
             if not wname.lower().startswith("way of the "):
-                waycards.append(f"Way of the {wname}")
+                way_cards.append(f"Way of the {wname}")
             else:
-                waycards.append(wname)
+                way_cards.append(wname)
         self.ways = self._load_non_kingdom_cards(
             cardtype="Way",
-            specified=waycards,
+            specified=way_cards,
             num_required=self.numways,
             cardKlass=WayPile,
         )
@@ -440,7 +444,7 @@ class Game:  # pylint: disable=too-many-public-methods
             self._load_boons()
         elif self.guess_cardname(card, "Artifact"):
             # Artifacts should be loaded by the requiring card but can still be specified
-            # in a cardset
+            # in a card set
             pass
         elif card.lower() == "shelters":
             # Use of shelters handled elsewhere
@@ -529,6 +533,7 @@ class Game:  # pylint: disable=too-many-public-methods
             return 0
 
         self.card_piles[card_name] = card_pile
+        self.card_instances[card_name] = self.card_mapping[card_type][card_name]()
         for card in card_pile:
             self._cards[card.uuid] = card
             if not card.pile:
@@ -542,7 +547,7 @@ class Game:  # pylint: disable=too-many-public-methods
         """Get and return a card from pile (with name if specified)"""
         assert isinstance(pile, str), f"{pile=} {type(pile)=}"
         assert pile in self.card_piles, f"{pile=} not in {self.card_piles=}"
-        return self[pile].remove(name)
+        return self.card_piles[pile].remove(name)
 
     ###########################################################################
     def _use_ruins(self, card) -> None:
@@ -608,14 +613,14 @@ class Game:  # pylint: disable=too-many-public-methods
             sys.exit(1)
 
     ###########################################################################
-    def card_piles(self):
+    def get_card_piles(self):
         """TODO"""
         return self.card_piles.items()
 
     ###########################################################################
-    def __getitem__(self, key):
+    def X__getitem__(self, key):
         """Return the card using `game[card_name]`"""
-        return self.card_piles[key]
+        return self.card_instances[key]
 
     ###########################################################################
     def __contains__(self, key):
@@ -664,7 +669,7 @@ class Game:  # pylint: disable=too-many-public-methods
 
     ###########################################################################
     @classmethod
-    def get_card_classes(cls, prefix, path, class_prefix):
+    def get_card_classes(cls, prefix, path, class_prefix="Card_"):
         """Import all the modules to determine the real name of the card
         This is slow, but it is the only way that I can think of
 
@@ -672,9 +677,9 @@ class Game:  # pylint: disable=too-many-public-methods
         """
         mapping = {}
         files = glob.glob(f"{path}/{prefix}_*.py")
-        for fname in [os.path.basename(_) for _ in files]:
-            fname = fname.replace(".py", "")
-            mod = importlib.import_module(f"{path.replace('/', '.')}.{fname}")
+        for file_name in [os.path.basename(_) for _ in files]:
+            file_name = file_name.replace(".py", "")
+            mod = importlib.import_module(f"{path.replace('/', '.')}.{file_name}")
 
             classes = dir(mod)
             for kls in classes:
@@ -693,8 +698,8 @@ class Game:  # pylint: disable=too-many-public-methods
         return list(self.card_mapping[prefix].keys())
 
     ###########################################################################
-    def get_action_piles(self, cost=999):
-        """Return all cardstacks that are action cards that cost less than cost"""
+    def get_action_piles(self, cost=999) -> list[str]:
+        """Return all card stacks that are action cards that cost less than cost"""
         action_piles = []
         for name, pile in self.card_piles.items():
             card = pile.get_top_card()
@@ -709,20 +714,21 @@ class Game:  # pylint: disable=too-many-public-methods
         return action_piles
 
     ###########################################################################
-    def getTreasurePiles(self):
-        """Return all cardstacks that are treasure cards"""
-        treasurepiles = []
-        for cpile in self.card_piles.values():
-            if cpile.isTreasure():
-                treasurepiles.append(cpile)
-        return treasurepiles
+    def get_treasure_piles(self) -> list[str]:
+        """Return all card stacks that are treasure cards"""
+        treasure_piles = []
+        for name, _ in self.card_piles.values():
+            card = self.card_instances[name]
+            if card.isTreasure():
+                treasure_piles.append(name)
+        return treasure_piles
 
     ###########################################################################
-    def getVictoryPiles(self):
+    def get_victory_piles(self) -> list[str]:
         """Return all card stack names that are victory cards"""
         victory_piles = []
         for name, _ in self.card_piles.items():
-            card = self.get_card_from_pile(name)
+            card = self.card_instances[name]
             if card.isVictory():
                 victory_piles.append(name)
         return victory_piles
@@ -732,13 +738,13 @@ class Game:  # pylint: disable=too-many-public-methods
         """is the game over"""
         empties = []
         for cpil in self.card_piles:
-            if self[cpil].is_empty():
+            if self.card_piles[cpil].is_empty():
                 empties.append(cpil)
         if len(empties) >= 3:
             self.output(f"Game Over: {', '.join(empties)} piles are empty")
             return True
 
-        if self["Province"].is_empty():
+        if self.card_piles["Province"].is_empty():
             self.output("Game Over: Province pile is empty")
             return True
         return False
@@ -845,6 +851,8 @@ class Game:  # pylint: disable=too-many-public-methods
                     tokens += f"{plr.name}[{','.join(tkns)}]"
 
             print(f"CardPile {name}: {len(card_pile)} cards {tokens}")
+        print(f"Instances: {', '.join([_ for _ in self.card_instances])}")
+
         for plr in self.player_list():
             self.print_player_state(plr)
         if card_dump:
@@ -925,20 +933,19 @@ class Game:  # pylint: disable=too-many-public-methods
             f"current={self.count_cards()} original={self._original['total_cards']}\n",
             file=sys.stderr,
         )
-        for pile in self.card_piles.values():
-            card = pile.name
-            if self._original["count"][card]["total"] == now[card]["total"]:
+        for name, pile in self.card_piles.items():
+            if self._original["count"][name]["total"] == now[name]["total"]:
                 continue
-            print(f"{card} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)
-            print(f" {card} Original:")
+            print(f"{name} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", file=sys.stderr)
+            print(f" {name} Original:")
             try:
                 print(
-                    json.dumps(self._original["count"][card], indent=2), file=sys.stderr
+                    json.dumps(self._original["count"][name], indent=2), file=sys.stderr
                 )
             except KeyError:
-                print(f"Unhandled card {card}")
-            print(f" {card} Now:")
-            print(json.dumps(now[card], indent=2), file=sys.stderr)
+                print(f"Unhandled card {name}")
+            print(f" {name} Now:")
+            print(json.dumps(now[name], indent=2), file=sys.stderr)
         print(f"{'- -' * 20}", file=sys.stderr)
 
     ###########################################################################

@@ -40,7 +40,7 @@ class TestOldWitch(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, initcards=["Old Witch"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Old Witch"].remove()
+        self.card = self.g.get_card_from_pile("Old Witch")
 
     def test_play(self):
         self.plr.piles[Piles.HAND].set()

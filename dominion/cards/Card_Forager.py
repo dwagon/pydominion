@@ -34,12 +34,12 @@ class Test_Forager(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Forager"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Forager"].remove()
+        self.card = self.g.get_card_from_pile("Forager")
 
     def test_play(self):
         """Play a forager"""
-        self.plr.trash_card(self.g["Copper"].remove())
-        self.plr.trash_card(self.g["Silver"].remove())
+        self.plr.trash_card(self.g.get_card_from_pile("Copper"))
+        self.plr.trash_card(self.g.get_card_from_pile("Silver"))
         self.plr.piles[Piles.HAND].set("Province")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.test_input = ["province"]

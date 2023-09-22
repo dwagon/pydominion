@@ -53,7 +53,7 @@ class Test_Courtier(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Courtier", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Courtier"].remove()
+        self.card = self.g.get_card_from_pile("Courtier")
         self.plr.piles[Piles.HAND].set("Copper", "Moat", "Estate")
         self.plr.add_card(self.card, Piles.HAND)
 

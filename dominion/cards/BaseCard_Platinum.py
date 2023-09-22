@@ -25,7 +25,7 @@ class Test_Platinum(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, prosperity=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Platinum"].remove()
+        self.card = self.g.get_card_from_pile("Platinum")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

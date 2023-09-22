@@ -384,8 +384,8 @@ class Player:
             return card
 
         # Return card to a card pile
-        if isinstance(pile, CardPile):
-            self.game[card.pile].add(card)
+        if pile == Piles.CARDPILE or isinstance(pile, CardPile):
+            self.game.card_piles[card.pile].add(card)
             return card
 
         if pile in self.piles:
@@ -647,7 +647,7 @@ class Player:
     def _get_all_purchasable(self):
         """Return all potentially purchasable cards"""
         all_cards = PlayArea("all_purchasable")
-        for name, pile in self.game.card_piles():
+        for name, pile in self.game.get_card_piles():
             if pile.is_empty():
                 continue
             card = pile.get_top_card()
@@ -683,12 +683,12 @@ class Player:
                 verb = ""
                 action = None
             details = [self._cost_string(card)]
-            if self.game[card.pile].embargo_level:
+            if self.game.card_piles[card.pile].embargo_level:
                 details.append(f"Embargo {card.embargo_level}")
-            if self.game[card.pile].getVP():
-                details.append(f"Gathered {self.game[card.name].getVP()} VP")
+            if self.game.card_piles[card.pile].getVP():
+                details.append(f"Gathered {self.game.card_piles[card.name].getVP()} VP")
             details.append(card.get_cardtype_repr())
-            details.append(f"{len(self.game[card.pile])} left")
+            details.append(f"{len(self.game.card_piles[card.pile])} left")
             for tkn in self.which_token(card.name):
                 details.append(f"[Tkn: {tkn}]")
             o = Option(
@@ -1340,7 +1340,7 @@ class Player:
 
         # Replace is to gain a different card
         if options.get("replace"):
-            self.game[new_card.name].add(new_card)
+            self.game.card_piles[new_card.name].add(new_card)
             new_card = self.game.get_card_from_pile(options["replace"])
             if not new_card:
                 self.output(f"No more {options['replace']}")
@@ -1407,7 +1407,7 @@ class Player:
             self.output("Must pay off debt first")
             return
         self.buys -= 1
-        card = self.game[card_name].get_top_card()
+        card = self.game.card_instances[card_name]
         cost = self.card_cost(card)
         if card.isDebt():
             self.debt += card.debtcost
@@ -1421,8 +1421,8 @@ class Player:
         if not new_card:
             self.output("Couldn't buy card")
             return
-        if self.game[card.name].embargo_level:
-            for _ in range(self.game[card.name].embargo_level):
+        if self.game.card_piles[card.name].embargo_level:
+            for _ in range(self.game.card_piles[card.name].embargo_level):
                 self.gain_card("Curse")
                 self.output("Gained a Curse from embargo")
         self.stats["bought"].append(new_card)
@@ -1513,7 +1513,7 @@ class Player:
     ###########################################################################
     def gain_prize(self):
         """Pickup a Prize"""
-        prizes = [self.game[_] for _ in self.game.getPrizes()]
+        prizes = [self.game.card_piles[_] for _ in self.game.getPrizes()]
         options = []
         for prize_pile in prizes:
             if prize_pile.is_empty():
@@ -1600,7 +1600,7 @@ class Player:
         {coin} {num_potions} are the resources constraints we have
         """
         affordable = PlayArea("affordable")
-        for name, pile in self.game.card_piles():
+        for name, pile in self.game.get_card_piles():
             if not pile:
                 continue
             card = pile.get_top_card()

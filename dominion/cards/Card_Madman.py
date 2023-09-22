@@ -2,7 +2,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -20,20 +19,20 @@ class Card_Madman(Card.Card):
 
     def special(self, game, player):
         handsize = player.piles[Piles.HAND].size()
-        player.output("Gaining %d cards from madman" % handsize)
+        player.output(f"Gaining {handsize} cards from madman")
         for _ in range(handsize):
             player.pickup_card()
-        game["Madman"].add(self)
+        game.card_piles["Madman"].add(self)
         player.piles[Piles.PLAYED].remove(self)
 
 
 ###############################################################################
-class Test_Madman(unittest.TestCase):
+class TestMadman(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Hermit"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Madman"].remove()
+        self.card = self.g.get_card_from_pile("Madman")
 
     def test_play(self):
         """Play a Madman"""

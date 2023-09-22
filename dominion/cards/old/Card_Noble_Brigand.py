@@ -74,7 +74,7 @@ class Test_Noble_Brigand(unittest.TestCase):
         self.g = Game.TestGame(numplayers=2, oldcards=True, initcards=["Noble Brigand"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Noble Brigand"].remove()
+        self.card = self.g.get_card_from_pile("Noble Brigand")
 
     def test_play(self):
         """Play a Noble Brigand but without anything to steal"""

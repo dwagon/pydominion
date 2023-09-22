@@ -42,7 +42,7 @@ class Test_Circle_of_Witches(unittest.TestCase):
     def test_play_card(self):
         """Play a liaison and curse"""
         self.plr.favors.set(4)
-        card = self.g["Underling"].remove()
+        card = self.g.get_card_from_pile("Underling")
         self.plr.add_card(card, Piles.HAND)
         self.plr.test_input = ["Curse"]
         self.plr.play_card(card)

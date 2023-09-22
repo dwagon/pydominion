@@ -44,7 +44,7 @@ class Test_Duchy(unittest.TestCase):
         self.g = Game.TestGame(quiet=True, numplayers=1)
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Duchy"].remove()
+        self.card = self.g.get_card_from_pile("Duchy")
 
     def test_have(self):
         self.plr.add_card(self.card)

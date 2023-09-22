@@ -34,7 +34,7 @@ class Test_Spices(unittest.TestCase):
         self.plr = self.g.player_list(0)
 
     def test_play_card(self):
-        self.card = self.g["Spices"].remove()
+        self.card = self.g.get_card_from_pile("Spices")
         self.plr.add_card(self.card, Piles.HAND)
         self.plr.coffers.set(0)
         self.plr.play_card(self.card)

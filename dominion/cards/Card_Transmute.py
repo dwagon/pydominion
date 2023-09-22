@@ -50,7 +50,7 @@ class Test_Transmute(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Transmute"], badcards=["Duchess"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Transmute"].remove()
+        self.card = self.g.get_card_from_pile("Transmute")
 
     def test_play(self):
         """Play a transmute - trash nothing"""

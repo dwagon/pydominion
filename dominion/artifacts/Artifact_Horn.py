@@ -22,7 +22,7 @@ class Test_Horn(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list(0)
         self.artifact = self.g.artifacts["Horn"]
-        self.card = self.g["Border Guard"].remove()
+        self.card = self.g.get_card_from_pile("Border Guard")
 
     def test_horn(self):
         self.plr.assign_artifact("Horn")

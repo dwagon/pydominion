@@ -28,7 +28,7 @@ class Test_Altar(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Altar", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Altar"].remove()
+        self.card = self.g.get_card_from_pile("Altar")
 
     def test_play(self):
         """Play an Altar"""

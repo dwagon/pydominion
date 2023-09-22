@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -21,22 +20,22 @@ class Card_Paddock(Card.Card):
     def special(self, game, player):
         player.gain_card("Horse")
         player.gain_card("Horse")
-        empties = sum([1 for st in game.card_piles if game[st].is_empty()])
+        empties = sum([1 for _, st in game.get_card_piles() if st.is_empty()])
         player.add_actions(empties)
 
 
 ###############################################################################
-class Test_Paddock(unittest.TestCase):
+class TestPaddock(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Paddock", "Moat"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Paddock"].remove()
+        self.card = self.g.get_card_from_pile("Paddock")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_playcard_one_stack(self):
         while True:
-            c = self.g["Moat"].remove()
+            c = self.g.get_card_from_pile("Moat")
             if not c:
                 break
         self.plr.play_card(self.card)

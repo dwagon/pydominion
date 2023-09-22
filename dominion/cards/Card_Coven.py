@@ -3,7 +3,6 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
@@ -23,7 +22,7 @@ class Card_Coven(Card.Card):
     def special(self, game, player):
         for plr in player.attack_victims():
             plr.exile_card("Curse")
-            if game["Curse"].is_empty():
+            if game.card_piles["Curse"].is_empty():
                 num = plr.unexile("Curse")
                 plr.output(f"Unexiled {num} Curses from {player.name}'s Coven")
             else:
@@ -31,12 +30,12 @@ class Card_Coven(Card.Card):
 
 
 ###############################################################################
-class Test_Coven(unittest.TestCase):
+class TestCoven(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=2, initcards=["Coven", "Moat"])
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Coven"].remove()
+        self.card = self.g.get_card_from_pile("Coven")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play(self):

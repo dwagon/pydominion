@@ -64,7 +64,7 @@ class Test_Scrap(unittest.TestCase):
         self.g = Game.TestGame(numplayers=1, initcards=["Scrap"])
         self.g.start_game()
         self.plr = self.g.player_list(0)
-        self.card = self.g["Scrap"].remove()
+        self.card = self.g.get_card_from_pile("Scrap")
 
     def test_playcard_cost0(self):
         """Play a scrap and trash something worth 0"""

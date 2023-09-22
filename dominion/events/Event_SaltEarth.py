@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+""" https://wiki.dominionstrategy.com/index.php/Salt_the_Earth"""
 import unittest
 from dominion import Card, Game, Piles, Event
 
@@ -15,12 +15,17 @@ class Event_SaltEarth(Event.Event):
 
     def special(self, game, player):
         player.add_score("Salt the Earth", 1)
-        stacks = game.getVictoryPiles()
-        cp = player.card_sel(cardsrc=stacks, prompt="Trash a Victory card from the Supply")
-        if not cp:
+        stacks = game.get_victory_piles()
+        options = [("Select nothing", None)]
+        for stack in game.get_victory_piles():
+            options.append((f"Select {stack}", stack))
+        pile = player.plr_choose_options(
+            "Trash a Victory card from the Supply", *options
+        )
+        if not pile:
             return
-        cd = cp[0].remove()
-        player.trash_card(cd)
+        card = game.get_card_from_pile(pile)
+        player.trash_card(card)
 
 
 ###############################################################################

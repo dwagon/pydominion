@@ -49,7 +49,7 @@ class Test_SacredGrove(unittest.TestCase):
         )
         self.g.start_game()
         self.plr, self.vic = self.g.player_list()
-        self.card = self.g["Sacred Grove"].remove()
+        self.card = self.g.get_card_from_pile("Sacred Grove")
         self.plr.add_card(self.card, Piles.HAND)
 
     def test_play_no_share(self):

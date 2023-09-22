@@ -26,7 +26,7 @@ class Card_Sorcerer(Card.Card):
     def _generate_options(self, game):
         """Generate the options for user interaction"""
         options = []
-        for name, card_pile in game.card_piles():
+        for name, card_pile in game.get_card_piles():
             card = game.get_card_from_pile(name)
             if card and card.purchasable:
                 options.append((name, name))
@@ -73,7 +73,7 @@ class TestSorcerer(unittest.TestCase):
 
     def test_play_miss(self):
         while True:
-            card = self.g["Wizards"].remove()
+            card = self.g.get_card_from_pile("Wizards")
             if card.name == "Sorcerer":
                 break
         self.plr.add_card(card, Piles.HAND)

@@ -41,7 +41,7 @@ class Test_Moons_Gift(unittest.TestCase):
                 myboon = b
                 break
         self.g.boons = [myboon]
-        self.card = self.g["Bard"].remove()
+        self.card = self.g.get_card_from_pile("Bard")
 
     def test_moons_gift(self):
         self.plr.piles[Piles.DISCARD].set("Province", "Gold")

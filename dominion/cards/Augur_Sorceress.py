@@ -23,7 +23,7 @@ class Card_Sorceress(Card.Card):
     def special(self, game, player):
         options = [{"selector": "0", "print": "No guess", "card": None}]
         index = 1
-        for name, card_pile in sorted(game.card_piles()):
+        for name, card_pile in sorted(game.get_card_piles()):
             options.append(
                 {"selector": f"{index}", "print": f"Guess {name}", "card": name}
             )
@@ -48,7 +48,7 @@ class TestSorceress(unittest.TestCase):
         self.plr, self.vic = self.g.player_list()
 
         while True:
-            card = self.g["Augurs"].remove()
+            card = self.g.get_card_from_pile("Augurs")
             if card.name == "Sorceress":
                 break
         self.card = card

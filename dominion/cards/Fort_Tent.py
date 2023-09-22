@@ -49,7 +49,7 @@ class Test_Tent(unittest.TestCase):
         self.g.start_game()
         self.plr = self.g.player_list()[0]
         while True:
-            self.card = self.g["Forts"].remove()
+            self.card = self.g.get_card_from_pile("Forts")
             if self.card.name == "Tent":
                 break
         self.plr.add_card(self.card, Piles.HAND)
@@ -64,7 +64,7 @@ class Test_Tent(unittest.TestCase):
         """Play a tent - rotate"""
         self.plr.test_input = ["Rotate"]
         self.plr.play_card(self.card)
-        card = self.g["Forts"].remove()
+        card = self.g.get_card_from_pile("Forts")
         self.assertEqual(card.name, "Garrison")
 
 
