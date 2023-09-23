@@ -523,11 +523,11 @@ class Game:  # pylint: disable=too-many-public-methods
             print(f"Unknown card '{card_name}'\n", file=sys.stderr)
             sys.exit(1)
         card = self.card_mapping[card_type][card_name]()
-        num_cards = self._num_cards_in_pile(card)
         if hasattr(card, "cardpile_setup"):
             card_pile = card.cardpile_setup(self)
         else:
             card_pile = CardPile(self)
+        num_cards = self._num_cards_in_pile(card)
         card_pile.init_cards(num_cards, self.card_mapping[card_type][card_name])
         if not force and not card.insupply:
             return 0

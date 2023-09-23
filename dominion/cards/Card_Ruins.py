@@ -20,7 +20,7 @@ class Card_Ruins(Card.Card):
         return card_pile
 
     def calc_numcards(self, game):
-        return min(10, game.numplayers * 10 - 10)
+        return max(10, game.numplayers * 10 - 10)
 
 
 ###############################################################################
