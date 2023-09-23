@@ -47,7 +47,10 @@ class PlayArea:
         """Used for testing to set contents"""
         self.empty()
         for card_name in cards:
-            card = self.game.card_instances[card_name]
+            if card_name in self.game.card_piles:
+                card = self.game.card_piles[card_name].remove()
+            else:
+                card = self.game.card_instances[card_name]
             if card is None:
                 print(f"Card Pile {card_name} is empty")
                 return

@@ -1,5 +1,6 @@
 import sys
 import colorama
+
 from dominion import Piles
 from dominion.Player import Player
 from dominion.Option import Option

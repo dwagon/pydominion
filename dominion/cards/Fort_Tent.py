@@ -28,7 +28,7 @@ class Card_Tent(Card.Card):
             ("Rotate", True),
         )
         if opt:
-            game["Forts"].rotate()
+            game.card_piles["Forts"].rotate()
 
     def hook_discard_this_card(self, game, player, source):
         opt = player.plr_choose_options(

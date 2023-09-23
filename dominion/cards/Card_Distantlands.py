@@ -2,11 +2,10 @@
 
 import unittest
 from dominion import Game, Card, Piles
-import dominion.Card as Card
 
 
 ###############################################################################
-class Card_Distantlands(Card.Card):
+class Card_DistantLands(Card.Card):
     def __init__(self):
         Card.Card.__init__(self)
         self.cardtype = [
@@ -21,19 +20,15 @@ class Card_Distantlands(Card.Card):
         self.callable = False
         self.counted = False
 
-    def special_score(self, game, player):
+    def special_score(self, game, player) -> int:
         """Worth 4 VP if on your tavern mat; else 0"""
-        score = 0
-        if game.game_over:
-            for c in player.piles[Piles.RESERVE]:
-                if c.name == "Distant Lands" and not c.counted:
-                    c.counted = True
-                    score += 4
-        return score
+        if self.location == Piles.RESERVE:
+            return 4
+        return 0
 
 
 ###############################################################################
-class Test_Distantlands(unittest.TestCase):
+class TestDistantLands(unittest.TestCase):
     def setUp(self):
         self.g = Game.TestGame(numplayers=1, initcards=["Distant Lands"])
         self.g.start_game()
@@ -48,18 +43,18 @@ class Test_Distantlands(unittest.TestCase):
         self.assertEqual(self.plr.piles[Piles.RESERVE].size(), 1)
         self.assertIsNotNone(self.plr.piles[Piles.RESERVE]["Distant Lands"])
 
-    def test_notonmat(self):
+    def test_not_on_mat(self):
         self.plr.piles[Piles.HAND].set("Distant Lands")
         self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 0)
 
-    def test_onmat(self):
+    def test_on_mat(self):
         """Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands")
         self.g.game_over = True
         self.assertEqual(self.plr.get_score_details()["Distant Lands"], 4)
 
-    def test_onmat_twice(self):
+    def test_on_mat_twice(self):
         """Two Distant lands on mat"""
         self.plr.piles[Piles.RESERVE].set("Distant Lands", "Distant Lands")
         self.g.game_over = True

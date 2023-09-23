@@ -7,6 +7,9 @@ import operator
 import sys
 from collections import defaultdict
 from typing import Optional
+from icecream import ic
+
+ic.configureOutput(includeContext=True)
 
 from dominion import Piles, Phase
 from dominion.Card import Card, CardType
@@ -983,16 +986,19 @@ class Player:
     ###########################################################################
     def get_score_details(self) -> dict:
         """Calculate score of the player from all factors"""
-        scr = {}
-        for c in self.all_cards():
-            scr[c.name] = scr.get(c.name, 0) + c.victory
-            scr[c.name] = scr.get(c.name, 0) + c.special_score(self.game, self)
-        for s in self.states:
-            scr[s.name] = scr.get(s.name, 0) + s.victory
+        score = {}
+        for card in self.all_cards():
+            score[card.name] = (
+                score.get(card.name, 0)
+                + card.victory
+                + card.special_score(self.game, self)
+            )
+        for state in self.states:
+            score[state.name] = score.get(state.name, 0) + state.victory
         if self.game.ally:
-            scr[self.game.ally.name] = self.game.ally.special_score(self.game, self)
-        scr.update(self.score)
-        return scr
+            score[self.game.ally.name] = self.game.ally.special_score(self.game, self)
+        score.update(self.score)
+        return score
 
     ###########################################################################
     def get_score(self, verbose=False):
@@ -1564,7 +1570,7 @@ class Player:
         if not self.buys:
             self.output("Need a buy to perform an event")
             return False
-        if self.debt != 0:
+        if self.debt:
             self.output("Must pay off debt first")
         if self.coins < event.cost:
             self.output(f"Need {event.cost} coins to perform this event")
@@ -1646,7 +1652,7 @@ class Player:
 
     ###########################################################################
     def get_cards(self):
-        """Return a list of all teh cards owned"""
+        """Return a list of all the cards owned"""
         cards = defaultdict(int)
         for _, stack in self.piles.items():
             for card in stack:
@@ -1902,9 +1908,9 @@ class Player:
         )
         if discard is None:
             return None
-        for c in discard:
-            self.output(f"Discarding {c.name}")
-            self.discard_card(c)
+        for card in discard:
+            self.output(f"Discarding {card.name}")
+            self.discard_card(card)
         return discard
 
     ###########################################################################
